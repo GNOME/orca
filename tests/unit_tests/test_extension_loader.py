@@ -347,50 +347,6 @@ class TestExtensionLoaderDataclass:
         assert calls == ["failing", "working"]
         debug_mock.print_exception.assert_called_once_with(debug_mock.LEVEL_WARNING)
 
-    def test_notify_user_extension_state_changed_only_notifies_named_extension(
-        self,
-        test_context: OrcaTestContext,
-    ) -> None:
-        """Test enabled and disabled notifications target one loaded extension."""
-
-        essential_modules = test_context.setup_shared_dependencies(
-            ["orca.command_manager", "orca.gsettings_registry"]
-        )
-        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
-        registry.gsettings_schema.return_value = lambda cls: cls
-        registry.gsetting.return_value = lambda func: func
-        debug_mock = essential_modules["orca.debug"]
-        from orca.extension import Extension
-        from orca.extension_loader import ExtensionLoader
-
-        calls = []
-
-        class FirstExtension(Extension):
-            GROUP_LABEL = "First"
-
-            def on_enabled(self) -> None:
-                calls.append("first enabled")
-
-        class SecondExtension(Extension):
-            GROUP_LABEL = "Second"
-
-            def on_enabled(self) -> None:
-                calls.append("second enabled")
-
-            def on_disabled(self) -> None:
-                calls.append("second disabled")
-                raise RuntimeError("Disable failed")
-
-        loader = ExtensionLoader()
-        loader._user_extensions = [FirstExtension(), SecondExtension()]
-
-        loader.notify_user_extension_state_changed("SecondExtension", True)
-        loader.notify_user_extension_state_changed("SecondExtension", False)
-        loader.notify_user_extension_state_changed("MissingExtension", True)
-
-        assert calls == ["second enabled", "second disabled"]
-        debug_mock.print_exception.assert_called_once_with(debug_mock.LEVEL_WARNING)
-
     def test_shutdown_user_extensions_notifies_loaded_extensions(
         self,
         test_context: OrcaTestContext,
@@ -697,12 +653,14 @@ class TestExtensionLoaderDataclass:
 
         assert ExtensionLoader._compute_hash(str(package_dir)) == first_hash
 
-    def test_reload_user_extensions_unloads_old_extensions_and_sets_up_new_ones(
+    @pytest.mark.parametrize("orca_is_ready", [False, True])
+    def test_reload_user_extensions_runs_lifecycle_hooks_when_orca_is_ready(
         self,
         test_context: OrcaTestContext,
         tmp_path: Path,
+        orca_is_ready: bool,
     ) -> None:
-        """Test reload clears stale user extensions and installs current ones."""
+        """Test reload transitions instances only after Orca becomes ready."""
 
         essential_modules = test_context.setup_shared_dependencies(
             ["orca.command_manager", "orca.gsettings_registry"]
@@ -732,6 +690,7 @@ class TestExtensionLoaderDataclass:
         )
 
         loader = ExtensionLoader()
+        loader._orca_is_ready = orca_is_ready
         old = OldExtension()
         old.disable = test_context.Mock()
         loader._user_extensions = [old]
@@ -751,20 +710,83 @@ class TestExtensionLoaderDataclass:
         old.disable.assert_called_once()
         assert [extension.module_name for extension in loader._user_extensions] == ["NewExtension"]
         assert loader._speech_output_handlers == []
-        assert not lifecycle_calls
-        assert not enabled_calls
+        assert lifecycle_calls == (["old disabled"] if orca_is_ready else [])
+        assert enabled_calls == (["NewExtension"] if orca_is_ready else [])
         command_manager.activate_commands.assert_called_once_with("reloaded user extensions")
+
+    def test_reload_user_extensions_transitions_all_instances(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test every replaced instance receives its runtime lifecycle hook."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        from orca.extension import Extension
+        from orca.extension_loader import ExtensionLoader
+
+        calls = []
+
+        class TrackingExtension(Extension):
+            GROUP_LABEL = "Tracking"
+
+            def __init__(self, name: str) -> None:
+                super().__init__()
+                self.module_name = name
+
+            def on_enabled(self) -> None:
+                calls.append(f"{self.module_name} enabled")
+
+            def on_disabled(self) -> None:
+                calls.append(f"{self.module_name} disabled")
+
+        old_a = TrackingExtension("A")
+        old_b = TrackingExtension("B")
+        new_a = TrackingExtension("A")
+        new_b = TrackingExtension("B")
+        old_a.disable = test_context.Mock(side_effect=lambda: calls.append("A disable"))
+        old_b.disable = test_context.Mock(side_effect=lambda: calls.append("B disable"))
+
+        loader = ExtensionLoader()
+        loader._orca_is_ready = True
+        loader._user_extensions = [old_a, old_b]
+        loader.discover_and_load = test_context.Mock(
+            side_effect=lambda _directory: loader._user_extensions.extend([new_a, new_b])
+        )
+        loader.set_up_user_commands = test_context.Mock()
+        command_manager = essential_modules["orca.command_manager"].get_manager.return_value
+        command_manager.activate_commands.side_effect = lambda _reason: calls.append(
+            "commands activated"
+        )
+
+        loader.reload_user_extensions("/extensions")
+
+        assert calls == [
+            "A disabled",
+            "A disable",
+            "B disabled",
+            "B disable",
+            "commands activated",
+            "A enabled",
+            "B enabled",
+        ]
+        old_a.disable.assert_called_once()
+        old_b.disable.assert_called_once()
 
 
 @pytest.mark.unit
 class TestExtensionLoaderPreferencesLifecycle:
-    """Tests lifecycle notifications caused by preferences actions."""
+    """Tests preferences actions delegate lifecycle transitions to reloads."""
 
-    def test_revoking_approval_notifies_before_reload(
+    def test_revoking_approval_reloads_extensions(
         self,
         test_context: OrcaTestContext,
     ) -> None:
-        """Test revoking approval notifies the active instance before unloading it."""
+        """Test revoking approval relies on reload to run lifecycle hooks."""
 
         extension_loader, grid_module = _load_preferences_grid_module(test_context)
         info = SimpleNamespace(
@@ -784,15 +806,14 @@ class TestExtensionLoaderPreferencesLifecycle:
 
         assert loader.method_calls == [
             call.revoke_extension("example.py"),
-            call.notify_user_extension_state_changed("ExampleExtension", False),
             call.reload_user_extensions("/extensions"),
         ]
 
-    def test_reapproving_notifies_after_reload(
+    def test_reapproving_reloads_extensions(
         self,
         test_context: OrcaTestContext,
     ) -> None:
-        """Test reapproval notifies the new active instance after loading it."""
+        """Test reapproval relies on reload to run lifecycle hooks."""
 
         extension_loader, grid_module = _load_preferences_grid_module(test_context)
         info = SimpleNamespace(
@@ -813,15 +834,14 @@ class TestExtensionLoaderPreferencesLifecycle:
         assert loader.method_calls == [
             call.approve_extension_file("/extensions/example.py"),
             call.reload_user_extensions("/extensions"),
-            call.notify_user_extension_state_changed("ExampleExtension", True),
         ]
 
-    def test_deleting_notifies_before_reload(
+    def test_deleting_reloads_extensions(
         self,
         test_context: OrcaTestContext,
         tmp_path: Path,
     ) -> None:
-        """Test deleting an active extension notifies it before unloading it."""
+        """Test deletion relies on reload to run lifecycle hooks."""
 
         _extension_loader, grid_module = _load_preferences_grid_module(test_context)
         filepath = str(tmp_path / "example.py")
@@ -843,7 +863,6 @@ class TestExtensionLoaderPreferencesLifecycle:
         grid_module.ExtensionLoaderPreferencesGrid._on_delete_clicked(grid, "example.py")
 
         assert loader.method_calls == [
-            call.notify_user_extension_state_changed("ExampleExtension", False),
             call.revoke_extension("example.py"),
             call.get_disabled_extensions(),
             call.set_disabled_extensions([]),

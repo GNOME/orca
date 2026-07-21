@@ -512,21 +512,16 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if info is None:
             return
 
-        class_name = info.class_name
         revoking = info.status in (
             extension_loader.UserExtensionStatus.APPROVED,
             extension_loader.UserExtensionStatus.DISABLED,
         )
         if revoking:
             self._loader.revoke_extension(filename)
-            if class_name:
-                self._loader.notify_user_extension_state_changed(class_name, False)
         else:
             self._loader.approve_extension_file(info.filepath)
 
         self._loader.reload_user_extensions(self._extensions_dir)
-        if class_name and not revoking:
-            self._loader.notify_user_extension_state_changed(class_name, True)
         if info := self._get_info(filename):
             self._sync_row(info)
 
@@ -562,8 +557,6 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self.refresh()
             return
 
-        if info.class_name:
-            self._loader.notify_user_extension_state_changed(info.class_name, False)
         self._loader.revoke_extension(filename)
         if info.class_name:
             disabled = [
@@ -641,10 +634,6 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             return
 
         self._loader.set_disabled_extensions(disabled)
-        if not enabled:
-            self._loader.notify_user_extension_state_changed(info.class_name, False)
         self._loader.reload_user_extensions(self._extensions_dir)
-        if enabled:
-            self._loader.notify_user_extension_state_changed(info.class_name, True)
         if info := self._get_info(filename):
             self._sync_row(info)

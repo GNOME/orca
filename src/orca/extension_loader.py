@@ -246,6 +246,8 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
         """Reloads approved user extensions and their Orca-owned integration points."""
 
         for extension in self._user_extensions:
+            if self._orca_is_ready:
+                self._run_lifecycle_hook(extension, extension.on_disabled)
             extension.disable()
         self._user_extensions.clear()
         self._speech_output_handlers.clear()
@@ -253,6 +255,9 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
         self.discover_and_load(extensions_dir)
         self.set_up_user_commands()
         command_manager.get_manager().activate_commands("reloaded user extensions")
+        if self._orca_is_ready:
+            for extension in self._user_extensions:
+                self._run_lifecycle_hook(extension, extension.on_enabled)
 
     def register_builtin(self, getter: Callable[[], Extension], group_label: str) -> None:
         """Registers a built-in extension with the loader."""
@@ -362,17 +367,6 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
         self._orca_is_ready = True
         for extension in self._user_extensions:
             self._run_lifecycle_hook(extension, extension.on_ready)
-
-    def notify_user_extension_state_changed(self, class_name: str, enabled: bool) -> None:
-        """Notifies a user extension that a preference action changed its active state."""
-
-        extension = self.get_loaded_user_extension(class_name)
-        if extension is None:
-            return
-        if enabled:
-            self._run_lifecycle_hook(extension, extension.on_enabled)
-        else:
-            self._run_lifecycle_hook(extension, extension.on_disabled)
 
     @staticmethod
     def _run_lifecycle_hook(

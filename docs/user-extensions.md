@@ -727,17 +727,20 @@ def on_disabled(self) -> None:
     self.controller.present_message_internal(_("Example extension disabled."))
 ```
 
-Orca calls `on_disabled()` before deactivating an active extension when the
-user disables it, revokes its approval, or deletes it. Orca calls
-`on_enabled()` after activating an extension when the user enables it or
-approves or re-approves it while its saved state is enabled. Approval and the
-saved enabled state are separate, so re-approving an extension restores that
-state. Approving or revoking an extension whose saved state is disabled does
-not call either hook.
+Changing an extension from the preferences page reloads all enabled user
+extensions. Once Orca is ready, it calls `on_disabled()` before unloading each
+current instance and `on_enabled()` after activating each newly loaded
+instance. Therefore, changing one extension can call both hooks on another
+enabled extension because that extension's instance is also replaced.
 
-Only the extension affected by the user action is notified. These hooks are
-not called during startup or shutdown. Use `on_ready()` for startup
-initialization and `on_shutdown()` for exit cleanup.
+An extension that is newly enabled or approved receives `on_enabled()`. An
+active extension that is disabled, revoked, or deleted receives
+`on_disabled()`. Approval and the saved enabled state are separate, so
+re-approving an extension restores that state. A disabled extension remains
+unloaded and receives neither hook.
+
+These hooks are not called during startup or shutdown. Use `on_ready()` for
+startup initialization and `on_shutdown()` for exit cleanup.
 
 Enabled and disabled hooks run synchronously on Orca's main thread and must
 return quickly. If a hook raises an exception, Orca logs it and completes the
