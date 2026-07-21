@@ -238,6 +238,7 @@ def _activate_services():
     clipboard.get_presenter().activate()
     Gdk.notify_startup_complete()  # pylint: disable=no-value-for-parameter
     systemd.get_manager().notify_ready()
+    extension_loader.get_loader().notify_user_extensions_ready()
 
 
 def main():

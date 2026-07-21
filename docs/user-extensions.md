@@ -713,6 +713,62 @@ controller API, and settings, see
 
 ## Hooks and Observers
 
+### Enabled and Disabled Hooks
+
+Override `on_enabled()` and `on_disabled()` to respond when an extension
+becomes active or inactive because of an action on the User Extensions
+preferences page:
+
+```python
+def on_enabled(self) -> None:
+    self.controller.present_message_internal(_("Example extension enabled."))
+
+def on_disabled(self) -> None:
+    self.controller.present_message_internal(_("Example extension disabled."))
+```
+
+Orca calls `on_disabled()` before deactivating an active extension when the
+user disables it, revokes its approval, or deletes it. Orca calls
+`on_enabled()` after activating an extension when the user enables it or
+approves or re-approves it while its saved state is enabled. Approval and the
+saved enabled state are separate, so re-approving an extension restores that
+state. Approving or revoking an extension whose saved state is disabled does
+not call either hook.
+
+Only the extension affected by the user action is notified. These hooks are
+not called during startup or shutdown. Use `on_ready()` for startup
+initialization and `on_shutdown()` for exit cleanup.
+
+Enabled and disabled hooks run synchronously on Orca's main thread and must
+return quickly. If a hook raises an exception, Orca logs it and completes the
+state change.
+
+### Ready Hook
+
+Override `on_ready()` if your extension needs to wait until Orca is ready for
+normal operation before doing one-time startup work:
+
+```python
+def on_ready(self) -> None:
+    self.controller.present_message_internal(_("Example extension is ready."))
+```
+
+During startup, Orca calls the hook once on each extension instance loaded at
+that time, after its presenters, remote controller, accessibility services,
+commands, and initial focus tracking are ready. The startup message has already
+been presented, so the hook can use the controller API to present its own
+messages. Disabled and unapproved extensions are not loaded and do not receive
+the notification.
+
+Ready hooks run synchronously on Orca's main thread and must return quickly. A
+hook should not perform slow file, service, or network operations itself. If a
+hook raises an exception, Orca logs it and continues notifying the other
+extensions.
+
+`on_ready()` is a startup hook. Reloading extensions during an Orca session
+does not call it again; a newly enabled extension receives it the next time
+Orca starts.
+
 ### Shutdown Hook
 
 Override `on_shutdown()` if your extension needs to clean up when Orca exits:

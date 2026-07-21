@@ -336,6 +336,15 @@ class Extension:
 
         return None
 
+    def on_ready(self) -> None:
+        """Called when Orca is ready for normal operation."""
+
+    def on_enabled(self) -> None:
+        """Called when the extension becomes active."""
+
+    def on_disabled(self) -> None:
+        """Called before the extension becomes inactive."""
+
     def on_shutdown(self) -> None:
         """Called when Orca is shutting down."""
 

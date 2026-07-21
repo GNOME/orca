@@ -97,7 +97,7 @@ class UserExtensionInfo:
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Extensions", name="extensions")
-class ExtensionLoader:
+class ExtensionLoader:  # pylint: disable=too-many-public-methods
     """Discovers, validates, and loads built-in and user extensions."""
 
     _SHUTDOWN_HOOK_TOTAL_TIMEOUT_SECONDS = 0.5
@@ -107,6 +107,7 @@ class ExtensionLoader:
         self._user_extensions: list[Extension] = []
         self._speech_output_handlers: list[Extension] = []
         self._braille_output_handlers: list[Extension] = []
+        self._orca_is_ready = False
 
     @gsettings_registry.get_registry().gsetting(
         key="disabled-extensions",
@@ -352,6 +353,40 @@ class ExtensionLoader:
             msg = f"EXTENSION LOADER: Loading user extension {ext.module_name}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             ext.set_up_commands()
+
+    def notify_user_extensions_ready(self) -> None:
+        """Notifies loaded user extensions that Orca is ready."""
+
+        if self._orca_is_ready:
+            return
+        self._orca_is_ready = True
+        for extension in self._user_extensions:
+            self._run_lifecycle_hook(extension, extension.on_ready)
+
+    def notify_user_extension_state_changed(self, class_name: str, enabled: bool) -> None:
+        """Notifies a user extension that a preference action changed its active state."""
+
+        extension = self.get_loaded_user_extension(class_name)
+        if extension is None:
+            return
+        if enabled:
+            self._run_lifecycle_hook(extension, extension.on_enabled)
+        else:
+            self._run_lifecycle_hook(extension, extension.on_disabled)
+
+    @staticmethod
+    def _run_lifecycle_hook(
+        extension: Extension,
+        hook: Callable[[], None],
+    ) -> None:
+        """Runs a lifecycle hook for one user extension, logging exceptions."""
+
+        msg = f"EXTENSION LOADER: Calling {extension.module_name}.{hook.__name__}()"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        try:
+            hook()
+        except Exception:  # pylint: disable=broad-exception-caught
+            debug.print_exception(debug.LEVEL_WARNING)
 
     def shutdown_user_extensions(self) -> None:
         """Notifies loaded user extensions that Orca is shutting down."""
