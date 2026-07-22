@@ -20,6 +20,7 @@
 
 """Reader for the speech and braille JSONL logs written by orca.output_recorder."""
 
+import contextlib
 import json
 import os
 import queue
@@ -66,7 +67,7 @@ class InterruptRecord:
 class OutputReader:
     """Reads the JSONL files written by the speech and braille presenters."""
 
-    _POLL_INTERVAL = 0.02
+    _POLL_INTERVAL = 0.005
 
     def __init__(self, speech_path: str, braille_path: str) -> None:
         self._speech_path = speech_path
@@ -75,6 +76,7 @@ class OutputReader:
         self._pending: list[SpeechRecord | BrailleRecord | InterruptRecord] = []
         self._stop_event = threading.Event()
         self._threads: list[threading.Thread] = []
+        self._consumed: dict[str, int] = {speech_path: 0, braille_path: 0}
         self._idle_check: Callable[[], bool] | None = None
 
     def set_idle_check(self, idle_check: Callable[[], bool] | None) -> None:
@@ -131,6 +133,8 @@ class OutputReader:
         first_record_timeout *= scale
         records: list[SpeechRecord | BrailleRecord | InterruptRecord] = list(self._pending)
         self._pending.clear()
+        # The overall timeout bounds inactivity, not the whole drain: Say All produces
+        # records for as long as it runs.
         deadline = time.monotonic() + overall_timeout
         while True:
             remaining = deadline - time.monotonic()
@@ -140,10 +144,33 @@ class OutputReader:
             try:
                 record = self._queue.get(timeout=min(wait, remaining))
             except queue.Empty:
-                if idle_aware and self._idle_check is not None and not self._idle_check():
-                    continue
+                if idle_aware and self._idle_check is not None:
+                    if not self._idle_check():
+                        continue
+                    if self._await_more_output(records, remaining):
+                        continue
                 return self._honor_interrupts(records)
             records.append(record)
+            deadline = time.monotonic() + overall_timeout
+
+    def _await_more_output(self, records: list, remaining: float) -> bool:
+        """Returns True if output arrived after Orca first reported itself idle."""
+
+        limit = time.monotonic() + remaining
+        while time.monotonic() < limit and not self._readers_are_caught_up():
+            with contextlib.suppress(queue.Empty):
+                records.append(self._queue.get(timeout=self._POLL_INTERVAL))
+                return True
+        return False
+
+    def _readers_are_caught_up(self) -> bool:
+        """Returns True if both logs have been read as far as they have been written."""
+
+        for path, consumed in self._consumed.items():
+            with contextlib.suppress(OSError):
+                if consumed < os.path.getsize(path):
+                    return False
+        return self._queue.empty()
 
     @staticmethod
     def _honor_interrupts(
@@ -224,11 +251,19 @@ class OutputReader:
             if self._stop_event.wait(timeout=self._POLL_INTERVAL):
                 return
 
-        with open(path, encoding="utf-8") as handle:
+        # Read bytes, so that what has been consumed can be compared against the size of
+        # the file, and so that a record split across two reads cannot fail to decode.
+        with open(path, "rb") as handle:
+            # A read can land mid-write, so hold a partial record until its newline arrives.
+            partial = b""
             while not self._stop_event.is_set():
-                if line := handle.readline():
-                    if record := parser(line):
-                        self._queue.put(record)
+                if chunk := handle.readline():
+                    partial += chunk
+                    if partial.endswith(b"\n"):
+                        if record := parser(partial.decode("utf-8")):
+                            self._queue.put(record)
+                        self._consumed[path] += len(partial)
+                        partial = b""
                     continue
                 if self._stop_event.wait(timeout=self._POLL_INTERVAL):
                     return

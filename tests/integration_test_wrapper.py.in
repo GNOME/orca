@@ -24,6 +24,16 @@ _ATSPI_DIRECTORIES = (
 )
 _SANDBOX_READY_FLAG = "--sandbox-ready"
 
+
+class _Terminated(Exception):
+    """Raised when the wrapper is signalled to stop, so that cleanup still happens."""
+
+
+def _raise_terminated(signum: int, _frame: object) -> NoReturn:
+    """Turns a termination signal into an exception the cleanup path can see."""
+
+    raise _Terminated(signum)
+
 # The only services our bus may start. Anything else the host has installed, including the
 # portals and the shortcuts window they open, stays unreachable from the sandbox.
 _ACTIVATABLE_SERVICES = ("org.gnome.GPaste",)
@@ -437,8 +447,14 @@ def main() -> int:
             env=child_env,
             start_new_session=True,
         )
+        # Without this, a timeout kills the wrapper before the cleanup below runs, leaving
+        # an Orca behind which makes every subsequent test file skip.
+        for signal_number in (signal.SIGTERM, signal.SIGINT):
+            signal.signal(signal_number, _raise_terminated)
         try:
             returncode = proc.wait()
+        except _Terminated as error:
+            returncode = 128 + int(error.args[0])
         finally:
             with contextlib.suppress(ProcessLookupError, PermissionError):
                 os.killpg(proc.pid, signal.SIGKILL)
