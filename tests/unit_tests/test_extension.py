@@ -188,6 +188,61 @@ class TestExtensionTranslation:
         extension.debug.print_message.assert_called_once()  # pylint: disable=no-member
 
 
+@pytest.mark.unit
+class TestExtensionCommands:
+    """Tests command setup for user extensions."""
+
+    def test_cached_command_function_is_wrapped_only_once(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test setting up a cached command twice keeps its original wrapper."""
+
+        test_context.setup_shared_dependencies(["orca.command_manager", "orca.dbus_service"])
+        from orca.extension import Extension
+
+        calls = []
+
+        def callback() -> bool:
+            calls.append("called")
+            return True
+
+        class CachedCommand:
+            def __init__(self) -> None:
+                self.function = callback
+
+            def get_function(self):
+                return self.function
+
+            def set_function(self, function) -> None:
+                self.function = function
+
+            @staticmethod
+            def get_name() -> str:
+                return "cached_command"
+
+        command = CachedCommand()
+
+        class CachedCommandExtension(Extension):
+            GROUP_LABEL = "Cached command"
+
+            def _get_commands(self):
+                return [command]
+
+        extension = CachedCommandExtension()
+        extension.mark_as_user_extension()
+        extension.set_up_commands()
+        first_wrapper = command.get_function()
+
+        extension.reset_commands()
+        extension.set_up_commands()
+        second_wrapper = command.get_function()
+
+        assert second_wrapper is first_wrapper
+        assert second_wrapper(None, None) is True
+        assert calls == ["called"]
+
+
 class _VariantLike:
     """Simple object that mimics GLib.Variant.unpack()."""
 

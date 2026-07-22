@@ -105,6 +105,7 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
     def __init__(self) -> None:
         self._builtins: list[tuple[Callable[[], Extension], str]] = []
         self._user_extensions: list[Extension] = []
+        self._user_extensions_by_source: dict[str, Extension] = {}
         self._speech_output_handlers: list[Extension] = []
         self._braille_output_handlers: list[Extension] = []
         self._orca_is_ready = False
@@ -242,22 +243,33 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
 
         return result
 
-    def reload_user_extensions(self, extensions_dir: str) -> None:
-        """Reloads approved user extensions and their Orca-owned integration points."""
+    def reload_user_extension(self, extensions_dir: str, source_id: str) -> None:
+        """Reloads one user extension while preserving unrelated instances."""
 
-        for extension in self._user_extensions:
+        old_extension = self._user_extensions_by_source.pop(source_id, None)
+        if old_extension is not None:
             if self._orca_is_ready:
-                self._run_lifecycle_hook(extension, extension.on_disabled)
-            extension.disable()
-        self._user_extensions.clear()
-        self._speech_output_handlers.clear()
-        self._braille_output_handlers.clear()
-        self.discover_and_load(extensions_dir)
+                self._run_lifecycle_hook(old_extension, old_extension.on_disabled)
+            old_extension.disable()
+            self._sync_user_extension_lists()
+
+        self._remove_user_extension_modules(source_id)
+        new_extension = self._load_user_extension_source(extensions_dir, source_id)
+        if old_extension is None and new_extension is None:
+            return
+
+        # Re-register commands in source order so keybinding conflict winners
+        # do not depend on which extension was reloaded.
+        for extension in self._user_extensions_by_source.values():
+            extension.reset_commands()
+
+        if new_extension is not None:
+            self._user_extensions_by_source[source_id] = new_extension
+        self._sync_user_extension_lists()
         self.set_up_user_commands()
-        command_manager.get_manager().activate_commands("reloaded user extensions")
-        if self._orca_is_ready:
-            for extension in self._user_extensions:
-                self._run_lifecycle_hook(extension, extension.on_enabled)
+        command_manager.get_manager().activate_commands("reloaded user extension")
+        if self._orca_is_ready and new_extension is not None:
+            self._run_lifecycle_hook(new_extension, new_extension.on_enabled)
 
     def register_builtin(self, getter: Callable[[], Extension], group_label: str) -> None:
         """Registers a built-in extension with the loader."""
@@ -276,59 +288,125 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
         disabled = self.get_disabled_extensions()
 
         for filename, filepath, _is_package in self._iter_extension_sources(extensions_dir):
-            file_hash = self._compute_hash(filepath)
-            approved_hash = approved.get(filename)
-
-            if approved_hash is None:
-                msg = (
-                    f"EXTENSION LOADER: New extension found: {filename}. "
-                    f"Not approved. Hash: {file_hash}"
-                )
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                profile = gsettings_registry.get_registry().get_active_profile()
-                msg = (
-                    f"EXTENSION LOADER: To approve, run: dconf write "
-                    f"/org/gnome/orca/{profile}/extensions/"
-                    f"approved-user-extensions "
-                    f"\"{{'{filename}': '{file_hash}'}}\""
-                )
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                continue
-
-            if approved_hash != file_hash:
-                msg = (
-                    f"EXTENSION LOADER: Extension modified: {filename}. "
-                    f"Approved hash: {approved_hash} "
-                    f"Current hash: {file_hash}. "
-                    "Not loading until re-approved."
-                )
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
-                profile = gsettings_registry.get_registry().get_active_profile()
-                msg = (
-                    f"EXTENSION LOADER: To re-approve, run: dconf write "
-                    f"/org/gnome/orca/{profile}/extensions/"
-                    f"approved-user-extensions "
-                    f"\"{{'{filename}': '{file_hash}'}}\""
-                )
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                continue
-
-            extension = self._load_from_file(filepath, filename)
+            extension = self._load_user_extension(filename, filepath, approved, disabled)
             if extension is None:
                 continue
 
-            if extension.module_name in disabled:
-                msg = f"EXTENSION LOADER: Extension {extension.module_name} is disabled. Skipping."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                continue
+            self._user_extensions_by_source[filename] = extension
 
-            self._user_extensions.append(extension)
-            if self._extension_handles_speech_output(extension):
-                self._speech_output_handlers.append(extension)
-            if self._extension_handles_braille_output(extension):
-                self._braille_output_handlers.append(extension)
-            msg = f"EXTENSION LOADER: Loaded extension {extension.module_name} from {filename}"
+        self._sync_user_extension_lists()
+
+    def _load_user_extension_source(
+        self,
+        extensions_dir: str,
+        source_id: str,
+    ) -> Extension | None:
+        """Loads source_id if it is present, approved, and enabled."""
+
+        if not os.path.isdir(extensions_dir):
+            return None
+
+        source = None
+        for filename, filepath, _is_package in self._iter_extension_sources(extensions_dir):
+            if filename == source_id:
+                source = (filename, filepath)
+                break
+        if source is None:
+            return None
+
+        filename, filepath = source
+        return self._load_user_extension(
+            filename,
+            filepath,
+            self.get_approved_extensions(),
+            self.get_disabled_extensions(),
+        )
+
+    def _load_user_extension(
+        self,
+        filename: str,
+        filepath: str,
+        approved: dict[str, str],
+        disabled: list[str],
+    ) -> Extension | None:
+        """Loads an approved, enabled user-extension source."""
+
+        file_hash = self._compute_hash(filepath)
+        approved_hash = approved.get(filename)
+        if approved_hash is None:
+            msg = (
+                f"EXTENSION LOADER: New extension found: {filename}. "
+                f"Not approved. Hash: {file_hash}"
+            )
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            profile = gsettings_registry.get_registry().get_active_profile()
+            msg = (
+                f"EXTENSION LOADER: To approve, run: dconf write "
+                f"/org/gnome/orca/{profile}/extensions/"
+                f"approved-user-extensions "
+                f"\"{{'{filename}': '{file_hash}'}}\""
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return None
+
+        if approved_hash != file_hash:
+            msg = (
+                f"EXTENSION LOADER: Extension modified: {filename}. "
+                f"Approved hash: {approved_hash} "
+                f"Current hash: {file_hash}. "
+                "Not loading until re-approved."
+            )
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            profile = gsettings_registry.get_registry().get_active_profile()
+            msg = (
+                f"EXTENSION LOADER: To re-approve, run: dconf write "
+                f"/org/gnome/orca/{profile}/extensions/"
+                f"approved-user-extensions "
+                f"\"{{'{filename}': '{file_hash}'}}\""
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return None
+
+        if disabled:
+            class_name = self.get_class_name(filepath)
+            if class_name in disabled:
+                msg = f"EXTENSION LOADER: Extension {class_name} is disabled. Skipping."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return None
+
+        extension = self._load_from_file(filepath, filename)
+        if extension is None:
+            return None
+
+        # Static metadata can differ from the subclass selected when the module is loaded.
+        if extension.module_name in disabled:
+            msg = f"EXTENSION LOADER: Extension {extension.module_name} is disabled. Skipping."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            extension.disable()
+            self._remove_user_extension_modules(filename)
+            return None
+
+        msg = f"EXTENSION LOADER: Loaded extension {extension.module_name} from {filename}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return extension
+
+    def _sync_user_extension_lists(self) -> None:
+        """Rebuilds the user-extension and output-handler lists in source order."""
+
+        self._user_extensions = [
+            self._user_extensions_by_source[source_id]
+            for source_id in sorted(self._user_extensions_by_source)
+        ]
+        self._speech_output_handlers = [
+            extension
+            for extension in self._user_extensions
+            if self._extension_handles_speech_output(extension)
+        ]
+        self._braille_output_handlers = [
+            extension
+            for extension in self._user_extensions
+            if self._extension_handles_braille_output(extension)
+        ]
 
     def set_up_all_commands(self) -> None:
         """Calls set_up_commands on all enabled extensions (built-in and user)."""
@@ -656,6 +734,28 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
         return os.path.basename(filepath)
 
     @staticmethod
+    def _get_user_extension_namespace(source_id: str) -> str:
+        """Returns the Python namespace for a user-extension source id."""
+
+        if source_id.endswith(".py"):
+            return os.path.splitext(source_id)[0]
+        return source_id
+
+    @staticmethod
+    def _remove_user_extension_modules(source_id: str) -> None:
+        """Removes a user extension and its submodules from the module cache."""
+
+        namespace = ExtensionLoader._get_user_extension_namespace(source_id)
+        module_name = f"orca_user_extension.{namespace}"
+        names = [
+            name
+            for name in sys.modules
+            if name == module_name or name.startswith(f"{module_name}.")
+        ]
+        for name in names:
+            sys.modules.pop(name, None)
+
+    @staticmethod
     def _get_source_file(filepath: str) -> str | None:
         """Returns the Python file that defines extension metadata."""
 
@@ -678,7 +778,7 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return None
 
-        namespace = os.path.splitext(filename)[0] if filename.endswith(".py") else filename
+        namespace = ExtensionLoader._get_user_extension_namespace(filename)
         module_name = f"orca_user_extension.{namespace}"
         try:
             if os.path.isdir(filepath):
@@ -700,7 +800,7 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
             sys.modules[module_name] = module
             spec.loader.exec_module(module)
         except Exception as error:  # pylint: disable=broad-exception-caught
-            sys.modules.pop(module_name, None)
+            ExtensionLoader._remove_user_extension_modules(filename)
             msg = f"EXTENSION LOADER: Failed to load {filepath}: {error}"
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return None

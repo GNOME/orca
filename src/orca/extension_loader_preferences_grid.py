@@ -521,7 +521,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         else:
             self._loader.approve_extension_file(info.filepath)
 
-        self._loader.reload_user_extensions(self._extensions_dir)
+        self._loader.reload_user_extension(self._extensions_dir, filename)
         if info := self._get_info(filename):
             self._sync_row(info)
 
@@ -553,7 +553,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             msg = f"EXTENSION LOADER PREFERENCES: Could not delete {info.filepath}: {error}"
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             self._present_delete_error(info)
-            self._loader.reload_user_extensions(self._extensions_dir)
+            self._loader.reload_user_extension(self._extensions_dir, filename)
             self.refresh()
             return
 
@@ -567,7 +567,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._loader.set_disabled_extensions(disabled)
             self._staged_settings_by_class_name.pop(info.class_name, None)
 
-        self._loader.reload_user_extensions(self._extensions_dir)
+        self._loader.reload_user_extension(self._extensions_dir, filename)
         self.refresh()
 
     def _is_deletable_extension_path(self, filepath: str) -> bool:
@@ -634,6 +634,6 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             return
 
         self._loader.set_disabled_extensions(disabled)
-        self._loader.reload_user_extensions(self._extensions_dir)
+        self._loader.reload_user_extension(self._extensions_dir, filename)
         if info := self._get_info(filename):
             self._sync_row(info)

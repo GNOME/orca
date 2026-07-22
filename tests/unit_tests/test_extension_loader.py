@@ -577,6 +577,44 @@ class TestExtensionLoaderDataclass:
         assert infos["packaged"].status is UserExtensionStatus.APPROVED
         assert "orca_user_extension.packaged" not in sys.modules
 
+    def test_discover_and_load_does_not_execute_disabled_extension(
+        self,
+        test_context: OrcaTestContext,
+        tmp_path: Path,
+    ) -> None:
+        """Test an approved but disabled extension is not imported or instantiated."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        from orca.extension_loader import ExtensionLoader
+
+        marker = tmp_path / "executed"
+        extension_path = tmp_path / "disabled.py"
+        extension_path.write_text(
+            "from pathlib import Path\n"
+            "from orca.extension import Extension\n"
+            f"Path({str(marker)!r}).write_text('executed')\n"
+            "class DisabledExtension(Extension):\n"
+            '    GROUP_LABEL = "Disabled"\n'
+        )
+
+        loader = ExtensionLoader()
+        loader.get_approved_extensions = test_context.Mock(
+            return_value={"disabled.py": loader._compute_hash(str(extension_path))}
+        )
+        loader.get_disabled_extensions = test_context.Mock(return_value=["DisabledExtension"])
+
+        loader.discover_and_load(str(tmp_path))
+
+        assert not marker.exists()
+        assert loader._user_extensions == []
+        assert loader._user_extensions_by_source == {}
+        assert "orca_user_extension.disabled" not in sys.modules
+
     def test_get_metadata_localizes_marked_package_strings_without_loading(
         self,
         test_context: OrcaTestContext,
@@ -653,72 +691,11 @@ class TestExtensionLoaderDataclass:
 
         assert ExtensionLoader._compute_hash(str(package_dir)) == first_hash
 
-    @pytest.mark.parametrize("orca_is_ready", [False, True])
-    def test_reload_user_extensions_runs_lifecycle_hooks_when_orca_is_ready(
-        self,
-        test_context: OrcaTestContext,
-        tmp_path: Path,
-        orca_is_ready: bool,
-    ) -> None:
-        """Test reload transitions instances only after Orca becomes ready."""
-
-        essential_modules = test_context.setup_shared_dependencies(
-            ["orca.command_manager", "orca.gsettings_registry"]
-        )
-        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
-        registry.gsettings_schema.return_value = lambda cls: cls
-        registry.gsetting.return_value = lambda func: func
-        from orca.extension import Extension
-        from orca.extension_loader import ExtensionLoader
-
-        lifecycle_calls = []
-
-        class OldExtension(Extension):
-            GROUP_LABEL = "Old"
-
-            def on_disabled(self) -> None:
-                lifecycle_calls.append("old disabled")
-
-        ext_path = tmp_path / "new.py"
-        ext_path.write_text(
-            "from orca.extension import Extension\n"
-            "ENABLED_CALLS = []\n"
-            "class NewExtension(Extension):\n"
-            '    GROUP_LABEL = "New"\n'
-            "    def on_enabled(self):\n"
-            "        ENABLED_CALLS.append(self.module_name)\n"
-        )
-
-        loader = ExtensionLoader()
-        loader._orca_is_ready = orca_is_ready
-        old = OldExtension()
-        old.disable = test_context.Mock()
-        loader._user_extensions = [old]
-        loader._speech_output_handlers = [old]
-        loader.get_approved_extensions = test_context.Mock(
-            return_value={"new.py": loader._compute_hash(str(ext_path))}
-        )
-        loader.get_disabled_extensions = test_context.Mock(return_value=[])
-        command_manager = essential_modules["orca.command_manager"].get_manager.return_value
-
-        try:
-            loader.reload_user_extensions(str(tmp_path))
-            enabled_calls = sys.modules["orca_user_extension.new"].ENABLED_CALLS
-        finally:
-            sys.modules.pop("orca_user_extension.new", None)
-
-        old.disable.assert_called_once()
-        assert [extension.module_name for extension in loader._user_extensions] == ["NewExtension"]
-        assert loader._speech_output_handlers == []
-        assert lifecycle_calls == (["old disabled"] if orca_is_ready else [])
-        assert enabled_calls == (["NewExtension"] if orca_is_ready else [])
-        command_manager.activate_commands.assert_called_once_with("reloaded user extensions")
-
-    def test_reload_user_extensions_transitions_all_instances(
+    def test_reload_user_extension_replaces_only_target_source(
         self,
         test_context: OrcaTestContext,
     ) -> None:
-        """Test every replaced instance receives its runtime lifecycle hook."""
+        """Test targeted reload preserves unrelated instances and their lifecycle state."""
 
         essential_modules = test_context.setup_shared_dependencies(
             ["orca.command_manager", "orca.gsettings_registry"]
@@ -731,56 +708,390 @@ class TestExtensionLoaderDataclass:
 
         calls = []
 
-        class TrackingExtension(Extension):
-            GROUP_LABEL = "Tracking"
-
-            def __init__(self, name: str) -> None:
-                super().__init__()
-                self.module_name = name
-
-            def on_enabled(self) -> None:
-                calls.append(f"{self.module_name} enabled")
+        class OldTarget(Extension):
+            GROUP_LABEL = "Old Target"
 
             def on_disabled(self) -> None:
-                calls.append(f"{self.module_name} disabled")
+                calls.append("old target disabled")
 
-        old_a = TrackingExtension("A")
-        old_b = TrackingExtension("B")
-        new_a = TrackingExtension("A")
-        new_b = TrackingExtension("B")
-        old_a.disable = test_context.Mock(side_effect=lambda: calls.append("A disable"))
-        old_b.disable = test_context.Mock(side_effect=lambda: calls.append("B disable"))
+            def on_speech_output(self, _output):
+                return None
+
+        class NewTarget(Extension):
+            GROUP_LABEL = "New Target"
+
+            def on_enabled(self) -> None:
+                calls.append("new target enabled")
+
+            def on_braille_output(self, _output):
+                return None
+
+        class UnrelatedExtension(Extension):
+            GROUP_LABEL = "Unrelated"
+
+            def on_enabled(self) -> None:
+                calls.append("unrelated enabled")
+
+            def on_disabled(self) -> None:
+                calls.append("unrelated disabled")
+
+            def on_speech_output(self, _output):
+                return None
+
+        old_target = OldTarget()
+        new_target = NewTarget()
+        unrelated = UnrelatedExtension()
+        old_target.disable = test_context.Mock()
+        new_target.set_up_commands = test_context.Mock()
+        unrelated.reset_commands = test_context.Mock()
+        unrelated.set_up_commands = test_context.Mock()
 
         loader = ExtensionLoader()
         loader._orca_is_ready = True
-        loader._user_extensions = [old_a, old_b]
-        loader.discover_and_load = test_context.Mock(
-            side_effect=lambda _directory: loader._user_extensions.extend([new_a, new_b])
+        loader._user_extensions_by_source = {
+            "a.py": old_target,
+            "b.py": unrelated,
+        }
+        loader.get_disabled_extensions = test_context.Mock(return_value=[])
+        loader._sync_user_extension_lists()
+        loader._load_user_extension_source = test_context.Mock(return_value=new_target)
+        target_module = ModuleType("orca_user_extension.a")
+        target_submodule = ModuleType("orca_user_extension.a.helper")
+        unrelated_module = ModuleType("orca_user_extension.b")
+        test_context.patch_modules(
+            {
+                "orca_user_extension.a": target_module,
+                "orca_user_extension.a.helper": target_submodule,
+                "orca_user_extension.b": unrelated_module,
+            }
         )
-        loader.set_up_user_commands = test_context.Mock()
         command_manager = essential_modules["orca.command_manager"].get_manager.return_value
-        command_manager.activate_commands.side_effect = lambda _reason: calls.append(
-            "commands activated"
+
+        loader.reload_user_extension("/extensions", "a.py")
+
+        assert calls == ["old target disabled", "new target enabled"]
+        assert loader._user_extensions_by_source == {
+            "a.py": new_target,
+            "b.py": unrelated,
+        }
+        assert loader._user_extensions == [new_target, unrelated]
+        assert loader._speech_output_handlers == [unrelated]
+        assert loader._braille_output_handlers == [new_target]
+        assert "orca_user_extension.a" not in sys.modules
+        assert "orca_user_extension.a.helper" not in sys.modules
+        assert sys.modules["orca_user_extension.b"] is unrelated_module
+        old_target.disable.assert_called_once()
+        unrelated.reset_commands.assert_called_once()
+        unrelated.set_up_commands.assert_called_once()
+        new_target.set_up_commands.assert_called_once()
+        command_manager.activate_commands.assert_called_once_with("reloaded user extension")
+
+    def test_reload_user_extension_loads_updated_file_only(
+        self,
+        test_context: OrcaTestContext,
+        tmp_path: Path,
+    ) -> None:
+        """Test an actual targeted reload imports new code and preserves its peer."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
         )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        from orca.extension_loader import ExtensionLoader
 
-        loader.reload_user_extensions("/extensions")
+        target_path = tmp_path / "target.py"
+        peer_path = tmp_path / "peer.py"
+        target_path.write_text(
+            "from orca.extension import Extension\n"
+            "class OldTarget(Extension):\n"
+            '    GROUP_LABEL = "Old target"\n'
+        )
+        peer_path.write_text(
+            "from orca.extension import Extension\n"
+            "class PeerExtension(Extension):\n"
+            '    GROUP_LABEL = "Peer"\n'
+        )
+        loader = ExtensionLoader()
+        approved = {
+            "peer.py": loader._compute_hash(str(peer_path)),
+            "target.py": loader._compute_hash(str(target_path)),
+        }
+        loader.get_approved_extensions = test_context.Mock(return_value=approved)
+        loader.get_disabled_extensions = test_context.Mock(return_value=[])
 
-        assert calls == [
-            "A disabled",
-            "A disable",
-            "B disabled",
-            "B disable",
-            "commands activated",
-            "A enabled",
-            "B enabled",
-        ]
-        old_a.disable.assert_called_once()
-        old_b.disable.assert_called_once()
+        try:
+            loader.discover_and_load(str(tmp_path))
+            peer = loader._user_extensions_by_source["peer.py"]
+            old_target = loader._user_extensions_by_source["target.py"]
+            target_path.write_text(
+                "from orca.extension import Extension\n"
+                "class NewTargetExtension(Extension):\n"
+                '    GROUP_LABEL = "New target extension"\n'
+            )
+            approved["target.py"] = loader._compute_hash(str(target_path))
+
+            loader.reload_user_extension(str(tmp_path), "target.py")
+
+            assert loader._user_extensions_by_source["peer.py"] is peer
+            assert loader._user_extensions_by_source["target.py"] is not old_target
+            assert loader._user_extensions_by_source["target.py"].module_name == (
+                "NewTargetExtension"
+            )
+        finally:
+            sys.modules.pop("orca_user_extension.peer", None)
+            sys.modules.pop("orca_user_extension.target", None)
+
+    def test_reload_missing_inactive_source_preserves_everything(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test a target with no old or new instance causes no unrelated churn."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        from orca.extension import Extension
+        from orca.extension_loader import ExtensionLoader
+
+        class UnrelatedExtension(Extension):
+            GROUP_LABEL = "Unrelated"
+
+        unrelated = UnrelatedExtension()
+        unrelated.reset_commands = test_context.Mock()
+        loader = ExtensionLoader()
+        loader._user_extensions_by_source = {"unrelated.py": unrelated}
+        loader._sync_user_extension_lists()
+        loader._load_user_extension_source = test_context.Mock(return_value=None)
+        command_manager = essential_modules["orca.command_manager"].get_manager.return_value
+
+        loader.reload_user_extension("/extensions", "disabled.py")
+
+        assert loader._user_extensions == [unrelated]
+        unrelated.reset_commands.assert_not_called()
+        command_manager.activate_commands.assert_not_called()
+
+    @pytest.mark.parametrize(
+        ("old_target_present", "new_target_present", "expected_calls"),
+        [
+            (True, False, ["target disabled"]),
+            (False, True, ["target enabled"]),
+        ],
+    )
+    def test_reload_user_extension_handles_activation_boundaries(
+        self,
+        test_context: OrcaTestContext,
+        old_target_present: bool,
+        new_target_present: bool,
+        expected_calls: list[str],
+    ) -> None:
+        """Test targeted enable and disable notify only the target instance."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        from orca.extension import Extension
+        from orca.extension_loader import ExtensionLoader
+
+        calls = []
+
+        class TargetExtension(Extension):
+            GROUP_LABEL = "Target"
+
+            def on_enabled(self) -> None:
+                calls.append("target enabled")
+
+            def on_disabled(self) -> None:
+                calls.append("target disabled")
+
+        class UnrelatedExtension(Extension):
+            GROUP_LABEL = "Unrelated"
+
+            def on_enabled(self) -> None:
+                calls.append("unrelated enabled")
+
+            def on_disabled(self) -> None:
+                calls.append("unrelated disabled")
+
+        old_target = TargetExtension() if old_target_present else None
+        new_target = TargetExtension() if new_target_present else None
+        unrelated = UnrelatedExtension()
+        unrelated.reset_commands = test_context.Mock()
+        unrelated.set_up_commands = test_context.Mock()
+        if old_target is not None:
+            old_target.disable = test_context.Mock()
+        if new_target is not None:
+            new_target.set_up_commands = test_context.Mock()
+
+        loader = ExtensionLoader()
+        loader._orca_is_ready = True
+        loader._user_extensions_by_source = {"unrelated.py": unrelated}
+        if old_target is not None:
+            loader._user_extensions_by_source["target.py"] = old_target
+        loader.get_disabled_extensions = test_context.Mock(return_value=[])
+        loader._sync_user_extension_lists()
+        loader._load_user_extension_source = test_context.Mock(return_value=new_target)
+
+        loader.reload_user_extension("/extensions", "target.py")
+
+        assert calls == expected_calls
+        assert loader._user_extensions_by_source.get("unrelated.py") is unrelated
+        assert loader._user_extensions_by_source.get("target.py") is new_target
+        unrelated.reset_commands.assert_called_once()
+        unrelated.set_up_commands.assert_called_once()
+
+    def test_targeted_reload_reconciles_keybinding_conflicts_in_source_order(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test targeted changes restore and recreate conflicts without replacing peers."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            [
+                "orca.ax_device_manager",
+                "orca.gsettings_registry",
+                "orca.orca_modifier_manager",
+                "orca.presentation_manager",
+            ]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        registry.layered_lookup.return_value = {}
+        modifier_manager = essential_modules["orca.orca_modifier_manager"].get_manager.return_value
+        modifier_manager.get_orca_modifier_keys.return_value = []
+        from orca import command_manager
+        from orca.extension import Extension
+        from orca.extension_loader import ExtensionLoader
+
+        def create_binding():
+            binding = test_context.Mock()
+            binding.keysymstring = "F9"
+            binding.modifiers = 256
+            binding.click_count = 1
+            binding.keyval = 65
+            binding.keycode = 38
+            binding.has_grabs.return_value = False
+            binding.get_grab_ids.return_value = []
+            binding.as_string.return_value = "Orca+F9"
+            return binding
+
+        class FirstExtension(Extension):
+            GROUP_LABEL = "First"
+
+            def _get_commands(self):
+                return [
+                    command_manager.KeyboardCommand(
+                        "first_command",
+                        lambda: None,
+                        self.GROUP_LABEL,
+                        desktop_keybinding=create_binding(),
+                    )
+                ]
+
+        class SecondExtension(Extension):
+            GROUP_LABEL = "Second"
+
+            def _get_commands(self):
+                return [
+                    command_manager.KeyboardCommand(
+                        "second_command",
+                        lambda: None,
+                        self.GROUP_LABEL,
+                        desktop_keybinding=create_binding(),
+                    )
+                ]
+
+        first = FirstExtension()
+        second = SecondExtension()
+        first.mark_as_user_extension("first")
+        second.mark_as_user_extension("second")
+        loader = ExtensionLoader()
+        loader._user_extensions_by_source = {
+            "a-first.py": first,
+            "b-second.py": second,
+        }
+        loader.get_disabled_extensions = test_context.Mock(return_value=[])
+        loader._sync_user_extension_lists()
+        loader.set_up_user_commands()
+        manager = command_manager.get_manager()
+
+        assert manager.get_keyboard_command("first_command").get_keybinding() is not None
+        assert manager.get_keyboard_command("second_command").get_keybinding() is None
+        assert manager.has_user_extension_keybinding_conflicts("SecondExtension")
+
+        loader._load_user_extension_source = test_context.Mock(return_value=None)
+        loader.reload_user_extension("/extensions", "a-first.py")
+
+        assert loader._user_extensions == [second]
+        assert manager.get_keyboard_command("first_command") is None
+        assert manager.get_keyboard_command("second_command").get_keybinding() is not None
+        assert not manager.has_user_extension_keybinding_conflicts("SecondExtension")
+
+        replacement = FirstExtension()
+        replacement.mark_as_user_extension("first")
+        loader._load_user_extension_source = test_context.Mock(return_value=replacement)
+        loader.reload_user_extension("/extensions", "a-first.py")
+
+        assert loader._user_extensions == [replacement, second]
+        assert manager.get_keyboard_command("first_command").get_keybinding() is not None
+        assert manager.get_keyboard_command("second_command").get_keybinding() is None
+        assert manager.has_user_extension_keybinding_conflicts("SecondExtension")
 
 
 @pytest.mark.unit
 class TestExtensionLoaderPreferencesLifecycle:
     """Tests preferences actions delegate lifecycle transitions to reloads."""
+
+    @pytest.mark.parametrize(
+        ("enabled", "disabled", "expected_disabled"),
+        [
+            (False, [], ["ExampleExtension"]),
+            (True, ["ExampleExtension", "OtherExtension"], ["OtherExtension"]),
+        ],
+    )
+    def test_toggling_reloads_only_selected_extension(
+        self,
+        test_context: OrcaTestContext,
+        enabled: bool,
+        disabled: list[str],
+        expected_disabled: list[str],
+    ) -> None:
+        """Test toggling updates state and targets the selected source for reload."""
+
+        _extension_loader, grid_module = _load_preferences_grid_module(test_context)
+        info = SimpleNamespace(class_name="ExampleExtension")
+        loader = test_context.Mock()
+        loader.get_disabled_extensions.return_value = disabled
+        switch = test_context.Mock()
+        switch.get_active.return_value = enabled
+        grid = SimpleNamespace(
+            _extensions_dir="/extensions",
+            _get_info=test_context.Mock(return_value=info),
+            _loader=loader,
+            _sync_row=test_context.Mock(),
+            _syncing_filenames=set(),
+        )
+
+        grid_module.ExtensionLoaderPreferencesGrid._on_switch_toggled(
+            grid,
+            switch,
+            None,
+            "example.py",
+        )
+
+        assert loader.method_calls == [
+            call.get_disabled_extensions(),
+            call.set_disabled_extensions(expected_disabled),
+            call.reload_user_extension("/extensions", "example.py"),
+        ]
 
     def test_revoking_approval_reloads_extensions(
         self,
@@ -806,7 +1117,7 @@ class TestExtensionLoaderPreferencesLifecycle:
 
         assert loader.method_calls == [
             call.revoke_extension("example.py"),
-            call.reload_user_extensions("/extensions"),
+            call.reload_user_extension("/extensions", "example.py"),
         ]
 
     def test_reapproving_reloads_extensions(
@@ -833,7 +1144,7 @@ class TestExtensionLoaderPreferencesLifecycle:
 
         assert loader.method_calls == [
             call.approve_extension_file("/extensions/example.py"),
-            call.reload_user_extensions("/extensions"),
+            call.reload_user_extension("/extensions", "example.py"),
         ]
 
     def test_deleting_reloads_extensions(
@@ -866,5 +1177,5 @@ class TestExtensionLoaderPreferencesLifecycle:
             call.revoke_extension("example.py"),
             call.get_disabled_extensions(),
             call.set_disabled_extensions([]),
-            call.reload_user_extensions(str(tmp_path)),
+            call.reload_user_extension(str(tmp_path), "example.py"),
         ]

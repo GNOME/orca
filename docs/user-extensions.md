@@ -727,11 +727,11 @@ def on_disabled(self) -> None:
     self.controller.present_message_internal(_("Example extension disabled."))
 ```
 
-Changing an extension from the preferences page reloads all enabled user
-extensions. Once Orca is ready, it calls `on_disabled()` before unloading each
-current instance and `on_enabled()` after activating each newly loaded
-instance. Therefore, changing one extension can call both hooks on another
-enabled extension because that extension's instance is also replaced.
+Changing an extension from the preferences page reloads only that extension.
+Once Orca is ready, it calls `on_disabled()` before unloading the current
+instance and `on_enabled()` after activating its replacement. Other extensions
+remain loaded and do not receive either hook. Orca rechecks user-extension
+commands and keybinding conflicts without replacing those unrelated instances.
 
 An extension that is newly enabled or approved receives `on_enabled()`. An
 active extension that is disabled, revoked, or deleted receives

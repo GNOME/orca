@@ -32,6 +32,8 @@ from . import command_manager, dbus_service, debug, gsettings_registry
 from .extension_preferences import ExtensionPreference, ExtensionPreferenceKind
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from .command import Command
 
 __all__ = [
@@ -236,6 +238,16 @@ class ExtensionSettings:
         )
 
 
+class _UserExtensionCommandFunction:
+    """Adapts a parameterless user-extension function to Orca's command API."""
+
+    def __init__(self, function: Callable[..., Any]) -> None:
+        self._function = function
+
+    def __call__(self, _script: object, _event: object) -> Any:
+        return self._function()
+
+
 class Extension:
     """Base class for Orca extensions."""
 
@@ -265,13 +277,19 @@ class Extension:
         self._disabled = True
         msg = f"EXTENSION: {self.module_name} has been disabled."
         debug.print_message(debug.LEVEL_INFO, msg, True)
+        self.reset_commands(f"disabled extension {self.module_name}")
+        self.controller.deregister_module_commands(self.module_name)
+
+    def reset_commands(self, reason: str | None = None) -> None:
+        """Removes registered commands so they can be set up again."""
+
         manager = command_manager.get_manager()
         manager.remove_commands(
             self._registered_command_names,
-            f"disabled extension {self.module_name}",
+            reason or f"reset extension {self.module_name}",
         )
         self._registered_command_names.clear()
-        self.controller.deregister_module_commands(self.module_name)
+        self._commands_initialized = False
 
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
@@ -349,10 +367,9 @@ class Extension:
         """Called when Orca is shutting down."""
 
     @staticmethod
-    def _wrap_function(func):
+    def _wrap_function(func: Callable[..., Any]) -> Callable[..., Any]:
         """Wraps a user extension method so it accepts and discards script and event."""
 
-        def wrapper(_script, _event):
-            return func()
-
-        return wrapper
+        if isinstance(func, _UserExtensionCommandFunction):
+            return func
+        return _UserExtensionCommandFunction(func)
