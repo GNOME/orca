@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-07-19 11:29+0000\n"
-"PO-Revision-Date: 2026-07-19 13:37+0200\n"
+"POT-Creation-Date: 2026-07-20 15:17+0000\n"
+"PO-Revision-Date: 2026-07-22 16:39+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -12975,9 +12975,21 @@ msgstr[1] "Seznam s skupno %d predmetom"
 msgstr[2] "Seznam s skupno %d predmetoma"
 msgstr[3] "Seznam s skupno %d predmeti"
 
+#. Translators: This message describes the number of available items in a list which
+#. also contains unavailable items. Available items are those which the user can
+#. navigate to and interact with; unavailable items are insensitive.
+#: src/orca/messages.py:2474
+#, python-format
+msgid "List with %d available item"
+msgid_plural "List with %d available items"
+msgstr[0] "Seznam s/z %d razpoložljivimi predmeti"
+msgstr[1] "Seznam z %d razpoložljivim predmetom"
+msgstr[2] "Seznam z %d razpoložljivima predmetoma"
+msgstr[3] "Seznam s %d razpoložljivimi predmeti"
+
 #. Translators: This message describes the number of items of a bulleted or numbered list
 #. that is inside of another list.
-#: src/orca/messages.py:2473
+#: src/orca/messages.py:2482
 #, python-format
 msgid "Nested list with %d item"
 msgid_plural "Nested list with %d items"
@@ -12991,13 +13003,13 @@ msgstr[3] "Gnezden seznam s skupno %d predmeti"
 #. scrolling, adding and/or removing items as the user moves up or down.
 #. Normally Orca announces "feed with n articles" when the count is known.
 #. This is the corresponding message for the unknown-count scenario.
-#: src/orca/messages.py:2485
+#: src/orca/messages.py:2494
 msgid "Feed of unknown size"
 msgstr "Vir neznane velikosti"
 
 #. Translators: This message describes the number of articles (news items,
 #. social media posts, etc.) in a feed.
-#: src/orca/messages.py:2489
+#: src/orca/messages.py:2498
 #, python-format
 msgid "Feed with %d article"
 msgid_plural "Feed with %d articles"
@@ -13006,7 +13018,7 @@ msgstr[1] "Vir s skupno %d prispevkom"
 msgstr[2] "Vir s skupno %d prispevkoma"
 msgstr[3] "Vir s skupno %d prispevki"
 
-#: src/orca/messages.py:2499
+#: src/orca/messages.py:2508
 #, python-format
 msgid "Description list with %d term"
 msgid_plural "Description list with %d terms"
@@ -13017,7 +13029,7 @@ msgstr[3] "Seznam opisov s skupno %d vnosi"
 
 #. Translators: A GtkNotebook (https://docs.gtk.org/gtk4/class.Notebook.html) is an
 #. example of a "tab list". This message describes the tab list to the user.
-#: src/orca/messages.py:2508
+#: src/orca/messages.py:2517
 #, python-format
 msgid "Tab list with %d tab"
 msgid_plural "Tab list with %d tabs"
@@ -13030,7 +13042,7 @@ msgstr[3] "Seznam zavihkov s %d zavihki"
 #. A given term ("dt" element) can have 0 or more values ("dd" elements).
 #. This message presents the number values a particular term has.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
-#: src/orca/messages.py:2518
+#: src/orca/messages.py:2527
 #, python-format
 msgid "%d value"
 msgid_plural "%d values"
@@ -13041,7 +13053,7 @@ msgstr[3] "%d vrednosti"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2526
+#: src/orca/messages.py:2535
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
@@ -13056,8 +13068,8 @@ msgstr[3] "matematična razpredelnica  %d vrsticami"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2529 src/orca/messages.py:2545
-#: src/orca/messages.py:2686
+#: src/orca/messages.py:2538 src/orca/messages.py:2554
+#: src/orca/messages.py:2695
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -13066,7 +13078,7 @@ msgstr[1] "%d stolpec"
 msgstr[2] "%d stolpca"
 msgstr[3] "%d stolpci"
 
-#: src/orca/messages.py:2540
+#: src/orca/messages.py:2549
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
@@ -13077,7 +13089,7 @@ msgstr[3] "gnezdena matematična razpredelnica z %d vrsticami"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: src/orca/messages.py:2555
+#: src/orca/messages.py:2564
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -13088,7 +13100,7 @@ msgstr[3] "%d sporočila.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: src/orca/messages.py:2563
+#: src/orca/messages.py:2572
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -13100,7 +13112,7 @@ msgstr[3] "%d odstotki."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: src/orca/messages.py:2572
+#: src/orca/messages.py:2581
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -13111,7 +13123,7 @@ msgstr[3] "Prebrani so %d odstotki dokumenta"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
-#: src/orca/messages.py:2580
+#: src/orca/messages.py:2589
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
@@ -13120,7 +13132,7 @@ msgstr[1] "%d točka"
 msgstr[2] "%d točki"
 msgstr[3] "%d točke"
 
-#: src/orca/messages.py:2590
+#: src/orca/messages.py:2599
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -13129,7 +13141,7 @@ msgstr[1] "%(repeatChar)s %(count)d ponovitev"
 msgstr[2] "%(repeatChar)s %(count)d ponovitvi"
 msgstr[3] "%(repeatChar)s %(count)d ponovitve"
 
-#: src/orca/messages.py:2602
+#: src/orca/messages.py:2611
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -13138,7 +13150,7 @@ msgstr[1] "%(index)d od %(total)d izbranega predmeta"
 msgstr[2] "%(index)d od %(total)d izbranih predmetov"
 msgstr[3] "%(index)d od %(total)d izbranih predmetov"
 
-#: src/orca/messages.py:2615
+#: src/orca/messages.py:2624
 #, python-format
 msgid "%d Screen reader command found."
 msgid_plural "%d Screen reader commands found."
@@ -13149,7 +13161,7 @@ msgstr[3] "Najdeni so %d ukazi zaslonskega bralnika."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: src/orca/messages.py:2625
+#: src/orca/messages.py:2634
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -13160,7 +13172,7 @@ msgstr[3] "%d presledki"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: src/orca/messages.py:2633
+#: src/orca/messages.py:2642
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -13170,7 +13182,7 @@ msgstr[2] "%d tabulatorja"
 msgstr[3] "%d tabulatorji"
 
 #. Translators: This message presents the number of tables in a document.
-#: src/orca/messages.py:2643
+#: src/orca/messages.py:2652
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -13183,11 +13195,11 @@ msgstr[3] "%d razpredelnice"
 #. number of rows and the number of columns are unknown. Normally
 #. Orca announces the table dimensions (e.g. "table with 100 rows
 #. 15 columns"). When both counts are unknown, it presents this.
-#: src/orca/messages.py:2655
+#: src/orca/messages.py:2664
 msgid "table of unknown size"
 msgstr "kazalo neznane velikosti"
 
-#: src/orca/messages.py:2662
+#: src/orca/messages.py:2671
 #, python-format
 msgid "table with %d column, row count unknown"
 msgid_plural "table with %d columns, row count unknown"
@@ -13196,7 +13208,7 @@ msgstr[1] "razpredelnica s skupno %d stolpcem, število vrstic ni znano"
 msgstr[2] "razpredelnica s skupno %d stolpcema, število vrstic ni znano"
 msgstr[3] "razpredelnica s skupno %d stolpci, število vrstic ni znano"
 
-#: src/orca/messages.py:2675
+#: src/orca/messages.py:2684
 #, python-format
 msgid "table with %d row, column count unknown"
 msgid_plural "table with %d rows, column count unknown"
@@ -13206,7 +13218,7 @@ msgstr[2] "razpredelnica s skupno %d vrsticama, število stolpcev ni znano"
 msgstr[3] "razpredelnica s skupno %d vrsticami, število stolpcev ni znano"
 
 #. Translators: this represents the number of rows in a table.
-#: src/orca/messages.py:2683
+#: src/orca/messages.py:2692
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -13217,7 +13229,7 @@ msgstr[3] "razpredelnica s skupno %d vrsticami"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of seconds.
-#: src/orca/messages.py:2696
+#: src/orca/messages.py:2705
 #, python-format
 msgid "%d second ago"
 msgid_plural "%d seconds ago"
@@ -13228,7 +13240,7 @@ msgstr[3] "Pred %d sekundami"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of minutes.
-#: src/orca/messages.py:2704
+#: src/orca/messages.py:2713
 #, python-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
@@ -13239,7 +13251,7 @@ msgstr[3] "Pred %d minutami"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of hours.
-#: src/orca/messages.py:2712
+#: src/orca/messages.py:2721
 #, python-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
@@ -13250,7 +13262,7 @@ msgstr[3] "Pred %d urami"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of days.
-#: src/orca/messages.py:2720
+#: src/orca/messages.py:2729
 #, python-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
@@ -13261,7 +13273,7 @@ msgstr[3] "Pred %d dnevi"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: src/orca/messages.py:2747
+#: src/orca/messages.py:2756
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -13272,7 +13284,7 @@ msgstr[3] "%d neobiskane povezave"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: src/orca/messages.py:2758
+#: src/orca/messages.py:2767
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
