@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-07-19 11:29+0000\n"
-"PO-Revision-Date: 2026-07-16 20:10+0200\n"
+"POT-Creation-Date: 2026-07-20 15:17+0000\n"
+"PO-Revision-Date: 2026-07-22 16:41+0200\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.2.2\n"
 
 # Megjegyzés: Mivel mindenhol régóta Gáborral egyeztetve az Orca nevet magyarosan Orkaként írjuk a fordításban, így a fordítást megváltoztattam Orka képernyőolvasóra az Orca képernyőolvasó helyett.
 #: orca-autostart.desktop.in:3
@@ -4249,19 +4249,16 @@ msgstr "Ugrás az utolsó élő régióra, amely információt közölt."
 
 #. Translators: this is for navigating among math expressions in a document.
 #: src/orca/cmdnames.py:1082
-#| msgid "Go to previous live region"
 msgid "Go to previous math expression"
 msgstr "Ugrás az előző matematikai kifejezésre"
 
 #. Translators: this is for navigating among math expressions in a document.
 #: src/orca/cmdnames.py:1085
-#| msgid "Go to next live region"
 msgid "Go to next math expression"
 msgstr "Ugrás a következő matematikai kifejezésre"
 
 #. Translators: this is for navigating among math expressions in a document.
 #: src/orca/cmdnames.py:1088
-#| msgid "Display a list of headings"
 msgid "Display a list of math expressions"
 msgstr "Matematikai kifejezések listájának megjelenítése"
 
@@ -7155,7 +7152,6 @@ msgstr "Listaelem"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a math expression.
 #: src/orca/guilabels.py:1029
-#| msgid "Math presentation"
 msgctxt "structural navigation"
 msgid "Math Expression"
 msgstr "Matematikai kifejezés"
@@ -7375,7 +7371,6 @@ msgstr "Listaelemek listája"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: src/orca/guilabels.py:1170
-#| msgid "Math presentation"
 msgctxt "structural navigation"
 msgid "Math Expressions"
 msgstr "Matematikai kifejezések listája"
@@ -11947,7 +11942,6 @@ msgstr "Nincs több élő régió."
 #. expression to math expression. This is a detailed message which will be
 #. presented to the user if no more math expressions can be found.
 #: src/orca/messages.py:1664
-#| msgid "No more live regions."
 msgid "No more math expressions."
 msgstr "Nincs több matematikai kifejezés."
 
@@ -13050,9 +13044,21 @@ msgid_plural "List with %d items"
 msgstr[0] "%d elemű lista"
 msgstr[1] "%d elemű lista"
 
+#. Translators: This message describes the number of available items in a list which
+#. also contains unavailable items. Available items are those which the user can
+#. navigate to and interact with; unavailable items are insensitive.
+#: src/orca/messages.py:2474
+#, python-format
+#| msgid "List with %d item"
+#| msgid_plural "List with %d items"
+msgid "List with %d available item"
+msgid_plural "List with %d available items"
+msgstr[0] "%d elérhető elemű lista"
+msgstr[1] "%d elérhető elemű lista"
+
 #. Translators: This message describes the number of items of a bulleted or numbered list
 #. that is inside of another list.
-#: src/orca/messages.py:2473
+#: src/orca/messages.py:2482
 #, python-format
 msgid "Nested list with %d item"
 msgid_plural "Nested list with %d items"
@@ -13064,20 +13070,20 @@ msgstr[1] "%d elemű beágyazott lista"
 #. scrolling, adding and/or removing items as the user moves up or down.
 #. Normally Orca announces "feed with n articles" when the count is known.
 #. This is the corresponding message for the unknown-count scenario.
-#: src/orca/messages.py:2485
+#: src/orca/messages.py:2494
 msgid "Feed of unknown size"
 msgstr "Ismeretlen számú hírforrás"
 
 #. Translators: This message describes the number of articles (news items,
 #. social media posts, etc.) in a feed.
-#: src/orca/messages.py:2489
+#: src/orca/messages.py:2498
 #, python-format
 msgid "Feed with %d article"
 msgid_plural "Feed with %d articles"
 msgstr[0] "%d cikket tartalmazó hírcsatorna"
 msgstr[1] "%d cikket tartalmazó hírcsatorna"
 
-#: src/orca/messages.py:2499
+#: src/orca/messages.py:2508
 #, python-format
 msgid "Description list with %d term"
 msgid_plural "Description list with %d terms"
@@ -13086,7 +13092,7 @@ msgstr[1] "Leírások listája %d kifejezéssel"
 
 #. Translators: A GtkNotebook (https://docs.gtk.org/gtk4/class.Notebook.html) is an
 #. example of a "tab list". This message describes the tab list to the user.
-#: src/orca/messages.py:2508
+#: src/orca/messages.py:2517
 #, python-format
 msgid "Tab list with %d tab"
 msgid_plural "Tab list with %d tabs"
@@ -13097,7 +13103,7 @@ msgstr[1] "%d elemű laplista"
 #. A given term ("dt" element) can have 0 or more values ("dd" elements).
 #. This message presents the number values a particular term has.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
-#: src/orca/messages.py:2518
+#: src/orca/messages.py:2527
 #, python-format
 msgid "%d value"
 msgid_plural "%d values"
@@ -13106,7 +13112,7 @@ msgstr[1] "%d érték"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2526
+#: src/orca/messages.py:2535
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
@@ -13119,15 +13125,15 @@ msgstr[1] "Matematikai táblázat %d sorral"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2529 src/orca/messages.py:2545
-#: src/orca/messages.py:2686
+#: src/orca/messages.py:2538 src/orca/messages.py:2554
+#: src/orca/messages.py:2695
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
 msgstr[0] "%d oszloppal"
 msgstr[1] "%d oszloppal"
 
-#: src/orca/messages.py:2540
+#: src/orca/messages.py:2549
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
@@ -13136,7 +13142,7 @@ msgstr[1] "beágyazott matematikai táblázat %d sorral"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: src/orca/messages.py:2555
+#: src/orca/messages.py:2564
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -13145,7 +13151,7 @@ msgstr[1] "%d értesítés.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: src/orca/messages.py:2563
+#: src/orca/messages.py:2572
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -13155,7 +13161,7 @@ msgstr[1] "%d százalék."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: src/orca/messages.py:2572
+#: src/orca/messages.py:2581
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -13164,28 +13170,28 @@ msgstr[1] "a dokumentum %d százaléka beolvasva"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
-#: src/orca/messages.py:2580
+#: src/orca/messages.py:2589
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
 msgstr[0] "%d képpont"
 msgstr[1] "%d képpont"
 
-#: src/orca/messages.py:2590
+#: src/orca/messages.py:2599
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
 msgstr[0] "%(count)d %(repeatChar)s karakter"
 msgstr[1] "%(count)d %(repeatChar)s karakter"
 
-#: src/orca/messages.py:2602
+#: src/orca/messages.py:2611
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
 msgstr[0] "%(index)d elem kijelölve, %(total)d elemből."
 msgstr[1] "%(index)d elem kijelölve, %(total)d elemből."
 
-#: src/orca/messages.py:2615
+#: src/orca/messages.py:2624
 #, python-format
 msgid "%d Screen reader command found."
 msgid_plural "%d Screen reader commands found."
@@ -13194,7 +13200,7 @@ msgstr[1] "%d képernyőolvasó billentyűparancs található."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: src/orca/messages.py:2625
+#: src/orca/messages.py:2634
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -13203,7 +13209,7 @@ msgstr[1] "%d szóköz"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: src/orca/messages.py:2633
+#: src/orca/messages.py:2642
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -13211,7 +13217,7 @@ msgstr[0] "%d tabulátor"
 msgstr[1] "%d tabulátor"
 
 #. Translators: This message presents the number of tables in a document.
-#: src/orca/messages.py:2643
+#: src/orca/messages.py:2652
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -13222,18 +13228,18 @@ msgstr[1] "%d táblázat"
 #. number of rows and the number of columns are unknown. Normally
 #. Orca announces the table dimensions (e.g. "table with 100 rows
 #. 15 columns"). When both counts are unknown, it presents this.
-#: src/orca/messages.py:2655
+#: src/orca/messages.py:2664
 msgid "table of unknown size"
 msgstr "Ismeretlen méretű táblázat"
 
-#: src/orca/messages.py:2662
+#: src/orca/messages.py:2671
 #, python-format
 msgid "table with %d column, row count unknown"
 msgid_plural "table with %d columns, row count unknown"
 msgstr[0] "Ismeretlen sorszámú táblázat, %d oszloppal"
 msgstr[1] "Ismeretlen sorszámú táblázat, %d oszloppal"
 
-#: src/orca/messages.py:2675
+#: src/orca/messages.py:2684
 #, python-format
 msgid "table with %d row, column count unknown"
 msgid_plural "table with %d rows, column count unknown"
@@ -13241,7 +13247,7 @@ msgstr[0] "Táblázat %d sorral, ismeretlen számú oszloppal"
 msgstr[1] "Táblázat %d sorral, ismeretlen számú oszloppal"
 
 #. Translators: this represents the number of rows in a table.
-#: src/orca/messages.py:2683
+#: src/orca/messages.py:2692
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -13250,7 +13256,7 @@ msgstr[1] "Táblázat %d sorral"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of seconds.
-#: src/orca/messages.py:2696
+#: src/orca/messages.py:2705
 #, python-format
 msgid "%d second ago"
 msgid_plural "%d seconds ago"
@@ -13259,7 +13265,7 @@ msgstr[1] "%d másodperce"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of minutes.
-#: src/orca/messages.py:2704
+#: src/orca/messages.py:2713
 #, python-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
@@ -13268,7 +13274,7 @@ msgstr[1] "%d perce"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of hours.
-#: src/orca/messages.py:2712
+#: src/orca/messages.py:2721
 #, python-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
@@ -13277,7 +13283,7 @@ msgstr[1] "%d órája"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of days.
-#: src/orca/messages.py:2720
+#: src/orca/messages.py:2729
 #, python-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
@@ -13286,7 +13292,7 @@ msgstr[1] "%d napja"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: src/orca/messages.py:2747
+#: src/orca/messages.py:2756
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -13295,7 +13301,7 @@ msgstr[1] "%d nem látogatott hivatkozás"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: src/orca/messages.py:2758
+#: src/orca/messages.py:2767
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
