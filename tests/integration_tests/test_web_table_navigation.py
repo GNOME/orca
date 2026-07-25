@@ -449,7 +449,8 @@ def test_say_all_over_tables(web_tables: NativeAppSession) -> None:
     move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-    assert speech(session) == [
+    # Say All pauses between utterances for longer than the default quiescence.
+    assert speech(session, quiescence=0.3) == [
         "Tables",
         "Before the tables.",
         "table with 3 rows 3 columns",

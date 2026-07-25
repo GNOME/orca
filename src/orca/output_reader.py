@@ -67,7 +67,7 @@ class InterruptRecord:
 class OutputReader:
     """Reads the JSONL files written by the speech and braille presenters."""
 
-    _POLL_INTERVAL = 0.005
+    _POLL_INTERVAL = 0.02
 
     def __init__(self, speech_path: str, braille_path: str) -> None:
         self._speech_path = speech_path
