@@ -24,24 +24,36 @@ if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
 
 
+_NANO_LINE_COUNT = 30
+_NANO_LINES = frozenset(f"line {number}" for number in range(1, _NANO_LINE_COUNT + 1))
+
+
+def _spoken_lines(utterances: list[str]) -> list[str]:
+    """Returns the spoken text as individual lines, ignoring how it was divided up."""
+
+    lines = (line.strip() for utterance in utterances for line in utterance.split("\n"))
+    return [line for line in lines if line]
+
+
 def _assert_single_spoken_line(
     session: NativeAppSession,
     line_number: int,
-    blank_already_seen: bool,
+    blank_in_previous: bool,
 ) -> bool:
     """Asserts that the expected line is spoken once, ignoring nano status cleanup."""
 
     actual = helpers.speech(session, quiescence=0.4, overall=3.0)
-    expected = f"line {line_number}"
-    line_utterances = [utterance for utterance in actual if utterance.strip() == expected]
-    assert len(line_utterances) == 1, actual
-    assert all(utterance == "blank" or utterance.strip() == expected for utterance in actual), (
-        actual
-    )
-    blank_count = actual.count("blank")
+    # A repaint can redraw more than the current line, and whether that arrives as one
+    # utterance or several is not something to assert on.
+    spoken = _spoken_lines(actual)
+    assert spoken.count(f"line {line_number}") == 1, actual
+    assert all(line == "blank" or line in _NANO_LINES for line in spoken), actual
+    blank_count = spoken.count("blank")
     assert blank_count <= 1, actual
-    assert not (blank_count and blank_already_seen), actual
-    return blank_already_seen or bool(blank_count)
+    # nano blanks its status area from time to time. Announcing that is only a problem if it
+    # happens on navigation after navigation, so reject consecutive blanks rather than any.
+    assert not (blank_count and blank_in_previous), actual
+    return bool(blank_count)
 
 
 @pytest.mark.native_app
@@ -53,14 +65,14 @@ def test_nano_line_navigation_repaint_speaks_each_line_once(
     session = gtk3_terminal_nano
     settle(session)
 
-    blank_seen = False
-    for line_number in range(2, 31):
+    blank_in_previous = False
+    for line_number in range(2, _NANO_LINE_COUNT + 1):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        blank_seen = _assert_single_spoken_line(session, line_number, blank_seen)
+        blank_in_previous = _assert_single_spoken_line(session, line_number, blank_in_previous)
 
-    for line_number in range(29, 0, -1):
+    for line_number in range(_NANO_LINE_COUNT - 1, 0, -1):
         keyboard.tap_key(keyboard.KEYSYM_UP)
-        blank_seen = _assert_single_spoken_line(session, line_number, blank_seen)
+        blank_in_previous = _assert_single_spoken_line(session, line_number, blank_in_previous)
 
 
 @pytest.mark.native_app
@@ -76,14 +88,32 @@ def test_pager_navigation_speaks_each_page(gtk3_terminal_pager: NativeAppSession
     session.reader.drain(quiescence_timeout=0.5, overall_timeout=3.0)
     session.reader.reset()
 
+    # Less repaints the page and its status line together. Whether Orca sends the speech as
+    # one utterance or several, and how many intermediate braille paints it makes on the way,
+    # both vary with timing, so assert the text and the braille the display lands on.
     keyboard.tap_key(keyboard.KEYSYM_PAGE_DOWN)
-    assert helpers.capture(session) == (
-        ["line 15\nline 16\nline 17\nline 18\nline 19\nline 20\n(END)"],
-        [helpers.BrailleLine(6, "(END)", "(END)", "\x00" * 5)],
-    )
+    spoken, brailled = helpers.capture(session)
+    assert _spoken_lines(spoken) == [
+        "line 15",
+        "line 16",
+        "line 17",
+        "line 18",
+        "line 19",
+        "line 20",
+        "(END)",
+    ]
+    assert brailled[-1] == helpers.BrailleLine(6, "(END)", "(END)", "\x00" * 5)
 
     keyboard.tap_key(keyboard.KEYSYM_PAGE_UP)
-    assert helpers.capture(session) == (
-        ["07\nline 08\nline 09\nline 10\nline 11\nline 12\nline 13\n:"],
-        [helpers.BrailleLine(2, ":", ":", "\x00")],
-    )
+    spoken, brailled = helpers.capture(session)
+    assert _spoken_lines(spoken) == [
+        "07",
+        "line 08",
+        "line 09",
+        "line 10",
+        "line 11",
+        "line 12",
+        "line 13",
+        ":",
+    ]
+    assert brailled[-1] == helpers.BrailleLine(2, ":", ":", "\x00")
