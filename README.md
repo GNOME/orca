@@ -41,7 +41,10 @@ Orca has the following dependencies:
 * python3-dasbus: Dasbus (<https://dasbus.readthedocs.io/>) support for remote control of Orca
 * python3-louis: Liblouis (<https://liblouis.io/>) support for contracted braille (optional)
 * python3-psutil: Process and system utilities (optional)
-* python3-setproctitle: Python library to set the process title (optional)
+* python3-setproctitle: Python library to set the process title (strongly encouraged).
+  This causes `pidof orca` to work. It also updates `/proc/<Orca's pid>/cmdline` to
+  contain "orca". The latter is checked by Chromium-based browsers to automatically enable
+  full accessibility support without the need for `--force-rendereer-accessibility`.
 * python3-speechd: Python bindings for Speech Dispatcher (optional)
 * gstreamer-1.0: GStreamer - Streaming media framework (optional)
 * cargo: Used to build MathCAT (<https://daisy.github.io/MathCAT/>) for MathML support.
