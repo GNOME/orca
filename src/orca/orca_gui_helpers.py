@@ -710,6 +710,7 @@ def create_row_structure(  # pylint: disable=too-many-arguments,too-many-positio
     label_hexpand: bool = True,
     widget_expand: bool = False,
     label_size_group: Gtk.SizeGroup | None = None,
+    set_mnemonic_widget: bool = True,
 ) -> tuple[Gtk.ListBoxRow, Gtk.Box, Gtk.Label | None]:
     """Return a standard listbox row structure."""
 
@@ -734,7 +735,7 @@ def create_row_structure(  # pylint: disable=too-many-arguments,too-many-positio
         if label_size_group is not None:
             label_size_group.add_widget(label)
         hbox.pack_start(label, label_hexpand, label_hexpand, 0)
-        if not isinstance(widget, Gtk.Button):
+        if set_mnemonic_widget:
             label.set_mnemonic_widget(widget)
         hbox.pack_end(widget, widget_expand, widget_expand, 0)
 
@@ -1116,6 +1117,7 @@ def create_button_row(
         label_text,
         button,
         label_halign=Gtk.Align.START,
+        set_mnemonic_widget=False,
     )
 
     assert label is not None
