@@ -755,8 +755,7 @@ class StructuralNavigator(Extension):
             return
 
         pres_manager = presentation_manager.get_manager()
-        pres_manager.speak_contents(contents, prior_obj=prior_obj)
-        pres_manager.display_contents(contents)
+        pres_manager.present_contents(contents, prior_obj=prior_obj)
 
     def _present_object(
         self,

@@ -39,6 +39,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
 from . import (
+    ax_cache_manager,
     colornames,
     debug,
     language_utilities,
@@ -250,6 +251,12 @@ class AXTextAttribute(enum.Enum):
 class AXText:
     """Wrapper for the Atspi.Text interface."""
 
+    _CHARACTER_COUNT = "AXText.character-count"
+    _ALL_TEXT = "AXText.all-text"
+    _CACHE = ax_cache_manager.ScopedCache(
+        (_CHARACTER_COUNT, _ALL_TEXT),
+        ax_cache_manager.active_stable_tree_scope,
+    )
     _ZERO_WIDTH_JOINER = "\u200d"
     _ZERO_WIDTH_NO_BREAK_SPACE = "\ufeff"
     _VARIATION_SELECTOR_RANGE = ("\ufe00", "\ufe0f")
@@ -650,6 +657,11 @@ class AXText:
         if not AXObject.supports_text(obj):
             return 0
 
+        key = ax_cache_manager.get_object_key(obj)
+        cached = AXText._CACHE.get(AXText._CHARACTER_COUNT, key)
+        if cached is not ax_cache_manager.MISSING:
+            return cached
+
         try:
             count = Atspi.Text.get_character_count(obj)
         except GLib.GError as error:
@@ -659,6 +671,7 @@ class AXText:
 
         tokens = ["AXText:", obj, f"reports {count} characters."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        AXText._CACHE.set(AXText._CHARACTER_COUNT, key, count)
         return count
 
     @staticmethod
@@ -723,6 +736,11 @@ class AXText:
     def get_all_text(obj: Atspi.Accessible, length: int | None = None) -> str:
         """Returns the text content of obj."""
 
+        key = ax_cache_manager.get_object_key(obj)
+        cached = AXText._CACHE.get(AXText._ALL_TEXT, key)
+        if cached is not ax_cache_manager.MISSING:
+            return cached
+
         if length is None:
             length = AXText.get_character_count(obj)
         if not length:
@@ -744,6 +762,7 @@ class AXText:
         debug_string = debug_string.replace("\n", "\\n")
         tokens = ["AXText: Text of", obj, f"'{debug_string}'"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        AXText._CACHE.set(AXText._ALL_TEXT, key, result)
         return result
 
     @staticmethod

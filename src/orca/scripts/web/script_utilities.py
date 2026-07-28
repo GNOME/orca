@@ -35,6 +35,7 @@ import functools
 import re
 import time
 import urllib
+from contextlib import contextmanager
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -61,7 +62,7 @@ from orca.ax_utilities_debugging import AXUtilitiesDebugging
 from orca.ax_utilities_hypertext import CaretPolicy
 
 if TYPE_CHECKING:
-    from collections.abc import Hashable
+    from collections.abc import Hashable, Iterator
 
     from orca.ax_utilities_text import CaretSetReason
 
@@ -1607,6 +1608,14 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
+    @staticmethod
+    @contextmanager
+    def _hypertext_content_building_scope() -> Iterator[None]:
+        """Caches the AT-SPI reads made while assembling line contents, until the scope ends."""
+
+        with ax_cache_manager.stable_tree_scope():
+            yield
+
     def get_line_contents_at_offset(
         self,
         obj: Atspi.Accessible,
@@ -1615,7 +1624,8 @@ class Utilities(script_utilities.Utilities):
         use_cache: bool = True,
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         self._cache.clear_caret_context_decisions("web line contents")
-        rv = self._get_line_contents_at_offset(obj, offset, layout_mode, use_cache)
+        with self._hypertext_content_building_scope():
+            rv = self._get_line_contents_at_offset(obj, offset, layout_mode, use_cache)
         self._cache.clear_caret_context_decisions("web line contents")
         return rv
 
@@ -1839,7 +1849,8 @@ class Utilities(script_utilities.Utilities):
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the previous line."""
 
-        return self._get_previous_line_contents(obj, offset, layout_mode, use_cache)
+        with self._hypertext_content_building_scope():
+            return self._get_previous_line_contents(obj, offset, layout_mode, use_cache)
 
     def _get_previous_line_contents(
         self,
@@ -1915,7 +1926,8 @@ class Utilities(script_utilities.Utilities):
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the next line."""
 
-        return self._get_next_line_contents(obj, offset, layout_mode, use_cache)
+        with self._hypertext_content_building_scope():
+            return self._get_next_line_contents(obj, offset, layout_mode, use_cache)
 
     def _get_next_line_contents(
         self,

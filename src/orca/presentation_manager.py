@@ -25,6 +25,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import enum
 import os
 from typing import TYPE_CHECKING
@@ -496,7 +497,7 @@ class PresentationManager:
         if not (generate_speech or generate_braille or generate_sound):
             return
 
-        with ax_cache_manager.stable_tree_scope():
+        with self._stable_tree_scope_for(obj):
             if generate_speech:
                 speech_presenter.get_presenter().present_generated_speech(
                     script,
@@ -520,6 +521,35 @@ class PresentationManager:
                     prior_obj=prior_obj,
                     reason=reason,
                 )
+
+    @staticmethod
+    def _stable_tree_scope_for(
+        obj: Atspi.Accessible,
+    ) -> contextlib.AbstractContextManager[None]:
+        """Returns a scope treating the tree as stable, or a null one where it cannot be."""
+
+        # A terminal's or editable's contents can change while being presented.
+        if AXUtilities.is_editable(obj) or AXUtilities.find_ancestor_inclusive(
+            obj, AXUtilities.is_terminal
+        ):
+            return contextlib.nullcontext()
+        return ax_cache_manager.stable_tree_scope()
+
+    def present_contents(
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        *,
+        reason: PresentationReason | None = None,
+        prior_obj: Atspi.Accessible | None = None,
+    ) -> None:
+        """Speaks and displays the specified contents."""
+
+        if not contents:
+            return
+
+        with self._stable_tree_scope_for(contents[0][0]):
+            self.speak_contents(contents, reason=reason, prior_obj=prior_obj)
+            self.display_contents(contents)
 
     def speak_contents(
         self,

@@ -192,6 +192,10 @@ class TestPresentationManager:
                 events.append("exit")
 
         test_context.patch_object(ax_cache_manager, "stable_tree_scope", side_effect=scope)
+        from orca.ax_utilities import AXUtilities
+
+        test_context.patch_object(AXUtilities, "is_editable", return_value=False)
+        test_context.patch_object(AXUtilities, "find_ancestor_inclusive", return_value=None)
         script = test_context.Mock()
         obj = test_context.Mock()
         speech = essential_modules["orca.speech_presenter"].get_presenter()

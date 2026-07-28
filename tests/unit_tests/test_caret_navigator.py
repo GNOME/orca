@@ -445,8 +445,7 @@ class TestCaretNavigator:
 
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         pres_manager.interrupt_presentation.reset_mock()
-        pres_manager.speak_contents.reset_mock()
-        pres_manager.display_contents.reset_mock()
+        pres_manager.present_contents.reset_mock()
 
         navigation_method = getattr(navigator, f"{navigation_type}")
         result = navigation_method(mock_script, mock_event)
@@ -457,8 +456,7 @@ class TestCaretNavigator:
             assert navigator._last_input_event == mock_event
             mock_script.utilities.set_caret_position.assert_called()
             pres_manager.interrupt_presentation.assert_called_once()
-            pres_manager.speak_contents.assert_called_once()
-            pres_manager.display_contents.assert_called_once()
+            pres_manager.present_contents.assert_called_once()
         elif in_say_all:
             assert navigator._last_input_event != mock_event
 
