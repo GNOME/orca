@@ -83,6 +83,54 @@ def _print_orca_stats(all_stats: dict) -> None:
         )
 
 
+def _print_module(all_stats: dict, name: str) -> None:
+    """Prints every profiled function whose file matches name, plus a module total."""
+
+    keys = [key for key in all_stats if name in _short_path(key[0])]
+    if not keys:
+        print(f"No profiled functions matched module '{name}'.", file=sys.stderr)
+        return
+
+    keys.sort(key=lambda k: all_stats[k][2], reverse=True)
+
+    print(
+        f"{'ncalls':>16s}   {'tottime':>8s}   {'cumtime':>8s}"
+        f"   {'percall':>8s}   filename:lineno(function)"
+    )
+
+    total_calls = 0
+    total_tottime = 0.0
+    for key in keys:
+        cc, nc, tt, ct, _callers = all_stats[key]
+        total_calls += nc
+        total_tottime += tt
+        calls_str = str(nc) if cc == nc else f"{nc}/{cc}"
+        per_call = tt / nc if nc else 0
+        if per_call >= 0.001:
+            per_call_str = f"{per_call:.3f}s"
+        else:
+            per_call_str = f"{per_call * 1e6:.0f}µs"
+        print(
+            f"{calls_str:>16s}   {tt:>8.3f}   {ct:>8.3f}   {per_call_str:>8s}   {_format_key(key)}"
+        )
+
+    print(f"\n  {len(keys)} functions, {total_calls} calls, {total_tottime:.3f}s total time.")
+
+    for key in keys:
+        _cc, nc, _tt, _ct, callers = all_stats[key]
+        if not callers:
+            continue
+
+        print(f"\n  Callers of {_format_key(key)} (called {nc} times):")
+        print(f"  {'ncalls':>12s}   caller")
+
+        caller_list = [(caller_data[0], caller_key) for caller_key, caller_data in callers.items()]
+        caller_list.sort(reverse=True)
+
+        for caller_nc, caller_key in caller_list[:_CALLERS_N]:
+            print(f"  {caller_nc:>12d}   {_format_key(caller_key)}")
+
+
 def _print_callers(all_stats: dict) -> None:
     """Prints the top callers for the most expensive functions."""
 
@@ -225,6 +273,11 @@ def main() -> None:
 
     parser = argparse.ArgumentParser(description="Profile a running Orca session.")
     parser.add_argument(
+        "--module",
+        metavar="NAME",
+        help="List every profiled function whose file matches NAME (e.g. ax_text).",
+    )
+    parser.add_argument(
         "--target",
         metavar="FUNCTION",
         help="Show detailed breakdown for the named function.",
@@ -260,7 +313,12 @@ def main() -> None:
 
     all_stats: dict = pstats.Stats(profiler).stats  # type: ignore[attr-defined]
 
-    if args.target:
+    if args.module:
+        print(f"\n{'=' * 72}")
+        print(f"Module: {args.module}")
+        print(f"{'=' * 72}\n")
+        _print_module(all_stats, args.module)
+    elif args.target:
         print(f"\n{'=' * 72}")
         print(f"Focus: {args.target} (depth {args.depth})")
         print(f"{'=' * 72}")
