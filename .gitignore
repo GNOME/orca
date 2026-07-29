@@ -15,3 +15,4 @@ subprojects/mathcat-py/addon/
 subprojects/mathcat-py/target/
 .coverage-integration/
 htmlcov-integration/
+.profile-integration/

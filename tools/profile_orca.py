@@ -34,6 +34,7 @@
 from __future__ import annotations
 
 import cProfile
+import glob
 import os
 import pstats
 import runpy
@@ -266,12 +267,32 @@ def _print_target_tree(
             _print_target_tree(callees_map, callee_key, depth - 1, indent + 4)
 
 
+def _load_merged_stats(directory: str) -> dict | None:
+    """Merges the pstats files an integration run wrote to directory."""
+
+    files = sorted(glob.glob(os.path.join(directory, "profile-*.pstats")))
+    if not files:
+        print(f"No profile-*.pstats files found in {directory}.", file=sys.stderr)
+        return None
+
+    merged = pstats.Stats(files[0])
+    for path in files[1:]:
+        merged.add(path)
+    print(f"Merged {len(files)} Orca processes from {directory}.")
+    return merged.stats  # type: ignore[attr-defined]
+
+
 def main() -> None:
     """Launches Orca under cProfile and prints the results."""
 
     import argparse
 
     parser = argparse.ArgumentParser(description="Profile a running Orca session.")
+    parser.add_argument(
+        "--load",
+        metavar="DIR",
+        help="Report on the pstats files in DIR instead of launching Orca.",
+    )
     parser.add_argument(
         "--module",
         metavar="NAME",
@@ -290,28 +311,34 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    orca_bin = shutil.which("orca")
-    if orca_bin is None:
-        print("orca not found in PATH.", file=sys.stderr)
-        sys.exit(1)
+    if args.load:
+        loaded = _load_merged_stats(args.load)
+        if loaded is None:
+            sys.exit(1)
+        all_stats: dict = loaded
+    else:
+        orca_bin = shutil.which("orca")
+        if orca_bin is None:
+            print("orca not found in PATH.", file=sys.stderr)
+            sys.exit(1)
 
-    print("Launching Orca under cProfile (debug output suppressed).")
-    print("Interact with Orca normally, then Ctrl+C when done.\n")
+        print("Launching Orca under cProfile (debug output suppressed).")
+        print("Interact with Orca normally, then Ctrl+C when done.\n")
 
-    os.environ["ORCA_PROFILING"] = "1"
+        os.environ["ORCA_PROFILING"] = "1"
 
-    sys.argv = [orca_bin, "--replace"]
+        sys.argv = [orca_bin, "--replace"]
 
-    profiler = cProfile.Profile()
-    profiler.enable()
-    try:
-        runpy.run_path(orca_bin, run_name="__main__")
-    except (KeyboardInterrupt, SystemExit):
-        pass
-    finally:
-        profiler.disable()
+        profiler = cProfile.Profile()
+        profiler.enable()
+        try:
+            runpy.run_path(orca_bin, run_name="__main__")
+        except (KeyboardInterrupt, SystemExit):
+            pass
+        finally:
+            profiler.disable()
 
-    all_stats: dict = pstats.Stats(profiler).stats  # type: ignore[attr-defined]
+        all_stats = pstats.Stats(profiler).stats  # type: ignore[attr-defined]
 
     if args.module:
         print(f"\n{'=' * 72}")

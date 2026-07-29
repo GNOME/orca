@@ -27,6 +27,7 @@ import shutil
 import subprocess
 import sys
 import time
+import uuid
 from collections.abc import Iterator
 from typing import Any
 
@@ -68,6 +69,11 @@ class OrcaSession:
             argv = [*argv, f"--debug-file={debug_file}"]
         if os.environ.get("ORCA_TEST_COVERAGE"):
             argv = [sys.executable, "-m", "coverage", "run", "--parallel-mode", *argv]
+        elif profile_dir := os.environ.get("ORCA_TEST_PROFILE"):
+            # A unique name per launch keeps the Orca processes from overwriting each
+            # other; coverage's --parallel-mode does the same for its own files.
+            profile_path = os.path.join(profile_dir, f"profile-{uuid.uuid4().hex}.pstats")
+            argv = [sys.executable, "-m", "cProfile", "-o", profile_path, *argv]
         # Not a `with`: the Orca process must outlive launch() and is terminated in quit().
         # pylint: disable-next=consider-using-with
         self._process = subprocess.Popen(argv, env=self._env)
