@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-03-03 10:19+0000\n"
-"PO-Revision-Date: 2026-06-03 17:38+0200\n"
+"PO-Revision-Date: 2026-07-29 16:54+0200\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: Czech\n"
 "Language: cs\n"
@@ -1309,7 +1309,7 @@ msgstr "Vymazat mezipaměť AT-SPI pro aktuální aplikaci"
 #. the feature without the need to get into a GUI.
 #: src/orca/cmdnames.py:560
 msgid "Toggle mouse review mode"
-msgstr "Přepínout mezi režimy zkoumání myší"
+msgstr "Přepnout mezi režimy zkoumání myší"
 
 #. Translators: Orca has a command to present the battery status (e.g. level, whether
 #. or not it is plugged in, etc.). This string is the name of that command.
@@ -1595,7 +1595,7 @@ msgstr "Přepnout mezi kurzorovou navigací čtečky obrazovky a nativní"
 #. to cycle through the different "politeness" levels.
 #: src/orca/cmdnames.py:762
 msgid "Advance live region politeness setting"
-msgstr "Rozšířená nastavení chování živé oblasti"
+msgstr "Přepnout na další úroveň chování živé oblasti"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
