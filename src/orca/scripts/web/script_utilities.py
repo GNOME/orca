@@ -766,6 +766,16 @@ class Utilities(script_utilities.Utilities):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
+        return self._expand_eocs_for_child(obj, start_offset, end_offset)
+
+    def _expand_eocs_for_child(
+        self,
+        obj: Atspi.Accessible,
+        start_offset: int = 0,
+        end_offset: int = -1,
+    ) -> str:
+        """Expands obj, whose document and grid-descendant status the caller has established."""
+
         if not self.treat_as_text_object(obj):
             return ""
 

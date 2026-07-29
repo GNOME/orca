@@ -205,6 +205,7 @@ class LiveRegionPresenter(Extension):
         self._politeness_overrides: dict[int, LivePoliteness] = {}
         self._restore_overrides: dict[int, LivePoliteness] = {}
 
+        self._deferred_containers: list[Atspi.Accessible] = []
         self._last_presented_message: LiveRegionMessage | None = None
         self._monitoring: bool = True
         # Use QUEUE_SIZE as sentinel to indicate "not yet navigating"
@@ -218,6 +219,7 @@ class LiveRegionPresenter(Extension):
         """Reset the live region presenter."""
 
         self._politeness_overrides = {}
+        self._deferred_containers = []
 
     def handle_event(self, script: default.Script, event: Atspi.Event) -> None:
         """Handles a live region event."""
@@ -225,17 +227,92 @@ class LiveRegionPresenter(Extension):
         if not self.is_presentable_live_region_event(script, event):
             return
 
+        if self._defer_until_not_busy(event.source):
+            return
+
+        container = self._take_deferred_container(event.source)
+        if container is not None and self._present_container(script, container):
+            return
+
         politeness = self._get_live_event_type(event.source)
         if politeness == LivePoliteness.OFF:
             return
-        if politeness == LivePoliteness.ASSERTIVE:
-            self.msg_queue.purge_by_priority(LivePoliteness.POLITE)
 
         text = self._get_message(event)
         if not text:
             return
 
-        message = LiveRegionMessage(text=text, politeness=politeness, obj=event.source)
+        self._enqueue_message(text, politeness, event.source)
+
+    def handle_busy_changed(self, script: default.Script, event: Atspi.Event) -> None:
+        """Presents the live region update which was deferred while event.source was busy."""
+
+        if event.detail1:
+            return
+
+        if (container := self._take_deferred_container(event.source)) is not None:
+            self._present_container(script, container)
+
+    def _defer_until_not_busy(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if obj's live region is busy, deferring its update until it is not."""
+
+        attrs = AXObject.get_attributes_dict(obj, False)
+        if attrs.get("container-busy") != "true":
+            return False
+
+        container = AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_busy)
+        if container is None:
+            tokens = ["LIVE REGION PRESENTER: Could not find busy container for", obj]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        if container not in self._deferred_containers:
+            self._deferred_containers.append(container)
+
+        tokens = ["LIVE REGION PRESENTER: Deferring update until", container, "is not busy"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return True
+
+    def _take_deferred_container(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns and forgets the deferred container of obj, if there is one."""
+
+        for container in self._deferred_containers:
+            if AXUtilities.is_ancestor(obj, container, True):
+                self._deferred_containers.remove(container)
+                return container
+
+        return None
+
+    def _present_container(self, script: default.Script, container: Atspi.Accessible) -> bool:
+        """Returns True after presenting the update of a live region which is no longer busy."""
+
+        politeness = self._get_live_event_type(container)
+        if politeness == LivePoliteness.OFF:
+            return True
+
+        text = self._add_name_to_content(container, script.utilities.expand_eocs(container))
+        if not text:
+            tokens = ["LIVE REGION PRESENTER: Could not get deferred update from", container]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        tokens = ["LIVE REGION PRESENTER: Presenting deferred update from", container]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        self._enqueue_message(text, politeness, container)
+        return True
+
+    def _enqueue_message(
+        self,
+        text: str,
+        politeness: LivePoliteness,
+        obj: Atspi.Accessible,
+    ) -> None:
+        """Queues text for presentation unless it duplicates the previous message."""
+
+        if politeness == LivePoliteness.ASSERTIVE:
+            self.msg_queue.purge_by_priority(LivePoliteness.POLITE)
+
+        message = LiveRegionMessage(text=text, politeness=politeness, obj=obj)
 
         # Check for duplicate and update tracking.
         if message.is_duplicate_of(self._last_presented_message):
@@ -609,8 +686,13 @@ class LiveRegionPresenter(Extension):
             container = self._find_container(event.source)
             content = script.utilities.expand_eocs(container)
 
+        return self._add_name_to_content(event.source, content)
+
+    def _add_name_to_content(self, obj: Atspi.Accessible, content: str) -> str | None:
+        """Returns content prefixed with obj's name, or obj's name if there is no content."""
+
         content = content.strip()
-        name = AXObject.get_name(event.source).strip()
+        name = AXObject.get_name(obj).strip()
         if not content:
             return name or None
 

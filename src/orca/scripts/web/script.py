@@ -599,6 +599,8 @@ class Script(default.Script):
     def _on_busy_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:busy accessibility events."""
 
+        live_region_presenter.get_presenter().handle_busy_changed(self, event)
+
         if AXUtilities.has_no_size(event.source):
             msg = "WEB: Ignoring event from page with no size."
             debug.print_message(debug.LEVEL_INFO, msg, True)

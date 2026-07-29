@@ -532,7 +532,7 @@ class Utilities:
         for i, char in enumerate(to_build):
             if char == "\ufffc":
                 child = AXUtilities.find_child_at_offset(obj, i + start_offset)
-                result = self.expand_eocs(child)
+                result = self._expand_eocs_for_child(child)
                 if child and AXObject.get_role(child) in block_roles:
                     result += " "
                 to_build[i] = result
@@ -551,6 +551,16 @@ class Utilities:
             return ""
 
         return result
+
+    def _expand_eocs_for_child(
+        self,
+        obj: Atspi.Accessible,
+        start_offset: int = 0,
+        end_offset: int = -1,
+    ) -> str:
+        """Expands obj, which is a descendant of an object already being expanded."""
+
+        return self.expand_eocs(obj, start_offset, end_offset)
 
     def is_error_for_contents(
         self,

@@ -69,6 +69,10 @@ _TOP_TO_BOTTOM = (
 
 
 _BOTTOM_TO_TOP = (
+    ["Finalize", "button"],
+    ["Append", "button"],
+    ["Rewrite", "button"],
+    ["blank"],
     ["Bezel", "button"],
     ["Removable"],
     ["Remove", "button"],
@@ -175,3 +179,33 @@ def test_live_region_child_removal_is_silent(web_live_regions: NativeAppSession)
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
     assert capture(session, wait_async=True) == ([], [])
+
+
+@pytest.mark.native_app
+def test_busy_live_region_rewritten_in_place(web_live_regions: NativeAppSession) -> None:
+    """Tests that a region rewritten while aria-busy is announced once it is no longer busy."""
+
+    session = web_live_regions
+    reset_web_state(session)
+
+    for _ in range(7):
+        keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert speech(session) == ["Rewrite", "button"]
+
+    keyboard.tap_key(keyboard.KEYSYM_SPACE)
+    assert speech(session, wait_async=True) == ["First second third"]
+
+
+@pytest.mark.native_app
+def test_busy_live_region_finalized_with_its_content(web_live_regions: NativeAppSession) -> None:
+    """Tests that clearing aria-busy along with a final rewrite yields one announcement."""
+
+    session = web_live_regions
+    reset_web_state(session)
+
+    for _ in range(9):
+        keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert speech(session) == ["Finalize", "button"]
+
+    keyboard.tap_key(keyboard.KEYSYM_SPACE)
+    assert speech(session, wait_async=True) == ["Complete rewritten answer"]
