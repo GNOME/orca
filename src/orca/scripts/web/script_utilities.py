@@ -925,7 +925,7 @@ class Utilities(script_utilities.Utilities):
         rv = False
         if AXUtilities.has_explicit_name(obj) and AXObject.supports_action(obj):
             for child in AXObject.iter_children(obj):
-                if not self._is_useless_empty_element(child) or self._is_useless_image(child):
+                if not (self._is_useless_empty_element(child) or self._is_useless_image(child)):
                     break
             else:
                 rv = True
@@ -1760,21 +1760,20 @@ class Utilities(script_utilities.Utilities):
                 return True
 
             reason = None
-            if AXUtilities.is_table_cell_or_header(
-                obj_block, include_display=True
-            ) and AXUtilities.is_table_cell_or_header(x_obj_block, include_display=True):
-                obj_block_row = AXObject.get_parent(obj_block)
-                if not AXUtilities.is_table_row(
-                    obj_block_row, include_display=True
-                ) or obj_block_row != AXObject.get_parent(x_obj_block):
-                    reason = "different table row"
-            else:
+            if obj_row is None:
                 reason = "different block ancestor"
+            elif obj_row != AXUtilities.get_nearest_table_row(x_obj_block):
+                reason = "different table row"
 
             if reason:
                 tokens = ["WEB: Excluding", x_obj, "from line contents:", reason]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return False
+
+            # A clipped element is not laid out where its text appears, so its position cannot
+            # be used to split the row it belongs to.
+            if AXUtilities.clips_its_own_text(obj) or AXUtilities.clips_its_own_text(x_obj):
+                return True
 
             return AXUtilities.rects_are_on_same_line(rect, x_rect, inline_flow=False)
 
@@ -1793,6 +1792,7 @@ class Utilities(script_utilities.Utilities):
             return []
 
         obj_block = AXUtilities.get_nearest_block_ancestor(obj)
+        obj_row = AXUtilities.get_nearest_table_row(obj_block)
         seen = set(objects)
 
         first_obj, first_start, first_end, _first_string = objects[0]
@@ -2396,9 +2396,10 @@ class Utilities(script_utilities.Utilities):
                     i = max(i + 1, end)
 
         # A tall, narrow column is CSSed brokenness; a wider-than-tall element merely wrapped.
+        # An element shorter than its own text is clipping it, so its shape proves nothing.
         if is_single_chars or is_single_words:
             rect = AXComponent.get_rect(obj)
-            if rect.width > rect.height:
+            if rect.width > rect.height and not AXUtilities.clips_its_own_text(obj):
                 is_single_chars = False
                 is_single_words = False
 

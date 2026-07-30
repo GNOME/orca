@@ -1336,6 +1336,10 @@ class Text(_AccessibleTextRegion):
                 self.accessible,
                 self.caret_offset,
             )[0:2]
+            if end_offset is not None and end_offset > self.line_offset + len(string):
+                # This can happen with CSSed-offscreen text in which the reported lines contain
+                # single characters or words.
+                string = AXText.get_substring(self.accessible, self.line_offset, end_offset)
             string = string.replace("\ufffc", " ")
 
         if end_offset is None:

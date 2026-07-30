@@ -2551,9 +2551,11 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         if (
-            self._get_prior_obj() != obj or self._is_where_am_i()
-        ) and self._generate_text_substring(obj):
-            result += self._generate_text_line(obj)
+            self._get_prior_obj() != obj
+            or self._is_where_am_i()
+            or self._content_slice_is_partial(obj)
+        ) and (text := self._generate_text_line(obj) or self._generate_text_substring(obj)):
+            result += text
         if not result:
             result += self._generate_accessible_label_and_name(obj)
         result += self._generate_accessible_role(obj)
@@ -3614,9 +3616,11 @@ class SpeechGenerator(generator.Generator):
 
         result = self._generate_default_prefix(obj)
         if (
-            self._get_prior_obj() != obj or self._is_where_am_i()
-        ) and self._generate_text_substring(obj):
-            result += self._generate_text_line(obj)
+            self._get_prior_obj() != obj
+            or self._is_where_am_i()
+            or self._content_slice_is_partial(obj)
+        ) and (text := self._generate_text_line(obj) or self._generate_text_substring(obj)):
+            result += text
         if not result:
             result += self._generate_accessible_label_and_name(obj)
         result += self._generate_accessible_role(obj)
@@ -3936,9 +3940,11 @@ class SpeechGenerator(generator.Generator):
 
         result = self._generate_default_prefix(obj)
         if (
-            self._get_prior_obj() != obj or self._is_where_am_i()
-        ) and self._generate_text_substring(obj):
-            result += self._generate_text_line(obj)
+            self._get_prior_obj() != obj
+            or self._is_where_am_i()
+            or self._content_slice_is_partial(obj)
+        ) and (text := self._generate_text_line(obj) or self._generate_text_substring(obj)):
+            result += text
         if not result:
             result += self._generate_accessible_label_and_name(obj)
         result += self._generate_accessible_role(obj)
@@ -3974,9 +3980,11 @@ class SpeechGenerator(generator.Generator):
 
         result = self._generate_default_prefix(obj)
         if (
-            self._get_prior_obj() != obj or self._is_where_am_i()
-        ) and self._generate_text_substring(obj):
-            result += self._generate_text_line(obj)
+            self._get_prior_obj() != obj
+            or self._is_where_am_i()
+            or self._content_slice_is_partial(obj)
+        ) and (text := self._generate_text_line(obj) or self._generate_text_substring(obj)):
+            result += text
         if not result:
             result += self._generate_accessible_label_and_name(obj)
         result += self._generate_accessible_role(obj)

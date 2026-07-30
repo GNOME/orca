@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Table Block Cells ready</title>
+<style>
+  html { font-family: "DejaVu Sans Mono", monospace; font-size: 16px; line-height: 1.5; }
+  table { border-collapse: collapse; margin: 0 0 1em 0; }
+  th, td { text-align: left; vertical-align: top; padding: 0 8px; }
+  th p, td p { margin: 0; }
+  .screen-reader-only {
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+    position: absolute;
+    height: 1px;
+    width: 1px;
+  }
+  .uppercase { text-transform: uppercase; }
+</style>
+</head>
+<body>
+<p>Before the tables.</p>
+
+<table>
+<tr><th scope="col"><p>Name</p></th><th scope="col"><p>Price</p></th><th scope="col"><p>Change</p></th></tr>
+<tr><td><a href="https://example.com/ftse"><p>FTSE 100</p></a></td><td><p>10,908.41</p></td><td><p>+37.39</p></td></tr>
+<tr><td><a href="https://example.com/dax"><p>DAX</p></a></td><td><p>24,235.31</p></td><td><p>-92.11</p></td></tr>
+</table>
+
+<table>
+<tr><td><p>Ada</p><p>Lovelace</p></td><td><p>Engineer</p><p>London</p></td></tr>
+<tr><td><p>Grace</p><p>Hopper</p></td><td><p>Admiral</p><p>Boston</p></td></tr>
+</table>
+
+<table>
+<tr><td><p>Alan<br>Turing</p></td><td><p>Analyst<br>Wilmslow</p></td></tr>
+</table>
+
+<table>
+<tr><td>Katherine<br>Johnson</td><td>Physicist<br>Hampton</td></tr>
+</table>
+
+<table>
+<thead>
+<tr>
+<td scope="col"><p class="uppercase screen-reader-only">Trend Direction</p></td>
+<td scope="col"><p class="uppercase screen-reader-only">Name</p></td>
+<td scope="col"><p class="uppercase">Price</p></td>
+<td scope="col"><p class="uppercase">Change</p></td>
+<td scope="col"><p class="uppercase">% Chg</p></td>
+</tr>
+</thead>
+<tbody>
+<tr><td aria-label="Trending up arrow"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M13.3 6.8L8 1.5 2.7 6.8l.9.9 3.8-3.8v10.7h1.2V3.8l3.8 3.8.9-.8z"></path></svg></td><td><a href="https://example.com/nikkei"><p>Nikkei</p></a></td><td><p>42,062.98</p></td><td><p>+112.50</p></td><td><p>0.27%</p></td></tr>
+</tbody>
+</table>
+
+<table>
+<tr><th scope="col">Name</th><th scope="col">Price</th><th scope="col">Change</th></tr>
+<tr><td>Sensex</td><td>81,254.00</td><td>+64.20</td></tr>
+</table>
+
+<table>
+<tr><th scope="col">Trend<br>Direction</th><th scope="col">Delta</th></tr>
+<tr><td>Rising</td><td>+1.90</td></tr>
+</table>
+
+<table>
+<tr><th scope="col"><p>Name</p></th><th scope="col"><p>Price</p></th><th scope="col"><p>Change</p></th></tr>
+<tr><td><p>Sensex</p></td><td><p>81,254.00</p></td><td><p>+64.20</p></td></tr>
+</table>
+
+<table>
+<tr><th scope="col"><p>Trend<br>Direction</p></th><th scope="col"><p>Delta</p></th></tr>
+<tr><td><p>Rising</p></td><td><p>+1.90</p></td></tr>
+</table>
+
+<p>After the tables.</p>
+</body>
+</html>

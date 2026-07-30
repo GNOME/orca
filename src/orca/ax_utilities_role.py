@@ -2379,19 +2379,13 @@ class AXUtilitiesRole:
         return role == Atspi.Role.TABLE_CELL
 
     @staticmethod
-    def is_table_cell_or_header(
-        obj: Atspi.Accessible,
-        role: Atspi.Role | None = None,
-        include_display: bool = False,
-    ) -> bool:
-        """Returns True if obj is a table cell/header by role, or CSS display if include_display."""
+    def is_table_cell_or_header(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
+        """Returns True if obj has a table cell or header related role"""
 
         roles = AXUtilitiesRole.get_table_cell_roles()
         if role is None:
             role = AXObject.get_role(obj)
-        if role in roles:
-            return True
-        return include_display and AXUtilitiesRole._get_display_style(obj) == "table-cell"
+        return role in roles
 
     @staticmethod
     def is_table_column_header(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:

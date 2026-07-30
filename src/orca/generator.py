@@ -451,6 +451,15 @@ class Generator:
         item = self._get_content_item(obj)
         return item.string if item is not None else default
 
+    def _content_slice_is_partial(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if obj's content slice covers only part of obj's text."""
+
+        item = self._get_content_item(obj)
+        if item is None:
+            return False
+
+        return item.start_offset > 0 or item.end_offset < AXText.get_character_count(obj)
+
     def _get_caret_offset(self, obj: Atspi.Accessible, default: int | None = None) -> int | None:
         """Returns obj's content-slice caret offset, or default if obj is not the subject."""
 

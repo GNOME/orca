@@ -969,6 +969,15 @@ class AXUtilities:
         return rv
 
     @staticmethod
+    def get_nearest_table_row(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns obj or its nearest ancestor which is a table row, by role or CSS display."""
+
+        def is_row(x: Atspi.Accessible) -> bool:
+            return AXUtilitiesRole.is_table_row(x, include_display=True)
+
+        return AXUtilitiesObject.find_ancestor_inclusive(obj, is_row)
+
+    @staticmethod
     def get_embedded_document_frame_for_object(obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns obj's nearest document-frame ancestor that is inside an application, if any."""
 
@@ -1352,6 +1361,31 @@ class AXUtilities:
         """Returns True if obj has an author/app-provided name as opposed to a calculated name."""
 
         return AXObject.get_attribute(obj, "explicit-name") == "true"
+
+    @staticmethod
+    def name_is_from_descendant(obj: Atspi.Accessible, descendant: Atspi.Accessible) -> bool:
+        """Returns True if obj's name was calculated from the text of descendant."""
+
+        name = AXObject.get_name(obj)
+        if not name or AXUtilities.has_explicit_name(obj):
+            return False
+
+        if not AXUtilitiesObject.is_ancestor(descendant, obj):
+            return False
+
+        text = " ".join(AXText.get_all_text(descendant).split())
+        return bool(text) and text in " ".join(name.split())
+
+    @staticmethod
+    def clips_its_own_text(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj's box is too small to hold the text inside it."""
+
+        n_chars = AXText.get_character_count(obj)
+        if not n_chars:
+            return False
+
+        text_rect = AXText.get_range_rect(obj, 0, n_chars)
+        return AXComponent.get_rect(obj).height < text_rect.height
 
     @staticmethod
     def has_visible_caption(obj: Atspi.Accessible) -> bool:

@@ -732,6 +732,25 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         self._context = context
         return self._generate_web_contents(contents)
 
+    @staticmethod
+    def _cell_named_by(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the table cell or header which obj exists only to name."""
+
+        if not AXUtilities.is_text_block(obj, exclude_editable=True, exclude_focusable=True):
+            return None
+
+        parent = AXObject.get_parent(obj)
+        if not AXUtilities.is_table_cell_or_header(parent):
+            return None
+
+        if AXObject.get_child_count(parent) != 1:
+            return None
+
+        if not AXUtilities.name_is_from_descendant(parent, obj):
+            return None
+
+        return parent
+
     def _generate_web_contents(
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
@@ -786,13 +805,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 position = ContentPosition(
                     index=i, total=len(contents), last_for_object=last_for_object
                 )
+            subject = self._cell_named_by(obj) or obj
+            if subject is not obj:
+                # A cell subject's text comes from the ContentItem string rather than from
+                # _generate_text_line, which is what would otherwise drop a trailing break.
+                string = string.rstrip("\n")
             self._context = replace(
                 self._context,
                 content_item=ContentItem(start_offset=start, end_offset=end, string=string),
                 content_position=position,
-                content_subject=obj,
+                content_subject=subject,
             )
-            utterance = self.generate_speech(obj, self._context)
+            utterance = self.generate_speech(subject, self._context)
             if isinstance(utterance, list):
 
                 def is_not_empty_list(x):
@@ -801,7 +825,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 utterance = list(filter(is_not_empty_list, utterance))
             if utterance and utterance[0]:
                 result.append(utterance)
-                self._context = replace(self._context, prior_obj=obj)
+                self._context = replace(self._context, prior_obj=subject)
         self._context = original_context
 
         if not result:
