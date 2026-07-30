@@ -142,9 +142,10 @@ class AXUtilitiesDebugging:
         """Returns information about the actions as a string."""
 
         results = []
-        for i in range(AXAction.get_n_actions(obj)):
-            result = AXAction.get_action_name(obj, i)
-            keybinding = AXAction.get_action_key_binding(obj, i)
+        n_actions = AXAction.get_n_actions(obj)
+        for i in range(n_actions):
+            result = AXAction.get_action_name(obj, i, n_actions)
+            keybinding = AXAction.get_action_key_binding(obj, i, n_actions)
             if keybinding:
                 result += f" ({keybinding})"
             results.append(result)

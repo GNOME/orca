@@ -41,8 +41,9 @@ class AXUtilitiesAction:
         """Returns the list of actions supported on obj."""
 
         results = []
-        for i in range(AXAction.get_n_actions(obj)):
-            name = AXAction.get_action_name(obj, i)
+        n_actions = AXAction.get_n_actions(obj)
+        for i in range(n_actions):
+            name = AXAction.get_action_name(obj, i, n_actions)
             if name:
                 results.append(name)
         return results
@@ -52,8 +53,9 @@ class AXUtilitiesAction:
         """Returns the index of the named action or -1 if unsupported."""
 
         action_name = AXAction.normalize_action_name(action_name)
-        for i in range(AXAction.get_n_actions(obj)):
-            if action_name == AXAction.get_action_name(obj, i):
+        n_actions = AXAction.get_n_actions(obj)
+        for i in range(n_actions):
+            if action_name == AXAction.get_action_name(obj, i, n_actions):
                 return i
 
         return -1
@@ -85,8 +87,9 @@ class AXUtilitiesAction:
         if not key:
             return False
 
-        for i in range(AXAction.get_n_actions(obj)):
-            shortcuts = AXAction.get_action_key_binding(obj, i).split(";")
+        n_actions = AXAction.get_n_actions(obj)
+        for i in range(n_actions):
+            shortcuts = AXAction.get_action_key_binding(obj, i, n_actions).split(";")
             if any(s.endswith(key.upper()) for s in shortcuts):
                 return True
         return False
@@ -95,8 +98,9 @@ class AXUtilitiesAction:
     def _find_first_action_with_keybinding(obj: Atspi.Accessible) -> int:
         """Returns the index of the first action with a keybinding on obj."""
 
-        for i in range(AXAction.get_n_actions(obj)):
-            if AXAction.get_action_key_binding(obj, i):
+        n_actions = AXAction.get_n_actions(obj)
+        for i in range(n_actions):
+            if AXAction.get_action_key_binding(obj, i, n_actions):
                 return i
         return -1
 

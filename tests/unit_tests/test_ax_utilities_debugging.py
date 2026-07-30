@@ -176,10 +176,10 @@ class TestAXUtilitiesDebugging:
 
         test_context.patch("orca.ax_utilities_debugging.AXAction.get_n_actions", return_value=2)
 
-        def mock_get_action_name(unused_obj, index):
+        def mock_get_action_name(unused_obj, index, unused_n_actions=None):
             return ["click", "focus"][index]
 
-        def mock_get_action_key_binding(unused_obj, index):
+        def mock_get_action_key_binding(unused_obj, index, unused_n_actions=None):
             return ["Return", ""][index]
 
         test_context.patch(

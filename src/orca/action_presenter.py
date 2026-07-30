@@ -135,10 +135,11 @@ class ActionPresenter(Extension):
             return True
 
         actions = {}
-        for i in range(AXAction.get_n_actions(obj)):
-            name = AXAction.get_action_name(obj, i)
-            localized_name = AXAction.get_action_localized_name(obj, i)
-            description = AXAction.get_action_description(obj, i)
+        n_actions = AXAction.get_n_actions(obj)
+        for i in range(n_actions):
+            name = AXAction.get_action_name(obj, i, n_actions)
+            localized_name = AXAction.get_action_localized_name(obj, i, n_actions)
+            description = AXAction.get_action_description(obj, i, n_actions)
             tokens = [
                 f"ACTION PRESENTER: Action {i} on",
                 obj,

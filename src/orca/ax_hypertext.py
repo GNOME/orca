@@ -27,12 +27,18 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
-from . import debug
+from . import ax_cache_manager, debug
 from .ax_object import AXObject
 
 
 class AXHypertext:
     """Wrapper for the Atspi.Hypertext and Hyperlink interfaces."""
+
+    _LINK_START = "AXHypertext.link-start"
+    _CACHE = ax_cache_manager.ScopedCache(
+        (_LINK_START,),
+        ax_cache_manager.active_stable_tree_scope,
+    )
 
     @staticmethod
     def get_link_count(obj: Atspi.Accessible) -> int:
@@ -88,6 +94,11 @@ class AXHypertext:
     def get_link_start_offset(obj: Atspi.Accessible) -> int:
         """Returns the start offset of obj in the associated text."""
 
+        key = ax_cache_manager.get_object_key(obj)
+        cached = AXHypertext._CACHE.get(AXHypertext._LINK_START, key)
+        if cached is not ax_cache_manager.MISSING:
+            return cached
+
         if isinstance(obj, Atspi.Hyperlink):
             link = obj
             if debug.debugLevel <= debug.LEVEL_INFO:
@@ -109,6 +120,7 @@ class AXHypertext:
 
         tokens = ["AXHypertext: Start offset of", obj, f"is {offset}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        AXHypertext._CACHE.set(AXHypertext._LINK_START, key, offset)
         return offset
 
     @staticmethod

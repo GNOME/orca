@@ -100,7 +100,7 @@ class TestAXUtilitiesAction:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXAction, "get_n_actions", return_value=3)
 
-        def mock_get_action_name(_obj, i) -> str:
+        def mock_get_action_name(_obj, i, _n_actions=None) -> str:
             names = ["click", "", "press"]
             return names[i]
 
@@ -123,7 +123,7 @@ class TestAXUtilitiesAction:
         )
         test_context.patch_object(AXAction, "get_n_actions", return_value=2)
 
-        def mock_get_action_name(_obj, index) -> str:
+        def mock_get_action_name(_obj, index, _n_actions=None) -> str:
             if index == 0:
                 return "press"
             return "click"
@@ -187,7 +187,7 @@ class TestAXUtilitiesAction:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXAction, "get_n_actions", return_value=2)
 
-        def mock_get_action_key_binding(_obj, index) -> str:
+        def mock_get_action_key_binding(_obj, index, _n_actions=None) -> str:
             if index == 0:
                 return ""
             return "Alt+F"
