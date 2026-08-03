@@ -126,12 +126,13 @@ class Systemd:
         # systemd will restart Orca. So, we want to ping more quickly than
         # requested, to avoid a situation where timer inaccuracies will
         # cause us to miss the deadline. systemd's code for this pings
-        # anywhere from 133% - 200% faster than necessary. For us it's
-        # easier to just ping 2x as fast. Use a high priority so that it is
-        # scheduled ahead of other work done on the main loop (e.g. event
-        # processing during a flood).
+        # anywhere from 133% - 200% faster than necessary. We ping 4x as
+        # fast: the main-loop stall we can survive is the deadline minus one
+        # interval. Use a high priority so that it is scheduled ahead of
+        # other work done on the main loop (e.g. event processing during a
+        # flood).
         GLib.timeout_add(
-            self._watchdog_interval // 2,
+            self._watchdog_interval // 4,
             _on_watchdog_tick,
             priority=GLib.PRIORITY_HIGH,
         )
