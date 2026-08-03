@@ -110,6 +110,60 @@ class TestBrailleLineRanges:
         ranges = braille._compute_ranges("abc def", 4, 10)
         assert ranges == [[0, 4], [4, 7]]
 
+    def test_compute_ranges_indentation_precedes_long_word(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Indentation shares a range with the start of a word wider than the display."""
+
+        self._setup_dependencies(test_context)
+        from orca import braille
+
+        ranges = braille._compute_ranges("    " + "a" * 139, -1, 40)
+        assert ranges == [[0, 40], [40, 80], [80, 120], [120, 143]]
+
+    def test_compute_ranges_leading_words_precede_long_word(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Whole words before an over-long word fill the display width."""
+
+        self._setup_dependencies(test_context)
+        from orca import braille
+
+        ranges = braille._compute_ranges("ab cd " + "e" * 50, -1, 20)
+        assert ranges == [[0, 20], [20, 40], [40, 56]]
+
+    def test_compute_ranges_indentation_kept_when_line_fits(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """A line that fits the display stays a single range, indentation included."""
+
+        self._setup_dependencies(test_context)
+        from orca import braille
+
+        ranges = braille._compute_ranges("    hello", -1, 40)
+        assert ranges == [[0, 9]]
+
+    def test_update_viewport_keeps_indentation_on_display(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Keep the viewport at the line start when indentation precedes a long word."""
+
+        self._setup_dependencies(test_context)
+        from orca import braille
+
+        # Flat review reports the offset of the first word, so the cursor offset for an
+        # indented line is non-zero and the viewport is moved to that cursor's range.
+        line_string = "    -b2sums=('" + "8c4fb59e" * 16 + "'"
+        braille._clear()
+        braille._set_lines([braille.Line(braille.Region(line_string, 0))])
+
+        braille._update_viewport_for_cursor(True, 0, 4, line_string)
+        assert braille._STATE.viewport[0] == 0
+
     def test_get_region_at_cell_returns_region(self, test_context: OrcaTestContext) -> None:
         """Return the region and offset for a given cell."""
 

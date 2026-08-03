@@ -1637,25 +1637,34 @@ def _compute_ranges(string: str, focus_offset: int, display_width: int) -> list[
     ranges: list[list[int]] = []
     span: list[int] = []
     for start, end in words:
+        word_start = start
         if span and end - span[0] > display_width:
+            if end - word_start > display_width:
+                # This word gets split regardless, so ending the span here preserves no word
+                # boundary. Fill it with as much of the word as fits.
+                word_start = span[0] + display_width
+                span[1] = word_start
             ranges.append(span)
             span = []
         if not span:
             # Subdivide long words that exceed the display width.
-            word_length = end - start
+            word_length = end - word_start
             if word_length > display_width:
                 display_widths = word_length // display_width
                 if display_widths:
                     ranges.extend(
-                        [start + i * display_width, start + (i + 1) * display_width]
+                        [
+                            word_start + i * display_width,
+                            word_start + (i + 1) * display_width,
+                        ]
                         for i in range(display_widths)
                     )
                     if word_length % display_width:
-                        span = [start + display_widths * display_width, end]
+                        span = [word_start + display_widths * display_width, end]
                     else:
                         continue
             else:
-                span = [start, end]
+                span = [word_start, end]
         else:
             span[1] = end
         if end == focus_offset:
