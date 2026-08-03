@@ -1,3 +1,45 @@
+51.beta - 3 August 2026
+
+Extensions:
+
+* Add support for localized strings.
+
+* Fix persistence of set_current_voice().
+
+* Add more lifecycle hooks.
+
+Web:
+
+* Respect aria-busy when presenting (or not) live regions.
+
+* Fix multiple issues related to table presentation.
+
+* Fix presentation of Chrome's history table.
+
+* Don't present the value as a percent when the widget has the
+  "indeterminate" state.
+
+General:
+
+* Fix regression in presenting name of Orca's color-chooser buttons.
+
+* Report the number of available items in list boxes (as opposed to
+  an unchecked count).
+
+* Fix false positive which triggered flat review reset in terminals.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  cs              Czech                     Daniel Rusek
+  de              German                    Christian Kirbach
+  hu              Hungarian                 Attila Hammer
+  ka              Georgian                  Ekaterine Papava
+  kk              Kazakh                    Baurzhan Muftakhidinov
+  sl              Slovenian                 Martin
+  uk              Ukrainian                 Yuri Chornoivan
+
+=========
+
 51.alpha - 20 July 2026
 
 New Features:
