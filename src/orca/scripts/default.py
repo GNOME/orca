@@ -443,6 +443,10 @@ class Script(script.Script):
                 msg = "DEFAULT: Event is for last saved cursor position"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
+            if caret_navigator.get_navigator().last_input_event_was_navigation_command():
+                msg = "DEFAULT: Event is for position set by Orca's caret navigation"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
             msg = "DEFAULT: Position matches but proceeding due to navigation reason"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             presentation_manager.get_manager().interrupt_presentation()
