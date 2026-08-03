@@ -55,7 +55,10 @@ class Utilities(script_utilities.Utilities):
         # tree all the way to the top; other times, we cannot get the parent, but can still
         # get the children. The fallback search handles the latter scenario.
         result = super().top_level_object(obj, use_fallback_search=True)
-        if result is not None and AXObject.get_role(result) not in self._top_level_roles():
+        if (
+            result is not None
+            and AXObject.get_role(result) not in AXUtilities.get_top_level_roles()
+        ):
             tokens = ["QT: Top level object", result, "lacks expected role."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 

@@ -389,6 +389,19 @@ class AXUtilitiesRole:
         return roles
 
     @staticmethod
+    def get_top_level_roles() -> list[Atspi.Role]:
+        """Returns the list of roles we consider top-level objects"""
+
+        roles = [
+            Atspi.Role.DIALOG,
+            Atspi.Role.FILE_CHOOSER,
+            Atspi.Role.FRAME,
+            Atspi.Role.WINDOW,
+            Atspi.Role.ALERT,
+        ]
+        return roles
+
+    @staticmethod
     def get_tree_related_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider tree related"""
 

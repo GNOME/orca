@@ -242,3 +242,22 @@ class AXUtilitiesObject:
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return matches
+
+    @staticmethod
+    def path_comparison(path1: list[int], path2: list[int]) -> int:
+        """Returns -1, 0, or 1 to indicate if path1 is before, the same, or after path2."""
+
+        if path1 == path2:
+            return 0
+
+        size = max(len(path1), len(path2))
+        path1 = (path1 + [-1] * size)[:size]
+        path2 = (path2 + [-1] * size)[:size]
+
+        for x in range(min(len(path1), len(path2))):
+            if path1[x] < path2[x]:
+                return -1
+            if path1[x] > path2[x]:
+                return 1
+
+        return 0

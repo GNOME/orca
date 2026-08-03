@@ -579,7 +579,7 @@ class StructuralNavigator(Extension):
         current_path = AXObject.get_path(obj)
         for match in objects:
             path = AXObject.get_path(match)
-            comparison = script.utilities.path_comparison(path, current_path)
+            comparison = AXUtilities.path_comparison(path, current_path)
             # A descendant of the focused object is always "after" it in path terms,
             # but the caret may have already moved past that descendant's location.
             if comparison > 0 and self._caret_is_past_descendant(obj, match):

@@ -290,6 +290,26 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
+    def is_error_for_contents(
+        obj: Atspi.Accessible,
+        contents: list[tuple[Atspi.Accessible, int, int, str]] | None = None,
+    ) -> bool:
+        """Returns True of obj is an error message for the contents."""
+
+        if not contents:
+            return False
+
+        if not AXUtilitiesRelation.get_is_error_for(obj):
+            return False
+
+        for acc, _start, _end, _string in contents:
+            targets = AXUtilitiesRelation.get_error_message(acc)
+            if targets is not None and obj in targets:
+                return True
+
+        return False
+
+    @staticmethod
     def get_flows_from(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj flows from."""
 

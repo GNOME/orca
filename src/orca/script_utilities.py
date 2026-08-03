@@ -53,8 +53,6 @@ from .ax_utilities import AXUtilities
 from .ax_utilities_text import TextUnit
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-
     from .ax_utilities_text import CaretSetReason
 
 
@@ -298,42 +296,9 @@ class Utilities:
 
         return AXUtilities.is_link(obj)
 
-    def _top_level_roles(self) -> list[Atspi.Role]:
-        # TODO - JD: Move this into AXUtilities.
-        roles = [
-            Atspi.Role.DIALOG,
-            Atspi.Role.FILE_CHOOSER,
-            Atspi.Role.FRAME,
-            Atspi.Role.WINDOW,
-            Atspi.Role.ALERT,
-        ]
-        return roles
-
-    def _find_window_with_descendant(self, child: Atspi.Accessible) -> Atspi.Accessible | None:
-        """A terrible, non-performant workaround for broken ancestry."""
-
-        if not AXObject.is_valid(child):
-            return None
-
-        app = AXUtilities.get_application(child)
-        if app is None:
-            return None
-
-        for i in range(AXObject.get_child_count(app)):
-            window = AXObject.get_child(app, i)
-            if AXUtilities.find_descendant(window, lambda x: x == child) is not None:
-                tokens = ["SCRIPT UTILITIES:", window, "contains", child]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return window
-
-            tokens = ["SCRIPT UTILITIES:", window, "does not contain", child]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        return None
-
     def _is_top_level_object(self, obj: Atspi.Accessible) -> bool:
         return (
-            AXObject.get_role(obj) in self._top_level_roles()
+            AXObject.get_role(obj) in AXUtilities.get_top_level_roles()
             and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.APPLICATION
         )
 
@@ -351,7 +316,7 @@ class Utilities:
         if rv is None and use_fallback_search:
             msg = "SCRIPT UTILITIES: Attempting to find top-level object via fallback search"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            rv = self._find_window_with_descendant(obj)
+            rv = AXUtilities.find_window_with_descendant(obj)
 
         return rv
 
@@ -369,46 +334,6 @@ class Utilities:
             return False
 
         return top_level == focus_manager.get_manager().get_active_window()
-
-    @staticmethod
-    def path_comparison(path1: list[int], path2: list[int]) -> int:
-        """Returns -1, 0, or 1 to indicate if path1 is before, the same, or after path2."""
-
-        # TODO - JD: Move into AXUtilities.
-
-        if path1 == path2:
-            return 0
-
-        size = max(len(path1), len(path2))
-        path1 = (path1 + [-1] * size)[:size]
-        path2 = (path2 + [-1] * size)[:size]
-
-        for x in range(min(len(path1), len(path2))):
-            if path1[x] < path2[x]:
-                return -1
-            if path1[x] > path2[x]:
-                return 1
-
-        return 0
-
-    def _find_all_descendants(
-        self,
-        root: Atspi.Accessible | None,
-        include_if: Callable[[Atspi.Accessible], bool] | None = None,
-        exclude_if: Callable[[Atspi.Accessible], bool] | None = None,
-    ) -> list[Atspi.Accessible]:
-        # TODO - JD: Move this into AXUtilities.
-        if root is None:
-            return []
-
-        # Don't bother if the root is a 'pre' or 'code' element. Those often have
-        # nothing but a TON of static text leaf nodes, which we want to ignore.
-        if AXUtilities.is_code(root):
-            tokens = ["SCRIPT UTILITIES: Returning 0 descendants for pre/code", root]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return []
-
-        return AXUtilities.find_all_descendants(root, include_if, exclude_if)
 
     def unrelated_labels(
         self,
@@ -465,7 +390,7 @@ class Utilities:
                 return True
             return only_showing and not AXUtilities.is_showing(x)
 
-        labels = self._find_all_descendants(root, _include, _exclude)
+        labels = AXUtilities.find_all_descendants(root, _include, _exclude)
 
         root_name = AXObject.get_name(root)
 
@@ -561,26 +486,6 @@ class Utilities:
         """Expands obj, which is a descendant of an object already being expanded."""
 
         return self.expand_eocs(obj, start_offset, end_offset)
-
-    def is_error_for_contents(
-        self,
-        obj: Atspi.Accessible,
-        contents: list[tuple[Atspi.Accessible, int, int, str]] | None = None,
-    ) -> bool:
-        """Returns True of obj is an error message for the contents."""
-
-        if not contents:
-            return False
-
-        if not AXUtilities.get_is_error_for(obj):
-            return False
-
-        for acc, _start, _end, _string in contents:
-            targets = AXUtilities.get_error_message(acc)
-            if targets is not None and obj in targets:
-                return True
-
-        return False
 
     def deleted_text(self, event: Atspi.Event) -> str:
         """Tries to determine the real deleted text for the given event. Because app bugs."""

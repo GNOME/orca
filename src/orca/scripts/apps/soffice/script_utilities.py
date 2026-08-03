@@ -75,7 +75,10 @@ class Utilities(script_utilities.Utilities):
 
     def _is_top_level_object(self, obj: Atspi.Accessible) -> bool:
         # https://bugs.documentfoundation.org/show_bug.cgi?id=160806
-        if AXObject.get_parent(obj) is None and AXObject.get_role(obj) in self._top_level_roles():
+        if (
+            AXObject.get_parent(obj) is None
+            and AXObject.get_role(obj) in AXUtilities.get_top_level_roles()
+        ):
             tokens = ["SOFFICE:", obj, "has no parent. Treating as top-level."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
             return True

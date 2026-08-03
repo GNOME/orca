@@ -2070,7 +2070,9 @@ class Utilities(script_utilities.Utilities):
             if not AXUtilities.is_web_element(child):
                 continue
             subtree.append(child)
-            subtree.extend(self._find_all_descendants(child, _include, _exclude))
+            # Code blocks tend to contain nothing but a TON of static text leaf nodes.
+            if not AXUtilities.is_code(child):
+                subtree.extend(AXUtilities.find_all_descendants(child, _include, _exclude))
             if end_obj in subtree:
                 break
 
@@ -2079,7 +2081,8 @@ class Utilities(script_utilities.Utilities):
 
         if end_obj not in subtree:
             subtree.append(end_obj)
-            subtree.extend(self._find_all_descendants(end_obj, _include, _exclude))
+            if not AXUtilities.is_code(end_obj):
+                subtree.extend(AXUtilities.find_all_descendants(end_obj, _include, _exclude))
 
         end_obj_parent = AXObject.get_parent(end_obj)
         end_obj_index = AXObject.get_index_in_parent(end_obj)
@@ -2113,7 +2116,7 @@ class Utilities(script_utilities.Utilities):
         self._selection_anchor_and_focus = (start, end)
 
         def _cmp(obj1, obj2):
-            return self.path_comparison(AXObject.get_path(obj1), AXObject.get_path(obj2))
+            return AXUtilities.path_comparison(AXObject.get_path(obj1), AXObject.get_path(obj2))
 
         old_subtree = self._get_subtree(old_start, old_end)
         if start == old_start and end == old_end:
@@ -2244,7 +2247,7 @@ class Utilities(script_utilities.Utilities):
                 reason = "useless image"
             elif self.is_link_ancestor_of_image_in_contents(obj, contents):
                 reason = "link ancestor of image in contents"
-            elif self.is_error_for_contents(obj, contents):
+            elif AXUtilities.is_error_for_contents(obj, contents):
                 reason = "error for contents"
             elif self._is_labelling_contents(obj, contents):
                 reason = "labels other contents"

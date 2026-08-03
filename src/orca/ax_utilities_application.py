@@ -30,6 +30,7 @@ from gi.repository import Atspi, GLib
 
 from . import ax_cache_manager, debug
 from .ax_object import AXObject
+from .ax_utilities_object import AXUtilitiesObject
 
 
 class _AXUtilitiesApplicationCache:
@@ -85,6 +86,29 @@ class AXUtilitiesApplication:
             f"{AXUtilitiesApplication.get_application_toolkit_version(obj)})"
         )
         return string
+
+    @staticmethod
+    def find_window_with_descendant(child: Atspi.Accessible) -> Atspi.Accessible | None:
+        """A terrible, non-performant workaround for broken ancestry."""
+
+        if not AXObject.is_valid(child):
+            return None
+
+        app = AXUtilitiesApplication.get_application(child)
+        if app is None:
+            return None
+
+        for i in range(AXObject.get_child_count(app)):
+            window = AXObject.get_child(app, i)
+            if AXUtilitiesObject.find_descendant(window, lambda x: x == child) is not None:
+                tokens = ["AXUtilitiesApplication:", window, "contains", child]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return window
+
+            tokens = ["AXUtilitiesApplication:", window, "does not contain", child]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        return None
 
     @staticmethod
     def get_all_applications(

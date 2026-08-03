@@ -466,7 +466,7 @@ class TestStructuralNavigator:
                 return 1
             return 0
 
-        mock_script.utilities.path_comparison.side_effect = mock_path_comparison
+        essential_modules["orca.AXUtilities"].path_comparison.side_effect = mock_path_comparison
 
         result = nav._get_object_in_direction(mock_script, objects, True, NavigationType.LINK)
         assert result == mock_obj3
@@ -510,7 +510,7 @@ class TestStructuralNavigator:
                 return 1
             return 0
 
-        mock_script.utilities.path_comparison.side_effect = mock_path_comparison
+        essential_modules["orca.AXUtilities"].path_comparison.side_effect = mock_path_comparison
 
         result = nav._get_object_in_direction(mock_script, objects, False, NavigationType.LINK)
         assert result == mock_obj1
