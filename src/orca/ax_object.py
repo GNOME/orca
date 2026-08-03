@@ -272,6 +272,26 @@ class AXObject:
         return AXObject._CACHE.get_dead_status(obj) is True
 
     @staticmethod
+    def revalidate_if_known_dead(obj: Atspi.Accessible) -> bool:
+        """Retries a direct role query for an object previously believed to be dead."""
+
+        if obj is None:
+            return False
+        if not AXObject.object_is_known_dead(obj):
+            return True
+
+        try:
+            role = Atspi.Accessible.get_role(obj)
+        except GLib.GError:
+            return False
+
+        if role == Atspi.Role.INVALID:
+            return False
+
+        AXObject._set_known_dead_status(obj, False)
+        return True
+
+    @staticmethod
     def check_hung(
         obj: Atspi.Accessible | None,
         app: Atspi.Accessible | None = None,

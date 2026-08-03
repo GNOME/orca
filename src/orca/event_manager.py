@@ -960,6 +960,17 @@ class EventManager:
 
         app = AXUtilities.get_application(event.source)
         if AXObject.is_dead(event.source, app) or AXUtilities.is_defunct(event.source):
+            if (
+                event_type.startswith("window:activate")
+                and AXObject.object_is_known_dead(event.source)
+                and AXObject.revalidate_if_known_dead(event.source)
+            ):
+                app = AXUtilities.get_application(event.source)
+                if not AXObject.is_dead(event.source, app) and not AXUtilities.is_defunct(
+                    event.source
+                ):
+                    return False
+
             tokens = ["EVENT MANAGER: Ignoring defunct object:", event.source]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
