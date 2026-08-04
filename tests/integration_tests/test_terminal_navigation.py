@@ -76,6 +76,27 @@ def test_nano_line_navigation_repaint_speaks_each_line_once(
 
 
 @pytest.mark.native_app
+def test_vim_line_navigation_speaks_only_the_current_line(
+    gtk3_terminal_vim_scroll: NativeAppSession,
+) -> None:
+    """Tests that scrolling line navigation in Vim speaks the caret's line and nothing else."""
+
+    session = gtk3_terminal_vim_scroll
+    settle(session)
+
+    # Each arrow key repaints Vim's pending command area and ruler, and scrolls a row in.
+    for line_number in range(2, 13):
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        actual = helpers.speech(session, quiescence=0.4, overall=3.0)
+        assert _spoken_lines(actual) == [f"line {line_number:02d}"], actual
+
+    for line_number in range(11, 1, -1):
+        keyboard.tap_key(keyboard.KEYSYM_UP)
+        actual = helpers.speech(session, quiescence=0.4, overall=3.0)
+        assert _spoken_lines(actual) == [f"line {line_number:02d}"], actual
+
+
+@pytest.mark.native_app
 def test_pager_navigation_speaks_each_page(gtk3_terminal_pager: NativeAppSession) -> None:
     """Tests that paging through Less forward and back speaks each newly shown page."""
 

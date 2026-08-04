@@ -296,19 +296,47 @@ class AXUtilitiesEvent:
         )
 
     @staticmethod
-    def _repeats_terminal_line_navigation_repaint_line(event: Atspi.Event) -> bool:
+    def _get_terminal_line_navigation_repaint_line(obj: Atspi.Accessible) -> str | None:
+        """Returns the line a recent repaint of obj presented, if there was one."""
+
         prior = AXUtilitiesEvent._LAST_TERMINAL_LINE_NAVIGATION_REPAINT_LINE
         if prior is None:
-            return False
+            return None
 
         obj_key, timestamp, line = prior
-        if obj_key != ax_cache_manager.get_object_key(event.source):
-            return False
+        if obj_key != ax_cache_manager.get_object_key(obj):
+            return None
 
         if time.monotonic() - timestamp > AXUtilitiesEvent.TERMINAL_REPAINT_EVENT_WINDOW_SECONDS:
+            return None
+
+        return line
+
+    @staticmethod
+    def _repeats_terminal_line_navigation_repaint_line(event: Atspi.Event) -> bool:
+        line = AXUtilitiesEvent._get_terminal_line_navigation_repaint_line(event.source)
+        if line is None or not line.strip():
             return False
 
-        return bool(line.strip()) and event.any_data.strip() == line.strip()
+        return event.any_data.strip() == line.strip()
+
+    @staticmethod
+    def _insertion_includes_caret_line(event: Atspi.Event) -> bool:
+        """Returns True if the inserted text overlaps the line the caret is on."""
+
+        _line, start, end = AXText.get_line_at_offset(event.source)
+        return event.detail1 < end and start < event.detail1 + event.detail2
+
+    @staticmethod
+    def _terminal_caret_line_is_redundant(obj: Atspi.Accessible) -> bool:
+        """Returns True if the caret's line in obj was already presented via a repaint."""
+
+        # A repaint shifts the contents out from under the offset _did_line_change saved.
+        repaint_line = AXUtilitiesEvent._get_terminal_line_navigation_repaint_line(obj)
+        if repaint_line == AXText.get_line_at_offset(obj)[0]:
+            return True
+
+        return not AXUtilitiesEvent._did_line_change(obj)
 
     @staticmethod
     def _is_terminal_line_navigation_repaint(event: Atspi.Event) -> bool:
@@ -601,7 +629,7 @@ class AXUtilitiesEvent:
                 result == TextEventReason.NAVIGATION_BY_PAGE
                 or (
                     result == TextEventReason.NAVIGATION_BY_LINE
-                    and not AXUtilitiesEvent._did_line_change(obj)
+                    and AXUtilitiesEvent._terminal_caret_line_is_redundant(obj)
                 )
             ):
                 result = TextEventReason.AUTO_INSERTION_UNPRESENTABLE
@@ -805,6 +833,14 @@ class AXUtilitiesEvent:
                 # it again is noise.
                 if AXUtilitiesEvent._repeats_terminal_line_navigation_repaint_line(event):
                     return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
+                # A partial row is the ruler, the status line, or the pending command area.
+                # Scrolling can leave the caret's offset unchanged, so the caret's new line
+                # may arrive without a caret-moved event to present it.
+                if not AXUtilitiesEvent._insertion_includes_caret_line(event):
+                    if "\n" not in event.any_data:
+                        return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
+                    AXUtilitiesEvent._save_terminal_line_navigation_repaint_line(event)
+                    return TextEventReason.TERMINAL_LINE_NAVIGATION_REPAINT
             return TextEventReason.AUTO_INSERTION_PRESENTABLE
         if has_selected:
             return TextEventReason.SELECTED_TEXT_INSERTION

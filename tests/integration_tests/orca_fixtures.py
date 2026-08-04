@@ -211,6 +211,16 @@ _gtk3_terminal_vim = _make_terminal_fixture(
     files={"doc.txt": "hello\n"},
 )
 
+_VIM_DOC_LINE_COUNT = 20
+_VIM_DOC = "\n".join(f"line {n:02d}" for n in range(1, _VIM_DOC_LINE_COUNT + 1)) + "\n"
+# scrolloff forces a scroll on each arrow key; showcmd repaints the pending command area.
+_gtk3_terminal_vim_scroll = _make_terminal_fixture(
+    "gtk3_terminal_vim_scroll",
+    binary_names=("vim",),
+    args=("-u", "NONE", "-i", "NONE", "-n", "-c", "set ruler showcmd scrolloff=2", "doc.txt"),
+    files={"doc.txt": _VIM_DOC},
+)
+
 
 def _run_native_app(
     tmp_path_factory: pytest.TempPathFactory,
