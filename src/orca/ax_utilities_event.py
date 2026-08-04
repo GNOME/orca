@@ -53,7 +53,13 @@ from .ax_utilities_text import AXUtilitiesText, CaretSetReason
 from .ax_value import AXValue
 
 if TYPE_CHECKING:
+    from collections.abc import Hashable
+
+    from .input_event import InputEvent
     from .input_event_manager import InputEventManager
+
+    TerminalDeletionRecord = tuple[Hashable, float, str]
+    TerminalRepaintRecord = tuple[Hashable, InputEvent | None, str]
 
 
 class TextEventReason(enum.Enum):
@@ -275,8 +281,8 @@ class AXUtilitiesEvent:
     TERMINAL_REPAINT_EVENT_WINDOW_SECONDS = 1.0
 
     _CACHE = _AXUtilitiesEventCache()
-    _LAST_TERMINAL_LINE_NAVIGATION_DELETION: tuple[object, float, str] | None = None
-    _LAST_TERMINAL_LINE_NAVIGATION_REPAINT_LINE: tuple[object, float, str] | None = None
+    _LAST_TERMINAL_LINE_NAVIGATION_DELETION: TerminalDeletionRecord | None = None
+    _LAST_TERMINAL_LINE_NAVIGATION_REPAINT_LINE: TerminalRepaintRecord | None = None
 
     @staticmethod
     def _save_terminal_line_navigation_deletion(event: Atspi.Event) -> None:
@@ -288,51 +294,57 @@ class AXUtilitiesEvent:
         AXUtilitiesEvent._LAST_TERMINAL_LINE_NAVIGATION_REPAINT_LINE = None
 
     @staticmethod
-    def _save_terminal_line_navigation_repaint_line(event: Atspi.Event) -> None:
+    def _save_terminal_line_navigation_repaint_line(
+        event: Atspi.Event, mgr: InputEventManager
+    ) -> None:
         AXUtilitiesEvent._LAST_TERMINAL_LINE_NAVIGATION_REPAINT_LINE = (
             ax_cache_manager.get_object_key(event.source),
-            time.monotonic(),
+            mgr.get_last_input_event(),
             AXText.get_line_at_offset(event.source)[0],
         )
 
     @staticmethod
-    def _get_terminal_line_navigation_repaint_line(obj: Atspi.Accessible) -> str | None:
-        """Returns the line a recent repaint of obj presented, if there was one."""
+    def _get_terminal_line_navigation_repaint_line(
+        obj: Atspi.Accessible, mgr: InputEventManager
+    ) -> str | None:
+        """Returns the line this keypress's repaint of obj presented, if there was one."""
 
         prior = AXUtilitiesEvent._LAST_TERMINAL_LINE_NAVIGATION_REPAINT_LINE
         if prior is None:
             return None
 
-        obj_key, timestamp, line = prior
+        obj_key, saved_event, line = prior
         if obj_key != ax_cache_manager.get_object_key(obj):
             return None
 
-        if time.monotonic() - timestamp > AXUtilitiesEvent.TERMINAL_REPAINT_EVENT_WINDOW_SECONDS:
+        if not mgr.last_event_equals_or_is_release_for_event(saved_event):
             return None
 
         return line
 
     @staticmethod
-    def _repeats_terminal_line_navigation_repaint_line(event: Atspi.Event) -> bool:
-        line = AXUtilitiesEvent._get_terminal_line_navigation_repaint_line(event.source)
+    def _repeats_terminal_line_navigation_repaint_line(
+        event: Atspi.Event, mgr: InputEventManager
+    ) -> bool:
+        line = AXUtilitiesEvent._get_terminal_line_navigation_repaint_line(event.source, mgr)
         if line is None or not line.strip():
             return False
 
         return event.any_data.strip() == line.strip()
 
     @staticmethod
-    def _insertion_includes_caret_line(event: Atspi.Event) -> bool:
-        """Returns True if the inserted text overlaps the line the caret is on."""
+    def _insertion_is_within_caret_line(event: Atspi.Event) -> bool:
+        """Returns True if the inserted text falls entirely within the line the caret is on."""
 
         _line, start, end = AXText.get_line_at_offset(event.source)
-        return event.detail1 < end and start < event.detail1 + event.detail2
+        return start <= event.detail1 and event.detail1 + event.detail2 <= end
 
     @staticmethod
-    def _terminal_caret_line_is_redundant(obj: Atspi.Accessible) -> bool:
+    def _terminal_caret_line_is_redundant(obj: Atspi.Accessible, mgr: InputEventManager) -> bool:
         """Returns True if the caret's line in obj was already presented via a repaint."""
 
         # A repaint shifts the contents out from under the offset _did_line_change saved.
-        repaint_line = AXUtilitiesEvent._get_terminal_line_navigation_repaint_line(obj)
+        repaint_line = AXUtilitiesEvent._get_terminal_line_navigation_repaint_line(obj, mgr)
         if repaint_line == AXText.get_line_at_offset(obj)[0]:
             return True
 
@@ -629,7 +641,7 @@ class AXUtilitiesEvent:
                 result == TextEventReason.NAVIGATION_BY_PAGE
                 or (
                     result == TextEventReason.NAVIGATION_BY_LINE
-                    and AXUtilitiesEvent._terminal_caret_line_is_redundant(obj)
+                    and AXUtilitiesEvent._terminal_caret_line_is_redundant(obj, mgr)
                 )
             ):
                 result = TextEventReason.AUTO_INSERTION_UNPRESENTABLE
@@ -826,20 +838,20 @@ class AXUtilitiesEvent:
                 and mgr.last_event_was_line_navigation()
             ):
                 if AXUtilitiesEvent._is_terminal_line_navigation_repaint(event):
-                    AXUtilitiesEvent._save_terminal_line_navigation_repaint_line(event)
+                    AXUtilitiesEvent._save_terminal_line_navigation_repaint_line(event, mgr)
                     return TextEventReason.TERMINAL_LINE_NAVIGATION_REPAINT
                 # VTE can draw the row scrolled into view as a separate insertion after the
                 # repaint. If the repaint handling already presented exactly that line, saying
                 # it again is noise.
-                if AXUtilitiesEvent._repeats_terminal_line_navigation_repaint_line(event):
+                if AXUtilitiesEvent._repeats_terminal_line_navigation_repaint_line(event, mgr):
                     return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
-                # A partial row is the ruler, the status line, or the pending command area.
-                # Scrolling can leave the caret's offset unchanged, so the caret's new line
-                # may arrive without a caret-moved event to present it.
-                if not AXUtilitiesEvent._insertion_includes_caret_line(event):
+                # Only an insertion confined to the caret's line is content, such as a recalled
+                # shell command. Anything wider drags in the ruler and status line, and scrolling
+                # can leave the caret's offset unchanged, so present the caret's line instead.
+                if not AXUtilitiesEvent._insertion_is_within_caret_line(event):
                     if "\n" not in event.any_data:
                         return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
-                    AXUtilitiesEvent._save_terminal_line_navigation_repaint_line(event)
+                    AXUtilitiesEvent._save_terminal_line_navigation_repaint_line(event, mgr)
                     return TextEventReason.TERMINAL_LINE_NAVIGATION_REPAINT
             return TextEventReason.AUTO_INSERTION_PRESENTABLE
         if has_selected:

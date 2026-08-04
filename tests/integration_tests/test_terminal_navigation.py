@@ -18,7 +18,7 @@ import pytest
 
 from . import helpers
 from .harness import keyboard
-from .terminal_helpers import settle
+from .terminal_helpers import settle, type_text
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -26,6 +26,7 @@ if TYPE_CHECKING:
 
 _NANO_LINE_COUNT = 30
 _NANO_LINES = frozenset(f"line {number}" for number in range(1, _NANO_LINE_COUNT + 1))
+_VIM_BOTTOM_LINES = (*(f"line {number:02d}" for number in range(1, 13)), "same", "same")
 
 
 def _spoken_lines(utterances: list[str]) -> list[str]:
@@ -94,6 +95,43 @@ def test_vim_line_navigation_speaks_only_the_current_line(
         keyboard.tap_key(keyboard.KEYSYM_UP)
         actual = helpers.speech(session, quiescence=0.4, overall=3.0)
         assert _spoken_lines(actual) == [f"line {line_number:02d}"], actual
+
+
+@pytest.mark.native_app
+def test_vim_line_navigation_from_bottom_row_omits_the_ruler(
+    gtk3_terminal_vim_bottom: NativeAppSession,
+) -> None:
+    """Tests that a scroll which repaints the caret's line and the ruler speaks only the line."""
+
+    session = gtk3_terminal_vim_bottom
+    settle(session)
+
+    for line in _VIM_BOTTOM_LINES[1:]:
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        actual = helpers.speech(session, quiescence=0.4, overall=3.0)
+        assert _spoken_lines(actual) == [line], actual
+
+    for line in reversed(_VIM_BOTTOM_LINES[:-1]):
+        keyboard.tap_key(keyboard.KEYSYM_UP)
+        actual = helpers.speech(session, quiescence=0.4, overall=3.0)
+        assert _spoken_lines(actual) == [line], actual
+
+
+@pytest.mark.native_app
+def test_shell_history_recall_speaks_the_recalled_command(
+    gtk3_terminal_shell: NativeAppSession,
+) -> None:
+    """Tests that recalling a command from the shell's history speaks what was recalled."""
+
+    session = gtk3_terminal_shell
+    settle(session)
+
+    type_text("echo hi\n")
+    session.reader.drain(quiescence_timeout=0.5, overall_timeout=3.0)
+    session.reader.reset()
+
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    assert helpers.speech(session) == ["echo hi"]
 
 
 @pytest.mark.native_app

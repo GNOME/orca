@@ -220,6 +220,15 @@ _gtk3_terminal_vim_scroll = _make_terminal_fixture(
     args=("-u", "NONE", "-i", "NONE", "-n", "-c", "set ruler showcmd scrolloff=2", "doc.txt"),
     files={"doc.txt": _VIM_DOC},
 )
+# Without scrolloff the caret sits on the row next to the ruler, so the scroll repaints both.
+# The last two lines are identical so that reversing direction lands on the same text twice.
+_VIM_BOTTOM_DOC = "\n".join(f"line {n:02d}" for n in range(1, 13)) + "\nsame\nsame\n"
+_gtk3_terminal_vim_bottom = _make_terminal_fixture(
+    "gtk3_terminal_vim_bottom",
+    binary_names=("vim",),
+    args=("-u", "NONE", "-i", "NONE", "-n", "-c", "set ruler showcmd", "doc.txt"),
+    files={"doc.txt": _VIM_BOTTOM_DOC},
+)
 
 
 def _run_native_app(
