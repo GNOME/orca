@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-07-20 15:17+0000\n"
-"PO-Revision-Date: 2026-08-06 03:05+0330\n"
+"PO-Revision-Date: 2026-08-06 03:19+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: \n"
 "Language: fa\n"
@@ -4505,7 +4505,7 @@ msgstr "کوچک‌نمایی"
 #: src/orca/cmdnames.py:1212
 msgctxt "mathcat"
 msgid "Zoom in completely"
-msgstr ""
+msgstr "بزرگ‌نمایی کامل"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command goes all the way back
@@ -4513,7 +4513,7 @@ msgstr ""
 #: src/orca/cmdnames.py:1217
 msgctxt "mathcat"
 msgid "Zoom out completely"
-msgstr ""
+msgstr "کوچک‌نمایی کامل"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the first item.
@@ -4599,7 +4599,7 @@ msgstr "یک خانه به پایین رفتن"
 #: src/orca/cmdnames.py:1270
 msgctxt "mathcat"
 msgid "Increase navigation granularity"
-msgstr ""
+msgstr "افزایش ریزدانگی پیمایش"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command cycles the navigation
@@ -4607,7 +4607,7 @@ msgstr ""
 #: src/orca/cmdnames.py:1275
 msgctxt "mathcat"
 msgid "Decrease navigation granularity"
-msgstr ""
+msgstr "کاهش ریزدانگی پیمایش"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command toggles whether navigation
@@ -4647,7 +4647,7 @@ msgstr "خواندن مورد کنونی"
 #: src/orca/cmdnames.py:1300
 msgctxt "mathcat"
 msgid "Read current cell"
-msgstr ""
+msgstr "خواندن خانهٔ کنونی"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command gives a structural
@@ -4679,7 +4679,7 @@ msgstr "شرح مورد کنونی"
 #: src/orca/cmdnames.py:1320
 msgctxt "mathcat"
 msgid "Where am I"
-msgstr ""
+msgstr "کجایم"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command announces the user's
@@ -4695,7 +4695,7 @@ msgstr "کجایم (با جزییات)"
 #: src/orca/cmdnames.py:1330
 msgctxt "mathcat"
 msgid "Return to last position"
-msgstr ""
+msgstr "بازگشت به آخرین موقعیت"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). Place markers are bookmarks within
@@ -4727,7 +4727,7 @@ msgstr "خواندن نشانهٔ جا"
 #: src/orca/cmdnames.py:1350
 msgctxt "mathcat"
 msgid "Describe place marker"
-msgstr ""
+msgstr "شرح نشانهٔ جا"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command copies the current
@@ -5836,7 +5836,7 @@ msgstr "نقل قول‌ها"
 #: src/orca/guilabels.py:53
 msgctxt "Context"
 msgid "Code blocks"
-msgstr ""
+msgstr "بلوک‌های کد"
 
 #. Translators: Some users want to hear additional information when entering
 #. different types of content. When enabled, Orca will announce when a document
@@ -5845,7 +5845,7 @@ msgstr ""
 #: src/orca/guilabels.py:59
 msgctxt "Context"
 msgid "Embedded documents"
-msgstr ""
+msgstr "مستندات تعبیه شده"
 
 #. Translators: Some users want to hear additional information when entering
 #. different types of content. If this checkbox is checked, Orca will announce
@@ -5914,19 +5914,19 @@ msgstr "حالت تمرکز خودکار"
 
 #: src/orca/guilabels.py:111
 msgid ""
-"Automatic focus mode causes Orca to switch to focus mode when you navigate into "
-"a form field or other interactive widget."
+"Automatic focus mode causes Orca to switch to focus mode when you navigate into a "
+"form field or other interactive widget."
 msgstr ""
-"حالت تمرکز خودکار موجب می‌شود هنگامی که به زمینهٔ فرم یا ابزارکی تعاملی پیمایش "
-"می‌کنید اورکا به حالت تمرکز وارد شود."
+"حالت تمرکز خودکار موجب می‌شود هنگامی که به زمینهٔ فرم یا ابزارکی تعاملی پیمایش می‌کنید "
+"اورکا به حالت تمرکز وارد شود."
 
 #: src/orca/guilabels.py:118
 msgid ""
-"Native navigation refers to keyboard commands handled by the application, such "
-"as Tab, Page Up, Page Down, and Enter."
+"Native navigation refers to keyboard commands handled by the application, such as "
+"Tab, Page Up, Page Down, and Enter."
 msgstr ""
-"پیمایش بومی به دستورهای صفحه‌کلیدی اشاره دارد که به دست برنامه مدیریت می‌شود؛ چون "
-"جهش، صفحه بالا، صفحه پایین و ورود."
+"پیمایش بومی به دستورهای صفحه‌کلیدی اشاره دارد که به دست برنامه مدیریت می‌شود؛ چون جهش، "
+"صفحه بالا، صفحه پایین و ورود."
 
 #. Translators: This setting controls whether Orca automatically enables sticky
 #. focus mode for web applications (such as Facebook Messenger) and Electron apps
@@ -5940,11 +5940,11 @@ msgstr "حالت تمرکز چسبناک خودکار برای برنامه‌ه
 
 #: src/orca/guilabels.py:133
 msgid ""
-"Automatic sticky focus mode causes Orca to detect web applications and Electron "
-"apps and stay in focus mode until toggled off by command."
+"Automatic sticky focus mode causes Orca to detect web applications and Electron apps "
+"and stay in focus mode until toggled off by command."
 msgstr ""
-"حالت تمرکز چسبناک خودکار موجب می‌شود اورکا کاره‌های وب و الکترون را تشخیص داده و "
-"تا زمان خاموش شدن با دستور در حالت تمرکز بماند."
+"حالت تمرکز چسبناک خودکار موجب می‌شود اورکا کاره‌های وب و الکترون را تشخیص داده و تا "
+"زمان خاموش شدن با دستور در حالت تمرکز بماند."
 
 #. Translators: A single braille cell on a refreshable braille display consists
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
@@ -6232,8 +6232,7 @@ msgstr "واژه‌نامهٔ تلفّظ"
 msgid ""
 "Customize how words are spoken by adding words and replacement text to the "
 "pronunciation dictionary."
-msgstr ""
-"سفارشی سازی چگونگی گفتن واژه‌ها با افزودن واژه و متن جایگزینش در واژه‌نامهٔ تلفّظ."
+msgstr "سفارشی سازی چگونگی گفتن واژه‌ها با افزودن واژه و متن جایگزینش در واژه‌نامهٔ تلفّظ."
 
 #. Translators: This is a label for a column header in Orca's pronunciation
 #. dictionary. The pronunciation dictionary allows the user to correct words
@@ -6484,11 +6483,11 @@ msgstr "پیمایش ریاضی"
 
 #: src/orca/guilabels.py:530
 msgid ""
-"When enabled, Orca handles the arrow keys, Home, and End to move through content "
-"by character, word, or line."
+"When enabled, Orca handles the arrow keys, Home, and End to move through content by "
+"character, word, or line."
 msgstr ""
-"هنگام به کار افتادن، اوکار کلیدهای جهت* خانه و پایان را برای جابه‌جایی بین محتوا "
-"با نویسه، واژه یا خط مدیریت می‌کند."
+"هنگام به کار افتادن، اوکار کلیدهای جهت* خانه و پایان را برای جابه‌جایی بین محتوا با "
+"نویسه، واژه یا خط مدیریت می‌کند."
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to chat applications such as instant messaging.
@@ -6526,10 +6525,10 @@ msgstr "حالت خواب"
 
 #: src/orca/guilabels.py:564
 msgid ""
-"Sleep mode causes Orca to behave as if it were not running for a given "
-"application. The default keybinding to toggle sleep mode on or off is "
-"Shift+Alt+Ctrl+Q. This can be changed in Commands. An application must be "
-"running to add it to the sleep mode applications list."
+"Sleep mode causes Orca to behave as if it were not running for a given application. "
+"The default keybinding to toggle sleep mode on or off is Shift+Alt+Ctrl+Q. This can "
+"be changed in Commands. An application must be running to add it to the sleep mode "
+"applications list."
 msgstr ""
 
 #. Translators: This label appears above a list of applications on the Sleep Mode
@@ -6576,13 +6575,11 @@ msgstr "پیمایش ساختاری"
 
 #: src/orca/guilabels.py:597
 msgid ""
-"When enabled, alphanumeric keys can be used to quickly jump between elements. "
-"For example, H moves to the next heading, K to the next link. Add Shift to move "
-"backwards."
+"When enabled, alphanumeric keys can be used to quickly jump between elements. For "
+"example, H moves to the next heading, K to the next link. Add Shift to move backwards."
 msgstr ""
-"هنگام به کار افتادن، کلیدهای حروفعددی می‌توانند برای پرش سریع بین عنصرها استفاده "
-"شوند. برای نمونه H به سرایند بعدی و K به پیوند بعدی می‌رود. افزودن تبدیل برای "
-"حرکت معکوس."
+"هنگام به کار افتادن، کلیدهای حروفعددی می‌توانند برای پرش سریع بین عنصرها استفاده شوند. "
+"برای نمونه H به سرایند بعدی و K به پیوند بعدی می‌رود. افزودن تبدیل برای حرکت معکوس."
 
 #. Translators: This is a label for a switch that controls whether structural
 #. navigation wraps around when reaching the top or bottom of a document.
@@ -6599,11 +6596,11 @@ msgstr "درازای شی بزرگ"
 
 #: src/orca/guilabels.py:618
 msgid ""
-"Large object length defines the minimum number of characters an element must "
-"have to be included when using the large object navigation shortcuts."
+"Large object length defines the minimum number of characters an element must have to "
+"be included when using the large object navigation shortcuts."
 msgstr ""
-"درازای شی بزرگ کمینهٔ شماره نویسه‌هایی را که عنصرها باید هنگام استفاده از "
-"میان‌برهای پیمایش شی بزرگ برای شامل شدن داشته باشند تعریف می‌کند."
+"درازای شی بزرگ کمینهٔ شماره نویسه‌هایی را که عنصرها باید هنگام استفاده از میان‌برهای "
+"پیمایش شی بزرگ برای شامل شدن داشته باشند تعریف می‌کند."
 
 #. Translators: This is a label for a switch that controls whether images
 #. without accessible names or descriptions are skipped during image
@@ -6689,7 +6686,7 @@ msgstr "همیشه"
 #: src/orca/guilabels.py:684
 msgctxt "flat review focus tracking"
 msgid "Automatically"
-msgstr ""
+msgstr "به صورت خودکار"
 
 #. Translators: This is one of the choices for when flat review should follow
 #. the focus and caret location. "Never" means flat review stays where the user
@@ -6896,13 +6893,13 @@ msgstr "برداشتن نماگر کاربری"
 #: src/orca/guilabels.py:840
 #, python-format
 msgid ""
-"You are about to remove profile %s. All unsaved settings and settings saved in "
-"this profile will be lost. Do you want to continue and remove this profile and "
-"all related settings?"
+"You are about to remove profile %s. All unsaved settings and settings saved in this "
+"profile will be lost. Do you want to continue and remove this profile and all related "
+"settings?"
 msgstr ""
-"دارید نماگر %s را برمی‌دارید. همهٔ تنظیمات ذخیره نشده و آن‌هایی که در این نماگر "
-"ذخیره شده‌اند از دست خواهند رفت. می‌خواهید ادامه داده و این نماگر را با همهٔ "
-"تنظیمات مربوطه بردارید؟"
+"دارید نماگر %s را برمی‌دارید. همهٔ تنظیمات ذخیره نشده و آن‌هایی که در این نماگر ذخیره "
+"شده‌اند از دست خواهند رفت. می‌خواهید ادامه داده و این نماگر را با همهٔ تنظیمات مربوطه "
+"بردارید؟"
 
 #: src/orca/guilabels.py:850
 msgid ""
@@ -6911,9 +6908,8 @@ msgid ""
 "\n"
 "Do you want to continue?"
 msgstr ""
-"تغییراتی ذخیره نشده دارید. ایجاد کردن نماگری جدید تنظیمات ذخیره شدهٔ کنونی را "
-"رونوشت خواهد کرد؛ نه تغییرات ذخیره نشده‌تان را. تغییرات ذخیره نشده از دست خواهند "
-"رفت.\n"
+"تغییراتی ذخیره نشده دارید. ایجاد کردن نماگری جدید تنظیمات ذخیره شدهٔ کنونی را رونوشت "
+"خواهد کرد؛ نه تغییرات ذخیره نشده‌تان را. تغییرات ذخیره نشده از دست خواهند رفت.\n"
 "\n"
 "می‌خواهید ادامه دهید؟"
 
@@ -7169,7 +7165,7 @@ msgstr "مورد سیاهه"
 #: src/orca/guilabels.py:1029
 msgctxt "structural navigation"
 msgid "Math Expression"
-msgstr ""
+msgstr "عبارت ریاضی"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7517,8 +7513,8 @@ msgid ""
 "These settings apply when the screen reader can identify the elements of the "
 "application's spell check dialog."
 msgstr ""
-"این تنظیمات هنگامی که صفحه‌خوان بتواند عنصرهای گفت‌وگوی بررسی نوشتاری برنامه را "
-"تشخیص دهد اعمال می‌شوند."
+"این تنظیمات هنگامی که صفحه‌خوان بتواند عنصرهای گفت‌وگوی بررسی نوشتاری برنامه را تشخیص "
+"دهد اعمال می‌شوند."
 
 #. Translators: This is a label for a widget associated with an Orca setting.
 #. When this option is enabled, Orca will spell out the current error in addition
@@ -7815,8 +7811,8 @@ msgstr "افزونه‌های کاربر"
 
 #: src/orca/guilabels.py:1490
 msgid ""
-"User extensions are Python files or packages in ~/.local/share/orca/extensions. "
-"Only approve extensions that you trust."
+"User extensions are Python files or packages in ~/.local/share/orca/extensions. Only "
+"approve extensions that you trust."
 msgstr ""
 
 #. Translators: This message is shown in the User Extensions preferences page
@@ -7832,7 +7828,7 @@ msgstr "هیچ افزونهٔ کاربری پیدا نشد."
 #: src/orca/guilabels.py:1502
 msgctxt "user extensions"
 msgid "Approve"
-msgstr ""
+msgstr "تأیید"
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. It is shown when a previously-approved extension has changed on disk and must
@@ -7840,7 +7836,7 @@ msgstr ""
 #: src/orca/guilabels.py:1507
 msgctxt "user extensions"
 msgid "Re-approve"
-msgstr ""
+msgstr "تأیید دوباره"
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button removes Orca's approval for the selected user extension.
@@ -7865,15 +7861,17 @@ msgstr "حذف"
 #: src/orca/guilabels.py:1520
 msgctxt "user extensions"
 msgid "Delete user extension?"
-msgstr ""
+msgstr "حذف افزونهٔ کاربر؟"
 
 #: src/orca/guilabels.py:1527
 #, python-format
 msgctxt "user extensions"
 msgid ""
-"The following extension will be permanently deleted from your user extensions "
-"folder: %s. Do you want to continue?"
+"The following extension will be permanently deleted from your user extensions folder: "
+"%s. Do you want to continue?"
 msgstr ""
+"افزونهٔ زیر برای همیشه از شاخهٔ افزونه‌های کاربرتان حذف خواهد شد: %s. می‌خواهید ادامه "
+"دهید؟"
 
 #. Translators: This message is presented when Orca fails to delete a user
 #. extension file or package directory from ~/.local/share/orca/extensions. The
@@ -7998,7 +7996,7 @@ msgstr "مکان"
 #: src/orca/guilabels.py:1617
 msgctxt "user extensions"
 msgid "Some commands were unbound due to conflicts."
-msgstr ""
+msgstr "برخی فرمان‌ها به خاطر تداخل نامحدود شدند."
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by whether the extension is approved, not approved, disabled, invalid,
@@ -8036,7 +8034,7 @@ msgstr "نامعتبر"
 #: src/orca/guilabels.py:1641
 msgctxt "user extensions"
 msgid "Approved"
-msgstr ""
+msgstr "تأیید شده"
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the extension has been
@@ -8061,7 +8059,7 @@ msgstr "تأیید نشده"
 #: src/orca/guilabels.py:1657
 msgctxt "user extensions"
 msgid "Modified; re-approval required"
-msgstr ""
+msgstr "تغییر یافته؛ نیازمند تأیید دوباره"
 
 #. Translators: This is the label for a widget in the preferences dialog.
 #: src/orca/guilabels.py:1660
@@ -8300,15 +8298,14 @@ msgstr "نماگر کنونی"
 #: src/orca/guilabels.py:1834
 #, python-format
 msgid ""
-"Profiles are collections of settings. The \"%s\" profile is loaded at startup. "
-"To edit an existing profile, select it below and then adjust settings on the "
-"other pages. To rename or delete the selected profile, use the Tab key to "
-"navigate to its associated buttons."
+"Profiles are collections of settings. The \"%s\" profile is loaded at startup. To "
+"edit an existing profile, select it below and then adjust settings on the other "
+"pages. To rename or delete the selected profile, use the Tab key to navigate to its "
+"associated buttons."
 msgstr ""
-"نماگرها مجموعه‌ای از تنظیمات هستند. نماگر «%s» در آغاز بار می‌شود. برای ویرایش "
-"نماگری موجود، از زیر انتخابش کرده و سپس تنظیمات را در صفحه‌های دیگر تغییر دهید. "
-"برای تغییر نام یا حذف نماگر گزیده از کلید جهش برای پیمایش به دکمه‌های مربوط "
-"استفاده کنید."
+"نماگرها مجموعه‌ای از تنظیمات هستند. نماگر «%s» در آغاز بار می‌شود. برای ویرایش نماگری "
+"موجود، از زیر انتخابش کرده و سپس تنظیمات را در صفحه‌های دیگر تغییر دهید. برای تغییر "
+"نام یا حذف نماگر گزیده از کلید جهش برای پیمایش به دکمه‌های مربوط استفاده کنید."
 
 #. Translators: This is a label in the Preferences dialog box. It applies to
 #. several options related to which progress bars Orca should speak and how
@@ -8336,32 +8333,27 @@ msgstr "گفتن همه با"
 
 #: src/orca/guilabels.py:1864
 msgid ""
-"Say All reads from the current location to the end of the document, pausing "
-"after each sentence or line based on the \"Say All By\" value."
+"Say All reads from the current location to the end of the document, pausing after "
+"each sentence or line based on the \"Say All By\" value."
 msgstr ""
-"گفتن همهٔ خوانش ّا از مکان کنونی به پایان سند. مکث کردن پس از هر جمله یا خط بر "
-"اساس مقدار «Say All By»."
+"گفتن همهٔ خوانش ّا از مکان کنونی به پایان سند. مکث کردن پس از هر جمله یا خط بر اساس "
+"مقدار «Say All By»."
 
 #: src/orca/guilabels.py:1874
 msgid ""
-"If enabled, you can use the arrow keys and/or structural navigation commands to "
-"move within the document while Say All is active."
+"If enabled, you can use the arrow keys and/or structural navigation commands to move "
+"within the document while Say All is active."
 msgstr ""
-"اگر به کار بیفتد می‌توانید هنگام فعّال بودن گفتن همه، از کلیدهای جهت‌دار یا "
-"دستورهای پیمایش ساختاری برای جابه‌جایی در سند استفاده کنید."
+"اگر به کار بیفتد می‌توانید هنگام فعّال بودن گفتن همه، از کلیدهای جهت‌دار یا دستورهای "
+"پیمایش ساختاری برای جابه‌جایی در سند استفاده کنید."
 
 #: src/orca/guilabels.py:1882
-#, fuzzy
-#| msgid ""
-#| "The \"Container Announcements\" settings determine what additional details "
-#| "will be announced as Say All moves through the document."
 msgid ""
-"The announcement settings determine which document changes, text formatting "
-"changes, and container boundaries will be announced as Say All moves through the "
-"document."
+"The announcement settings determine which document changes, text formatting changes, "
+"and container boundaries will be announced as Say All moves through the document."
 msgstr ""
-"تنظمیات «اعلامیه‌های بارگنج» تصمیم می‌گیرند هنگام جابه‌جایی گفتن همه در سند چه "
-"جزییات اضافی‌ای اعلام شوند."
+"تنظیمات اعلامیه مشخّص می‌کند که کدام تغییرات سند، تغییرات قالب‌بندی متن و محدوده‌های "
+"بارگنج به عنوان گفتن همهٔ جابه‌جایی‌ها در سند اعلام شوند."
 
 #: src/orca/guilabels.py:1887
 msgid "Speak object under mo_use"
@@ -8418,10 +8410,8 @@ msgstr "بسامد (ثانیه):"
 #. Caps Lock for the "laptop" keyboard layout. This string is a label for choosing
 #. which key(s) should be used as the Orca modifier.
 #: src/orca/guilabels.py:1925
-#, fuzzy
-#| msgid "Screen Reader _Modifier Key(s):"
 msgid "Screen Reader Modifier Keys"
-msgstr "کلید(های) _تغییردهندهٔ صفحه‌خوان:"
+msgstr "کلیدهای تغییر دهندهٔ صفحه‌خوان"
 
 #. Translators: This refers to the Insert key being used as the Orca modifier.
 #: src/orca/guilabels.py:1928
@@ -8432,10 +8422,8 @@ msgstr "درج"
 #. It is important that the translation be different from the one for "Insert" so
 #. that users can distinguish between the two keys.
 #: src/orca/guilabels.py:1933
-#, fuzzy
-#| msgid "Insert"
 msgid "Keypad Insert"
-msgstr "درج"
+msgstr "درج صفحهٔ عدد"
 
 #. Translators: This refers to the Caps Lock key being used as the Orca modifier.
 #: src/orca/guilabels.py:1936
@@ -8444,8 +8432,6 @@ msgstr "قفل تبدیل"
 
 #. Translators: This refers to the Shift Lock key being used as the Orca modifier.
 #: src/orca/guilabels.py:1939
-#, fuzzy
-#| msgid "shift lock"
 msgid "Shift Lock"
 msgstr "قفل تبدیل"
 
@@ -8572,10 +8558,8 @@ msgstr "نشانگر اشتباه نوشتاری"
 #. Translators: This is a label for a widget associated with when Orca will
 #. announce text formatting changes (e.g. bold, italic) when navigating.
 #: src/orca/guilabels.py:2037
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attribute changes"
-msgstr "ویژگی‌های متن"
+msgstr "تغییرات ویژگی‌های متن"
 
 #. Translators: This is an option for the text attribute changes setting.
 #: src/orca/guilabels.py:2040
@@ -8754,19 +8738,18 @@ msgid ""
 "speaking. The default keybinding to show or hide it is Orca+Shift+d. This can be "
 "changed in Commands."
 msgstr ""
-"نمایشگر گفتار روی صفحه پنجره‌ایست که نشان می‌دهد صفحه‌خوان دارد چه می‌گوید. ترکیب "
-"کلیدهای پیش‌گزیده برای نمایش یا نهفتنش اورکا+تبدیل+ی است. این ترکیب می‌تواند در "
-"دستورها عوض شود."
+"نمایشگر گفتار روی صفحه پنجره‌ایست که نشان می‌دهد صفحه‌خوان دارد چه می‌گوید. ترکیب کلیدهای "
+"پیش‌گزیده برای نمایش یا نهفتنش اورکا+تبدیل+ی است. این ترکیب می‌تواند در دستورها عوض شود."
 
 #: src/orca/guilabels.py:2176
 msgid ""
-"The on-screen braille display is a window intended for developers that shows "
-"what would be presented on a braille display. To show or hide it, assign a "
-"keybinding in Commands."
+"The on-screen braille display is a window intended for developers that shows what "
+"would be presented on a braille display. To show or hide it, assign a keybinding in "
+"Commands."
 msgstr ""
-"نمایشگر بریل روی صفحه پنجره‌ایست که برای توسعه‌دهندگان در نظر گرفته شده تا نشان "
-"دهد چه چیزی روی نمایشگر بریل ظاهر خواهد شد. برای نمایش یا نهفتنش ترکیب کلیدی در "
-"دستورها تنظیم کنید."
+"نمایشگر بریل روی صفحه پنجره‌ایست که برای توسعه‌دهندگان در نظر گرفته شده تا نشان دهد چه "
+"چیزی روی نمایشگر بریل ظاهر خواهد شد. برای نمایش یا نهفتنش ترکیب کلیدی در دستورها "
+"تنظیم کنید."
 
 #. Translators: This is the label of the Braille page in the Orca Preferences dialog.
 #: src/orca/guilabels.py:2182
@@ -8795,10 +8778,8 @@ msgstr "اعلامیه‌های بارگنج"
 #. Translators: This is the label for a group of settings which control
 #. announcements of document revision markup and text formatting changes.
 #: src/orca/guilabels.py:2204
-#, fuzzy
-#| msgid "Container Announcements"
 msgid "Change Announcements"
-msgstr "اعلامیه‌های بارگنج"
+msgstr "اعلامیه‌های تغییر"
 
 #. Translators: This is a heading for a group of toggleable widgets. Each one controls
 #. whether Orca announces entering a type of container (e.g. blockquotes, forms,
@@ -8817,11 +8798,11 @@ msgstr "پژواک"
 
 #: src/orca/guilabels.py:2221
 msgid ""
-"Key echo speaks the key you pressed. Typing echo speaks what was inserted into "
-"the document as a result of your typing."
+"Key echo speaks the key you pressed. Typing echo speaks what was inserted into the "
+"document as a result of your typing."
 msgstr ""
-"پژواک کلیدی را که فشرده‌اید خواهد گفت. پژواک نوشتن آن چه را که در نتیحهٔ نوشتنتان "
-"در سند درج شده خواهد گفت."
+"پژواک کلیدی را که فشرده‌اید خواهد گفت. پژواک نوشتن آن چه را که در نتیحهٔ نوشتنتان در "
+"سند درج شده خواهد گفت."
 
 #. Translators: This is the label of the General page in the Orca Preferences
 #. dialog. On that page there are a variety of general Orca settings which do
@@ -8865,26 +8846,20 @@ msgstr "تلفّظ"
 #. to mathematical expressions such as equations, fractions, and formulas encountered
 #. in documents and web pages. Presentation refers to how they are spoken and brailled.
 #: src/orca/guilabels.py:2261
-#, fuzzy
-#| msgid "Match options:"
 msgid "Math presentation"
-msgstr "گزینه‌های تطبیق:"
+msgstr "ارائه ریاضی"
 
 #. Translators: This refers to a human language such as English, Spanish, or German.
 #: src/orca/guilabels.py:2264
-#, fuzzy
-#| msgid "_Language:"
 msgid "Language:"
-msgstr "_زبان:"
+msgstr "زبان:"
 
 #. Translators: This is the style used when speaking mathematical expressions.
 #. "ClearSpeak" produces natural-sounding speech (e.g. "x squared") while
 #. "SimpleSpeak" is more literal and structured (e.g. "x superscript 2 end superscript").
 #: src/orca/guilabels.py:2269
-#, fuzzy
-#| msgid "Speech _system:"
 msgid "Speech style:"
-msgstr "_سامانهٔ صدا:"
+msgstr "سبک گفتار:"
 
 #. Translators: This is a verbosity level for speaking mathematical expressions.
 #. "Terse" provides minimal information, for example "square root x" instead of
@@ -8896,34 +8871,27 @@ msgstr ""
 #. Translators: This is a verbosity level for speaking mathematical expressions.
 #. "Medium" is the default and provides a moderate amount of detail.
 #: src/orca/guilabels.py:2278
-#, fuzzy
 msgid "Medium"
-msgstr "متوسط"
+msgstr "متوسّط"
 
 #. Translators: This is a verbosity level for speaking mathematical expressions.
 #. "Verbose" provides the most detail, for example "the square root of x" instead
 #. of "square root x".
 #: src/orca/guilabels.py:2283
-#, fuzzy
-#| msgid "Ver_bose"
 msgid "Verbose"
-msgstr "_پرگو"
+msgstr "پرگو"
 
 #. Translators: This is the braille code used to represent mathematical expressions.
 #. Examples include "Nemeth" (common in the US) and "UEB" (Unified English Braille).
 #: src/orca/guilabels.py:2287
-#, fuzzy
-#| msgid "Braille"
 msgid "Braille code:"
-msgstr "بریل"
+msgstr "کد بریل:"
 
 #. Translators: This is the format used when copying math content to the clipboard.
 #. Options include MathML, LaTeX, ASCIIMath, and Speech.
 #: src/orca/guilabels.py:2291
-#, fuzzy
-#| msgid "Dat_e format:"
 msgid "Copy format:"
-msgstr "قالب _تاریخ:"
+msgstr "رونوشت از قالب:"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. the label for a setting that controls navigation granularity. In Enhanced
@@ -8931,10 +8899,8 @@ msgstr "قالب _تاریخ:"
 #. Simple mode, each element is visited individually. In Character mode,
 #. individual symbols are visited one at a time.
 #: src/orca/guilabels.py:2298
-#, fuzzy
-#| msgid "Navigation keys"
 msgid "Navigation mode:"
-msgstr "کلیدهای پیمایش"
+msgstr "حالت پیمایش:"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. the label for a setting that controls how the current position is indicated
@@ -8942,10 +8908,8 @@ msgstr "کلیدهای پیمایش"
 #. the position. The options control which cells get those dots: none, only the
 #. first character, the first and last characters, or all characters.
 #: src/orca/guilabels.py:2305
-#, fuzzy
-#| msgid "Table navigation"
 msgid "Braille navigation highlight:"
-msgstr "پیمایش جدول"
+msgstr "برجسته سازی پیمایش بریل:"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. When this
 #. setting is enabled, navigating past the edge of a 2D structure like a matrix
@@ -8988,11 +8952,8 @@ msgstr "هیچ‌کدام"
 #. one of the braille highlight options. When set to First character, only the
 #. first cell of the current math item is highlighted with dots 7 and 8.
 #: src/orca/guilabels.py:2336
-#, fuzzy
-#| msgid "%d characters"
-#| msgid_plural "%d characters"
 msgid "First character"
-msgstr "%d نویسه"
+msgstr "نخستین نویسه"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the braille highlight options. When set to End points, the first and
@@ -9005,10 +8966,8 @@ msgstr ""
 #. one of the braille highlight options. When set to All cells, every cell of
 #. the current math item is highlighted with dots 7 and 8.
 #: src/orca/guilabels.py:2346
-#, fuzzy
-#| msgid "All cha_nnels"
 msgid "All cells"
-msgstr "همهٔ _کانال‌ها"
+msgstr "همهٔ خانه‌ها"
 
 #. Translators: This is the label of the Sound page in the Orca Preferences dialog.
 #. On that page there are settings related to sound output, including volume
@@ -9055,8 +9014,8 @@ msgstr "ویژگی‌های متن"
 
 #: src/orca/guilabels.py:2382
 msgid ""
-"Configure which text attributes are spoken and/or marked in braille, and the "
-"order in which they are presented."
+"Configure which text attributes are spoken and/or marked in braille, and the order in "
+"which they are presented."
 msgstr ""
 "پیکربندی ویژگی‌های متنی که در بریل گفته یا نشانه گذاری می‌شوند؛ به ترتیبی که ارائه "
 "می‌شوند."
@@ -9070,19 +9029,15 @@ msgstr "صدا"
 #. Translators: This is the label for a section in the Voice Sets preferences
 #. page where users can select and manage voice sets for different languages.
 #: src/orca/guilabels.py:2392
-#, fuzzy
-#| msgid "Voice Type Settings"
 msgid "Voice Sets"
-msgstr "تنظیمات گونهٔ صدا"
+msgstr "مجموعه‌های صدا"
 
 #. Translators: This is a label for a combo box that selects which voice set
 #. to configure. A voice set is a named collection of voice settings, such as
 #. the primary set or a language-specific set (e.g. Italian).
 #: src/orca/guilabels.py:2397
-#, fuzzy
-#| msgid "_Voice type:"
 msgid "Voice set:"
-msgstr "_گونهٔ صدا:"
+msgstr "مجموعهٔ صدا:"
 
 #. Translators: This is the title of a confirmation dialog shown when the user
 #. is about to delete a voice set. The %s is replaced with the voice set name.
@@ -9108,19 +9063,17 @@ msgstr ""
 #: src/orca/guilabels.py:2418
 #, python-format
 msgid ""
-"Voice sets are collections of voice types (such as default, uppercase, "
-"hyperlink, and system). The \"%s\" voice set contains the voice types for the "
-"current profile. Additional voice sets can be created for specific languages."
+"Voice sets are collections of voice types (such as default, uppercase, hyperlink, and "
+"system). The \"%s\" voice set contains the voice types for the current profile. "
+"Additional voice sets can be created for specific languages."
 msgstr ""
 
 #. Translators: This is the label of the Voice Types page in the Orca
 #. Preferences dialog, where users configure voices for different contexts
 #. (e.g. default, uppercase, hyperlink, system).
 #: src/orca/guilabels.py:2436
-#, fuzzy
-#| msgid "_Voice type:"
 msgid "Voice Types"
-msgstr "_گونهٔ صدا:"
+msgstr "گونه‌های صدا"
 
 #. Translators: This is the label for a group of settings on the Voice preferences
 #. page. It contains widgets that control whether speech is enabled and how
@@ -9143,31 +9096,24 @@ msgstr "تنظیمات %s"
 #. Translators: This is the heading for a group of language switching settings
 #. in the Voice preferences dialog.
 #: src/orca/guilabels.py:2452
-#, fuzzy
-#| msgid "Automatic language switching"
 msgid "Language Switching"
-msgstr "عوض کردن خودکار زبان"
+msgstr "عوض کردن زبان"
 
 #. Translators: This is a label for a setting that controls whether Orca will
 #. automatically switch the speech synthesizer's language based on the language
 #. of document content being spoken (e.g. text in a web page or word processor).
 #. It appears under a "Language Switching" group heading.
 #: src/orca/guilabels.py:2458
-#, fuzzy
-#| msgid "Document mode"
 msgid "Document content"
-msgstr "حالت سند"
+msgstr "محتوای سند"
 
 #. Translators: This is a label for a setting that controls whether Orca will
 #. automatically switch the speech synthesizer's language based on the language
 #. of UI elements being spoken (e.g. buttons, labels, and menus).
 #. It appears under a "Language Switching" group heading.
 #: src/orca/guilabels.py:2464
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "element of"
 msgid "UI elements"
-msgstr "عضو"
+msgstr "عنصرهای میانای کاربری"
 
 #. Translators: This is a label for a setting that controls whether Orca will
 #. only switch to languages that the user has explicitly configured a voice for.
@@ -9344,11 +9290,8 @@ msgstr "_حجم:"
 #. inflection (pitch range) of the current voice. More inflection means the voice
 #. varies its pitch more when speaking; less inflection means it sounds more monotone.
 #: src/orca/guilabels.py:2596
-#, fuzzy
-#| msgctxt "Braille indicator"
-#| msgid "Selection:"
 msgid "_Inflection:"
-msgstr "بخش:"
+msgstr "_آهنگ:"
 
 #. Translators: Having multiple voice types in Orca makes it possible for the
 #. user to more quickly identify properties of text non-visually, such as the
@@ -9742,27 +9685,21 @@ msgstr ""
 #. Translators: This is presented when the user cycles the text attribute change
 #. announcement mode. In this mode, formatting changes are not announced.
 #: src/orca/messages.py:61
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attributes: off."
-msgstr "ویژگی‌های متن"
+msgstr "ویژگی‌های متن: خاموش."
 
 #. Translators: This is presented when the user cycles the text attribute change
 #. announcement mode. In this mode, formatting changes are only announced in
 #. editable content.
 #: src/orca/messages.py:66
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attributes: editable text."
-msgstr "ویژگی‌های متن"
+msgstr "ویژگی‌های متن: متن ویرایش‌پذیر."
 
 #. Translators: This is presented when the user cycles the text attribute change
 #. announcement mode. In this mode, formatting changes are always announced.
 #: src/orca/messages.py:70
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attributes: on."
-msgstr "ویژگی‌های متن"
+msgstr "ویژگی‌های متن: روشن."
 
 #. Translators: Orca has a command which toggles all (other) Orca commands so that
 #. the associated keystroke can by consumed by the native application. For example,
@@ -10070,10 +10007,9 @@ msgstr "FILENAME"
 #. Translators: This message is presented when the user tries to approve an
 #. extension file that does not exist. The string substitution is the file path.
 #: src/orca/messages.py:300
-#, fuzzy, python-format
-#| msgid "string not found"
+#, python-format
 msgid "Extension not found: %s"
-msgstr "رشته پیدا نشد"
+msgstr "افزونه پیدا نشد: %s"
 
 #. Translators: This message is presented when a user extension has been approved
 #. for loading. The string substitution is the extension filename.
@@ -10922,10 +10858,8 @@ msgstr "از کار افتاده"
 #. Translators: This detailed message indicates that indentation will not be
 #. spoken.
 #: src/orca/messages.py:922
-#, fuzzy
-#| msgid "Simplified navigation disabled."
 msgid "Spoken indentation disabled."
-msgstr "ناوبری ساده شده از کار افتاد."
+msgstr "تورفتگی گفتاری از کار افتاد."
 
 #. Translators: This brief message indicates that indentation will be spoken.
 #: src/orca/messages.py:925
@@ -10936,10 +10870,8 @@ msgstr "به کار افتاده"
 #. Translators: This detailed message indicates that indentation will be
 #. spoken.
 #: src/orca/messages.py:929
-#, fuzzy
-#| msgid "Simplified navigation enabled."
 msgid "Spoken indentation enabled."
-msgstr "ناوبری ساده شده به کار افتاد."
+msgstr "تورفتگی گفتاری به کار افتاد."
 
 #. Translators: Orca announces when a widget has an associated error, such as
 #. disallowed characters in an input, or a must-check box that is not checked
@@ -10965,12 +10897,12 @@ msgstr "دانستن بیش‌تر.  زدن گریز برای خروج."
 #: src/orca/messages.py:954
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the screen "
-"reader's documentation, press F1. To get a list of the screen reader's "
-"shortcuts, press F2. To exit learn mode, press the escape key."
+"reader's documentation, press F1. To get a list of the screen reader's shortcuts, "
+"press F2. To exit learn mode, press the escape key."
 msgstr ""
-"وارد شدن به حالت آموزش.  زدن هر کلیدی برای شنیدن کاراییش.  زدن F1 برای دیدن "
-"مستندات صفحه‌خوان. زدن F2 برای گرفتن سیاههٔ میان‌برهای پیش‌گزیدهٔ صفحه‌خوان. زدن کلید "
-"گریز برای خروج از حالت آموزش."
+"وارد شدن به حالت آموزش.  زدن هر کلیدی برای شنیدن کاراییش.  زدن F1 برای دیدن مستندات "
+"صفحه‌خوان. زدن F2 برای گرفتن سیاههٔ میان‌برهای پیش‌گزیدهٔ صفحه‌خوان. زدن کلید گریز برای "
+"خروج از حالت آموزش."
 
 #. Translators: This message is presented when a user is navigating within
 #. an article and then navigates out of it.
@@ -11009,11 +10941,8 @@ msgstr "خروج از جزییات."
 #. document (e.g. an embedded PDF viewer or the rendered preview of a document)
 #. and then navigates out of it into the surrounding page.
 #: src/orca/messages.py:986
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving credit."
 msgid "leaving document."
-msgstr "ترک اعتبار."
+msgstr "ترک کردن سند."
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
@@ -14198,15 +14127,15 @@ msgstr "نگارش"
 
 #: src/orca/phonnames.py:47
 msgid ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, "
-"h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, "
-"o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, "
-"v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
+"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : "
+"hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, o : oscar, "
+"p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : victor, w : "
+"whiskey, x : xray, y : yankee, z : zulu"
 msgstr ""
-"ا : آبان, ب : بستنی, پ : پسته, ت : تانک, ث : ثریا, ج : جوجه, چ : چای, ح : حوله, "
-"خ : خمیر, د : دانیال, ذ : ذبیح, ر : راننده, ز : زمین, ژ : ژاله, س : سنگ, ش : "
-"شال, ص : صابون, ض : ضریح, ط : طلا, ظ : ظالم, ع : عسل, غ : غرفه, ف : فانوس, ق : "
-"قند, ک : کبوتر, گ : گل, ل : لوله, م : ماه, ن : نان, و : وان, ه : هسته, ی : یاس"
+"ا : آبان, ب : بستنی, پ : پسته, ت : تانک, ث : ثریا, ج : جوجه, چ : چای, ح : حوله, خ : "
+"خمیر, د : دانیال, ذ : ذبیح, ر : راننده, ز : زمین, ژ : ژاله, س : سنگ, ش : شال, ص : "
+"صابون, ض : ضریح, ط : طلا, ظ : ظالم, ع : عسل, غ : غرفه, ف : فانوس, ق : قند, ک : کبوتر, "
+"گ : گل, ل : لوله, م : ماه, ن : نان, و : وان, ه : هسته, ی : یاس"
 
 #. Translators: this attribute specifies the background color of the text.
 #. The value is an RGB value of the format "u,u,u".
@@ -16326,8 +16255,8 @@ msgstr "نوشتار"
 #~ msgstr ""
 #~ "درون‌ریزی تنظیمات از DIR در dconf (رونویسی تنظیمات کنونی).\n"
 #~ "برای پشتیبان‌گیری: ‪dconf dump /org/gnome/orca/ > backup.ini‬\n"
-#~ "برای بازگردانی: ‪dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/"
-#~ "orca/ < backup.ini"
+#~ "برای بازگردانی: ‪dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < "
+#~ "backup.ini"
 
 #~ msgid "DIR"
 #~ msgstr "DIR"
@@ -16505,8 +16434,7 @@ msgstr "نوشتار"
 #~ msgid "Toggle whether we provide chat room specific message histories"
 #~ msgstr "تغییر وضعیت این که تاریخچهٔ پیام‌های مخصوص اتاق گپ را فراهم کنیم یا نه"
 
-#~ msgid ""
-#~ "Toggle whether we prefix chat room messages with the name of the chat room"
+#~ msgid "Toggle whether we prefix chat room messages with the name of the chat room"
 #~ msgstr "تغییر وضعیت این که پیش از پیام‌های اتاق گپ، نام اتاق را بیاوریم یا نه"
 
 #~ msgid "Present the contents of the input line"
@@ -17135,8 +17063,7 @@ msgstr "نوشتار"
 #~ msgid "To activate press space."
 #~ msgstr "برای فعال‌سازی کلید فاصله را بفشارید."
 
-#~ msgid ""
-#~ "Use up or down arrow to select value. Or type in the desired numerical value."
+#~ msgid "Use up or down arrow to select value. Or type in the desired numerical value."
 #~ msgstr ""
 #~ "از کلیدهای جهتی بالا یا پایین برای انتخاب مقدار استفاده کنید. یا مقدار دلخواه "
 #~ "عددیتان را بنویسید."
@@ -17145,11 +17072,11 @@ msgstr "نوشتار"
 #~ msgstr "برای تغییر از کلیدهای جهتی استفاده کنید."
 
 #~ msgid ""
-#~ "To navigate, press left or right arrow. To move through items press up or "
-#~ "down arrow."
+#~ "To navigate, press left or right arrow. To move through items press up or down "
+#~ "arrow."
 #~ msgstr ""
-#~ "برای ناوبری، کلید جهت‌های راست و چپ را بفشارید. برای حرکت میان گزینه‌ها، "
-#~ "کلیدهای بالا یا پایین را بفشارید."
+#~ "برای ناوبری، کلید جهت‌های راست و چپ را بفشارید. برای حرکت میان گزینه‌ها، کلیدهای "
+#~ "بالا یا پایین را بفشارید."
 
 #~ msgid "To enter sub menu, press right arrow."
 #~ msgstr "برای ورود به زیرمنو، کلید جهت راست را فشار دهید."
@@ -17158,8 +17085,8 @@ msgstr "نوشتار"
 #~ "To decrease press left arrow, to increase press right arrow. To go to minimum "
 #~ "press home, and for maximum press end."
 #~ msgstr ""
-#~ "برای کاهش کلید جهت چپ را فشار دهید، برای افزایش کلید جهت راست را فشار دهید. "
-#~ "برای حداقل کلید خانه و برای حداکثر کلید پایان را فشار دهید."
+#~ "برای کاهش کلید جهت چپ را فشار دهید، برای افزایش کلید جهت راست را فشار دهید. برای "
+#~ "حداقل کلید خانه و برای حداکثر کلید پایان را فشار دهید."
 
 #~ msgctxt "structural navigation"
 #~ msgid "Interal Frames"
