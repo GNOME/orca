@@ -499,9 +499,13 @@ _BROWSER_APPS: dict[str, ModuleType] = {"chromium": chromium_browser}
 
 
 def _make_web_fixture(
-    page: str, *, caret_browsing: bool = False
+    page: str,
+    *,
+    caret_browsing: bool = False,
+    name: str | None = None,
+    scope: Literal["function", "class", "module", "package", "session"] = "session",
 ) -> Callable[..., Iterator[NativeAppSession]]:
-    @pytest.fixture(scope="session", name=Path(page).stem, params=["chromium"])
+    @pytest.fixture(scope=scope, name=name or Path(page).stem, params=["chromium"])
     def fixture(
         request: pytest.FixtureRequest,
         tmp_path_factory: pytest.TempPathFactory,
@@ -558,6 +562,12 @@ _web_inline_list_wrap = _make_web_fixture("web_inline_list_wrap.html")
 _web_nested_headings = _make_web_fixture("web_nested_headings.html")
 _web_label_inference = _make_web_fixture("web_label_inference.html")
 _web_structural_navigation = _make_web_fixture("web_structural_navigation.html")
+_web_native_text_selection = _make_web_fixture(
+    "web_structural_navigation.html",
+    caret_browsing=True,
+    name="web_native_text_selection",
+    scope="function",
+)
 _web_headings = _make_web_fixture("web_headings.html")
 _web_field_states = _make_web_fixture("web_field_states.html")
 _web_flat_review = _make_web_fixture("web_flat_review.html")

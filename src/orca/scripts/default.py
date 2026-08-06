@@ -71,6 +71,7 @@ from orca import (
     structural_navigator,
     system_information_presenter,
     table_navigator,
+    text_selection_presenter,
     typing_echo_presenter,
     where_am_i_presenter,
 )
@@ -254,9 +255,21 @@ class Script(script.Script):
         if input_event_manager.get_manager().last_event_was_caret_selection():
             handled = False
             if AXObject.supports_text(old_focus):
-                handled = self.utilities.handle_text_selection_change(old_focus) or handled
+                handled = (
+                    text_selection_presenter.get_presenter().handle_text_selection_change(
+                        self,
+                        old_focus,
+                    )
+                    or handled
+                )
             if AXObject.supports_text(new_focus):
-                handled = self.utilities.handle_text_selection_change(new_focus) or handled
+                handled = (
+                    text_selection_presenter.get_presenter().handle_text_selection_change(
+                        self,
+                        new_focus,
+                    )
+                    or handled
+                )
             if handled:
                 self.update_braille(new_focus)
                 return True
@@ -478,11 +491,17 @@ class Script(script.Script):
         if AXUtilities.has_selected_text(event.source):
             msg = "DEFAULT: Event source has text selections"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.utilities.handle_text_selection_change(event.source)
+            text_selection_presenter.get_presenter().handle_text_selection_change(
+                self,
+                event.source,
+            )
             return True
 
         text, _start, _end = AXUtilities.get_cached_selected_text(obj)
-        if text and self.utilities.handle_text_selection_change(obj):
+        if text and text_selection_presenter.get_presenter().handle_text_selection_change(
+            self,
+            obj,
+        ):
             msg = "DEFAULT: Event handled as text selection change"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -919,7 +938,7 @@ class Script(script.Script):
             AXUtilities.update_cached_selected_text(event.source)
             return True
 
-        self.utilities.handle_text_selection_change(event.source)
+        text_selection_presenter.get_presenter().handle_text_selection_change(self, event.source)
         self.update_braille(event.source)
         return True
 

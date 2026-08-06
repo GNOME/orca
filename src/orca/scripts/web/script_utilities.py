@@ -31,7 +31,6 @@
 
 from __future__ import annotations
 
-import functools
 import re
 import time
 import urllib
@@ -369,12 +368,6 @@ class Utilities(script_utilities.Utilities):
             in_document_content=self.in_document_content,
             is_boundary=self.is_top_level_document,
             is_text_block_element=self.is_text_block_element,
-        )
-        self._selection_anchor_and_focus: tuple[
-            Atspi.Accessible | None, Atspi.Accessible | None
-        ] = (
-            None,
-            None,
         )
         self._valid_child_roles: dict[Atspi.Role, list[Atspi.Role]] = {
             Atspi.Role.LIST: [Atspi.Role.LIST_ITEM],
@@ -1972,142 +1965,6 @@ class Utilities(script_utilities.Utilities):
             return []
 
         return contents
-
-    def _find_selection_boundary_object(
-        self,
-        root: Atspi.Accessible,
-        find_start: bool = True,
-    ) -> Atspi.Accessible | None:
-        string = AXUtilities.get_selected_text(root)[0]
-        if not string:
-            return None
-
-        if find_start and not string.startswith("\ufffc"):
-            return root
-
-        if not find_start and not string.endswith("\ufffc"):
-            return root
-
-        indices = list(range(AXObject.get_child_count(root)))
-        if not find_start:
-            indices.reverse()
-
-        for i in indices:
-            result = self._find_selection_boundary_object(AXObject.get_child(root, i), find_start)
-            if result:
-                return result
-
-        return None
-
-    def _get_selection_anchor_and_focus(
-        self,
-        root: Atspi.Accessible,
-    ) -> tuple[Atspi.Accessible | None, Atspi.Accessible | None]:
-        obj1 = self._find_selection_boundary_object(root, True)
-        obj2 = self._find_selection_boundary_object(root, False)
-        return obj1, obj2
-
-    def _get_subtree(
-        self,
-        start_obj: Atspi.Accessible,
-        end_obj: Atspi.Accessible,
-    ) -> list[Atspi.Accessible]:
-        if not (start_obj and end_obj):
-            return []
-
-        if AXObject.is_dead(start_obj):
-            msg = "INFO: Cannot get subtree: Start object is dead."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return []
-
-        def _include(x):
-            return x is not None
-
-        def _exclude(x):
-            return not AXUtilities.is_web_element(x)
-
-        subtree = []
-        start_obj_parent = AXObject.get_parent(start_obj)
-        for i in range(
-            AXObject.get_index_in_parent(start_obj),
-            AXObject.get_child_count(start_obj_parent),
-        ):
-            child = AXObject.get_child(start_obj_parent, i)
-            if not AXUtilities.is_web_element(child):
-                continue
-            subtree.append(child)
-            # Code blocks tend to contain nothing but a TON of static text leaf nodes.
-            if not AXUtilities.is_code(child):
-                subtree.extend(AXUtilities.find_all_descendants(child, _include, _exclude))
-            if end_obj in subtree:
-                break
-
-        if end_obj == start_obj:
-            return subtree
-
-        if end_obj not in subtree:
-            subtree.append(end_obj)
-            if not AXUtilities.is_code(end_obj):
-                subtree.extend(AXUtilities.find_all_descendants(end_obj, _include, _exclude))
-
-        end_obj_parent = AXObject.get_parent(end_obj)
-        end_obj_index = AXObject.get_index_in_parent(end_obj)
-        last_obj = AXObject.get_child(end_obj_parent, end_obj_index + 1) or end_obj
-
-        try:
-            end_index = subtree.index(last_obj)
-        except ValueError:
-            pass
-        else:
-            if last_obj == end_obj:
-                end_index += 1
-            subtree = subtree[:end_index]
-
-        return subtree
-
-    def handle_text_selection_change(
-        self,
-        obj: Atspi.Accessible,
-        speak_message: bool = True,
-    ) -> bool:
-        """Handles a change in the selected text."""
-
-        if not self.in_document_content(obj) or document_presenter.get_presenter().in_focus_mode(
-            self._script.app,
-        ):
-            return super().handle_text_selection_change(obj)
-
-        old_start, old_end = self._selection_anchor_and_focus
-        start, end = self._get_selection_anchor_and_focus(obj)
-        self._selection_anchor_and_focus = (start, end)
-
-        def _cmp(obj1, obj2):
-            return AXUtilities.path_comparison(AXObject.get_path(obj1), AXObject.get_path(obj2))
-
-        old_subtree = self._get_subtree(old_start, old_end)
-        if start == old_start and end == old_end:
-            descendants = old_subtree
-        else:
-            new_subtree = self._get_subtree(start, end)
-            descendants = sorted(
-                set(old_subtree).union(new_subtree),
-                key=functools.cmp_to_key(_cmp),
-            )
-
-        if not descendants:
-            return False
-
-        descendants_set = set(descendants)
-        for descendant in descendants:
-            if descendant not in (old_start, old_end, start, end) and AXUtilities.find_ancestor(
-                descendant,
-                lambda x: x in descendants_set,
-            ):
-                AXUtilities.update_cached_selected_text(descendant)
-            else:
-                super().handle_text_selection_change(descendant, speak_message)
-
-        return True
 
     def unrelated_labels(
         self,

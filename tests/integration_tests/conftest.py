@@ -104,6 +104,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_math,
     _web_missing_cells,
     _web_mixed_line_heights,
+    _web_native_text_selection,
     _web_nested_headings,
     _web_offscreen_labels,
     _web_option_removal,

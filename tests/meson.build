@@ -82,6 +82,7 @@ unit_tests = [
   'unit_tests/test_typing_echo_presenter.py',
   'unit_tests/test_table_navigator.py',
   'unit_tests/test_text_attribute_manager.py',
+  'unit_tests/test_text_selection_presenter.py',
   'unit_tests/test_where_am_i_presenter.py',
 ]
 
@@ -131,6 +132,9 @@ orca_integration_tests = [
   'integration_tests/test_web_label_inference.py',
   'integration_tests/test_web_mode_switching.py',
   'integration_tests/test_web_caret_text_navigation.py',
+  'integration_tests/test_web_native_character_selection.py',
+  'integration_tests/test_web_native_word_selection.py',
+  'integration_tests/test_web_native_line_selection.py',
   'integration_tests/test_web_code_block.py',
   'integration_tests/test_web_code_block_multiline.py',
   'integration_tests/test_web_weird_headings.py',
