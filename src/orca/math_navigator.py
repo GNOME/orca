@@ -167,7 +167,7 @@ class MathNavigator(Extension):
 
         # Re-pressing restarts at the outermost element and re-presents the whole expression.
         math_obj = self._math_object or obj
-        if speech := math_presenter.get_presenter().get_speech_for_math(math_obj):
+        if speech := math_presenter.get_presenter().expand_embedded_math(math_obj):
             presentation_manager.get_manager().speak_accessible_text(math_obj, speech)
         return True
 

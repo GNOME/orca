@@ -750,40 +750,6 @@ class Utilities(script_utilities.Utilities):
 
         return AXComponent.get_rect(obj)
 
-    def expand_eocs(
-        self,
-        obj: Atspi.Accessible,
-        start_offset: int = 0,
-        end_offset: int = -1,
-    ) -> str:
-        """Expands the current object replacing embedded object characters with their text."""
-
-        if not self.in_document_content(obj):
-            return super().expand_eocs(obj, start_offset, end_offset)
-
-        if self._has_grid_descendant(obj):
-            tokens = ["WEB: not expanding EOCs:", obj, "has grid descendant"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return ""
-
-        return self._expand_eocs_for_child(obj, start_offset, end_offset)
-
-    def _expand_eocs_for_child(
-        self,
-        obj: Atspi.Accessible,
-        start_offset: int = 0,
-        end_offset: int = -1,
-    ) -> str:
-        """Expands obj, whose document and grid-descendant status the caller has established."""
-
-        if not self.treat_as_text_object(obj):
-            return ""
-
-        if AXUtilities.is_math(obj) and AXObject.get_child_count(obj):
-            return speech_presenter.get_presenter().generate_speech_string(self._script, obj)
-
-        return super().expand_eocs(obj, start_offset, end_offset)
-
     def _adjust_contents_for_language(
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],

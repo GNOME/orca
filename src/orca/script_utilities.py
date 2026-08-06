@@ -274,7 +274,7 @@ class Utilities:
         name = AXObject.get_name(obj)
         if name:
             tokens.append(name)
-        text = self.expand_eocs(obj)
+        text = AXUtilities.expand_eocs(obj)
         if text and text not in tokens:
             tokens.append(text)
         else:
@@ -429,63 +429,6 @@ class Utilities:
         if restrict_to is None:
             restrict_to = self.get_top_level_document_for_object(obj)
         return AXUtilities.find_next_object(obj, restrict_to)
-
-    def expand_eocs(
-        self,
-        obj: Atspi.Accessible,
-        start_offset: int = 0,
-        end_offset: int = -1,
-    ) -> str:
-        """Expands the current object replacing embedded object characters with their text."""
-
-        text = AXText.get_substring(obj, start_offset, end_offset)
-        if "\ufffc" not in text:
-            return text
-
-        block_roles = [
-            Atspi.Role.HEADING,
-            Atspi.Role.LIST,
-            Atspi.Role.LIST_ITEM,
-            Atspi.Role.PARAGRAPH,
-            Atspi.Role.SECTION,
-            Atspi.Role.TABLE,
-            Atspi.Role.TABLE_CELL,
-            Atspi.Role.TABLE_ROW,
-        ]
-
-        to_build = list(text)
-        for i, char in enumerate(to_build):
-            if char == "\ufffc":
-                child = AXUtilities.find_child_at_offset(obj, i + start_offset)
-                result = self._expand_eocs_for_child(child)
-                if child and AXObject.get_role(child) in block_roles:
-                    result += " "
-                to_build[i] = result
-
-        result = "".join(to_build)
-        tokens = [
-            "SCRIPT UTILITIES: Expanded EOCs for",
-            obj,
-            f"range: {start_offset}:{end_offset}: '{result}'",
-        ]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if "\ufffc" in result:
-            msg = "SCRIPT UTILITIES: Unable to expand EOCs"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return ""
-
-        return result
-
-    def _expand_eocs_for_child(
-        self,
-        obj: Atspi.Accessible,
-        start_offset: int = 0,
-        end_offset: int = -1,
-    ) -> str:
-        """Expands obj, which is a descendant of an object already being expanded."""
-
-        return self.expand_eocs(obj, start_offset, end_offset)
 
     def deleted_text(self, event: Atspi.Event) -> str:
         """Tries to determine the real deleted text for the given event. Because app bugs."""

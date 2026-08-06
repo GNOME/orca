@@ -572,8 +572,8 @@ class MathPresenter(Extension):
 
         return MathPreferencesGrid(self)
 
-    def get_speech_for_math(self, obj: Atspi.Accessible) -> str:
-        """Given a math accessible, returns MathCAT speech or empty string on failure."""
+    def expand_embedded_math(self, obj: Atspi.Accessible) -> str:
+        """Returns the expanded text for an embedded math object."""
 
         if not self.is_available():
             return ""

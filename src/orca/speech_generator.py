@@ -3313,7 +3313,7 @@ class SpeechGenerator(generator.Generator):
     def _generate_math(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the math role."""
 
-        if speech := math_presenter.get_presenter().get_speech_for_math(obj):
+        if speech := math_presenter.get_presenter().expand_embedded_math(obj):
             result: list[Any] = [speech]
             result.extend(self.voice(DEFAULT, obj=obj))
             return result

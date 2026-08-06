@@ -301,7 +301,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.append(self.get_localized_role_name(o))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj))
 
-            string = self._script.utilities.expand_eocs(o)
+            string = AXUtilities.expand_eocs(o)
             if not string.strip():
                 continue
 
@@ -342,7 +342,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result: list[Any] = []
         for o in objs:
             string = (
-                self._script.utilities.expand_eocs(o)
+                AXUtilities.expand_eocs(o)
                 or AXObject.get_name(o)
                 or self.get_localized_role_name(o)
             )

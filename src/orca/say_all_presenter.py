@@ -348,7 +348,7 @@ class SayAllPresenter(Extension):
             skip, _reason = self._say_all_should_skip_content(content, contents)
             if skip:
                 continue
-            expanded = self._script.utilities.expand_eocs(content_obj, start, end)
+            expanded = AXUtilities.expand_eocs(content_obj, start, end)
             if not expanded.strip():
                 continue
             if first_obj is None:

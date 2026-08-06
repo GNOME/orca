@@ -32,6 +32,7 @@ from . import debug
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_text import AXText
+from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_role import AXUtilitiesRole
 
 if TYPE_CHECKING:
@@ -57,6 +58,266 @@ class CaretPolicy:
 
 class AXUtilitiesHypertext:
     """Hypertext and hyperlink utilities."""
+
+    @staticmethod
+    def _expand_eocs_in_subtree(
+        root: Atspi.Accessible,
+        start: tuple[Atspi.Accessible, int] | None,
+        end: tuple[Atspi.Accessible, int] | None,
+        include_start: bool,
+        include_end: bool,
+    ) -> str:
+        """Expands a subtree, trimming it at optional text boundaries."""
+
+        start_obj = start[0] if start is not None else None
+        end_obj = end[0] if end is not None else None
+        start_child = (
+            AXUtilitiesHypertext._direct_descendant(start_obj, root)
+            if start_obj is not None and start_obj != root
+            else None
+        )
+        end_child = (
+            AXUtilitiesHypertext._direct_descendant(end_obj, root)
+            if end_obj is not None and end_obj != root
+            else None
+        )
+
+        if not AXObject.supports_text(root):
+            first = AXObject.get_index_in_parent(start_child) if start_child is not None else 0
+            last = (
+                AXObject.get_index_in_parent(end_child)
+                if end_child is not None
+                else AXObject.get_child_count(root) - 1
+            )
+            return "".join(
+                AXUtilitiesHypertext._expand_eocs_in_subtree(
+                    child,
+                    start if child == start_child else None,
+                    end if child == end_child else None,
+                    include_start if child == start_child else True,
+                    include_end if child == end_child else True,
+                )
+                for index in range(first, last + 1)
+                if (child := AXObject.get_child(root, index)) is not None
+            )
+
+        count = AXText.get_character_count(root)
+        lower = start[1] + int(not include_start) if start is not None and start_obj == root else 0
+        upper = end[1] + int(include_end) if end is not None and end_obj == root else count
+        if start_child is not None:
+            lower = AXHypertext.get_character_offset_in_parent(start_child)
+        if end_child is not None:
+            upper = AXHypertext.get_character_offset_in_parent(end_child) + 1
+        lower = max(0, min(lower, count))
+        upper = max(0, min(upper, count))
+
+        boundaries = [child for child in (start_child, end_child) if child is not None]
+        if len(boundaries) == 2 and boundaries[0] == boundaries[1]:
+            boundaries.pop()
+        result = []
+        cursor = lower
+        for child in sorted(boundaries, key=AXHypertext.get_character_offset_in_parent):
+            offset = AXHypertext.get_character_offset_in_parent(child)
+            if not lower <= offset < upper:
+                continue
+            if cursor < offset:
+                result.append(AXUtilitiesHypertext.expand_eocs(root, cursor, offset))
+            result.append(
+                AXUtilitiesHypertext._expand_eocs_in_subtree(
+                    child,
+                    start if child == start_child else None,
+                    end if child == end_child else None,
+                    include_start if child == start_child else True,
+                    include_end if child == end_child else True,
+                )
+            )
+            cursor = offset + 1
+        if cursor < upper:
+            result.append(AXUtilitiesHypertext.expand_eocs(root, cursor, upper))
+        return "".join(result)
+
+    @staticmethod
+    def expand_eocs_in_range(
+        start_obj: Atspi.Accessible,
+        start_offset: int,
+        end_obj: Atspi.Accessible | None,
+        end_offset: int,
+        *,
+        include_start: bool = True,
+        include_end: bool = True,
+    ) -> str:
+        """Expands embedded objects between two accessible text positions."""
+
+        end_obj = end_obj or start_obj
+        if end_offset < 0:
+            end_offset = AXText.get_character_count(end_obj) - 1
+        if end_offset < 0:
+            return ""
+
+        comparison = AXUtilitiesHypertext.compare_text_positions(
+            start_obj,
+            start_offset,
+            end_obj,
+            end_offset,
+        )
+        if comparison > 0:
+            start_obj, end_obj = end_obj, start_obj
+            start_offset, end_offset = end_offset, start_offset
+            include_start, include_end = include_end, include_start
+
+        root = AXUtilitiesObject.get_common_ancestor(start_obj, end_obj)
+        if root is None:
+            tokens = [
+                "AXUtilitiesHypertext: No common ancestor for text endpoints",
+                start_obj,
+                start_offset,
+                end_obj,
+                end_offset,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return ""
+
+        result = AXUtilitiesHypertext._expand_eocs_in_subtree(
+            root,
+            (start_obj, start_offset),
+            (end_obj, end_offset),
+            include_start,
+            include_end,
+        )
+        tokens = [
+            "AXUtilitiesHypertext: Expanded EOCs between",
+            start_obj,
+            start_offset,
+            "and",
+            end_obj,
+            end_offset,
+            f"with endpoint inclusion {include_start}, {include_end}: '{result}'",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return result
+
+    @staticmethod
+    def expand_eocs(
+        obj: Atspi.Accessible,
+        start_offset: int = 0,
+        end_offset: int = -1,
+    ) -> str:
+        """Replaces embedded object characters in a text range with their text."""
+
+        if AXUtilitiesRole.is_math(obj):
+            if not AXObject.get_child_count(obj):
+                return ""
+            # pylint: disable-next=import-outside-toplevel
+            from . import math_presenter
+
+            return math_presenter.get_presenter().expand_embedded_math(obj)
+
+        if not AXUtilitiesHypertext.can_expand_embedded_object_as_text(obj):
+            return ""
+
+        if AXUtilitiesRole.is_grid(obj) or AXUtilitiesObject.find_descendant(
+            obj, AXUtilitiesRole.is_grid
+        ):
+            tokens = ["AXUtilitiesHypertext: Not expanding EOCs in", obj, "which contains a grid."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return ""
+
+        text = AXText.get_substring(obj, start_offset, end_offset)
+        if OBJECT_REPLACEMENT_CHARACTER not in text:
+            return text
+
+        block_role_predicates = (
+            AXUtilitiesRole.is_heading,
+            AXUtilitiesRole.is_list,
+            AXUtilitiesRole.is_list_item,
+            AXUtilitiesRole.is_paragraph,
+            AXUtilitiesRole.is_section,
+            AXUtilitiesRole.is_table,
+            AXUtilitiesRole.is_table_cell,
+            AXUtilitiesRole.is_table_row,
+        )
+        to_build = list(text)
+        for index, char in enumerate(to_build):
+            if char != OBJECT_REPLACEMENT_CHARACTER:
+                continue
+            child = AXUtilitiesHypertext.find_child_at_offset(obj, index + start_offset)
+            result = AXUtilitiesHypertext.expand_eocs(child) if child is not None else ""
+            if child is not None and any(predicate(child) for predicate in block_role_predicates):
+                result += " "
+            to_build[index] = result
+
+        result = "".join(to_build)
+        tokens = [
+            "AXUtilitiesHypertext: Expanded EOCs for",
+            obj,
+            f"range {start_offset}:{end_offset}: '{result}'",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if OBJECT_REPLACEMENT_CHARACTER in result:
+            msg = "AXUtilitiesHypertext: Unable to expand EOCs"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return ""
+        return result
+
+    @staticmethod
+    def can_expand_embedded_object_as_text(obj: Atspi.Accessible | None) -> bool:
+        """Returns True if an embedded object can contribute text to its parent."""
+
+        if not AXObject.supports_text(obj) or not AXText.get_character_count(obj):
+            return False
+        return not any(
+            predicate(obj)
+            for predicate in (
+                AXUtilitiesRole.is_button,
+                AXUtilitiesRole.is_embedded,
+                AXUtilitiesRole.is_list_box,
+                AXUtilitiesRole.is_table,
+                AXUtilitiesRole.is_table_row,
+            )
+        )
+
+    @staticmethod
+    def _direct_descendant(
+        descendant: Atspi.Accessible,
+        ancestor: Atspi.Accessible,
+    ) -> Atspi.Accessible | None:
+        """Returns the child of ancestor which contains descendant."""
+
+        child = descendant
+        parent = AXObject.get_parent(child)
+        while parent is not None and parent != ancestor:
+            child = parent
+            parent = AXObject.get_parent(child)
+        return child if parent == ancestor else None
+
+    @staticmethod
+    def compare_text_positions(
+        obj1: Atspi.Accessible,
+        offset1: int,
+        obj2: Atspi.Accessible,
+        offset2: int,
+    ) -> int:
+        """Returns the relative document order of two accessible text positions."""
+
+        if obj1 == obj2:
+            return (offset1 > offset2) - (offset1 < offset2)
+
+        if AXUtilitiesObject.is_ancestor(obj2, obj1):
+            child = AXUtilitiesHypertext._direct_descendant(obj2, obj1)
+            if child is not None:
+                child_offset = AXHypertext.get_character_offset_in_parent(child)
+                if child_offset >= 0:
+                    if offset1 != child_offset:
+                        return (offset1 > child_offset) - (offset1 < child_offset)
+                    return 0 if offset2 == 0 else -1
+
+        if AXUtilitiesObject.is_ancestor(obj1, obj2):
+            return -AXUtilitiesHypertext.compare_text_positions(obj2, offset2, obj1, offset1)
+
+        return AXUtilitiesObject.path_comparison(
+            AXObject.get_path(obj1),
+            AXObject.get_path(obj2),
+        )
 
     @staticmethod
     def find_child_at_offset(obj: Atspi.Accessible, offset: int) -> Atspi.Accessible | None:

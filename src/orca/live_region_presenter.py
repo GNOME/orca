@@ -290,7 +290,7 @@ class LiveRegionPresenter(Extension):
         if politeness == LivePoliteness.OFF:
             return True
 
-        text = self._add_name_to_content(container, script.utilities.expand_eocs(container))
+        text = self._add_name_to_content(container, AXUtilities.expand_eocs(container))
         if not text:
             tokens = ["LIVE REGION PRESENTER: Could not get deferred update from", container]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -677,14 +677,14 @@ class LiveRegionPresenter(Extension):
             if "\ufffc" not in event.any_data:
                 content = event.any_data
             else:
-                content = script.utilities.expand_eocs(
+                content = AXUtilities.expand_eocs(
                     event.source,
                     event.detail1,
                     event.detail1 + event.detail2,
                 )
         else:
             container = self._find_container(event.source)
-            content = script.utilities.expand_eocs(container)
+            content = AXUtilities.expand_eocs(container)
 
         return self._add_name_to_content(event.source, content)
 

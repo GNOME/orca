@@ -282,6 +282,31 @@ class AXUtilities:
 
     # From ax_utilities_hypertext.py
     @staticmethod
+    def expand_eocs_in_range(
+        start_obj: Atspi.Accessible,
+        start_offset: int,
+        end_obj: Atspi.Accessible | None,
+        end_offset: int,
+        *,
+        include_start: bool = True,
+        include_end: bool = True,
+    ) -> str: ...
+    @staticmethod
+    def expand_eocs(
+        obj: Atspi.Accessible,
+        start_offset: int = 0,
+        end_offset: int = -1,
+    ) -> str: ...
+    @staticmethod
+    def can_expand_embedded_object_as_text(obj: Atspi.Accessible | None) -> bool: ...
+    @staticmethod
+    def compare_text_positions(
+        obj1: Atspi.Accessible,
+        offset1: int,
+        obj2: Atspi.Accessible,
+        offset2: int,
+    ) -> int: ...
+    @staticmethod
     def find_next_context(
         obj: Atspi.Accessible | None, offset: int, policy: CaretPolicy
     ) -> tuple[Atspi.Accessible | None, int]: ...

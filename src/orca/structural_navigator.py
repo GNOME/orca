@@ -717,7 +717,7 @@ class StructuralNavigator(Extension):
                 len(list(AXObject.iter_children(obj, AXUtilities.is_page_tab))),
             )
 
-        if result := script.utilities.expand_eocs(obj):
+        if result := AXUtilities.expand_eocs(obj):
             return result
 
         if AXUtilities.is_link(obj):

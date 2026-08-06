@@ -1166,7 +1166,7 @@ class Script(script.Script):
     def say_phrase(self, obj: Atspi.Accessible, start_offset: int, end_offset: int) -> None:
         """Speaks the substring between start and end offset."""
 
-        phrase = self.utilities.expand_eocs(obj, start_offset, end_offset)
+        phrase = AXUtilities.expand_eocs(obj, start_offset, end_offset)
         if not phrase:
             return
 

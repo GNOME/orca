@@ -47,7 +47,12 @@ class TestAXUtilitiesHypertext:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Set up mocks for ax_utilities_hypertext dependencies."""
 
-        additional_modules = ["orca.ax_text", "orca.ax_utilities_role"]
+        additional_modules = [
+            "orca.ax_hypertext",
+            "orca.ax_text",
+            "orca.ax_utilities_object",
+            "orca.ax_utilities_role",
+        ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         debug_mock = essential_modules["orca.debug"]
@@ -56,7 +61,315 @@ class TestAXUtilitiesHypertext:
         debug_mock.LEVEL_INFO = 800
         debug_mock.debugLevel = 1000
 
+        essential_modules[
+            "orca.ax_utilities_object"
+        ].AXUtilitiesObject.find_descendant = test_context.Mock(return_value=None)
+        essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_grid = test_context.Mock(
+            return_value=False
+        )
+        essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_button = test_context.Mock(
+            return_value=False
+        )
+        essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_embedded = test_context.Mock(
+            return_value=False
+        )
+        essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_math = test_context.Mock(
+            return_value=False
+        )
+        essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_list_box = test_context.Mock(
+            return_value=False
+        )
+        essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_table = test_context.Mock(
+            return_value=False
+        )
+        essential_modules[
+            "orca.ax_utilities_role"
+        ].AXUtilitiesRole.is_table_row = test_context.Mock(return_value=False)
+        for name in (
+            "is_heading",
+            "is_list",
+            "is_list_item",
+            "is_paragraph",
+            "is_section",
+            "is_table_cell",
+        ):
+            setattr(
+                essential_modules["orca.ax_utilities_role"].AXUtilitiesRole,
+                name,
+                test_context.Mock(return_value=False),
+            )
+
         return essential_modules
+
+    def test_expand_eocs_in_range_in_same_object(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test endpoint inclusion is converted for the original expander."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import AXObject, AXText, AXUtilitiesHypertext
+
+        obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        test_context.patch_object(AXText, "get_character_count", return_value=10)
+        essential_modules[
+            "orca.ax_utilities_object"
+        ].AXUtilitiesObject.get_common_ancestor.return_value = obj
+
+        strings = {(obj, 2, 8): "selected"}
+        test_context.patch_object(
+            AXText,
+            "get_substring",
+            side_effect=lambda obj, start, end: strings[obj, start, end],
+        )
+        result = AXUtilitiesHypertext.expand_eocs_in_range(obj, 2, obj, 7)
+
+        assert result == "selected"
+
+    def test_expand_eocs_in_range_stops_at_embedded_child_endpoint(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test expansion recurses into the child containing the end endpoint."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import (
+            AXHypertext,
+            AXObject,
+            AXText,
+            AXUtilitiesHypertext,
+        )
+
+        parent = test_context.Mock(spec=Atspi.Accessible)
+        child = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXUtilitiesHypertext, "compare_text_positions", return_value=-1)
+        essential_modules[
+            "orca.ax_utilities_object"
+        ].AXUtilitiesObject.get_common_ancestor.return_value = parent
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        test_context.patch_object(
+            AXObject,
+            "get_parent",
+            side_effect=lambda obj: parent if obj == child else None,
+        )
+        test_context.patch_object(
+            AXText,
+            "get_character_count",
+            side_effect=lambda obj: 12 if obj == parent else 9,
+        )
+        test_context.patch_object(AXHypertext, "get_character_offset_in_parent", return_value=11)
+
+        strings = {(child, 0, 9): "Wikipedia"}
+        test_context.patch_object(
+            AXText,
+            "get_substring",
+            side_effect=lambda obj, start, end: strings[obj, start, end],
+        )
+        result = AXUtilitiesHypertext.expand_eocs_in_range(
+            parent,
+            10,
+            child,
+            8,
+            include_start=False,
+        )
+
+        assert result == "Wikipedia"
+
+    def test_expand_eocs_in_range_combines_nested_text(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test expansion continues from an embedded child into ancestor text."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import (
+            AXHypertext,
+            AXObject,
+            AXText,
+            AXUtilitiesHypertext,
+        )
+
+        section = test_context.Mock(spec=Atspi.Accessible)
+        heading = test_context.Mock(spec=Atspi.Accessible)
+        link = test_context.Mock(spec=Atspi.Accessible)
+        parents = {link: heading, heading: section, section: None}
+        counts = {section: 2, heading: 12, link: 9}
+        offsets = {heading: 0, link: 11}
+        test_context.patch_object(AXUtilitiesHypertext, "compare_text_positions", return_value=-1)
+        essential_modules[
+            "orca.ax_utilities_object"
+        ].AXUtilitiesObject.get_common_ancestor.return_value = section
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        test_context.patch_object(AXObject, "get_parent", side_effect=parents.get)
+        test_context.patch_object(AXText, "get_character_count", side_effect=counts.get)
+        test_context.patch_object(
+            AXHypertext,
+            "get_character_offset_in_parent",
+            side_effect=offsets.get,
+        )
+        strings = {
+            (heading, 10, 12): " Wikipedia",
+            (section, 1, 2): ",",
+        }
+        test_context.patch_object(
+            AXText,
+            "get_substring",
+            side_effect=lambda obj, start, end: strings[obj, start, end],
+        )
+
+        result = AXUtilitiesHypertext.expand_eocs_in_range(
+            heading,
+            9,
+            section,
+            1,
+            include_start=False,
+        )
+
+        assert result == " Wikipedia,"
+
+    def test_expand_eocs_replaces_embedded_child_with_its_text(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test single-object expansion delegates embedded child expansion."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import AXText, AXUtilitiesHypertext
+
+        parent = test_context.Mock(spec=Atspi.Accessible)
+        child = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXText,
+            "get_substring",
+            side_effect=lambda obj, _start, _end: (
+                "before \ufffc after" if obj == parent else "child"
+            ),
+        )
+        test_context.patch_object(AXText, "get_character_count", return_value=5)
+        test_context.patch_object(AXUtilitiesHypertext, "find_child_at_offset", return_value=child)
+        result = AXUtilitiesHypertext.expand_eocs(parent, 0, -1)
+
+        assert result == "before child after"
+
+    def test_expand_eocs_does_not_include_button_text(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test text from a button child is not included in its parent."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import (
+            AXObject,
+            AXText,
+            AXUtilitiesHypertext,
+            AXUtilitiesRole,
+        )
+
+        parent = test_context.Mock(spec=Atspi.Accessible)
+        button = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        test_context.patch_object(AXText, "get_character_count", return_value=10)
+        strings = {(parent, 0, -1): "Question \ufffc"}
+        test_context.patch_object(
+            AXText,
+            "get_substring",
+            side_effect=lambda obj, start, end: strings[obj, start, end],
+        )
+        test_context.patch_object(AXUtilitiesHypertext, "find_child_at_offset", return_value=button)
+        AXUtilitiesRole.is_button.side_effect = lambda obj: obj == button
+
+        assert AXUtilitiesHypertext.expand_eocs(parent) == "Question "
+
+    def test_expand_eocs_does_not_expand_grid_subtree(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test EOCs are not expanded in a subtree containing a grid."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import AXText, AXUtilitiesHypertext
+
+        obj = test_context.Mock(spec=Atspi.Accessible)
+        grid = test_context.Mock(spec=Atspi.Accessible)
+        essential_modules[
+            "orca.ax_utilities_object"
+        ].AXUtilitiesObject.find_descendant.return_value = grid
+        test_context.patch_object(AXText, "get_substring", return_value="grid text")
+
+        result = AXUtilitiesHypertext.expand_eocs(obj, 0, -1)
+
+        assert result == ""
+
+    def test_expand_eocs_does_not_expand_object_with_embedded_role(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test EOCs are not expanded in an object with the embedded role."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import (
+            AXObject,
+            AXText,
+            AXUtilitiesHypertext,
+            AXUtilitiesRole,
+        )
+
+        obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        test_context.patch_object(AXText, "get_character_count", return_value=10)
+        test_context.patch_object(AXText, "get_substring", return_value="application child text")
+        AXUtilitiesRole.is_embedded.return_value = True
+
+        assert AXUtilitiesHypertext.expand_eocs(obj) == ""
+
+    @pytest.mark.parametrize(
+        "parent_offset,child_offset,expected_result",
+        [
+            pytest.param(3, 0, 0, id="equivalent_child_start"),
+            pytest.param(3, 1, -1, id="parent_boundary_before_child_content"),
+            pytest.param(4, 1, 1, id="parent_position_after_child"),
+        ],
+    )
+    def test_compare_text_positions_with_hypertext_descendant(
+        self,
+        test_context: OrcaTestContext,
+        parent_offset: int,
+        child_offset: int,
+        expected_result: int,
+    ) -> None:
+        """Test text positions account for a child's offset in ancestor hypertext."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import (
+            AXHypertext,
+            AXObject,
+            AXUtilitiesHypertext,
+            AXUtilitiesObject,
+        )
+
+        parent = test_context.Mock(spec=Atspi.Accessible)
+        child = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesObject,
+            "is_ancestor",
+            side_effect=lambda obj, ancestor: obj == child and ancestor == parent,
+        )
+        test_context.patch_object(AXObject, "get_parent", return_value=parent)
+        test_context.patch_object(
+            AXHypertext,
+            "get_character_offset_in_parent",
+            return_value=3,
+        )
+
+        result = AXUtilitiesHypertext.compare_text_positions(
+            parent,
+            parent_offset,
+            child,
+            child_offset,
+        )
+
+        assert result == expected_result
 
     @pytest.mark.parametrize(
         "start_offset, end_offset, link_ranges, expected_count",

@@ -1117,7 +1117,7 @@ class Generator:
             indicator = indicators[0]
 
         targets = AXUtilities.get_error_message(obj) or ""
-        error_message = "\n".join(map(self._script.utilities.expand_eocs, targets or []))
+        error_message = "\n".join(map(AXUtilities.expand_eocs, targets or []))
         if error_message:
             result.append(f"{indicator}: {error_message}")
         else:
@@ -1329,7 +1329,7 @@ class Generator:
             return cached
 
         item = self._get_content_item(obj)
-        text = self._script.utilities.expand_eocs(
+        text = AXUtilities.expand_eocs(
             obj,
             item.start_offset if item is not None else 0,
             item.end_offset if item is not None else -1,
