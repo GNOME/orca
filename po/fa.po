@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-07-20 15:17+0000\n"
-"PO-Revision-Date: 2026-08-06 03:19+0330\n"
+"PO-Revision-Date: 2026-08-07 19:54+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: \n"
 "Language: fa\n"
@@ -428,7 +428,7 @@ msgstr "مولفه توکار"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:40
 msgid "Afrikaans, uncontracted"
-msgstr ""
+msgstr "آفریقایی، ناقراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -437,7 +437,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:46
 msgid "Afrikaans, contracted"
-msgstr ""
+msgstr "آفریقایی، قراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -446,7 +446,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:52
 msgid "Akkadian, Borger"
-msgstr ""
+msgstr "آکادی، بورگر"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -455,7 +455,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:58
 msgid "Akkadian, U.S."
-msgstr ""
+msgstr "آکادی، ایالات متّحده"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -464,7 +464,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:64
 msgid "Ancient languages, Borger"
-msgstr ""
+msgstr "زبان‌های باستانی، بورگر"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -473,7 +473,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:70
 msgid "Ancient languages, U.S."
-msgstr ""
+msgstr "زبان‌های باستانی، ایالات متّحده"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -482,7 +482,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:76
 msgid "Arabic, computer"
-msgstr ""
+msgstr "عربی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -491,7 +491,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:82
 msgid "Arabic, uncontracted"
-msgstr ""
+msgstr "عربی، ناقراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -499,10 +499,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:88
-#, fuzzy
-#| msgid "Arabic Grade 1"
 msgid "Arabic, contracted"
-msgstr "عربی سطح ۱"
+msgstr "عربی، قرارداری"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -520,7 +518,7 @@ msgstr "آسامی"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:100
 msgid "Awadhi"
-msgstr ""
+msgstr "آوادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -529,7 +527,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:106
 msgid "Bashkir"
-msgstr ""
+msgstr "باشکر"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -546,10 +544,8 @@ msgstr "بنگالی"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:118
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Belarusian, computer"
-msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
+msgstr "بلاروسی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -558,7 +554,7 @@ msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:124
 msgid "Belarusian, with capitals"
-msgstr ""
+msgstr "بلاروسی، با حروف بزرگ"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -575,10 +571,8 @@ msgstr "بلاروسی"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:136
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Bulgarian, computer"
-msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
+msgstr "بلغاری، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -596,7 +590,7 @@ msgstr "بلغاری"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:148
 msgid "Bihari"
-msgstr ""
+msgstr "بهاری"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -605,7 +599,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:154
 msgid "Tibetan, computer"
-msgstr ""
+msgstr "تبتی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -623,7 +617,7 @@ msgstr "جعبه‌ها"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:166
 msgid "Braj"
-msgstr ""
+msgstr "براج"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -641,7 +635,7 @@ msgstr "کاتالان"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:178
 msgid "Cherokee"
-msgstr "Cherokee"
+msgstr "چروکی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -659,7 +653,7 @@ msgstr "کردی"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:190
 msgid "Coptic, computer"
-msgstr ""
+msgstr "کوپتی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -668,7 +662,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:196
 msgid "Coptic"
-msgstr ""
+msgstr "کوپتی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -676,10 +670,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:202
-#, fuzzy
-#| msgid "Search complete."
 msgid "Czech, computer"
-msgstr "جست‌وجو کامل شد."
+msgstr "چک، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -697,7 +689,7 @@ msgstr "چکی"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:214
 msgid "Cuneiform, transliterated, compact"
-msgstr ""
+msgstr "کونیفرم، آوانگاشته، فشرده"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -706,7 +698,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:220
 msgid "Cuneiform, transliterated"
-msgstr ""
+msgstr "کونیفرم، آوانگاشته"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -715,7 +707,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:226
 msgid "Welsh, uncontracted"
-msgstr ""
+msgstr "ولزی، ناقرارداری"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -723,10 +715,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:232
-#, fuzzy
-#| msgid "Welsh Grade 1"
 msgid "Welsh, contracted"
-msgstr "والز سطح ۱"
+msgstr "ولزی، قرارداری"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -735,7 +725,7 @@ msgstr "والز سطح ۱"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:238
 msgid "Danish, computer, 2022"
-msgstr ""
+msgstr "دانمارکی، رایانه، ۲۰۲۲"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -744,7 +734,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:244
 msgid "Danish, computer, 1993"
-msgstr ""
+msgstr "دانمارکی، رایانه، ۱۹۹۳"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -753,7 +743,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:250 src/orca/brltablenames.py:262
 msgid "Danish, uncontracted, 6-dot, 1993"
-msgstr ""
+msgstr "دانمارکی، ناقراردادی، ۶ نقطه، ۱۹۹۳"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -762,7 +752,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:256
 msgid "Danish, uncontracted, 6-dot, 2022"
-msgstr ""
+msgstr "دانمارکی، ناقراردادی، ۶ نقطه، ۲۰۲۲"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -771,7 +761,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:268
 msgid "Danish, uncontracted, 8-dot, 2022"
-msgstr ""
+msgstr "دانمارکی، ناقراردادی، ۸ نقطه، ۲۰۲۲"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -780,7 +770,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:274
 msgid "Danish, uncontracted, 8-dot, 1993"
-msgstr ""
+msgstr "دانمارکی، ناقراردادی، ۸ نقطه، ۱۹۹۳"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -789,7 +779,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:280 src/orca/brltablenames.py:292
 msgid "Danish, contracted, 6-dot, 1993"
-msgstr ""
+msgstr "دانمارکی، قراردادی، ۶ نقطه، ۱۹۹۳"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -798,7 +788,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:286
 msgid "Danish, contracted, 6-dot, 2022"
-msgstr ""
+msgstr "دانمارکی، قراردادی، ۶ نقطه، ۲۰۲۲"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -807,7 +797,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:298 src/orca/brltablenames.py:304
 msgid "Danish, partially contracted, 6-dot, 1993"
-msgstr ""
+msgstr "دانمارکی، نیمه‌قراردادی، ۶ نقطه، ۱۹۹۳"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -816,7 +806,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:310
 msgid "Danish, contracted, 8-dot, 2022"
-msgstr ""
+msgstr "دانمارکی، قراردادی، ۸ نقطه، ۲۰۲۲"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -825,7 +815,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:316
 msgid "Danish, contracted, 8-dot, 1993"
-msgstr ""
+msgstr "دانمارکی، قراردادی، ۸ نقطه، ۱۹۹۳"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -834,7 +824,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:322
 msgid "Danish, partially contracted, 8-dot, 1993"
-msgstr ""
+msgstr "دانمارکی، نیمه‌قراردادی، ۸ نقطه، ۱۹۹۳"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -843,7 +833,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:328
 msgid "de-chess"
-msgstr ""
+msgstr "de-chess"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -852,7 +842,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:334
 msgid "German, computer, 6-dot"
-msgstr ""
+msgstr "آلمانی، رایانه، ۶ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -861,7 +851,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:340
 msgid "German, computer, 8-dot"
-msgstr ""
+msgstr "آلمانی، رایانه، ۸ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -870,7 +860,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:346
 msgid "German, uncontracted, with capitals"
-msgstr ""
+msgstr "آلمانی، ناقراردادی، با حروف بزرگ"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -879,7 +869,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:352
 msgid "German, uncontracted"
-msgstr ""
+msgstr "آلمانی، ناقراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -888,7 +878,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:358
 msgid "German, partially contracted, with capitals"
-msgstr ""
+msgstr "آلمانی، نیمه‌قرارداری، با حروف بزرگ"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -896,11 +886,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:364
-#, fuzzy
-#| msgctxt "checkbox"
-#| msgid "partially checked"
 msgid "German, partially contracted"
-msgstr "تقریبی بررسی شد"
+msgstr "آلمانی، نیمه‌قرارداری"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -909,7 +896,7 @@ msgstr "تقریبی بررسی شد"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:370
 msgid "German, contracted, with capitals"
-msgstr ""
+msgstr "آلمانی، ناقرارداری، با حروف بزرگ"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -917,10 +904,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:376
-#, fuzzy
-#| msgid "German Grade 0"
 msgid "German, contracted"
-msgstr "آلمانی سطح ۰"
+msgstr "آلمانی، قرارداری"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -928,10 +913,8 @@ msgstr "آلمانی سطح ۰"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:382
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Dravidian, computer"
-msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
+msgstr "دراویدی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -949,7 +932,7 @@ msgstr "یونانی"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:394
 msgid "en-chess"
-msgstr ""
+msgstr "en-chess"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -958,7 +941,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:400
 msgid "English, contracted, grade 3"
-msgstr ""
+msgstr "انگلیسی، قراردادی، سطح ۳"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -967,7 +950,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:406
 msgid "English, U.K., computer"
-msgstr ""
+msgstr "انگلیسی، بریتانیایی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -976,7 +959,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:412
 msgid "English, U.K., uncontracted"
-msgstr ""
+msgstr "انگلیسی، بریتانیایی، ناقراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -985,7 +968,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:418
 msgid "English, U.K., contracted"
-msgstr ""
+msgstr "انگلیسی، بریتانیایی، قراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -994,7 +977,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:424
 msgid "en-in-g1"
-msgstr ""
+msgstr "en-in-g1"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1003,7 +986,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:430
 msgid "English, U.S., computer, NABCC"
-msgstr ""
+msgstr "انگلیسی، ایلات متّحده، رایانه، NABCC"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1012,7 +995,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:436
 msgid "English, unified, uncontracted"
-msgstr ""
+msgstr "انگلیسی، مشترک، ناقراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1021,7 +1004,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:442
 msgid "English, unified, contracted"
-msgstr ""
+msgstr "انگلیسی، مشترک، قراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1030,7 +1013,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:448
 msgid "en-ueb-math"
-msgstr ""
+msgstr "en-ueb-math"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1039,7 +1022,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:454
 msgid "English, U.S., computer, 6-dot"
-msgstr ""
+msgstr "انگلیسی، ایلات متّحده، رایانه، ۶ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1048,7 +1031,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:460
 msgid "English, U.S., computer, 8-dot"
-msgstr ""
+msgstr "انگلیسی، ایلات متّحده، رایانه، ۸ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1057,7 +1040,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:466
 msgid "en-us-comp8"
-msgstr ""
+msgstr "en-us-comp8"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1083,10 +1066,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:484
-#, fuzzy
-#| msgid "underline"
 msgid "en-us-interline"
-msgstr "زیرخط"
+msgstr "en-us-interline"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1103,10 +1084,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:496
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "English, Canada, computer"
-msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
+msgstr "انگلیسی، کانادا، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1132,10 +1111,8 @@ msgstr "اسپرانتو"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:514
-#, fuzzy
-#| msgid "Search complete."
 msgid "Spanish, computer"
-msgstr "جست‌وجو کامل شد."
+msgstr "اسپانیایی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1143,10 +1120,8 @@ msgstr "جست‌وجو کامل شد."
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:520
-#, fuzzy
-#| msgid "Spanish Grade 1"
 msgid "Spanish, uncontracted"
-msgstr "اسپانیایی سطح ۱"
+msgstr "اسپانیایی، ناقراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1154,10 +1129,8 @@ msgstr "اسپانیایی سطح ۱"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:526
-#, fuzzy
-#| msgid "Spanish Grade 1"
 msgid "Spanish, contracted"
-msgstr "اسپانیایی سطح ۱"
+msgstr "اسپانیایی، قراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1165,10 +1138,8 @@ msgstr "اسپانیایی سطح ۱"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:532
-#, fuzzy
-#| msgid "Spanish Grade 1"
 msgid "Spanish, Norway"
-msgstr "اسپانیایی سطح ۱"
+msgstr "اسپانیایی، نروژ"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1185,10 +1156,8 @@ msgstr "استونیایی"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:544
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Estonian, computer"
-msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
+msgstr "استونیایی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1205,10 +1174,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:556
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Persian, computer"
-msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
+msgstr "فارسی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1261,10 +1228,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:592
-#, fuzzy
-#| msgid "Search complete."
 msgid "French, computer"
-msgstr "جست‌وجو کامل شد."
+msgstr "فرانسوی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1290,10 +1255,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:610
-#, fuzzy
-#| msgid "right control"
 msgid "Irish, contracted"
-msgstr "مهار راست"
+msgstr "ایرلندی، قراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1418,10 +1381,8 @@ msgstr "هندی"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:694
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Croatian, computer"
-msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
+msgstr "کرواتی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1438,10 +1399,8 @@ msgstr "کرواتی"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:706
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Hungarian, computer"
-msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
+msgstr "مجاری، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1449,10 +1408,8 @@ msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:712
-#, fuzzy
-#| msgid "Hungarian Grade 1"
 msgid "Hungarian, uncontracted"
-msgstr "مجاری سطح ۱"
+msgstr "مجاری، ناقراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1460,10 +1417,8 @@ msgstr "مجاری سطح ۱"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:718
-#, fuzzy
-#| msgid "Hungarian Grade 1"
 msgid "Hungarian, contracted"
-msgstr "مجاری سطح ۱"
+msgstr "مجاری، قراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1471,10 +1426,8 @@ msgstr "مجاری سطح ۱"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:724
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Armenian, computer"
-msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
+msgstr "ارمنی* رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1491,11 +1444,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:736
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "List"
 msgid "is"
-msgstr "فهرست"
+msgstr ""
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1512,10 +1462,8 @@ msgstr "ایتالیایی"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:748
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Italian, computer"
-msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
+msgstr "ایتالیایی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1694,10 +1642,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:874
-#, fuzzy
-#| msgid "lst"
 msgid "lt"
-msgstr "سیاهه"
+msgstr "lt"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1831,10 +1777,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:964
-#, fuzzy
-#| msgid "Line"
 msgid "ne"
-msgstr "خط"
+msgstr "ne"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1869,10 +1813,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:988
-#, fuzzy
-#| msgid "Norwegian Grade 0"
 msgid "Norwegian, computer"
-msgstr "نروژی سطح ۰"
+msgstr "نروژی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1889,10 +1831,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1000
-#, fuzzy
-#| msgid "Norwegian Grade 1"
 msgid "Norwegian, contracted, grade 1"
-msgstr "نروژی سطح ۱"
+msgstr "نروژی، قراردادی، سطح ۱"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1900,10 +1840,8 @@ msgstr "نروژی سطح ۱"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1006
-#, fuzzy
-#| msgid "Norwegian Grade 2"
 msgid "Norwegian, contracted, grade 2"
-msgstr "نروژی سطح ۲"
+msgstr "نروژی، قراردادی، سطح ۲"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1911,10 +1849,8 @@ msgstr "نروژی سطح ۲"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1012
-#, fuzzy
-#| msgid "Norwegian Grade 3"
 msgid "Norwegian, contracted, grade 3"
-msgstr "نروژی سطح ۳"
+msgstr "نروژی، قراردادی، سطح ۳"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2039,10 +1975,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1096
-#, fuzzy
-#| msgid "Portuguese Grade 1"
 msgid "Portuguese, uncontracted"
-msgstr "پرتغالی سطح ۱"
+msgstr "پرتغالی، ناقراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2050,10 +1984,8 @@ msgstr "پرتغالی سطح ۱"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1102
-#, fuzzy
-#| msgid "Portuguese Grade 1"
 msgid "Portuguese, contracted"
-msgstr "پرتغالی سطح ۱"
+msgstr "پرتغالی، قراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2079,10 +2011,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1120
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Romanian, computer"
-msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
+msgstr "رومانیایی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2108,11 +2038,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1138
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "union with plus"
 msgid "Russian, with capitals"
-msgstr "احتماع با جمع"
+msgstr "روسی، با حروف بزرگ"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2183,10 +2110,8 @@ msgstr "سندی"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1186
-#, fuzzy
-#| msgid "spin"
 msgid "sin"
-msgstr "چرخنده"
+msgstr "sin"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2221,10 +2146,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1210
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Slovenian, computer"
-msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
+msgstr "اسلونیایی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2538,11 +2461,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1420
-#, fuzzy
-#| msgctxt "checkbox"
-#| msgid "partially checked"
 msgid "Thai, partially contracted"
-msgstr "تقریبی بررسی شد"
+msgstr "تایلندی، نیمه‌قراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2622,10 +2542,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1474
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Ukrainian, computer"
-msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
+msgstr "اوکراینی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2633,11 +2551,8 @@ msgstr "رایانهٔ ۸ نقطه‌ای مجاری"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1480
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "union with plus"
 msgid "Ukrainian, with capitals"
-msgstr "احتماع با جمع"
+msgstr "اوکراینی، با حروف بزرگ"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -3392,13 +3307,13 @@ msgstr "کاهش حجم گفتار"
 #. speech synthesis engine. More inflection means more variation in pitch.
 #: src/orca/cmdnames.py:454
 msgid "Increase the speech inflection"
-msgstr "افزایش انحراف گفتار"
+msgstr "افزایش آهنگ گفتار"
 
 #. Translators: the speech inflection is the pitch range used by the
 #. speech synthesis engine. Less inflection means a more monotone voice.
 #: src/orca/cmdnames.py:458
 msgid "Decrease the speech inflection"
-msgstr "کاهش انحراف گفتار"
+msgstr "کاهش آهنگ گفتار"
 
 #. Translators: Orca allows the user to turn speech synthesis on or off.
 #. We call it 'silencing'.
@@ -5914,19 +5829,19 @@ msgstr "حالت تمرکز خودکار"
 
 #: src/orca/guilabels.py:111
 msgid ""
-"Automatic focus mode causes Orca to switch to focus mode when you navigate into a "
-"form field or other interactive widget."
+"Automatic focus mode causes Orca to switch to focus mode when you navigate into "
+"a form field or other interactive widget."
 msgstr ""
-"حالت تمرکز خودکار موجب می‌شود هنگامی که به زمینهٔ فرم یا ابزارکی تعاملی پیمایش می‌کنید "
-"اورکا به حالت تمرکز وارد شود."
+"حالت تمرکز خودکار موجب می‌شود هنگامی که به زمینهٔ فرم یا ابزارکی تعاملی پیمایش "
+"می‌کنید اورکا به حالت تمرکز وارد شود."
 
 #: src/orca/guilabels.py:118
 msgid ""
-"Native navigation refers to keyboard commands handled by the application, such as "
-"Tab, Page Up, Page Down, and Enter."
+"Native navigation refers to keyboard commands handled by the application, such "
+"as Tab, Page Up, Page Down, and Enter."
 msgstr ""
-"پیمایش بومی به دستورهای صفحه‌کلیدی اشاره دارد که به دست برنامه مدیریت می‌شود؛ چون جهش، "
-"صفحه بالا، صفحه پایین و ورود."
+"پیمایش بومی به دستورهای صفحه‌کلیدی اشاره دارد که به دست برنامه مدیریت می‌شود؛ چون "
+"جهش، صفحه بالا، صفحه پایین و ورود."
 
 #. Translators: This setting controls whether Orca automatically enables sticky
 #. focus mode for web applications (such as Facebook Messenger) and Electron apps
@@ -5940,11 +5855,11 @@ msgstr "حالت تمرکز چسبناک خودکار برای برنامه‌ه
 
 #: src/orca/guilabels.py:133
 msgid ""
-"Automatic sticky focus mode causes Orca to detect web applications and Electron apps "
-"and stay in focus mode until toggled off by command."
+"Automatic sticky focus mode causes Orca to detect web applications and Electron "
+"apps and stay in focus mode until toggled off by command."
 msgstr ""
-"حالت تمرکز چسبناک خودکار موجب می‌شود اورکا کاره‌های وب و الکترون را تشخیص داده و تا "
-"زمان خاموش شدن با دستور در حالت تمرکز بماند."
+"حالت تمرکز چسبناک خودکار موجب می‌شود اورکا کاره‌های وب و الکترون را تشخیص داده و "
+"تا زمان خاموش شدن با دستور در حالت تمرکز بماند."
 
 #. Translators: A single braille cell on a refreshable braille display consists
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
@@ -6232,7 +6147,8 @@ msgstr "واژه‌نامهٔ تلفّظ"
 msgid ""
 "Customize how words are spoken by adding words and replacement text to the "
 "pronunciation dictionary."
-msgstr "سفارشی سازی چگونگی گفتن واژه‌ها با افزودن واژه و متن جایگزینش در واژه‌نامهٔ تلفّظ."
+msgstr ""
+"سفارشی سازی چگونگی گفتن واژه‌ها با افزودن واژه و متن جایگزینش در واژه‌نامهٔ تلفّظ."
 
 #. Translators: This is a label for a column header in Orca's pronunciation
 #. dictionary. The pronunciation dictionary allows the user to correct words
@@ -6483,11 +6399,11 @@ msgstr "پیمایش ریاضی"
 
 #: src/orca/guilabels.py:530
 msgid ""
-"When enabled, Orca handles the arrow keys, Home, and End to move through content by "
-"character, word, or line."
+"When enabled, Orca handles the arrow keys, Home, and End to move through content "
+"by character, word, or line."
 msgstr ""
-"هنگام به کار افتادن، اوکار کلیدهای جهت* خانه و پایان را برای جابه‌جایی بین محتوا با "
-"نویسه، واژه یا خط مدیریت می‌کند."
+"هنگام به کار افتادن، اوکار کلیدهای جهت* خانه و پایان را برای جابه‌جایی بین محتوا "
+"با نویسه، واژه یا خط مدیریت می‌کند."
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to chat applications such as instant messaging.
@@ -6525,10 +6441,10 @@ msgstr "حالت خواب"
 
 #: src/orca/guilabels.py:564
 msgid ""
-"Sleep mode causes Orca to behave as if it were not running for a given application. "
-"The default keybinding to toggle sleep mode on or off is Shift+Alt+Ctrl+Q. This can "
-"be changed in Commands. An application must be running to add it to the sleep mode "
-"applications list."
+"Sleep mode causes Orca to behave as if it were not running for a given "
+"application. The default keybinding to toggle sleep mode on or off is "
+"Shift+Alt+Ctrl+Q. This can be changed in Commands. An application must be "
+"running to add it to the sleep mode applications list."
 msgstr ""
 
 #. Translators: This label appears above a list of applications on the Sleep Mode
@@ -6575,11 +6491,13 @@ msgstr "پیمایش ساختاری"
 
 #: src/orca/guilabels.py:597
 msgid ""
-"When enabled, alphanumeric keys can be used to quickly jump between elements. For "
-"example, H moves to the next heading, K to the next link. Add Shift to move backwards."
+"When enabled, alphanumeric keys can be used to quickly jump between elements. "
+"For example, H moves to the next heading, K to the next link. Add Shift to move "
+"backwards."
 msgstr ""
-"هنگام به کار افتادن، کلیدهای حروفعددی می‌توانند برای پرش سریع بین عنصرها استفاده شوند. "
-"برای نمونه H به سرایند بعدی و K به پیوند بعدی می‌رود. افزودن تبدیل برای حرکت معکوس."
+"هنگام به کار افتادن، کلیدهای حروفعددی می‌توانند برای پرش سریع بین عنصرها استفاده "
+"شوند. برای نمونه H به سرایند بعدی و K به پیوند بعدی می‌رود. افزودن تبدیل برای "
+"حرکت معکوس."
 
 #. Translators: This is a label for a switch that controls whether structural
 #. navigation wraps around when reaching the top or bottom of a document.
@@ -6596,11 +6514,11 @@ msgstr "درازای شی بزرگ"
 
 #: src/orca/guilabels.py:618
 msgid ""
-"Large object length defines the minimum number of characters an element must have to "
-"be included when using the large object navigation shortcuts."
+"Large object length defines the minimum number of characters an element must "
+"have to be included when using the large object navigation shortcuts."
 msgstr ""
-"درازای شی بزرگ کمینهٔ شماره نویسه‌هایی را که عنصرها باید هنگام استفاده از میان‌برهای "
-"پیمایش شی بزرگ برای شامل شدن داشته باشند تعریف می‌کند."
+"درازای شی بزرگ کمینهٔ شماره نویسه‌هایی را که عنصرها باید هنگام استفاده از "
+"میان‌برهای پیمایش شی بزرگ برای شامل شدن داشته باشند تعریف می‌کند."
 
 #. Translators: This is a label for a switch that controls whether images
 #. without accessible names or descriptions are skipped during image
@@ -6893,13 +6811,13 @@ msgstr "برداشتن نماگر کاربری"
 #: src/orca/guilabels.py:840
 #, python-format
 msgid ""
-"You are about to remove profile %s. All unsaved settings and settings saved in this "
-"profile will be lost. Do you want to continue and remove this profile and all related "
-"settings?"
+"You are about to remove profile %s. All unsaved settings and settings saved in "
+"this profile will be lost. Do you want to continue and remove this profile and "
+"all related settings?"
 msgstr ""
-"دارید نماگر %s را برمی‌دارید. همهٔ تنظیمات ذخیره نشده و آن‌هایی که در این نماگر ذخیره "
-"شده‌اند از دست خواهند رفت. می‌خواهید ادامه داده و این نماگر را با همهٔ تنظیمات مربوطه "
-"بردارید؟"
+"دارید نماگر %s را برمی‌دارید. همهٔ تنظیمات ذخیره نشده و آن‌هایی که در این نماگر "
+"ذخیره شده‌اند از دست خواهند رفت. می‌خواهید ادامه داده و این نماگر را با همهٔ "
+"تنظیمات مربوطه بردارید؟"
 
 #: src/orca/guilabels.py:850
 msgid ""
@@ -6908,8 +6826,9 @@ msgid ""
 "\n"
 "Do you want to continue?"
 msgstr ""
-"تغییراتی ذخیره نشده دارید. ایجاد کردن نماگری جدید تنظیمات ذخیره شدهٔ کنونی را رونوشت "
-"خواهد کرد؛ نه تغییرات ذخیره نشده‌تان را. تغییرات ذخیره نشده از دست خواهند رفت.\n"
+"تغییراتی ذخیره نشده دارید. ایجاد کردن نماگری جدید تنظیمات ذخیره شدهٔ کنونی را "
+"رونوشت خواهد کرد؛ نه تغییرات ذخیره نشده‌تان را. تغییرات ذخیره نشده از دست خواهند "
+"رفت.\n"
 "\n"
 "می‌خواهید ادامه دهید؟"
 
@@ -7513,8 +7432,8 @@ msgid ""
 "These settings apply when the screen reader can identify the elements of the "
 "application's spell check dialog."
 msgstr ""
-"این تنظیمات هنگامی که صفحه‌خوان بتواند عنصرهای گفت‌وگوی بررسی نوشتاری برنامه را تشخیص "
-"دهد اعمال می‌شوند."
+"این تنظیمات هنگامی که صفحه‌خوان بتواند عنصرهای گفت‌وگوی بررسی نوشتاری برنامه را "
+"تشخیص دهد اعمال می‌شوند."
 
 #. Translators: This is a label for a widget associated with an Orca setting.
 #. When this option is enabled, Orca will spell out the current error in addition
@@ -7811,8 +7730,8 @@ msgstr "افزونه‌های کاربر"
 
 #: src/orca/guilabels.py:1490
 msgid ""
-"User extensions are Python files or packages in ~/.local/share/orca/extensions. Only "
-"approve extensions that you trust."
+"User extensions are Python files or packages in ~/.local/share/orca/extensions. "
+"Only approve extensions that you trust."
 msgstr ""
 
 #. Translators: This message is shown in the User Extensions preferences page
@@ -7867,11 +7786,11 @@ msgstr "حذف افزونهٔ کاربر؟"
 #, python-format
 msgctxt "user extensions"
 msgid ""
-"The following extension will be permanently deleted from your user extensions folder: "
-"%s. Do you want to continue?"
+"The following extension will be permanently deleted from your user extensions "
+"folder: %s. Do you want to continue?"
 msgstr ""
-"افزونهٔ زیر برای همیشه از شاخهٔ افزونه‌های کاربرتان حذف خواهد شد: %s. می‌خواهید ادامه "
-"دهید؟"
+"افزونهٔ زیر برای همیشه از شاخهٔ افزونه‌های کاربرتان حذف خواهد شد: %s. می‌خواهید "
+"ادامه دهید؟"
 
 #. Translators: This message is presented when Orca fails to delete a user
 #. extension file or package directory from ~/.local/share/orca/extensions. The
@@ -8298,14 +8217,15 @@ msgstr "نماگر کنونی"
 #: src/orca/guilabels.py:1834
 #, python-format
 msgid ""
-"Profiles are collections of settings. The \"%s\" profile is loaded at startup. To "
-"edit an existing profile, select it below and then adjust settings on the other "
-"pages. To rename or delete the selected profile, use the Tab key to navigate to its "
-"associated buttons."
+"Profiles are collections of settings. The \"%s\" profile is loaded at startup. "
+"To edit an existing profile, select it below and then adjust settings on the "
+"other pages. To rename or delete the selected profile, use the Tab key to "
+"navigate to its associated buttons."
 msgstr ""
-"نماگرها مجموعه‌ای از تنظیمات هستند. نماگر «%s» در آغاز بار می‌شود. برای ویرایش نماگری "
-"موجود، از زیر انتخابش کرده و سپس تنظیمات را در صفحه‌های دیگر تغییر دهید. برای تغییر "
-"نام یا حذف نماگر گزیده از کلید جهش برای پیمایش به دکمه‌های مربوط استفاده کنید."
+"نماگرها مجموعه‌ای از تنظیمات هستند. نماگر «%s» در آغاز بار می‌شود. برای ویرایش "
+"نماگری موجود، از زیر انتخابش کرده و سپس تنظیمات را در صفحه‌های دیگر تغییر دهید. "
+"برای تغییر نام یا حذف نماگر گزیده از کلید جهش برای پیمایش به دکمه‌های مربوط "
+"استفاده کنید."
 
 #. Translators: This is a label in the Preferences dialog box. It applies to
 #. several options related to which progress bars Orca should speak and how
@@ -8333,24 +8253,25 @@ msgstr "گفتن همه با"
 
 #: src/orca/guilabels.py:1864
 msgid ""
-"Say All reads from the current location to the end of the document, pausing after "
-"each sentence or line based on the \"Say All By\" value."
+"Say All reads from the current location to the end of the document, pausing "
+"after each sentence or line based on the \"Say All By\" value."
 msgstr ""
-"گفتن همهٔ خوانش ّا از مکان کنونی به پایان سند. مکث کردن پس از هر جمله یا خط بر اساس "
-"مقدار «Say All By»."
+"گفتن همهٔ خوانش ّا از مکان کنونی به پایان سند. مکث کردن پس از هر جمله یا خط بر "
+"اساس مقدار «Say All By»."
 
 #: src/orca/guilabels.py:1874
 msgid ""
-"If enabled, you can use the arrow keys and/or structural navigation commands to move "
-"within the document while Say All is active."
+"If enabled, you can use the arrow keys and/or structural navigation commands to "
+"move within the document while Say All is active."
 msgstr ""
-"اگر به کار بیفتد می‌توانید هنگام فعّال بودن گفتن همه، از کلیدهای جهت‌دار یا دستورهای "
-"پیمایش ساختاری برای جابه‌جایی در سند استفاده کنید."
+"اگر به کار بیفتد می‌توانید هنگام فعّال بودن گفتن همه، از کلیدهای جهت‌دار یا "
+"دستورهای پیمایش ساختاری برای جابه‌جایی در سند استفاده کنید."
 
 #: src/orca/guilabels.py:1882
 msgid ""
-"The announcement settings determine which document changes, text formatting changes, "
-"and container boundaries will be announced as Say All moves through the document."
+"The announcement settings determine which document changes, text formatting "
+"changes, and container boundaries will be announced as Say All moves through the "
+"document."
 msgstr ""
 "تنظیمات اعلامیه مشخّص می‌کند که کدام تغییرات سند، تغییرات قالب‌بندی متن و محدوده‌های "
 "بارگنج به عنوان گفتن همهٔ جابه‌جایی‌ها در سند اعلام شوند."
@@ -8738,18 +8659,19 @@ msgid ""
 "speaking. The default keybinding to show or hide it is Orca+Shift+d. This can be "
 "changed in Commands."
 msgstr ""
-"نمایشگر گفتار روی صفحه پنجره‌ایست که نشان می‌دهد صفحه‌خوان دارد چه می‌گوید. ترکیب کلیدهای "
-"پیش‌گزیده برای نمایش یا نهفتنش اورکا+تبدیل+ی است. این ترکیب می‌تواند در دستورها عوض شود."
+"نمایشگر گفتار روی صفحه پنجره‌ایست که نشان می‌دهد صفحه‌خوان دارد چه می‌گوید. ترکیب "
+"کلیدهای پیش‌گزیده برای نمایش یا نهفتنش اورکا+تبدیل+ی است. این ترکیب می‌تواند در "
+"دستورها عوض شود."
 
 #: src/orca/guilabels.py:2176
 msgid ""
-"The on-screen braille display is a window intended for developers that shows what "
-"would be presented on a braille display. To show or hide it, assign a keybinding in "
-"Commands."
+"The on-screen braille display is a window intended for developers that shows "
+"what would be presented on a braille display. To show or hide it, assign a "
+"keybinding in Commands."
 msgstr ""
-"نمایشگر بریل روی صفحه پنجره‌ایست که برای توسعه‌دهندگان در نظر گرفته شده تا نشان دهد چه "
-"چیزی روی نمایشگر بریل ظاهر خواهد شد. برای نمایش یا نهفتنش ترکیب کلیدی در دستورها "
-"تنظیم کنید."
+"نمایشگر بریل روی صفحه پنجره‌ایست که برای توسعه‌دهندگان در نظر گرفته شده تا نشان "
+"دهد چه چیزی روی نمایشگر بریل ظاهر خواهد شد. برای نمایش یا نهفتنش ترکیب کلیدی در "
+"دستورها تنظیم کنید."
 
 #. Translators: This is the label of the Braille page in the Orca Preferences dialog.
 #: src/orca/guilabels.py:2182
@@ -8798,11 +8720,11 @@ msgstr "پژواک"
 
 #: src/orca/guilabels.py:2221
 msgid ""
-"Key echo speaks the key you pressed. Typing echo speaks what was inserted into the "
-"document as a result of your typing."
+"Key echo speaks the key you pressed. Typing echo speaks what was inserted into "
+"the document as a result of your typing."
 msgstr ""
-"پژواک کلیدی را که فشرده‌اید خواهد گفت. پژواک نوشتن آن چه را که در نتیحهٔ نوشتنتان در "
-"سند درج شده خواهد گفت."
+"پژواک کلیدی را که فشرده‌اید خواهد گفت. پژواک نوشتن آن چه را که در نتیحهٔ نوشتنتان "
+"در سند درج شده خواهد گفت."
 
 #. Translators: This is the label of the General page in the Orca Preferences
 #. dialog. On that page there are a variety of general Orca settings which do
@@ -9014,8 +8936,8 @@ msgstr "ویژگی‌های متن"
 
 #: src/orca/guilabels.py:2382
 msgid ""
-"Configure which text attributes are spoken and/or marked in braille, and the order in "
-"which they are presented."
+"Configure which text attributes are spoken and/or marked in braille, and the "
+"order in which they are presented."
 msgstr ""
 "پیکربندی ویژگی‌های متنی که در بریل گفته یا نشانه گذاری می‌شوند؛ به ترتیبی که ارائه "
 "می‌شوند."
@@ -9063,9 +8985,9 @@ msgstr ""
 #: src/orca/guilabels.py:2418
 #, python-format
 msgid ""
-"Voice sets are collections of voice types (such as default, uppercase, hyperlink, and "
-"system). The \"%s\" voice set contains the voice types for the current profile. "
-"Additional voice sets can be created for specific languages."
+"Voice sets are collections of voice types (such as default, uppercase, "
+"hyperlink, and system). The \"%s\" voice set contains the voice types for the "
+"current profile. Additional voice sets can be created for specific languages."
 msgstr ""
 
 #. Translators: This is the label of the Voice Types page in the Orca
@@ -10897,12 +10819,12 @@ msgstr "دانستن بیش‌تر.  زدن گریز برای خروج."
 #: src/orca/messages.py:954
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the screen "
-"reader's documentation, press F1. To get a list of the screen reader's shortcuts, "
-"press F2. To exit learn mode, press the escape key."
+"reader's documentation, press F1. To get a list of the screen reader's "
+"shortcuts, press F2. To exit learn mode, press the escape key."
 msgstr ""
-"وارد شدن به حالت آموزش.  زدن هر کلیدی برای شنیدن کاراییش.  زدن F1 برای دیدن مستندات "
-"صفحه‌خوان. زدن F2 برای گرفتن سیاههٔ میان‌برهای پیش‌گزیدهٔ صفحه‌خوان. زدن کلید گریز برای "
-"خروج از حالت آموزش."
+"وارد شدن به حالت آموزش.  زدن هر کلیدی برای شنیدن کاراییش.  زدن F1 برای دیدن "
+"مستندات صفحه‌خوان. زدن F2 برای گرفتن سیاههٔ میان‌برهای پیش‌گزیدهٔ صفحه‌خوان. زدن کلید "
+"گریز برای خروج از حالت آموزش."
 
 #. Translators: This message is presented when a user is navigating within
 #. an article and then navigates out of it.
@@ -11505,10 +11427,8 @@ msgstr "نتوانست مکان کنونی را بیابد."
 #. message is presented when the current character does not expose any formatting
 #. information to Orca.
 #: src/orca/messages.py:1377
-#, fuzzy
-#| msgid "Battery status unknown"
 msgid "Character format unknown."
-msgstr "وصعیت نامعلوم باتری"
+msgstr "قالب نویسه ناشناخته."
 
 #. Translators: Orca has a command which presents formatting information for the
 #. current text character. Examples of this information include font family, font
@@ -11757,10 +11677,8 @@ msgstr "کنشی برای %s پیدا نشد"
 #. suggestions, and highlights. This is a detailed message which will be presented to
 #. the user if no more annotations can be found.
 #: src/orca/messages.py:1568
-#, fuzzy
-#| msgid "No more buttons."
 msgid "No more annotations."
-msgstr "هیچ دکمهٔ دیگری وجود ندارد."
+msgstr "هیچ حاشیه‌نویسی دیگری وجود ندارد."
 
 #. Translators: This is for navigating document content by moving from blockquote
 #. to blockquote. This is a detailed message which will be presented to the user
@@ -11855,10 +11773,8 @@ msgstr "هیچ تصویر دیگری وجود ندارد."
 #. search, etc. This is a detailed message which will be presented to the user if
 #. no more landmarks can be found.
 #: src/orca/messages.py:1637
-#, fuzzy
-#| msgid "No more links."
 msgid "No more landmarks."
-msgstr "هیچ پیوند دیگری وجود ندارد."
+msgstr "هیچ نشانهٔ دیگری وجود ندارد."
 
 #. Translators: This is for navigating document content by moving from link to
 #. link (regardless of visited state). This is a detailed message which will be
@@ -11894,10 +11810,8 @@ msgstr "هیچ ناحیهٔ زندهٔ دیگری وجود ندارد."
 #. expression to math expression. This is a detailed message which will be
 #. presented to the user if no more math expressions can be found.
 #: src/orca/messages.py:1664
-#, fuzzy
-#| msgid "No more live regions."
 msgid "No more math expressions."
-msgstr "هیچ ناحیهٔ زندهٔ دیگری وجود ندارد."
+msgstr "هیچ عبارت ریاضی دیگری وجود ندارد."
 
 #. Translators: This is for navigating document content by moving from paragraph
 #. to paragraph. This is a detailed message which will be presented to the user
@@ -12358,19 +12272,13 @@ msgstr "آرام‌تر."
 
 #. Translators: This string announces speech inflection (pitch range) change.
 #: src/orca/messages.py:1991
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "square intersection"
 msgid "more inflection."
-msgstr "اشتراک مربّعی"
+msgstr "آهنگ بیش‌تر."
 
 #. Translators: This string announces speech inflection (pitch range) change.
 #: src/orca/messages.py:1994
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "double intersection"
 msgid "less inflection."
-msgstr "تقاطع دوگانه"
+msgstr "آهنگ کم‌تر."
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -12551,19 +12459,15 @@ msgstr ""
 #. expressions via MathCAT. This is presented when the user tries to enter
 #. math navigation but is not on a math element.
 #: src/orca/messages.py:2124
-#, fuzzy
-#| msgid "Not in a table."
 msgid "Not in math."
-msgstr "خارج از جدول."
+msgstr "خارج از ریاضی."
 
 #. Translators: Orca has a modal math navigation mode for exploring math
 #. expressions via MathCAT. This hint is presented when the user reaches the
 #. edge of the expression and cannot move further in the current direction.
 #: src/orca/messages.py:2129
-#, fuzzy
-#| msgid "Learn mode.  Press escape to exit."
 msgid "Press Escape to exit."
-msgstr "دانستن بیش‌تر.  زدن گریز برای خروج."
+msgstr "زدن گریز برای خروج."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
@@ -13001,13 +12905,11 @@ msgstr[1] "سیاهه‌ای با %d مورد"
 #. also contains unavailable items. Available items are those which the user can
 #. navigate to and interact with; unavailable items are insensitive.
 #: src/orca/messages.py:2474
-#, fuzzy, python-format
-#| msgid "List with %d item"
-#| msgid_plural "List with %d items"
+#, python-format
 msgid "List with %d available item"
 msgid_plural "List with %d available items"
-msgstr[0] "سیاهه‌ای با %d مورد"
-msgstr[1] "سیاهه‌ای با %d مورد"
+msgstr[0] "سیاهه‌ای با %d مورد موجود"
+msgstr[1] "سیاهه‌ای با %d مورد موجود"
 
 #. Translators: This message describes the number of items of a bulleted or numbered list
 #. that is inside of another list.
@@ -13144,13 +13046,11 @@ msgstr[0] "%(index)d از %(total)d مورد گزیده شد"
 msgstr[1] "%(index)d از %(total)d مورد گزیده شد"
 
 #: src/orca/messages.py:2624
-#, fuzzy, python-format
-#| msgid "%d Screen reader shortcut found."
-#| msgid_plural "%d Screen reader shortcuts found."
+#, python-format
 msgid "%d Screen reader command found."
 msgid_plural "%d Screen reader commands found."
-msgstr[0] "‏%d میان‌بر صفحه‌خوان پیدا شد."
-msgstr[1] "‏%d میان‌بر صفحه‌خوان پیدا شد."
+msgstr[0] "‏%d فرمان صفحه‌خوان پیدا شد."
+msgstr[1] "‏%d فرمان صفحه‌خوان پیدا شد."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
@@ -13158,8 +13058,8 @@ msgstr[1] "‏%d میان‌بر صفحه‌خوان پیدا شد."
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
-msgstr[0] "%d فاصله"
-msgstr[1] "%d فاصله"
+msgstr[0] "‏%d فاصله"
+msgstr[1] "‏%d فاصله"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
@@ -13168,15 +13068,15 @@ msgstr[1] "%d فاصله"
 msgid "%d tab"
 msgid_plural "%d tabs"
 msgstr[0] "%d جهش"
-msgstr[1] "%d جهش"
+msgstr[1] "‏%d جهش"
 
 #. Translators: This message presents the number of tables in a document.
 #: src/orca/messages.py:2652
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
-msgstr[0] "%d جدول"
-msgstr[1] "%d جدول"
+msgstr[0] "‏%d جدول"
+msgstr[1] "‏%d جدول"
 
 #. Translators: This message describes a table for which both the
 #. number of rows and the number of columns are unknown. Normally
@@ -14127,15 +14027,15 @@ msgstr "نگارش"
 
 #: src/orca/phonnames.py:47
 msgid ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : "
-"hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, o : oscar, "
-"p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : victor, w : "
-"whiskey, x : xray, y : yankee, z : zulu"
+"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, "
+"h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, "
+"o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, "
+"v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 msgstr ""
-"ا : آبان, ب : بستنی, پ : پسته, ت : تانک, ث : ثریا, ج : جوجه, چ : چای, ح : حوله, خ : "
-"خمیر, د : دانیال, ذ : ذبیح, ر : راننده, ز : زمین, ژ : ژاله, س : سنگ, ش : شال, ص : "
-"صابون, ض : ضریح, ط : طلا, ظ : ظالم, ع : عسل, غ : غرفه, ف : فانوس, ق : قند, ک : کبوتر, "
-"گ : گل, ل : لوله, م : ماه, ن : نان, و : وان, ه : هسته, ی : یاس"
+"ا : آبان, ب : بستنی, پ : پسته, ت : تانک, ث : ثریا, ج : جوجه, چ : چای, ح : حوله, "
+"خ : خمیر, د : دانیال, ذ : ذبیح, ر : راننده, ز : زمین, ژ : ژاله, س : سنگ, ش : "
+"شال, ص : صابون, ض : ضریح, ط : طلا, ظ : ظالم, ع : عسل, غ : غرفه, ف : فانوس, ق : "
+"قند, ک : کبوتر, گ : گل, ل : لوله, م : ماه, ن : نان, و : وان, ه : هسته, ی : یاس"
 
 #. Translators: this attribute specifies the background color of the text.
 #. The value is an RGB value of the format "u,u,u".
@@ -16255,8 +16155,8 @@ msgstr "نوشتار"
 #~ msgstr ""
 #~ "درون‌ریزی تنظیمات از DIR در dconf (رونویسی تنظیمات کنونی).\n"
 #~ "برای پشتیبان‌گیری: ‪dconf dump /org/gnome/orca/ > backup.ini‬\n"
-#~ "برای بازگردانی: ‪dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < "
-#~ "backup.ini"
+#~ "برای بازگردانی: ‪dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/"
+#~ "orca/ < backup.ini"
 
 #~ msgid "DIR"
 #~ msgstr "DIR"
@@ -16434,7 +16334,8 @@ msgstr "نوشتار"
 #~ msgid "Toggle whether we provide chat room specific message histories"
 #~ msgstr "تغییر وضعیت این که تاریخچهٔ پیام‌های مخصوص اتاق گپ را فراهم کنیم یا نه"
 
-#~ msgid "Toggle whether we prefix chat room messages with the name of the chat room"
+#~ msgid ""
+#~ "Toggle whether we prefix chat room messages with the name of the chat room"
 #~ msgstr "تغییر وضعیت این که پیش از پیام‌های اتاق گپ، نام اتاق را بیاوریم یا نه"
 
 #~ msgid "Present the contents of the input line"
@@ -17063,7 +16964,8 @@ msgstr "نوشتار"
 #~ msgid "To activate press space."
 #~ msgstr "برای فعال‌سازی کلید فاصله را بفشارید."
 
-#~ msgid "Use up or down arrow to select value. Or type in the desired numerical value."
+#~ msgid ""
+#~ "Use up or down arrow to select value. Or type in the desired numerical value."
 #~ msgstr ""
 #~ "از کلیدهای جهتی بالا یا پایین برای انتخاب مقدار استفاده کنید. یا مقدار دلخواه "
 #~ "عددیتان را بنویسید."
@@ -17072,11 +16974,11 @@ msgstr "نوشتار"
 #~ msgstr "برای تغییر از کلیدهای جهتی استفاده کنید."
 
 #~ msgid ""
-#~ "To navigate, press left or right arrow. To move through items press up or down "
-#~ "arrow."
+#~ "To navigate, press left or right arrow. To move through items press up or "
+#~ "down arrow."
 #~ msgstr ""
-#~ "برای ناوبری، کلید جهت‌های راست و چپ را بفشارید. برای حرکت میان گزینه‌ها، کلیدهای "
-#~ "بالا یا پایین را بفشارید."
+#~ "برای ناوبری، کلید جهت‌های راست و چپ را بفشارید. برای حرکت میان گزینه‌ها، "
+#~ "کلیدهای بالا یا پایین را بفشارید."
 
 #~ msgid "To enter sub menu, press right arrow."
 #~ msgstr "برای ورود به زیرمنو، کلید جهت راست را فشار دهید."
@@ -17085,8 +16987,8 @@ msgstr "نوشتار"
 #~ "To decrease press left arrow, to increase press right arrow. To go to minimum "
 #~ "press home, and for maximum press end."
 #~ msgstr ""
-#~ "برای کاهش کلید جهت چپ را فشار دهید، برای افزایش کلید جهت راست را فشار دهید. برای "
-#~ "حداقل کلید خانه و برای حداکثر کلید پایان را فشار دهید."
+#~ "برای کاهش کلید جهت چپ را فشار دهید، برای افزایش کلید جهت راست را فشار دهید. "
+#~ "برای حداقل کلید خانه و برای حداکثر کلید پایان را فشار دهید."
 
 #~ msgctxt "structural navigation"
 #~ msgid "Interal Frames"
