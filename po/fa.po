@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-07-20 15:17+0000\n"
-"PO-Revision-Date: 2026-08-07 20:16+0330\n"
+"PO-Revision-Date: 2026-08-07 20:26+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: \n"
 "Language: fa\n"
@@ -1877,7 +1877,7 @@ msgstr "نپالی"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1030
 msgid "Sepedi, uncontracted"
-msgstr ""
+msgstr "سپتی، ناقراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1886,7 +1886,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1036
 msgid "Sepedi, contracted"
-msgstr ""
+msgstr "سپتی، قراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1913,7 +1913,7 @@ msgstr "اوریا"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1054
 msgid "Elfdalian, 6-dot"
-msgstr ""
+msgstr "الفدالی، ۶ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1922,7 +1922,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1060
 msgid "Elfdalian, 8-dot"
-msgstr ""
+msgstr "الفدالی، ۸ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1931,7 +1931,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1066
 msgid "Pali"
-msgstr ""
+msgstr "پالی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1940,7 +1940,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1072
 msgid "Polish, computer"
-msgstr ""
+msgstr "لهستانی* رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1958,7 +1958,7 @@ msgstr "لهستانی"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1084
 msgid "Portuguese, computer, 6-dot"
-msgstr ""
+msgstr "پرتغالی، رایانه، ۶ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1967,7 +1967,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1090
 msgid "Portuguese, computer, 8-dot"
-msgstr ""
+msgstr "پرتغالی، رایانه، ۸ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2003,7 +2003,7 @@ msgstr "پنجابی"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1114
 msgid "Romanian, uncontracted"
-msgstr ""
+msgstr "رومانیایی، ناقراردای"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2021,7 +2021,7 @@ msgstr "رومانیایی، رایانه"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1126
 msgid "Russian, computer, 6-dot"
-msgstr ""
+msgstr "روسی، رایانه، ۶ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2030,7 +2030,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1132
 msgid "Russian, computer, 8-dot"
-msgstr ""
+msgstr "روسی، رایانه، ۸ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2057,7 +2057,7 @@ msgstr "روسی"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1150
 msgid "Russian, contracted"
-msgstr ""
+msgstr "روسی، قراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2075,7 +2075,7 @@ msgstr "کینیارواندا"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1162
 msgid "Sanskrit"
-msgstr ""
+msgstr "سانسکریت"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2084,7 +2084,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1168
 msgid "Yakut"
-msgstr ""
+msgstr "یاکوت"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2093,7 +2093,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1174
 msgid "se-se"
-msgstr ""
+msgstr "se-se"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2129,7 +2129,7 @@ msgstr "اسلواکی"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1198
 msgid "sk-sk-g1"
-msgstr ""
+msgstr "sk-sk-g1"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2138,7 +2138,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1204
 msgid "sk-sk"
-msgstr ""
+msgstr "sk-sk"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2165,7 +2165,7 @@ msgstr "اسلوونیایی"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1222
 msgid "Sami, 6-dot"
-msgstr ""
+msgstr "سامی، ۶ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2174,7 +2174,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1228
 msgid "Sami, 8-dot"
-msgstr ""
+msgstr "سامی، ۸ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2183,7 +2183,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1234
 msgid "Sesotho, uncontracted"
-msgstr ""
+msgstr "سسوتو، ناقراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2192,7 +2192,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1240
 msgid "Sesotho, contracted"
-msgstr ""
+msgstr "سسوتو، قراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2201,7 +2201,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1246
 msgid "Serbian, Cyrillic"
-msgstr ""
+msgstr "صربی، سریلیک"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2219,7 +2219,7 @@ msgstr "صربستانی"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1258
 msgid "Swedish, computer, 1989"
-msgstr ""
+msgstr "سوئدی، رایانه، ۱۹۸۹"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2228,7 +2228,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1264
 msgid "Swedish, computer, 1996"
-msgstr ""
+msgstr "سوئدی، رایانه، ۱۹۹۶"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2237,7 +2237,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1270
 msgid "Swedish, uncontracted, 6-dot, detailed"
-msgstr ""
+msgstr "سوئدی، ناقراردادی، ۶ نقطه، باجزییات"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2246,7 +2246,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1276
 msgid "Swedish, uncontracted, 6-dot, phonetics"
-msgstr ""
+msgstr "سوئدی، ناقراردادی، ۶ نقطه، آوایی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2255,7 +2255,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1282
 msgid "Swedish, partially contracted, 6-dot, detailed"
-msgstr ""
+msgstr "سوئدی، نیمه‌قراردادی، ۶ نقطه، باجزییات"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2264,7 +2264,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1288
 msgid "Swedish, contracted, 6-dot, detailed"
-msgstr ""
+msgstr "سوئدی، قراردادی، ۶ نقطه، باجزییات"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2273,7 +2273,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1294
 msgid "Swedish, uncontracted, 8-dot, detailed"
-msgstr ""
+msgstr "سوئدی، ناقراردادی، ۸ نقطه، باجزییات"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2282,7 +2282,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1300
 msgid "Swedish, uncontracted, 8-dot"
-msgstr ""
+msgstr "سوئدی، ناقراردادی، ۸ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2291,7 +2291,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1306
 msgid "Swedish, partially contracted, 8-dot, detailed"
-msgstr ""
+msgstr "سوئدی، نیمه‌قراردادی، ۸ نقطه، باجزییات"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2300,7 +2300,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1312
 msgid "Swedish, partially contracted, 8-dot"
-msgstr ""
+msgstr "سوئدی، نیمه‌قراردادی، ۸ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2309,7 +2309,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1318
 msgid "Swedish, contracted, 8-dot, detailed"
-msgstr ""
+msgstr "سوئدی، قراردادی، ۸ نقطه، باجزییات"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2318,7 +2318,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1324
 msgid "Swedish, contracted, 8-dot"
-msgstr ""
+msgstr "سوئدی، قراردادی، ۸ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2327,7 +2327,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1330
 msgid "Swedish, uncontracted, 6-dot"
-msgstr ""
+msgstr "سوئدی، ناقراردادی، ۶ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2336,7 +2336,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1336
 msgid "Swedish, partially contracted, 6-dot"
-msgstr ""
+msgstr "سوئدی، نیمه‌قراردادی، ۶ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2345,7 +2345,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1342
 msgid "Swedish, contracted, 6-dot"
-msgstr ""
+msgstr "سوئدی، قراردادی، ۶ نقطه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2354,7 +2354,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1348
 msgid "Swahili, contracted, grade 1.2"
-msgstr ""
+msgstr "سواحیلی، قراردادی، سطح ۱٫۲"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2363,7 +2363,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1354
 msgid "Swahili, contracted, grade 1.3"
-msgstr ""
+msgstr "سواحیلی، قراردادی، سطح ۱٫۳"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2372,7 +2372,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1360
 msgid "Swahili, contracted, grade 1.4"
-msgstr ""
+msgstr "سواحیلی، قراردادی، سطح ۱٫۴"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2381,7 +2381,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1366
 msgid "Swahili, contracted, grade 1.5"
-msgstr ""
+msgstr "سواحیلی، قراردادی، سطح ۱٫۵"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2390,7 +2390,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1372
 msgid "Swahili, uncontracted"
-msgstr ""
+msgstr "سواحیلی، ناقراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2399,7 +2399,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1378
 msgid "Swahili, contracted, grade 2"
-msgstr ""
+msgstr "سواحیلی، قراردادی، سطح ۲"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2408,7 +2408,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1384
 msgid "Syriac"
-msgstr ""
+msgstr "سریانی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2426,7 +2426,7 @@ msgstr "تامیل"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1396
 msgid "Tamil, computer"
-msgstr ""
+msgstr "تامیل، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2444,7 +2444,7 @@ msgstr "تلوگو"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1408
 msgid "Thai, computer"
-msgstr ""
+msgstr "تایلندی، رایانه"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2453,7 +2453,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1414
 msgid "Thai, uncontracted"
-msgstr ""
+msgstr "تایلندی، ناقراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2471,7 +2471,7 @@ msgstr "تایلندی، نیمه‌قراردادی"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1426
 msgid "Thai, contracted"
-msgstr ""
+msgstr "تایلندی، قراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2507,7 +2507,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1450
 msgid "Setswana, uncontracted"
-msgstr ""
+msgstr "ستسوانا، ناقراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2516,7 +2516,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1456
 msgid "Setswana, contracted"
-msgstr ""
+msgstr "ستسوانا، قراردادی"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
