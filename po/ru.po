@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: orca trunk\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-03-03 10:19+0000\n"
-"PO-Revision-Date: 2026-04-11 15:59+0300\n"
+"PO-Revision-Date: 2026-07-29 18:02+0500\n"
 "Last-Translator: Ser82-png <asvmail.as@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -318,7 +318,7 @@ msgstr "панразд"
 #. Translators: short braille for the rolename of a spin button.
 #: src/orca/braille_rolenames.py:157
 msgid "spin"
-msgstr "счетч"
+msgstr "счётч"
 
 #. Translators: short braille for the rolename of a statusbar.
 #: src/orca/braille_rolenames.py:159
@@ -3895,8 +3895,8 @@ msgid ""
 "Shift to move backwards."
 msgstr ""
 "Если этот параметр включён, можно использовать буквенно-цифровые клавиши для "
-"быстрого перемещение между элементами. Например, H - позволяет перейти к "
-"следующему заголовку, K - к следующей ссылке. Добавление Shift приведет к "
+"быстрого перемещения между элементами. Например, H - позволяет перейти к "
+"следующему заголовку, K - к следующей ссылке. Добавление Shift приведёт к "
 "изменению направления перемещения."
 
 #. Translators: This is a label for a switch that controls whether structural
@@ -4151,7 +4151,7 @@ msgid ""
 "Do you want to continue?"
 msgstr ""
 "У вас есть несохранённые изменения. При создании нового профиля будут "
-"скопированы ваши текущие сохраненные настройки, а не несохранённые изменения "
+"скопированы ваши текущие сохранённые настройки, а несохранённые изменения "
 "будут потеряны.\n"
 "\n"
 "Хотите продолжить?"
@@ -10713,7 +10713,7 @@ msgstr "Макет для ноутбука."
 #. the mouse pointer to a particular object is believed to have succeeded.
 #: src/orca/messages.py:1700
 msgid "Pointer moved to object."
-msgstr "Указатель перемещен на объект."
+msgstr "Указатель перемещён на объект."
 
 #. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
