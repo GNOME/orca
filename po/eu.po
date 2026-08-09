@@ -11,7 +11,7 @@ msgid ""
 msgstr "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-07-20 15:17+0000\n"
-"PO-Revision-Date: 2026-08-06 10:00+0100\n"
+"PO-Revision-Date: 2026-08-09 10:00+0100\n"
 "Last-Translator: Asier Saratsua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -2917,7 +2917,7 @@ msgstr "Eraman berrrikuspen laua fokua duen objektura"
 #. object at the current flat review location.
 #: src/orca/cmdnames.py:143
 msgid "Move focus to the flat review location"
-msgstr ""
+msgstr "Eraman fokua berrikuspen lauaren kokalekura"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -3354,7 +3354,7 @@ msgstr "Aktibatu edo desaktibatu pantailako ahots-gailua"
 #. for the app being used at the time the command is given.
 #: src/orca/cmdnames.py:489
 msgid "Toggle sleep mode for the current application"
-msgstr "Txandakatu lo modua uneko aplikaziorako"
+msgstr "Txandakatu lo-modua uneko aplikaziorako"
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -3488,7 +3488,7 @@ msgstr "Joan teklen hurrengo oihartzun-mailara"
 #. through the available modes: off, editable text only, and always.
 #: src/orca/cmdnames.py:588
 msgid "Cycle to the next text attribute change mode"
-msgstr ""
+msgstr "Joan hurrengo testu-atributuen aldaketa-modura"
 
 #. Translators: this is a debug message that Orca users will not normally see. It
 #. describes a debug routine that allows the user to adjust the level of debug
@@ -4375,14 +4375,14 @@ msgstr "Joan zutabearen beheko aldera"
 #: src/orca/cmdnames.py:1183
 msgctxt "mathcat"
 msgid "Enter math navigation mode"
-msgstr "Sartu matematikako nabigazio moduan"
+msgstr "Sartu matematikako nabigazio-moduan"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command exits that mode.
 #: src/orca/cmdnames.py:1187
 msgctxt "mathcat"
 msgid "Exit math navigation mode"
-msgstr "Irten matematikako nabigazio modutik"
+msgstr "Irten matematikako nabigazio-modutik"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the next sibling
@@ -4516,7 +4516,7 @@ msgstr "Joan gelaxka bat behera"
 #: src/orca/cmdnames.py:1270
 msgctxt "mathcat"
 msgid "Increase navigation granularity"
-msgstr ""
+msgstr "Handitu nabigazio-granulartasuna"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command cycles the navigation
@@ -4524,7 +4524,7 @@ msgstr ""
 #: src/orca/cmdnames.py:1275
 msgctxt "mathcat"
 msgid "Decrease navigation granularity"
-msgstr ""
+msgstr "Txikitu nabigazio-granulartasuna"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command toggles whether navigation
@@ -4532,7 +4532,7 @@ msgstr ""
 #: src/orca/cmdnames.py:1280
 msgctxt "mathcat"
 msgid "Toggle speech mode"
-msgstr ""
+msgstr "Txandakatu ahotsaren modua"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command speaks the previous math
@@ -5821,7 +5821,7 @@ msgstr "Taulak"
 #: src/orca/guilabels.py:100
 msgctxt "Context"
 msgid "Tracked changes"
-msgstr ""
+msgstr "Jarraitutako aldaketak"
 
 #. Translators: This is a shorter version of "Automatic focus mode during caret/structural
 #. navigation" used on sub-pages where the navigation type context is already clear.
@@ -6117,7 +6117,7 @@ msgid ""
 "If layout mode is enabled, Orca will present the full line as it appears on "
 "the screen. Otherwise, Orca will treat each object as if it were on a "
 "separate line."
-msgstr ""
+msgstr "Diseinu-modua gaituta badago, Orcak lerro osoa aurkeztuko du pantailan agertzen den moduan. Bestela, objektu bakoitza lerro bereizi bat izango balitz bezala tratatuko du."
 
 #. Translators: This is a label which will appear in the list of available speech
 #. engines as a special item. It refers to the default engine configured within
@@ -6141,7 +6141,7 @@ msgstr "Ahoskeraren hiztegia"
 msgid ""
 "Customize how words are spoken by adding words and replacement text to the "
 "pronunciation dictionary."
-msgstr ""
+msgstr "Pertsonalizatu hitzak nola esaten diren, ahoskera-hiztegian hitzak eta ordezko testuak gehituz."
 
 #. Translators: This is a label for a column header in Orca's pronunciation
 #. dictionary. The pronunciation dictionary allows the user to correct words
@@ -6343,7 +6343,7 @@ msgstr "Pantaila-irakurlearen kudeaketa"
 #. command keys to the current application instead of handling them itself.
 #: src/orca/guilabels.py:496
 msgid "Bypass mode"
-msgstr ""
+msgstr "Saiheste-modua"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to debugging.
@@ -6428,7 +6428,7 @@ msgstr "Eskualde aktiboak"
 #. are related to sleep mode.
 #: src/orca/guilabels.py:558
 msgid "Sleep mode"
-msgstr "Lo modua"
+msgstr "Lo-modua"
 
 #: src/orca/guilabels.py:564
 msgid ""
@@ -6443,7 +6443,7 @@ msgstr "Sleep mode causes Orca to behave as if it were not running for a given a
 #. have sleep mode enabled.
 #: src/orca/guilabels.py:573
 msgid "Always use sleep mode with these applications"
-msgstr ""
+msgstr "Erabili beti lo-modua aplikazio hauekin"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to mouse interaction, such as routing the pointer, clicking
@@ -6485,7 +6485,7 @@ msgid ""
 "When enabled, alphanumeric keys can be used to quickly jump between "
 "elements. For example, H moves to the next heading, K to the next link. Add "
 "Shift to move backwards."
-msgstr ""
+msgstr "Gaituta dagoenean, tekla alfanumerikoak erabili daitezke elementuen artean azkar jauzi egiteko. Adibidez, H letrakin hurrengo goiburura zoaz, K letrarekin hurrengo estekara. Gehitu Shift atzerantz joateko."
 
 #. Translators: This is a label for a switch that controls whether structural
 #. navigation wraps around when reaching the top or bottom of a document.
@@ -6574,7 +6574,7 @@ msgstr "Berrikuspen laua"
 #. caret as the user navigates the application normally.
 #: src/orca/guilabels.py:674
 msgid "Follow the focus and caret location"
-msgstr ""
+msgstr "Jarraitu fokuaren eta kurtsorearen kokalekua"
 
 #. Translators: This is one of the choices for when flat review should follow
 #. the focus and caret location. "Always" means flat review moves whenever the
@@ -6604,14 +6604,14 @@ msgstr "Inoiz ere ez"
 #. speak the content at the flat review location when that content changes.
 #: src/orca/guilabels.py:693
 msgid "Speak changes at review location"
-msgstr ""
+msgstr "Esan berrikuspen-kokalekuko aldaketak"
 
 #. Translators: This is a label for the setting which determines if Orca will
 #. refresh the braille display with the content at the flat review location
 #. when that content changes.
 #: src/orca/guilabels.py:698
 msgid "Display changes at review location"
-msgstr ""
+msgstr "Bistaratu berrikuspen-kokalekuko aldaketak"
 
 #. Translators: This is a label for the setting which determines if Orca will
 #. restrict flat review to the current object rather than the whole window.
@@ -6722,7 +6722,7 @@ msgstr "Karaktere-formatua"
 #: src/orca/guilabels.py:777
 #, python-format
 msgid "Character Formatting for: '%s'"
-msgstr ""
+msgstr "Karaktere-formatu honentzako: '%s'"
 
 #. Translators: This is an option in a combo box for how a text attribute should
 #. be presented. If selected, the attribute will not be presented.
@@ -7891,7 +7891,7 @@ msgstr "Kokalekua"
 #: src/orca/guilabels.py:1617
 msgctxt "user extensions"
 msgid "Some commands were unbound due to conflicts."
-msgstr ""
+msgstr "Zenbait komando lotu gabe daude gatazken ondorioz."
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by whether the extension is approved, not approved, disabled, invalid,
@@ -8240,7 +8240,7 @@ msgid ""
 "The announcement settings determine which document changes, text formatting "
 "changes, and container boundaries will be announced as Say All moves through "
 "the document."
-msgstr ""
+msgstr "Iragarpen-ezarpenak zehazten du zein dokumentu-aldaketa, testu-formatuko aldaketa eta edukiontzi-muga iragarriko diren 'Esan dena' dokumentuan zehar mugitzen denean."
 
 #: src/orca/guilabels.py:1887
 msgid "Speak object under mo_use"
@@ -8298,7 +8298,7 @@ msgstr "Maiztasuna (seg.):"
 #. which key(s) should be used as the Orca modifier.
 #: src/orca/guilabels.py:1925
 msgid "Screen Reader Modifier Keys"
-msgstr ""
+msgstr "Pantaila-irakurgailuaren tekla aldatzaileak"
 
 #. Translators: This refers to the Insert key being used as the Orca modifier.
 #: src/orca/guilabels.py:1928
@@ -8310,7 +8310,7 @@ msgstr "Txertatu"
 #. that users can distinguish between the two keys.
 #: src/orca/guilabels.py:1933
 msgid "Keypad Insert"
-msgstr ""
+msgstr "Zenbakizko teklatuaren txertatzea"
 
 #. Translators: This refers to the Caps Lock key being used as the Orca modifier.
 #: src/orca/guilabels.py:1936
@@ -8446,7 +8446,7 @@ msgstr "Gaizki idatzitako hitzen adierazlea"
 #. announce text formatting changes (e.g. bold, italic) when navigating.
 #: src/orca/guilabels.py:2037
 msgid "Text attribute changes"
-msgstr ""
+msgstr "Testu-atributuen aldaketak"
 
 #. Translators: This is an option for the text attribute changes setting.
 #: src/orca/guilabels.py:2040
@@ -8631,7 +8631,7 @@ msgid ""
 "The on-screen braille display is a window intended for developers that shows "
 "what would be presented on a braille display. To show or hide it, assign a "
 "keybinding in Commands."
-msgstr ""
+msgstr "Pantailako braille bistaratzea garatzaileentzako leiho bat da. Braille bistaratze batean zer aurkezten den erakusten du. Hura erakutsi edo ezkutatzeko, esleitu laster-tekla bat 'Komandoak' atalean."
 
 #. Translators: This is the label of the Braille page in the Orca Preferences dialog.
 #: src/orca/guilabels.py:2182
@@ -8682,7 +8682,7 @@ msgstr "Oihartzuna"
 msgid ""
 "Key echo speaks the key you pressed. Typing echo speaks what was inserted "
 "into the document as a result of your typing."
-msgstr ""
+msgstr "Tekla-oihartzunak zuk sakatutako tekla irakurtzen du. Idazketaren oihartzunak zurk idatzi ahala dokumentuan txertatzen ari dena irakurtzen du."
 
 #. Translators: This is the label of the General page in the Orca Preferences
 #. dialog. On that page there are a variety of general Orca settings which do
@@ -8746,7 +8746,7 @@ msgstr "Ahots-estiloa:"
 #. "the square root of x".
 #: src/orca/guilabels.py:2274
 msgid "Terse"
-msgstr ""
+msgstr "Garbia"
 
 #. Translators: This is a verbosity level for speaking mathematical expressions.
 #. "Medium" is the default and provides a moderate amount of detail.
@@ -8789,7 +8789,7 @@ msgstr "Nabigazio-modua:"
 #. first character, the first and last characters, or all characters.
 #: src/orca/guilabels.py:2305
 msgid "Braille navigation highlight:"
-msgstr ""
+msgstr "Braille nabigazioaren nabarmentzea:"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. When this
 #. setting is enabled, navigating past the edge of a 2D structure like a matrix
@@ -8797,7 +8797,7 @@ msgstr ""
 #. staying inside the structure.
 #: src/orca/guilabels.py:2311
 msgid "Automatically exit 2D math structures"
-msgstr ""
+msgstr "Automatikoki irten 2Dekin bat datozen egituretatik"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the navigation granularity options. In Enhanced mode, MathCAT groups
@@ -8922,7 +8922,7 @@ msgstr "Ahots multzoa:"
 #: src/orca/guilabels.py:2401
 #, python-format
 msgid "Delete voice set '%s'?"
-msgstr ""
+msgstr "Ezabatu '%s' ahots multzoa?"
 
 #. Translators: This is the label for the global (default) voice set in the
 #. voice set selector combo box. It represents the main voice configuration
@@ -8945,7 +8945,7 @@ msgid ""
 "hyperlink, and system). The \"%s\" voice set contains the voice types for "
 "the current profile. Additional voice sets can be created for specific "
 "languages."
-msgstr ""
+msgstr "Ahots multzoak ahots moten bildumak dira (adibidez, lehenetsia, maiuskulak, hiperesteka eta sistema). \"%s\"  ahots multzoak uneko profilaren ahots motak ditu. Ahots multzo gehigarriak sortu daitezke beste hizkuntza batzuetarako."
 
 #. Translators: This is the label of the Voice Types page in the Orca
 #. Preferences dialog, where users configure voices for different contexts
@@ -9000,7 +9000,7 @@ msgstr "Erabiltzaile-interfazearen elementuak"
 #. a voice change. It appears under a "Language Switching" group heading.
 #: src/orca/guilabels.py:2470
 msgid "Limit switching to configured voices"
-msgstr ""
+msgstr "Mugatu konfiguratutako ahotsetara aldatzea"
 
 #. Translators: This label is for a group of buttons on the Text Attributes
 #. pane of the Orca Preferences dialog. On that pane there is a long list of
@@ -9795,7 +9795,8 @@ msgstr "Ezin da pantaila-irakurlea abiarazi ezin duelako Mahaigainarekin konekta
 msgid ""
 "Another screen reader process is already running for this session.\n"
 "Run “orca --replace” to replace that process with a new one."
-msgstr ""
+msgstr "Beste pantaila-irakurgailu bat ari da exekutatzen saio honetan.\n"
+"Exekutatu “orca --replace” prozesu hori berri batekin ordezkatzeko."
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '-p, --profile' command line option.
@@ -9868,13 +9869,13 @@ msgstr "FITXATEGIA"
 #. which allows the user to approve a user extension for loading.
 #: src/orca/messages.py:288
 msgid "Approve a user extension for loading"
-msgstr ""
+msgstr "Onartu erabiltzaile-hedapen bat kargatzeko"
 
 #. Translators: This is the description of command line option '--revoke-extension'
 #. which allows the user to revoke approval for a user extension.
 #: src/orca/messages.py:292
 msgid "Revoke approval for a user extension"
-msgstr ""
+msgstr "Kendu erabiltzaile-hedapen baten onarpena"
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '--approve-extension' or '--revoke-extension' command line options.
@@ -9901,7 +9902,7 @@ msgstr "Onartutako hedapena: %s"
 #: src/orca/messages.py:308
 #, python-format
 msgid "Revoked approval for: %s"
-msgstr ""
+msgstr "Onarpena kendu zaio honi: %s"
 
 #. Translators: This message is presented when the user tries to revoke an
 #. extension that was not approved. The string substitution is the filename.
@@ -9913,7 +9914,7 @@ msgstr "Hedapena ez da onartu: %s"
 #: src/orca/messages.py:317
 #, python-format
 msgid "Warning: %s is currently disabled and will not load until enabled."
-msgstr ""
+msgstr "Abisua: %s desgaituta dago eta ezin da kargatu gaitu arte."
 
 #. Translators: This is the description of command line option '-s, --setup'
 #. that will place the user in Orca's GUI preferences window.
@@ -10737,7 +10738,7 @@ msgstr "Desgaituta"
 #. spoken.
 #: src/orca/messages.py:922
 msgid "Spoken indentation disabled."
-msgstr ""
+msgstr "Irakurritako koskatzea desgaituta."
 
 #. Translators: This brief message indicates that indentation will be spoken.
 #: src/orca/messages.py:925
@@ -10749,7 +10750,7 @@ msgstr "Gaituta"
 #. spoken.
 #: src/orca/messages.py:929
 msgid "Spoken indentation enabled."
-msgstr ""
+msgstr "Irakurritako koskatzea gaituta."
 
 #. Translators: Orca announces when a widget has an associated error, such as
 #. disallowed characters in an input, or a must-check box that is not checked
@@ -11381,7 +11382,7 @@ msgstr "Ezin izan da uneko kokapena aurkitu."
 #. information to Orca.
 #: src/orca/messages.py:1377
 msgid "Character format unknown."
-msgstr ""
+msgstr "Karaktere-formatu ezezaguna."
 
 #. Translators: Orca has a command which presents formatting information for the
 #. current text character. Examples of this information include font family, font
@@ -11391,7 +11392,7 @@ msgstr ""
 #. values.
 #: src/orca/messages.py:1385
 msgid "Default character format."
-msgstr ""
+msgstr "Karektere-formatu lehenetsia."
 
 #. Translators: This string is used to present the state of a locking key, such
 #. as Caps Lock. If Caps Lock is "off", then letters typed will appear in
@@ -11417,7 +11418,7 @@ msgstr "-"
 #. is presented if the modifier key state cannot be obtained from the system.
 #: src/orca/messages.py:1403
 msgid "Modifier key state is not available."
-msgstr ""
+msgstr "Tekla aldatzailearen egoera ezin da eskuratu."
 
 #. Translators: This is to inform the user of the presence of the red squiggly
 #. line which indicates that a given word is not spelled correctly.
@@ -11631,7 +11632,7 @@ msgstr "Ez da ekintzarik aurkitu hemen: %s"
 #. the user if no more annotations can be found.
 #: src/orca/messages.py:1568
 msgid "No more annotations."
-msgstr ""
+msgstr "Ez dago oharpen gehiago."
 
 #. Translators: This is for navigating document content by moving from blockquote
 #. to blockquote. This is a detailed message which will be presented to the user
@@ -11727,7 +11728,7 @@ msgstr "Ez dago irudi gehiago."
 #. no more landmarks can be found.
 #: src/orca/messages.py:1637
 msgid "No more landmarks."
-msgstr ""
+msgstr "Ez dago erreferentzia-puntu gehiago."
 
 #. Translators: This is for navigating document content by moving from link to
 #. link (regardless of visited state). This is a detailed message which will be
@@ -11764,7 +11765,7 @@ msgstr "Ez dago eskualde aktibo gehiago."
 #. presented to the user if no more math expressions can be found.
 #: src/orca/messages.py:1664
 msgid "No more math expressions."
-msgstr ""
+msgstr "Ez dago matematika-adierazpen gehiago."
 
 #. Translators: This is for navigating document content by moving from paragraph
 #. to paragraph. This is a detailed message which will be presented to the user
@@ -11915,7 +11916,7 @@ msgstr "-"
 #. item has started loading.
 #: src/orca/messages.py:1771
 msgid "Loading.  Please wait."
-msgstr ""
+msgstr "Kargatzen. Itxaron."
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading.
@@ -12102,7 +12103,7 @@ msgstr "Testua desautatu da."
 #: src/orca/messages.py:1902
 #, python-format
 msgid "Size: %d, %d. Location: %d, %d."
-msgstr ""
+msgstr "Tamaina: %d, %d. Kokalekua: %d, %d."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the full/verbose output
@@ -12111,7 +12112,7 @@ msgstr ""
 #: src/orca/messages.py:1908
 #, python-format
 msgid "Width: %d. Height: %d. %d from left. %d from top."
-msgstr ""
+msgstr "Zabalera: %d. Altuera: %d. %d ezkerretik. %d goitik."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
@@ -12173,7 +12174,7 @@ msgstr "Pantailako ahotsa desgaituta dago."
 #: src/orca/messages.py:1955
 #, python-format
 msgid "Sleep mode disabled for %s."
-msgstr "Lo modua desgaituta honetarako: %s."
+msgstr "Lo-modua desgaituta honetarako: %s."
 
 #. Translators: Orca has a sleep mode which causes Orca to essentially behave as
 #. if it were not running for a given application. Some use cases include self-
@@ -12191,7 +12192,7 @@ msgstr "Lo modua desgaituta honetarako: %s."
 #: src/orca/messages.py:1970
 #, python-format
 msgid "Sleep mode enabled for %s."
-msgstr "Lo modua gaituta honetarako: %s."
+msgstr "Lo-modua gaituta honetarako: %s."
 
 #. Translators: This string announces speech rate change.
 #: src/orca/messages.py:1973
@@ -12226,12 +12227,12 @@ msgstr "leunago."
 #. Translators: This string announces speech inflection (pitch range) change.
 #: src/orca/messages.py:1991
 msgid "more inflection."
-msgstr ""
+msgstr "flexio gehiago."
 
 #. Translators: This string announces speech inflection (pitch range) change.
 #: src/orca/messages.py:1994
 msgid "less inflection."
-msgstr ""
+msgstr "flexio gutxiago."
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -12400,27 +12401,27 @@ msgstr "Taula-nabigazioa gaitu da."
 #. expressions via MathCAT. This string is presented when entering that mode.
 #: src/orca/messages.py:2115
 msgid "MathCAT on."
-msgstr ""
+msgstr "MathCAT aktibatuta."
 
 #. Translators: Orca has a modal math navigation mode for exploring math
 #. expressions via MathCAT. This string is presented when leaving that mode.
 #: src/orca/messages.py:2119
 msgid "MathCAT off."
-msgstr ""
+msgstr "MathCAT desaktibatuta."
 
 #. Translators: Orca has a modal math navigation mode for exploring math
 #. expressions via MathCAT. This is presented when the user tries to enter
 #. math navigation but is not on a math element.
 #: src/orca/messages.py:2124
 msgid "Not in math."
-msgstr ""
+msgstr "Ez matematiketan"
 
 #. Translators: Orca has a modal math navigation mode for exploring math
 #. expressions via MathCAT. This hint is presented when the user reaches the
 #. edge of the expression and cannot move further in the current direction.
 #: src/orca/messages.py:2129
 msgid "Press Escape to exit."
-msgstr ""
+msgstr "Sakatu Esc irteteko."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
@@ -12861,8 +12862,8 @@ msgstr[1] "%d elementu dituen zerrenda"
 #, python-format
 msgid "List with %d available item"
 msgid_plural "List with %d available items"
-msgstr[0] ""
-msgstr[1] "%d elementu dituen zerrenda"
+msgstr[0] "Elementu %d eskuragarri duen zerrenda"
+msgstr[1] "%d elementu eskuragarri dituen zerrenda"
 
 #. Translators: This message describes the number of items of a bulleted or numbered list
 #. that is inside of another list.
@@ -12870,8 +12871,8 @@ msgstr[1] "%d elementu dituen zerrenda"
 #, python-format
 msgid "Nested list with %d item"
 msgid_plural "Nested list with %d items"
-msgstr[0] "Elementu %d duen zerrenda"
-msgstr[1] "%d elementu dituen zerrenda"
+msgstr[0] "Elementu %d duen zerrenda habiaratua"
+msgstr[1] "%d elementu dituen zerrenda habiaratua"
 
 #. Translators: This message describes a news/article feed whose size is
 #. unknown, such as can be found on social media sites that have unlimited
@@ -13003,8 +13004,8 @@ msgstr[1] "%(index)d / %(total)d elementu hautatu da"
 #, python-format
 msgid "%d Screen reader command found."
 msgid_plural "%d Screen reader commands found."
-msgstr[0] ""
-msgstr[1] "Pantaila-irakurlearen %d lasterbide aurkitu dira."
+msgstr[0] "Pantaila-irakurgailuaren komando %d aurkitu da."
+msgstr[1] "Pantaila-irakurgailuaren %d komando aurkitu dira."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
@@ -13225,7 +13226,7 @@ msgstr "%s(e)n ditu xehetasunak"
 #: src/orca/object_properties.py:103
 msgctxt "role"
 msgid "code"
-msgstr ""
+msgstr "kodea"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
