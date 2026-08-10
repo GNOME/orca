@@ -89,6 +89,7 @@ class TestAXDocument:
     @pytest.mark.parametrize(
         "method_name,expected_result",
         [
+            ("get_text_selections", (False, [])),
             ("get_page_count", 0),
             ("get_locale", ""),
         ],
@@ -111,6 +112,112 @@ class TestAXDocument:
         result = method(mock_accessible)
         assert result == expected_result
         ax_object_mock.supports_document.assert_called_once_with(mock_accessible)
+
+    @pytest.mark.parametrize(
+        "atspi_version,getter_is_safe",
+        [
+            pytest.param((2, 58, 8), False, id="gnome-49-before-fix"),
+            pytest.param((2, 58, 9), True, id="gnome-49-with-fix"),
+            pytest.param((2, 59, 2), False, id="gnome-50-development-before-fix"),
+            pytest.param((2, 60, 6), False, id="gnome-50-before-fix"),
+            pytest.param((2, 60, 7), True, id="gnome-50-with-fix"),
+            pytest.param((2, 61, 1), False, id="gnome-51-development-before-fix"),
+            pytest.param((2, 61, 2), True, id="gnome-51-development-with-fix"),
+        ],
+    )
+    def test_get_text_selections_obeys_safe_version_boundaries(
+        self,
+        test_context: OrcaTestContext,
+        atspi_version: tuple[int, int, int],
+        getter_is_safe: bool,
+    ) -> None:
+        """Test the getter is called only in releases containing the crash fix."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        from orca.ax_document import AXDocument
+
+        document = test_context.Mock(spec=Atspi.Accessible)
+        essential_modules["orca.ax_object"].AXObject.supports_document.return_value = True
+        test_context.patch(
+            "gi.repository.Atspi.get_version",
+            new=test_context.Mock(return_value=atspi_version),
+        )
+        getter = test_context.patch(
+            "gi.repository.Atspi.Document.get_text_selections",
+            return_value=[],
+        )
+
+        assert AXDocument.get_text_selections(document) == (getter_is_safe, [])
+        if getter_is_safe:
+            getter.assert_called_once_with(document)
+        else:
+            getter.assert_not_called()
+
+    def test_get_text_selections_returns_reported_selections(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test AXDocument.get_text_selections returns every reported selection."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        from orca.ax_document import AXDocument
+
+        document = test_context.Mock(spec=Atspi.Accessible)
+        selections = (
+            test_context.Mock(spec=Atspi.TextSelection),
+            test_context.Mock(spec=Atspi.TextSelection),
+        )
+        essential_modules["orca.ax_object"].AXObject.supports_document.return_value = True
+        test_context.patch(
+            "gi.repository.Atspi.get_version",
+            new=test_context.Mock(return_value=(2, 61, 2)),
+        )
+        getter = test_context.patch(
+            "gi.repository.Atspi.Document.get_text_selections",
+            new=test_context.Mock(return_value=selections),
+        )
+
+        assert AXDocument.get_text_selections(document) == (True, list(selections))
+        getter.assert_called_once_with(document)
+
+    def test_set_text_selection_success(self, test_context: OrcaTestContext) -> None:
+        """Test AXDocument.set_text_selection constructs and sets the requested range."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        from orca.ax_document import AXDocument
+
+        document = test_context.Mock(spec=Atspi.Accessible)
+        start_object = test_context.Mock(spec=Atspi.Accessible)
+        end_object = test_context.Mock(spec=Atspi.Accessible)
+        selection = test_context.Mock(spec=Atspi.TextSelection)
+        ax_object_mock = essential_modules["orca.ax_object"].AXObject
+        ax_object_mock.supports_document.return_value = True
+        constructor = test_context.patch(
+            "gi.repository.Atspi.TextSelection",
+            new=test_context.Mock(return_value=selection),
+        )
+        setter = test_context.patch(
+            "gi.repository.Atspi.Document.set_text_selections",
+            new=test_context.Mock(return_value=True),
+        )
+
+        result = AXDocument.set_text_selection(
+            document,
+            start_object,
+            3,
+            end_object,
+            8,
+            True,
+        )
+
+        assert result is True
+        constructor.assert_called_once_with()
+        assert selection.start_object == start_object
+        assert selection.start_offset == 3
+        assert selection.end_object == end_object
+        assert selection.end_offset == 8
+        assert selection.start_is_active is True
+        setter.assert_called_once_with(document, [selection])
 
     def test_get_page_count_success(self, test_context: OrcaTestContext) -> None:
         """Test AXDocument.get_page_count returns page count on success."""
