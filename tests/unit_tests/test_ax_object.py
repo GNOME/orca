@@ -1002,6 +1002,25 @@ class TestAXObject:
         result = AXObject.is_valid(test_obj, test_app)
         assert result == case["expected_result"]
 
+    def test_is_valid_returns_false_when_object_cannot_be_hashed(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test an uninitialized accessible is treated as invalid."""
+
+        self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
+        from orca.ax_object import AXObject
+
+        obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            ax_cache_manager,
+            "get_object_key",
+            side_effect=RuntimeError("Accessible is not initialized"),
+        )
+
+        assert AXObject.is_valid(obj) is False
+
     def test_check_hung_propagates_original_timestamp(self, test_context: OrcaTestContext) -> None:
         """Test propagated app hung markers retain the source timestamp."""
 

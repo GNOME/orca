@@ -253,7 +253,12 @@ class AXObject:
         if obj is None:
             return False
 
-        obj_key = ax_cache_manager.get_object_key(obj)
+        try:
+            obj_key = ax_cache_manager.get_object_key(obj)
+        except RuntimeError as error:
+            msg = f"AXObject: Cannot create cache key for invalid object: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
         if AXObject._CACHE.get_dead_status_for_key(obj_key):
             return False
 
