@@ -63,9 +63,9 @@ class TestWhereAmIPresenter:
 
         additional_modules = [
             "orca.flat_review_presenter",
-            "orca.speech_presenter",
             "orca.spellcheck_presenter",
             "orca.text_attribute_manager",
+            "orca.text_selection_presenter",
             "orca.ax_component",
             "orca.ax_text",
             "orca.ax_utilities",
@@ -110,8 +110,6 @@ class TestWhereAmIPresenter:
         messages_mock.STATUS_BAR_NOT_FOUND_FULL = STATUS_BAR_NOT_FOUND_FULL_MSG
         messages_mock.STATUS_BAR_NOT_FOUND_BRIEF = STATUS_BAR_NOT_FOUND_BRIEF_MSG
         messages_mock.NOT_ON_A_LINK = "Not on a link"
-        messages_mock.NO_SELECTED_TEXT = "No selected text"
-        messages_mock.SELECTED_TEXT_IS = "Selected text is %s"
         messages_mock.selected_items_count = test_context.Mock(return_value="2 of 5 items selected")
 
         handler_mock = test_context.Mock()
@@ -127,18 +125,6 @@ class TestWhereAmIPresenter:
             "underline",
         ]
         text_attr_mgr.get_manager.return_value.get_resolved_attributes_to_speak.return_value = []
-
-        speech_verbosity_instance = test_context.Mock()
-        speech_verbosity_instance.get_indentation_description = test_context.Mock(return_value="")
-        speech_verbosity_instance.adjust_for_presentation = test_context.Mock(
-            return_value="adjusted text",
-        )
-        speech_verbosity_instance.adjust_for_digits = test_context.Mock(
-            return_value="adjusted text",
-        )
-        essential_modules["orca.speech_presenter"].get_presenter = test_context.Mock(
-            return_value=speech_verbosity_instance,
-        )
 
         ax_component_mock = essential_modules["orca.ax_component"]
         rect_mock = test_context.Mock()
@@ -730,48 +716,6 @@ class TestWhereAmIPresenter:
         assert result is True
         pres_manager.present_message.assert_called_with("Not on a link")
 
-    def test_get_all_selected_text_spreadsheet_cell(self, test_context: OrcaTestContext) -> None:
-        """Test WhereAmIPresenter._get_all_selected_text with spreadsheet cell."""
-
-        deps = self._setup_dependencies(test_context)
-        from orca.where_am_i_presenter import WhereAmIPresenter
-
-        cell_obj = test_context.Mock()
-        mock_script = test_context.Mock()
-        deps["orca.ax_utilities"].AXUtilities.is_spreadsheet_cell.return_value = True
-
-        deps["orca.ax_utilities"].AXUtilities.get_selected_text.return_value = (
-            "cell text",
-            0,
-            9,
-        )
-        presenter = WhereAmIPresenter()
-        result = presenter._get_all_selected_text(mock_script, cell_obj)
-        assert result == "cell text"
-
-    def test_get_all_selected_text_with_adjacent(self, test_context: OrcaTestContext) -> None:
-        """Test WhereAmIPresenter._get_all_selected_text with adjacent text objects."""
-
-        deps = self._setup_dependencies(test_context)
-        from orca.where_am_i_presenter import WhereAmIPresenter
-
-        text_obj = test_context.Mock()
-        prev_obj = test_context.Mock()
-        next_obj = test_context.Mock()
-        mock_script = test_context.Mock()
-        deps["orca.ax_utilities"].AXUtilities.is_spreadsheet_cell.return_value = False
-        mock_script.utilities.find_previous_object.side_effect = [prev_obj, None]
-        mock_script.utilities.find_next_object.side_effect = [next_obj, None]
-
-        deps["orca.ax_utilities"].AXUtilities.get_selected_text.side_effect = [
-            ("current text", 0, 12),  # current object
-            ("prev text", 0, 9),  # previous object
-            ("next text", 0, 9),  # next object
-        ]
-        presenter = WhereAmIPresenter()
-        result = presenter._get_all_selected_text(mock_script, text_obj)
-        assert result == "prev text current text next text"
-
     def test_present_selected_text_no_focus(self, test_context: OrcaTestContext) -> None:
         """Test WhereAmIPresenter.present_selected_text with no focus."""
 
@@ -788,7 +732,7 @@ class TestWhereAmIPresenter:
         pres_manager.speak_message.assert_called_with(LOCATION_NOT_FOUND_MSG)
 
     def test_present_selected_text_with_text(self, test_context: OrcaTestContext) -> None:
-        """Test WhereAmIPresenter.present_selected_text with selected text."""
+        """Test the selected-text command delegates to the text-selection presenter."""
 
         deps = self._setup_dependencies(test_context)
         from orca.where_am_i_presenter import WhereAmIPresenter
@@ -798,26 +742,13 @@ class TestWhereAmIPresenter:
         mock_script = test_context.Mock()
 
         presenter = WhereAmIPresenter()
-        test_context.patch_object(presenter, "_get_all_selected_text", return_value="selected text")
+        selection_presenter = deps["orca.text_selection_presenter"].get_presenter.return_value
+        selection_presenter.present_selected_text.return_value = True
 
-        manager = deps["orca.speech_presenter"].get_presenter.return_value
-        manager.get_indentation_description.return_value = "indent: 2"
-
-        def mock_adjust_for_presentation(_obj, text) -> str:
-            return f"processed {text}"
-
-        def mock_adjust_for_digits(_obj, text) -> str:
-            text_str = str(text) if text is not None else ""
-            return text_str
-
-        manager.adjust_for_presentation = mock_adjust_for_presentation
-        manager.adjust_for_digits = mock_adjust_for_digits
-        pres_manager = deps["orca.presentation_manager"].get_manager()
-        pres_manager.speak_message.reset_mock()
         result = presenter.present_selected_text(mock_script)
+
         assert result is True
-        expected_msg = "Selected text is indent: 2 processed selected text"
-        pres_manager.speak_message.assert_called_with(expected_msg)
+        selection_presenter.present_selected_text.assert_called_once_with(mock_script, focus_obj)
 
     def test_present_selection_spreadsheet_handling(self, test_context: OrcaTestContext) -> None:
         """Test WhereAmIPresenter.present_selection with spreadsheet cell range."""
@@ -879,11 +810,12 @@ class TestWhereAmIPresenter:
         deps["orca.ax_utilities"].AXUtilities.find_ancestor.return_value = None
         mock_script = test_context.Mock()
         deps["orca.ax_utilities"].AXUtilities.get_selection_container.return_value = None
+        selection_presenter = deps["orca.text_selection_presenter"].get_presenter.return_value
+        selection_presenter.present_selected_text.return_value = True
         presenter = WhereAmIPresenter()
-        presenter.present_selected_text = test_context.Mock(return_value=True)
         result = presenter.present_selection(mock_script)
         assert result is True
-        presenter.present_selected_text.assert_called_with(mock_script, None, focus_obj)
+        selection_presenter.present_selected_text.assert_called_once_with(mock_script, focus_obj)
 
     def test_do_where_am_i_basic(self, test_context: OrcaTestContext) -> None:
         """Test WhereAmIPresenter._do_where_am_i with basic mode."""

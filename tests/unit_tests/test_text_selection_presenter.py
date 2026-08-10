@@ -39,14 +39,70 @@ class TestTextSelectionPresenter:
     """Test TextSelectionPresenter methods."""
 
     @staticmethod
-    def _setup_dependencies(test_context: OrcaTestContext) -> None:
+    def _setup_dependencies(test_context: OrcaTestContext):
         additional_modules = [
             "orca.document_presenter",
             "orca.input_event_manager",
             "orca.presentation_manager",
             "orca.speech_presenter",
+            "orca.text_selection_manager",
         ]
-        test_context.setup_shared_dependencies(additional_modules)
+        return test_context.setup_shared_dependencies(additional_modules)
+
+    def test_present_selected_text(self, test_context: OrcaTestContext) -> None:
+        """Test presenting all text returned by the text-selection manager."""
+
+        dependencies = self._setup_dependencies(test_context)
+        from orca.text_selection_presenter import (
+            TextSelectionPresenter,
+            messages,
+            presentation_manager,
+            speech_presenter,
+        )
+
+        script = test_context.Mock()
+        obj = test_context.Mock()
+        selection_manager = dependencies["orca.text_selection_manager"].get_manager.return_value
+        selection_manager.get_all_selected_text.return_value = "selected text"
+        speech_manager = speech_presenter.get_presenter.return_value
+        speech_manager.get_indentation_description.return_value = "indent: 2"
+        speech_manager.adjust_for_presentation.return_value = "processed selected text"
+        messages.SELECTED_TEXT_IS = "Selected text is %s"
+
+        assert TextSelectionPresenter().present_selected_text(script, obj)
+        selection_manager.get_all_selected_text.assert_called_once_with(script, obj)
+        speech_manager.get_indentation_description.assert_called_once_with(
+            "selected text",
+            only_if_changed=False,
+        )
+        speech_manager.adjust_for_presentation.assert_called_once_with(obj, "selected text")
+        presentation_manager.get_manager.return_value.speak_message.assert_called_once_with(
+            "Selected text is indent: 2 processed selected text"
+        )
+
+    def test_present_selected_text_when_nothing_is_selected(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test presenting selected text reports when no selection exists."""
+
+        dependencies = self._setup_dependencies(test_context)
+        from orca.text_selection_presenter import (
+            TextSelectionPresenter,
+            messages,
+            presentation_manager,
+        )
+
+        script = test_context.Mock()
+        obj = test_context.Mock()
+        selection_manager = dependencies["orca.text_selection_manager"].get_manager.return_value
+        selection_manager.get_all_selected_text.return_value = ""
+        messages.NO_SELECTED_TEXT = "No selected text"
+
+        assert TextSelectionPresenter().present_selected_text(script, obj)
+        presentation_manager.get_manager.return_value.speak_message.assert_called_once_with(
+            "No selected text"
+        )
 
     def test_newly_selected_text_is_cached_and_presented(
         self,

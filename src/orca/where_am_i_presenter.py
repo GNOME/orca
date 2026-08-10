@@ -41,9 +41,9 @@ from . import (
     math_presenter,
     messages,
     presentation_manager,
-    speech_presenter,
     spellcheck_presenter,
     text_attribute_manager,
+    text_selection_presenter,
     where_am_i_presenter_command_definitions,
 )
 from .ax_component import AXComponent
@@ -429,31 +429,6 @@ class WhereAmIPresenter(Extension):
 
         return self._do_where_am_i(script, True, link)
 
-    def _get_all_selected_text(self, script: default.Script, obj: Atspi.Accessible) -> str:
-        """Returns the selected text of obj plus any adjacent text objects."""
-
-        string = AXUtilities.get_selected_text(obj)[0]
-        if AXUtilities.is_spreadsheet_cell(obj):
-            return string
-
-        prev_obj = script.utilities.find_previous_object(obj)
-        while prev_obj:
-            selection = AXUtilities.get_selected_text(prev_obj)[0]
-            if not selection:
-                break
-            string = f"{selection} {string}"
-            prev_obj = script.utilities.find_previous_object(prev_obj)
-
-        next_obj = script.utilities.find_next_object(obj)
-        while next_obj:
-            selection = AXUtilities.get_selected_text(next_obj)[0]
-            if not selection:
-                break
-            string = f"{string} {selection}"
-            next_obj = script.utilities.find_next_object(next_obj)
-
-        return string
-
     @dbus_service.command
     def present_selected_text(
         self,
@@ -478,17 +453,7 @@ class WhereAmIPresenter(Extension):
             presentation_manager.get_manager().speak_message(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
-        text = self._get_all_selected_text(script, obj)
-        if not text:
-            presentation_manager.get_manager().speak_message(messages.NO_SELECTED_TEXT)
-            return True
-
-        manager = speech_presenter.get_presenter()
-        indentation = manager.get_indentation_description(text, only_if_changed=False)
-        text = manager.adjust_for_presentation(obj, text)
-        msg = messages.SELECTED_TEXT_IS % f"{indentation} {text}"
-        presentation_manager.get_manager().speak_message(msg)
-        return True
+        return text_selection_presenter.get_presenter().present_selected_text(script, obj)
 
     @dbus_service.command
     def present_selection(
@@ -526,7 +491,7 @@ class WhereAmIPresenter(Extension):
         if container is None:
             tokens = ["WHERE AM I PRESENTER: Selection container not found for", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return self.present_selected_text(script, event, obj)
+            return text_selection_presenter.get_presenter().present_selected_text(script, obj)
 
         selected_count = AXUtilities.selected_child_count(container)
         child_count = AXUtilities.selectable_child_count(container)

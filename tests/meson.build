@@ -82,6 +82,7 @@ unit_tests = [
   'unit_tests/test_typing_echo_presenter.py',
   'unit_tests/test_table_navigator.py',
   'unit_tests/test_text_attribute_manager.py',
+  'unit_tests/test_text_selection_manager.py',
   'unit_tests/test_text_selection_presenter.py',
   'unit_tests/test_where_am_i_presenter.py',
 ]

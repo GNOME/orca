@@ -208,6 +208,7 @@ lib_sources = [
   'text_attribute_manager.py',
   'text_attribute_manager_preferences_grid.py',
   'text_attribute_names.py',
+  'text_selection_manager.py',
   'text_selection_presenter.py',
   'typing_echo_presenter.py',
   'typing_echo_presenter_command_definitions.py',

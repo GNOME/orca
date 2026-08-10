@@ -29,9 +29,10 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import messages
+from . import debug, messages
 from .ax_collection import AXCollection
 from .ax_document import AXDocument
+from .ax_utilities_hypertext import AXUtilitiesHypertext
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 from .ax_utilities_table import AXUtilitiesTable
@@ -39,6 +40,50 @@ from .ax_utilities_table import AXUtilitiesTable
 
 class AXUtilitiesDocument:
     """Utilities for accessible documents."""
+
+    @staticmethod
+    def get_document_selected_texts(
+        document: Atspi.Accessible,
+    ) -> tuple[bool, list[str]]:
+        """Returns whether the document getter succeeded and its selected text ranges."""
+
+        success, selections = AXDocument.get_text_selections(document)
+        if not success:
+            return False, []
+
+        strings = []
+        for selection in selections:
+            start_obj = selection.start_object
+            end_obj = selection.end_object
+            start_offset = selection.start_offset
+            end_offset = selection.end_offset
+            if start_obj is None or end_obj is None or start_offset < 0 or end_offset < 0:
+                tokens = [
+                    "AXUtilitiesDocument: Ignoring invalid text selection from",
+                    document,
+                    selection,
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                continue
+
+            string = AXUtilitiesHypertext.expand_eocs_in_range(
+                start_obj,
+                start_offset,
+                end_obj,
+                end_offset,
+                include_start=True,
+                include_end=False,
+            )
+            if string:
+                strings.append(string)
+
+        tokens = [
+            "AXUtilitiesDocument:",
+            document,
+            f"has {len(strings)} selected text range(s).",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return True, strings
 
     @staticmethod
     def get_uri(document: Atspi.Accessible) -> str:

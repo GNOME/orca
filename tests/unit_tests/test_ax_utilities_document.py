@@ -50,6 +50,7 @@ class TestAXUtilitiesDocument:
         additional_modules = [
             "orca.ax_collection",
             "orca.ax_document",
+            "orca.ax_utilities_hypertext",
             "orca.ax_utilities_role",
             "orca.ax_utilities_state",
             "orca.ax_utilities_table",
@@ -72,6 +73,7 @@ class TestAXUtilitiesDocument:
 
         ax_document_mock = essential_modules["orca.ax_document"].AXDocument
         ax_document_mock.get_attributes_dict = test_context.Mock(return_value={})
+        ax_document_mock.get_text_selections = test_context.Mock(return_value=(False, []))
 
         ax_utilities_table_mock = essential_modules["orca.ax_utilities_table"].AXUtilitiesTable
         ax_utilities_table_mock.is_layout_table = test_context.Mock(return_value=False)
@@ -87,6 +89,85 @@ class TestAXUtilitiesDocument:
         ax_utilities_state_mock.is_visited = test_context.Mock(return_value=False)
 
         return essential_modules
+
+    def test_get_document_selected_texts_expands_every_valid_selection(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test every valid document selection is expanded across its endpoint objects."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_document import AXUtilitiesDocument
+
+        document = test_context.Mock(spec=Atspi.Accessible)
+        first_start = test_context.Mock(spec=Atspi.Accessible)
+        first_end = test_context.Mock(spec=Atspi.Accessible)
+        second_start = test_context.Mock(spec=Atspi.Accessible)
+        second_end = test_context.Mock(spec=Atspi.Accessible)
+        selections = [
+            test_context.Mock(
+                start_object=first_start,
+                start_offset=2,
+                end_object=first_end,
+                end_offset=7,
+            ),
+            test_context.Mock(
+                start_object=second_start,
+                start_offset=0,
+                end_object=second_end,
+                end_offset=12,
+            ),
+        ]
+        essential_modules["orca.ax_document"].AXDocument.get_text_selections.return_value = (
+            True,
+            selections,
+        )
+        expand = essential_modules[
+            "orca.ax_utilities_hypertext"
+        ].AXUtilitiesHypertext.expand_eocs_in_range
+        expand.side_effect = ["First selection", "Second selection"]
+
+        result = AXUtilitiesDocument.get_document_selected_texts(document)
+
+        assert result == (True, ["First selection", "Second selection"])
+        assert [(item.args, item.kwargs) for item in expand.call_args_list] == [
+            (
+                (first_start, 2, first_end, 7),
+                {"include_start": True, "include_end": False},
+            ),
+            (
+                (second_start, 0, second_end, 12),
+                {"include_start": True, "include_end": False},
+            ),
+        ]
+
+    @pytest.mark.parametrize(
+        "getter_result,expected_result",
+        [
+            pytest.param((False, []), (False, []), id="getter-failed"),
+            pytest.param((True, []), (True, []), id="nothing-selected"),
+        ],
+    )
+    def test_get_document_selected_texts_preserves_getter_status(
+        self,
+        test_context: OrcaTestContext,
+        getter_result: tuple[bool, list],
+        expected_result: tuple[bool, list[str]],
+    ) -> None:
+        """Test callers can distinguish getter failure from no document selection."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_document import AXUtilitiesDocument
+
+        document = test_context.Mock(spec=Atspi.Accessible)
+        essential_modules[
+            "orca.ax_document"
+        ].AXDocument.get_text_selections.return_value = getter_result
+
+        assert AXUtilitiesDocument.get_document_selected_texts(document) == expected_result
+        essential_modules[
+            "orca.ax_utilities_hypertext"
+        ].AXUtilitiesHypertext.expand_eocs_in_range.assert_not_called()
 
     @pytest.mark.parametrize(
         "mime_type,uri,expected",

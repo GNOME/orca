@@ -33,6 +33,7 @@ from . import (
     messages,
     presentation_manager,
     speech_presenter,
+    text_selection_manager,
 )
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -65,6 +66,25 @@ class TextSelectionPresenter:
             self,
             self.DOCUMENT_SELECTION_BOUNDARIES,
         )
+
+    def present_selected_text(
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
+    ) -> bool:
+        """Presents all text in the logical selection containing obj."""
+
+        text = text_selection_manager.get_manager().get_all_selected_text(script, obj)
+        if not text:
+            presentation_manager.get_manager().speak_message(messages.NO_SELECTED_TEXT)
+            return True
+
+        manager = speech_presenter.get_presenter()
+        indentation = manager.get_indentation_description(text, only_if_changed=False)
+        text = manager.adjust_for_presentation(obj, text)
+        message = messages.SELECTED_TEXT_IS % f"{indentation} {text}"
+        presentation_manager.get_manager().speak_message(message)
+        return True
 
     def _get_cached_document_selection_boundaries(
         self,
