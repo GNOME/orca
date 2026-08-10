@@ -1590,12 +1590,19 @@ class AXUtilities:
 
     # From ax_utilities_text.py
     @staticmethod
+    def get_text_selection_container(obj: Atspi.Accessible) -> Atspi.Accessible: ...
+    @staticmethod
     def get_text_selection_endpoints(
         root: Atspi.Accessible,
     ) -> tuple[
         tuple[Atspi.Accessible | None, int],
         tuple[Atspi.Accessible | None, int],
     ]: ...
+    @staticmethod
+    def get_text_selection_elements(
+        start_obj: Atspi.Accessible | None,
+        end_obj: Atspi.Accessible | None,
+    ) -> list[Atspi.Accessible]: ...
     @staticmethod
     def get_last_text_unit_spoken() -> TextUnit | None: ...
     @staticmethod

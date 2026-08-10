@@ -355,6 +355,7 @@ class TestAXText:
         additional_modules = [
             "locale",
             "orca.colornames",
+            "orca.ax_utilities_object",
             "orca.ax_utilities_role",
             "orca.ax_utilities_state",
         ]
@@ -418,6 +419,90 @@ class TestAXText:
         ax_utilities_state_mock.AXUtilitiesState = state_class_mock
 
         return essential_modules
+
+    def test_get_text_selection_container_finds_partially_selected_ancestor(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test nested full selections resolve to their partially selected container."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_text import AXObject, AXText, AXUtilitiesText
+
+        leaf = test_context.Mock(spec=Atspi.Accessible)
+        child = test_context.Mock(spec=Atspi.Accessible)
+        parent = test_context.Mock(spec=Atspi.Accessible)
+        document = test_context.Mock(spec=Atspi.Accessible)
+        parents = {leaf: child, child: parent, parent: document, document: None}
+        ranges = {leaf: [], child: [(0, 10)], parent: [(1, 3)], document: []}
+        lengths = {child: 10, parent: 5}
+        test_context.patch_object(AXObject, "get_parent", side_effect=parents.get)
+        test_context.patch_object(AXText, "get_selected_ranges", side_effect=ranges.get)
+        test_context.patch_object(AXText, "get_character_count", side_effect=lengths.get)
+
+        assert AXUtilitiesText.get_text_selection_container(leaf) == parent
+
+    def test_get_text_selection_elements_stops_after_non_web_end_boundary(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test selection elements include non-web text through the end boundary."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_text import (
+            AXObject,
+            AXUtilitiesObject,
+            AXUtilitiesRole,
+            AXUtilitiesText,
+        )
+
+        parent = test_context.Mock()
+        start = test_context.Mock()
+        start_child = test_context.Mock()
+        end_container = test_context.Mock()
+        end = test_context.Mock()
+        following_end = test_context.Mock()
+        following_container = test_context.Mock()
+        children = {
+            (parent, 0): start,
+            (parent, 1): end_container,
+            (parent, 2): following_container,
+            (end_container, 1): following_end,
+        }
+        parents = {start: parent, end: end_container}
+        indices = {start: 0, end: 0}
+        descendants = {
+            start: [start_child],
+            end_container: [end, following_end],
+        }
+        test_context.patch_object(AXObject, "is_dead", return_value=False)
+        test_context.patch_object(AXObject, "get_parent", side_effect=parents.get)
+        test_context.patch_object(AXObject, "get_index_in_parent", side_effect=indices.get)
+        test_context.patch_object(
+            AXObject,
+            "get_child_count",
+            side_effect=lambda obj: 3 if obj == parent else 2,
+        )
+        test_context.patch_object(
+            AXObject,
+            "get_child",
+            side_effect=lambda obj, index: children.get((obj, index)),
+        )
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "is_web_element", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_code", return_value=False)
+        test_context.patch_object(
+            AXUtilitiesObject,
+            "find_all_descendants",
+            side_effect=lambda obj, _include, _exclude: descendants.get(obj, []),
+        )
+
+        assert AXUtilitiesText.get_text_selection_elements(start, end) == [
+            start,
+            start_child,
+            end_container,
+            end,
+        ]
 
     def test_get_text_selection_endpoints_resolves_embedded_object(
         self,

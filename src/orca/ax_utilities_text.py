@@ -41,6 +41,7 @@ from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities_application import AXUtilitiesApplication
 from .ax_utilities_hypertext import AXUtilitiesHypertext
+from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_role import AXUtilitiesRole
 
 if TYPE_CHECKING:
@@ -168,6 +169,33 @@ class AXUtilitiesText:
     """Utilities for accessible text."""
 
     @staticmethod
+    def get_text_selection_container(obj: Atspi.Accessible) -> Atspi.Accessible:
+        """Returns the container for the text selection at obj."""
+
+        result = obj
+        found_selection = False
+        ancestor = obj
+        while ancestor is not None:
+            ranges = AXText.get_selected_ranges(ancestor)
+            if not ranges:
+                if found_selection:
+                    break
+                ancestor = AXObject.get_parent(ancestor)
+                continue
+
+            result = ancestor
+            found_selection = True
+            start = ranges[0][0]
+            end = ranges[-1][1]
+            if start > 0 or end < AXText.get_character_count(ancestor):
+                break
+            ancestor = AXObject.get_parent(ancestor)
+
+        tokens = ["AXUtilitiesText: Text selection container for", obj, "is", result]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return result
+
+    @staticmethod
     def _find_text_selection_endpoint(
         root: Atspi.Accessible,
         find_start: bool,
@@ -222,6 +250,65 @@ class AXUtilitiesText:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return start, end
+
+    @staticmethod
+    def get_text_selection_elements(
+        start_obj: Atspi.Accessible | None,
+        end_obj: Atspi.Accessible | None,
+    ) -> list[Atspi.Accessible]:
+        """Returns the selected elements from start_obj through end_obj."""
+
+        if not (start_obj and end_obj):
+            return []
+        if AXObject.is_dead(start_obj):
+            msg = "AXUtilitiesText: Cannot get selection elements: Start object is dead."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return []
+
+        def _is_selection_element(x):
+            return AXUtilitiesRole.is_web_element(x) or AXObject.supports_text(x)
+
+        def _include(x):
+            return x is not None and _is_selection_element(x)
+
+        def _exclude(x):
+            if not AXUtilitiesRole.is_static(x) or AXUtilitiesRole.is_web_element(x):
+                return False
+            return AXUtilitiesObject.find_ancestor(x, AXUtilitiesRole.is_web_element) is not None
+
+        elements = []
+        start_parent = AXObject.get_parent(start_obj)
+        for i in range(
+            AXObject.get_index_in_parent(start_obj), AXObject.get_child_count(start_parent)
+        ):
+            child = AXObject.get_child(start_parent, i)
+            if not _is_selection_element(child):
+                continue
+            elements.append(child)
+            if not AXUtilitiesRole.is_code(child):
+                elements.extend(AXUtilitiesObject.find_all_descendants(child, _include, _exclude))
+            if end_obj in elements:
+                break
+
+        if end_obj == start_obj:
+            return elements
+        if end_obj not in elements:
+            elements.append(end_obj)
+            if not AXUtilitiesRole.is_code(end_obj):
+                elements.extend(AXUtilitiesObject.find_all_descendants(end_obj, _include, _exclude))
+
+        end_parent = AXObject.get_parent(end_obj)
+        end_index = AXObject.get_index_in_parent(end_obj)
+        last_obj = AXObject.get_child(end_parent, end_index + 1) or end_obj
+        try:
+            elements_end = elements.index(last_obj)
+        except ValueError:
+            pass
+        else:
+            if last_obj == end_obj:
+                elements_end += 1
+            elements = elements[:elements_end]
+        return elements
 
     LAST_CARET_SET: ClassVar[LastCaretSet | None] = None
     _CACHE = _AXUtilitiesTextCache()
