@@ -167,6 +167,62 @@ class _AXUtilitiesTextCache:
 class AXUtilitiesText:
     """Utilities for accessible text."""
 
+    @staticmethod
+    def _find_text_selection_endpoint(
+        root: Atspi.Accessible,
+        find_start: bool,
+    ) -> tuple[Atspi.Accessible, int] | None:
+        ranges = AXText.get_selected_ranges(root)
+        if ranges:
+            start, end = ranges[0] if find_start else ranges[-1]
+            string = AXText.get_substring(root, start, end)
+            if find_start and not string.startswith("\ufffc"):
+                return root, start
+            if not find_start and not string.endswith("\ufffc"):
+                return root, max(start, end - 1)
+
+            endpoint_offset = start if find_start else end - 1
+            child = AXHypertext.get_child_at_offset(root, endpoint_offset)
+            if child is not None:
+                result = AXUtilitiesText._find_text_selection_endpoint(child, find_start)
+                if result is not None:
+                    return result
+                if AXUtilitiesRole.is_image_or_canvas(child):
+                    return child, 0
+
+        indices = list(range(AXObject.get_child_count(root)))
+        if not find_start:
+            indices.reverse()
+        for i in indices:
+            result = AXUtilitiesText._find_text_selection_endpoint(
+                AXObject.get_child(root, i),
+                find_start,
+            )
+            if result is not None:
+                return result
+        return None
+
+    @staticmethod
+    def get_text_selection_endpoints(
+        root: Atspi.Accessible,
+    ) -> tuple[
+        tuple[Atspi.Accessible | None, int],
+        tuple[Atspi.Accessible | None, int],
+    ]:
+        """Returns the first and last selected text positions under root."""
+
+        start = AXUtilitiesText._find_text_selection_endpoint(root, True) or (None, -1)
+        end = AXUtilitiesText._find_text_selection_endpoint(root, False) or (None, -1)
+        tokens = [
+            "AXUtilitiesText: Text selection endpoints under",
+            root,
+            "are",
+            start,
+            end,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return start, end
+
     LAST_CARET_SET: ClassVar[LastCaretSet | None] = None
     _CACHE = _AXUtilitiesTextCache()
     LINK_STYLING_ATTRIBUTES: ClassVar[frozenset[AXTextAttribute]] = frozenset(

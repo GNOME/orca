@@ -419,6 +419,127 @@ class TestAXText:
 
         return essential_modules
 
+    def test_get_text_selection_endpoints_resolves_embedded_object(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test an embedded-object selection resolves to its accessible child."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_text import (
+            AXHypertext,
+            AXObject,
+            AXText,
+            AXUtilitiesRole,
+            AXUtilitiesText,
+        )
+
+        parent = test_context.Mock(spec=Atspi.Accessible)
+        image = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXText, "get_selected_ranges", side_effect=[[(4, 5)], []])
+        test_context.patch_object(AXText, "get_substring", return_value="\ufffc")
+        test_context.patch_object(AXHypertext, "get_child_at_offset", return_value=image)
+        test_context.patch_object(AXUtilitiesRole, "is_image_or_canvas", return_value=True)
+        test_context.patch_object(AXObject, "get_child_count", return_value=0)
+
+        result = AXUtilitiesText._find_text_selection_endpoint(parent, False)
+
+        assert result == (image, 0)
+        AXHypertext.get_child_at_offset.assert_called_once_with(parent, 4)
+
+    def test_get_text_selection_endpoints_skips_empty_structural_child(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test an empty structural child is not treated as a selection endpoint."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_text import (
+            AXHypertext,
+            AXObject,
+            AXText,
+            AXUtilitiesRole,
+            AXUtilitiesText,
+        )
+
+        parent = test_context.Mock(spec=Atspi.Accessible)
+        empty_section = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXText, "get_selected_ranges", side_effect=[[(4, 5)], []])
+        test_context.patch_object(AXText, "get_substring", return_value="\ufffc")
+        test_context.patch_object(
+            AXHypertext,
+            "get_child_at_offset",
+            return_value=empty_section,
+        )
+        test_context.patch_object(AXUtilitiesRole, "is_image_or_canvas", return_value=False)
+        test_context.patch_object(AXObject, "get_child_count", return_value=0)
+
+        result = AXUtilitiesText._find_text_selection_endpoint(parent, False)
+
+        assert result is None
+
+    def test_get_text_selection_endpoints_searches_selected_text_children(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test endpoints are found when only children of the container have selections."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_text import AXObject, AXText, AXUtilitiesText
+
+        document = test_context.Mock(spec=Atspi.Accessible)
+        page1 = test_context.Mock(spec=Atspi.Accessible)
+        page2 = test_context.Mock(spec=Atspi.Accessible)
+        children = {document: [page1, page2], page1: [], page2: []}
+        ranges = {document: [], page1: [(0, 89)], page2: [(0, 52)]}
+        test_context.patch_object(
+            AXObject,
+            "get_child_count",
+            side_effect=lambda obj: len(children[obj]),
+        )
+        test_context.patch_object(
+            AXObject,
+            "get_child",
+            side_effect=lambda obj, index: children[obj][index],
+        )
+        test_context.patch_object(AXText, "get_selected_ranges", side_effect=ranges.get)
+        test_context.patch_object(
+            AXText,
+            "get_substring",
+            side_effect=lambda obj, _start, _end: "page 1" if obj == page1 else "page 2",
+        )
+
+        assert AXUtilitiesText.get_text_selection_endpoints(document) == (
+            (page1, 0),
+            (page2, 51),
+        )
+
+    @pytest.mark.parametrize(
+        "find_start,expected_offset",
+        [
+            pytest.param(True, 12, id="start"),
+            pytest.param(False, 74, id="end"),
+        ],
+    )
+    def test_get_text_selection_endpoint_includes_selected_character_offset(
+        self,
+        test_context: OrcaTestContext,
+        find_start: bool,
+        expected_offset: int,
+    ) -> None:
+        """Test a text selection endpoint includes its selected character offset."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_text import AXText, AXUtilitiesText
+
+        paragraph = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXText, "get_selected_ranges", return_value=[(12, 75)])
+        test_context.patch_object(AXText, "get_substring", return_value="selected text")
+
+        result = AXUtilitiesText._find_text_selection_endpoint(paragraph, find_start)
+
+        assert result == (paragraph, expected_offset)
+
     def test_is_eoc_with_embedded_object_character(self, test_context: OrcaTestContext) -> None:
         """Test AXText.is_eoc with embedded object character."""
 

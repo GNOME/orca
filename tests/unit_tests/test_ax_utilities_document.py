@@ -54,6 +54,7 @@ class TestAXUtilitiesDocument:
             "orca.ax_utilities_role",
             "orca.ax_utilities_state",
             "orca.ax_utilities_table",
+            "orca.ax_utilities_text",
             "orca.messages",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
@@ -74,6 +75,17 @@ class TestAXUtilitiesDocument:
         ax_document_mock = essential_modules["orca.ax_document"].AXDocument
         ax_document_mock.get_attributes_dict = test_context.Mock(return_value={})
         ax_document_mock.get_text_selections = test_context.Mock(return_value=(False, []))
+        ax_document_mock.set_text_selection = test_context.Mock(return_value=False)
+
+        ax_hypertext_utilities_mock = essential_modules[
+            "orca.ax_utilities_hypertext"
+        ].AXUtilitiesHypertext
+        ax_hypertext_utilities_mock.compare_text_positions = test_context.Mock(return_value=0)
+
+        ax_text_utilities_mock = essential_modules["orca.ax_utilities_text"].AXUtilitiesText
+        ax_text_utilities_mock.get_text_selection_endpoints = test_context.Mock(
+            return_value=((None, -1), (None, -1))
+        )
 
         ax_utilities_table_mock = essential_modules["orca.ax_utilities_table"].AXUtilitiesTable
         ax_utilities_table_mock.is_layout_table = test_context.Mock(return_value=False)
@@ -168,6 +180,153 @@ class TestAXUtilitiesDocument:
         essential_modules[
             "orca.ax_utilities_hypertext"
         ].AXUtilitiesHypertext.expand_eocs_in_range.assert_not_called()
+
+    def test_get_document_text_selection_endpoints_uses_text_fallback(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test document selection boundaries fall back to text objects."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_document import AXUtilitiesDocument
+
+        document = test_context.Mock(spec=Atspi.Accessible)
+        root = test_context.Mock(spec=Atspi.Accessible)
+        start = test_context.Mock(spec=Atspi.Accessible)
+        end = test_context.Mock(spec=Atspi.Accessible)
+        get_endpoints = essential_modules[
+            "orca.ax_utilities_text"
+        ].AXUtilitiesText.get_text_selection_endpoints
+        get_endpoints.return_value = ((start, 2), (end, 7))
+
+        result = AXUtilitiesDocument.get_document_text_selection_endpoints(document, root)
+
+        assert result == ((start, 2), (end, 8))
+        get_endpoints.assert_called_once_with(root)
+
+    def test_get_document_text_selection_endpoints_uses_document_getter(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test document selection boundaries use a safe document getter."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_document import AXUtilitiesDocument
+
+        document = test_context.Mock(spec=Atspi.Accessible)
+        root = test_context.Mock(spec=Atspi.Accessible)
+        start = test_context.Mock(spec=Atspi.Accessible)
+        end = test_context.Mock(spec=Atspi.Accessible)
+        selection = test_context.Mock(
+            start_object=start,
+            start_offset=2,
+            end_object=end,
+            end_offset=8,
+        )
+        ax_document = essential_modules["orca.ax_document"].AXDocument
+        ax_document.get_text_selections.return_value = (True, [selection])
+
+        result = AXUtilitiesDocument.get_document_text_selection_endpoints(document, root)
+
+        assert result == ((start, 2), (end, 8))
+        ax_document.get_text_selections.assert_called_once_with(document)
+
+    def test_get_document_text_selection_endpoints_accepts_zero_end_offset(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test an exclusive endpoint at the start of the next object is valid."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_document import AXUtilitiesDocument
+
+        document = test_context.Mock(spec=Atspi.Accessible)
+        root = test_context.Mock(spec=Atspi.Accessible)
+        start = test_context.Mock(spec=Atspi.Accessible)
+        end = test_context.Mock(spec=Atspi.Accessible)
+        selection = test_context.Mock(
+            start_object=start,
+            start_offset=0,
+            end_object=end,
+            end_offset=0,
+        )
+        ax_document = essential_modules["orca.ax_document"].AXDocument
+        ax_document.get_text_selections.return_value = (True, [selection])
+
+        result = AXUtilitiesDocument.get_document_text_selection_endpoints(document, root)
+
+        assert result == ((start, 0), (end, 0))
+
+    def test_get_document_text_selection_endpoints_honors_successful_empty_result(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test a successful empty document result does not use the text fallback."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_document import AXUtilitiesDocument
+
+        document = test_context.Mock(spec=Atspi.Accessible)
+        root = test_context.Mock(spec=Atspi.Accessible)
+        ax_document = essential_modules["orca.ax_document"].AXDocument
+        ax_document.get_text_selections.return_value = (True, [])
+        get_endpoints = essential_modules[
+            "orca.ax_utilities_text"
+        ].AXUtilitiesText.get_text_selection_endpoints
+
+        result = AXUtilitiesDocument.get_document_text_selection_endpoints(document, root)
+
+        assert result == ((None, -1), (None, -1))
+        get_endpoints.assert_not_called()
+
+    @pytest.mark.parametrize(
+        "comparison,expected_args",
+        [
+            pytest.param(-1, ("anchor", 3, "active", 8, False), id="active_at_end"),
+            pytest.param(1, ("active", 8, "anchor", 3, True), id="active_at_start"),
+        ],
+    )
+    def test_set_document_text_selection_endpoints(
+        self,
+        test_context: OrcaTestContext,
+        comparison: int,
+        expected_args: tuple[str, int, str, int, bool],
+    ) -> None:
+        """Test document selection converts anchor and active points to an ordered range."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_document import AXUtilitiesDocument
+
+        document = test_context.Mock(spec=Atspi.Accessible)
+        anchor = test_context.Mock(spec=Atspi.Accessible)
+        active = test_context.Mock(spec=Atspi.Accessible)
+        ax_document = essential_modules["orca.ax_document"].AXDocument
+        ax_document.set_text_selection.return_value = True
+        compare = essential_modules[
+            "orca.ax_utilities_hypertext"
+        ].AXUtilitiesHypertext.compare_text_positions
+        compare.return_value = comparison
+
+        result = AXUtilitiesDocument.set_document_text_selection_endpoints(
+            document,
+            anchor,
+            3,
+            active,
+            8,
+        )
+
+        assert result is True
+        compare.assert_called_once_with(anchor, 3, active, 8)
+        expected_start, start_offset, expected_end, end_offset, start_is_active = expected_args
+        expected_objects = {"anchor": anchor, "active": active}
+        ax_document.set_text_selection.assert_called_once_with(
+            document,
+            expected_objects[expected_start],
+            start_offset,
+            expected_objects[expected_end],
+            end_offset,
+            start_is_active,
+        )
 
     @pytest.mark.parametrize(
         "mime_type,uri,expected",

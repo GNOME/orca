@@ -484,6 +484,22 @@ class AXUtilities:
         document: Atspi.Accessible,
     ) -> tuple[bool, list[str]]: ...
     @staticmethod
+    def get_document_text_selection_endpoints(
+        document: Atspi.Accessible | None,
+        root: Atspi.Accessible,
+    ) -> tuple[
+        tuple[Atspi.Accessible | None, int],
+        tuple[Atspi.Accessible | None, int],
+    ]: ...
+    @staticmethod
+    def set_document_text_selection_endpoints(
+        document: Atspi.Accessible,
+        anchor_obj: Atspi.Accessible,
+        anchor_offset: int,
+        active_obj: Atspi.Accessible,
+        active_offset: int,
+    ) -> bool: ...
+    @staticmethod
     def is_pdf(document: Atspi.Accessible) -> bool: ...
     @staticmethod
     def is_plain_text(document: Atspi.Accessible) -> bool: ...
@@ -1573,6 +1589,13 @@ class AXUtilities:
     ) -> Atspi.Accessible | None: ...
 
     # From ax_utilities_text.py
+    @staticmethod
+    def get_text_selection_endpoints(
+        root: Atspi.Accessible,
+    ) -> tuple[
+        tuple[Atspi.Accessible | None, int],
+        tuple[Atspi.Accessible | None, int],
+    ]: ...
     @staticmethod
     def get_last_text_unit_spoken() -> TextUnit | None: ...
     @staticmethod

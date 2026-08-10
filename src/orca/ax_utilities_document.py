@@ -36,6 +36,7 @@ from .ax_utilities_hypertext import AXUtilitiesHypertext
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 from .ax_utilities_table import AXUtilitiesTable
+from .ax_utilities_text import AXUtilitiesText
 
 
 class AXUtilitiesDocument:
@@ -84,6 +85,82 @@ class AXUtilitiesDocument:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True, strings
+
+    @staticmethod
+    def get_document_text_selection_endpoints(
+        document: Atspi.Accessible | None,
+        root: Atspi.Accessible,
+    ) -> tuple[
+        tuple[Atspi.Accessible | None, int],
+        tuple[Atspi.Accessible | None, int],
+    ]:
+        """Returns the inclusive start and exclusive end of the document selection."""
+
+        if document is not None:
+            success, selections = AXDocument.get_text_selections(document)
+            if selections:
+                selection = selections[0]
+                if (
+                    selection.start_object is not None
+                    and selection.end_object is not None
+                    and selection.start_offset >= 0
+                    and selection.end_offset >= 0
+                ):
+                    start = selection.start_object, selection.start_offset
+                    end = selection.end_object, selection.end_offset
+                    tokens = [
+                        "AXUtilitiesDocument: Text selection boundaries in",
+                        document,
+                        "are",
+                        start,
+                        end,
+                    ]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                    return start, end
+            if success:
+                return (None, -1), (None, -1)
+
+        msg = "AXUtilitiesDocument: Getting text selection boundaries from text objects."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        start, end = AXUtilitiesText.get_text_selection_endpoints(root)
+        if end[0] is not None:
+            end = end[0], end[1] + 1
+        return start, end
+
+    @staticmethod
+    def set_document_text_selection_endpoints(
+        document: Atspi.Accessible,
+        anchor_obj: Atspi.Accessible,
+        anchor_offset: int,
+        active_obj: Atspi.Accessible,
+        active_offset: int,
+    ) -> bool:
+        """Sets the document selection from the anchor to the active position."""
+
+        comparison = AXUtilitiesHypertext.compare_text_positions(
+            anchor_obj,
+            anchor_offset,
+            active_obj,
+            active_offset,
+        )
+        if comparison <= 0:
+            return AXDocument.set_text_selection(
+                document,
+                anchor_obj,
+                anchor_offset,
+                active_obj,
+                active_offset,
+                False,
+            )
+
+        return AXDocument.set_text_selection(
+            document,
+            active_obj,
+            active_offset,
+            anchor_obj,
+            anchor_offset,
+            True,
+        )
 
     @staticmethod
     def get_uri(document: Atspi.Accessible) -> str:
