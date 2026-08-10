@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-07-15 13:57+0000\n"
-"PO-Revision-Date: 2026-07-18 13:21+0300\n"
+"PO-Revision-Date: 2026-08-10 20:48+0300\n"
 "Last-Translator: Yuras Shumovich <shumovichy@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
 "Language: be\n"
@@ -427,7 +427,7 @@ msgstr "убуд"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:40
 msgid "Afrikaans, uncontracted"
-msgstr ""
+msgstr "Афрыкаанс, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -436,7 +436,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:46
 msgid "Afrikaans, contracted"
-msgstr ""
+msgstr "Афрыкаанс, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -481,7 +481,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:76
 msgid "Arabic, computer"
-msgstr ""
+msgstr "Арабская, камп'ютарная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -490,7 +490,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:82
 msgid "Arabic, uncontracted"
-msgstr ""
+msgstr "Арабская, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -498,10 +498,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:88
-#, fuzzy
-#| msgid "Arabic Grade 1"
 msgid "Arabic, contracted"
-msgstr "Арабская, узровень 1"
+msgstr "Арабская, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -509,10 +507,8 @@ msgstr "Арабская, узровень 1"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:94
-#, fuzzy
-#| msgid "same site"
 msgid "Assamese"
-msgstr "гэты ж сайт"
+msgstr "Асамская"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -521,7 +517,7 @@ msgstr "гэты ж сайт"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:100
 msgid "Awadhi"
-msgstr ""
+msgstr "Авадхі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -530,7 +526,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:106
 msgid "Bashkir"
-msgstr ""
+msgstr "Башкірская"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -539,7 +535,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:112
 msgid "Bengali"
-msgstr ""
+msgstr "Бенгальская"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -593,7 +589,7 @@ msgstr "Балгарская"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:148
 msgid "Bihari"
-msgstr ""
+msgstr "Біхары"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -602,7 +598,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:154
 msgid "Tibetan, computer"
-msgstr ""
+msgstr "Тыбецкая, камп'ютарная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -610,11 +606,10 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:160
-#, fuzzy
 #| msgctxt "structural navigation"
 #| msgid "Combo Boxes"
 msgid "boxes"
-msgstr "Палі з выплыўным спісам"
+msgstr "boxes"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -623,7 +618,7 @@ msgstr "Палі з выплыўным спісам"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:166
 msgid "Braj"
-msgstr ""
+msgstr "Брадж"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -632,7 +627,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:172
 msgid "Catalan"
-msgstr ""
+msgstr "Каталанская"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -641,7 +636,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:178
 msgid "Cherokee"
-msgstr ""
+msgstr "Чэрокі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -650,7 +645,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:184
 msgid "Kurdish"
-msgstr ""
+msgstr "Курдская"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -695,7 +690,7 @@ msgstr "Чэшская"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:214
 msgid "Cuneiform, transliterated, compact"
-msgstr ""
+msgstr "Клінапіс, трансліт, кампактны"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -704,7 +699,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:220
 msgid "Cuneiform, transliterated"
-msgstr ""
+msgstr "Клінапіс, трансліт"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -839,7 +834,7 @@ msgstr "Дацкая, з частковымі скарачэннямі, 8 кро
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:328
 msgid "de-chess"
-msgstr ""
+msgstr "de-chess"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -921,7 +916,7 @@ msgstr "Нямецкая, са скарачэннямі"
 #: src/orca/brltablenames.py:382
 #| msgid "Hungarian 8 dot computer"
 msgid "Dravidian, computer"
-msgstr ""
+msgstr "Дравідыйская, камп'ютарная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -939,7 +934,7 @@ msgstr "Грэчаская"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:394
 msgid "en-chess"
-msgstr ""
+msgstr "en-chess"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -948,7 +943,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:400
 msgid "English, contracted, grade 3"
-msgstr ""
+msgstr "Англійская, са скарачэннямі, узровень 3"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -957,7 +952,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:406
 msgid "English, U.K., computer"
-msgstr ""
+msgstr "Англійская, Вялікабрытанія, камп'ютарная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -966,7 +961,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:412
 msgid "English, U.K., uncontracted"
-msgstr ""
+msgstr "Англійская, Вялікабрытанія, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -975,7 +970,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:418
 msgid "English, U.K., contracted"
-msgstr ""
+msgstr "Англійская, Вялікабрытанія, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -984,7 +979,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:424
 msgid "en-in-g1"
-msgstr ""
+msgstr "en-in-g1"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -993,7 +988,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:430
 msgid "English, U.S., computer, NABCC"
-msgstr ""
+msgstr "Англійская, ЗША, камп'ютарная, NABCC"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1002,7 +997,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:436
 msgid "English, unified, uncontracted"
-msgstr ""
+msgstr "Англійская, уніфікаваная, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1011,7 +1006,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:442
 msgid "English, unified, contracted"
-msgstr ""
+msgstr "Англійская, уніфікаваная, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1020,7 +1015,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:448
 msgid "en-ueb-math"
-msgstr ""
+msgstr "en-ueb-math"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1029,7 +1024,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:454
 msgid "English, U.S., computer, 6-dot"
-msgstr ""
+msgstr "Англійская, ЗША, камп'ютарная, 6 кропак"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1038,7 +1033,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:460
 msgid "English, U.S., computer, 8-dot"
-msgstr ""
+msgstr "Англійская, ЗША, камп'ютарная, 8 кропак"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1047,7 +1042,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:466
 msgid "en-us-comp8"
-msgstr ""
+msgstr "en-us-comp8"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1056,7 +1051,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:472
 msgid "English, U.S., uncontracted"
-msgstr ""
+msgstr "Англійская, ЗША, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1065,7 +1060,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:478
 msgid "English, U.S., contracted"
-msgstr ""
+msgstr "Англійская, ЗША, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1076,7 +1071,7 @@ msgstr ""
 #| msgctxt "textattr"
 #| msgid "underline"
 msgid "en-us-interline"
-msgstr ""
+msgstr "en-us-interline"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1085,7 +1080,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:490
 msgid "en-us-mathtext"
-msgstr ""
+msgstr "en-us-mathtext"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1095,7 +1090,7 @@ msgstr ""
 #: src/orca/brltablenames.py:496
 #| msgid "Hungarian 8 dot computer"
 msgid "English, Canada, computer"
-msgstr ""
+msgstr "Англійская, Канада, камп'ютарная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1258,7 +1253,7 @@ msgstr "Французская, са скарачэннямі"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:604
 msgid "Irish, uncontracted"
-msgstr ""
+msgstr "Ірландская, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1266,9 +1261,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:610
-#| msgid "right control"
 msgid "Irish, contracted"
-msgstr ""
+msgstr "Ірландская, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1277,7 +1271,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:616
 msgid "Scottish Gaelic, computer"
-msgstr ""
+msgstr "Гаэльская шатландская, камп'ютарная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1286,7 +1280,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:622
 msgid "Gondi"
-msgstr ""
+msgstr "Гондзі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1333,7 +1327,7 @@ msgstr "Гуджараці"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:652
 msgid "Hawaiian"
-msgstr ""
+msgstr "Гавайскяа"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1342,7 +1336,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:658
 msgid "Hebrew, classical, cantillated"
-msgstr ""
+msgstr "Іўрыт, класічны, з кантыляцыяй"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1351,7 +1345,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:664
 msgid "Hebrew, classical, slim"
-msgstr ""
+msgstr "Іўрыт, класічны, вузкі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1360,7 +1354,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:670
 msgid "Hebrew, classical, IHBC"
-msgstr ""
+msgstr "Іўрыт, класічны, міжнародны (IHBC)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1369,7 +1363,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:676
 msgid "Hebrew, modern, computer"
-msgstr ""
+msgstr "Іўрыт, сучасны, камп'ютарны"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1378,7 +1372,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:682
 msgid "Hebrew, modern"
-msgstr ""
+msgstr "Іўрыт, сучасны"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1450,7 +1444,7 @@ msgstr "Армянская, камп'ютарная"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:730
 msgid "International Phonetic Alphabet"
-msgstr "Міжнародны фанетычны альфавіт"
+msgstr "Міжнародны фанетычны алфавіт"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1461,7 +1455,7 @@ msgstr "Міжнародны фанетычны альфавіт"
 #| msgctxt "structural navigation"
 #| msgid "List"
 msgid "is"
-msgstr ""
+msgstr "is"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1488,7 +1482,7 @@ msgstr "Італьянская, камп'ютарная"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:754
 msgid "Inuktitut"
-msgstr ""
+msgstr "Інуктытут"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1497,7 +1491,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:760 src/orca/brltablenames.py:766
 msgid "Japanese, Kantenji"
-msgstr ""
+msgstr "Японская, кантэндзі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1506,7 +1500,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:772
 msgid "Japanese, Rokuten Kanji"
-msgstr ""
+msgstr "Японская, ракутэн кандзі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1515,7 +1509,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:778
 msgid "Kannada"
-msgstr ""
+msgstr "Канада"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1533,7 +1527,7 @@ msgstr "Грузінская"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:790
 msgid "Khasi"
-msgstr ""
+msgstr "Кхасі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1542,7 +1536,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:796
 msgid "Kazakh"
-msgstr ""
+msgstr "Казахская"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1596,7 +1590,7 @@ msgstr "Карэйская, са скарачэннямі"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:832
 msgid "Konkani"
-msgstr ""
+msgstr "Конкані"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1605,7 +1599,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:838
 msgid "Kurukh"
-msgstr ""
+msgstr "Курух"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1614,7 +1608,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:844
 msgid "ks-in-g1"
-msgstr ""
+msgstr "ks-in-g1"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1623,7 +1617,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:850
 msgid "Luganda"
-msgstr ""
+msgstr "Луганда"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1660,7 +1654,7 @@ msgstr "Літоўская, 8 кропак"
 #: src/orca/brltablenames.py:874
 #| msgid "lst"
 msgid "lt"
-msgstr ""
+msgstr "lt"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1679,7 +1673,7 @@ msgstr "Латышская"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:886
 msgid "Maori"
-msgstr ""
+msgstr "Маары"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1697,7 +1691,7 @@ msgstr "Македонская"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:898
 msgid "Malayalam"
-msgstr ""
+msgstr "Малаялам"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1706,7 +1700,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:904
 msgid "Manipuri"
-msgstr ""
+msgstr "Маніпіуры"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1715,7 +1709,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:910
 msgid "Mongolian, uncontracted"
-msgstr ""
+msgstr "Мангольская, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1724,7 +1718,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:916
 msgid "Mongolian, contracted"
-msgstr ""
+msgstr "Мангольская, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1733,7 +1727,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:922
 msgid "Marathi"
-msgstr ""
+msgstr "Маратхі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1742,7 +1736,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:928
 msgid "Malay"
-msgstr ""
+msgstr "Малайская"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1751,7 +1745,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:934
 msgid "Maltese, computer"
-msgstr ""
+msgstr "Мальтыйская, камп'ютарная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1760,7 +1754,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:940
 msgid "Munda"
-msgstr ""
+msgstr "Манда"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1769,7 +1763,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:946
 msgid "Marwari"
-msgstr ""
+msgstr "Марвары"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1778,7 +1772,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:952
 msgid "Burmese, uncontracted"
-msgstr ""
+msgstr "Бірманская, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1787,7 +1781,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:958
 msgid "Burmese, contracted"
-msgstr ""
+msgstr "Бірманская, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1797,7 +1791,7 @@ msgstr ""
 #: src/orca/brltablenames.py:964
 #| msgid "Line"
 msgid "ne"
-msgstr ""
+msgstr "ne"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1815,7 +1809,7 @@ msgstr "Галандская, камп'ютарная"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:976
 msgid "Norwegian, uncontracted, 8-dot, 6-dot fallback"
-msgstr ""
+msgstr "Нарвежская, без скарачэнняў, пераход у 6 кропак"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1878,7 +1872,7 @@ msgstr "Нарвежская, са скарачэннямі, узровень 3"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1018
 msgid "no-no-generic"
-msgstr ""
+msgstr "no-no-generic"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1887,7 +1881,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1024
 msgid "Nepali"
-msgstr ""
+msgstr "Непальская"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1896,7 +1890,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1030
 msgid "Sepedi, uncontracted"
-msgstr ""
+msgstr "Педзі, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1905,7 +1899,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1036
 msgid "Sepedi, contracted"
-msgstr ""
+msgstr "Педзі, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1914,7 +1908,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1042
 msgid "Chichewa"
-msgstr ""
+msgstr "Чычэва"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1932,7 +1926,7 @@ msgstr "Орыя"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1054
 msgid "Elfdalian, 6-dot"
-msgstr ""
+msgstr "Эльвдальская, 6 кропак"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1941,7 +1935,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1060
 msgid "Elfdalian, 8-dot"
-msgstr ""
+msgstr "Эльвдальская, 8 кропак"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1950,7 +1944,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1066
 msgid "Pali"
-msgstr ""
+msgstr "Палі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2013,7 +2007,7 @@ msgstr "Партугальская, са скарачэннямі"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1108
 msgid "Punjabi"
-msgstr ""
+msgstr "Панджабі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2022,7 +2016,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1114
 msgid "Romanian, uncontracted"
-msgstr ""
+msgstr "Румынская, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2085,7 +2079,7 @@ msgstr "Руская, са скарачэннямі"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1156
 msgid "Kinyarwanda"
-msgstr ""
+msgstr "Кіньяруанда"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2112,7 +2106,7 @@ msgstr "Якуцкая"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1174
 msgid "se-se"
-msgstr ""
+msgstr "se-se"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2121,7 +2115,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1180
 msgid "Sindhi"
-msgstr ""
+msgstr "Сіндхі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2131,7 +2125,7 @@ msgstr ""
 #: src/orca/brltablenames.py:1186
 #| msgid "spin"
 msgid "sin"
-msgstr ""
+msgstr "sin"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2149,7 +2143,7 @@ msgstr "Славацкая"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1198
 msgid "sk-sk-g1"
-msgstr ""
+msgstr "sk-sk-g1"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2158,7 +2152,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1204
 msgid "sk-sk"
-msgstr ""
+msgstr "sk-sk"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2185,7 +2179,7 @@ msgstr "Славенская"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1222
 msgid "Sami, 6-dot"
-msgstr ""
+msgstr "Саамская, 6 кропак"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2194,7 +2188,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1228
 msgid "Sami, 8-dot"
-msgstr ""
+msgstr "Саамская, 8 кропак"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2203,7 +2197,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1234
 msgid "Sesotho, uncontracted"
-msgstr ""
+msgstr "Сесота, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2212,7 +2206,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1240
 msgid "Sesotho, contracted"
-msgstr ""
+msgstr "Сесота, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2239,7 +2233,7 @@ msgstr "Сербская"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1258
 msgid "Swedish, computer, 1989"
-msgstr ""
+msgstr "Шведская, камп'ютарная 1989"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2248,7 +2242,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1264
 msgid "Swedish, computer, 1996"
-msgstr ""
+msgstr "Шведская, камп'ютарная 1996"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2257,7 +2251,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1270
 msgid "Swedish, uncontracted, 6-dot, detailed"
-msgstr ""
+msgstr "Шведская, без скарачэнняў, 6 кропак, падрабязная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2266,7 +2260,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1276
 msgid "Swedish, uncontracted, 6-dot, phonetics"
-msgstr ""
+msgstr "Дацкая, без скарачэнняў, 6 кропак, фанетычная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2275,7 +2269,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1282
 msgid "Swedish, partially contracted, 6-dot, detailed"
-msgstr ""
+msgstr "Шведская, з частковымі скарачэннямі, 6 кропак, падрабязная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2284,7 +2278,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1288
 msgid "Swedish, contracted, 6-dot, detailed"
-msgstr ""
+msgstr "Шведская, са скарачэннямі, 6 кропак, падрабязная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2293,7 +2287,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1294
 msgid "Swedish, uncontracted, 8-dot, detailed"
-msgstr ""
+msgstr "Шведская, без скарачэнняў, 8 кропак, падрабязная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2302,7 +2296,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1300
 msgid "Swedish, uncontracted, 8-dot"
-msgstr ""
+msgstr "Шведская, без скарачэнняў, 8 кропак"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2311,7 +2305,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1306
 msgid "Swedish, partially contracted, 8-dot, detailed"
-msgstr ""
+msgstr "Шведская, з частковымі скарачэннямі, 8 кропак, падрабязная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2320,7 +2314,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1312
 msgid "Swedish, partially contracted, 8-dot"
-msgstr ""
+msgstr "Шведская, з частковымі скарачэннямі, 8 кропак"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2329,7 +2323,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1318
 msgid "Swedish, contracted, 8-dot, detailed"
-msgstr ""
+msgstr "Шведская, са скарачэннямі, 8 кропак, падрабязная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2338,7 +2332,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1324
 msgid "Swedish, contracted, 8-dot"
-msgstr ""
+msgstr "Шведская, са скарачэннямі, 8 кропак"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2347,7 +2341,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1330
 msgid "Swedish, uncontracted, 6-dot"
-msgstr ""
+msgstr "Шведская, без скарачэнняў, 6 кропак"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2356,7 +2350,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1336
 msgid "Swedish, partially contracted, 6-dot"
-msgstr ""
+msgstr "Шведская, з частковымі скарачэннямі, 6 кропак"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2365,7 +2359,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1342
 msgid "Swedish, contracted, 6-dot"
-msgstr ""
+msgstr "Шведская, са скарачэннямі, 6 кропак"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2374,7 +2368,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1348
 msgid "Swahili, contracted, grade 1.2"
-msgstr ""
+msgstr "Суахілі, са скарачэннямі, узровень 1.2"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2383,7 +2377,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1354
 msgid "Swahili, contracted, grade 1.3"
-msgstr ""
+msgstr "Суахілі, са скарачэннямі, узровень 1.3"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2392,7 +2386,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1360
 msgid "Swahili, contracted, grade 1.4"
-msgstr ""
+msgstr "Суахілі, са скарачэннямі, узровень 1.4"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2401,7 +2395,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1366
 msgid "Swahili, contracted, grade 1.5"
-msgstr ""
+msgstr "Суахілі, са скарачэннямі, узровень 1.5"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2410,7 +2404,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1372
 msgid "Swahili, uncontracted"
-msgstr ""
+msgstr "Суахілі, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2419,7 +2413,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1378
 msgid "Swahili, contracted, grade 2"
-msgstr ""
+msgstr "Суахілі, са скарачэннямі, узровень 2"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2446,7 +2440,7 @@ msgstr "Тамільская"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1396
 msgid "Tamil, computer"
-msgstr ""
+msgstr "Тамільская, камп'ютарная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2464,7 +2458,7 @@ msgstr "Тэлугу"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1408
 msgid "Thai, computer"
-msgstr ""
+msgstr "Тайская, камп'ютарная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2473,7 +2467,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1414
 msgid "Thai, uncontracted"
-msgstr ""
+msgstr "Тайская, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2484,7 +2478,7 @@ msgstr ""
 #| msgctxt "checkbox"
 #| msgid "partially checked"
 msgid "Thai, partially contracted"
-msgstr ""
+msgstr "Тайская, з частковымі скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2493,7 +2487,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1426
 msgid "Thai, contracted"
-msgstr ""
+msgstr "Тайская, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2502,7 +2496,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1432
 msgid "Turkish, uncontracted"
-msgstr ""
+msgstr "Турэцкая, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2511,7 +2505,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1438
 msgid "Turkish, contracted"
-msgstr ""
+msgstr "Турэцкая, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2520,7 +2514,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1444
 msgid "Turkish, computer"
-msgstr ""
+msgstr "Турэцкая, камп'ютарная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2529,7 +2523,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1450
 msgid "Setswana, uncontracted"
-msgstr ""
+msgstr "Сетсвана, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2538,7 +2532,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1456
 msgid "Setswana, contracted"
-msgstr ""
+msgstr "Сетсвана, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2556,7 +2550,7 @@ msgstr "Татарская"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1468
 msgid "Ugaritic"
-msgstr ""
+msgstr "Угарыцкая"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2593,7 +2587,7 @@ msgstr "Украінская"
 #: src/orca/brltablenames.py:1492
 #| msgid "On-screen braille"
 msgid "unicode-braille"
-msgstr ""
+msgstr "unicode-braille"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2620,7 +2614,7 @@ msgstr "Урду, са скарачэннямі"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1510
 msgid "Uzbek"
-msgstr ""
+msgstr "Узбекская"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2629,7 +2623,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1516
 msgid "Tshivenda, uncontracted"
-msgstr ""
+msgstr "Венга, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2638,7 +2632,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1522
 msgid "Tshivenda, contracted"
-msgstr ""
+msgstr "Венга, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2647,7 +2641,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1528
 msgid "Vietnamese, computer"
-msgstr ""
+msgstr "В'етнамская, камп'ютарная"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2656,7 +2650,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1534
 msgid "Vietnamese, Saigon, contracted"
-msgstr ""
+msgstr "В'етнамская, Сайгон, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2665,7 +2659,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1540
 msgid "Vietnamese, uncontracted"
-msgstr ""
+msgstr "В'етнамская, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2674,7 +2668,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1546
 msgid "Vietnamese, partially contracted"
-msgstr ""
+msgstr "В'етнамская, з частковымі скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2683,7 +2677,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1552
 msgid "Vietnamese, contracted"
-msgstr ""
+msgstr "В'етнамская, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2692,7 +2686,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1558
 msgid "isiXhosa, uncontracted"
-msgstr ""
+msgstr "isiXhosa, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2701,7 +2695,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1564
 msgid "isiXhosa, contracted"
-msgstr ""
+msgstr "isiXhosa, са скарачэннямі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2710,7 +2704,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1570
 msgid "Yiddish"
-msgstr ""
+msgstr "Ідыш"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2719,7 +2713,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1576
 msgid "Mandarin, mainland China, without tones"
-msgstr ""
+msgstr "Паўночнакітайская, мацерыковы Кітай, без тонаў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2728,7 +2722,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1582
 msgid "Cantonese"
-msgstr ""
+msgstr "Кантонскі дыялект кітайскай"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2737,7 +2731,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1588
 msgid "Mandarin, Taiwan, bopomofo"
-msgstr ""
+msgstr "Паўночнакітайская, Тайвань, бапамофа"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2746,7 +2740,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1594
 msgid "Mandarin, mainland China, common braille scheme"
-msgstr ""
+msgstr "Паўночнакітайская, мацерыковы Кітай, агульная схема Брайля"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2755,7 +2749,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1600
 msgid "Mandarin, mainland China, with tones"
-msgstr ""
+msgstr "Паўночнакітайская, мацерыковы Кітай, з тонамі"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2764,7 +2758,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1606
 msgid "Mandarin, mainland China, double-phonic"
-msgstr ""
+msgstr "Паўночнакітайская, мацерыковы Кітай, піньінь"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2773,7 +2767,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1612
 msgid "isiZulu, uncontracted"
-msgstr ""
+msgstr "Зулуская, без скарачэнняў"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2782,7 +2776,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1618
 msgid "isiZulu, contracted"
-msgstr ""
+msgstr "Зулуская, са скарачэннямі"
 
 #. pylint: disable=import-error
 #. Translators: this command will move the mouse pointer to the current item,
@@ -3224,10 +3218,8 @@ msgstr "Агучваць толькі бягучую клетку табліцы
 #. information for the current text character, such as font name, font size,
 #. bold, italic, underline, foreground color, and background color.
 #: src/orca/cmdnames.py:372
-#, fuzzy
-#| msgid "Present battery status"
 msgid "Present character formatting"
-msgstr "Паведаміць стан батарэі"
+msgstr "Паведаміць фарматаванне сімвала"
 
 # ?
 #. Translators: This is a command description. The command opens a window
@@ -3235,11 +3227,8 @@ msgstr "Паведаміць стан батарэі"
 #. such as font name, font size, bold, italic, underline, foreground color, and
 #. background color.
 #: src/orca/cmdnames.py:378
-#, fuzzy
-#| msgid "%d character too long"
-#| msgid_plural "%d characters too long"
 msgid "Show character formatting"
-msgstr "занадта доўга, на %d сімвал"
+msgstr "Паказаць фарматаванне сімвала"
 
 #. Translators: a refreshable braille display is an external hardware device that
 #. presents braille characters to the user. There are a limited number of cells
@@ -3344,18 +3333,14 @@ msgstr "Паменшыць гучнасць маўлення"
 #. Translators: the speech inflection is the pitch range used by the
 #. speech synthesis engine. More inflection means more variation in pitch.
 #: src/orca/cmdnames.py:454
-#, fuzzy
-#| msgid "Increase the speech pitch"
 msgid "Increase the speech inflection"
-msgstr "Павысіць тэмбр маўлення"
+msgstr "Павысіць тон маўлення"
 
 #. Translators: the speech inflection is the pitch range used by the
 #. speech synthesis engine. Less inflection means a more monotone voice.
 #: src/orca/cmdnames.py:458
-#, fuzzy
-#| msgid "Decrease the speech pitch"
 msgid "Decrease the speech inflection"
-msgstr "Панізіць тэмбр маўлення"
+msgstr "Панізіць тон маўлення"
 
 #. Translators: Orca allows the user to turn speech synthesis on or off.
 #. We call it 'silencing'.
@@ -3417,26 +3402,20 @@ msgstr "Пераключыць раскладку клавіятуры"
 #. quitting an Orca instance managed as a systemd service, because systemd may
 #. treat that as a failure and restart Orca.
 #: src/orca/cmdnames.py:507
-#, fuzzy
-#| msgid "Quit the screen reader"
 msgid "Quit the screen reader application"
-msgstr "Выйсці са сродку чытання з экрана"
+msgstr "Выйсці з праграмы чытання з экрана"
 
 #. Translators: the preferences window allows users to set their preferences
 #. for Orca.
 #: src/orca/cmdnames.py:511
-#, fuzzy
-#| msgid "Display the preferences configuration dialog"
 msgid "Display the preferences window"
-msgstr "Паказаць дыялог канфігурацыі налад"
+msgstr "Паказаць акно налад"
 
 #. Translators: the application preferences window allows users to set their
 #. preferences for a specific application within Orca.
 #: src/orca/cmdnames.py:515
-#, fuzzy
-#| msgid "Display the application preferences configuration dialog"
 msgid "Display the application preferences window"
-msgstr "Паказаць дыялог канфігурацыі налад праграмы"
+msgstr "Паказаць акно налад праграмы"
 
 #. Translators: Orca allows the user to enable/disable spoken indentation.
 #: src/orca/cmdnames.py:518
@@ -3478,19 +3457,16 @@ msgstr "Пераключыць на наступны сінтэзатар маў
 #. named set. The "%s" is replaced with the name of the set, e.g. a language name
 #. or "Global" for the user's primary set.
 #: src/orca/cmdnames.py:544
-#, fuzzy, python-format
-#| msgid "Switch back to %s"
+#, python-format
 msgid "Switch voice to: %s"
-msgstr "Вярнуцца на %s"
+msgstr "Пераключыць голас на: %s"
 
 #. Translators: Orca can hold several "voice sets": collections of voices, such as
 #. one set per language. This command switches the voice Orca speaks with to the
 #. next set in the list, wrapping around to the first set after the last.
 #: src/orca/cmdnames.py:549
-#, fuzzy
-#| msgid "Cycle to the next key echo level"
 msgid "Cycle to the next voice set"
-msgstr "Пераключыць на наступны ўзровень агучвання клавіш"
+msgstr "Пераключыць на наступны набор налад голасу"
 
 #. Translators: Orca has a feature whereby users can set up different "profiles,"
 #. which are collection of settings which apply to a given task, such as a
@@ -7860,7 +7836,7 @@ msgstr ""
 #: src/orca/guilabels.py:1500
 msgctxt "user extensions"
 msgid "Revoke"
-msgstr ""
+msgstr "Адклікаць"
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button asks the user to confirm deleting the selected extension
@@ -7887,6 +7863,8 @@ msgid ""
 "The following extension will be permanently deleted from your user "
 "extensions folder: %s. Do you want to continue?"
 msgstr ""
+"Наступная пашырэнне будзе незваротна выдалена з папкі пашырэнняў "
+"карыстальніка: %s. Працягнуць?"
 
 #. Translators: This message is presented when Orca fails to delete a user
 #. extension file or package directory from ~/.local/share/orca/extensions. The
@@ -7917,11 +7895,9 @@ msgstr "Налады"
 #. user extension. The button adds one item to a list setting exposed by the
 #. extension, for instance a list of application names.
 #: src/orca/guilabels.py:1538
-#, fuzzy
-#| msgid "0 items"
 msgctxt "user extensions"
 msgid "New item"
-msgstr "0 элементаў"
+msgstr "Новы элемент"
 
 #. Translators: This is a button label in the generated settings dialog for a
 #. user extension. The button opens a file chooser so the user can choose a file
@@ -7935,23 +7911,17 @@ msgstr "Агляд..."
 #. user extension when the user enters an invalid item in a list setting. The
 #. exact list setting depends on the extension.
 #: src/orca/guilabels.py:1553
-#, fuzzy
-#| msgctxt "error"
-#| msgid "invalid entry"
 msgctxt "user extensions"
 msgid "Invalid item."
-msgstr "памылковы запіс"
+msgstr "Памылковы элемент."
 
 #. Translators: This error message appears in the generated settings dialog for a
 #. user extension when the user enters an item that is already present in the same
 #. list setting.
 #: src/orca/guilabels.py:1558
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "there exists"
 msgctxt "user extensions"
 msgid "Item already exists."
-msgstr "існуе"
+msgstr "Элемент ужо выкарыстоўваецца."
 
 #. Translators: This is a fallback label in the generated settings dialog for a
 #. user extension. It is used for the first field in a dictionary entry editor
@@ -7977,7 +7947,7 @@ msgstr "Значэнне"
 #: src/orca/guilabels.py:1573
 msgctxt "user extensions"
 msgid "Invalid value."
-msgstr "Няправільнае значэнне"
+msgstr "Няправільнае значэнне."
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by the name of the person or people who wrote the extension.
@@ -7990,11 +7960,9 @@ msgstr "Аўтар"
 #. refers to the company, project, or similar entity associated with the
 #. extension.
 #: src/orca/guilabels.py:1582
-#, fuzzy
-#| msgid "Pronunciation"
 msgctxt "user extensions"
 msgid "Organization"
-msgstr "Вымаўленне"
+msgstr "Арганізацыя"
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by a copyright holder or copyright notice supplied by the extension
@@ -8053,7 +8021,7 @@ msgstr "Вэб-сайт"
 #| msgid "invalid"
 msgctxt "user extensions"
 msgid "Invalid"
-msgstr ""
+msgstr "Памылковае"
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the user has approved this
@@ -8061,7 +8029,7 @@ msgstr ""
 #: src/orca/guilabels.py:1630
 msgctxt "user extensions"
 msgid "Approved"
-msgstr ""
+msgstr "Адклікана"
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the extension has been
@@ -8075,12 +8043,11 @@ msgstr "Адключана"
 #. in the user extension information dialog. It means the user has not yet
 #. approved this extension, so Orca will not load or run it.
 #: src/orca/guilabels.py:1640
-#, fuzzy
 #| msgctxt "structural navigation"
 #| msgid "Not supported"
 msgctxt "user extensions"
 msgid "Not approved"
-msgstr "Не падтрымліваецца"
+msgstr ""
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the extension was approved
@@ -8381,17 +8348,14 @@ msgstr ""
 "дакуменце."
 
 #: src/orca/guilabels.py:1871
-#, fuzzy
-#| msgid ""
-#| "The \"Container Announcements\" settings determine what additional "
-#| "details will be announced as Say All moves through the document."
 msgid ""
 "The announcement settings determine which document changes, text formatting "
 "changes, and container boundaries will be announced as Say All moves through "
 "the document."
 msgstr ""
-"Налады «Апавяшчэнні кантэйнераў» вызначаюць, якія дадатковыя звесткі будуць "
-"аб'яўляцца функцыяй «Чытаць усё» пры перамяшчэнні па дакуменце."
+"Налады апавяшчэнняў вызначаюць, якія змены ў дакуменце, змены фарматавання "
+"тэксту і межы кантэйнераў паведамляцца функцыяй «Чытаць усё» пры "
+"перамяшчэнні па дакуменце."
 
 #: src/orca/guilabels.py:1876
 msgid "Speak object under mo_use"
@@ -8448,10 +8412,8 @@ msgstr "Частата (сек):"
 #. Caps Lock for the "laptop" keyboard layout. This string is a label for choosing
 #. which key(s) should be used as the Orca modifier.
 #: src/orca/guilabels.py:1914
-#, fuzzy
-#| msgid "Screen Reader _Modifier Key(s):"
 msgid "Screen Reader Modifier Keys"
-msgstr "_Клавішы-мадыфікатары чытання з экрана:"
+msgstr "Клавішы-мадыфікатары чытання з экрана"
 
 #. Translators: This refers to the Insert key being used as the Orca modifier.
 #: src/orca/guilabels.py:1917
@@ -8579,11 +8541,8 @@ msgstr "Апісанне"
 #. Translators: This is a label for a widget associated with whether Orca will
 #. speak indentation information for text content.
 #: src/orca/guilabels.py:2010
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "direction"
 msgid "Indentation"
-msgstr "напрамак"
+msgstr "Водступы"
 
 #. Translators: This is the label for a widget on the Speech preferences page.
 #. When checked, indentation will only be announced when it has changed from
@@ -8604,34 +8563,28 @@ msgstr "Няправільнасць напісання слова"
 #. Translators: This is a label for a widget associated with when Orca will
 #. announce text formatting changes (e.g. bold, italic) when navigating.
 #: src/orca/guilabels.py:2026
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attribute changes"
-msgstr "Атрыбуты тэксту"
+msgstr "Змяненне атрыбутаў тэксту"
 
 #. Translators: This is an option for the text attribute changes setting.
 #: src/orca/guilabels.py:2029
-#, fuzzy
-#| msgid "off"
 msgctxt "text attribute changes"
 msgid "Off"
-msgstr "выключана"
+msgstr "Выключана"
 
 #. Translators: This is an option for the text attribute changes setting.
 #. When selected, formatting changes are only announced in editable content.
 #: src/orca/guilabels.py:2033
-#, fuzzy
-#| msgid "editable content"
 msgctxt "text attribute changes"
 msgid "Editable text only"
-msgstr "змяняльнае змесціва"
+msgstr "Толькі змяняльны тэкст"
 
 #. Translators: This is an option for the text attribute changes setting.
 #. When selected, formatting changes are always announced.
 #: src/orca/guilabels.py:2037
 msgctxt "text attribute changes"
 msgid "Always"
-msgstr ""
+msgstr "Заўсёды"
 
 #. Translators: This is a label for a widget associated with whether Orca will
 #. speak blank lines when navigating in document content.
@@ -8907,10 +8860,8 @@ msgstr "Вымаўленне"
 #. to mathematical expressions such as equations, fractions, and formulas encountered
 #. in documents and web pages. Presentation refers to how they are spoken and brailled.
 #: src/orca/guilabels.py:2250
-#, fuzzy
-#| msgid "Match options:"
 msgid "Math presentation"
-msgstr "Параметры пошуку:"
+msgstr "Вывад матэматычных выразаў"
 
 #. Translators: This refers to a human language such as English, Spanish, or German.
 #: src/orca/guilabels.py:2253
@@ -8947,18 +8898,14 @@ msgstr "Падрабязны"
 #. Translators: This is the braille code used to represent mathematical expressions.
 #. Examples include "Nemeth" (common in the US) and "UEB" (Unified English Braille).
 #: src/orca/guilabels.py:2276
-#, fuzzy
-#| msgid "Braille"
 msgid "Braille code:"
-msgstr "Брайль"
+msgstr "Код Брайля:"
 
 #. Translators: This is the format used when copying math content to the clipboard.
 #. Options include MathML, LaTeX, ASCIIMath, and Speech.
 #: src/orca/guilabels.py:2280
-#, fuzzy
-#| msgid "Dat_e format:"
 msgid "Copy format:"
-msgstr "Фармат дат_ы:"
+msgstr "Фармат капіявання:"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. the label for a setting that controls navigation granularity. In Enhanced
@@ -9109,26 +9056,22 @@ msgstr "Голас"
 #. Translators: This is the label for a section in the Voice Sets preferences
 #. page where users can select and manage voice sets for different languages.
 #: src/orca/guilabels.py:2381
-#, fuzzy
-#| msgid "Voice Type Settings"
 msgid "Voice Sets"
-msgstr "Налады тыпу голасу"
+msgstr "Наборы налад голасу"
 
 #. Translators: This is a label for a combo box that selects which voice set
 #. to configure. A voice set is a named collection of voice settings, such as
 #. the primary set or a language-specific set (e.g. Italian).
 #: src/orca/guilabels.py:2386
-#, fuzzy
-#| msgid "_Voice type:"
 msgid "Voice set:"
-msgstr "Тып _голасу:"
+msgstr "Набор налад голасу:"
 
 #. Translators: This is the title of a confirmation dialog shown when the user
 #. is about to delete a voice set. The %s is replaced with the voice set name.
 #: src/orca/guilabels.py:2390
 #, python-format
 msgid "Delete voice set '%s'?"
-msgstr ""
+msgstr "Выдаліць набор налад голасу «%s»?"
 
 #. Translators: This is the label for the global (default) voice set in the
 #. voice set selector combo box. It represents the main voice configuration
@@ -9136,13 +9079,13 @@ msgstr ""
 #: src/orca/guilabels.py:2395
 msgctxt "VoiceSet"
 msgid "Global"
-msgstr ""
+msgstr "Агульны"
 
 #. Translators: This is the accessible name for a button that creates a new
 #. voice set for a specific language.
 #: src/orca/guilabels.py:2399
 msgid "New Voice Set"
-msgstr ""
+msgstr "Новы набор налад голасу"
 
 #: src/orca/guilabels.py:2407
 #, python-format
@@ -9769,32 +9712,26 @@ msgstr "паўтлусты"
 #: src/orca/messages.py:57
 #, python-format
 msgid "%s off"
-msgstr ""
+msgstr "%s адключаны"
 
 #. Translators: This is presented when the user cycles the text attribute change
 #. announcement mode. In this mode, formatting changes are not announced.
 #: src/orca/messages.py:61
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attributes: off."
-msgstr "Атрыбуты тэксту"
+msgstr "Атрыбуты тэксту: адключаны."
 
 #. Translators: This is presented when the user cycles the text attribute change
 #. announcement mode. In this mode, formatting changes are only announced in
 #. editable content.
 #: src/orca/messages.py:66
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attributes: editable text."
-msgstr "Атрыбуты тэксту"
+msgstr "Атрыбуты тэксту: змяняльны тэкст."
 
 #. Translators: This is presented when the user cycles the text attribute change
 #. announcement mode. In this mode, formatting changes are always announced.
 #: src/orca/messages.py:70
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attributes: on."
-msgstr "Атрыбуты тэксту"
+msgstr "Атрыбуты тэксту: уключаны."
 
 #. Translators: Orca has a command which toggles all (other) Orca commands so that
 #. the associated keystroke can by consumed by the native application. For example,
@@ -12016,10 +11953,8 @@ msgstr "Больш няма відарысаў."
 #. search, etc. This is a detailed message which will be presented to the user if
 #. no more landmarks can be found.
 #: src/orca/messages.py:1637
-#, fuzzy
-#| msgid "No more links."
 msgid "No more landmarks."
-msgstr "Больш няма спасылак."
+msgstr "Больш няма арыенціраў."
 
 #. Translators: This is for navigating document content by moving from link to
 #. link (regardless of visited state). This is a detailed message which will be
@@ -14469,12 +14404,9 @@ msgstr "вышыня радка"
 #. If possible please use a term similar to that used to translate the strings
 #. "highlight start" and "highlight end" in messages.py.
 #: src/orca/text_attribute_names.py:107
-#, fuzzy
-#| msgctxt "content"
-#| msgid "highlight end"
 msgctxt "textattr"
 msgid "highlight"
-msgstr "канец падсветкі"
+msgstr "падсветка"
 
 #. Translators: this attribute refers to the named style which is associated
 #. with the entire paragraph and which controls the default formatting
@@ -15100,1250 +15032,3 @@ msgstr "суцэльны"
 msgctxt "textattr"
 msgid "spelling"
 msgstr "правапіс"
-
-#~ msgid "Czech Grade 1"
-#~ msgstr "Чэшская, узровень 1"
-
-#~ msgid "Canada French Grade 2"
-#~ msgstr "Французская (Канада), узровень 2"
-
-#~ msgid "France French Grade 2"
-#~ msgstr "Французская, узровень 2"
-
-#~ msgid "Netherlands Dutch Grade 1"
-#~ msgstr "Галандская (Нідэрланды), узровень 1"
-
-#~ msgid "Swedish Grade 1"
-#~ msgstr "Шведская, узровень 1"
-
-#~ msgid "Welsh Grade 2"
-#~ msgstr "Уэльская, узровень 2"
-
-#~ msgid "German Grade 1"
-#~ msgstr "Нямецкая, узровень 1"
-
-#~ msgid "German Grade 2"
-#~ msgstr "Нямецкая, узровень 2"
-
-#~ msgid "U.K. English Grade 2"
-#~ msgstr "Англійская (Вялікабрытанія), узровень 2"
-
-#~ msgid "U.K. English Grade 1"
-#~ msgstr "Англійская (Вялікабрытанія), узровень 1"
-
-#~ msgid "U.S. English Grade 1"
-#~ msgstr "Англійская (ЗША), узровень 1"
-
-#~ msgid "U.S. English Grade 2"
-#~ msgstr "Англійская (ЗША), узровень 2"
-
-#~ msgid "Canada French Grade 1"
-#~ msgstr "Французская (Канада), узровень 1"
-
-#~ msgid "France French Grade 1"
-#~ msgstr "Французская (Францыя), узровень 1"
-
-#~ msgid "Greek Grade 1"
-#~ msgstr "Грэчаская, узровень 1"
-
-#~ msgid "Hindi Grade 1"
-#~ msgstr "Хіндзі, узровень 1"
-
-#~ msgid "Hungarian Grade 2"
-#~ msgstr "Венгерская, узровень 2"
-
-#~ msgid "Belgium Dutch Grade 1"
-#~ msgstr "Галандская (Бельгія), узровень 1"
-
-#~ msgid "Read the attributes associated with the current text character"
-#~ msgstr "Агучваць атрыбуты тэксту для бягучага сімвала"
-
-#~ msgid "Toggle the speaking of indentation and justification"
-#~ msgstr "Пераключыць агучванне водступаў і выраўноўвання"
-
-#~ msgctxt "capitalization style"
-#~ msgid "None"
-#~ msgstr "Нічога"
-
-#~ msgctxt "keybindings"
-#~ msgid "Default"
-#~ msgstr "Прадвызначаныя"
-
-#~ msgid "Mouse review"
-#~ msgstr "Агляд з дапамогай мышы"
-
-#~ msgid "Indentation and justification"
-#~ msgstr "Водступы і выраўноўванне"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "bold %s"
-#~ msgstr "тлусты %s"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "italic %s"
-#~ msgstr "курсівам %s"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "bold italic %s"
-#~ msgstr "тлустым курсівам %s"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "script %s"
-#~ msgstr "рукапісны %s"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "bold script %s"
-#~ msgstr "рукапісны тлусты %s"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "fraktur %s"
-#~ msgstr "гатычны %s"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "double-struck %s"
-#~ msgstr "двайны абрыс %s"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "bold fraktur %s"
-#~ msgstr "тлусты гатычны %s"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "sans-serif %s"
-#~ msgstr "%s без засечак"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "sans-serif bold %s"
-#~ msgstr "тлусты %s без засечак"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "sans-serif italic %s"
-#~ msgstr "%s без засечак курсівам"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "sans-serif bold italic %s"
-#~ msgstr "%s без засечак тлустым курсівам"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "monospace %s"
-#~ msgstr "монашырынны %s"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "dotless %s"
-#~ msgstr "%s без кропкі"
-
-#~ msgctxt "math symbol"
-#~ msgid "left arrow"
-#~ msgstr "стрэлка ўлева"
-
-#~ msgctxt "math symbol"
-#~ msgid "up arrow"
-#~ msgstr "стрэлка ўверх"
-
-#~ msgctxt "math symbol"
-#~ msgid "right arrow"
-#~ msgstr "стрэлка ўправа"
-
-#~ msgctxt "math symbol"
-#~ msgid "down arrow"
-#~ msgstr "стрэлка ўніз"
-
-#~ msgctxt "math symbol"
-#~ msgid "left right arrow"
-#~ msgstr "стрэлка ўлева і ўправа"
-
-#~ msgctxt "math symbol"
-#~ msgid "up down arrow"
-#~ msgstr "стрэлка ўверх і ўніз"
-
-#~ msgctxt "math symbol"
-#~ msgid "north west arrow"
-#~ msgstr "стрэлка на паўночны захад"
-
-#~ msgctxt "math symbol"
-#~ msgid "north east arrow"
-#~ msgstr "стрэлка на паўночны ўсход"
-
-#~ msgctxt "math symbol"
-#~ msgid "south east arrow"
-#~ msgstr "стрэлка на паўднёвы ўсход"
-
-#~ msgctxt "math symbol"
-#~ msgid "left arrow from bar"
-#~ msgstr "стрэлка ўлева ад жэрдкі"
-
-#~ msgctxt "math symbol"
-#~ msgid "up arrow from bar"
-#~ msgstr "стрэлка ўверх ад жэрдкі"
-
-#~ msgctxt "math symbol"
-#~ msgid "right arrow from bar"
-#~ msgstr "стрэлка ўправа ад жэрдкі"
-
-#~ msgctxt "math symbol"
-#~ msgid "down arrow from bar"
-#~ msgstr "стрэлка ўніз ад жэрдкі"
-
-#~ msgctxt "math symbol"
-#~ msgid "left double arrow"
-#~ msgstr "двайная стрэлка ўлева"
-
-#~ msgctxt "math symbol"
-#~ msgid "up double arrow"
-#~ msgstr "двайная стрэлка ўверх"
-
-#~ msgctxt "math symbol"
-#~ msgid "right double arrow"
-#~ msgstr "двайная стрэлка ўправа"
-
-#~ msgctxt "math symbol"
-#~ msgid "down double arrow"
-#~ msgstr "двайная стрэлка ўніз"
-
-#~ msgctxt "math symbol"
-#~ msgid "left right double arrow"
-#~ msgstr "двайная стрэлка ўлева і ўправа"
-
-#~ msgctxt "math symbol"
-#~ msgid "up down double arrow"
-#~ msgstr "двайная стрэлка ўверх і ўніз"
-
-#~ msgctxt "math symbol"
-#~ msgid "north west double arrow"
-#~ msgstr "двайная стрэлка на паўночны захад"
-
-#~ msgctxt "math symbol"
-#~ msgid "north east double arrow"
-#~ msgstr "двайная стрэлка на паўночны ўсход"
-
-#~ msgctxt "math symbol"
-#~ msgid "south east double arrow"
-#~ msgstr "двайная стрэлка на паўднёвы ўсход"
-
-#~ msgctxt "math symbol"
-#~ msgid "south west double arrow"
-#~ msgstr "двайная стрэлка на паўднёвы захад"
-
-#~ msgctxt "math symbol"
-#~ msgid "right-pointing arrow"
-#~ msgstr "указальная стрэлка ўправа"
-
-#~ msgctxt "math symbol"
-#~ msgid "right-pointing arrowhead"
-#~ msgstr "стрэлка-наканечнік управа"
-
-#~ msgctxt "math symbol"
-#~ msgid "minus"
-#~ msgstr "мінус"
-
-#~ msgctxt "math symbol"
-#~ msgid "less than"
-#~ msgstr "менш за"
-
-#~ msgctxt "math symbol"
-#~ msgid "greater than"
-#~ msgstr "больш за"
-
-#~ msgctxt "math symbol"
-#~ msgid "circumflex"
-#~ msgstr "цыркумфлекс"
-
-#~ msgctxt "math symbol"
-#~ msgid "háček"
-#~ msgstr "гачак"
-
-#~ msgctxt "math symbol"
-#~ msgid "breve"
-#~ msgstr "брэвіс"
-
-#~ msgctxt "math symbol"
-#~ msgid "dot"
-#~ msgstr "кропка"
-
-# паралельнасць
-#~ msgctxt "math symbol"
-#~ msgid "double vertical line"
-#~ msgstr "двайная вертыкальная лінія"
-
-#~ msgctxt "math symbol"
-#~ msgid "horizontal ellipsis"
-#~ msgstr "гарызантальнае шматкроп'е"
-
-#~ msgctxt "math symbol"
-#~ msgid "there does not exist"
-#~ msgstr "не існуе"
-
-#~ msgctxt "math symbol"
-#~ msgid "empty set"
-#~ msgstr "пустое мноства"
-
-#~ msgctxt "math symbol"
-#~ msgid "increment"
-#~ msgstr "дэльта"
-
-#~ msgctxt "math symbol"
-#~ msgid "nabla"
-#~ msgstr "набла"
-
-#~ msgctxt "math symbol"
-#~ msgid "not an element of"
-#~ msgstr "не элемент"
-
-#~ msgctxt "math symbol"
-#~ msgid "small element of"
-#~ msgstr "малы элемент"
-
-#, fuzzy
-#~| msgid "End of row."
-#~ msgctxt "math symbol"
-#~ msgid "end of proof"
-#~ msgstr "Канец радка."
-
-#~ msgctxt "math symbol"
-#~ msgid "sum"
-#~ msgstr "сума"
-
-#~ msgctxt "math symbol"
-#~ msgid "minus or plus"
-#~ msgstr "плюс-мінус"
-
-#~ msgctxt "math symbol"
-#~ msgid "dot plus"
-#~ msgstr "плюс з кропкай"
-
-#~ msgctxt "math symbol"
-#~ msgid "division slash"
-#~ msgstr "касая дзялення"
-
-#~ msgctxt "math symbol"
-#~ msgid "set minus"
-#~ msgstr "адніманне мностваў"
-
-#~ msgctxt "math symbol"
-#~ msgid "asterisk operator"
-#~ msgstr "аператар зорачка"
-
-#~ msgctxt "math symbol"
-#~ msgid "ring operator"
-#~ msgstr "аператар кольца"
-
-#~ msgctxt "math symbol"
-#~ msgid "square root"
-#~ msgstr "квадратны корань"
-
-#~ msgctxt "math symbol"
-#~ msgid "cube root"
-#~ msgstr "кубічны корань"
-
-#~ msgctxt "math symbol"
-#~ msgid "fourth root"
-#~ msgstr "корань чацвёртай ступені"
-
-#~ msgctxt "math symbol"
-#~ msgid "proportional to"
-#~ msgstr "знак прапарцыянальнасці"
-
-#~ msgctxt "math symbol"
-#~ msgid "infinity"
-#~ msgstr "бясконцасць"
-
-#~ msgctxt "math symbol"
-#~ msgid "right angle"
-#~ msgstr "прамы вугал"
-
-#~ msgctxt "math symbol"
-#~ msgid "angle"
-#~ msgstr "вугал"
-
-#~ msgctxt "math symbol"
-#~ msgid "spherical angle"
-#~ msgstr "сферычны вугал"
-
-#~ msgctxt "math symbol"
-#~ msgid "divides"
-#~ msgstr "дзеліць"
-
-#~ msgctxt "math symbol"
-#~ msgid "does not divide"
-#~ msgstr "не дзеліць"
-
-#~ msgctxt "math symbol"
-#~ msgid "parallel to"
-#~ msgstr "паралельна"
-
-#~ msgctxt "math symbol"
-#~ msgid "not parallel to"
-#~ msgstr "не паралельна"
-
-#~ msgctxt "math symbol"
-#~ msgid "logical and"
-#~ msgstr "лагічнае і"
-
-#~ msgctxt "math symbol"
-#~ msgid "logical or"
-#~ msgstr "лагічнае або"
-
-#~ msgctxt "math symbol"
-#~ msgid "intersection"
-#~ msgstr "перасячэнне"
-
-#~ msgctxt "math symbol"
-#~ msgid "union"
-#~ msgstr "аб’яднанне"
-
-#~ msgctxt "math symbol"
-#~ msgid "integral"
-#~ msgstr "інтэграл"
-
-#~ msgctxt "math symbol"
-#~ msgid "double integral"
-#~ msgstr "двайны інтэграл"
-
-#~ msgctxt "math symbol"
-#~ msgid "triple integral"
-#~ msgstr "трайны інтэграл"
-
-#~ msgctxt "math symbol"
-#~ msgid "contour integral"
-#~ msgstr "крывалінейны інтэграл"
-
-#~ msgctxt "math symbol"
-#~ msgid "surface integral"
-#~ msgstr "паверхневы інтэграл"
-
-#~ msgctxt "math symbol"
-#~ msgid "volume integral"
-#~ msgstr "аб'ёмны інтэграл"
-
-#~ msgctxt "math symbol"
-#~ msgid "therefore"
-#~ msgstr "таму"
-
-#~ msgctxt "math symbol"
-#~ msgid "because"
-#~ msgstr "бо"
-
-#~ msgctxt "math symbol"
-#~ msgid "proportion"
-#~ msgstr "прапорцыя"
-
-#~ msgctxt "math symbol"
-#~ msgid "dot minus"
-#~ msgstr "мінус з кропкай"
-
-#~ msgctxt "math symbol"
-#~ msgid "tilde"
-#~ msgstr "тыльда"
-
-#~ msgctxt "math symbol"
-#~ msgid "reversed tilde"
-#~ msgstr "перавернутая тыльда"
-
-#~ msgctxt "math symbol"
-#~ msgid "inverted lazy S"
-#~ msgstr "перавернутая плаўная S"
-
-#~ msgctxt "math symbol"
-#~ msgid "sine wave"
-#~ msgstr "сінусоіда"
-
-#, fuzzy
-#~| msgid "n tilde"
-#~ msgctxt "math symbol"
-#~ msgid "not tilde"
-#~ msgstr "лацінская эн з тыльдай"
-
-#, fuzzy
-#~| msgid "n tilde"
-#~ msgctxt "math symbol"
-#~ msgid "minus tilde"
-#~ msgstr "лацінская эн з тыльдай"
-
-#~ msgctxt "math symbol"
-#~ msgid "asymptotically equal to"
-#~ msgstr "асімптатычна роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "not asymptotically equal to"
-#~ msgstr "асімптатычна няроўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "approximately equal to"
-#~ msgstr "набліжана роўна"
-
-#, fuzzy
-#~ msgctxt "math symbol"
-#~ msgid "neither approximately nor actually equal to"
-#~ msgstr "не роўна набліжана і "
-
-#~ msgctxt "math symbol"
-#~ msgid "almost equal to"
-#~ msgstr "набліжана роўна"
-
-#, fuzzy
-#~ msgctxt "math symbol"
-#~ msgid "not almost equal to"
-#~ msgstr "набліжана не роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "almost equal or equal to"
-#~ msgstr "набліжана роўна або роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "triple tilde"
-#~ msgstr "трайная тыльда"
-
-#, fuzzy
-#~ msgctxt "math symbol"
-#~ msgid "all equal to"
-#~ msgstr "набліжана не роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "equivalent to"
-#~ msgstr "эквівалентна"
-
-#~ msgctxt "math symbol"
-#~ msgid "geometrically equivalent to"
-#~ msgstr "геаметрычна эквівалентна"
-
-#~ msgctxt "math symbol"
-#~ msgid "difference between"
-#~ msgstr "розніца паміж"
-
-#~ msgctxt "math symbol"
-#~ msgid "geometrically equal to"
-#~ msgstr "геаметрычна роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "colon equals"
-#~ msgstr "двукроп'е роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "equals colon"
-#~ msgstr "роўна двукроп'е"
-
-#~ msgctxt "math symbol"
-#~ msgid "ring in equal to"
-#~ msgstr "кольца ў роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "ring equal to"
-#~ msgstr "кольца роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "corresponds to"
-#~ msgstr "адпавядае"
-
-#~ msgctxt "math symbol"
-#~ msgid "equiangular to"
-#~ msgstr "роўнавугольна"
-
-#~ msgctxt "math symbol"
-#~ msgid "star equals"
-#~ msgstr "зорка роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "delta equal to"
-#~ msgstr "дэльта роўна"
-
-#, fuzzy
-#~| msgid "less than or equal to"
-#~ msgctxt "math symbol"
-#~ msgid "questioned equal to"
-#~ msgstr "менш ці роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "not equal to"
-#~ msgstr "няроўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "identical to"
-#~ msgstr "тоесна"
-
-#~ msgctxt "math symbol"
-#~ msgid "not identical to"
-#~ msgstr "не тоесна"
-
-#~ msgctxt "math symbol"
-#~ msgid "strictly equivalent to"
-#~ msgstr "строга эквівалентна"
-
-#~ msgctxt "math symbol"
-#~ msgid "less than or equal to"
-#~ msgstr "менш ці роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "greater than or equal to"
-#~ msgstr "больш ці роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "less than over equal to"
-#~ msgstr "менш над роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "greater than over equal to"
-#~ msgstr "больш над роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "less than but not equal to"
-#~ msgstr "менш, але не роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "greater than but not equal to"
-#~ msgstr "больш, але не роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "much less than"
-#~ msgstr "намнога менш"
-
-#~ msgctxt "math symbol"
-#~ msgid "much greater than"
-#~ msgstr "намнога больш"
-
-#~ msgctxt "math symbol"
-#~ msgid "between"
-#~ msgstr "паміж"
-
-#~ msgctxt "math symbol"
-#~ msgid "not equivalent to"
-#~ msgstr "не эквівалентна"
-
-#~ msgctxt "math symbol"
-#~ msgid "not less than"
-#~ msgstr "не менш за"
-
-#~ msgctxt "math symbol"
-#~ msgid "not greater than"
-#~ msgstr "не больш за"
-
-#~ msgctxt "math symbol"
-#~ msgid "neither less than nor equal to"
-#~ msgstr "не менш і не роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "neither greater than nor equal to"
-#~ msgstr "не больш і не роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "less than or equivalent to"
-#~ msgstr "менш ці эквівалентна"
-
-#~ msgctxt "math symbol"
-#~ msgid "greater than or equivalent to"
-#~ msgstr "больш ці эквівалентна"
-
-#~ msgctxt "math symbol"
-#~ msgid "neither less than nor equivalent to"
-#~ msgstr "не менш і не эквівалентна"
-
-#~ msgctxt "math symbol"
-#~ msgid "neither greater than nor equivalent to"
-#~ msgstr "не больш і не эквівалентна"
-
-#~ msgctxt "math symbol"
-#~ msgid "less than or greater than"
-#~ msgstr "менш ці больш"
-
-#~ msgctxt "math symbol"
-#~ msgid "greater than or less than"
-#~ msgstr "больш ці менш"
-
-#~ msgctxt "math symbol"
-#~ msgid "neither less than nor greater than"
-#~ msgstr "не менш і не больш"
-
-#~ msgctxt "math symbol"
-#~ msgid "neither greater than nor less than"
-#~ msgstr "не больш і не менш"
-
-#~ msgctxt "math symbol"
-#~ msgid "precedes"
-#~ msgstr "папярэднічае"
-
-#~ msgctxt "math symbol"
-#~ msgid "succeeds"
-#~ msgstr "ідзе следам"
-
-#~ msgctxt "math symbol"
-#~ msgid "precedes or equal to"
-#~ msgstr "папярэднічае ці роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "succeeds or equal to"
-#~ msgstr "ідзе следам ці роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "precedes or equivalent to"
-#~ msgstr "папярэднічае ці эквівалентна"
-
-#~ msgctxt "math symbol"
-#~ msgid "succeeds or equivalent to"
-#~ msgstr "ідзе следам ці эквівалентна"
-
-#~ msgctxt "math symbol"
-#~ msgid "does not precede"
-#~ msgstr "не папярэднічае"
-
-#~ msgctxt "math symbol"
-#~ msgid "does not succeed"
-#~ msgstr "не ідзе следам"
-
-#~ msgctxt "math symbol"
-#~ msgid "subset of"
-#~ msgstr "падмноства"
-
-#~ msgctxt "math symbol"
-#~ msgid "superset of"
-#~ msgstr "надмноства"
-
-#~ msgctxt "math symbol"
-#~ msgid "not a subset of"
-#~ msgstr "не падмноства"
-
-#~ msgctxt "math symbol"
-#~ msgid "not a superset of"
-#~ msgstr "надмноства"
-
-#~ msgctxt "math symbol"
-#~ msgid "subset of or equal to"
-#~ msgstr "падмноства ці роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "superset of or equal to"
-#~ msgstr "надмноства ці роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "neither a subset of nor equal to"
-#~ msgstr "не падмноства і не роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "neither a superset of nor equal to"
-#~ msgstr "не надмноства і не роўна"
-
-#, fuzzy
-#~ msgctxt "math symbol"
-#~ msgid "subset of with not equal to"
-#~ msgstr "падмноства з не роўна"
-
-#, fuzzy
-#~ msgctxt "math symbol"
-#~ msgid "superset of with not equal to"
-#~ msgstr "надмноства з не роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "multiset"
-#~ msgstr "мультымножнасць"
-
-#, fuzzy
-#~| msgctxt "textattr"
-#~| msgid "justification"
-#~ msgctxt "math symbol"
-#~ msgid "multiset multiplication"
-#~ msgstr "раўнаванне"
-
-#, fuzzy
-#~ msgctxt "math symbol"
-#~ msgid "multiset union"
-#~ msgstr "шматразовае аб’яднанне"
-
-#~ msgctxt "math symbol"
-#~ msgid "square image of"
-#~ msgstr "квадратны вобраз"
-
-#~ msgctxt "math symbol"
-#~ msgid "square original of"
-#~ msgstr "квадратны правобраз"
-
-#~ msgctxt "math symbol"
-#~ msgid "square image of or equal to"
-#~ msgstr "квадратны вобраз ці роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "square original of or equal to"
-#~ msgstr "квадратны правобраз ці роўна"
-
-#, fuzzy
-#~| msgid "square root"
-#~ msgctxt "math symbol"
-#~ msgid "square cap"
-#~ msgstr "квадратны корань"
-
-#, fuzzy
-#~| msgid "square root"
-#~ msgctxt "math symbol"
-#~ msgid "square cup"
-#~ msgstr "квадратны корань"
-
-#~ msgctxt "math symbol"
-#~ msgid "circled plus"
-#~ msgstr "плюс у крузе"
-
-#~ msgctxt "math symbol"
-#~ msgid "circled minus"
-#~ msgstr "мінус у крузе"
-
-#~ msgctxt "math symbol"
-#~ msgid "circled times"
-#~ msgstr "знак множання ў крузе"
-
-#~ msgctxt "math symbol"
-#~ msgid "circled division slash"
-#~ msgstr "касая дзялення ў крузе"
-
-#~ msgctxt "math symbol"
-#~ msgid "circled dot operator"
-#~ msgstr "аператар кропка ў крузе"
-
-#~ msgctxt "math symbol"
-#~ msgid "circled ring operator"
-#~ msgstr "аператар кольца ў крузе"
-
-#~ msgctxt "math symbol"
-#~ msgid "circled asterisk operator"
-#~ msgstr "аператар зорачка ў крузе"
-
-#~ msgctxt "math symbol"
-#~ msgid "circled equals"
-#~ msgstr "роўна ў крузе"
-
-#~ msgctxt "math symbol"
-#~ msgid "circled dash"
-#~ msgstr "працяжнік у крузе"
-
-#~ msgctxt "math symbol"
-#~ msgid "squared plus"
-#~ msgstr "плюс у квадраце"
-
-#~ msgctxt "math symbol"
-#~ msgid "squared minus"
-#~ msgstr "мінус у квадраце"
-
-#~ msgctxt "math symbol"
-#~ msgid "squared times"
-#~ msgstr "знак множання ў квадраце"
-
-#~ msgctxt "math symbol"
-#~ msgid "squared dot operator"
-#~ msgstr "аператар кропка ў квадраце"
-
-#, fuzzy
-#~| msgid "right meta"
-#~ msgctxt "math symbol"
-#~ msgid "right tack"
-#~ msgstr "правы meta"
-
-#, fuzzy
-#~| msgid "left tab"
-#~ msgctxt "math symbol"
-#~ msgid "left tack"
-#~ msgstr "левы tab"
-
-#, fuzzy
-#~| msgid "down"
-#~ msgctxt "math symbol"
-#~ msgid "down tack"
-#~ msgstr "уніз"
-
-#, fuzzy
-#~| msgid "section"
-#~ msgctxt "math symbol"
-#~ msgid "assertion"
-#~ msgstr "параграф"
-
-#~ msgctxt "math symbol"
-#~ msgid "true"
-#~ msgstr "праўда"
-
-#~ msgctxt "math symbol"
-#~ msgid "not true"
-#~ msgstr "не праўда"
-
-#~ msgctxt "math symbol"
-#~ msgid "normal subgroup of"
-#~ msgstr "нармальная падгрупа"
-
-#~ msgctxt "math symbol"
-#~ msgid "normal subgroup of or equal to"
-#~ msgstr "нармальная падгрупа ці роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "original of"
-#~ msgstr "правобраз"
-
-#~ msgctxt "math symbol"
-#~ msgid "image of"
-#~ msgstr "вобраз"
-
-#, fuzzy
-#~ msgctxt "math symbol"
-#~ msgid "multimap"
-#~ msgstr "мульты"
-
-#, fuzzy
-#~| msgctxt "textattr"
-#~| msgid "normal"
-#~ msgctxt "math symbol"
-#~ msgid "nor"
-#~ msgstr "звычайны"
-
-#, fuzzy
-#~| msgid "right single quote"
-#~ msgctxt "math symbol"
-#~ msgid "right angle with arc"
-#~ msgstr "правае адзінкавае двукоссе"
-
-#, fuzzy
-#~| msgid "right brace"
-#~ msgctxt "math symbol"
-#~ msgid "right triangle"
-#~ msgstr "правая фігурная дужка"
-
-#~ msgctxt "math symbol"
-#~ msgid "dot operator"
-#~ msgstr "аператар кропка"
-
-# бабачка бінарны аператар | натуральнае аб’яднанне
-#~ msgctxt "math symbol"
-#~ msgid "bowtie"
-#~ msgstr "натуральнае аб’яднанне"
-
-#, fuzzy
-#~| msgid "logical not"
-#~ msgctxt "math symbol"
-#~ msgid "curly logical or"
-#~ msgstr "лагічнае адмаўленне"
-
-#, fuzzy
-#~| msgid "logical not"
-#~ msgctxt "math symbol"
-#~ msgid "curly logical and"
-#~ msgstr "лагічнае адмаўленне"
-
-#~ msgctxt "math symbol"
-#~ msgid "double subset"
-#~ msgstr "двайная падмножнсць"
-
-#~ msgctxt "math symbol"
-#~ msgid "double superset"
-#~ msgstr "двайная надмножнсць"
-
-#~ msgctxt "math symbol"
-#~ msgid "double union"
-#~ msgstr "двайное аб’яднанне"
-
-#~ msgctxt "math symbol"
-#~ msgid "equal and parallel to"
-#~ msgstr "роўна і паралельна"
-
-#~ msgctxt "math symbol"
-#~ msgid "less than with dot"
-#~ msgstr "менш з кропкай"
-
-#~ msgctxt "math symbol"
-#~ msgid "greater than with dot"
-#~ msgstr "больш з кропкай"
-
-#~ msgctxt "math symbol"
-#~ msgid "very much less than"
-#~ msgstr "значна менш"
-
-#~ msgctxt "math symbol"
-#~ msgid "very much greater than"
-#~ msgstr "значна больш"
-
-#, fuzzy
-#~| msgid "less than or equal to"
-#~ msgctxt "math symbol"
-#~ msgid "less than equal to or greater than"
-#~ msgstr "менш ці роўна"
-
-#, fuzzy
-#~| msgid "greater than or equal to"
-#~ msgctxt "math symbol"
-#~ msgid "greater than equal to or less than"
-#~ msgstr "больш ці роўна"
-
-#, fuzzy
-#~| msgid "greater than or equal to"
-#~ msgctxt "math symbol"
-#~ msgid "not square image of or equal to"
-#~ msgstr "больш ці роўна"
-
-#, fuzzy
-#~| msgid "greater than or equal to"
-#~ msgctxt "math symbol"
-#~ msgid "square image of or not equal to"
-#~ msgstr "больш ці роўна"
-
-#, fuzzy
-#~| msgid "less than or equal to"
-#~ msgctxt "math symbol"
-#~ msgid "less than but not equivalent to"
-#~ msgstr "менш ці роўна"
-
-#, fuzzy
-#~| msgid "greater than or equal to"
-#~ msgctxt "math symbol"
-#~ msgid "greater than but not equivalent to"
-#~ msgstr "больш ці роўна"
-
-#~ msgctxt "math symbol"
-#~ msgid "precedes but not equivalent to"
-#~ msgstr "папярэднічае, але не эквівалентна"
-
-#~ msgctxt "math symbol"
-#~ msgid "vertical ellipsis"
-#~ msgstr "вертыкальнае шматкроп'е"
-
-#, fuzzy
-#~| msgid "left paren"
-#~ msgctxt "math symbol"
-#~ msgid "left ceiling"
-#~ msgstr "левая дужка"
-
-#, fuzzy
-#~| msgid "right paren"
-#~ msgctxt "math symbol"
-#~ msgid "right ceiling"
-#~ msgstr "правая дужка"
-
-#, fuzzy
-#~| msgid "left alt"
-#~ msgctxt "math symbol"
-#~ msgid "left floor"
-#~ msgstr "левы alt"
-
-#, fuzzy
-#~| msgid "right alt"
-#~ msgctxt "math symbol"
-#~ msgid "right floor"
-#~ msgstr "правы alt"
-
-#~ msgctxt "math symbol"
-#~ msgid "top brace"
-#~ msgstr "верхняя фігурная дужка"
-
-#~ msgctxt "math symbol"
-#~ msgid "bottom brace"
-#~ msgstr "ніжняя фігурная дужка"
-
-#~ msgctxt "math symbol"
-#~ msgid "left angle bracket"
-#~ msgstr "левая вуглавая дужка"
-
-#~ msgctxt "math symbol"
-#~ msgid "right angle bracket"
-#~ msgstr "правая вуглавая дужка"
-
-#~ msgctxt "math symbol"
-#~ msgid "circled dot"
-#~ msgstr "кропка ў крузе"
-
-#~ msgctxt "math symbol"
-#~ msgid "union with dot"
-#~ msgstr "аб’яднанне з кропкай"
-
-#~ msgctxt "math symbol"
-#~ msgid "square union"
-#~ msgstr "аператар аб’яднанне ў квадраце"
-
-#~ msgctxt "math symbol"
-#~ msgid "black square"
-#~ msgstr "чорны квадрат"
-
-#~ msgctxt "math symbol"
-#~ msgid "white square"
-#~ msgstr "незафарбаваны квадрат"
-
-#~ msgctxt "math symbol"
-#~ msgid "black diamond"
-#~ msgstr "чорны ромб"
-
-#~ msgctxt "math symbol"
-#~ msgid "white circle"
-#~ msgstr "незафарбаваны круг"
-
-#~ msgctxt "math symbol"
-#~ msgid "black circle"
-#~ msgstr "чорны круг"
-
-#, fuzzy
-#~ msgctxt "math symbol"
-#~ msgid "white bullet"
-#~ msgstr "незафарбаваны кружок"
-
-#, fuzzy
-#~| msgid "black square"
-#~ msgctxt "math symbol"
-#~ msgid "black medium small square"
-#~ msgstr "чорны квадрат"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "%s with underline"
-#~ msgstr "%s з падкрэсліваннем"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "%s with slash"
-#~ msgstr "%s з касой рысай"
-
-#, python-format
-#~ msgctxt "math symbol"
-#~ msgid "%s with vertical line"
-#~ msgstr "%s з вертыкальнай лініяй"
-
-#~ msgid "DIR"
-#~ msgstr "КАТАЛОГ"
-
-#~ msgid "Set up user preferences (GUI version)"
-#~ msgstr "Задаць налады карыстальніка (графічная версія)"
-
-#, python-format
-#~ msgctxt "math enclosure"
-#~ msgid "Enclosed by: %s"
-#~ msgstr "Змешчана ў: %s"
-
-#~ msgctxt "math enclosure"
-#~ msgid "a box"
-#~ msgstr "прамавугольнік"
-
-#~ msgctxt "math enclosure"
-#~ msgid "a circle"
-#~ msgstr "круг"
-
-#~ msgctxt "math enclosure"
-#~ msgid "a radical"
-#~ msgstr "радыкал"
-
-#~ msgctxt "math enclosure"
-#~ msgid "a rounded box"
-#~ msgstr "скруглены прамавугольнік"
-
-#~ msgctxt "math enclosure"
-#~ msgid "a horizontal strike"
-#~ msgstr "гарызантальнае закрэсліванне"
-
-#~ msgctxt "math enclosure"
-#~ msgid "a vertical strike"
-#~ msgstr "вертыкальнае закрэсліванне"
-
-#~ msgctxt "math enclosure"
-#~ msgid "a down diagonal strike"
-#~ msgstr "дыяганальнае закрэсліванне зверху ўніз"
-
-#~ msgctxt "math enclosure"
-#~ msgid "an up diagonal strike"
-#~ msgstr "дыяганальнае закрэсліванне знізу ўверх"
-
-#~ msgctxt "math enclosure"
-#~ msgid "a northeast arrow"
-#~ msgstr "стрэлка на паўночны ўсход"
-
-#~ msgctxt "math enclosure"
-#~ msgid "a line at the bottom"
-#~ msgstr "лінія знізу"
-
-#~ msgctxt "math enclosure"
-#~ msgid "a line on the left"
-#~ msgstr "лінія злева"
-
-#~ msgctxt "math enclosure"
-#~ msgid "a line on the right"
-#~ msgstr "лінія справа"
-
-#~ msgctxt "math enclosure"
-#~ msgid "a line at the top"
-#~ msgstr "лінія зверху"
-
-#~ msgctxt "math enclosure"
-#~ msgid "a phasor angle"
-#~ msgstr "фазавы вугал"
-
-#~ msgctxt "math enclosure"
-#~ msgid "an arabic factorial symbol"
-#~ msgstr "арабскі сімвал фактарыяла"
-
-#~ msgctxt "math enclosure"
-#~ msgid "and"
-#~ msgstr "і"
-
-#~ msgid "fraction start"
-#~ msgstr "пачатак дробу"
-
-#~ msgid "fraction without bar, start"
-#~ msgstr "дроб без рысы, пачатак"
-
-#~ msgctxt "math fraction"
-#~ msgid "over"
-#~ msgstr "над"
-
-#~ msgid "fraction end"
-#~ msgstr "канец дробу"
-
-#~ msgid "square root of"
-#~ msgstr "квадратны корань з"
-
-#~ msgid "cube root of"
-#~ msgstr "кубічны корань з"
-
-#~ msgid "root of"
-#~ msgstr "корань з"
-
-#~ msgctxt "math script generic"
-#~ msgid "subscript"
-#~ msgstr "ніжні індэкс"
-
-#~ msgctxt "math script generic"
-#~ msgid "superscript"
-#~ msgstr "верхні індэкс"
-
-#, fuzzy
-#~| msgid "subscript 0"
-#~ msgctxt "math script"
-#~ msgid "pre-subscript"
-#~ msgstr "ніжні індэкс 0"
-
-#, fuzzy
-#~| msgid "superscript a"
-#~ msgctxt "math script"
-#~ msgid "pre-superscript"
-#~ msgstr "верхні індэкс лацінскай а"
-
-#~ msgctxt "math script generic"
-#~ msgid "underscript"
-#~ msgstr "падтэкставы"
-
-#~ msgctxt "math script generic"
-#~ msgid "overscript"
-#~ msgstr "надтэкставы"
-
-#~ msgctxt "math table"
-#~ msgid "table end"
-#~ msgstr "канец табліцы"
-
-#~ msgctxt "math table"
-#~ msgid "nested table end"
-#~ msgstr "канец укладзенай табліцы"
-
-#~ msgid "Speaking of indentation and justification disabled."
-#~ msgstr "Агучванне водступаў і выраўноўвання выключана."
-
-#~ msgid "Speaking of indentation and justification enabled."
-#~ msgstr "Агучванне водступаў і выраўноўвання ўключана."
-
-#~ msgid "No landmark found."
-#~ msgstr "Больш няма арыенціраў."
