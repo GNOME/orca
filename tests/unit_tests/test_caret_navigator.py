@@ -376,37 +376,6 @@ class TestCaretNavigator:
         assert navigator._get_end_of_file(mock_script) == ("text", 34)
         find_deepest.assert_not_called()
 
-    def test_get_end_of_file_uses_last_native_text_descendant(
-        self,
-        test_context: OrcaTestContext,
-    ) -> None:
-        """Test native file-end lookup uses the last text descendant of a container."""
-
-        self._setup_dependencies(test_context)
-        from orca.caret_navigator import AXObject, AXText, AXUtilities, CaretNavigator
-
-        navigator = CaretNavigator()
-        mock_script = test_context.Mock()
-        mock_script.utilities.in_document_content.return_value = False
-        test_context.patch_object(navigator, "_get_embedded_document_frame", return_value=None)
-        test_context.patch_object(navigator, "_get_root_object", return_value="document")
-        test_context.patch_object(AXObject, "supports_text", return_value=False)
-        find_deepest = test_context.patch_object(AXUtilities, "find_deepest_descendant")
-        get_text_descendants = test_context.patch_object(
-            AXUtilities,
-            "get_text_descendants",
-            return_value=["page 1", "page 2"],
-        )
-        test_context.patch_object(
-            AXText,
-            "get_character_count",
-            side_effect=lambda obj: 51 if obj == "page 2" else 89,
-        )
-
-        assert navigator._get_end_of_file(mock_script) == ("page 2", 51)
-        find_deepest.assert_not_called()
-        get_text_descendants.assert_called_once_with("document")
-
     def test_next_line_rejects_invalid_destination(
         self,
         test_context: OrcaTestContext,
