@@ -237,7 +237,7 @@ class BrailleGenerator(generator.Generator):
             if not regions:
                 continue
 
-            if acc == obj and start <= offset < end:
+            if acc == obj and (start <= offset < end or (i == len(contents) - 1 and offset == end)):
                 focused_region = f_region
 
             if last_region and regions:

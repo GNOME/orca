@@ -351,6 +351,92 @@ class TestCaretNavigator:
         cmd_manager = command_manager.get_manager()
         assert cmd_manager is not None
 
+    def test_get_end_of_file_keeps_native_text_object(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test native text is not replaced by its container at the end of the file."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXObject, AXText, AXUtilities, CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_script.utilities.in_document_content.return_value = False
+        test_context.patch_object(navigator, "_get_embedded_document_frame", return_value=None)
+        test_context.patch_object(navigator, "_get_root_object", return_value="text")
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        find_deepest = test_context.patch_object(
+            AXUtilities,
+            "find_deepest_descendant",
+            return_value="panel",
+        )
+        test_context.patch_object(AXText, "get_character_count", return_value=34)
+
+        assert navigator._get_end_of_file(mock_script) == ("text", 34)
+        find_deepest.assert_not_called()
+
+    def test_get_end_of_file_uses_last_native_text_descendant(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test native file-end lookup uses the last text descendant of a container."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXObject, AXText, AXUtilities, CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_script.utilities.in_document_content.return_value = False
+        test_context.patch_object(navigator, "_get_embedded_document_frame", return_value=None)
+        test_context.patch_object(navigator, "_get_root_object", return_value="document")
+        test_context.patch_object(AXObject, "supports_text", return_value=False)
+        find_deepest = test_context.patch_object(AXUtilities, "find_deepest_descendant")
+        get_text_descendants = test_context.patch_object(
+            AXUtilities,
+            "get_text_descendants",
+            return_value=["page 1", "page 2"],
+        )
+        test_context.patch_object(
+            AXText,
+            "get_character_count",
+            side_effect=lambda obj: 51 if obj == "page 2" else 89,
+        )
+
+        assert navigator._get_end_of_file(mock_script) == ("page 2", 51)
+        find_deepest.assert_not_called()
+        get_text_descendants.assert_called_once_with("document")
+
+    def test_next_line_rejects_invalid_destination(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test a malformed next-line result cannot invalidate the caret context."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXObject, CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        current_obj = test_context.Mock()
+        current_line = [(current_obj, 0, 10, "Last line.")]
+        mock_script.utilities.get_caret_context.return_value = (current_obj, 10)
+        mock_script.utilities.get_line_contents_at_offset.return_value = current_line
+        mock_script.utilities.get_next_line_contents.return_value = [(None, 0, 0, "")]
+        test_context.patch_object(
+            AXObject,
+            "supports_text",
+            side_effect=lambda obj: obj is current_obj,
+        )
+        test_context.patch_object(navigator, "_get_root_object", return_value=None)
+
+        assert navigator.next_line(mock_script, mock_event) is False
+        mock_script.utilities.set_caret_position.assert_not_called()
+        presenter = essential_modules["orca.presentation_manager"].get_manager()
+        presenter.interrupt_presentation.assert_not_called()
+        presenter.present_contents.assert_not_called()
+
     @pytest.mark.parametrize(
         "navigation_type,in_say_all,current_line,next_prev_contents,expected_result",
         [

@@ -435,6 +435,20 @@ class CaretNavigator(Extension):
 
         frame = self._get_embedded_document_frame(script)
         root = frame if frame is not None else self._get_root_object(script)
+        if root is None:
+            return None, -1
+
+        if not script.utilities.in_document_content(root):
+            if AXObject.supports_text(root):
+                return root, AXText.get_character_count(root)
+
+            text_descendants = AXUtilities.get_text_descendants(root)
+            if not text_descendants:
+                return None, -1
+
+            obj = text_descendants[-1]
+            return obj, AXText.get_character_count(obj)
+
         obj = AXUtilities.find_deepest_descendant(root)
         if obj is None:
             return None, -1
@@ -651,16 +665,16 @@ class CaretNavigator(Extension):
         if not contents:
             return False
 
+        if line != contents:
+            obj, offset, end, _string = contents[0]
+        else:
+            obj, offset, end, _string = contents[-1]
+
         if not self._is_navigable_object(script, obj):
             return False
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
-
-        if line != contents:
-            obj, offset, end, _string = contents[0]
-        else:
-            obj, offset, end, _string = contents[-1]
 
         script.utilities.set_caret_position(obj, offset, reason=CaretSetReason.CARET_NAVIGATION)
         focus_manager.get_manager().emit_region_changed(
@@ -850,6 +864,7 @@ class CaretNavigator(Extension):
     ) -> bool:
         """Moves to the end of the file."""
 
+        prior_obj, _prior_offset = script.utilities.get_caret_context()
         obj, end = self._get_end_of_file(script)
         if obj is None:
             return False
@@ -872,7 +887,9 @@ class CaretNavigator(Extension):
             return True
 
         presenter = presentation_manager.get_manager()
-        presenter.present_contents(contents)
+        if AXUtilities.is_page(obj):
+            prior_obj = obj
+        presenter.present_contents(contents, prior_obj=prior_obj)
         return True
 
 
