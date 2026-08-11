@@ -625,6 +625,153 @@ class TestAXText:
 
         assert result == (paragraph, expected_offset)
 
+    @pytest.mark.parametrize(
+        "after_embedded_object,expected_offset",
+        [
+            pytest.param(False, 4, id="before_embedded_object"),
+            pytest.param(True, 5, id="after_embedded_object"),
+        ],
+    )
+    def test_get_text_selection_endpoint_for_caret_context_with_embedded_object(
+        self,
+        test_context: OrcaTestContext,
+        after_embedded_object: bool,
+        expected_offset: int,
+    ) -> None:
+        """Test a non-text object is represented by its character in a text parent."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_text import AXHypertext, AXObject, AXUtilitiesText
+
+        image = test_context.Mock(spec=Atspi.Accessible)
+        link = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXObject,
+            "supports_text",
+            side_effect=lambda obj: obj == link,
+        )
+        test_context.patch_object(
+            AXObject,
+            "get_parent",
+            side_effect=lambda obj: link if obj == image else None,
+        )
+        get_child_offset = test_context.patch_object(
+            AXHypertext,
+            "get_character_offset_in_parent",
+            return_value=4,
+        )
+
+        result = AXUtilitiesText.get_text_selection_endpoint_for_caret_context(
+            image,
+            0,
+            after_embedded_object=after_embedded_object,
+        )
+
+        assert result == (link, expected_offset)
+        get_child_offset.assert_called_once_with(image)
+
+    def test_get_text_selection_endpoint_for_caret_context_after_embedded_text_child(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test a position after embedded text is represented by the child's end."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_text import AXHypertext, AXObject, AXText, AXUtilitiesText
+
+        parent = test_context.Mock(spec=Atspi.Accessible)
+        child = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        get_child = test_context.patch_object(
+            AXHypertext,
+            "get_child_at_offset",
+            side_effect=lambda obj, offset: child if (obj, offset) == (parent, 0) else None,
+        )
+        test_context.patch_object(
+            AXText,
+            "get_substring",
+            side_effect=lambda obj, start, end: (
+                "\ufffc" if (obj, start, end) == (parent, 0, 1) else "a"
+            ),
+        )
+        test_context.patch_object(AXText, "get_character_count", return_value=9)
+
+        result = AXUtilitiesText.get_text_selection_endpoint_for_caret_context(
+            parent,
+            1,
+            after_embedded_object=False,
+        )
+
+        assert result == (child, 9)
+        get_child.assert_called_once_with(parent, 0)
+
+    @pytest.mark.parametrize(
+        "endpoint_is_start,parent_offset,expected_child_offset",
+        [
+            pytest.param(True, 15, 0, id="selection-start"),
+            pytest.param(False, 16, 19, id="selection-end"),
+        ],
+    )
+    def test_get_caret_context_for_text_selection_endpoint_in_embedded_text_child(
+        self,
+        test_context: OrcaTestContext,
+        endpoint_is_start: bool,
+        parent_offset: int,
+        expected_child_offset: int,
+    ) -> None:
+        """Test a parent EOC selection endpoint becomes a stable child caret context."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_text import AXHypertext, AXObject, AXText, AXUtilitiesText
+
+        parent = test_context.Mock(spec=Atspi.Accessible)
+        child = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXText,
+            "get_substring",
+            side_effect=lambda obj, start, end: (
+                "\ufffc" if obj == parent and start == 15 and end == 16 else ""
+            ),
+        )
+        get_child = test_context.patch_object(
+            AXHypertext,
+            "get_child_at_offset",
+            return_value=child,
+        )
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        test_context.patch_object(AXText, "get_character_count", return_value=19)
+
+        result = AXUtilitiesText.get_caret_context_for_text_selection_endpoint(
+            parent,
+            parent_offset,
+            endpoint_is_start=endpoint_is_start,
+        )
+
+        assert result == (child, expected_child_offset)
+        get_child.assert_called_once_with(parent, 15)
+
+    def test_get_caret_context_for_text_selection_endpoint_without_embedded_text(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test an ordinary text-selection endpoint is already a caret context."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_text import AXHypertext, AXText, AXUtilitiesText
+
+        obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXText, "get_substring", return_value="a")
+        get_child = test_context.patch_object(AXHypertext, "get_child_at_offset")
+
+        result = AXUtilitiesText.get_caret_context_for_text_selection_endpoint(
+            obj,
+            7,
+            endpoint_is_start=True,
+        )
+
+        assert result == (obj, 7)
+        get_child.assert_not_called()
+
     def test_is_eoc_with_embedded_object_character(self, test_context: OrcaTestContext) -> None:
         """Test AXText.is_eoc with embedded object character."""
 

@@ -1590,6 +1590,20 @@ class AXUtilities:
 
     # From ax_utilities_text.py
     @staticmethod
+    def get_text_selection_endpoint_for_caret_context(
+        obj: Atspi.Accessible,
+        offset: int,
+        *,
+        after_embedded_object: bool,
+    ) -> tuple[Atspi.Accessible | None, int]: ...
+    @staticmethod
+    def get_caret_context_for_text_selection_endpoint(
+        obj: Atspi.Accessible,
+        offset: int,
+        *,
+        endpoint_is_start: bool,
+    ) -> tuple[Atspi.Accessible, int]: ...
+    @staticmethod
     def get_text_selection_container(obj: Atspi.Accessible) -> Atspi.Accessible: ...
     @staticmethod
     def get_text_selection_endpoints(

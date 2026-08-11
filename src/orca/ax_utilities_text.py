@@ -310,6 +310,87 @@ class AXUtilitiesText:
             elements = elements[:elements_end]
         return elements
 
+    @staticmethod
+    def get_text_selection_endpoint_for_caret_context(
+        obj: Atspi.Accessible,
+        offset: int,
+        *,
+        after_embedded_object: bool,
+    ) -> tuple[Atspi.Accessible | None, int]:
+        """Returns the text-selection endpoint for the caret context."""
+
+        if AXObject.supports_text(obj):
+            if offset > 0 and AXText.get_substring(obj, offset - 1, offset) == "\ufffc":
+                child = AXHypertext.get_child_at_offset(obj, offset - 1)
+                if child is not None and child != obj and AXObject.supports_text(child):
+                    child_offset = AXText.get_character_count(child)
+                    tokens = [
+                        "AXUtilitiesText: Using the end of embedded text child",
+                        child,
+                        f"at offset {child_offset} for position {offset} in",
+                        obj,
+                    ]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                    return AXUtilitiesText.get_text_selection_endpoint_for_caret_context(
+                        child,
+                        child_offset,
+                        after_embedded_object=after_embedded_object,
+                    )
+            return obj, offset
+
+        child = obj
+        parent = AXObject.get_parent(child)
+        while parent is not None:
+            if AXObject.supports_text(parent):
+                child_offset = AXHypertext.get_character_offset_in_parent(child)
+                if child_offset >= 0:
+                    result = child_offset + int(after_embedded_object)
+                    tokens = [
+                        "AXUtilitiesText: Using embedded object character in",
+                        parent,
+                        f"at offset {result} for",
+                        obj,
+                    ]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                    return parent, result
+            child = parent
+            parent = AXObject.get_parent(child)
+
+        return None, -1
+
+    @staticmethod
+    def get_caret_context_for_text_selection_endpoint(
+        obj: Atspi.Accessible,
+        offset: int,
+        *,
+        endpoint_is_start: bool,
+    ) -> tuple[Atspi.Accessible, int]:
+        """Returns the caret context represented by a text-selection endpoint."""
+
+        embedded_offset = offset if endpoint_is_start else offset - 1
+        if embedded_offset < 0:
+            return obj, offset
+        if AXText.get_substring(obj, embedded_offset, embedded_offset + 1) != "\ufffc":
+            return obj, offset
+
+        child = AXHypertext.get_child_at_offset(obj, embedded_offset)
+        if child is None or child == obj or not AXObject.supports_text(child):
+            return obj, offset
+
+        child_offset = 0 if endpoint_is_start else AXText.get_character_count(child)
+        tokens = [
+            "AXUtilitiesText: Using embedded text child",
+            child,
+            f"at offset {child_offset} for selection endpoint {offset} in",
+            obj,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return AXUtilitiesText.get_caret_context_for_text_selection_endpoint(
+            child,
+            child_offset,
+            endpoint_is_start=endpoint_is_start,
+        )
+
     LAST_CARET_SET: ClassVar[LastCaretSet | None] = None
     _CACHE = _AXUtilitiesTextCache()
     LINK_STYLING_ATTRIBUTES: ClassVar[frozenset[AXTextAttribute]] = frozenset(
