@@ -73,10 +73,9 @@ def test_line_navigation_across_wrapped_link(web_wrapped_link: NativeAppSession)
         [helpers.BrailleLine(1, "This is the final line.", "This is the final line.", "\x00" * 23)],
     )
 
-    # Setting the caret into the wrapped link makes Chromium report its whole text as one line.
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert helpers.capture(session) == (
-        ["Kelly Rowland", "link", " plus others here."],
+        ["Rowland", "link", " plus others here."],
         [
             helpers.BrailleLine(
                 1,
@@ -89,7 +88,7 @@ def test_line_navigation_across_wrapped_link(web_wrapped_link: NativeAppSession)
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert helpers.capture(session) == (
-        ["The group included star ", "Kelly Rowland", "link"],
+        ["The group included star ", "Kelly ", "link"],
         [
             helpers.BrailleLine(
                 1,

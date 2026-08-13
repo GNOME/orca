@@ -27,6 +27,8 @@ if TYPE_CHECKING:
 _NANO_LINE_COUNT = 30
 _NANO_LINES = frozenset(f"line {number}" for number in range(1, _NANO_LINE_COUNT + 1))
 _VIM_BOTTOM_LINES = (*(f"line {number:02d}" for number in range(1, 13)), "same", "same")
+_ORCA_CONTROLS = "The screen reader is controlling the caret."
+_APP_CONTROLS = "The application is controlling the caret."
 
 
 def _spoken_lines(utterances: list[str]) -> list[str]:
@@ -176,3 +178,118 @@ def test_pager_navigation_speaks_each_page(gtk3_terminal_pager: NativeAppSession
         ":",
     ]
     assert brailled[-1] == helpers.BrailleLine(2, ":", ":", "\x00")
+
+
+@pytest.mark.native_app
+def test_caret_navigation_in_a_pager(gtk3_terminal_pager: NativeAppSession) -> None:
+    """Tests caret navigation in a pager when Orca controls the caret."""
+
+    session = gtk3_terminal_pager
+    settle(session)
+
+    session.orca.press_orca_key(keyboard.KEYSYM_F12)
+    assert helpers.capture(session) == (
+        [_ORCA_CONTROLS],
+        [helpers.BrailleLine(0, _ORCA_CONTROLS, "The screen reader is controlling", "\x00" * 43)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["line 07\n"]
+    assert brailled[-1] == helpers.BrailleLine(1, "line 07", "line 07", "\x00" * 7)
+
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    assert helpers.capture(session) == (
+        ["line 06\n"],
+        [helpers.BrailleLine(1, "line 06", "line 06", "\x00" * 7)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
+        ["line 07\n"],
+        [helpers.BrailleLine(1, "line 07", "line 07", "\x00" * 7)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    assert helpers.capture(session) == (
+        ["i"],
+        [helpers.BrailleLine(2, "line 07", "line 07", "\x00" * 7)],
+    )
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+    assert helpers.capture(session) == (
+        ["line"],
+        [helpers.BrailleLine(5, "line 07", "line 07", "\x00" * 7)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_END)
+    assert helpers.capture(session) == (
+        ["blank"],
+        [helpers.BrailleLine(8, "line 07", "line 07", "\x00" * 7)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_HOME)
+    assert helpers.capture(session) == (
+        ["l"],
+        [helpers.BrailleLine(1, "line 07", "line 07", "\x00" * 7)],
+    )
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
+    assert helpers.capture(session) == (
+        ["line 01\n"],
+        [helpers.BrailleLine(1, "line 01", "line 01", "\x00" * 7)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
+        ["line 02\n"],
+        [helpers.BrailleLine(1, "line 02", "line 02", "\x00" * 7)],
+    )
+
+    session.orca.press_orca_key(keyboard.KEYSYM_F12)
+    assert helpers.capture(session) == (
+        [_APP_CONTROLS],
+        [helpers.BrailleLine(0, _APP_CONTROLS, "The application is controlling t", "\x00" * 41)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    spoken, brailled = helpers.capture(session)
+    assert _spoken_lines(spoken) == ["line 08", ":"]
+    assert brailled[-1] == helpers.BrailleLine(2, ":", ":", "\x00")
+
+
+@pytest.mark.native_app
+def test_caret_navigation_at_the_start_and_end(gtk3_terminal_pager: NativeAppSession) -> None:
+    """Tests caret navigation at the start and end of a terminal."""
+
+    session = gtk3_terminal_pager
+    settle(session)
+
+    session.orca.press_orca_key(keyboard.KEYSYM_F12)
+    assert helpers.capture(session)[0] == [_ORCA_CONTROLS]
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["doc.txt\n"]
+    assert brailled[-1] == helpers.BrailleLine(9, "doc.txt", "doc.txt", "\x00" * 7)
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == ([], [])
+
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    assert helpers.capture(session) == (
+        ["line 07\n"],
+        [helpers.BrailleLine(1, "line 07", "line 07", "\x00" * 7)],
+    )
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
+    assert helpers.capture(session) == (
+        ["line 01\n"],
+        [helpers.BrailleLine(1, "line 01", "line 01", "\x00" * 7)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    assert helpers.capture(session) == ([], [])
+
+    session.orca.press_orca_key(keyboard.KEYSYM_F12)
+    assert helpers.capture(session)[0] == [_APP_CONTROLS]

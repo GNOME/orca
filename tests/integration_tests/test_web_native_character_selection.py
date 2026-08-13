@@ -31,6 +31,7 @@ from .web_native_selection_helpers import (
     LONG_PARAGRAPH,
     assert_walks,
     native_selection,
+    say_selection,
     select_character,
 )
 
@@ -52,22 +53,17 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
     selected.append([])
     add_text("Quoted text.")
     selected.extend([[], []])
-    selected.append(["selected"])
-    selected.extend([[], [], []])
+    selected.extend([["selected"]] * 4)
     second_state_only_index = len(selected)
     selected.append([])
     selected.extend([[]] * 6)
-    fruit_initial_index = len(selected)
-    selected.append(["F", "selected"])
-    selected.extend([[]] * 5)
-    fruit_remainder_index = len(selected)
-    selected.append(["ruit", "Apple", "Pear", "selected"])
+    add_text("Fruit")
     selected.append([])
-    city_initial_index = len(selected)
-    selected.append(["C", "selected"])
-    selected.extend([[]] * 4)
-    city_remainder_index = len(selected)
-    selected.append(["ity", "selected"])
+    combo_index = len(selected)
+    selected.append(["Apple Pear", "selected"])
+    selected.append([])
+    add_text("City")
+    selected.extend([[], []])
     selected.extend([[]] * 14)
     add_text("Name")
     selected.append([])
@@ -93,10 +89,8 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
             unselected.append([])
 
     count = len(selected)
-    unselected[count - 1 - city_remainder_index] = []
-    unselected[count - 1 - city_initial_index] = ["City"]
-    unselected[count - 1 - fruit_remainder_index] = []
-    unselected[count - 1 - fruit_initial_index] = ["Fruit", "Apple", "Pear", "unselected"]
+    unselected[count - 1 - combo_index] = []
+    unselected[count - combo_index] = ["Apple Pear", "unselected"]
     unselected[count - 1 - second_state_only_index] = []
 
     return selected, unselected
@@ -116,3 +110,38 @@ def test_character_selection_and_unselection(
         unselected = [select_character(session, keyboard.KEYSYM_LEFT) for _ in expected_unselected]
 
     assert_walks(selected, unselected, expected_selected, expected_unselected)
+
+
+@pytest.mark.native_app
+def test_selection_to_the_right_after_line_navigation(
+    web_native_text_selection: NativeAppSession,
+) -> None:
+    """Tests selection to the right after line navigation."""
+
+    session = web_native_text_selection
+
+    with native_selection(session):
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+        session.reader.reset()
+
+        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["Q", "selected"]
+        assert say_selection(session) == ["Selected text is:  Q"]
+
+
+@pytest.mark.native_app
+def test_selection_to_the_right_after_structural_navigation(
+    web_native_text_selection: NativeAppSession,
+) -> None:
+    """Tests selection to the right after structural navigation."""
+
+    session = web_native_text_selection
+
+    with native_selection(session):
+        keyboard.tap_key(ord("q"))
+        session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+        session.reader.reset()
+
+        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["Q", "selected"]
+        assert say_selection(session) == ["Selected text is:  Q"]

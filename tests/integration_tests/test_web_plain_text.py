@@ -41,12 +41,12 @@ def test_line_navigation_in_plain_text_document(web_plain_text: NativeAppSession
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(web_plain_text) == (
-        ["Second line of the file.\n"],
+        ["Second line of the file."],
         [BrailleLine(1, "Second line of the file. $l", "Second line of the file. $l", "\x00" * 27)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(web_plain_text) == (
-        ["Third line of the file.\n"],
+        ["Third line of the file."],
         [BrailleLine(1, "Third line of the file. $l", "Third line of the file. $l", "\x00" * 26)],
     )

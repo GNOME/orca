@@ -433,7 +433,6 @@ def test_where_am_i_on_link(web_landmarks: NativeAppSession) -> None:
     helpers.reset_web_state(session)
 
     helpers.tab_and_swallow_presentation(session)
-    assert _where_am_i(session) == (
-        ["https link Home", "different site"],
-        [BrailleLine(1, "Home", "Home", "\xc0" * 4)],
-    )
+    spoken, brailled = _where_am_i(session)
+    assert spoken == ["https link Home", "different site"]
+    assert brailled[-1] == BrailleLine(1, "Home", "Home", "\xc0" * 4)

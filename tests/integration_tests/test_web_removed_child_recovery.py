@@ -42,22 +42,25 @@ def test_navigation_continues_after_focused_line_removed(
     session = web_removed_child_recovery
     reset_web_state(session)
 
-    # Arrow right into the doomed paragraph; reaching offset 1 makes the page delete it.
-    # The transitional output as it vanishes is not asserted (its timing varies); the
-    # two assertions below verify the outcome instead.
+    # Arrow right into the doomed paragraph, which the page then deletes. The output as it
+    # goes away is not asserted; the assertions below check where navigation ends up.
     for _ in range(4):
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
         capture(session, wait_async=True)
     capture(session, wait_async=True)
 
-    # Down still advances to a real line: Orca recovered the caret.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session, wait_async=True) == (
+        ["Last paragraph here."],
+        [BrailleLine(1, "Last paragraph here.", "Last paragraph here.", "\x00" * 20)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session, wait_async=True) == (
         ["After the doomed one."],
         [BrailleLine(1, "After the doomed one.", "After the doomed one.", "\x00" * 21)],
     )
 
-    # Up reaches the heading, not "Doomed.": the line really was removed.
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session, wait_async=True) == (
         ["Go.", "heading 1"],

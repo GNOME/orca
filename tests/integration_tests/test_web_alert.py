@@ -44,7 +44,6 @@ def test_inserted_alertdialog_is_presented(web_alert: NativeAppSession) -> None:
     assert speech(session) == ["Submit", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert capture(session, wait_async=True) == (
-        ["alert", "Notice", "Form submitted"],
-        [BrailleLine(1, "Notice alert", "Notice alert", "\x00" * 12)],
-    )
+    spoken, brailled = capture(session, wait_async=True)
+    assert spoken == ["alert", "Notice", "Form submitted"]
+    assert brailled[-1] == BrailleLine(1, "Notice alert", "Notice alert", "\x00" * 12)

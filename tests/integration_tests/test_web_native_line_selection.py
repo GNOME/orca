@@ -27,7 +27,12 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .web_native_selection_helpers import assert_walks, native_selection, select_line
+from .web_native_selection_helpers import (
+    assert_walks,
+    native_selection,
+    say_selection,
+    select_line,
+)
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -44,22 +49,21 @@ def test_line_selection_and_unselection(web_native_text_selection: NativeAppSess
         ["Quoted text.", "selected"],
         ["selected"],
         [],
-        ["Fruit", "Apple", "Pear", "selected"],
-        ["City"],
+        ["Fruit Apple Pear", "selected"],
+        ["City", "selected"],
         [],
         [],
         ["Name", "selected"],
-        [],
-        [],
-        [],
-        ["Age", "36", "First link", "selected"],
+        ["Age", "selected"],
+        ["Ada", "selected"],
+        ["36", "selected"],
+        ["First link", "selected"],
         ["Second link", "selected"],
         ["Clickable region", "selected"],
         [],
         [
-            "This is a sufficiently long paragraph of body text so that it qualifies as a "
-            "large object for structural navigation, which targets substantial chunks of "
-            "readable ",
+            "This is a sufficiently long paragraph of body text so that it qualifies as a large "
+            "object for structural navigation, which targets substantial chunks of readable",
             "selected",
         ],
         ["prose rather than short fragments or individual controls.", "selected"],
@@ -67,23 +71,23 @@ def test_line_selection_and_unselection(web_native_text_selection: NativeAppSess
     ]
     expected_unselected = [
         [
-            "This is a sufficiently long paragraph of body text so that it qualifies as a "
-            "large object for structural navigation, which targets substantial chunks of "
-            "readable prose rather than short fragments or individual controls.",
+            "This is a sufficiently long paragraph of body text so that it qualifies as a large "
+            "object for structural navigation, which targets substantial chunks of readable prose "
+            "rather than short fragments or individual controls.",
             "unselected",
         ],
         [],
         ["Clickable region", "unselected"],
         ["Second link", "unselected"],
         ["First link", "unselected"],
+        ["36", "unselected"],
+        ["Ada", "unselected"],
+        ["Age", "unselected"],
+        ["Name", "unselected"],
         [],
         [],
-        [],
-        [],
-        [],
-        [" "],
-        ["City"],
-        ["Fruit", "Apple", "Pear", "unselected"],
+        ["City", "unselected"],
+        ["Fruit Apple Pear", "unselected"],
         [],
         ["unselected"],
         ["Quoted text.", "unselected"],
@@ -98,3 +102,33 @@ def test_line_selection_and_unselection(web_native_text_selection: NativeAppSess
         unselected = [select_line(session, keyboard.KEYSYM_UP) for _ in expected_unselected]
 
     assert_walks(selected, unselected, expected_selected, expected_unselected)
+
+
+@pytest.mark.native_app
+def test_selection_by_line_up_then_down(web_native_text_selection: NativeAppSession) -> None:
+    """Tests selection by line up and then down."""
+
+    session = web_native_text_selection
+
+    with native_selection(session):
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+        session.reader.reset()
+
+        assert select_line(session, keyboard.KEYSYM_UP) == ["aragraph.", "selected"]
+        assert select_line(session, keyboard.KEYSYM_UP) == [
+            "uctural navigation Intro p",
+            "selected",
+        ]
+        assert say_selection(session) == ["Selected text is:  uctural navigation Intro paragraph."]
+
+        assert select_line(session, keyboard.KEYSYM_DOWN) == [
+            "uctural navigation Intro p",
+            "unselected",
+        ]
+        assert select_line(session, keyboard.KEYSYM_DOWN) == ["aragraph.", "unselected"]
+        assert say_selection(session) == ["No selected text."]
+
+        assert select_line(session, keyboard.KEYSYM_DOWN) == ["Quoted text.", "selected"]
+        assert say_selection(session) == ["Selected text is:  Quoted text."]

@@ -44,20 +44,11 @@ LONG_PARAGRAPH = (
 
 @contextlib.contextmanager
 def native_selection(session: NativeAppSession) -> Iterator[None]:
-    """Lets Chromium control its native caret for the duration of a selection test."""
+    """Runs the block in browse mode, where Chromium's own caret performs the selection."""
 
     reset_web_state(session)
-    ((key, mods),) = session.orca.available_keybindings(1)
-    session.orca.bind_command("enable_sticky_focus_mode", key, mods)
-    session.orca.refresh_keybindings()
-    session.orca.press_bound_key(key)
-    session.reader.drain(quiescence_timeout=0.4, overall_timeout=2.0)
-    session.reader.reset()
-    try:
-        yield
-    finally:
-        session.orca.unbind_command("enable_sticky_focus_mode")
-        session.orca.refresh_keybindings()
+    assert not session.orca.get("DocumentPresenter", "InFocusMode")
+    yield
 
 
 def select_character(session: NativeAppSession, key: str) -> list[str]:
@@ -78,6 +69,13 @@ def select_line(session: NativeAppSession, key: str) -> list[str]:
     """Extends or retracts Chromium's native selection by one line."""
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], key)
+    return speech(session)
+
+
+def say_selection(session: NativeAppSession) -> list[str]:
+    """Speaks the selection and returns the speech."""
+
+    session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
     return speech(session)
 
 

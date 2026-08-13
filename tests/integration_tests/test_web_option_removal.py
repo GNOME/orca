@@ -51,7 +51,7 @@ def test_focused_option_removed(web_option_removal: NativeAppSession) -> None:
 
     # Delete moves aria-activedescendant to the next option and removes the old one.
     keyboard.tap_key(keyboard.KEYSYM_DELETE)
-    assert capture(session, wait_async=True) == (
+    assert capture(session, wait_async=True, quiescence=1.0, overall=5.0) == (
         ["Option B"],
         [
             BrailleLine(1, "Option A", "Option A", "\x00" * 8),

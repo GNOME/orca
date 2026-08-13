@@ -22,7 +22,6 @@
 
 from __future__ import annotations
 
-import contextlib
 from typing import TYPE_CHECKING
 
 import pytest
@@ -31,8 +30,6 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
-
     from .orca_fixtures import NativeAppSession
 
 _FULL_COMPUTER = "knowledge good people child about character educated everywhere indeed. $l"
@@ -99,21 +96,26 @@ def _configure_noneditable_contracted(session: NativeAppSession) -> None:
     session.reader.reset()
 
 
-@contextlib.contextmanager
-def _sticky_focus_mode(session: NativeAppSession) -> Iterator[None]:
-    """Turns on sticky focus mode so Shift+arrow selection reaches the browser and stays in sync."""
+# Keep ahead of the tests which select: a leftover selection silences this one's speech.
+@pytest.mark.native_app
+def test_noneditable_selection_contracted(web_contracted_braille: NativeAppSession) -> None:
+    """Tests that selecting non-editable page text underlines the contracted cells."""
 
-    ((key, mods),) = session.orca.available_keybindings(1)
-    session.orca.bind_command("enable_sticky_focus_mode", key, mods)
-    session.orca.refresh_keybindings()
-    session.orca.press_bound_key(key)
-    session.reader.drain(quiescence_timeout=0.4, overall_timeout=2.0)
-    session.reader.reset()
-    try:
-        yield
-    finally:
-        session.orca.unbind_command("enable_sticky_focus_mode")
-        session.orca.refresh_keybindings()
+    session = web_contracted_braille
+    _configure_noneditable_contracted(session)
+    keyboard.press_chord(
+        [keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT
+    )
+    _assert_selection(
+        session,
+        speech=["Contractions", "selected"],
+        line=helpers.BrailleLine(
+            10,
+            _HEADING_CONTRACTED,
+            _HEADING_CONTRACTED,
+            _selection_mask(_HEADING_CONTRACTED, 9),
+        ),
+    )
 
 
 @pytest.mark.native_app
@@ -217,25 +219,3 @@ def test_editable_selection_midstring_extend_and_unselect(
             32, _FULL_CONTRACTED, 'gd p * ab "* $ucat$ "ey": 9de$4 ', "\x00" * len(_FULL_CONTRACTED)
         ),
     )
-
-
-@pytest.mark.native_app
-def test_noneditable_selection_contracted(web_contracted_braille: NativeAppSession) -> None:
-    """Tests that selecting non-editable page text underlines the contracted cells."""
-
-    session = web_contracted_braille
-    _configure_noneditable_contracted(session)
-    with _sticky_focus_mode(session):
-        keyboard.press_chord(
-            [keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT
-        )
-        _assert_selection(
-            session,
-            speech=["Contractions", "selected"],
-            line=helpers.BrailleLine(
-                10,
-                _HEADING_CONTRACTED,
-                _HEADING_CONTRACTED,
-                _selection_mask(_HEADING_CONTRACTED, 9),
-            ),
-        )

@@ -60,7 +60,6 @@ def test_line_reading_emoji_text_and_inline_links(web_emoji_links: NativeAppSess
         ],
     )
 
-    # The source has a "\n\n\n" run after the link, so two blank lines follow.
     for _ in range(2):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert capture(session) == (["blank"], [BrailleLine(1, "", "", None)])
@@ -68,7 +67,7 @@ def test_line_reading_emoji_text_and_inline_links(web_emoji_links: NativeAppSess
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     text = "🎵 Follow me on Spotify to get notified whenever I release something!"
     assert capture(session) == (
-        [text + "\n"],
+        [text + ""],
         [BrailleLine(1, text, "🎵 Follow me on Spotify to get no", "\x00" * len(text))],
     )
 

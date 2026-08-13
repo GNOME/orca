@@ -64,7 +64,7 @@ _DOWN_LINES = [
         ],
     ),
     (
-        ["next line 1\n"],
+        ["next line 1"],
         [
             helpers.BrailleLine(
                 cursor_cell=1,
@@ -75,7 +75,7 @@ _DOWN_LINES = [
         ],
     ),
     (
-        ["next line 2\n"],
+        ["next line 2"],
         [
             helpers.BrailleLine(
                 cursor_cell=1,
@@ -91,7 +91,7 @@ _DOWN_LINES = [
         [helpers.BrailleLine(cursor_cell=1, full="", visible="", mask=None)],
     ),
     (
-        ["next line 3\n"],
+        ["next line 3"],
         [
             helpers.BrailleLine(
                 cursor_cell=1,
@@ -135,7 +135,7 @@ _DOWN_LINES = [
         ],
     ),
     (
-        ["from 🇺🇸 to 🇮🇹 abroad: ", "profile four", "link", " back 🇺🇸🇮🇹\n"],
+        ["from 🇺🇸 to 🇮🇹 abroad: ", "profile four", "link", " back 🇺🇸🇮🇹"],
         [
             helpers.BrailleLine(
                 cursor_cell=1,
@@ -191,10 +191,6 @@ _DOWN_LINES = [
     ),
 ]
 
-# Up-arrow navigation through the flags row is asymmetric with Down-arrow.
-# Down-arrow presents the full flags line in one press, but Up-arrow stops twice:
-# once showing only the trailing " back 🇺🇸🇮🇹\n" fragment, then again showing the
-# full line. This is captured as-is for jd to evaluate as a possible bug.
 _UP_LINES = [
     (
         ["last line, no link"],
@@ -232,7 +228,7 @@ _UP_LINES = [
     # Up from the family row lands at the end of the flags line first.
     # This is the asymmetric extra stop described in the note above.
     (
-        [" back 🇺🇸🇮🇹\n"],
+        [" back 🇺🇸🇮🇹"],
         [
             helpers.BrailleLine(
                 cursor_cell=1,
@@ -243,7 +239,7 @@ _UP_LINES = [
         ],
     ),
     (
-        ["from 🇺🇸 to 🇮🇹 abroad: ", "profile four", "link", " back 🇺🇸🇮🇹\n"],
+        ["from 🇺🇸 to 🇮🇹 abroad: ", "profile four", "link", " back 🇺🇸🇮🇹"],
         [
             helpers.BrailleLine(
                 cursor_cell=1,
@@ -287,7 +283,7 @@ _UP_LINES = [
         ],
     ),
     (
-        ["next line 3\n"],
+        ["next line 3"],
         [
             helpers.BrailleLine(
                 cursor_cell=1,
@@ -303,7 +299,7 @@ _UP_LINES = [
         [helpers.BrailleLine(cursor_cell=1, full="", visible="", mask=None)],
     ),
     (
-        ["next line 2\n"],
+        ["next line 2"],
         [
             helpers.BrailleLine(
                 cursor_cell=1,
@@ -314,7 +310,7 @@ _UP_LINES = [
         ],
     ),
     (
-        ["next line 1\n"],
+        ["next line 1"],
         [
             helpers.BrailleLine(
                 cursor_cell=1,
@@ -1203,15 +1199,15 @@ _WORD_RIGHT_SPEECH: list[list[str]] = [
     # "next line 1"
     ["next "],
     ["line "],
-    ["1\n"],
+    ["1"],
     # "next line 2"
     ["next "],
     ["line "],
-    ["2\n\n"],
+    ["2"],
     # "next line 3"
     ["next "],
     ["line "],
-    ["3\n"],
+    ["3"],
     # "🎵 service one: profile one"
     ["🎵"],
     ["service "],
@@ -1305,7 +1301,7 @@ _WORD_LEFT_SPEECH: list[list[str]] = [
     # "from 🇺🇸 to 🇮🇹 abroad: profile four back 🇺🇸🇮🇹" right-to-left
     # The back-to-back pair "🇺🇸🇮🇹" is one word stop (includes trailing newline).
     # Isolated flag emojis are individual word stops.
-    ["🇺🇸🇮🇹\n"],
+    ["🇺🇸🇮🇹"],
     ["back "],
     ["four"],
     ["profile "],
@@ -1337,15 +1333,15 @@ _WORD_LEFT_SPEECH: list[list[str]] = [
     ["service "],
     ["🎵"],
     # "next line 3" right-to-left
-    ["3\n"],
+    ["3"],
     ["line "],
     ["next "],
     # "next line 2" right-to-left
-    ["2\n\n"],
+    ["2"],
     ["line "],
     ["next "],
     # "next line 1" right-to-left
-    ["1\n"],
+    ["1"],
     ["line "],
     ["next "],
     # "♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ basic note symbols, no skew: link notes" right-to-left

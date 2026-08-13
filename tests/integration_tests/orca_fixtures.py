@@ -29,6 +29,7 @@ import shutil
 import subprocess
 import sys
 import time
+import warnings
 from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -437,6 +438,29 @@ def _resolve_binary(names: tuple[str, ...]) -> str | None:
     return None
 
 
+_BROWSER_BINARY_ENV_VAR = "ORCA_TEST_CHROMIUM_BINARY"
+_BROWSER_BETA_PATH = "/opt/google/chrome-beta/chrome"
+
+
+def _resolve_browser_binary(names: tuple[str, ...]) -> str | None:
+    """Returns the browser to test against, preferring beta, which is what expectations target."""
+
+    if override := os.environ.get(_BROWSER_BINARY_ENV_VAR):
+        return override
+
+    if Path(_BROWSER_BETA_PATH).is_file():
+        return _BROWSER_BETA_PATH
+
+    binary = _resolve_binary(names)
+    if binary is not None:
+        warnings.warn(
+            f"Web test expectations were captured against {_BROWSER_BETA_PATH}; using {binary}. "
+            f"Set {_BROWSER_BINARY_ENV_VAR} to choose a different build.",
+            stacklevel=2,
+        )
+    return binary
+
+
 def _document_loaded(accessible: Atspi.Accessible) -> bool:
     """Predicate: the app has a document-role descendant with content (no title to match)."""
 
@@ -465,7 +489,7 @@ def _run_browser_session(
 ) -> Iterator[NativeAppSession]:
     """Launches app loading web_pages/<page> under its own Orca subprocess."""
 
-    binary = _resolve_binary(app.BINARY_NAMES)
+    binary = _resolve_browser_binary(app.BINARY_NAMES)
     if binary is None:
         pytest.skip(f"{app.__name__}: no binary found among {app.BINARY_NAMES!r}")
 

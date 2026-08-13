@@ -34,8 +34,8 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.native_app
-def test_last_line_loops_to_top(web_code_block_multiline: NativeAppSession) -> None:
-    """Down from the third line loops back to the top instead of reaching the fourth line."""
+def test_line_navigation_to_the_last_line(web_code_block_multiline: NativeAppSession) -> None:
+    """Tests line navigation to the last line."""
 
     session = web_code_block_multiline
     helpers.reset_web_state(session)
@@ -45,6 +45,10 @@ def test_last_line_loops_to_top(web_code_block_multiline: NativeAppSession) -> N
         helpers.speech(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    looped = " ".join(helpers.speech(session))
-    # Chromium bug crbug.com/536662914: loops to the top (GStreamer), not "voice and video".
-    assert "GStreamer" in looped
+    assert helpers.speech(session) == [
+        "Build with voice and video 4  .  characters  :  no",
+        "code end",
+    ]
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.speech(session) == ["leaving code.", "End of report."]

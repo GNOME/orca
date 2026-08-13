@@ -34,8 +34,8 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.native_app
-def test_blank_line_loops_to_top(web_code_block: NativeAppSession) -> None:
-    """Down from the blank line loops back to the top instead of reaching the last line."""
+def test_line_navigation_past_the_blank_line(web_code_block: NativeAppSession) -> None:
+    """Tests line navigation past the blank line."""
 
     session = web_code_block
     helpers.reset_web_state(session)
@@ -47,6 +47,11 @@ def test_blank_line_loops_to_top(web_code_block: NativeAppSession) -> None:
     assert helpers.speech(session) == ["blank"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    looped = " ".join(helpers.speech(session))
-    # Chromium bug crbug.com/536662914: loops to line 1 ("DPY - 1"), not the last line.
-    assert "DPY - 1" in looped
+    assert helpers.speech(session) == [
+        'nvidia - settings  -  - assign  " CurrentMetaMode = DPY - 4 :  nvidia - auto - select  '
+        '@ 1920x1080  + 0 + 0  { ViewPortIn = 1920x1080 ,  ViewPortOut = 1920x1080 + 0 + 0 }  " ',
+        "code end",
+    ]
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.speech(session) == ["leaving code.", "I use fluxbox and xrandr."]
