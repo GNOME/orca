@@ -75,6 +75,21 @@ class TextSelectionManager:
             if success:
                 return " ".join(strings)
 
+            start, end = AXUtilities.get_document_text_selection_endpoints(None, document)
+            start_obj, start_offset = start
+            end_obj, end_offset = end
+            if start_obj is not None and end_obj is not None:
+                expanded = AXUtilities.expand_eocs_in_range(
+                    start_obj,
+                    start_offset,
+                    end_obj,
+                    end_offset,
+                    include_start=True,
+                    include_end=False,
+                )
+                if expanded:
+                    return expanded
+
         strings = []
         current = self._get_selected_text_with_eocs_expanded(obj)
         if current:

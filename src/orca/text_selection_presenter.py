@@ -22,8 +22,7 @@
 
 from __future__ import annotations
 
-import functools
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from . import (
     ax_cache_manager,
@@ -89,18 +88,24 @@ class TextSelectionPresenter:
     def _get_cached_document_selection_boundaries(
         self,
         script: default.Script,
-    ) -> tuple[Atspi.Accessible | None, Atspi.Accessible | None]:
+    ) -> tuple[
+        tuple[Atspi.Accessible | None, int],
+        tuple[Atspi.Accessible | None, int],
+    ]:
         if self._document_selection_boundaries is None:
-            return None, None
+            return (None, -1), (None, -1)
         return self._document_selection_boundaries.get(
             ax_cache_manager.get_object_key(script),
-            (None, None),
+            ((None, -1), (None, -1)),
         )
 
     def _set_cached_document_selection_boundaries(
         self,
         script: default.Script,
-        boundaries: tuple[Atspi.Accessible | None, Atspi.Accessible | None],
+        boundaries: tuple[
+            tuple[Atspi.Accessible | None, int],
+            tuple[Atspi.Accessible | None, int],
+        ],
     ) -> None:
         if self._document_selection_boundaries is not None:
             self._document_selection_boundaries.put(
@@ -287,105 +292,156 @@ class TextSelectionPresenter:
         )
         return True
 
-    def _find_document_selection_boundary(
+    def _get_document_text_change(
         self,
-        root: Atspi.Accessible,
-        find_start: bool,
-    ) -> Atspi.Accessible | None:
-        string = AXUtilities.get_selected_text(root)[0]
-        if not string:
-            return None
-        if find_start and not string.startswith("\ufffc"):
-            return root
-        if not find_start and not string.endswith("\ufffc"):
-            return root
+        old_start: tuple[Atspi.Accessible | None, int],
+        old_end: tuple[Atspi.Accessible | None, int],
+        start: tuple[Atspi.Accessible | None, int],
+        end: tuple[Atspi.Accessible | None, int],
+    ) -> (
+        tuple[
+            tuple[Atspi.Accessible, int],
+            tuple[Atspi.Accessible, int],
+            bool,
+            bool,
+            str,
+        ]
+        | None
+    ):
+        """Returns the changed document range and its selection state."""
 
-        indices = list(range(AXObject.get_child_count(root)))
-        if not find_start:
-            indices.reverse()
-        for index in indices:
-            result = self._find_document_selection_boundary(
-                AXObject.get_child(root, index),
-                find_start,
-            )
-            if result is not None:
-                return result
+        old_start_obj, _old_start_offset = old_start
+        old_end_obj, _old_end_offset = old_end
+        start_obj, _start_offset = start
+        end_obj, _end_offset = end
+        if old_start_obj is None and old_end_obj is None:
+            if start_obj is not None and end_obj is not None:
+                return start, end, True, False, messages.TEXT_SELECTED
+            return None
+        if start_obj is None and end_obj is None:
+            if old_start_obj is not None and old_end_obj is not None:
+                return old_start, old_end, True, False, messages.TEXT_UNSELECTED
+            return None
+
+        if None in (old_start_obj, old_end_obj, start_obj, end_obj):
+            return None
+        starts_are_same = AXUtilities.compare_text_positions(*start, *old_start) == 0
+        ends_are_same = AXUtilities.compare_text_positions(*end, *old_end) == 0
+        if starts_are_same and not ends_are_same:
+            comparison = AXUtilities.compare_text_positions(*old_end, *end)
+            if comparison < 0:
+                return old_end, end, True, False, messages.TEXT_SELECTED
+            if comparison > 0:
+                return end, old_end, True, False, messages.TEXT_UNSELECTED
+        if ends_are_same and not starts_are_same:
+            comparison = AXUtilities.compare_text_positions(*old_start, *start)
+            if comparison > 0:
+                return start, old_start, True, False, messages.TEXT_SELECTED
+            if comparison < 0:
+                return old_start, start, True, False, messages.TEXT_UNSELECTED
         return None
 
-    def _get_document_selection_boundaries(
+    def _present_document_text_change(
         self,
-        root: Atspi.Accessible,
-    ) -> tuple[Atspi.Accessible | None, Atspi.Accessible | None]:
-        return (
-            self._find_document_selection_boundary(root, True),
-            self._find_document_selection_boundary(root, False),
-        )
+        script: default.Script,
+        old_start: tuple[Atspi.Accessible | None, int],
+        old_end: tuple[Atspi.Accessible | None, int],
+        start: tuple[Atspi.Accessible | None, int],
+        end: tuple[Atspi.Accessible | None, int],
+        speak_message: bool,
+    ) -> bool:
+        """Presents a document text selection change as a single phrase."""
 
-    @staticmethod
-    def _get_document_selection_elements(
-        start_obj: Atspi.Accessible | None,
-        end_obj: Atspi.Accessible | None,
-    ) -> list[Atspi.Accessible]:
-        if not (start_obj and end_obj):
-            return []
-        if AXObject.is_dead(start_obj):
-            msg = "TEXT SELECTION PRESENTER: Cannot get elements: Start object is dead."
+        manager = input_event_manager.get_manager()
+        change = self._get_document_text_change(old_start, old_end, start, end)
+        if change is None:
+            msg = "TEXT SELECTION PRESENTER: Could not identify changed document text range."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return []
+            return False
 
-        def _include(x):
-            return x is not None
+        range_start, range_end, include_start, include_end, message = change
+        if not manager.last_event_was_caret_selection():
+            selection_was_removed = start[0] is None and end[0] is None
+            if not selection_was_removed:
+                msg = "TEXT SELECTION PRESENTER: Change is not from caret selection."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
 
-        def _exclude(x):
-            return not AXUtilities.is_web_element(x)
+            msg = "TEXT SELECTION PRESENTER: Presenting selection removal."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            if speak_message:
+                presentation_manager.get_manager().speak_message(messages.SELECTION_REMOVED)
+            return True
 
-        elements = []
-        start_parent = AXObject.get_parent(start_obj)
-        for index in range(
-            AXObject.get_index_in_parent(start_obj),
-            AXObject.get_child_count(start_parent),
-        ):
-            child = AXObject.get_child(start_parent, index)
-            if not AXUtilities.is_web_element(child):
-                continue
-            elements.append(child)
-            if not AXUtilities.is_code(child):
-                elements.extend(AXUtilities.find_all_descendants(child, _include, _exclude))
-            if end_obj in elements:
-                break
+        start_obj, start_offset = range_start
+        end_obj, end_offset = range_end
+        string = AXUtilities.expand_eocs_in_range(
+            start_obj,
+            start_offset,
+            end_obj,
+            end_offset,
+            include_start=include_start,
+            include_end=include_end,
+        )
+        tokens: list[Any] = [
+            "TEXT SELECTION PRESENTER: Expanded changed document text range",
+            range_start,
+            range_end,
+            f"with endpoint inclusion {include_start}, {include_end}",
+            f"to '{string}'",
+            f"message='{message}'",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if not string:
+            return False
+        spoken_string = string.strip() or string
 
-        if end_obj == start_obj:
-            return elements
-        if end_obj not in elements:
-            elements.append(end_obj)
-            if not AXUtilities.is_code(end_obj):
-                elements.extend(AXUtilities.find_all_descendants(end_obj, _include, _exclude))
+        speak_message = (
+            speak_message and not speech_presenter.get_presenter().get_only_speak_displayed_text()
+        )
+        if len(string) > 5000 and speak_message:
+            if message == messages.TEXT_SELECTED:
+                presentation_manager.get_manager().speak_message(
+                    messages.selected_character_count(len(string)),
+                )
+            else:
+                presentation_manager.get_manager().speak_message(
+                    messages.unselected_character_count(len(string)),
+                )
+            return True
 
-        end_parent = AXObject.get_parent(end_obj)
-        end_index = AXObject.get_index_in_parent(end_obj)
-        last_obj = AXObject.get_child(end_parent, end_index + 1) or end_obj
-        try:
-            elements_end = elements.index(last_obj)
-        except ValueError:
-            pass
-        else:
-            if last_obj == end_obj:
-                elements_end += 1
-            elements = elements[:elements_end]
-        return elements
+        speech_presenter.get_presenter().speak_phrase(
+            script,
+            start_obj,
+            start_offset,
+            end_offset if start_obj == end_obj else start_offset + 1,
+            spoken_string,
+        )
+        if speak_message:
+            presentation_manager.get_manager().speak_message(message)
+        return True
 
     def _handle_document_change(
         self,
         script: default.Script,
+        document: Atspi.Accessible | None,
         obj: Atspi.Accessible,
         speak_message: bool,
     ) -> bool:
         old_start, old_end = self._get_cached_document_selection_boundaries(script)
-        start, end = self._get_document_selection_boundaries(obj)
+        selection_root = (
+            document if document is not None else AXUtilities.get_text_selection_container(obj)
+        )
+        start, end = AXUtilities.get_document_text_selection_endpoints(
+            document,
+            selection_root,
+        )
         self._set_cached_document_selection_boundaries(script, (start, end))
         tokens = [
             "TEXT SELECTION PRESENTER: Document selection event from",
             obj,
+            "Selection root:",
+            selection_root,
             "Old boundaries:",
             old_start,
             old_end,
@@ -395,19 +451,23 @@ class TextSelectionPresenter:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        old_elements = self._get_document_selection_elements(old_start, old_end)
+        old_start_obj, _old_start_offset = old_start
+        old_end_obj, _old_end_offset = old_end
+        start_obj, _start_offset = start
+        end_obj, _end_offset = end
+        old_elements = AXUtilities.get_text_selection_elements(old_start_obj, old_end_obj)
+        new_elements = AXUtilities.get_text_selection_elements(start_obj, end_obj)
         if start == old_start and end == old_end:
-            elements = old_elements
-        else:
-            new_elements = self._get_document_selection_elements(start, end)
+            msg = "TEXT SELECTION PRESENTER: Ignoring duplicate document selection boundaries."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            for element in new_elements:
+                AXUtilities.update_cached_selected_text(element)
+            return bool(new_elements)
 
-            def _compare(obj1, obj2):
-                return AXUtilities.path_comparison(AXObject.get_path(obj1), AXObject.get_path(obj2))
-
-            elements = sorted(
-                set(old_elements).union(new_elements),
-                key=functools.cmp_to_key(_compare),
-            )
+        elements = []
+        for element in old_elements + new_elements:
+            if element not in elements:
+                elements.append(element)
 
         tokens = [
             "TEXT SELECTION PRESENTER: Document selection element count:",
@@ -418,11 +478,23 @@ class TextSelectionPresenter:
         if not elements:
             return False
 
-        elements_set = set(elements)
+        if self._present_document_text_change(
+            script,
+            old_start,
+            old_end,
+            start,
+            end,
+            speak_message,
+        ):
+            for element in elements:
+                AXUtilities.update_cached_selected_text(element)
+            return True
+
+        boundary_objects = (old_start_obj, old_end_obj, start_obj, end_obj)
         for element in elements:
-            if element not in (old_start, old_end, start, end) and AXUtilities.find_ancestor(
+            if element not in boundary_objects and AXUtilities.find_ancestor(
                 element,
-                lambda x: x in elements_set,
+                lambda x: x in elements,
             ):
                 tokens = ["TEXT SELECTION PRESENTER: Updating nested selection cache for", element]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -456,7 +528,8 @@ class TextSelectionPresenter:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if is_document:
-            return self._handle_document_change(script, obj, speak_message)
+            document = script.utilities.get_document_for_object(obj)
+            return self._handle_document_change(script, document, obj, speak_message)
         return self._handle_basic_change(script, obj, speak_message)
 
 

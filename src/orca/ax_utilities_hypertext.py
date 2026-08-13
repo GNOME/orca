@@ -60,6 +60,48 @@ class AXUtilitiesHypertext:
     """Hypertext and hyperlink utilities."""
 
     @staticmethod
+    def _is_separate_text_element(obj: Atspi.Accessible) -> bool:
+        return any(
+            predicate(obj)
+            for predicate in (
+                AXUtilitiesRole.is_block_quote,
+                AXUtilitiesRole.is_combo_box,
+                AXUtilitiesRole.is_heading,
+                AXUtilitiesRole.is_list,
+                AXUtilitiesRole.is_list_box,
+                AXUtilitiesRole.is_list_item,
+                AXUtilitiesRole.is_menu_item_of_any_kind,
+                AXUtilitiesRole.is_paragraph,
+                AXUtilitiesRole.is_section,
+                AXUtilitiesRole.is_table,
+                AXUtilitiesRole.is_table_cell,
+                AXUtilitiesRole.is_table_row,
+            )
+        )
+
+    @staticmethod
+    def _join_expanded_parts(parts: list[tuple[str, bool]]) -> str:
+        result: list[str] = []
+        previous_requires_separator = False
+        for string, requires_separator in parts:
+            if not string:
+                continue
+            part = string
+            stripped = part.lstrip()
+            if (
+                result
+                and (previous_requires_separator or requires_separator)
+                and stripped
+                and stripped[0].isalnum()
+            ):
+                result[-1] = result[-1].rstrip()
+                part = stripped
+                result.append(" ")
+            result.append(part)
+            previous_requires_separator = requires_separator
+        return "".join(result)
+
+    @staticmethod
     def _expand_eocs_in_subtree(
         root: Atspi.Accessible,
         start: tuple[Atspi.Accessible, int] | None,
@@ -89,16 +131,21 @@ class AXUtilitiesHypertext:
                 if end_child is not None
                 else AXObject.get_child_count(root) - 1
             )
-            return "".join(
-                AXUtilitiesHypertext._expand_eocs_in_subtree(
-                    child,
-                    start if child == start_child else None,
-                    end if child == end_child else None,
-                    include_start if child == start_child else True,
-                    include_end if child == end_child else True,
-                )
-                for index in range(first, last + 1)
-                if (child := AXObject.get_child(root, index)) is not None
+            return AXUtilitiesHypertext._join_expanded_parts(
+                [
+                    (
+                        AXUtilitiesHypertext._expand_eocs_in_subtree(
+                            child,
+                            start if child == start_child else None,
+                            end if child == end_child else None,
+                            include_start if child == start_child else True,
+                            include_end if child == end_child else True,
+                        ),
+                        True,
+                    )
+                    for index in range(first, last + 1)
+                    if (child := AXObject.get_child(root, index)) is not None
+                ]
             )
 
         count = AXText.get_character_count(root)
@@ -114,27 +161,30 @@ class AXUtilitiesHypertext:
         boundaries = [child for child in (start_child, end_child) if child is not None]
         if len(boundaries) == 2 and boundaries[0] == boundaries[1]:
             boundaries.pop()
-        result = []
+        parts = []
         cursor = lower
         for child in sorted(boundaries, key=AXHypertext.get_character_offset_in_parent):
             offset = AXHypertext.get_character_offset_in_parent(child)
             if not lower <= offset < upper:
                 continue
             if cursor < offset:
-                result.append(AXUtilitiesHypertext.expand_eocs(root, cursor, offset))
-            result.append(
-                AXUtilitiesHypertext._expand_eocs_in_subtree(
-                    child,
-                    start if child == start_child else None,
-                    end if child == end_child else None,
-                    include_start if child == start_child else True,
-                    include_end if child == end_child else True,
+                parts.append((AXUtilitiesHypertext.expand_eocs(root, cursor, offset), False))
+            parts.append(
+                (
+                    AXUtilitiesHypertext._expand_eocs_in_subtree(
+                        child,
+                        start if child == start_child else None,
+                        end if child == end_child else None,
+                        include_start if child == start_child else True,
+                        include_end if child == end_child else True,
+                    ),
+                    AXUtilitiesHypertext._is_separate_text_element(child),
                 )
             )
             cursor = offset + 1
         if cursor < upper:
-            result.append(AXUtilitiesHypertext.expand_eocs(root, cursor, upper))
-        return "".join(result)
+            parts.append((AXUtilitiesHypertext.expand_eocs(root, cursor, upper), False))
+        return AXUtilitiesHypertext._join_expanded_parts(parts)
 
     @staticmethod
     def expand_eocs_in_range(
@@ -226,23 +276,18 @@ class AXUtilitiesHypertext:
         if OBJECT_REPLACEMENT_CHARACTER not in text:
             return text
 
-        block_role_predicates = (
-            AXUtilitiesRole.is_heading,
-            AXUtilitiesRole.is_list,
-            AXUtilitiesRole.is_list_item,
-            AXUtilitiesRole.is_paragraph,
-            AXUtilitiesRole.is_section,
-            AXUtilitiesRole.is_table,
-            AXUtilitiesRole.is_table_cell,
-            AXUtilitiesRole.is_table_row,
-        )
         to_build = list(text)
         for index, char in enumerate(to_build):
             if char != OBJECT_REPLACEMENT_CHARACTER:
                 continue
             child = AXUtilitiesHypertext.find_child_at_offset(obj, index + start_offset)
             result = AXUtilitiesHypertext.expand_eocs(child) if child is not None else ""
-            if child is not None and any(predicate(child) for predicate in block_role_predicates):
+            if (
+                result
+                and not result[-1].isspace()
+                and child is not None
+                and AXUtilitiesHypertext._is_separate_text_element(child)
+            ):
                 result += " "
             to_build[index] = result
 

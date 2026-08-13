@@ -124,6 +124,11 @@ class TestTextSelectionManager:
         )
         test_context.patch_object(
             AXUtilities,
+            "get_document_text_selection_endpoints",
+            return_value=((None, -1), (None, -1)),
+        )
+        test_context.patch_object(
+            AXUtilities,
             "get_selected_text",
             side_effect=[
                 ("current text", 0, 12),
@@ -146,3 +151,54 @@ class TestTextSelectionManager:
         assert manager.get_all_selected_text(script, obj) == (
             "previous text current text next text"
         )
+
+    def test_get_all_selected_text_fallback_spans_non_text_widget(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test fallback expands the document range across an intervening non-text widget."""
+
+        test_context.setup_shared_dependencies([])
+        from orca.text_selection_manager import AXUtilities, TextSelectionManager
+
+        manager = TextSelectionManager()
+        script = test_context.Mock()
+        obj = test_context.Mock(spec=Atspi.Accessible)
+        document = test_context.Mock(spec=Atspi.Accessible)
+        start_obj = test_context.Mock(spec=Atspi.Accessible)
+        end_obj = test_context.Mock(spec=Atspi.Accessible)
+        start = (start_obj, 0)
+        end = (end_obj, 4)
+        test_context.patch_object(AXUtilities, "is_spreadsheet_cell", return_value=False)
+        test_context.patch_object(AXUtilities, "is_document", return_value=False)
+        test_context.patch_object(AXUtilities, "find_ancestor", return_value=document)
+        test_context.patch_object(
+            AXUtilities,
+            "get_document_selected_texts",
+            return_value=(False, []),
+        )
+        get_endpoints = test_context.patch_object(
+            AXUtilities,
+            "get_document_text_selection_endpoints",
+            return_value=(start, end),
+        )
+        expand = test_context.patch_object(
+            AXUtilities,
+            "expand_eocs_in_range",
+            return_value="Structural navigation Intro paragraph. Save Fruit Apple Pear",
+        )
+
+        result = manager.get_all_selected_text(script, obj)
+
+        assert result == "Structural navigation Intro paragraph. Save Fruit Apple Pear"
+        get_endpoints.assert_called_once_with(None, document)
+        expand.assert_called_once_with(
+            start_obj,
+            0,
+            end_obj,
+            4,
+            include_start=True,
+            include_end=False,
+        )
+        script.utilities.find_previous_object.assert_not_called()
+        script.utilities.find_next_object.assert_not_called()

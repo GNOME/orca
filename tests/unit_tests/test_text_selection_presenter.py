@@ -236,83 +236,171 @@ class TestTextSelectionPresenter:
         )
         script.say_phrase.assert_not_called()
 
-    def test_document_selection_boundaries_resolve_embedded_children(
+    def test_document_text_change_is_presented_as_single_phrase(
         self,
         test_context: OrcaTestContext,
     ) -> None:
-        """Test document selection boundaries descend through embedded-object characters."""
-
-        self._setup_dependencies(test_context)
-        from orca.text_selection_presenter import AXObject, AXUtilities, TextSelectionPresenter
-
-        presenter = TextSelectionPresenter()
-        root = test_context.Mock()
-        start = test_context.Mock()
-        end = test_context.Mock()
-        strings = {root: "\ufffc", start: "start", end: "end"}
-        children = {(root, 0): start, (root, 1): end}
-        test_context.patch_object(
-            AXUtilities,
-            "get_selected_text",
-            side_effect=lambda obj: (strings[obj], 0, len(strings[obj])),
-        )
-        test_context.patch_object(
-            AXObject,
-            "get_child_count",
-            side_effect=lambda obj: 2 if obj == root else 0,
-        )
-        test_context.patch_object(
-            AXObject,
-            "get_child",
-            side_effect=lambda obj, index: children.get((obj, index)),
-        )
-
-        assert presenter._get_document_selection_boundaries(root) == (start, end)
-
-    def test_document_selection_updates_nested_cache_without_presenting_it(
-        self,
-        test_context: OrcaTestContext,
-    ) -> None:
-        """Test nested document elements are cached while selection boundaries are presented."""
+        """Test a multi-object document change has one selection-state announcement."""
 
         self._setup_dependencies(test_context)
         from orca.text_selection_presenter import (
-            AXObject,
             AXUtilities,
             TextSelectionPresenter,
-            document_presenter,
+            input_event_manager,
+            messages,
+            presentation_manager,
+            speech_presenter,
         )
 
         presenter = TextSelectionPresenter()
         script = test_context.Mock()
-        root = test_context.Mock()
-        start = test_context.Mock()
-        nested = test_context.Mock()
-        end = test_context.Mock()
-        test_context.patch_object(AXUtilities, "is_web_element", return_value=True)
-        script.utilities.in_document_content.return_value = True
-        document_presenter.get_presenter.return_value.in_focus_mode.return_value = False
+        start_obj = test_context.Mock()
+        end_obj = test_context.Mock()
+        old_start = (start_obj, 10)
+        old_end = (start_obj, 10)
+        start = old_start
+        end = (end_obj, 1)
+        input_event_manager.get_manager.return_value.last_event_was_caret_selection.return_value = (
+            True
+        )
+        speech_presenter.get_presenter.return_value.get_only_speak_displayed_text.return_value = (
+            False
+        )
         test_context.patch_object(
             presenter,
-            "_get_document_selection_boundaries",
+            "_get_document_text_change",
+            return_value=(old_end, end, True, False, messages.TEXT_SELECTED),
+        )
+        expand = test_context.patch_object(
+            AXUtilities,
+            "expand_eocs_in_range",
+            return_value=" next item,",
+        )
+
+        assert presenter._present_document_text_change(
+            script,
+            old_start,
+            old_end,
+            start,
+            end,
+            True,
+        )
+
+        expand.assert_called_once_with(
+            start_obj,
+            10,
+            end_obj,
+            1,
+            include_start=True,
+            include_end=False,
+        )
+        speech_presenter.get_presenter.return_value.speak_phrase.assert_called_once_with(
+            script,
+            start_obj,
+            10,
+            11,
+            "next item,",
+        )
+        presentation_manager.get_manager.return_value.speak_message.assert_called_once_with(
+            messages.TEXT_SELECTED
+        )
+
+    def test_document_text_change_identifies_changed_endpoint_range(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test extending and shrinking either endpoint identifies only the changed range."""
+
+        self._setup_dependencies(test_context)
+        from orca.text_selection_presenter import TextSelectionPresenter, messages
+
+        presenter = TextSelectionPresenter()
+        obj = test_context.Mock()
+        no_selection = (None, -1)
+        old_start = (obj, 2)
+        old_end = (obj, 5)
+
+        assert presenter._get_document_text_change(
+            no_selection,
+            no_selection,
+            old_start,
+            old_end,
+        ) == (old_start, old_end, True, False, messages.TEXT_SELECTED)
+        assert presenter._get_document_text_change(
+            old_start,
+            old_end,
+            no_selection,
+            no_selection,
+        ) == (old_start, old_end, True, False, messages.TEXT_UNSELECTED)
+        assert presenter._get_document_text_change(
+            old_start,
+            old_end,
+            old_start,
+            (obj, 8),
+        ) == (old_end, (obj, 8), True, False, messages.TEXT_SELECTED)
+        assert presenter._get_document_text_change(
+            old_start,
+            old_end,
+            old_start,
+            (obj, 3),
+        ) == ((obj, 3), old_end, True, False, messages.TEXT_UNSELECTED)
+        assert presenter._get_document_text_change(
+            old_start,
+            old_end,
+            (obj, 0),
+            old_end,
+        ) == ((obj, 0), old_start, True, False, messages.TEXT_SELECTED)
+        assert presenter._get_document_text_change(
+            old_start,
+            old_end,
+            (obj, 4),
+            old_end,
+        ) == (old_start, (obj, 4), True, False, messages.TEXT_UNSELECTED)
+        assert (
+            presenter._get_document_text_change(
+                old_start,
+                old_end,
+                (obj, 0),
+                (obj, 8),
+            )
+            is None
+        )
+
+    def test_document_selection_change_uses_endpoint_range(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test one endpoint-range presentation replaces per-element presentation."""
+
+        self._setup_dependencies(test_context)
+        from orca.text_selection_presenter import AXUtilities, TextSelectionPresenter
+
+        presenter = TextSelectionPresenter()
+        script = test_context.Mock()
+        document = test_context.Mock()
+        event_source = test_context.Mock()
+        start_obj = test_context.Mock()
+        end_obj = test_context.Mock()
+        start = (start_obj, 0)
+        end = (end_obj, 8)
+        get_container = test_context.patch_object(
+            AXUtilities,
+            "get_text_selection_container",
+        )
+        get_endpoints = test_context.patch_object(
+            AXUtilities,
+            "get_document_text_selection_endpoints",
             return_value=(start, end),
         )
         test_context.patch_object(
+            AXUtilities,
+            "get_text_selection_elements",
+            side_effect=[[], [start_obj, end_obj]],
+        )
+        present_change = test_context.patch_object(
             presenter,
-            "_get_document_selection_elements",
-            side_effect=[[], [start, nested, end]],
-        )
-        paths = {start: [0], nested: [1], end: [2]}
-        test_context.patch_object(AXObject, "get_path", side_effect=paths.get)
-        test_context.patch_object(
-            AXUtilities,
-            "path_comparison",
-            side_effect=lambda path1, path2: (path1 > path2) - (path1 < path2),
-        )
-        test_context.patch_object(
-            AXUtilities,
-            "find_ancestor",
-            side_effect=lambda obj, _predicate: start if obj == nested else None,
+            "_present_document_text_change",
+            return_value=True,
         )
         update_cache = test_context.patch_object(AXUtilities, "update_cached_selected_text")
         handle_basic = test_context.patch_object(
@@ -321,66 +409,73 @@ class TestTextSelectionPresenter:
             return_value=True,
         )
 
-        assert presenter.handle_text_selection_change(script, root)
+        assert presenter._handle_document_change(script, document, event_source, True)
         assert presenter._get_cached_document_selection_boundaries(script) == (start, end)
-        assert [call.args for call in handle_basic.call_args_list] == [
-            (script, start, True),
-            (script, end, True),
+        get_endpoints.assert_called_once_with(
+            document,
+            document,
+        )
+        get_container.assert_not_called()
+        present_change.assert_called_once_with(
+            script,
+            (None, -1),
+            (None, -1),
+            start,
+            end,
+            True,
+        )
+        assert [call.args for call in update_cache.call_args_list] == [
+            (start_obj,),
+            (end_obj,),
         ]
-        update_cache.assert_called_once_with(nested)
+        handle_basic.assert_not_called()
 
-    def test_document_selection_elements_stop_after_end_boundary(
+    def test_document_selection_change_falls_back_to_basic_presentation(
         self,
         test_context: OrcaTestContext,
     ) -> None:
-        """Test document elements include nested boundaries without continuing past them."""
+        """Test an unidentifiable document change retains per-element presentation."""
 
         self._setup_dependencies(test_context)
-        from orca.text_selection_presenter import AXObject, AXUtilities, TextSelectionPresenter
+        from orca.text_selection_presenter import AXUtilities, TextSelectionPresenter
 
-        parent = test_context.Mock()
-        start = test_context.Mock()
-        start_child = test_context.Mock()
-        end_container = test_context.Mock()
-        end = test_context.Mock()
-        following_end = test_context.Mock()
-        following_container = test_context.Mock()
-        children = {
-            (parent, 0): start,
-            (parent, 1): end_container,
-            (parent, 2): following_container,
-            (end_container, 1): following_end,
-        }
-        parents = {start: parent, end: end_container}
-        indices = {start: 0, end: 0}
-        descendants = {
-            start: [start_child],
-            end_container: [end, following_end],
-        }
-        test_context.patch_object(AXObject, "is_dead", return_value=False)
-        test_context.patch_object(AXObject, "get_parent", side_effect=parents.get)
-        test_context.patch_object(AXObject, "get_index_in_parent", side_effect=indices.get)
-        test_context.patch_object(
-            AXObject,
-            "get_child_count",
-            side_effect=lambda obj: 3 if obj == parent else 2,
-        )
-        test_context.patch_object(
-            AXObject,
-            "get_child",
-            side_effect=lambda obj, index: children.get((obj, index)),
-        )
-        test_context.patch_object(AXUtilities, "is_web_element", return_value=True)
-        test_context.patch_object(AXUtilities, "is_code", return_value=False)
+        presenter = TextSelectionPresenter()
+        script = test_context.Mock()
+        document = test_context.Mock()
+        event_source = test_context.Mock()
+        selection_root = test_context.Mock()
+        start_obj = test_context.Mock()
+        nested_obj = test_context.Mock()
+        end_obj = test_context.Mock()
+        start = (start_obj, 0)
+        end = (end_obj, 8)
         test_context.patch_object(
             AXUtilities,
-            "find_all_descendants",
-            side_effect=lambda obj, _include, _exclude: descendants.get(obj, []),
+            "get_text_selection_container",
+            return_value=selection_root,
         )
+        test_context.patch_object(
+            AXUtilities,
+            "get_document_text_selection_endpoints",
+            return_value=(start, end),
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_text_selection_elements",
+            side_effect=[[], [start_obj, nested_obj, end_obj]],
+        )
+        test_context.patch_object(presenter, "_present_document_text_change", return_value=False)
+        test_context.patch_object(
+            AXUtilities,
+            "find_ancestor",
+            side_effect=lambda obj, _predicate: start_obj if obj == nested_obj else None,
+        )
+        update_cache = test_context.patch_object(AXUtilities, "update_cached_selected_text")
+        handle_basic = test_context.patch_object(presenter, "_handle_basic_change")
 
-        assert TextSelectionPresenter._get_document_selection_elements(start, end) == [
-            start,
-            start_child,
-            end_container,
-            end,
+        assert presenter._handle_document_change(script, document, event_source, True)
+        assert [call.args for call in handle_basic.call_args_list] == [
+            (script, start_obj, True),
+            (script, end_obj, True),
         ]
+        update_cache.assert_called_once_with(nested_obj)

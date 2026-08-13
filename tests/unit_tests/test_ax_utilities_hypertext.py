@@ -67,9 +67,15 @@ class TestAXUtilitiesHypertext:
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_grid = test_context.Mock(
             return_value=False
         )
+        essential_modules[
+            "orca.ax_utilities_role"
+        ].AXUtilitiesRole.is_combo_box = test_context.Mock(return_value=False)
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_button = test_context.Mock(
             return_value=False
         )
+        essential_modules[
+            "orca.ax_utilities_role"
+        ].AXUtilitiesRole.is_block_quote = test_context.Mock(return_value=False)
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_embedded = test_context.Mock(
             return_value=False
         )
@@ -85,6 +91,9 @@ class TestAXUtilitiesHypertext:
         essential_modules[
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_table_row = test_context.Mock(return_value=False)
+        essential_modules[
+            "orca.ax_utilities_role"
+        ].AXUtilitiesRole.is_menu_item_of_any_kind = test_context.Mock(return_value=False)
         for name in (
             "is_heading",
             "is_list",
@@ -227,6 +236,210 @@ class TestAXUtilitiesHypertext:
         )
 
         assert result == " Wikipedia,"
+
+    def test_expand_eocs_in_range_separates_adjacent_block_elements(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test expanded text from adjacent block elements has separators."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import AXObject, AXText, AXUtilitiesHypertext
+
+        root = test_context.Mock(spec=Atspi.Accessible)
+        children = [test_context.Mock(spec=Atspi.Accessible) for _index in range(3)]
+        strings = dict(zip(children, ("Fruit", "Apple", "Pear"), strict=True))
+        test_context.patch_object(AXUtilitiesHypertext, "compare_text_positions", return_value=-1)
+        essential_modules[
+            "orca.ax_utilities_object"
+        ].AXUtilitiesObject.get_common_ancestor.return_value = root
+        test_context.patch_object(
+            AXObject,
+            "supports_text",
+            side_effect=lambda obj: obj != root,
+        )
+        test_context.patch_object(
+            AXObject,
+            "get_parent",
+            side_effect=lambda obj: root if obj in children else None,
+        )
+        test_context.patch_object(
+            AXObject,
+            "get_index_in_parent",
+            side_effect=children.index,
+        )
+        test_context.patch_object(
+            AXObject,
+            "get_child_count",
+            side_effect=lambda obj: len(children) if obj == root else 0,
+        )
+        test_context.patch_object(
+            AXObject,
+            "get_child",
+            side_effect=lambda obj, index: children[index] if obj == root else None,
+        )
+        test_context.patch_object(
+            AXText,
+            "get_character_count",
+            side_effect=lambda obj: len(strings[obj]),
+        )
+        test_context.patch_object(
+            AXText,
+            "get_substring",
+            side_effect=lambda obj, start, end: strings[obj][start:end],
+        )
+        essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_paragraph.side_effect = (
+            lambda obj: obj in children
+        )
+
+        result = AXUtilitiesHypertext.expand_eocs_in_range(
+            children[0],
+            0,
+            children[-1],
+            len(strings[children[-1]]) - 1,
+        )
+
+        assert result == "Fruit Apple Pear"
+
+    def test_expand_eocs_in_range_separates_boundary_from_intermediate_block(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test a boundary element is separated from a block expanded through its parent."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import (
+            AXHypertext,
+            AXObject,
+            AXText,
+            AXUtilitiesHypertext,
+        )
+
+        root = test_context.Mock(spec=Atspi.Accessible)
+        heading = test_context.Mock(spec=Atspi.Accessible)
+        paragraph = test_context.Mock(spec=Atspi.Accessible)
+        quote = test_context.Mock(spec=Atspi.Accessible)
+        children = [heading, paragraph, quote]
+        counts = {root: 3, heading: 21, paragraph: 16, quote: 12}
+        offsets = {heading: 0, paragraph: 1, quote: 2}
+        expansions = {
+            (heading, 0, 21): "Structural navigation",
+            (root, 1, 2): "Intro paragraph.   ",
+            (quote, 0, 12): "Quoted text.",
+        }
+        test_context.patch_object(AXUtilitiesHypertext, "compare_text_positions", return_value=-1)
+        essential_modules[
+            "orca.ax_utilities_object"
+        ].AXUtilitiesObject.get_common_ancestor.return_value = root
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        test_context.patch_object(
+            AXObject,
+            "get_parent",
+            side_effect=lambda obj: root if obj in children else None,
+        )
+        test_context.patch_object(AXText, "get_character_count", side_effect=counts.get)
+        test_context.patch_object(
+            AXHypertext,
+            "get_character_offset_in_parent",
+            side_effect=offsets.get,
+        )
+        test_context.patch_object(
+            AXUtilitiesHypertext,
+            "expand_eocs",
+            side_effect=lambda obj, start, end: expansions[obj, start, end],
+        )
+        essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_heading.side_effect = (
+            lambda obj: obj == heading
+        )
+        essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_block_quote.side_effect = (
+            lambda obj: obj == quote
+        )
+
+        result = AXUtilitiesHypertext.expand_eocs_in_range(heading, 0, quote, 11)
+
+        assert result == "Structural navigation Intro paragraph. Quoted text."
+
+    def test_expand_eocs_in_range_separates_combo_box_label_and_options(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test a combo-box label and its options are separated in expanded text."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import (
+            AXHypertext,
+            AXObject,
+            AXText,
+            AXUtilitiesHypertext,
+        )
+
+        paragraph = test_context.Mock(spec=Atspi.Accessible)
+        label = test_context.Mock(spec=Atspi.Accessible)
+        combo_box = test_context.Mock(spec=Atspi.Accessible)
+        apple = test_context.Mock(spec=Atspi.Accessible)
+        pear = test_context.Mock(spec=Atspi.Accessible)
+        children = {
+            paragraph: [label, combo_box],
+            combo_box: [apple, pear],
+        }
+        parents = {
+            label: paragraph,
+            combo_box: paragraph,
+            apple: combo_box,
+            pear: combo_box,
+        }
+        strings = {
+            label: "Fruit",
+            apple: "Apple",
+            pear: "Pear",
+        }
+        test_context.patch_object(AXUtilitiesHypertext, "compare_text_positions", return_value=-1)
+        essential_modules[
+            "orca.ax_utilities_object"
+        ].AXUtilitiesObject.get_common_ancestor.return_value = paragraph
+        test_context.patch_object(
+            AXObject,
+            "supports_text",
+            side_effect=lambda obj: obj != combo_box,
+        )
+        test_context.patch_object(AXObject, "get_parent", side_effect=parents.get)
+        test_context.patch_object(
+            AXObject,
+            "get_index_in_parent",
+            side_effect=lambda obj: children[parents[obj]].index(obj),
+        )
+        test_context.patch_object(
+            AXObject,
+            "get_child_count",
+            side_effect=lambda obj: len(children.get(obj, [])),
+        )
+        test_context.patch_object(
+            AXObject,
+            "get_child",
+            side_effect=lambda obj, index: children.get(obj, [])[index],
+        )
+        test_context.patch_object(
+            AXText,
+            "get_character_count",
+            side_effect=lambda obj: 2 if obj == paragraph else len(strings[obj]),
+        )
+        test_context.patch_object(
+            AXText,
+            "get_substring",
+            side_effect=lambda obj, start, end: strings[obj][start:end],
+        )
+        test_context.patch_object(
+            AXHypertext,
+            "get_character_offset_in_parent",
+            side_effect=children[paragraph].index,
+        )
+        essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_combo_box.side_effect = (
+            lambda obj: obj == combo_box
+        )
+
+        result = AXUtilitiesHypertext.expand_eocs_in_range(label, 0, pear, 3)
+
+        assert result == "Fruit Apple Pear"
 
     def test_expand_eocs_replaces_embedded_child_with_its_text(
         self,
