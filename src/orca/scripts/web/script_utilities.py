@@ -3213,7 +3213,8 @@ class Utilities(script_utilities.Utilities):
             if obj is None:
                 obj = AXUtilities.get_focused_object(event.source)
 
-            if obj and focus_manager.get_manager().focus_is_dead() and AXUtilities.is_focused(obj):
+            # If what we found in the removed child's place has focus, focus really moved.
+            if obj is not None and AXUtilities.is_focused(obj):
                 notify = True
 
         if obj:
