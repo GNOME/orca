@@ -509,10 +509,11 @@ class Utilities:
         if self.grab_focus_when_setting_caret(obj):
             AXObject.grab_focus(obj)
 
-        # We cannot count on implementations clearing the selection for us when we set the caret
-        # offset. Also, we should clear the selected text first.
-        # https://bugs.documentfoundation.org/show_bug.cgi?id=167930
-        AXUtilities.clear_all_selected_text(obj)
+        if not reason.is_text_selection():
+            # We cannot count on implementations clearing the selection for us when we set the
+            # caret offset. Also, we should clear the selected text first.
+            # https://bugs.documentfoundation.org/show_bug.cgi?id=167930
+            AXUtilities.clear_all_selected_text(obj)
         self.set_caret_offset(obj, offset, reason=reason)
 
         # TODO - JD: The web script's set_caret_position() also sets the caret context.

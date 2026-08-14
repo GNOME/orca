@@ -49,6 +49,7 @@ from orca import (
     speech_presenter,
     structural_navigator,
     table_navigator,
+    text_selection_manager,
 )
 from orca.ax_event_synthesizer import AXEventSynthesizer
 from orca.ax_object import AXObject
@@ -797,6 +798,24 @@ class Script(default.Script):
             msg = "WEB: Event source is not in document content"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
+
+        selection_reasons = {
+            TextEventReason.SELECTION_BY_CHARACTER,
+            TextEventReason.SELECTION_BY_LINE,
+            TextEventReason.SELECTION_BY_PARAGRAPH,
+            TextEventReason.SELECTION_BY_PAGE,
+            TextEventReason.SELECTION_BY_WORD,
+            TextEventReason.SELECTION_TO_FILE_BOUNDARY,
+            TextEventReason.SELECTION_TO_LINE_BOUNDARY,
+        }
+        if (
+            reason in selection_reasons
+            and text_selection_manager.get_manager().get_current_selection_command(document)
+            is not None
+        ):
+            msg = "WEB: Ignoring caret-moved event caused by Orca's text selection"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
 
         obj, offset = self.utilities.get_caret_context(document, search_if_needed=False)
         tokens = ["WEB: Context: ", obj, ", ", offset]
@@ -1735,15 +1754,25 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        event_is_for_managed_selection = (
+            text_selection_manager.get_manager().get_current_selection_command(event.source)
+            is not None
+        )
         if structural_navigator.get_navigator().last_input_event_was_navigation_command():
-            msg = "WEB: Ignoring: Last input event was structural navigation command."
+            if not event_is_for_managed_selection:
+                msg = "WEB: Ignoring: Last input event was structural navigation command."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+            msg = "WEB: Deferring managed selection change caused by structural navigation."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
 
         if table_navigator.get_navigator().last_input_event_was_navigation_command():
-            msg = "WEB: Ignoring: Last input event was table navigation command."
+            if not event_is_for_managed_selection:
+                msg = "WEB: Ignoring: Last input event was table navigation command."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+            msg = "WEB: Deferring managed selection change caused by table navigation."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
 
         char = AXText.get_character_at_offset(event.source)[0]
         manager = input_event_manager.get_manager()
@@ -1751,6 +1780,7 @@ class Script(default.Script):
             char == "\ufffc"
             and not manager.last_event_was_caret_selection()
             and not manager.last_event_was_command()
+            and not event_is_for_managed_selection
         ):
             msg = "WEB: Ignoring: Not selecting and event offset is at embedded object"
             debug.print_message(debug.LEVEL_INFO, msg, True)

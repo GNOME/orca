@@ -80,6 +80,22 @@ class CaretSetReason(enum.Enum):
     SCROLL_INTO_VIEW = enum.auto()
     STRUCTURAL_NAVIGATION = enum.auto()
     TABLE_NAVIGATION = enum.auto()
+    TEXT_SELECTION_BY_CHARACTER = enum.auto()
+    TEXT_SELECTION_BY_LINE = enum.auto()
+    TEXT_SELECTION_BY_WORD = enum.auto()
+    TEXT_SELECTION_TO_FILE_BOUNDARY = enum.auto()
+    TEXT_SELECTION_TO_LINE_BOUNDARY = enum.auto()
+
+    def is_text_selection(self) -> bool:
+        """Returns True if the caret was set while changing a text selection."""
+
+        return self in {
+            CaretSetReason.TEXT_SELECTION_BY_CHARACTER,
+            CaretSetReason.TEXT_SELECTION_BY_LINE,
+            CaretSetReason.TEXT_SELECTION_BY_WORD,
+            CaretSetReason.TEXT_SELECTION_TO_FILE_BOUNDARY,
+            CaretSetReason.TEXT_SELECTION_TO_LINE_BOUNDARY,
+        }
 
 
 @dataclass(frozen=True)

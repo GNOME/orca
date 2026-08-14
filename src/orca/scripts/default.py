@@ -71,6 +71,7 @@ from orca import (
     structural_navigator,
     system_information_presenter,
     table_navigator,
+    text_selection_manager,
     text_selection_presenter,
     typing_echo_presenter,
     where_am_i_presenter,
@@ -416,6 +417,24 @@ class Script(script.Script):
         """Callback for object:text-caret-moved accessibility events."""
 
         reason = AXUtilities.get_text_event_reason(event)
+        selection_reasons = {
+            TextEventReason.SELECTION_BY_CHARACTER,
+            TextEventReason.SELECTION_BY_LINE,
+            TextEventReason.SELECTION_BY_PARAGRAPH,
+            TextEventReason.SELECTION_BY_PAGE,
+            TextEventReason.SELECTION_BY_WORD,
+            TextEventReason.SELECTION_TO_FILE_BOUNDARY,
+            TextEventReason.SELECTION_TO_LINE_BOUNDARY,
+        }
+        if (
+            reason in selection_reasons
+            and text_selection_manager.get_manager().get_current_selection_command(event.source)
+            is not None
+        ):
+            msg = "DEFAULT: Ignoring caret-moved event caused by Orca's text selection"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         if reason == TextEventReason.SEARCH_PRESENTABLE:
             msg = "DEFAULT: Presenting line for search result change"
             contents = self.utilities.get_line_contents_at_offset(event.source, event.detail1)
@@ -443,6 +462,11 @@ class Script(script.Script):
                 return True
             # TODO - JD: See if this can be removed. If it's still needed document why.
             manager.set_locus_of_focus(event, event.source, False)
+
+        if text_selection_manager.get_manager().get_current_selection_command(event.source):
+            msg = "DEFAULT: Ignoring caret-moved event caused by Orca's text selection"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
 
         obj, offset = manager.get_last_cursor_position()
         if offset == event.detail1 and obj == event.source:

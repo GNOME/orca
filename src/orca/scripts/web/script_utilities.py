@@ -531,7 +531,8 @@ class Utilities(script_utilities.Utilities):
         self.set_caret_context(obj, offset, document)
 
         old_focus = focus_manager.get_manager().get_locus_of_focus()
-        AXUtilities.clear_all_selected_text(old_focus)
+        if not reason.is_text_selection():
+            AXUtilities.clear_all_selected_text(old_focus)
         focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
         if grab_focus:
             AXObject.grab_focus(obj)

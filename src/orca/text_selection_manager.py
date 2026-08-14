@@ -22,6 +22,7 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from .ax_utilities import AXUtilities
@@ -35,8 +36,28 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
+@dataclass(frozen=True)
+class TextSelectionCommand:
+    """An Orca command which changed text selection."""
+
+    _should_notify_user: bool
+
+    def should_notify_user(self) -> bool:
+        """Returns True if this selection command should be presented."""
+
+        return self._should_notify_user
+
+
 class TextSelectionManager:
     """Provides high-level text-selection operations independent of navigation modality."""
+
+    def get_current_selection_command(
+        self,
+        obj: Atspi.Accessible | None = None,  # pylint: disable=unused-argument
+    ) -> TextSelectionCommand | None:
+        """Returns the current Orca text-selection command, if any."""
+
+        return None
 
     @staticmethod
     def _get_selected_text_with_eocs_expanded(obj: Atspi.Accessible) -> str:

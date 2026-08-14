@@ -31,6 +31,7 @@
 
 """Unit tests for ax_utilities_event.py event-related utilities."""
 
+import time
 from typing import TYPE_CHECKING
 
 import gi
@@ -94,6 +95,7 @@ class TestAXUtilitiesEvent:
             "orca.AXText",
             "orca.AXUtilities",
             "orca.input_event",
+            "orca.text_selection_manager",
             "orca.ax_utilities_object",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
@@ -181,6 +183,11 @@ class TestAXUtilitiesEvent:
         focus_manager_instance = test_context.Mock()
         focus_manager_instance.get_locus_of_focus.return_value = None
         essential_modules["orca.focus_manager"].get_manager.return_value = focus_manager_instance
+
+        selection_manager = essential_modules[
+            "orca.text_selection_manager"
+        ].get_manager.return_value
+        selection_manager.get_current_selection_command.return_value = None
 
         essential_modules["orca.AXObject"].supports_collection.return_value = True
         essential_modules["orca.AXUtilities"].is_heading.return_value = False
@@ -786,6 +793,46 @@ class TestAXUtilitiesEvent:
 
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == getattr(TextEventReason, case["expected_reason"])
+
+    def test_get_caret_moved_event_reason_uses_caret_set_reason(self, test_context):
+        """Test why Orca set the caret determines the reason for the resulting event."""
+
+        self._setup_dependencies(test_context)
+        from orca import focus_manager
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_text import AXUtilitiesText, CaretSetReason
+
+        mock_event = test_context.Mock(spec=Atspi.Event)
+        mock_event.source = test_context.Mock(spec=Atspi.Accessible)
+        mock_event.detail1 = 4
+        mock_focus_manager = test_context.Mock()
+        mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
+            "normal",
+            mock_event.source,
+        )
+        test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
+        test_context.patch_object(AXUtilitiesRole, "is_text_input_search", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
+        test_context.patch_object(
+            AXUtilitiesEvent,
+            "_is_spin_button_descendant",
+            return_value=False,
+        )
+        last_caret_set = test_context.Mock()
+        last_caret_set.obj = mock_event.source
+        last_caret_set.offset = mock_event.detail1
+        last_caret_set.time = time.monotonic()
+        last_caret_set.reason = CaretSetReason.TEXT_SELECTION_BY_WORD
+        test_context.patch_object(
+            AXUtilitiesText,
+            "get_last_caret_set",
+            return_value=last_caret_set,
+        )
+
+        result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
+
+        assert result == TextEventReason.SELECTION_BY_WORD
 
     @pytest.mark.parametrize(
         "case",
@@ -3433,7 +3480,7 @@ class TestAXUtilitiesEvent:
         """Test _get_text_selection_changed_event_reason with various scenarios."""
 
         self._setup_dependencies(test_context)
-        from orca import focus_manager, input_event_manager
+        from orca import focus_manager, input_event_manager, text_selection_manager
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
@@ -3466,6 +3513,14 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
+        selection_manager = text_selection_manager.get_manager.return_value
+        selection_command = test_context.Mock()
+        selection_command.should_notify_user.return_value = False
+        selection_manager.get_current_selection_command.return_value = selection_command
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.SELECTION_UNPRESENTABLE
+
+        selection_manager.get_current_selection_command.return_value = None
         result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
         assert result == TextEventReason.SEARCH_PRESENTABLE
 
@@ -3519,6 +3574,21 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_file_boundary_navigation.return_value = False
         result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
         assert result == TextEventReason.UNSPECIFIED_SELECTION
+
+        mock_input_manager.last_event_was_caret_selection.return_value = False
+        selection_command.should_notify_user.return_value = True
+        from orca.ax_utilities_text import AXUtilitiesText, CaretSetReason
+
+        last_caret_set = test_context.Mock()
+        last_caret_set.reason = CaretSetReason.TEXT_SELECTION_BY_CHARACTER
+        test_context.patch_object(
+            AXUtilitiesText,
+            "get_last_caret_set",
+            return_value=last_caret_set,
+        )
+        selection_manager.get_current_selection_command.return_value = selection_command
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.SELECTION_BY_CHARACTER
 
     def test_get_text_selection_changed_event_reason_caret_navigation(self, test_context):
         """Test _get_text_selection_changed_event_reason caret navigation scenarios."""

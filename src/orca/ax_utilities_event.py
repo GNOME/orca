@@ -103,6 +103,7 @@ class TextEventReason(enum.Enum):
     SELECTION_BY_PARAGRAPH = enum.auto()
     SELECTION_BY_PAGE = enum.auto()
     SELECTION_BY_WORD = enum.auto()
+    SELECTION_UNPRESENTABLE = enum.auto()
     SELECTION_TO_FILE_BOUNDARY = enum.auto()
     SELECTION_TO_LINE_BOUNDARY = enum.auto()
     SPIN_BUTTON_VALUE_CHANGE = enum.auto()
@@ -552,6 +553,26 @@ class AXUtilitiesEvent:
         return reason
 
     @staticmethod
+    def _get_text_event_reason_for_caret_set_reason(
+        reason: CaretSetReason,
+    ) -> TextEventReason | None:
+        """Returns the text-event reason corresponding to why Orca set the caret."""
+
+        reasons = {
+            CaretSetReason.BRAILLE_PANNING: TextEventReason.BRAILLE_PANNING,
+            CaretSetReason.TEXT_SELECTION_BY_CHARACTER: TextEventReason.SELECTION_BY_CHARACTER,
+            CaretSetReason.TEXT_SELECTION_BY_LINE: TextEventReason.SELECTION_BY_LINE,
+            CaretSetReason.TEXT_SELECTION_BY_WORD: TextEventReason.SELECTION_BY_WORD,
+            CaretSetReason.TEXT_SELECTION_TO_FILE_BOUNDARY: (
+                TextEventReason.SELECTION_TO_FILE_BOUNDARY
+            ),
+            CaretSetReason.TEXT_SELECTION_TO_LINE_BOUNDARY: (
+                TextEventReason.SELECTION_TO_LINE_BOUNDARY
+            ),
+        }
+        return reasons.get(reason)
+
+    @staticmethod
     def _get_caret_navigation_reason(mgr: InputEventManager) -> TextEventReason:
         """Returns the caret-navigation-granularity reason based on the last input event."""
 
@@ -603,13 +624,16 @@ class AXUtilitiesEvent:
         # Some toolkits report the resulting event's offset as -1 rather than what we set.
         if (
             last_caret_set is not None
-            and last_caret_set.reason == CaretSetReason.BRAILLE_PANNING
             and obj == last_caret_set.obj
             and event.detail1 in (last_caret_set.offset, -1)
             and time.monotonic() - last_caret_set.time
             < AXUtilitiesEvent.CARET_SET_EVENT_WINDOW_SECONDS
         ):
-            return TextEventReason.BRAILLE_PANNING
+            reason = AXUtilitiesEvent._get_text_event_reason_for_caret_set_reason(
+                last_caret_set.reason
+            )
+            if reason is not None:
+                return reason
 
         mode, focus = focus_manager.get_manager().get_active_mode_and_object_of_interest()
         if mode == focus_manager.SAY_ALL:
@@ -864,18 +888,35 @@ class AXUtilitiesEvent:
     def _get_text_selection_changed_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
-        from . import input_event_manager  # pylint: disable=import-outside-toplevel
+        from . import (  # pylint: disable=import-outside-toplevel
+            input_event_manager,
+            text_selection_manager,
+        )
 
         mgr = input_event_manager.get_manager()
+        selection_manager = text_selection_manager.get_manager()
         obj = event.source
         focus = focus_manager.get_manager().get_locus_of_focus()
 
+        selection_command = selection_manager.get_current_selection_command()
+        if selection_command is not None and not selection_command.should_notify_user():
+            return TextEventReason.SELECTION_UNPRESENTABLE
+        if selection_command is not None:
+            last_caret_set = AXUtilitiesText.get_last_caret_set()
+            if last_caret_set is not None:
+                reason = AXUtilitiesEvent._get_text_event_reason_for_caret_set_reason(
+                    last_caret_set.reason
+                )
+                if reason is not None:
+                    return reason
         if focus != obj and AXUtilitiesRole.is_text_input_search(focus):
             if mgr.last_event_was_backspace() or mgr.last_event_was_delete():
                 return TextEventReason.SEARCH_UNPRESENTABLE
             return TextEventReason.SEARCH_PRESENTABLE
         if mgr.last_event_was_caret_selection():
             return AXUtilitiesEvent._get_selection_navigation_reason(mgr)
+        if selection_command is not None:
+            return TextEventReason.UNSPECIFIED_SELECTION
         if mgr.last_event_was_caret_navigation():
             return AXUtilitiesEvent._get_caret_navigation_reason(mgr)
         if mgr.last_event_was_select_all():
