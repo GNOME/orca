@@ -25,7 +25,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from . import (
-    ax_cache_manager,
     debug,
     document_presenter,
     input_event_manager,
@@ -50,22 +49,6 @@ if TYPE_CHECKING:
 class TextSelectionPresenter:
     """Presents changes in text selection."""
 
-    DOCUMENT_SELECTION_BOUNDARIES = "TextSelectionPresenter.document-selection-boundaries"
-
-    def __init__(self) -> None:
-        self._manager = ax_cache_manager.get_manager()
-        self._manager.register_cache(
-            self,
-            self.DOCUMENT_SELECTION_BOUNDARIES,
-            lifetime=ax_cache_manager.Lifetime.OWNER,
-            clear_on_demand=ax_cache_manager.ClearPolicy.PRESERVE,
-            clear_interval_seconds=None,
-        )
-        self._document_selection_boundaries = self._manager.get_cache(
-            self,
-            self.DOCUMENT_SELECTION_BOUNDARIES,
-        )
-
     def present_selected_text(
         self,
         script: default.Script,
@@ -84,34 +67,6 @@ class TextSelectionPresenter:
         message = messages.SELECTED_TEXT_IS % f"{indentation} {text}"
         presentation_manager.get_manager().speak_message(message)
         return True
-
-    def _get_cached_document_selection_boundaries(
-        self,
-        script: default.Script,
-    ) -> tuple[
-        tuple[Atspi.Accessible | None, int],
-        tuple[Atspi.Accessible | None, int],
-    ]:
-        if self._document_selection_boundaries is None:
-            return (None, -1), (None, -1)
-        return self._document_selection_boundaries.get(
-            ax_cache_manager.get_object_key(script),
-            ((None, -1), (None, -1)),
-        )
-
-    def _set_cached_document_selection_boundaries(
-        self,
-        script: default.Script,
-        boundaries: tuple[
-            tuple[Atspi.Accessible | None, int],
-            tuple[Atspi.Accessible | None, int],
-        ],
-    ) -> None:
-        if self._document_selection_boundaries is not None:
-            self._document_selection_boundaries.put(
-                ax_cache_manager.get_object_key(script),
-                boundaries,
-            )
 
     def _compute_changes(
         self,
@@ -261,11 +216,12 @@ class TextSelectionPresenter:
             return True
 
         if (
-            not input_event_manager.get_manager().last_event_was_caret_selection()
+            not text_selection_manager.get_manager().is_selection_change_from_selection_command(obj)
             and old_string
             and not new_string
         ):
-            presentation_manager.get_manager().speak_message(messages.SELECTION_REMOVED)
+            if speak_message:
+                presentation_manager.get_manager().speak_message(messages.SELECTION_REMOVED)
             return False
 
         changes, preceding_child_change_presented = self._compute_changes(
@@ -352,7 +308,6 @@ class TextSelectionPresenter:
     ) -> bool:
         """Presents a document text selection change as a single phrase."""
 
-        manager = input_event_manager.get_manager()
         change = self._get_document_text_change(old_start, old_end, start, end)
         if change is None:
             msg = "TEXT SELECTION PRESENTER: Could not identify changed document text range."
@@ -360,10 +315,13 @@ class TextSelectionPresenter:
             return False
 
         range_start, range_end, include_start, include_end, message = change
-        if not manager.last_event_was_caret_selection():
+        selection_obj = start[0] or old_start[0]
+        if not text_selection_manager.get_manager().is_selection_change_from_selection_command(
+            selection_obj
+        ):
             selection_was_removed = start[0] is None and end[0] is None
             if not selection_was_removed:
-                msg = "TEXT SELECTION PRESENTER: Change is not from caret selection."
+                msg = "TEXT SELECTION PRESENTER: Change is not from a selection command."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
@@ -424,24 +382,22 @@ class TextSelectionPresenter:
     def _handle_document_change(
         self,
         script: default.Script,
-        document: Atspi.Accessible | None,
         obj: Atspi.Accessible,
         speak_message: bool,
     ) -> bool:
-        old_start, old_end = self._get_cached_document_selection_boundaries(script)
-        selection_root = (
-            document if document is not None else AXUtilities.get_text_selection_container(obj)
+        state, old_selection, selection = (
+            text_selection_manager.get_manager().update_selection_state(obj)
         )
-        start, end = AXUtilities.get_document_text_selection_endpoints(
-            document,
-            selection_root,
-        )
-        self._set_cached_document_selection_boundaries(script, (start, end))
+        if state == text_selection_manager.SelectionChangeState.UNPRESENTABLE:
+            msg = "TEXT SELECTION PRESENTER: Ignoring unpresentable document selection state."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        old_start, old_end = old_selection
+        start, end = selection
         tokens = [
             "TEXT SELECTION PRESENTER: Document selection event from",
             obj,
-            "Selection root:",
-            selection_root,
             "Old boundaries:",
             old_start,
             old_end,
@@ -505,21 +461,28 @@ class TextSelectionPresenter:
                 self._handle_basic_change(script, element, speak_message)
         return True
 
-    def handle_text_selection_change(
+    def present_text_selection_change(
         self,
         script: default.Script,
         obj: Atspi.Accessible,
         speak_message: bool = True,
     ) -> bool:
-        """Handles and presents a change in selected text."""
+        """Presents a change in selected text."""
 
+        selection_manager = text_selection_manager.get_manager()
+        managed_document = None
+        if selection_manager.get_current_selection_command() is not None:
+            active_document = script.utilities.active_document()
+            if (
+                active_document is not None
+                and selection_manager.get_current_selection_command(active_document) is not None
+            ):
+                managed_document = active_document
         is_document = bool(
-            AXUtilities.is_web_element(obj)
-            and script.utilities.in_document_content(obj)
-            and not document_presenter.get_presenter().in_focus_mode(script.app)
+            obj is not None and (AXUtilities.is_web_element(obj) or managed_document is not None)
         )
         tokens = [
-            "TEXT SELECTION PRESENTER: Handling change for",
+            "TEXT SELECTION PRESENTER: Presenting change for",
             obj,
             "Script:",
             script,
@@ -527,9 +490,12 @@ class TextSelectionPresenter:
             f"is document selection: {is_document}",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        if is_document:
-            document = script.utilities.get_document_for_object(obj)
-            return self._handle_document_change(script, document, obj, speak_message)
+        if (
+            is_document
+            and script.utilities.in_document_content(obj)
+            and not document_presenter.get_presenter().in_focus_mode(script.app)
+        ):
+            return self._handle_document_change(script, obj, speak_message)
         return self._handle_basic_change(script, obj, speak_message)
 
 

@@ -47,7 +47,11 @@ class TestTextSelectionPresenter:
             "orca.speech_presenter",
             "orca.text_selection_manager",
         ]
-        return test_context.setup_shared_dependencies(additional_modules)
+        dependencies = test_context.setup_shared_dependencies(additional_modules)
+        selection_manager = dependencies["orca.text_selection_manager"].get_manager.return_value
+        selection_manager.get_current_selection_command.return_value = None
+        selection_manager.is_selection_change_from_selection_command.return_value = False
+        return dependencies
 
     def test_present_selected_text(self, test_context: OrcaTestContext) -> None:
         """Test presenting all text returned by the text-selection manager."""
@@ -110,7 +114,7 @@ class TestTextSelectionPresenter:
     ) -> None:
         """Test extending a selection updates its cache and presents the new text."""
 
-        self._setup_dependencies(test_context)
+        dependencies = self._setup_dependencies(test_context)
         from orca.text_selection_presenter import (
             AXObject,
             AXText,
@@ -137,12 +141,13 @@ class TestTextSelectionPresenter:
         manager = input_event_manager.get_manager.return_value
         manager.last_event_was_cut.return_value = False
         manager.last_event_was_select_all.return_value = False
-        manager.last_event_was_caret_selection.return_value = True
+        selection_manager = dependencies["orca.text_selection_manager"].get_manager.return_value
+        selection_manager.is_selection_change_from_selection_command.return_value = True
         speech_presenter.get_presenter.return_value.get_only_speak_displayed_text.return_value = (
             False
         )
 
-        assert presenter.handle_text_selection_change(script, obj)
+        assert presenter.present_text_selection_change(script, obj)
         update_cache.assert_called_once_with(obj)
         script.say_phrase.assert_called_once_with(obj, 1, 2)
         presentation_manager.get_manager.return_value.speak_message.assert_called_once_with(
@@ -197,13 +202,15 @@ class TestTextSelectionPresenter:
         else:
             manager.speak_message.assert_called_once_with(messages.TEXT_SELECTED)
 
+    @pytest.mark.parametrize("speak_message", [False, True])
     def test_removed_selection_is_cached_and_reported_as_unhandled(
         self,
         test_context: OrcaTestContext,
+        speak_message: bool,
     ) -> None:
         """Test clearing a selection updates its cache while allowing caret presentation."""
 
-        self._setup_dependencies(test_context)
+        dependencies = self._setup_dependencies(test_context)
         from orca.text_selection_presenter import (
             AXObject,
             AXUtilities,
@@ -227,13 +234,16 @@ class TestTextSelectionPresenter:
         manager = input_event_manager.get_manager.return_value
         manager.last_event_was_cut.return_value = False
         manager.last_event_was_select_all.return_value = False
-        manager.last_event_was_caret_selection.return_value = False
+        selection_manager = dependencies["orca.text_selection_manager"].get_manager.return_value
+        selection_manager.is_selection_change_from_selection_command.return_value = False
 
-        assert not presenter.handle_text_selection_change(script, obj)
+        assert not presenter.present_text_selection_change(script, obj, speak_message)
         update_cache.assert_called_once_with(obj)
-        presentation_manager.get_manager.return_value.speak_message.assert_called_once_with(
-            messages.SELECTION_REMOVED
-        )
+        speak = presentation_manager.get_manager.return_value.speak_message
+        if speak_message:
+            speak.assert_called_once_with(messages.SELECTION_REMOVED)
+        else:
+            speak.assert_not_called()
         script.say_phrase.assert_not_called()
 
     def test_document_text_change_is_presented_as_single_phrase(
@@ -242,11 +252,10 @@ class TestTextSelectionPresenter:
     ) -> None:
         """Test a multi-object document change has one selection-state announcement."""
 
-        self._setup_dependencies(test_context)
+        dependencies = self._setup_dependencies(test_context)
         from orca.text_selection_presenter import (
             AXUtilities,
             TextSelectionPresenter,
-            input_event_manager,
             messages,
             presentation_manager,
             speech_presenter,
@@ -260,9 +269,8 @@ class TestTextSelectionPresenter:
         old_end = (start_obj, 10)
         start = old_start
         end = (end_obj, 1)
-        input_event_manager.get_manager.return_value.last_event_was_caret_selection.return_value = (
-            True
-        )
+        selection_manager = dependencies["orca.text_selection_manager"].get_manager.return_value
+        selection_manager.is_selection_change_from_selection_command.return_value = True
         speech_presenter.get_presenter.return_value.get_only_speak_displayed_text.return_value = (
             False
         )
@@ -370,27 +378,24 @@ class TestTextSelectionPresenter:
         self,
         test_context: OrcaTestContext,
     ) -> None:
-        """Test one endpoint-range presentation replaces per-element presentation."""
+        """Test manager state is presented as one endpoint range."""
 
-        self._setup_dependencies(test_context)
+        dependencies = self._setup_dependencies(test_context)
+        from orca.text_selection_manager import SelectionChangeState
         from orca.text_selection_presenter import AXUtilities, TextSelectionPresenter
 
         presenter = TextSelectionPresenter()
         script = test_context.Mock()
-        document = test_context.Mock()
         event_source = test_context.Mock()
         start_obj = test_context.Mock()
         end_obj = test_context.Mock()
         start = (start_obj, 0)
         end = (end_obj, 8)
-        get_container = test_context.patch_object(
-            AXUtilities,
-            "get_text_selection_container",
-        )
-        get_endpoints = test_context.patch_object(
-            AXUtilities,
-            "get_document_text_selection_endpoints",
-            return_value=(start, end),
+        selection_manager = dependencies["orca.text_selection_manager"].get_manager.return_value
+        selection_manager.update_selection_state.return_value = (
+            SelectionChangeState.NOT_ORCA,
+            ((None, -1), (None, -1)),
+            (start, end),
         )
         test_context.patch_object(
             AXUtilities,
@@ -409,13 +414,8 @@ class TestTextSelectionPresenter:
             return_value=True,
         )
 
-        assert presenter._handle_document_change(script, document, event_source, True)
-        assert presenter._get_cached_document_selection_boundaries(script) == (start, end)
-        get_endpoints.assert_called_once_with(
-            document,
-            document,
-        )
-        get_container.assert_not_called()
+        assert presenter._handle_document_change(script, event_source, True)
+        selection_manager.update_selection_state.assert_called_once_with(event_source)
         present_change.assert_called_once_with(
             script,
             (None, -1),
@@ -436,28 +436,23 @@ class TestTextSelectionPresenter:
     ) -> None:
         """Test an unidentifiable document change retains per-element presentation."""
 
-        self._setup_dependencies(test_context)
+        dependencies = self._setup_dependencies(test_context)
+        from orca.text_selection_manager import SelectionChangeState
         from orca.text_selection_presenter import AXUtilities, TextSelectionPresenter
 
         presenter = TextSelectionPresenter()
         script = test_context.Mock()
-        document = test_context.Mock()
         event_source = test_context.Mock()
-        selection_root = test_context.Mock()
         start_obj = test_context.Mock()
         nested_obj = test_context.Mock()
         end_obj = test_context.Mock()
         start = (start_obj, 0)
         end = (end_obj, 8)
-        test_context.patch_object(
-            AXUtilities,
-            "get_text_selection_container",
-            return_value=selection_root,
-        )
-        test_context.patch_object(
-            AXUtilities,
-            "get_document_text_selection_endpoints",
-            return_value=(start, end),
+        selection_manager = dependencies["orca.text_selection_manager"].get_manager.return_value
+        selection_manager.update_selection_state.return_value = (
+            SelectionChangeState.NOT_ORCA,
+            ((None, -1), (None, -1)),
+            (start, end),
         )
         test_context.patch_object(
             AXUtilities,
@@ -473,9 +468,72 @@ class TestTextSelectionPresenter:
         update_cache = test_context.patch_object(AXUtilities, "update_cached_selected_text")
         handle_basic = test_context.patch_object(presenter, "_handle_basic_change")
 
-        assert presenter._handle_document_change(script, document, event_source, True)
+        assert presenter._handle_document_change(script, event_source, True)
         assert [call.args for call in handle_basic.call_args_list] == [
             (script, start_obj, True),
             (script, end_obj, True),
         ]
         update_cache.assert_called_once_with(nested_obj)
+
+    def test_unpresentable_document_selection_change_is_ignored(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test an unpresentable selection state is ignored."""
+
+        dependencies = self._setup_dependencies(test_context)
+        from orca.text_selection_manager import SelectionChangeState
+        from orca.text_selection_presenter import TextSelectionPresenter
+
+        presenter = TextSelectionPresenter()
+        script = test_context.Mock()
+        event_source = test_context.Mock()
+        old_selection = ((test_context.Mock(), 0), (test_context.Mock(), 4))
+        no_selection = ((None, -1), (None, -1))
+        selection_manager = dependencies["orca.text_selection_manager"].get_manager.return_value
+        selection_manager.update_selection_state.return_value = (
+            SelectionChangeState.UNPRESENTABLE,
+            old_selection,
+            no_selection,
+        )
+        present_change = test_context.patch_object(
+            presenter,
+            "_present_document_text_change",
+        )
+
+        assert not presenter._handle_document_change(script, event_source, True)
+        present_change.assert_not_called()
+
+    def test_managed_non_web_selection_uses_document_presentation(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test a managed non-web selection is presented as a document selection."""
+
+        dependencies = self._setup_dependencies(test_context)
+        from orca.text_selection_presenter import (
+            AXUtilities,
+            TextSelectionPresenter,
+            document_presenter,
+        )
+
+        presenter = TextSelectionPresenter()
+        script = test_context.Mock()
+        obj = test_context.Mock()
+        document = test_context.Mock()
+        command = test_context.Mock()
+        selection_manager = dependencies["orca.text_selection_manager"].get_manager.return_value
+        selection_manager.get_current_selection_command.return_value = command
+        script.utilities.active_document.return_value = document
+        script.utilities.in_document_content.return_value = True
+        test_context.patch_object(AXUtilities, "is_web_element", return_value=False)
+        document_presenter.get_presenter.return_value.in_focus_mode.return_value = False
+        handle_document_change = test_context.patch_object(
+            presenter,
+            "_handle_document_change",
+            return_value=True,
+        )
+
+        assert presenter.present_text_selection_change(script, obj)
+        selection_manager.get_current_selection_command.assert_any_call(document)
+        handle_document_change.assert_called_once_with(script, obj, True)

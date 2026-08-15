@@ -257,7 +257,7 @@ class Script(script.Script):
             handled = False
             if AXObject.supports_text(old_focus):
                 handled = (
-                    text_selection_presenter.get_presenter().handle_text_selection_change(
+                    text_selection_presenter.get_presenter().present_text_selection_change(
                         self,
                         old_focus,
                     )
@@ -265,7 +265,7 @@ class Script(script.Script):
                 )
             if AXObject.supports_text(new_focus):
                 handled = (
-                    text_selection_presenter.get_presenter().handle_text_selection_change(
+                    text_selection_presenter.get_presenter().present_text_selection_change(
                         self,
                         new_focus,
                     )
@@ -515,14 +515,14 @@ class Script(script.Script):
         if AXUtilities.has_selected_text(event.source):
             msg = "DEFAULT: Event source has text selections"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            text_selection_presenter.get_presenter().handle_text_selection_change(
+            text_selection_presenter.get_presenter().present_text_selection_change(
                 self,
                 event.source,
             )
             return True
 
         text, _start, _end = AXUtilities.get_cached_selected_text(obj)
-        if text and text_selection_presenter.get_presenter().handle_text_selection_change(
+        if text and text_selection_presenter.get_presenter().present_text_selection_change(
             self,
             obj,
         ):
@@ -962,7 +962,7 @@ class Script(script.Script):
             AXUtilities.update_cached_selected_text(event.source)
             return True
 
-        text_selection_presenter.get_presenter().handle_text_selection_change(self, event.source)
+        text_selection_presenter.get_presenter().present_text_selection_change(self, event.source)
         self.update_braille(event.source)
         return True
 
