@@ -518,6 +518,33 @@ class TestAXUtilitiesObject:
         result = AXUtilitiesObject.find_ancestor(mock_accessible, always_true)
         assert result is None
 
+    def test_find_outermost_ancestor_inclusive(self, test_context: OrcaTestContext) -> None:
+        """Test the outermost matching ancestor is returned in one traversal."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_object import AXObject
+        from orca.ax_utilities_object import AXUtilitiesObject
+
+        obj = test_context.Mock(spec=Atspi.Accessible)
+        inner_match = test_context.Mock(spec=Atspi.Accessible)
+        outer_match = test_context.Mock(spec=Atspi.Accessible)
+        root = test_context.Mock(spec=Atspi.Accessible)
+        parents = {
+            obj: inner_match,
+            inner_match: outer_match,
+            outer_match: root,
+            root: None,
+        }
+        test_context.patch_object(AXObject, "is_valid", return_value=True)
+        test_context.patch_object(AXObject, "get_parent", side_effect=parents.get)
+
+        result = AXUtilitiesObject.find_outermost_ancestor_inclusive(
+            obj,
+            lambda candidate: candidate in {inner_match, outer_match},
+        )
+
+        assert result == outer_match
+
     def test_active_descendant_dead_obj(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilities.active_descendant with dead obj."""
 

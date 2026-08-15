@@ -93,6 +93,22 @@ class AXUtilitiesObject:
         return AXUtilitiesObject.find_ancestor(obj, pred)
 
     @staticmethod
+    def find_outermost_ancestor_inclusive(
+        obj: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool],
+    ) -> Atspi.Accessible | None:
+        """Returns the outermost object, including obj, for which pred is true."""
+
+        if not AXObject.is_valid(obj):
+            return None
+
+        for ancestor in AXUtilitiesObject._get_ancestors(obj):
+            if pred(ancestor):
+                return ancestor
+
+        return obj if pred(obj) else None
+
+    @staticmethod
     def find_ancestor(
         obj: Atspi.Accessible,
         pred: Callable[[Atspi.Accessible], bool],

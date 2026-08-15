@@ -1381,6 +1381,11 @@ class AXUtilities:
         pred: Callable[[Atspi.Accessible], bool],
     ) -> Atspi.Accessible | None: ...
     @staticmethod
+    def find_outermost_ancestor_inclusive(
+        obj: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool],
+    ) -> Atspi.Accessible | None: ...
+    @staticmethod
     def find_ancestor(
         obj: Atspi.Accessible,
         pred: Callable[[Atspi.Accessible], bool],
@@ -1827,6 +1832,20 @@ class AXUtilities:
     ) -> bool: ...
     @staticmethod
     def is_eoc(character: str) -> bool: ...
+    @staticmethod
+    def text_selection_positions_are_equivalent(
+        obj1: Atspi.Accessible,
+        offset1: int,
+        obj2: Atspi.Accessible,
+        offset2: int,
+    ) -> bool: ...
+    @staticmethod
+    def get_selection_anchor_offset(
+        obj: Atspi.Accessible,
+        focus_offset: int,
+        selection_start: int,
+        selection_end: int,
+    ) -> int: ...
     @staticmethod
     def character_at_offset_is_eoc(obj: Atspi.Accessible, offset: int) -> bool: ...
     @staticmethod

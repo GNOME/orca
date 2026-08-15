@@ -3589,6 +3589,7 @@ class TestAXUtilitiesEvent:
         selection_manager.get_current_selection_command.return_value = selection_command
         result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
         assert result == TextEventReason.SELECTION_BY_CHARACTER
+        selection_manager.get_current_selection_command.assert_called_with(mock_event.source)
 
     def test_get_text_selection_changed_event_reason_caret_navigation(self, test_context):
         """Test _get_text_selection_changed_event_reason caret navigation scenarios."""

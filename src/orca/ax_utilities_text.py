@@ -185,6 +185,64 @@ class AXUtilitiesText:
     """Utilities for accessible text."""
 
     @staticmethod
+    def text_selection_positions_are_equivalent(
+        obj1: Atspi.Accessible,
+        offset1: int,
+        obj2: Atspi.Accessible,
+        offset2: int,
+    ) -> bool:
+        """Returns True if both positions represent the same selection boundary."""
+
+        comparison = AXUtilitiesHypertext.compare_text_positions(obj1, offset1, obj2, offset2)
+        if comparison == 0:
+            return True
+        if obj1 == obj2:
+            start, end = sorted((offset1, offset2))
+            return AXText.get_substring(obj1, start, end) == "\n"
+
+        if comparison < 0:
+            before_obj, before_offset = obj1, offset1
+            after_obj, after_offset = obj2, offset2
+        else:
+            before_obj, before_offset = obj2, offset2
+            after_obj, after_offset = obj1, offset1
+        if before_offset != AXText.get_character_count(before_obj) or after_offset != 0:
+            return False
+        if AXUtilitiesObject.get_common_ancestor(before_obj, after_obj) is None:
+            return False
+
+        between = AXUtilitiesHypertext.expand_eocs_in_range(
+            before_obj,
+            before_offset,
+            after_obj,
+            after_offset,
+            include_start=False,
+            include_end=False,
+        )
+        return not between
+
+    @staticmethod
+    def get_selection_anchor_offset(
+        obj: Atspi.Accessible,
+        focus_offset: int,
+        selection_start: int,
+        selection_end: int,
+    ) -> int:
+        """Returns the fixed endpoint opposite focus_offset in obj's selection."""
+
+        if selection_start == selection_end:
+            return focus_offset
+        if AXUtilitiesText.text_selection_positions_are_equivalent(
+            obj, focus_offset, obj, selection_start
+        ):
+            return selection_end
+        if AXUtilitiesText.text_selection_positions_are_equivalent(
+            obj, focus_offset, obj, selection_end
+        ):
+            return selection_start
+        return focus_offset
+
+    @staticmethod
     def get_text_selection_container(obj: Atspi.Accessible) -> Atspi.Accessible:
         """Returns the container for the text selection at obj."""
 

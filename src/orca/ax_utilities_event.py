@@ -898,7 +898,7 @@ class AXUtilitiesEvent:
         obj = event.source
         focus = focus_manager.get_manager().get_locus_of_focus()
 
-        selection_command = selection_manager.get_current_selection_command()
+        selection_command = selection_manager.get_current_selection_command(event.source)
         if selection_command is not None and not selection_command.should_notify_user():
             return TextEventReason.SELECTION_UNPRESENTABLE
         if selection_command is not None:
