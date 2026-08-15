@@ -161,6 +161,8 @@ class _ClipboardManagerFallback(_ClipboardManager):
 class _ClipboardManagerGPaste(_ClipboardManager):
     """Class for interacting with the clipboard via GPaste."""
 
+    _DBUS_TIMEOUT_MS = 1000
+
     def __init__(self, change_callback: Callable[[str], None]) -> None:
         super().__init__("GPASTE", change_callback)
         self._bus: SessionMessageBus | None = None
@@ -182,25 +184,35 @@ class _ClipboardManagerGPaste(_ClipboardManager):
                 "/org/gnome/GPaste",
                 "org.freedesktop.DBus.Properties",
             )
-            self._original_active_state = self._props_proxy.Get("org.gnome.GPaste2", "Active")
-        except DBusError as error:
+            self._original_active_state = self._props_proxy.Get(
+                "org.gnome.GPaste2",
+                "Active",
+                timeout=self._DBUS_TIMEOUT_MS,
+            )
+        except (DBusError, TimeoutError) as error:
             msg = f"CLIPBOARD PRESENTER: Could not access GPaste interface: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._gpaste_proxy = None
+            self._props_proxy = None
+            self._bus = None
             return
 
         try:
-            self._original_active_state = self._props_proxy.Get("org.gnome.GPaste2", "Active")
             if not self._original_active_state:
                 msg = "CLIPBOARD PRESENTER: GPaste is not active. Enabling Tracking."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
-                self._gpaste_proxy.Track(True)
-                new_state = self._props_proxy.Get("org.gnome.GPaste2", "Active")
+                self._gpaste_proxy.Track(True, timeout=self._DBUS_TIMEOUT_MS)
+                new_state = self._props_proxy.Get(
+                    "org.gnome.GPaste2",
+                    "Active",
+                    timeout=self._DBUS_TIMEOUT_MS,
+                )
                 msg = f"CLIPBOARD PRESENTER: Is active now: {bool(new_state)}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
 
             self._signal_subscription = self._gpaste_proxy.Update.connect(self._on_contents_changed)
             self._is_active = True
-        except DBusError as error:
+        except (DBusError, TimeoutError) as error:
             msg = f"CLIPBOARD PRESENTER: Could not connect to GPaste signals: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._gpaste_proxy = None
@@ -222,10 +234,18 @@ class _ClipboardManagerGPaste(_ClipboardManager):
         if not self._original_active_state:
             msg = "CLIPBOARD PRESENTER: Restoring inactive state by disabling tracking."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._gpaste_proxy.Track(False)
-            new_state = self._props_proxy.Get("org.gnome.GPaste2", "Active")
-            msg = f"CLIPBOARD PRESENTER: Is active now: {bool(new_state)}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            try:
+                self._gpaste_proxy.Track(False, timeout=self._DBUS_TIMEOUT_MS)
+                new_state = self._props_proxy.Get(
+                    "org.gnome.GPaste2",
+                    "Active",
+                    timeout=self._DBUS_TIMEOUT_MS,
+                )
+                msg = f"CLIPBOARD PRESENTER: Is active now: {bool(new_state)}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+            except (DBusError, TimeoutError) as error:
+                msg = f"CLIPBOARD PRESENTER: Could not restore GPaste state: {error}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self._gpaste_proxy = None
         self._props_proxy = None
@@ -239,8 +259,11 @@ class _ClipboardManagerGPaste(_ClipboardManager):
             return ""
 
         try:
-            result = self._gpaste_proxy.GetElementAtIndex(0)[1]
-        except DBusError as error:
+            result = self._gpaste_proxy.GetElementAtIndex(
+                0,
+                timeout=self._DBUS_TIMEOUT_MS,
+            )[1]
+        except (DBusError, TimeoutError) as error:
             msg = f"GPASTE: Could not get clipboard contents: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
@@ -256,7 +279,11 @@ class _ClipboardManagerGPaste(_ClipboardManager):
         if self._gpaste_proxy is None:
             return
 
-        self._gpaste_proxy.Add(text)
+        try:
+            self._gpaste_proxy.Add(text, timeout=self._DBUS_TIMEOUT_MS)
+        except (DBusError, TimeoutError) as error:
+            msg = f"GPASTE: Could not set clipboard contents: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
 
 class _ClipboardManagerKlipper(_ClipboardManager):
