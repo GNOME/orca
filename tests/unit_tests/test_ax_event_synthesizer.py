@@ -54,6 +54,7 @@ class TestAXEventSynthesizer:
             "orca.ax_device_manager",
             "orca.ax_object",
             "orca.ax_text",
+            "orca.ax_utilities",
             "orca.ax_utilities_action",
             "orca.ax_utilities_component",
             "orca.ax_utilities_debugging",
@@ -168,8 +169,8 @@ class TestAXEventSynthesizer:
         from orca.ax_event_synthesizer import AXEventSynthesizer
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.find_ancestor.return_value = None
+        ax_utilities_mock = essential_modules["orca.ax_utilities"].AXUtilities
+        ax_utilities_mock.find_ancestor.return_value = None
         result = AXEventSynthesizer._is_scrolled_off_screen(mock_accessible)
         assert result is False
 
@@ -184,8 +185,8 @@ class TestAXEventSynthesizer:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         mock_ancestor = test_context.Mock(spec=Atspi.Accessible)
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.find_ancestor.return_value = mock_ancestor
+        ax_utilities_mock = essential_modules["orca.ax_utilities"].AXUtilities
+        ax_utilities_mock.find_ancestor.return_value = mock_ancestor
         ax_component_mock = essential_modules["orca.ax_component"].AXComponent
         obj_rect = test_context.Mock()
         obj_rect.x = 200
@@ -336,8 +337,8 @@ class TestAXEventSynthesizer:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         mock_ancestor = test_context.Mock(spec=Atspi.Accessible)
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.find_ancestor.return_value = mock_ancestor
+        ax_utilities_mock = essential_modules["orca.ax_utilities"].AXUtilities
+        ax_utilities_mock.find_ancestor.return_value = mock_ancestor
         ax_uc_mock = essential_modules["orca.ax_utilities_component"].AXUtilitiesComponent
         ax_uc_mock.get_center_point.return_value = (300.0, 350.0)
         mock_scroll = test_context.Mock()
@@ -595,8 +596,8 @@ class TestAXEventSynthesizer:
         rect.x, rect.y, rect.width, rect.height = 50, 50, 100, 100
         ax_component_mock.get_rect.return_value = rect
 
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.find_ancestor.return_value = None
+        ax_utilities_mock = essential_modules["orca.ax_utilities"].AXUtilities
+        ax_utilities_mock.find_ancestor.return_value = None
 
         result = AXEventSynthesizer._is_scrolled_off_screen(mock_obj, 5)
         assert result is False
@@ -632,8 +633,8 @@ class TestAXEventSynthesizer:
         ax_uc_mock.get_rect_intersection.return_value = empty_intersection
         ax_uc_mock.is_empty_rect.return_value = True
 
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.find_ancestor.return_value = mock_ancestor
+        ax_utilities_mock = essential_modules["orca.ax_utilities"].AXUtilities
+        ax_utilities_mock.find_ancestor.return_value = mock_ancestor
 
         result = AXEventSynthesizer._is_scrolled_off_screen(mock_obj, 10)
         assert result is True
@@ -662,8 +663,8 @@ class TestAXEventSynthesizer:
         ax_uc_mock.get_rect_intersection.return_value = intersection
         ax_uc_mock.is_empty_rect.return_value = False
 
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.find_ancestor.return_value = mock_ancestor
+        ax_utilities_mock = essential_modules["orca.ax_utilities"].AXUtilities
+        ax_utilities_mock.find_ancestor.return_value = mock_ancestor
 
         result = AXEventSynthesizer._is_scrolled_off_screen(mock_obj, None)
         assert result is False
@@ -697,8 +698,8 @@ class TestAXEventSynthesizer:
         ax_text_mock = essential_modules["orca.ax_text"].AXText
         ax_text_mock.get_character_rect.return_value = empty_char_rect
 
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.find_ancestor.return_value = mock_ancestor
+        ax_utilities_mock = essential_modules["orca.ax_utilities"].AXUtilities
+        ax_utilities_mock.find_ancestor.return_value = mock_ancestor
 
         result = AXEventSynthesizer._is_scrolled_off_screen(mock_obj, 8)
         assert result is False

@@ -25,30 +25,50 @@ from __future__ import annotations
 import time
 from typing import TYPE_CHECKING
 
+import gi
+
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 from . import debug
 from .ax_object import AXObject
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-
-    import gi
-
-    gi.require_version("Atspi", "2.0")
-    from gi.repository import Atspi
+    from collections.abc import Callable, Iterator
 
 
 class AXUtilitiesObject:
     """Utilities for obtaining information about accessible objects."""
 
     @staticmethod
+    def _iter_ancestors(obj: Atspi.Accessible) -> Iterator[Atspi.Accessible]:
+        """Yields the ancestors of obj, starting with its parent."""
+
+        if not AXObject.is_valid(obj):
+            return
+
+        seen = {obj}
+        parent = AXObject.get_parent(obj)
+        while parent:
+            if parent in seen:
+                tokens = [
+                    "AXUtilitiesObject: Circular tree suspected while walking ancestors.",
+                    parent,
+                    "already seen in:",
+                    list(seen),
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return
+
+            yield parent
+            seen.add(parent)
+            parent = AXObject.get_parent(parent)
+
+    @staticmethod
     def _get_ancestors(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of the ancestors of obj, starting with its parent."""
 
-        ancestors = []
-        parent = AXObject.get_parent(obj)
-        while parent:
-            ancestors.append(parent)
-            parent = AXObject.get_parent(parent)
+        ancestors = list(AXUtilitiesObject._iter_ancestors(obj))
         ancestors.reverse()
         return ancestors
 
@@ -115,28 +135,11 @@ class AXUtilitiesObject:
     ) -> Atspi.Accessible | None:
         """Returns the ancestor of obj if the function pred is true"""
 
-        if not AXObject.is_valid(obj):
-            return None
-
-        # Keep track of objects we've encountered in order to handle broken trees.
-        seen = {obj}
-        parent = AXObject.get_parent_checked(obj)
-        while parent:
-            if parent in seen:
-                tokens = [
-                    "AXUtilitiesObject: Circular tree suspected in find_ancestor.",
-                    parent,
-                    "already seen in:",
-                    list(seen),
-                ]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return None
-
-            if pred(parent):
-                return parent
-
-            seen.add(parent)
-            parent = AXObject.get_parent_checked(parent)
+        for ancestor in AXUtilitiesObject._iter_ancestors(obj):
+            if pred(ancestor):
+                return ancestor
+            if AXObject.get_role(ancestor) in (Atspi.Role.INVALID, Atspi.Role.APPLICATION):
+                break
 
         return None
 

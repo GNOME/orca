@@ -230,7 +230,7 @@ class Utilities:
     def get_top_level_document_for_object(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the top-level document containing obj."""
 
-        return AXUtilities.find_ancestor_inclusive(obj, self.is_top_level_document)
+        return AXUtilities.find_outermost_ancestor_inclusive(obj, self.is_document)
 
     def get_document_for_object(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the nearest document ancestor of obj, or obj if it is a document."""

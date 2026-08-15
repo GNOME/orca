@@ -132,7 +132,8 @@ class TestAXUtilitiesObject:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(AXObject, "get_parent_checked", return_value=None)
+        test_context.patch_object(AXObject, "get_parent", return_value=None)
+        test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.PANEL)
         result = AXUtilitiesObject.is_ancestor(mock_accessible, mock_accessible, inclusive=False)
         assert result is False
 
@@ -146,7 +147,8 @@ class TestAXUtilitiesObject:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         mock_ancestor = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(AXObject, "get_parent_checked", return_value=mock_ancestor)
+        test_context.patch_object(AXObject, "get_parent", return_value=mock_ancestor)
+        test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.PANEL)
         result = AXUtilitiesObject.is_ancestor(mock_accessible, mock_ancestor)
         assert result is True
 
@@ -160,7 +162,8 @@ class TestAXUtilitiesObject:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         mock_ancestor = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(AXObject, "get_parent_checked", return_value=None)
+        test_context.patch_object(AXObject, "get_parent", return_value=None)
+        test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.PANEL)
         result = AXUtilitiesObject.is_ancestor(mock_accessible, mock_ancestor)
         assert result is False
 
@@ -437,12 +440,13 @@ class TestAXUtilitiesObject:
         mock_parent = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
 
-        def mock_get_parent_checked(obj) -> object:
+        def mock_get_parent(obj) -> object:
             if obj == mock_accessible:
                 return mock_parent
             return None
 
-        test_context.patch_object(AXObject, "get_parent_checked", new=mock_get_parent_checked)
+        test_context.patch_object(AXObject, "get_parent", new=mock_get_parent)
+        test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.PANEL)
 
         def match_parent(obj) -> bool:
             return obj == mock_parent
@@ -462,14 +466,15 @@ class TestAXUtilitiesObject:
         mock_grandparent = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
 
-        def mock_get_parent_checked(obj) -> object:
+        def mock_get_parent(obj) -> object:
             if obj == mock_accessible:
                 return mock_parent
             if obj == mock_parent:
                 return mock_grandparent
             return None
 
-        test_context.patch_object(AXObject, "get_parent_checked", new=mock_get_parent_checked)
+        test_context.patch_object(AXObject, "get_parent", new=mock_get_parent)
+        test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.PANEL)
 
         def match_grandparent(obj) -> bool:
             return obj == mock_grandparent
@@ -488,12 +493,13 @@ class TestAXUtilitiesObject:
         mock_parent = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
 
-        def mock_get_parent_checked(obj) -> object:
+        def mock_get_parent(obj) -> object:
             if obj == mock_accessible:
                 return mock_parent
             return None
 
-        test_context.patch_object(AXObject, "get_parent_checked", new=mock_get_parent_checked)
+        test_context.patch_object(AXObject, "get_parent", new=mock_get_parent)
+        test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.PANEL)
 
         def never_match(_obj) -> bool:
             return False
@@ -510,13 +516,40 @@ class TestAXUtilitiesObject:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(AXObject, "get_parent_checked", return_value=None)
+        test_context.patch_object(AXObject, "get_parent", return_value=None)
+        test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.PANEL)
 
         def always_true(_obj) -> bool:
             return True
 
         result = AXUtilitiesObject.find_ancestor(mock_accessible, always_true)
         assert result is None
+
+    def test_find_ancestor_stops_at_application(self, test_context: OrcaTestContext) -> None:
+        """Test finding an ancestor does not continue above the application."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_object import AXObject
+        from orca.ax_utilities_object import AXUtilitiesObject
+
+        obj = test_context.Mock(spec=Atspi.Accessible)
+        parent = test_context.Mock(spec=Atspi.Accessible)
+        application = test_context.Mock(spec=Atspi.Accessible)
+        desktop = test_context.Mock(spec=Atspi.Accessible)
+        parents = {obj: parent, parent: application, application: desktop, desktop: None}
+        roles = {
+            parent: Atspi.Role.PANEL,
+            application: Atspi.Role.APPLICATION,
+            desktop: Atspi.Role.DESKTOP_FRAME,
+        }
+        test_context.patch_object(AXObject, "is_valid", return_value=True)
+        get_parent = test_context.patch_object(AXObject, "get_parent", side_effect=parents.get)
+        test_context.patch_object(AXObject, "get_role", side_effect=roles.get)
+
+        result = AXUtilitiesObject.find_ancestor(obj, lambda candidate: candidate == desktop)
+
+        assert result is None
+        assert [call.args[0] for call in get_parent.call_args_list] == [obj, parent]
 
     def test_find_outermost_ancestor_inclusive(self, test_context: OrcaTestContext) -> None:
         """Test the outermost matching ancestor is returned in one traversal."""
@@ -534,6 +567,52 @@ class TestAXUtilitiesObject:
             inner_match: outer_match,
             outer_match: root,
             root: None,
+        }
+        test_context.patch_object(AXObject, "is_valid", return_value=True)
+        test_context.patch_object(AXObject, "get_parent", side_effect=parents.get)
+
+        result = AXUtilitiesObject.find_outermost_ancestor_inclusive(
+            obj,
+            lambda candidate: candidate in {inner_match, outer_match},
+        )
+
+        assert result == outer_match
+
+    def test_find_outermost_ancestor_inclusive_invalid(self, test_context: OrcaTestContext) -> None:
+        """Test finding the outermost ancestor of an invalid object."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_object import AXObject
+        from orca.ax_utilities_object import AXUtilitiesObject
+
+        obj = test_context.Mock(spec=Atspi.Accessible)
+        predicate = test_context.Mock(return_value=True)
+        test_context.patch_object(AXObject, "is_valid", return_value=False)
+        get_parent = test_context.patch_object(AXObject, "get_parent")
+
+        result = AXUtilitiesObject.find_outermost_ancestor_inclusive(obj, predicate)
+
+        assert result is None
+        predicate.assert_not_called()
+        get_parent.assert_not_called()
+
+    def test_find_outermost_ancestor_inclusive_circular_tree(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test finding the outermost ancestor stops at a circular parent chain."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_object import AXObject
+        from orca.ax_utilities_object import AXUtilitiesObject
+
+        obj = test_context.Mock(spec=Atspi.Accessible)
+        inner_match = test_context.Mock(spec=Atspi.Accessible)
+        outer_match = test_context.Mock(spec=Atspi.Accessible)
+        parents = {
+            obj: inner_match,
+            inner_match: outer_match,
+            outer_match: inner_match,
         }
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         test_context.patch_object(AXObject, "get_parent", side_effect=parents.get)
