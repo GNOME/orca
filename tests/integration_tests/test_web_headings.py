@@ -138,3 +138,23 @@ def test_no_wrapping_when_disabled(web_headings: NativeAppSession) -> None:
         assert _next(session, keyboard.KEYSYM_1) == ["1", "No more headings at level 1."]
     finally:
         session.orca.set("StructuralNavigator", "NavigationWraps", True)
+
+
+@pytest.mark.native_app
+def test_heading_navigation_after_unrelated_page_change(
+    web_headings: NativeAppSession,
+) -> None:
+    """Tests heading navigation right after content elsewhere on the page changes."""
+
+    session = web_headings
+    move_to_top(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert speech(session) == ["Add", "button"]
+
+    # The list is not an ancestor of focus, so Orca refreshes its cache silently.
+    keyboard.tap_key(keyboard.KEYSYM_SPACE)
+    assert speech(session) == []
+
+    assert _next(session, keyboard.KEYSYM_H) == ["h", "Section One", "heading 2"]
+    assert _next(session, keyboard.KEYSYM_H) == ["h", "Sub A", "heading 3"]

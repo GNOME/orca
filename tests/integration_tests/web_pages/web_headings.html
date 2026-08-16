@@ -3,10 +3,21 @@
 <head>
 <meta charset="utf-8">
 <title>Orca Web Headings ready</title>
+<script>
+let counter = 0;
+function addItem() {
+  const li = document.createElement("li");
+  counter += 1;
+  li.textContent = "Item " + counter;
+  document.getElementById("list").appendChild(li);
+}
+</script>
 </head>
 <body>
 <h1>Doc Title</h1>
 <p>Intro.</p>
+<p><button type="button" onclick="addItem()">Add</button></p>
+<ul id="list"></ul>
 <h2>Section One</h2>
 <h3>Sub A</h3>
 <p>Body A.</p>

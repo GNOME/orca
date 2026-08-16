@@ -245,11 +245,20 @@ class Script(default.Script):
             prior_reason = "object in table"
 
         if prior_reason:
-            tokens = ["WEB: Using prior context for presentation:", prior_reason]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             prior_context = self.utilities.get_prior_context()
+            tokens = [
+                f"WEB: Using prior context for presentation: {prior_reason}. Prior context:",
+                prior_context,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if prior_context is not None:
                 prior_obj, _prior_offset = prior_context
+            if prior_obj is None:
+                prior_obj, prior_offset = self.utilities.get_caret_context(
+                    search_if_needed=False,
+                )
+                tokens = ["WEB: Using:", prior_obj, f"{prior_offset} as prior context."]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         document = self.utilities.get_document_for_object(obj)
         obj = AXEventSynthesizer.scroll_to_center(obj, start_offset=0, root=document)

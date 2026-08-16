@@ -109,7 +109,7 @@ class AXUtilitiesDebugging:
         elif isinstance(obj, Atspi.Rect):
             string = f"(x:{obj.x}, y:{obj.y}, width:{obj.width}, height:{obj.height})"
 
-        elif isinstance(obj, (list, set)):
+        elif isinstance(obj, (list, set, tuple)):
             string = f"[{', '.join(map(AXUtilitiesDebugging.as_string, obj))}]"
 
         elif isinstance(obj, dict):
