@@ -1759,28 +1759,22 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        if structural_navigator.get_navigator().last_input_event_was_navigation_command():
+            msg = "WEB: Deferring selection change caused by structural navigation."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if table_navigator.get_navigator().last_input_event_was_navigation_command():
+            msg = "WEB: Deferring selection change caused by table navigation."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        char = AXText.get_character_at_offset(event.source)[0]
+        manager = input_event_manager.get_manager()
         event_is_for_managed_selection = (
             text_selection_manager.get_manager().get_current_selection_command(event.source)
             is not None
         )
-        if structural_navigator.get_navigator().last_input_event_was_navigation_command():
-            if not event_is_for_managed_selection:
-                msg = "WEB: Ignoring: Last input event was structural navigation command."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return True
-            msg = "WEB: Deferring managed selection change caused by structural navigation."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        if table_navigator.get_navigator().last_input_event_was_navigation_command():
-            if not event_is_for_managed_selection:
-                msg = "WEB: Ignoring: Last input event was table navigation command."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return True
-            msg = "WEB: Deferring managed selection change caused by table navigation."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        char = AXText.get_character_at_offset(event.source)[0]
-        manager = input_event_manager.get_manager()
         if (
             char == "\ufffc"
             and not manager.last_event_was_caret_selection()

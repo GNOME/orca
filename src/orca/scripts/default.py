@@ -922,7 +922,14 @@ class Script(script.Script):
     def _on_text_selection_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:text-selection-changed accessibility events."""
 
-        if AXUtilities.is_focusable(event.source) and not AXUtilities.is_focused(event.source):
+        selection_manager = text_selection_manager.get_manager()
+        selection_command = selection_manager.get_selection_command_for_object(event.source)
+        event_is_from_orca_selection = selection_command is not None
+        if (
+            AXUtilities.is_focusable(event.source)
+            and not AXUtilities.is_focused(event.source)
+            and not event_is_from_orca_selection
+        ):
             msg = "DEFAULT: Ignoring event from focusable but unfocused source"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -932,7 +939,7 @@ class Script(script.Script):
         # missing upon undo, handle them in an app or toolkit script.
 
         reason = AXUtilities.get_text_event_reason(event)
-        if reason == TextEventReason.UNKNOWN:
+        if reason == TextEventReason.UNKNOWN and not event_is_from_orca_selection:
             msg = "DEFAULT: Ignoring event because reason for change is unknown"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             AXUtilities.update_cached_selected_text(event.source)
@@ -969,7 +976,22 @@ class Script(script.Script):
             AXUtilities.update_cached_selected_text(event.source)
             return True
 
-        text_selection_presenter.get_presenter().present_text_selection_change(self, event.source)
+        selection_objs = (event.source,)
+        if selection_command is not None:
+            selection_objs = selection_command.get_objects() or selection_objs
+            container = selection_command.get_selection_container()
+            if container is not None and AXUtilities.is_document(container):
+                selection_objs = (event.source,)
+        tokens = ["DEFAULT: Reconciling text selection changes in", selection_objs]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        for selection_obj in selection_objs:
+            if reason == TextEventReason.SELECTION_UNPRESENTABLE:
+                selection_manager.update_state_for_unpresentable_selection_change(selection_obj)
+            else:
+                text_selection_presenter.get_presenter().present_text_selection_change(
+                    self,
+                    selection_obj,
+                )
         self.update_braille(event.source)
         return True
 

@@ -771,3 +771,71 @@ class TestTextSelectionPresenter:
 
         handle_basic_change.assert_called_once_with(script, child, True)
         script.say_phrase.assert_not_called()
+
+    def test_document_text_change_accepts_equivalent_anchor_position(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test an equivalent ancestor/descendant anchor is not treated as changed."""
+
+        self._setup_dependencies(test_context)
+        from orca.text_selection_presenter import AXUtilities, TextSelectionPresenter, messages
+
+        presenter = TextSelectionPresenter()
+        old_start = (test_context.Mock(), 0)
+        old_end = (test_context.Mock(), 14)
+        normalized_start = (test_context.Mock(), 0)
+        new_end = (test_context.Mock(), 8)
+        test_context.patch_object(
+            AXUtilities,
+            "compare_text_positions",
+            side_effect=[0, 1, -1],
+        )
+
+        result = presenter._get_document_text_change(
+            old_start,
+            old_end,
+            normalized_start,
+            new_end,
+        )
+
+        assert result == (old_end, new_end, True, False, messages.TEXT_SELECTED)
+
+    def test_document_selection_removed_outside_selection_command_is_concise(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test removing a document selection does not repeat its former text."""
+
+        self._setup_dependencies(test_context)
+        from orca.text_selection_presenter import (
+            AXUtilities,
+            TextSelectionPresenter,
+            messages,
+            presentation_manager,
+        )
+
+        presenter = TextSelectionPresenter()
+        script = test_context.Mock()
+        start_obj = test_context.Mock()
+        end_obj = test_context.Mock()
+        old_start = (start_obj, 0)
+        old_end = (end_obj, 10)
+        no_selection = (None, -1)
+        expand = test_context.patch_object(
+            AXUtilities,
+            "expand_eocs_in_range",
+        )
+
+        assert presenter._present_document_text_change(
+            script,
+            old_start,
+            old_end,
+            no_selection,
+            no_selection,
+            True,
+        )
+        expand.assert_not_called()
+        presentation_manager.get_manager.return_value.speak_message.assert_called_once_with(
+            messages.SELECTION_REMOVED,
+        )
