@@ -537,3 +537,188 @@ class TestTextSelectionPresenter:
         assert presenter.present_text_selection_change(script, obj)
         selection_manager.get_current_selection_command.assert_any_call(document)
         handle_document_change.assert_called_once_with(script, obj, True)
+
+    def test_document_image_selection_change_presents_image(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test an image endpoint is presented when its changed text range is empty."""
+
+        dependencies = self._setup_dependencies(test_context)
+        from orca.text_selection_presenter import (
+            AXUtilities,
+            TextSelectionPresenter,
+            messages,
+            presentation_manager,
+            speech_presenter,
+        )
+
+        presenter = TextSelectionPresenter()
+        script = test_context.Mock()
+        text_obj = test_context.Mock()
+        image = test_context.Mock()
+        old_start = (text_obj, 0)
+        old_end = (text_obj, 10)
+        start = old_start
+        end = (image, 1)
+        manager = dependencies["orca.text_selection_manager"].get_manager.return_value
+        manager.is_selection_change_from_selection_command.return_value = True
+        speech_presenter.get_presenter.return_value.get_only_speak_displayed_text.return_value = (
+            False
+        )
+        test_context.patch_object(
+            presenter,
+            "_get_document_text_change",
+            return_value=(old_end, end, True, False, messages.TEXT_SELECTED),
+        )
+        test_context.patch_object(AXUtilities, "expand_eocs_in_range", return_value="")
+        test_context.patch_object(
+            AXUtilities,
+            "is_image_or_canvas",
+            side_effect=lambda obj: obj == image,
+        )
+
+        assert presenter._present_document_text_change(
+            script,
+            old_start,
+            old_end,
+            start,
+            end,
+            True,
+        )
+        presentation_manager.get_manager.return_value.present_object.assert_called_once_with(
+            script,
+            image,
+            generate_braille=False,
+        )
+        script.present_object.assert_not_called()
+        presentation_manager.get_manager.return_value.speak_message.assert_called_once_with(
+            messages.TEXT_SELECTED
+        )
+
+    def test_embedded_text_change_uses_basic_presentation(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test an embedded text object's selection change is presented directly."""
+
+        self._setup_dependencies(test_context)
+        from orca.text_selection_presenter import (
+            AXObject,
+            AXText,
+            AXUtilities,
+            TextSelectionPresenter,
+            messages,
+            speech_presenter,
+        )
+
+        presenter = TextSelectionPresenter()
+        script = test_context.Mock()
+        parent = test_context.Mock()
+        child = test_context.Mock()
+        test_context.patch_object(AXText, "get_substring", return_value="\ufffc")
+        test_context.patch_object(AXUtilities, "find_child_at_offset", return_value=child)
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        speech_presenter.get_presenter.return_value.get_only_speak_displayed_text.return_value = (
+            False
+        )
+        handle_basic_change = test_context.patch_object(presenter, "_handle_basic_change")
+
+        presenter._present_changes(
+            script,
+            parent,
+            [[11, 12, messages.TEXT_UNSELECTED]],
+            True,
+            False,
+        )
+
+        handle_basic_change.assert_called_once_with(script, child, True)
+
+    def test_embedded_non_text_change_uses_presentation_manager(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test a selected non-text child is presented without invoking navigation."""
+
+        self._setup_dependencies(test_context)
+        from orca.text_selection_presenter import (
+            AXObject,
+            AXText,
+            AXUtilities,
+            TextSelectionPresenter,
+            messages,
+            presentation_manager,
+            speech_presenter,
+        )
+
+        presenter = TextSelectionPresenter()
+        script = test_context.Mock()
+        parent = test_context.Mock()
+        child = test_context.Mock()
+        test_context.patch_object(AXText, "get_substring", return_value="\ufffc")
+        test_context.patch_object(AXUtilities, "find_child_at_offset", return_value=child)
+        test_context.patch_object(AXObject, "supports_text", return_value=False)
+        speech_presenter.get_presenter.return_value.get_only_speak_displayed_text.return_value = (
+            False
+        )
+
+        presenter._present_changes(
+            script,
+            parent,
+            [[11, 12, messages.TEXT_SELECTED]],
+            True,
+            False,
+        )
+
+        presentation_manager.get_manager.return_value.present_object.assert_called_once_with(
+            script,
+            child,
+            generate_braille=False,
+        )
+        script.present_object.assert_not_called()
+        presentation_manager.get_manager.return_value.speak_message.assert_called_once_with(
+            messages.TEXT_SELECTED
+        )
+
+    def test_whitespace_before_changed_child_is_not_presented_separately(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test a changed child absorbs an adjacent whitespace-only announcement."""
+
+        self._setup_dependencies(test_context)
+        from orca.text_selection_presenter import (
+            AXObject,
+            AXText,
+            AXUtilities,
+            TextSelectionPresenter,
+            messages,
+            speech_presenter,
+        )
+
+        presenter = TextSelectionPresenter()
+        script = test_context.Mock()
+        parent = test_context.Mock()
+        child = test_context.Mock()
+        test_context.patch_object(AXText, "get_substring", return_value=" \ufffc")
+        test_context.patch_object(AXUtilities, "find_child_at_offset", return_value=child)
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        speech_presenter.get_presenter.return_value.get_only_speak_displayed_text.return_value = (
+            False
+        )
+        handle_basic_change = test_context.patch_object(
+            presenter,
+            "_handle_basic_change",
+            return_value=True,
+        )
+
+        presenter._present_changes(
+            script,
+            parent,
+            [[10, 12, messages.TEXT_SELECTED]],
+            True,
+            False,
+        )
+
+        handle_basic_change.assert_called_once_with(script, child, True)
+        script.say_phrase.assert_not_called()

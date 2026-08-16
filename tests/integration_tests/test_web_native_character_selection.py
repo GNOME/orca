@@ -78,7 +78,7 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
     add_text("Second link")
     selected.append([])
     add_text("Clickable region")
-    selected.extend([[], [], []])
+    selected.extend([[], ["Red square", "image", "selected"], []])
     add_text(LONG_PARAGRAPH)
 
     unselected = []

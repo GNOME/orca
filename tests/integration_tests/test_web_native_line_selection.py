@@ -60,7 +60,7 @@ def test_line_selection_and_unselection(web_native_text_selection: NativeAppSess
         ["First link", "selected"],
         ["Second link", "selected"],
         ["Clickable region", "selected"],
-        [],
+        ["Red square", "image", "selected"],
         [
             "This is a sufficiently long paragraph of body text so that it qualifies as a large "
             "object for structural navigation, which targets substantial chunks of readable",
@@ -76,7 +76,7 @@ def test_line_selection_and_unselection(web_native_text_selection: NativeAppSess
             "rather than short fragments or individual controls.",
             "unselected",
         ],
-        [],
+        ["Red square", "image", "unselected"],
         ["Clickable region", "unselected"],
         ["Second link", "unselected"],
         ["First link", "unselected"],

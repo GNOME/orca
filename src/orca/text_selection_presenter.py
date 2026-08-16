@@ -139,7 +139,9 @@ class TextSelectionPresenter:
             string = AXText.get_substring(obj, start, end)
             ends_with_child = string.endswith("\ufffc")
             effective_end = end - 1 if ends_with_child else end
-            message_presented = False
+            child = (
+                AXUtilities.find_child_at_offset(obj, effective_end) if ends_with_child else None
+            )
             tokens = [
                 "TEXT SELECTION PRESENTER: Presenting change in",
                 obj,
@@ -148,6 +150,24 @@ class TextSelectionPresenter:
                 f"ends with child: {ends_with_child}",
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+            child_processed = False
+            message_presented = False
+            destination_child_change_presented = False
+            if child is not None and string[:-1].isspace() and AXObject.supports_text(child):
+                child_processed = True
+                destination_child_change_presented = self._handle_basic_change(
+                    script,
+                    child,
+                    speak_message,
+                )
+                if destination_child_change_presented:
+                    tokens = [
+                        "TEXT SELECTION PRESENTER: Suppressing whitespace before changed child",
+                        child,
+                    ]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                    continue
 
             if len(string) > 5000 and speak_message:
                 if message == messages.TEXT_SELECTED:
@@ -161,18 +181,28 @@ class TextSelectionPresenter:
                 message_presented = True
             else:
                 script.say_phrase(obj, start, effective_end)
-                if speak_message and not ends_with_child:
+                if speak_message and (not ends_with_child or child_processed):
                     presentation_manager.get_manager().speak_message(message)
                     message_presented = True
 
-            destination_child_change_presented = False
             if ends_with_child:
-                child = AXUtilities.find_child_at_offset(obj, effective_end)
-                destination_child_change_presented = self._handle_basic_change(
-                    script,
-                    child,
-                    speak_message,
-                )
+                if child is None:
+                    continue
+                if AXObject.supports_text(child) and not child_processed:
+                    destination_child_change_presented = self._handle_basic_change(
+                        script,
+                        child,
+                        speak_message,
+                    )
+                else:
+                    presentation_manager.get_manager().present_object(
+                        script,
+                        child,
+                        generate_braille=False,
+                    )
+                    if speak_message:
+                        presentation_manager.get_manager().speak_message(message)
+                        message_presented = True
 
             if (
                 speak_message
@@ -350,13 +380,33 @@ class TextSelectionPresenter:
             f"message='{message}'",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        if not string:
-            return False
-        spoken_string = string.strip() or string
-
         speak_message = (
             speak_message and not speech_presenter.get_presenter().get_only_speak_displayed_text()
         )
+        image = None
+        if not string:
+            image = next(
+                (
+                    obj
+                    for obj, _offset in (range_start, range_end)
+                    if AXUtilities.is_image_or_canvas(obj)
+                ),
+                None,
+            )
+            if image is None:
+                return False
+
+        if image is not None:
+            presentation_manager.get_manager().present_object(
+                script,
+                image,
+                generate_braille=False,
+            )
+            if speak_message:
+                presentation_manager.get_manager().speak_message(message)
+            return True
+
+        spoken_string = string.strip() or string
         if len(string) > 5000 and speak_message:
             if message == messages.TEXT_SELECTED:
                 presentation_manager.get_manager().speak_message(
