@@ -32,6 +32,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
+from unittest.mock import call
 
 import pytest
 
@@ -383,6 +384,78 @@ class TestCaretNavigator:
 
         assert navigator._get_end_of_file(mock_script) == ("text", 34)
         find_deepest.assert_not_called()
+
+    def test_get_end_of_file_uses_parent_of_document_static_text(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test document static-text leaves are replaced by their navigable parent."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXObject, AXText, AXUtilities, CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_script.utilities.in_document_content.return_value = True
+        mock_script.utilities.next_context.return_value = (None, -1)
+        test_context.patch_object(navigator, "_get_embedded_document_frame", return_value=None)
+        test_context.patch_object(navigator, "_get_root_object", return_value="document")
+        test_context.patch_object(
+            AXUtilities,
+            "find_deepest_descendant",
+            return_value="static text",
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "is_web_element",
+            side_effect=lambda obj: obj == "paragraph",
+        )
+        get_parent = test_context.patch_object(AXObject, "get_parent", return_value="paragraph")
+        test_context.patch_object(AXText, "get_character_count", return_value=10)
+
+        assert navigator._get_end_of_file(mock_script) == ("paragraph", 9)
+        get_parent.assert_called_once_with("static text")
+        mock_script.utilities.next_context.assert_called_once_with(
+            "paragraph",
+            9,
+            restrict_to="document",
+        )
+
+    def test_get_end_of_file_returns_text_object_when_parent_is_not_web_element(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test the text object is returned when its parent is not a web element."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXObject, AXText, AXUtilities, CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_script.utilities.in_document_content.return_value = True
+        mock_script.utilities.next_context.side_effect = [("page 2", 51), (None, -1)]
+        test_context.patch_object(navigator, "_get_embedded_document_frame", return_value=None)
+        test_context.patch_object(navigator, "_get_root_object", return_value="document")
+        test_context.patch_object(
+            AXUtilities,
+            "find_deepest_descendant",
+            return_value="page 2",
+        )
+        test_context.patch_object(AXUtilities, "is_web_element", return_value=False)
+        test_context.patch_object(AXUtilities, "is_ancestor", return_value=True)
+        get_parent = test_context.patch_object(
+            AXObject,
+            "get_parent",
+            return_value="document",
+        )
+        test_context.patch_object(AXText, "get_character_count", return_value=51)
+
+        assert navigator._get_end_of_file(mock_script) == ("page 2", 51)
+        get_parent.assert_called_once_with("page 2")
+        assert mock_script.utilities.next_context.call_args_list == [
+            call("page 2", 50, restrict_to="document"),
+            call("page 2", 51, restrict_to="document"),
+        ]
 
     def test_next_line_rejects_invalid_destination(
         self,

@@ -440,7 +440,8 @@ class CaretNavigator(Extension):
         if root is None:
             return None, -1
 
-        if not script.utilities.in_document_content(root):
+        root_in_document = script.utilities.in_document_content(root)
+        if not root_in_document:
             if not AXObject.supports_text(root):
                 return None, -1
             return root, AXText.get_character_count(root)
@@ -450,16 +451,20 @@ class CaretNavigator(Extension):
             return None, -1
 
         # Chromium includes static text leaf nodes which we ignore; use the navigable parent.
-        if not AXUtilities.is_web_element(obj):
-            obj = AXObject.get_parent(obj)
+        obj_in_document = (
+            root_in_document if obj == root else script.utilities.in_document_content(obj)
+        )
+        if obj_in_document and not AXUtilities.is_web_element(obj):
+            parent = AXObject.get_parent(obj)
+            if AXUtilities.is_web_element(parent):
+                obj = parent
 
         offset = max(0, AXText.get_character_count(obj) - 1)
         while obj:
             next_obj, next_offset = script.utilities.next_context(obj, offset, restrict_to=root)
             if next_obj is None or (next_obj, next_offset) == (obj, offset):
                 break
-            # The web context walkers ignore restrict_to, so enforce the frame boundary here.
-            if frame is not None and not AXUtilities.is_ancestor(next_obj, frame, True):
+            if not AXUtilities.is_ancestor(next_obj, root, True):
                 break
             obj, offset = next_obj, next_offset
 
