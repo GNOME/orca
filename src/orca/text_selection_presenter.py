@@ -74,6 +74,18 @@ class TextSelectionPresenter:
 
         presentation_manager.get_manager().speak_message(messages.SELECTION_REMOVED)
 
+    @staticmethod
+    def _present_pending_page_change(obj: Atspi.Accessible) -> bool:
+        """Presents a page change associated with obj's selection command."""
+
+        page_number = text_selection_manager.get_manager().take_deferred_page_change_for_selection(
+            obj
+        )
+        if page_number is None:
+            return False
+        presentation_manager.get_manager().present_message(messages.PAGE_NUMBER % page_number)
+        return True
+
     def _compute_changes(
         self,
         script: default.Script,
@@ -275,6 +287,7 @@ class TextSelectionPresenter:
         if not changes:
             return False
 
+        self._present_pending_page_change(obj)
         self._present_changes(
             script,
             obj,
@@ -402,6 +415,7 @@ class TextSelectionPresenter:
             if image is None:
                 return False
 
+        self._present_pending_page_change(selection_obj)
         if image is not None:
             presentation_manager.get_manager().present_object(
                 script,

@@ -548,6 +548,13 @@ class Script(script.Script):
         if event.detail1 < 0:
             return True
 
+        if text_selection_manager.get_manager().defer_page_change_for_current_selection(
+            event.detail1
+        ):
+            msg = "DEFAULT: Deferring page change caused by Orca's text selection"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         presentation_manager.get_manager().present_message(messages.PAGE_NUMBER % event.detail1)
         return True
 

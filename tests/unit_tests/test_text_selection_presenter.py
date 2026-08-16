@@ -51,6 +51,7 @@ class TestTextSelectionPresenter:
         selection_manager = dependencies["orca.text_selection_manager"].get_manager.return_value
         selection_manager.get_current_selection_command.return_value = None
         selection_manager.is_selection_change_from_selection_command.return_value = False
+        selection_manager.take_deferred_page_change_for_selection.return_value = None
         return dependencies
 
     def test_present_selected_text(self, test_context: OrcaTestContext) -> None:
@@ -125,6 +126,27 @@ class TestTextSelectionPresenter:
             "Text unselected"
         )
 
+    def test_present_deferred_page_change(self, test_context: OrcaTestContext) -> None:
+        """Test presenting a deferred page change for a selection command."""
+
+        dependencies = self._setup_dependencies(test_context)
+        from orca.text_selection_presenter import (
+            TextSelectionPresenter,
+            messages,
+            presentation_manager,
+        )
+
+        target = test_context.Mock()
+        messages.PAGE_NUMBER = "Page %d"
+        manager = dependencies["orca.text_selection_manager"].get_manager.return_value
+        manager.take_deferred_page_change_for_selection.return_value = 2
+
+        assert TextSelectionPresenter()._present_pending_page_change(target)
+        manager.take_deferred_page_change_for_selection.assert_called_once_with(target)
+        presentation_manager.get_manager.return_value.present_message.assert_called_once_with(
+            "Page 2"
+        )
+
     def test_newly_selected_text_is_cached_and_presented(
         self,
         test_context: OrcaTestContext,
@@ -163,9 +185,14 @@ class TestTextSelectionPresenter:
         speech_presenter.get_presenter.return_value.get_only_speak_displayed_text.return_value = (
             False
         )
+        present_page_change = test_context.patch_object(
+            presenter,
+            "_present_pending_page_change",
+        )
 
         assert presenter.present_text_selection_change(script, obj)
         update_cache.assert_called_once_with(obj)
+        present_page_change.assert_called_once_with(obj)
         script.say_phrase.assert_called_once_with(obj, 1, 2)
         presentation_manager.get_manager.return_value.speak_message.assert_called_once_with(
             messages.TEXT_SELECTED
@@ -301,6 +328,10 @@ class TestTextSelectionPresenter:
             "expand_eocs_in_range",
             return_value=" next item,",
         )
+        present_page_change = test_context.patch_object(
+            presenter,
+            "_present_pending_page_change",
+        )
 
         assert presenter._present_document_text_change(
             script,
@@ -311,6 +342,7 @@ class TestTextSelectionPresenter:
             True,
         )
 
+        present_page_change.assert_called_once_with(start_obj)
         expand.assert_called_once_with(
             start_obj,
             10,
