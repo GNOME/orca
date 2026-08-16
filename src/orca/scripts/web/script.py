@@ -50,6 +50,7 @@ from orca import (
     structural_navigator,
     table_navigator,
     text_selection_manager,
+    text_selection_presenter,
 )
 from orca.ax_event_synthesizer import AXEventSynthesizer
 from orca.ax_object import AXObject
@@ -288,6 +289,10 @@ class Script(default.Script):
         ):
             self.utilities.set_caret_position(
                 contents[0][0], contents[0][1], reason=CaretSetReason.OBJECT_PRESENTATION
+            )
+            text_selection_presenter.get_presenter().present_text_selection_change(
+                self,
+                contents[0][0],
             )
         presenter = presentation_manager.get_manager()
         if generate_braille:

@@ -68,6 +68,12 @@ class TextSelectionPresenter:
         presentation_manager.get_manager().speak_message(message)
         return True
 
+    @staticmethod
+    def present_selection_removed() -> None:
+        """Presents that the current text selection was removed."""
+
+        presentation_manager.get_manager().speak_message(messages.SELECTION_REMOVED)
+
     def _compute_changes(
         self,
         script: default.Script,

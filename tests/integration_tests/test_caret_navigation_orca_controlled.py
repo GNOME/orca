@@ -213,7 +213,7 @@ def test_selection_with_shift_plus_arrows(gtk3_text_view: NativeAppSession) -> N
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     spoken, brailled = capture(session)
-    assert spoken == ["the text view wraps it.\n", "Text unselected."]
+    assert spoken == ["Text unselected.", "the text view wraps it.\n"]
     assert brailled[-1] == BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)

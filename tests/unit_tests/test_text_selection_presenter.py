@@ -108,6 +108,23 @@ class TestTextSelectionPresenter:
             "No selected text"
         )
 
+    def test_present_selection_removed(self, test_context: OrcaTestContext) -> None:
+        """Test presenting that the current text selection was removed."""
+
+        self._setup_dependencies(test_context)
+        from orca.text_selection_presenter import (
+            TextSelectionPresenter,
+            messages,
+            presentation_manager,
+        )
+
+        messages.SELECTION_REMOVED = "Text unselected"
+        TextSelectionPresenter().present_selection_removed()
+
+        presentation_manager.get_manager.return_value.speak_message.assert_called_once_with(
+            "Text unselected"
+        )
+
     def test_newly_selected_text_is_cached_and_presented(
         self,
         test_context: OrcaTestContext,

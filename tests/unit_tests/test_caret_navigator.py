@@ -74,6 +74,14 @@ class TestCaretNavigator:
         essential_modules["orca.ax_text"].AXText.get_character_at_offset = test_context.Mock(
             return_value=("", 0, 0)
         )
+        test_context.patch(
+            "orca.ax_utilities.AXUtilities.has_selected_text",
+            return_value=False,
+        )
+        test_context.patch(
+            "orca.ax_utilities.AXUtilities.get_document_text_selection_endpoints",
+            return_value=((None, -1), (None, -1)),
+        )
 
         # Set up cmdnames with all required values for structural_navigator
         cmdnames = essential_modules["orca.cmdnames"]

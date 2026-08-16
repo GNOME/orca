@@ -1281,6 +1281,10 @@ class Script(script.Script):
             AXUtilities.set_caret_offset_with_reason(
                 obj, offset, CaretSetReason.OBJECT_PRESENTATION
             )
+            text_selection_presenter.get_presenter().present_text_selection_change(
+                self,
+                obj,
+            )
 
         presentation_manager.get_manager().present_object(
             self,
