@@ -446,6 +446,19 @@ class TextSelectionManager:
         selection_root = document or AXUtilities.get_text_selection_container(obj)
         return document, selection_root
 
+    def has_known_selection(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if obj or its selection root is known to have selected text."""
+
+        if AXUtilities.has_selected_text(obj):
+            return True
+
+        _document, selection_root = self._get_document_and_selection_root(obj)
+        if selection_root is None:
+            return False
+
+        start, end = self._get_cached_selection(ax_cache_manager.get_object_key(selection_root))
+        return start[0] is not None or end[0] is not None
+
     def _get_cached_selection(self, key: Hashable) -> SelectionBoundaries:
         """Returns the cached selection boundaries for key."""
 

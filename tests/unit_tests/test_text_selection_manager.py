@@ -210,6 +210,46 @@ class TestTextSelectionManager:
         script.utilities.find_previous_object.assert_not_called()
         script.utilities.find_next_object.assert_not_called()
 
+    @pytest.mark.parametrize(
+        "obj_has_selection,cached_boundaries,expected",
+        [
+            pytest.param(True, None, True, id="object_reports_selected_text"),
+            pytest.param(False, "recorded", True, id="root_has_recorded_boundaries"),
+            pytest.param(False, None, False, id="nothing_selected"),
+        ],
+    )
+    def test_has_known_selection(
+        self,
+        test_context: OrcaTestContext,
+        obj_has_selection: bool,
+        cached_boundaries: str | None,
+        expected: bool,
+    ) -> None:
+        """Test reporting whether obj or its selection root has a known selection."""
+
+        self._setup_dependencies(test_context)
+        from orca.text_selection_manager import AXUtilities, TextSelectionManager
+
+        manager = TextSelectionManager()
+        boundaries_cache = test_context.Mock()
+        manager._selection_boundaries = boundaries_cache
+        document = test_context.Mock(spec=Atspi.Accessible)
+        obj = test_context.Mock(spec=Atspi.Accessible)
+        recorded = ((test_context.Mock(spec=Atspi.Accessible), 0), (document, 4))
+        boundaries_cache.get.return_value = (
+            recorded if cached_boundaries else ((None, -1), (None, -1))
+        )
+        test_context.patch_object(
+            AXUtilities, "find_outermost_ancestor_inclusive", return_value=document
+        )
+        get_endpoints = test_context.patch_object(
+            AXUtilities, "get_document_text_selection_endpoints"
+        )
+        test_context.patch_object(AXUtilities, "has_selected_text", return_value=obj_has_selection)
+
+        assert manager.has_known_selection(obj) is expected
+        get_endpoints.assert_not_called()
+
     def test_update_selection_state_updates_boundaries(
         self,
         test_context: OrcaTestContext,

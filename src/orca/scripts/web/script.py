@@ -299,10 +299,11 @@ class Script(default.Script):
             self.utilities.set_caret_position(
                 contents[0][0], contents[0][1], reason=CaretSetReason.OBJECT_PRESENTATION
             )
-            text_selection_presenter.get_presenter().present_text_selection_change(
-                self,
-                contents[0][0],
-            )
+            if text_selection_manager.get_manager().has_known_selection(contents[0][0]):
+                text_selection_presenter.get_presenter().present_text_selection_change(
+                    self,
+                    contents[0][0],
+                )
         presenter = presentation_manager.get_manager()
         if generate_braille:
             presenter.display_contents(contents)
