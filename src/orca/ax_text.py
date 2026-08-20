@@ -753,15 +753,16 @@ class AXText:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
 
-        words = result.split()
-        if len(words) > 20:
-            debug_string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])}"
-        else:
-            debug_string = result
+        if debug.debugLevel <= debug.LEVEL_INFO:
+            words = result.split()
+            if len(words) > 20:
+                debug_string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])}"
+            else:
+                debug_string = result
 
-        debug_string = debug_string.replace("\n", "\\n")
-        tokens = ["AXText: Text of", obj, f"'{debug_string}'"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            debug_string = debug_string.replace("\n", "\\n")
+            tokens = ["AXText: Text of", obj, f"'{debug_string}'"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXText._CACHE.set(AXText._ALL_TEXT, key, result)
         return result
 

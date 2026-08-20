@@ -2874,12 +2874,13 @@ class Utilities(script_utilities.Utilities):
 
         # There may be other roles where we need to do this. For now, solve the known one.
         if AXUtilities.is_page_tab_list(event.source):
-            tokens = [
-                "WEB: Selection changed event is irrelevant (unrelated",
-                AXObject.get_role_name(event.source),
-                ")",
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            if debug.debugLevel <= debug.LEVEL_INFO:
+                tokens = [
+                    "WEB: Selection changed event is irrelevant (unrelated",
+                    AXObject.get_role_name(event.source),
+                    ")",
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         msg = "WEB: Selection changed event is relevant (no reason found to ignore it)"

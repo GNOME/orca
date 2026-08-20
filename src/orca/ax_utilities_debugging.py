@@ -68,7 +68,7 @@ class AXUtilitiesDebugging:
             result += f": '{AXUtilitiesDebugging._format_string(name)}'"
         if not result:
             result = "DEAD"
-        return f"[{result} ({hex(id(obj))})] "
+        return f"[{result} ({hex(id(obj))})]"
 
     @staticmethod
     def _function_as_string(obj: types.FunctionType) -> str:
@@ -110,6 +110,10 @@ class AXUtilitiesDebugging:
         elif isinstance(obj, Atspi.Rect):
             string = f"(x:{obj.x}, y:{obj.y}, width:{obj.width}, height:{obj.height})"
 
+        elif isinstance(obj, inspect.FrameInfo):
+            module_name = inspect.getmodulename(obj.filename) or "<unknown>"
+            string = f"{module_name}.{obj.function}:{obj.lineno}"
+
         elif isinstance(obj, (list, set, tuple)):
             string = f"[{', '.join(map(AXUtilitiesDebugging.as_string, obj))}]"
 
@@ -126,12 +130,8 @@ class AXUtilitiesDebugging:
             string = f"{module}.{obj.__func__.__qualname__}"
 
         elif isinstance(obj, types.FrameType):
-            module_name = inspect.getmodulename(obj.f_code.co_filename)
+            module_name = inspect.getmodulename(obj.f_code.co_filename) or "<unknown>"
             string = f"{module_name}.{obj.f_code.co_name}"
-
-        elif isinstance(obj, inspect.FrameInfo):
-            module_name = inspect.getmodulename(obj.filename) or "<unknown>"
-            string = f"{module_name}.{obj.function}:{obj.lineno}"
 
         else:
             string = str(obj)

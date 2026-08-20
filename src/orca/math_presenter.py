@@ -589,15 +589,16 @@ class MathPresenter(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
 
-        lang = libmathcat_py.GetPreference("Language")
-        style = libmathcat_py.GetPreference("SpeechStyle")
-        verbosity = libmathcat_py.GetPreference("Verbosity")
-        nav_mode = libmathcat_py.GetPreference("NavMode")
-        msg = (
-            f"MATH PRESENTER: Speech ({lang}, {style},"
-            f" verbosity={verbosity}, nav={nav_mode}): {speech}"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        if debug.debugLevel <= debug.LEVEL_INFO:
+            lang = libmathcat_py.GetPreference("Language")
+            style = libmathcat_py.GetPreference("SpeechStyle")
+            verbosity = libmathcat_py.GetPreference("Verbosity")
+            nav_mode = libmathcat_py.GetPreference("NavMode")
+            msg = (
+                f"MATH PRESENTER: Speech ({lang}, {style},"
+                f" verbosity={verbosity}, nav={nav_mode}): {speech}"
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
         return speech
 
     def get_braille_for_math(self, obj: Atspi.Accessible) -> str:
@@ -617,10 +618,11 @@ class MathPresenter(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
 
-        code = libmathcat_py.GetPreference("BrailleCode")
-        highlight = libmathcat_py.GetPreference("BrailleNavHighlight")
-        msg = f"MATH PRESENTER: Braille ({code}, highlight={highlight}): {braille}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        if debug.debugLevel <= debug.LEVEL_INFO:
+            code = libmathcat_py.GetPreference("BrailleCode")
+            highlight = libmathcat_py.GetPreference("BrailleNavHighlight")
+            msg = f"MATH PRESENTER: Braille ({code}, highlight={highlight}): {braille}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
         return braille
 
     def get_where_am_i(self) -> str:

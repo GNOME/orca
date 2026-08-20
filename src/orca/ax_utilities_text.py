@@ -1242,18 +1242,19 @@ class AXUtilitiesText:
                 start_offset = selection[0]
 
         text = " ".join(strings)
-        words = text.split()
-        if len(words) > 20:
-            debug_string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])}"
-        else:
-            debug_string = text
+        if debug.debugLevel <= debug.LEVEL_INFO:
+            words = text.split()
+            if len(words) > 20:
+                debug_string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])}"
+            else:
+                debug_string = text
 
-        tokens = [
-            "AXText: Selected text of",
-            obj,
-            f"'{debug_string}' ({start_offset}-{end_offset})",
-        ]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            tokens = [
+                "AXText: Selected text of",
+                obj,
+                f"'{debug_string}' ({start_offset}-{end_offset})",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return text, start_offset, end_offset
 
     @staticmethod

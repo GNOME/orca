@@ -1239,7 +1239,7 @@ class AXUtilities:
             return result
 
         filtered = list(filter(AXUtilitiesState.is_showing, result))
-        if result != filtered:
+        if result != filtered and debug.debugLevel <= debug.LEVEL_INFO:
             tokens = ["AXUtilities: Filtered non-showing:", set(result).difference(set(filtered))]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
