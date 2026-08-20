@@ -50,12 +50,19 @@ class AXUtilitiesDebugging:
             return ""
 
         original_length = len(string)
+        original_string = string
         string = string.replace("\n", "\\n").replace("\ufffc", "[OBJ]")
         if original_length < 100:
             return string
 
         words = string.split()
-        string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])} ({original_length} chars.)"
+        if len(words) > 10:
+            string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])}"
+        else:
+            start = original_string[:40].replace("\n", "\\n").replace("\ufffc", "[OBJ]")
+            end = original_string[-40:].replace("\n", "\\n").replace("\ufffc", "[OBJ]")
+            string = f"{start} ... {end}"
+        string += f" ({original_length} chars.)"
         return string
 
     @staticmethod
@@ -82,13 +89,17 @@ class AXUtilitiesDebugging:
     def as_string(obj: Any) -> str:
         """Turns obj into a human-consumable string."""
 
+        return AXUtilitiesDebugging._as_string(obj, False)
+
+    @staticmethod
+    def _as_string(obj: Any, format_strings: bool) -> str:
+        """Turns obj into a human-consumable string, optionally formatting string values."""
+
         if isinstance(obj, Atspi.Accessible):
             string = AXUtilitiesDebugging._accessible_as_string(obj)
 
         elif isinstance(obj, Atspi.Event):
-            any_data = AXUtilitiesDebugging._format_string(
-                AXUtilitiesDebugging.as_string(obj.any_data),
-            )
+            any_data = AXUtilitiesDebugging._as_string(obj.any_data, True)
             string = (
                 f"{obj.type} for {AXUtilitiesDebugging.as_string(obj.source)} in "
                 f"{AXUtilitiesApplication.application_as_string(obj.source)} "
@@ -115,10 +126,14 @@ class AXUtilitiesDebugging:
             string = f"{module_name}.{obj.function}:{obj.lineno}"
 
         elif isinstance(obj, (list, set, tuple)):
-            string = f"[{', '.join(map(AXUtilitiesDebugging.as_string, obj))}]"
+            values = (AXUtilitiesDebugging._as_string(value, format_strings) for value in obj)
+            string = f"[{', '.join(values)}]"
 
         elif isinstance(obj, dict):
-            stringified = {key: AXUtilitiesDebugging.as_string(value) for key, value in obj.items()}
+            stringified = {
+                key: AXUtilitiesDebugging._as_string(value, format_strings)
+                for key, value in obj.items()
+            }
             formatter = pprint.PrettyPrinter(width=150)
             string = f"{formatter.pformat(stringified)}"
 
@@ -135,6 +150,8 @@ class AXUtilitiesDebugging:
 
         else:
             string = str(obj)
+            if format_strings:
+                string = AXUtilitiesDebugging._format_string(string)
 
         return string
 
@@ -202,7 +219,7 @@ class AXUtilitiesDebugging:
             result = AXObject.get_role_name(acc)
             name = AXObject.get_name(acc)
             if name:
-                result += f": '{name}'"
+                result += f": '{AXUtilitiesDebugging._format_string(name)}'"
             if not result:
                 result = "DEAD"
             return f"[{result}]"
