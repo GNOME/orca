@@ -49,12 +49,13 @@ class AXUtilitiesDebugging:
         if not string:
             return ""
 
+        original_length = len(string)
         string = string.replace("\n", "\\n").replace("\ufffc", "[OBJ]")
-        if len(string) < 100:
+        if original_length < 100:
             return string
 
         words = string.split()
-        string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])} ({len(string)} chars.)"
+        string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])} ({original_length} chars.)"
         return string
 
     @staticmethod
