@@ -316,8 +316,8 @@ class LiveRegionPresenter(Extension):
 
         # Check for duplicate and update tracking.
         if message.is_duplicate_of(self._last_presented_message):
-            msg = f"LIVE REGION PRESENTER: Ignoring duplicate message: {text}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["LIVE REGION PRESENTER: Ignoring duplicate message:", text]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         self._last_presented_message = message
@@ -339,8 +339,8 @@ class LiveRegionPresenter(Extension):
         # do receive text changed events. Therefore we only pay attention to the latter here.
         # TODO - JD: Now that we have the "notification" event in AT-SPI, handle that here is well.
         if not event.type.startswith("object:text-changed:insert"):
-            msg = f"LIVE REGION PRESENTER: Ignoring event of type {event.type}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["LIVE REGION PRESENTER: Ignoring event of type", event.type]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if not self.get_is_enabled():
@@ -396,8 +396,8 @@ class LiveRegionPresenter(Extension):
         if not self._monitoring:
             self.msg_queue.purge_by_keep_alive()
 
-        msg = f"LIVE REGIONS: messages in queue: {len(self.msg_queue)}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["LIVE REGIONS: messages in queue:", len(self.msg_queue)]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         debug.print_message(debug.LEVEL_INFO, "^^^^^ PRESENT LIVE REGION MESSAGE ^^^^^\n")
         return len(self.msg_queue) > 0
 
@@ -566,8 +566,8 @@ class LiveRegionPresenter(Extension):
         if self.get_is_enabled() == value:
             return True
 
-        msg = f"LIVE REGION PRESENTER: Setting enabled to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["LIVE REGION PRESENTER: Setting enabled to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_ENABLED, value)
         return True
 
@@ -590,8 +590,8 @@ class LiveRegionPresenter(Extension):
         if self.get_present_live_region_from_inactive_tab() == value:
             return True
 
-        msg = f"LIVE REGION PRESENTER: Setting presentLiveRegionFromInactiveTab to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["LIVE REGION PRESENTER: Setting presentLiveRegionFromInactiveTab to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_PRESENT_FROM_INACTIVE_TAB,

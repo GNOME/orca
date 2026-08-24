@@ -127,8 +127,8 @@ class SoundPresenter:
     def set_sound_is_enabled(self, value: bool) -> bool:
         """Sets whether sound is enabled."""
 
-        msg = f"SOUND PRESENTER: Setting enable sound to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SOUND PRESENTER: Setting enable sound to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_ENABLED, value)
         return True
 
@@ -150,8 +150,8 @@ class SoundPresenter:
     def set_sound_volume(self, value: float) -> bool:
         """Sets the sound volume (0.0 to 1.0)."""
 
-        msg = f"SOUND PRESENTER: Setting sound volume to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SOUND PRESENTER: Setting sound volume to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_VOLUME, value)
         return True
 
@@ -173,8 +173,8 @@ class SoundPresenter:
     def set_beep_progress_bar_updates(self, value: bool) -> bool:
         """Sets whether beep progress bar updates are enabled."""
 
-        msg = f"SOUND PRESENTER: Setting beep progress bar updates to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SOUND PRESENTER: Setting beep progress bar updates to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_BEEP_PROGRESS_BAR_UPDATES,
@@ -200,8 +200,8 @@ class SoundPresenter:
     def set_progress_bar_beep_interval(self, value: UInt32) -> bool:
         """Sets the beep progress bar update interval in seconds."""
 
-        msg = f"SOUND PRESENTER: Setting progress bar beep interval to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SOUND PRESENTER: Setting progress bar beep interval to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_PROGRESS_BAR_BEEP_INTERVAL,
@@ -234,8 +234,8 @@ class SoundPresenter:
     def set_progress_bar_beep_verbosity(self, value: UInt32) -> bool:
         """Sets the beep progress bar verbosity level."""
 
-        msg = f"SOUND PRESENTER: Setting progress bar beep verbosity to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SOUND PRESENTER: Setting progress bar beep verbosity to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         level = ProgressBarVerbosity(value)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,

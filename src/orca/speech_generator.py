@@ -317,8 +317,8 @@ class SpeechGenerator(generator.Generator):
 
         if not language:
             language, dialect = server.get_language_and_dialect(family)
-            msg = f"SPEECH GENERATOR: Updated to: '{language}', '{dialect}'"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH GENERATOR: Updated to: '", language, "', '", dialect, "'"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return language, dialect
 

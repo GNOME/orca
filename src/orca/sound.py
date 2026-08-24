@@ -42,8 +42,8 @@ class Icon:
 
     def __init__(self, location: str, filename: str) -> None:
         self.path = os.path.join(location, filename)
-        msg = f"SOUND: Looking for '{filename}' in {location}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SOUND: Looking for '", filename, "' in", location]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def __str__(self) -> str:
         return f"Icon(path: {self.path}, is_valid: {self.is_valid()})"
@@ -113,8 +113,8 @@ class Player:
         elif message.type == Gst.MessageType.ERROR:
             self._player.set_state(Gst.State.NULL)
             error, _info = message.parse_error()
-            msg = f"SOUND ERROR: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SOUND ERROR:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _on_pipeline_message(self, _bus: Gst.Bus, message: Gst.Message) -> None:
         assert self._pipeline is not None
@@ -123,8 +123,8 @@ class Player:
         elif message.type == Gst.MessageType.ERROR:
             self._pipeline.set_state(Gst.State.NULL)
             error, _info = message.parse_error()
-            msg = f"SOUND: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SOUND:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _on_timeout(self, element: Gst.Element) -> bool:
         element.set_state(Gst.State.NULL)

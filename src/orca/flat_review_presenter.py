@@ -232,8 +232,8 @@ class FlatReviewPresenter(Extension):
             for event_type in self._EVENT_TYPES:
                 self._event_listener.deregister(event_type)
         except GLib.GError as error:
-            msg = f"FLAT REVIEW PRESENTER: Exception deregistering {event_type}: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["FLAT REVIEW PRESENTER: Exception deregistering", event_type, ":", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._registered_app = None
 
@@ -256,8 +256,13 @@ class FlatReviewPresenter(Extension):
         result = manager.previous_event_equals_or_is_release_for_event(self._last_input_event)
         string = self._last_input_event.as_single_line_string()
 
-        msg = f"FLAT REVIEW PRESENTER: Last review event ({string}) is last input event: {result}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "FLAT REVIEW PRESENTER: Last review event (",
+            string,
+            ") is last input event:",
+            result,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     def _can_use_existing_context(  # pylint: disable=too-many-return-statements
@@ -303,8 +308,8 @@ class FlatReviewPresenter(Extension):
         """Returns the flat review context, creating one if necessary."""
 
         if not self._can_use_existing_context(is_panning):
-            msg = f"FLAT REVIEW PRESENTER: Creating new context. Restrict: {self._restrict}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["FLAT REVIEW PRESENTER: Creating new context. Restrict:", self._restrict]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             previous_obj, previous_location = None, None
             if self._context is not None and not self._location_invalidated:
@@ -359,8 +364,8 @@ class FlatReviewPresenter(Extension):
             return self._context
 
         assert self._context is not None
-        msg = f"FLAT REVIEW PRESENTER: Using existing context. Restrict: {self._restrict}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["FLAT REVIEW PRESENTER: Using existing context. Restrict:", self._restrict]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         # If we are in unrestricted mode, update the context as below.
         # If the context already exists, but the active mode is not flat review, update
@@ -1552,8 +1557,8 @@ class FlatReviewPresenter(Extension):
     def set_is_restricted(self, value: bool) -> bool:
         """Sets whether flat review is restricted to the current object."""
 
-        msg = f"FLAT REVIEW PRESENTER: Setting is-restricted to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["FLAT REVIEW PRESENTER: Setting is-restricted to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_RESTRICTED, value
         )
@@ -1576,8 +1581,8 @@ class FlatReviewPresenter(Extension):
     def set_speaks_updates(self, value: bool) -> bool:
         """Sets whether changes at the review location are spoken automatically."""
 
-        msg = f"FLAT REVIEW PRESENTER: Setting speak-updates to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["FLAT REVIEW PRESENTER: Setting speak-updates to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_SPEAK_UPDATES, value
         )
@@ -1600,8 +1605,8 @@ class FlatReviewPresenter(Extension):
     def set_displays_updates(self, value: bool) -> bool:
         """Sets whether changes at the review location refresh braille automatically."""
 
-        msg = f"FLAT REVIEW PRESENTER: Setting display-updates to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["FLAT REVIEW PRESENTER: Setting display-updates to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_DISPLAY_UPDATES, value
         )
@@ -1634,8 +1639,8 @@ class FlatReviewPresenter(Extension):
     def set_focus_tracking(self, value: UInt32) -> bool:
         """Sets the flat review focus-tracking mode."""
 
-        msg = f"FLAT REVIEW PRESENTER: Setting focus-tracking to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["FLAT REVIEW PRESENTER: Setting focus-tracking to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         mode = FocusTracking(value)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_FOCUS_TRACKING, mode.name.lower()

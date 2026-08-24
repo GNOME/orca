@@ -179,8 +179,8 @@ class TextSelectionManager:
         manager = input_event_manager.get_manager()
         result = manager.last_event_equals_or_is_release_for_event(event)
         string = event.as_single_line_string()
-        msg = f"TEXT SELECTION MANAGER: Last selection event ({string}) is current: {result}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TEXT SELECTION MANAGER: Last selection event (", string, ") is current:", result]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return command if result else None
 
     def get_selection_command_for_object(
@@ -218,8 +218,8 @@ class TextSelectionManager:
             return False
 
         self._pending_page_change = command, page_number
-        msg = f"TEXT SELECTION MANAGER: Deferred page {page_number} for selection command."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TEXT SELECTION MANAGER: Deferred page", page_number, "for selection command."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     def take_deferred_page_change_for_selection(

@@ -157,8 +157,8 @@ class Script(script.Script):
         braille.setup_key_ranges(all_braille_keys)
 
         cmd_count = len(command_manager.get_manager().get_all_keyboard_commands())
-        msg = f"DEFAULT: Commands set up: {cmd_count} keyboard commands"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DEFAULT: Commands set up:", cmd_count, "keyboard commands"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def register_event_listeners(self) -> None:
         """Registers for listeners needed by this script."""
@@ -436,9 +436,9 @@ class Script(script.Script):
             return True
 
         if reason == TextEventReason.SEARCH_PRESENTABLE:
-            msg = "DEFAULT: Presenting line for search result change"
             contents = self.utilities.get_line_contents_at_offset(event.source, event.detail1)
             presentation_manager.get_manager().speak_contents(contents)
+            msg = "DEFAULT: Presenting line for search result change"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -507,8 +507,8 @@ class Script(script.Script):
             TextEventReason.UNDO,
         ]
         if reason in ignore:
-            msg = f"DEFAULT: Ignoring event due to reason ({reason})"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["DEFAULT: Ignoring event due to reason (", reason, ")"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             AXUtilities.update_cached_selected_text(event.source)
             return True
 
@@ -887,8 +887,8 @@ class Script(script.Script):
         silent_reasons = {TextEventReason.PAGE_SWITCH, TextEventReason.PASTE}
         description = reason_messages.get(reason)
         if description is not None:
-            msg = f"DEFAULT: Insertion is believed to be {description}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["DEFAULT: Insertion is believed to be", description]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             speak_string = reason not in silent_reasons
         else:
             msg = "DEFAULT: Not speaking inserted string due to lack of cause"
@@ -1285,8 +1285,14 @@ class Script(script.Script):
             word = AXText.get_substring(obj, start_offset, end_offset)
 
         text = word.replace("\n", "\\n")
-        msg = f"DEFAULT: Final word at offset {offset} is '{text}' ({start_offset}-{end_offset})"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "DEFAULT: Final word at offset",
+            offset,
+            "is '",
+            text,
+            f"' ({start_offset}-{end_offset})",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         speech_presenter.get_presenter().present_text_attribute_state(obj, start_offset)
         self.say_phrase(obj, start_offset, end_offset)

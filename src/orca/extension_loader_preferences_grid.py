@@ -536,7 +536,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             return
 
         if not self._is_deletable_extension_path(info.filepath):
-            tokens = [
+            tokens: list[Any] = [
                 "EXTENSION LOADER PREFERENCES: Refusing to delete unexpected path",
                 info.filepath,
             ]
@@ -550,8 +550,13 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             else:
                 os.remove(info.filepath)
         except OSError as error:
-            msg = f"EXTENSION LOADER PREFERENCES: Could not delete {info.filepath}: {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "EXTENSION LOADER PREFERENCES: Could not delete",
+                info.filepath,
+                ":",
+                error,
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             self._present_delete_error(info)
             self._loader.reload_user_extension(self._extensions_dir, filename)
             self.refresh()

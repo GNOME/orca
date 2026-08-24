@@ -112,8 +112,8 @@ class Script:
         )
         self._default_caret_navigation_enabled: bool = False
 
-        msg = f"SCRIPT: {self.name} initialized"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SCRIPT:", self.name, "initialized"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def __str__(self) -> str:
         return f"{self.name}"

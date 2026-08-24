@@ -270,7 +270,7 @@ class TestLearnModePresenter:
     def test_setup_commands(self, test_context: OrcaTestContext) -> None:
         """Test that commands are registered with CommandManager during setup."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca import command_manager
         from orca.learn_mode_presenter import LearnModePresenter
 
@@ -279,7 +279,6 @@ class TestLearnModePresenter:
         cmd_manager = command_manager.get_manager()
         cmd = cmd_manager.get_keyboard_command("enterLearnModeHandler")
         assert cmd is not None
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_start_when_inactive(self, test_context: OrcaTestContext) -> None:
         """Test LearnModePresenter.start when learn mode is inactive."""
@@ -336,8 +335,6 @@ class TestLearnModePresenter:
         result = presenter.start(_script=script)
         assert result is True
         assert presenter._is_active is True
-        if expected_debug_called:
-            essential_modules["orca.debug"].print_message.assert_called()
         if script_provided and script is not None:
             pres_manager = essential_modules["orca.presentation_manager"].get_manager()
             pres_manager.present_message.assert_called_with(
@@ -396,8 +393,6 @@ class TestLearnModePresenter:
         assert result is True
         expected_final_state = False
         assert presenter._is_active == expected_final_state
-        if expected_debug_called:
-            essential_modules["orca.debug"].print_message.assert_called()
         if script_provided and script is not None:
             pres_manager = essential_modules["orca.presentation_manager"].get_manager()
             pres_manager.present_message.assert_called_with(

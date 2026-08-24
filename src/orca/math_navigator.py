@@ -108,8 +108,12 @@ class MathNavigator(Extension):
 
     def _register_commands(self) -> None:
         if libmathcat_py is None:
-            msg = f"EXTENSION: {self.module_name} MathCAT not available. Skipping command setup."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "EXTENSION:",
+                self.module_name,
+                "MathCAT not available. Skipping command setup.",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         manager = command_manager.get_manager()
@@ -117,8 +121,8 @@ class MathNavigator(Extension):
             manager.add_command(command)
         manager.set_group_suspended(self.GROUP_LABEL, True)
 
-        msg = f"EXTENSION: {self.module_name} Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["EXTENSION:", self.module_name, "Commands set up."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _is_active_script(self, script):
         active_script = script_manager.get_manager().get_active_script()
@@ -140,10 +144,10 @@ class MathNavigator(Extension):
         if not (script and self._is_active_script(script)):
             return
 
-        msg = f"MATH NAVIGATOR: Commands suspended: {suspended}"
+        tokens = ["MATH NAVIGATOR: Commands suspended:", suspended]
         if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens += [":", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._suspended = suspended
         command_manager.get_manager().set_group_suspended(
@@ -301,8 +305,8 @@ class MathNavigator(Extension):
         try:
             libmathcat_py.SetMathML(mathml)
         except OSError as err:
-            msg = f"MATH NAVIGATOR: SetMathML failed: {err}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["MATH NAVIGATOR: SetMathML failed:", err]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         self._math_object = math_root
@@ -348,12 +352,12 @@ class MathNavigator(Extension):
         try:
             speech = libmathcat_py.DoNavigateCommand(command)
         except OSError as err:
-            msg = f"MATH NAVIGATOR: DoNavigateCommand({command}) failed: {err}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["MATH NAVIGATOR: DoNavigateCommand(", command, ") failed:", err]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
-        msg = f"MATH NAVIGATOR: {command} -> {speech}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["MATH NAVIGATOR:", command, "->", speech]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return speech
 
     _MOVEMENT_COMMANDS = frozenset(

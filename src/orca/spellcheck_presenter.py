@@ -27,7 +27,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
@@ -132,8 +132,8 @@ class SpellCheckPresenter:
         if self.get_spell_error() == value:
             return True
 
-        msg = f"SPELLCHECK PRESENTER: Setting spell error to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPELLCHECK PRESENTER: Setting spell error to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_SPELL_ERROR, value
         )
@@ -160,8 +160,8 @@ class SpellCheckPresenter:
         if self.get_spell_suggestion() == value:
             return True
 
-        msg = f"SPELLCHECK PRESENTER: Setting spell suggestion to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPELLCHECK PRESENTER: Setting spell suggestion to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_SPELL_SUGGESTION, value
         )
@@ -188,8 +188,8 @@ class SpellCheckPresenter:
         if self.get_present_context() == value:
             return True
 
-        msg = f"SPELLCHECK PRESENTER: Setting present context to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPELLCHECK PRESENTER: Setting present context to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_PRESENT_CONTEXT, value
         )
@@ -512,8 +512,8 @@ class SpellCheckPresenter:
 
         if self._widgets is None or self._state.completion_announced:
             reason = "Not active" if self._widgets is None else "Completion already announced"
-            msg = f"SPELL CHECK PRESENTER: {reason}; not checking for error change"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens: list[Any] = [f"SPELL CHECK PRESENTER: {reason}; not checking for error change"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if self._is_complete():
@@ -545,11 +545,13 @@ class SpellCheckPresenter:
             current_context_line = AXText.get_line_at_offset(self._widgets.document)
         context_changed = current_context_line != self._state.context_line
 
-        msg = (
-            f"SPELL CHECK PRESENTER: error_text_changed={error_text_changed} "
-            f"context_changed={context_changed}"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "SPELL CHECK PRESENTER: error_text_changed=",
+            error_text_changed,
+            "context_changed=",
+            context_changed,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not error_text_changed and not context_changed:
             msg = "SPELL CHECK PRESENTER: Error text and context unchanged; not presenting"
@@ -628,8 +630,8 @@ class SpellCheckPresenter:
             return ""
 
         string, start, end = AXText.get_line_at_offset(self._widgets.document)
-        msg = f"SPELL CHECK PRESENTER: Line at offset {start}-{end}: {string}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [f"SPELL CHECK PRESENTER: Line at offset {start}-{end}:", string]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not string or word not in string:
             return ""

@@ -133,8 +133,13 @@ class TableNavigator(Extension):
         else:
             string = "None"
 
-        msg = f"TABLE NAVIGATOR: Last navigation event ({string}) is last input event: {result}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "TABLE NAVIGATOR: Last navigation event (",
+            string,
+            ") is last input event:",
+            result,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     def _get_commands(self) -> list[Command]:
@@ -693,16 +698,16 @@ class TableNavigator(Extension):
         """Sets whether table navigation is enabled."""
 
         if self.get_is_enabled() == value:
-            msg = f"TABLE NAVIGATOR: Enabled already {value}. Refreshing command group."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["TABLE NAVIGATOR: Enabled already", value, ". Refreshing command group."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             command_manager.get_manager().set_group_enabled(
                 guilabels.KB_GROUP_TABLE_NAVIGATION,
                 value,
             )
             return True
 
-        msg = f"TABLE NAVIGATOR: Setting enabled to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TABLE NAVIGATOR: Setting enabled to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_ENABLED, value)
 
         self._last_input_event = None
@@ -714,8 +719,8 @@ class TableNavigator(Extension):
         """Re-applies the enabled state for the currently active app."""
 
         enabled = self.get_is_enabled()
-        msg = f"TABLE NAVIGATOR: Refreshing enabled state for active app: {enabled}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TABLE NAVIGATOR: Refreshing enabled state for active app:", enabled, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         command_manager.get_manager().set_group_enabled(
             guilabels.KB_GROUP_TABLE_NAVIGATION,
             enabled,
@@ -742,8 +747,8 @@ class TableNavigator(Extension):
         if self.get_skip_blank_cells() == value:
             return True
 
-        msg = f"TABLE NAVIGATOR: Setting skip blank cells to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TABLE NAVIGATOR: Setting skip blank cells to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_SKIP_BLANK_CELLS, value
         )

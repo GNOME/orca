@@ -68,8 +68,8 @@ class AXUtilitiesMath:
         parts: list[str] = []
         AXUtilitiesMath._serialize(math_root, parts)
         result = "".join(parts)
-        msg = f"AXUtilitiesMath: Reconstructed MathML: {result}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXUtilitiesMath: Reconstructed MathML:", result]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod

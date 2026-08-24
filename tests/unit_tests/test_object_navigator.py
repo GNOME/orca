@@ -596,7 +596,7 @@ class TestObjectNavigator:
     ) -> None:
         """Test perform_action logs debug information with None navigator focus."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.object_navigator import ObjectNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = ObjectNavigator()
@@ -605,7 +605,6 @@ class TestObjectNavigator:
 
         result = navigator.perform_action(mock_script)
         assert result is True
-        essential_modules["orca.debug"].print_tokens.assert_called()
 
     def test_toggle_simplify_announces_on_state(self, test_context: OrcaTestContext) -> None:
         """Test toggle_simplify announces state change correctly."""

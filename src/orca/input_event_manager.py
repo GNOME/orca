@@ -71,8 +71,8 @@ class InputEventManager:
     def pause_key_watcher(self, pause: bool = True, reason: str = "") -> None:
         """Pauses processing of keyboard input events."""
 
-        msg = f"INPUT EVENT MANAGER: Pause queueing: {pause}. {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["INPUT EVENT MANAGER: Pause queueing:", pause, ".", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._paused = pause
 
     def process_braille_event(self, event: Atspi.Event) -> bool:
@@ -287,11 +287,15 @@ class InputEventManager:
         if result and not event1.is_modifier_key() and not ignore_modifiers:
             result = event1.modifiers == event2.modifiers
 
-        msg = (
-            f"INPUT EVENT MANAGER: {event1.as_single_line_string()} "
-            f"is release for {event2.as_single_line_string()}: {result}"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "INPUT EVENT MANAGER:",
+            event1.as_single_line_string(),
+            "is release for",
+            event2.as_single_line_string(),
+            ":",
+            result,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     def last_event_equals_or_is_release_for_event(self, event):
@@ -355,9 +359,9 @@ class InputEventManager:
         if orca.is_orca(filename):
             return
 
-        msg = f"INPUT EVENT MANAGER: Refusing {method_name} call from outside Orca: {filename}"
-        debug.print_message(debug.LEVEL_WARNING, msg, True)
-        raise PermissionError(msg)
+        tokens = ["INPUT EVENT MANAGER: Refusing", method_name, "call from outside Orca:", filename]
+        debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
+        raise PermissionError(f"INPUT EVENT MANAGER: Refusing {method_name} call from outside Orca")
 
     def _last_key_and_modifiers(self):
         """Returns the last keyval name and modifiers"""

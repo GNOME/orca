@@ -54,8 +54,8 @@ class AXDocument:
             try:
                 result = Atspi.Document.get_text_selections(document)
             except GLib.GError as error:
-                msg = f"AXDocument: Exception in get_text_selections: {error}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["AXDocument: Exception in get_text_selections:", error]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return False, []
 
             selections = list(result or [])
@@ -66,11 +66,11 @@ class AXDocument:
         # Older versions can return dangling accessible pointers:
         # https://gitlab.gnome.org/GNOME/at-spi2-core/-/work_items/243
         version_string = ".".join(str(part) for part in atspi_version)
-        msg = (
-            "AXDocument: Not getting text selections due to at-spi2-core issue 243. "
-            f"Version: {version_string}"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "AXDocument: Not getting text selections due to at-spi2-core issue 243. Version:",
+            version_string,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False, []
 
     @staticmethod
@@ -97,8 +97,8 @@ class AXDocument:
         try:
             result = Atspi.Document.set_text_selections(document, [selection])
         except GLib.GError as error:
-            msg = f"AXDocument: Exception in set_text_selection: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXDocument: Exception in set_text_selection:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         tokens = [
@@ -125,8 +125,8 @@ class AXDocument:
         try:
             count = Atspi.Document.get_page_count(document)
         except GLib.GError as error:
-            msg = f"AXDocument: Exception in get_page_count: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXDocument: Exception in get_page_count:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0
 
         tokens = ["AXDocument: Page count of", document, f"is {count}"]
@@ -143,8 +143,8 @@ class AXDocument:
         try:
             result = Atspi.Document.get_locale(document)
         except GLib.GError as error:
-            msg = f"AXDocument: Exception in get_locale: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXDocument: Exception in get_locale:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
         if result is None:
@@ -166,8 +166,8 @@ class AXDocument:
         try:
             result = Atspi.Document.get_document_attributes(document)
         except GLib.GError as error:
-            msg = f"AXDocument: Exception in get_attributes_dict: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXDocument: Exception in get_attributes_dict:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return {}
 
         tokens = ["AXDocument: Attributes of", document, "are:", result]

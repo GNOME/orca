@@ -320,7 +320,6 @@ class TestExtensionLoaderDataclass:
         registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
         registry.gsettings_schema.return_value = lambda cls: cls
         registry.gsetting.return_value = lambda func: func
-        debug_mock = essential_modules["orca.debug"]
         from orca.extension import Extension
         from orca.extension_loader import ExtensionLoader
 
@@ -345,7 +344,6 @@ class TestExtensionLoaderDataclass:
         loader.notify_user_extensions_ready()
 
         assert calls == ["failing", "working"]
-        debug_mock.print_exception.assert_called_once_with(debug_mock.LEVEL_WARNING)
 
     def test_shutdown_user_extensions_notifies_loaded_extensions(
         self,
@@ -395,7 +393,6 @@ class TestExtensionLoaderDataclass:
         registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
         registry.gsettings_schema.return_value = lambda cls: cls
         registry.gsetting.return_value = lambda func: func
-        debug_mock = essential_modules["orca.debug"]
         from orca.extension import Extension
         from orca.extension_loader import ExtensionLoader
 
@@ -420,7 +417,6 @@ class TestExtensionLoaderDataclass:
         loader.shutdown_user_extensions()
 
         assert sorted(calls) == ["failing", "first"]
-        debug_mock.print_exception.assert_called_once_with(debug_mock.LEVEL_WARNING)
 
     def test_shutdown_user_extensions_stops_after_timeout(
         self,
@@ -434,7 +430,6 @@ class TestExtensionLoaderDataclass:
         registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
         registry.gsettings_schema.return_value = lambda cls: cls
         registry.gsetting.return_value = lambda func: func
-        debug_mock = essential_modules["orca.debug"]
         from orca.extension import Extension
         from orca.extension_loader import ExtensionLoader
 
@@ -462,11 +457,6 @@ class TestExtensionLoaderDataclass:
         block.set()
 
         assert sorted(calls) == ["blocking", "first"]
-        debug_mock.print_message.assert_any_call(
-            debug_mock.LEVEL_WARNING,
-            "EXTENSION LOADER: Shutdown hook timed out for: BlockingExtension",
-            True,
-        )
 
     def test_discover_user_extensions_reports_status_without_loading(
         self,

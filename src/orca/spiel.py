@@ -104,8 +104,8 @@ class SpeechServer(speechserver.SpeechServer):
         get_voice_families() prepends the list with the locale default and
         the default family.
         """
-        msg = f"SPIEL: Updating voices for provider {self._id}, got {len(voices)} voices"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPIEL: Updating voices for provider", self._id, ", got", len(voices), "voices"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         voice_profiles: tuple[tuple[str, str, None], ...] = ()
         for voice in voices:
@@ -113,8 +113,8 @@ class SpeechServer(speechserver.SpeechServer):
                 voice_profiles += ((voice.props.name, language, None),)
 
         self._current_voice_profiles = voice_profiles
-        msg = f"SPIEL: Updated voice profiles: {len(voice_profiles)} profiles"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPIEL: Updated voice profiles:", len(voice_profiles), "profiles"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     # *** Instance methods ***
 
@@ -143,8 +143,8 @@ class SpeechServer(speechserver.SpeechServer):
             self._init()
         except Exception as error:
             debug.print_exception(debug.LEVEL_WARNING)
-            msg = f"ERROR: Spiel service failed to connect {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["ERROR: Spiel service failed to connect", error]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
         else:
             SpeechServer._active_servers[server_id] = self
 
@@ -180,8 +180,8 @@ class SpeechServer(speechserver.SpeechServer):
         """
         # Use voices from the current provider, not all voices from the speaker
         if self._provider is None or len(self._provider.props.voices) == 0:
-            msg = f"SPIEL: No voices available for provider {self._id}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["SPIEL: No voices available for provider", self._id]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
         if acss_family is None:
@@ -244,16 +244,29 @@ class SpeechServer(speechserver.SpeechServer):
 
         punctuation_style = self._current_punctuation_level.name
 
-        msg = (
-            f"SPIEL: {prefix}\n"
-            f"ORCA rate {self._current_voice_properties.get(ACSS.RATE)}, "
-            f"pitch {self._current_voice_properties.get(ACSS.AVERAGE_PITCH)}, "
-            f"volume {self._current_voice_properties.get(ACSS.GAIN)}, "
-            f"language {self._get_language_and_dialect(family)[0]}, "
-            f"punctuation: {punctuation_style}\n"
-            f"SPIEL rate {rate}, pitch {pitch}, volume {volume}, language {language}"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "SPIEL:",
+            prefix,
+            "\nORCA rate",
+            self._current_voice_properties.get(ACSS.RATE),
+            ", pitch",
+            self._current_voice_properties.get(ACSS.AVERAGE_PITCH),
+            ", volume",
+            self._current_voice_properties.get(ACSS.GAIN),
+            ", language",
+            self._get_language_and_dialect(family)[0],
+            ", punctuation:",
+            punctuation_style,
+            "\nSPIEL rate",
+            rate,
+            ", pitch",
+            pitch,
+            ", volume",
+            volume,
+            ", language",
+            language,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _init(self) -> None:
         # Maintain a speaker singleton for all providers
@@ -288,10 +301,13 @@ class SpeechServer(speechserver.SpeechServer):
                 "items-changed",
                 self.update_voices,
             )
-            msg = (
-                f"SPIEL: Connected voices signal with ID {self._voices_id} for provider {self._id}"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "SPIEL: Connected voices signal with ID",
+                self._voices_id,
+                "for provider",
+                self._id,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self.update_voices(self._provider.props.voices)
         else:
             msg = "SPIEL: No voices signal connection for default server"
@@ -345,7 +361,7 @@ class SpeechServer(speechserver.SpeechServer):
         acss: ACSS | None = None,
         cap_style: CapitalizationStyle | None = None,
     ) -> None:
-        debug.print_message(debug.LEVEL_INFO, f"SPIEL Character: '{character}'")
+        debug.print_tokens(debug.LEVEL_INFO, ["SPIEL Character: '", character, "'"])
 
         if not acss:
             acss = ACSS(self._default_voice)
@@ -377,13 +393,13 @@ class SpeechServer(speechserver.SpeechServer):
         locking_state_string = event.get_locking_state_string()
         event_string = f"{event_string} {locking_state_string}".strip()
         if len(event_string) == 1:
-            msg = f"SPIEL: Speaking '{event_string}' as key"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPIEL: Speaking '", event_string, "' as key"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._apply_acss(acss)
             self.speak_character(event_string, acss)
         else:
-            msg = f"SPIEL: Speaking '{event_string}' as string"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPIEL: Speaking '", event_string, "' as string"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self.speak(event_string, acss=acss)
 
     def speak(self, text: str | None = None, acss: ACSS | None = None) -> None:
@@ -394,13 +410,13 @@ class SpeechServer(speechserver.SpeechServer):
             acss = ACSS(self._default_voice)
 
         if len(text) == 1:
-            msg = f"SPIEL: Speaking '{text}' as char"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPIEL: Speaking '", text, "' as char"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._apply_acss(acss)
             self.speak_character(text, acss)
         else:
-            msg = f"SPIEL: Speaking '{text}' as string"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPIEL: Speaking '", text, "' as string"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             utterance = self._create_utterance(text, acss)
             self._speak_utterance(utterance, acss)
 
@@ -420,13 +436,13 @@ class SpeechServer(speechserver.SpeechServer):
         else:
 
             def _utterance_started(_speaker, utterance, sayall_data):
-                debug.print_message(debug.LEVEL_INFO, f"STARTED: {utterance.props.text}")
+                debug.print_tokens(debug.LEVEL_INFO, ["STARTED:", utterance.props.text])
                 (callback, current_utterance, _) = sayall_data
                 if current_utterance == utterance:
                     callback(context, speechserver.SayAllContext.PROGRESS)
 
             def _utterance_finished(speaker, utterance, sayall_data):
-                debug.print_message(debug.LEVEL_INFO, f"FINISHED: {utterance.props.text}")
+                debug.print_tokens(debug.LEVEL_INFO, ["FINISHED:", utterance.props.text])
                 (callback, current_utterance, handlers) = sayall_data
                 if current_utterance == utterance:
                     callback(context, speechserver.SayAllContext.PROGRESS)
@@ -438,7 +454,7 @@ class SpeechServer(speechserver.SpeechServer):
                     self.say_all(utterance_iterator, callback)
 
             def _utterance_canceled(speaker, utterance, sayall_data):
-                debug.print_message(debug.LEVEL_INFO, f"CANCELED: {utterance.props.text}")
+                debug.print_tokens(debug.LEVEL_INFO, ["CANCELED:", utterance.props.text])
                 (callback, current_utterance, handlers) = sayall_data
                 if current_utterance == utterance:
                     for handler in handlers:
@@ -446,8 +462,8 @@ class SpeechServer(speechserver.SpeechServer):
                     callback(context, speechserver.SayAllContext.INTERRUPTED)
 
             def _utterance_error(speaker, utterance, error, sayall_data):
-                debug.print_message(debug.LEVEL_INFO, f"ERROR: {utterance.props.text}")
-                debug.print_message(debug.LEVEL_WARNING, f"ERROR: {error!r}")
+                debug.print_tokens(debug.LEVEL_INFO, ["ERROR:", utterance.props.text])
+                debug.print_tokens(debug.LEVEL_WARNING, [f"ERROR: {error!r}"])
                 (callback, current_utterance, handlers) = sayall_data
                 if current_utterance == utterance:
                     for handler in handlers:
@@ -455,20 +471,20 @@ class SpeechServer(speechserver.SpeechServer):
                     callback(context, speechserver.SayAllContext.INTERRUPTED)
 
             def _mark_reached(_speaker, utterance, name, sayall_data):
-                debug.print_message(debug.LEVEL_INFO, f"MARK REACHED: {name}")
+                debug.print_tokens(debug.LEVEL_INFO, ["MARK REACHED:", name])
                 (callback, current_utterance, _handlers) = sayall_data
                 if current_utterance == utterance:
                     callback(context, speechserver.SayAllContext.PROGRESS)
 
             def _range_started(_speaker, utterance, start, end, sayall_data):
-                debug.print_message(debug.LEVEL_INFO, f"RANGE STARTED: {start}-{end}")
+                debug.print_tokens(debug.LEVEL_INFO, [f"RANGE STARTED: {start}-{end}"])
                 (callback, current_utterance, _handlers) = sayall_data
                 if current_utterance == utterance:
                     # TODO: map start/end to current_offset/current_end_offset
                     callback(context, speechserver.SayAllContext.PROGRESS)
 
             def _word_started(_speaker, utterance, start, end, sayall_data):
-                debug.print_message(debug.LEVEL_INFO, f"WORD STARTED: {start}-{end}")
+                debug.print_tokens(debug.LEVEL_INFO, [f"WORD STARTED: {start}-{end}"])
                 (callback, current_utterance, _handlers) = sayall_data
                 if current_utterance == utterance:
                     context.current_offset = start
@@ -477,7 +493,7 @@ class SpeechServer(speechserver.SpeechServer):
                     callback(context, speechserver.SayAllContext.PROGRESS)
 
             def _sentence_started(_speaker, _utterance, start, end, sayall_data):
-                debug.print_message(debug.LEVEL_INFO, f"SENTENCE STARTED: {start}-{end}")
+                debug.print_tokens(debug.LEVEL_INFO, [f"SENTENCE STARTED: {start}-{end}"])
                 (callback, current_utterance, _handlers) = sayall_data
                 if current_utterance == _utterance:
                     # TODO: map start/end to current_offset/current_end_offset
@@ -550,17 +566,27 @@ class SpeechServer(speechserver.SpeechServer):
             self._speaker.cancel()
 
     def shutdown(self) -> None:
-        msg = f"SPIEL: Shutting down server {self._id}, voices_id: {self._voices_id}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens: list[Any] = [
+            "SPIEL: Shutting down server",
+            self._id,
+            ", voices_id:",
+            self._voices_id,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if self._id != SpeechServer.DEFAULT_SERVER_ID and self._voices_id is not None:
             try:
                 self._provider.props.voices.disconnect(self._voices_id)
-                msg = f"SPIEL: Successfully disconnected voices signal {self._voices_id}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["SPIEL: Successfully disconnected voices signal", self._voices_id]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 self._voices_id = None
             except Exception as error:
-                msg = f"SPIEL: Error disconnecting voices signal {self._voices_id}: {error}"
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                tokens = [
+                    "SPIEL: Error disconnecting voices signal",
+                    self._voices_id,
+                    ":",
+                    error,
+                ]
+                debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
                 self._voices_id = None
         self._maybe_shutdown()
         if self._id in SpeechServer._active_servers:
@@ -574,8 +600,8 @@ class SpeechServer(speechserver.SpeechServer):
                 self._provider.props.voices.disconnect(self._voices_id)
                 self._voices_id = None
             except Exception as error:
-                msg = f"SPIEL: Error disconnecting voices signal in reset: {error}"
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                tokens = ["SPIEL: Error disconnecting voices signal in reset:", error]
+                debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
                 self._voices_id = None
         self._init()
         if self._provider is not None:
@@ -619,24 +645,24 @@ class SpeechServer(speechserver.SpeechServer):
         """Set the speech output module to the specified provider."""
 
         if module_id not in SpeechServer._active_providers:
-            tokens = [f"SPIEL: {module_id} is not in", SpeechServer._active_providers]
+            tokens: list[Any] = [f"SPIEL: {module_id} is not in", SpeechServer._active_providers]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         if self._id == module_id:
-            msg = f"SPIEL: Already using provider {module_id}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPIEL: Already using provider", module_id]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         if self._id and self._id != SpeechServer.DEFAULT_SERVER_ID and self._voices_id is not None:
             try:
                 self._provider.props.voices.disconnect(self._voices_id)
                 self._voices_id = None
-                msg = f"SPIEL: Disconnected voices signal for old provider {self._id}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["SPIEL: Disconnected voices signal for old provider", self._id]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             except Exception as error:
-                msg = f"SPIEL: Error disconnecting voices signal: {error}"
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                tokens = ["SPIEL: Error disconnecting voices signal:", error]
+                debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
         old_id = self._id
         self._id = module_id
@@ -653,11 +679,13 @@ class SpeechServer(speechserver.SpeechServer):
                 "items-changed",
                 self.update_voices,
             )
-            msg = (
-                f"SPIEL: Connected voices signal with ID {self._voices_id} "
-                f"for new provider {self._id}"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "SPIEL: Connected voices signal with ID",
+                self._voices_id,
+                "for new provider",
+                self._id,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self.update_voices(self._provider.props.voices)
         self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % SpeechServer._SERVER_NAMES.get(
@@ -665,8 +693,8 @@ class SpeechServer(speechserver.SpeechServer):
             self._id,
         )
 
-        msg = f"SPIEL: Switched from {old_id} to {self._id}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPIEL: Switched from", old_id, "to", self._id]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def get_voice_family(self) -> VoiceFamily:
         """Returns the current voice family as a VoiceFamily dictionary."""
@@ -705,8 +733,8 @@ class SpeechServer(speechserver.SpeechServer):
                 return "exact"
             return "partial"
         except AttributeError as error:
-            msg = f"SPIEL: Error accessing voice properties: {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["SPIEL: Error accessing voice properties:", error]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
     def set_voice_family(self, family: VoiceFamily) -> None:
@@ -727,8 +755,8 @@ class SpeechServer(speechserver.SpeechServer):
         try:
             voices = self._provider.props.voices
         except AttributeError as error:
-            msg = f"SPIEL: Error getting voices from provider: {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["SPIEL: Error getting voices from provider:", error]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return
 
         partial_matches = []
@@ -741,9 +769,14 @@ class SpeechServer(speechserver.SpeechServer):
                 partial_matches.append(voice)
 
         if partial_matches:
-            msg = (
-                f"SPIEL: {len(partial_matches)} partial matches found for voice '{voice_name}'. "
-                f"Using the first ({partial_matches[0]})"
-            )
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "SPIEL:",
+                len(partial_matches),
+                "partial matches found for voice '",
+                voice_name,
+                "'. Using the first (",
+                partial_matches[0],
+                ")",
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             self._current_voice = partial_matches[0]

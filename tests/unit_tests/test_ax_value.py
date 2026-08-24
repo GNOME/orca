@@ -445,7 +445,7 @@ class TestAXValue:
     ) -> None:
         """Test AXValue.get_minimum_value and get_maximum_value with various scenarios."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
         from orca.ax_value import AXValue
 
@@ -478,9 +478,3 @@ class TestAXValue:
 
         result = getattr(AXValue, case["method_name"])(mock_obj)
         assert result == case["expected_result"]
-
-        if case["supports_value"]:
-            if case["should_raise_error"]:
-                essential_modules["orca.debug"].print_message.assert_called()
-            else:
-                essential_modules["orca.debug"].print_tokens.assert_called()

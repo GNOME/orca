@@ -31,7 +31,7 @@ import itertools
 import queue
 import threading
 import time
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
@@ -162,8 +162,15 @@ class EventManager:
     ) -> None:
         """Pauses/unpauses event queuing."""
 
-        msg = f"EVENT MANAGER: Pause queueing: {pause}. Clear queue: {clear_queue}. {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "EVENT MANAGER: Pause queueing:",
+            pause,
+            ". Clear queue:",
+            clear_queue,
+            ".",
+            reason,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._paused = pause
         if clear_queue:
             with self._gidle_lock:
@@ -263,8 +270,8 @@ class EventManager:
             try:
                 events = list(reversed(self._event_queue.queue))
             except queue.Empty as error:
-                msg = f"EVENT MANAGER: Exception in _is_obsoleted_by: {error}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["EVENT MANAGER: Exception in _is_obsoleted_by:", error]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 events = []
 
         for _priority, _counter, e in events:
@@ -305,8 +312,8 @@ class EventManager:
         # gnome-shell fires "focused" events spuriously after the Alt+Tab switcher
         # is used and something else has claimed focus.
         if AXUtilities.is_window(event.source, role) and "focused" in event_type:
-            msg = f"EVENT MANAGER: Ignoring {event_type} based on type and role"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT MANAGER: Ignoring", event_type, "based on type and role"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if AXUtilities.is_frame(event.source, role):
@@ -314,27 +321,27 @@ class EventManager:
             ignore = AXUtilities.is_mutter_x11_frames(app)
             prefix = "Ignoring" if ignore else "Not ignoring"
             reason = "application" if ignore else "role"
-            msg = f"EVENT MANAGER: {prefix} {event_type} based on {reason}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT MANAGER:", prefix, event_type, "based on", reason]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ignore
 
         # Events from the text role are typically something we want to handle.
         # One exception is a huge text insertion.
         if AXUtilities.is_text(event.source, role):
             if event_type.startswith("object:text-changed:insert") and event.detail2 > 5000:
-                msg = f"EVENT_MANAGER: Ignoring {event_type} due to size of inserted text"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["EVENT_MANAGER: Ignoring", event_type, "due to size of inserted text"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
             if not event_type.startswith("object:text-caret-moved"):
-                msg = f"EVENT_MANAGER: Not ignoring {event_type} due to role"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["EVENT_MANAGER: Not ignoring", event_type, "due to role"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return False
 
         if AXUtilities.is_notification(event.source, role) or AXUtilities.is_alert(
             event.source, role
         ):
-            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to role"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT_MANAGER: Not ignoring", event_type, "due to role"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         return None
@@ -350,14 +357,20 @@ class EventManager:
         event_type = event.type
         if focus in (event.source, event.any_data):
             reason = "source" if focus == event.source else "any_data"
-            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to {reason} being locus of focus"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "EVENT_MANAGER: Not ignoring",
+                event_type,
+                "due to",
+                reason,
+                "being locus of focus",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         source_states = AXObject.get_state_set(event.source)
         if AXUtilities.is_selected(event.source, source_states):
-            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being selected"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT_MANAGER: Not ignoring", event_type, "due to source being selected"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         # We see an unbelievable number of active-descendant-changed and selection changed
@@ -369,8 +382,8 @@ class EventManager:
             if not AXUtilities.manages_descendants(event.source, source_states) or (
                 event_type.startswith("object:state-changed:focused") and event.detail1
             ):
-                msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being focused"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["EVENT_MANAGER: Not ignoring", event_type, "due to source being focused"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return False
 
         if event_type.startswith("object:text-changed:insert") and AXUtilities.has_live_region_role(
@@ -378,8 +391,12 @@ class EventManager:
         ):
             live = AXObject.get_attribute(event.source, "live")
             if live and live != "off":
-                msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being live region"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = [
+                    "EVENT_MANAGER: Not ignoring",
+                    event_type,
+                    "due to source being live region",
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return False
 
         return None
@@ -393,13 +410,17 @@ class EventManager:
         ignore = last_app == hash(app) and time.time() - last_time < 0.1
         self._event_history[event_type] = hash(app), time.time()
         if ignore:
-            msg = f"EVENT_MANAGER: Ignoring {event_type} due to multiple instances in short time"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "EVENT_MANAGER: Ignoring",
+                event_type,
+                "due to multiple instances in short time",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if AXUtilities.is_mutter_x11_frames(app):
-            msg = f"EVENT MANAGER: Ignoring {event_type} based on application"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT MANAGER: Ignoring", event_type, "based on application"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return None
@@ -421,12 +442,12 @@ class EventManager:
 
         child = event.any_data
         if child is None or AXObject.is_dead(child):
-            msg = f"EVENT_MANAGER: Ignoring {event_type} due to null/dead event.any_data"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT_MANAGER: Ignoring", event_type, "due to null/dead event.any_data"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
         if AXUtilities.is_menu_related(child) or AXUtilities.is_image(child):
-            msg = f"EVENT_MANAGER: Ignoring {event_type} due to role of event.any_data"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT_MANAGER: Ignoring", event_type, "due to role of event.any_data"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         script = script_manager.get_manager().get_active_script()
@@ -434,8 +455,8 @@ class EventManager:
             reason = (
                 "there is no active script" if script is None else "event is not from active app"
             )
-            msg = f"EVENT MANAGER: Ignoring {event_type} because {reason}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT MANAGER: Ignoring", event_type, "because", reason]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return None
@@ -466,14 +487,14 @@ class EventManager:
                 Atspi.Role.TREE_ITEM,
             ]
             if role in ignore_name_roles:
-                msg = f"EVENT MANAGER: Ignoring {event_type} due to role of unfocused source"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["EVENT MANAGER: Ignoring", event_type, "due to role of unfocused source"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
             return False
         if "value" in event_type:
             if role in [Atspi.Role.SPLIT_PANE, Atspi.Role.SCROLL_BAR]:
-                msg = f"EVENT MANAGER: Ignoring {event_type} due to role of unfocused source"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["EVENT MANAGER: Ignoring", event_type, "due to role of unfocused source"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
             return False
 
@@ -497,8 +518,8 @@ class EventManager:
                 Atspi.Role.TREE_TABLE,
             ]
             if role in system_ignore_roles:
-                msg = f"EVENT MANAGER: Ignoring {event_type} based on role"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["EVENT MANAGER: Ignoring", event_type, "based on role"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
 
         return EventManager._ignore_state_changed_subtype(event, event_type, role)
@@ -541,8 +562,8 @@ class EventManager:
             return None
 
         if ignore:
-            msg = f"EVENT MANAGER: Ignoring {event_type} due to {reason}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT MANAGER: Ignoring", event_type, "due to", reason]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return ignore
 
     @staticmethod
@@ -553,15 +574,19 @@ class EventManager:
         if event_type.startswith("object:active-descendant-changed"):
             child = event.any_data
             if child is None or AXUtilities.is_invalid_role(child):
-                msg = f"EVENT_MANAGER: Ignoring {event_type} due to null/invalid event.any_data"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = [
+                    "EVENT_MANAGER: Ignoring",
+                    event_type,
+                    "due to null/invalid event.any_data",
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
             return False
 
         if event_type.startswith("object:selection-changed"):
             if AXObject.is_dead(event.source, AXUtilities.get_application(event.source)):
-                msg = f"EVENT MANAGER: Ignoring {event_type} from dead source"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["EVENT MANAGER: Ignoring", event_type, "from dead source"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
             return False
 
@@ -578,19 +603,19 @@ class EventManager:
         event_type = event.type
         if event_type.startswith("object:text-caret-moved"):
             if role == Atspi.Role.LABEL:
-                msg = f"EVENT MANAGER: Ignoring {event_type} due to role of unfocused source"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["EVENT MANAGER: Ignoring", event_type, "due to role of unfocused source"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
             return False
 
         if event_type.startswith("object:text-changed"):
             if "insert" in event_type and event.detail2 > 1000:
-                msg = f"EVENT MANAGER: Ignoring {event_type} due to inserted text size"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["EVENT MANAGER: Ignoring", event_type, "due to inserted text size"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
             if event_type.endswith("system") and AXUtilities.is_selectable(focus):
-                msg = f"EVENT MANAGER: Ignoring because {event_type} is suspected spam"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["EVENT MANAGER: Ignoring because", event_type, "is suspected spam"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
             return False
 
@@ -706,22 +731,26 @@ class EventManager:
         try:
             priority, counter, event = self._event_queue.get_nowait()
             self._queue_println(event, is_enqueue=False)
-            msg = f"priority: {priority.name}, counter: {counter}"
-            tokens = ["EVENT MANAGER: Dequeued", event, msg]
+            details = f"priority: {priority.name}, counter: {counter}"
+            tokens = ["EVENT MANAGER: Dequeued", event, details]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             start_time = time.time()
-            msg = (
-                f"\nvvvvv START {priority.name}-PRIORITY OBJECT EVENT {event.type.upper()} "
-                f"(queue size: {self._event_queue.qsize()}) vvvvv"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, False)
+            tokens = [
+                f"\nvvvvv START {priority.name}-PRIORITY OBJECT EVENT",
+                event.type.upper(),
+                "(queue size:",
+                self._event_queue.qsize(),
+                ") vvvvv",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, False)
             self._process_object_event(event, counter)
-            msg = (
-                f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
-                f"\n^^^^^ FINISHED {priority.name}-PRIORITY OBJECT EVENT "
-                f"{event.type.upper()} ^^^^^\n"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, False)
+            tokens = [
+                f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}",
+                f"\n^^^^^ FINISHED {priority.name}-PRIORITY OBJECT EVENT",
+                event.type.upper(),
+                "^^^^^\n",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, False)
             with self._gidle_lock:
                 if self._event_queue.empty():
                     GLib.timeout_add(2500, self._on_no_focus)
@@ -748,8 +777,8 @@ class EventManager:
         - event_type: the event type.
         """
 
-        msg = f"EVENT MANAGER: registering listener for: {event_type}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["EVENT MANAGER: registering listener for:", event_type]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if event_type in self._script_listener_counts:
             self._script_listener_counts[event_type] += 1
@@ -764,8 +793,8 @@ class EventManager:
         - event_type: the event type.
         """
 
-        msg = f"EVENT MANAGER: deregistering listener for: {event_type}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["EVENT MANAGER: deregistering listener for:", event_type]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if event_type not in self._script_listener_counts:
             return
@@ -775,8 +804,13 @@ class EventManager:
             try:
                 self._listener.deregister(event_type)
             except GLib.GError as error:
-                msg = f"EVENT MANAGER: Exception deregistering listener for {event_type}: {error}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = [
+                    "EVENT MANAGER: Exception deregistering listener for",
+                    event_type,
+                    ":",
+                    error,
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             del self._script_listener_counts[event_type]
 
     def register_script_listeners(self, script: default.Script) -> None:
@@ -925,22 +959,26 @@ class EventManager:
         """Returns True if this event should be processed."""
 
         if event_script == active_script:
-            msg = f"EVENT MANAGER: Processing {event.type}: script for event is active"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT MANAGER: Processing", event.type, ": script for event is active"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if event_script.present_if_inactive:
-            msg = f"EVENT MANAGER: Processing {event.type}: script handles events when inactive"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "EVENT MANAGER: Processing",
+                event.type,
+                ": script handles events when inactive",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if "accessible-value" in event.type and AXUtilities.is_progress_bar(event.source):
-            msg = f"EVENT MANAGER: Processing {event.type}: source is progress bar"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT MANAGER: Processing", event.type, ": source is progress bar"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        msg = f"EVENT MANAGER: Not processing {event.type} due to lack of reason"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["EVENT MANAGER: Not processing", event.type, "due to lack of reason"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
     @staticmethod
@@ -1011,8 +1049,10 @@ class EventManager:
             return
 
         if debug.debugLevel <= debug.LEVEL_INFO:
-            msg = AXUtilitiesDebugging.object_event_details_as_string(event)
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            # The details are still one string. They become tokens when the debug value tree
+            # can carry them.
+            tokens: list[Any] = [AXUtilitiesDebugging.object_event_details_as_string(event)]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         script_mgr = script_manager.get_manager()
         active_script = script_mgr.get_active_script()
@@ -1024,8 +1064,14 @@ class EventManager:
 
         if script != active_script:
             set_new_active_script, reason = self._is_activatable_event(event, script)
-            msg = f"EVENT MANAGER: Change active script: {set_new_active_script} ({reason})"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "EVENT MANAGER: Change active script:",
+                set_new_active_script,
+                "(",
+                reason,
+                ")",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             if set_new_active_script:
                 script_mgr.set_active_script(script, reason)
@@ -1036,8 +1082,8 @@ class EventManager:
 
         listener = self._find_listener(script, event.type)
         if listener is None:
-            msg = f"EVENT MANAGER: No listener for event type {event.type}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EVENT MANAGER: No listener for event type", event.type]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         listener(event)

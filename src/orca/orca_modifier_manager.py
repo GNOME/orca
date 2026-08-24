@@ -106,8 +106,8 @@ class OrcaModifierManager:
     def set_pressed_state(self, is_pressed: bool) -> None:
         """Updates the pressed state of the modifier based on event."""
 
-        msg = f"ORCA MODIFIER MANAGER: Setting pressed state to {is_pressed}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["ORCA MODIFIER MANAGER: Setting pressed state to", is_pressed]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._is_pressed = is_pressed
 
     def is_modifier_grabbed(self, modifier: str) -> bool:
@@ -182,8 +182,8 @@ class OrcaModifierManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self.remove_modifier_grab(keyboard_event.keyval_name)
 
-        msg = f"ORCA MODIFIER MANAGER: Scheduling toggle of {keyboard_event.keyval_name}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["ORCA MODIFIER MANAGER: Scheduling toggle of", keyboard_event.keyval_name]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         GLib.timeout_add(1, toggle, keyboard_event.hw_code)
 
         msg = "ORCA MODIFIER MANAGER: Scheduling re-adding grab post-toggle"
@@ -269,10 +269,10 @@ class OrcaModifierManager:
     def refresh_orca_modifiers(self, reason: str = "") -> None:
         """Refreshes the Orca modifier keys, including grabs and xmodmap."""
 
-        msg = "ORCA MODIFIER MANAGER: Refreshing Orca modifiers"
+        tokens = ["ORCA MODIFIER MANAGER: Refreshing Orca modifiers"]
         if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens += [":", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         for modifier in list(self._grabbed_modifiers.keys()):
             self.remove_modifier_grab(modifier)
@@ -313,10 +313,10 @@ class OrcaModifierManager:
     def unset_orca_modifiers(self, reason: str = "") -> None:
         """Turns the Orca modifiers back into their original purpose."""
 
-        msg = "ORCA MODIFIER MANAGER: Unsetting Orca modifiers"
+        tokens = ["ORCA MODIFIER MANAGER: Unsetting Orca modifiers"]
         if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens += [":", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._modifiers_are_set = False
         self._restore_original_xkbcomp()

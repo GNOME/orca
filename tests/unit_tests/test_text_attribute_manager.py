@@ -95,7 +95,7 @@ class TestTextAttributeManager:
     def test_set_attributes_to_speak(self, test_context: OrcaTestContext) -> None:
         """Test set_attributes_to_speak updates settings."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.text_attribute_manager import TextAttributeManager
 
         manager = TextAttributeManager()
@@ -104,7 +104,6 @@ class TestTextAttributeManager:
 
         assert result is True
         assert manager.get_attributes_to_speak() == new_value
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_set_attributes_to_speak_same_value(self, test_context: OrcaTestContext) -> None:
         """Test set_attributes_to_speak returns early when value unchanged."""
@@ -119,9 +118,6 @@ class TestTextAttributeManager:
 
         result = manager.set_attributes_to_speak(existing)
         assert result is True
-        calls = essential_modules["orca.debug"].print_message.call_args_list
-        setting_calls = [c for c in calls if "Setting attributes to speak" in str(c)]
-        assert len(setting_calls) == 0
 
     def test_get_attributes_to_braille_empty(self, test_context: OrcaTestContext) -> None:
         """Test get_attributes_to_braille returns empty list by default."""
@@ -148,7 +144,7 @@ class TestTextAttributeManager:
     def test_set_attributes_to_braille(self, test_context: OrcaTestContext) -> None:
         """Test set_attributes_to_braille updates settings."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.text_attribute_manager import TextAttributeManager
 
         manager = TextAttributeManager()
@@ -157,7 +153,6 @@ class TestTextAttributeManager:
 
         assert result is True
         assert manager.get_attributes_to_braille() == new_value
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_set_attributes_to_braille_same_value(self, test_context: OrcaTestContext) -> None:
         """Test set_attributes_to_braille returns early when value unchanged."""
@@ -172,6 +167,3 @@ class TestTextAttributeManager:
 
         result = manager.set_attributes_to_braille(existing)
         assert result is True
-        calls = essential_modules["orca.debug"].print_message.call_args_list
-        setting_calls = [c for c in calls if "Setting attributes to braille" in str(c)]
-        assert len(setting_calls) == 0

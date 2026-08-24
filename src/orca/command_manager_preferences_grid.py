@@ -796,11 +796,16 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     )
 
                 if current_text != parent_text:
-                    msg = (
-                        f"KEYBINDINGS GRID: Saving {handler_name}: '{current_text}' "
-                        f"(parent '{parent_text}')"
-                    )
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                    tokens = [
+                        "KEYBINDINGS GRID: Saving",
+                        handler_name,
+                        ": '",
+                        current_text,
+                        "' (parent '",
+                        parent_text,
+                        "')",
+                    ]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     if current_kb and current_kb.keysymstring:
                         binding_data = [
                             current_kb.keysymstring,

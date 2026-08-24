@@ -197,8 +197,13 @@ class CacheAccessor:
         if expires_at is not None and (
             not isinstance(expires_at, (int, float)) or not math.isfinite(expires_at)
         ):
-            msg = f"AXCacheManager: Invalid expiration time for {self._cache_name}: {expires_at}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "AXCacheManager: Invalid expiration time for",
+                self._cache_name,
+                ":",
+                expires_at,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         self._backend.put_value(self._cache, key, value, expires_at)
@@ -268,16 +273,18 @@ class AXCacheManager:
             return False
 
         if not isinstance(lifetime, Lifetime):
-            msg = f"AXCacheManager: Invalid cache lifetime for {cache_name}: {lifetime}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXCacheManager: Invalid cache lifetime for", cache_name, ":", lifetime]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if not isinstance(clear_on_demand, ClearPolicy):
-            msg = (
-                f"AXCacheManager: Invalid on-demand clearing policy for {cache_name}: "
-                f"{clear_on_demand}"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "AXCacheManager: Invalid on-demand clearing policy for",
+                cache_name,
+                ":",
+                clear_on_demand,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if clear_interval_seconds is not None and (
@@ -285,10 +292,13 @@ class AXCacheManager:
             or not math.isfinite(clear_interval_seconds)
             or clear_interval_seconds <= 0
         ):
-            msg = (
-                f"AXCacheManager: Invalid clear interval for {cache_name}: {clear_interval_seconds}"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "AXCacheManager: Invalid clear interval for",
+                cache_name,
+                ":",
+                clear_interval_seconds,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         start_thread = False
@@ -328,18 +338,21 @@ class AXCacheManager:
                     )
 
         if unsupported_owner:
-            msg = f"AXCacheManager: Owner-lifetime cache owner cannot be referenced: {cache_name}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "AXCacheManager: Owner-lifetime cache owner cannot be referenced:",
+                cache_name,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if conflicting_lifetime:
-            msg = f"AXCacheManager: Owner has conflicting lifetime policy: {cache_name}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXCacheManager: Owner has conflicting lifetime policy:", cache_name]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if collision:
-            msg = f"AXCacheManager: Cache already registered: {cache_name}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXCacheManager: Cache already registered:", cache_name]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if start_thread:
@@ -360,11 +373,11 @@ class AXCacheManager:
         failure = None
         with self._lock:
             if not isinstance(scope, CacheScope) or not scope.is_owned_by(self):
-                failure = "AXCacheManager: Cache scope belongs to another manager."
+                failure = ["AXCacheManager: Cache scope belongs to another manager."]
             else:
                 self._scoped_values.pop(scope, None)
         if failure:
-            debug.print_message(debug.LEVEL_INFO, failure, True)
+            debug.print_tokens(debug.LEVEL_INFO, failure, True)
 
     def get_cache(self, owner: object, cache_name: str) -> CacheAccessor | None:
         """Returns a direct accessor for an owned cache."""
@@ -376,7 +389,7 @@ class AXCacheManager:
             else:
                 accessor = CacheAccessor(self._accessor_backend, id(owner), cache_name, cache)
         if failure:
-            debug.print_message(debug.LEVEL_INFO, failure, True)
+            debug.print_tokens(debug.LEVEL_INFO, failure, True)
         return accessor
 
     def invalidate_cache(
@@ -389,7 +402,7 @@ class AXCacheManager:
             if cache is not None:
                 self._clear_cache_values_locked(id(owner), cache_name, cache)
         if failure:
-            debug.print_message(debug.LEVEL_INFO, failure, True)
+            debug.print_tokens(debug.LEVEL_INFO, failure, True)
         elif cache is not None and log:
             self._log_invalidation([cache_name], reason)
 
@@ -419,16 +432,16 @@ class AXCacheManager:
 
     def _get_owned_cache_locked(
         self, owner: object, cache_name: str
-    ) -> tuple[_Cache | None, str | None]:
+    ) -> tuple[_Cache | None, list[Any] | None]:
         """Returns an owned cache and any access failure to log."""
 
         owner_caches = self._get_owner_caches_locked(owner)
         if owner_caches is None:
-            return None, f"AXCacheManager: Cache is not registered: {cache_name}"
+            return None, ["AXCacheManager: Cache is not registered:", cache_name]
 
         cache = owner_caches.caches.get(cache_name)
         if cache is None:
-            return None, f"AXCacheManager: Cache is not registered: {cache_name}"
+            return None, ["AXCacheManager: Cache is not registered:", cache_name]
 
         return cache, None
 
@@ -450,14 +463,14 @@ class AXCacheManager:
 
     def _get_scope_values_locked(
         self, scope: CacheScope
-    ) -> tuple[dict[tuple[int, str], dict[Hashable, Any]] | None, str | None]:
+    ) -> tuple[dict[tuple[int, str], dict[Hashable, Any]] | None, list[Any] | None]:
         """Returns active scoped storage and any access failure to log."""
 
         if not isinstance(scope, CacheScope) or not scope.is_owned_by(self):
-            return None, "AXCacheManager: Cache scope belongs to another manager."
+            return None, ["AXCacheManager: Cache scope belongs to another manager."]
         values = self._scoped_values.get(scope)
         if values is None:
-            return None, "AXCacheManager: Cache scope is no longer active."
+            return None, ["AXCacheManager: Cache scope is no longer active."]
         return values, None
 
     def _get_accessor_value(self, cache: _Cache, key: Hashable, default: Any) -> Any:
@@ -499,7 +512,7 @@ class AXCacheManager:
                 except KeyError:
                     value = default
         if failure:
-            debug.print_message(debug.LEVEL_INFO, failure, True)
+            debug.print_tokens(debug.LEVEL_INFO, failure, True)
         return value
 
     def _put_accessor_value(
@@ -554,7 +567,7 @@ class AXCacheManager:
                 values = scoped_values.setdefault((owner_id, cache_name), {})
                 values[key] = value
         if failure:
-            debug.print_message(debug.LEVEL_INFO, failure, True)
+            debug.print_tokens(debug.LEVEL_INFO, failure, True)
 
     def _discard_accessor_value(self, cache: _Cache, key: Hashable) -> None:
         """Discards a value for a cache accessor."""
@@ -580,7 +593,7 @@ class AXCacheManager:
                 values = scoped_values.get((owner_id, cache_name), {})
                 values.pop(key, None)
         if failure:
-            debug.print_message(debug.LEVEL_INFO, failure, True)
+            debug.print_tokens(debug.LEVEL_INFO, failure, True)
 
     def _invalidate_accessor_cache(
         self, owner_id: int, cache_name: str, cache: _Cache, reason: str, log: bool
@@ -674,8 +687,8 @@ class AXCacheManager:
         try:
             self._run_cache_cleanup_iteration()
         except Exception as error:  # pylint: disable=broad-exception-caught
-            msg = f"AXCacheManager: Exception in cache cleanup thread: {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["AXCacheManager: Exception in cache cleanup thread:", error]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             debug.print_exception(debug.LEVEL_WARNING)
             with self._condition:
                 self._condition.wait(DEFAULT_CLEAR_INTERVAL_SECONDS)

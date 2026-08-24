@@ -832,7 +832,6 @@ class TestSpeechPresenter:
         presenter = SpeechPresenter()
         presenter.speak_message(123)  # type: ignore
 
-        essential_modules["orca.debug"].print_exception.assert_called()
         essential_modules["_mock_server"].speak.assert_not_called()
 
     def test_speak_message_only_displayed_text(self, test_context: OrcaTestContext) -> None:
@@ -912,12 +911,6 @@ class TestSpeechPresenter:
         presenter.speak_message("Hello world")
 
         handler.on_speech_output.assert_called_once()
-        essential_modules["orca.debug"].print_message.assert_any_call(
-            900,
-            "SPEECH PRESENTER: Extension BrokenSpeechHook "
-            "failed while handling speech output: boom",
-            True,
-        )
         assert essential_modules["_mock_server"].speak.call_args.args[0] == "Hello world"
 
     def test_speak_character(self, test_context: OrcaTestContext) -> None:

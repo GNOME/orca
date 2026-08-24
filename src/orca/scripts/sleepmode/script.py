@@ -80,12 +80,12 @@ class Script(script.Script):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if old_focus is None and AXUtilities.is_application(AXObject.get_parent(new_focus)):
             focus_manager.get_manager().clear_state("Sleep mode enabled for this app.")
-            msg = messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app)
+            text = messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app)
             manager = presentation_manager.get_manager()
-            manager.speak_message(msg)
+            manager.speak_message(text)
 
             # Don't restore previous braille content because Orca is no longer active.
-            manager.present_braille_message(msg, restore_previous=False)
+            manager.present_braille_message(text, restore_previous=False)
             return True
 
         msg = "SLEEP MODE: Ignoring event."

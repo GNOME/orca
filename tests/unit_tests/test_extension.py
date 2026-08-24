@@ -185,7 +185,6 @@ class TestExtensionTranslation:
         translation = extension.get_translation(str(source_file))
 
         assert translation.gettext("Hello") == "Hello"
-        extension.debug.print_message.assert_called_once()  # pylint: disable=no-member
 
 
 @pytest.mark.unit

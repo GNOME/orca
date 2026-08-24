@@ -61,8 +61,12 @@ class AXUtilitiesCollection:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         matches = list(filter(pred, matches))
-        msg = f"AXUtilitiesCollection: {len(matches)} matches found in {time.time() - start:.4f}s"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "AXUtilitiesCollection:",
+            len(matches),
+            f"matches found in {time.time() - start:.4f}s",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return matches
 
     @staticmethod

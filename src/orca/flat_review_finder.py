@@ -27,7 +27,7 @@ from __future__ import annotations
 import copy
 import re
 import time
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
@@ -240,8 +240,13 @@ class FlatReviewFinder(Extension):
 
             match = re.search(pattern, string)
             debug_string = string.replace("\n", "\\n")
-            msg = f"FLAT REVIEW FINDER: Looking in {type_string}='{debug_string}'. Match: {match}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                f"FLAT REVIEW FINDER: Looking in {type_string}='",
+                debug_string,
+                "'. Match:",
+                match,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return bool(match)
 
         found = matches(context, pattern, context_type)
@@ -279,10 +284,10 @@ class FlatReviewFinder(Extension):
     def _do_find(self, query: SearchQuery, context: Context) -> Context | None:
         """Performs the actual search."""
 
-        msg = f"FLAT REVIEW FINDER: Searching for {query!s}"
+        tokens: list[Any] = ["FLAT REVIEW FINDER: Searching for", str(query)]
         if self._match:
-            msg += f". Last match: {self._match}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens += [". Last match:", self._match]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         flags = re.UNICODE
         if not query.case_sensitive:

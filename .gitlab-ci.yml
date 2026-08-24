@@ -81,6 +81,7 @@ linters:
     - codespell src/orca || status=1
     - ruff format --check src/orca || status=1
     - ruff check src/orca || status=1
+    - python ci/check_orca_rules.py || status=1
     - mypy src/orca || status=1
     - exit $status
   allow_failure: true

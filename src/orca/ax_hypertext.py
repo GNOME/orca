@@ -50,8 +50,8 @@ class AXHypertext:
         try:
             count = Atspi.Hypertext.get_n_links(obj)
         except GLib.GError as error:
-            msg = f"AXHypertext: Exception in get_link_count: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXHypertext: Exception in get_link_count:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0
 
         tokens = ["AXHypertext:", obj, f"reports {count} hyperlinks"]
@@ -68,8 +68,8 @@ class AXHypertext:
         try:
             link = Atspi.Hypertext.get_link(obj, index)
         except GLib.GError as error:
-            msg = f"AXHypertext: Exception in get_link_at_index: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXHypertext: Exception in get_link_at_index:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return link
@@ -82,8 +82,8 @@ class AXHypertext:
             link = Atspi.Accessible.get_hyperlink(obj)
             uri = Atspi.Hyperlink.get_uri(link, index)
         except GLib.GError as error:
-            msg = f"AXHypertext: Exception in get_link_uri: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXHypertext: Exception in get_link_uri:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
         tokens = ["AXHypertext: URI of", obj, f"at index {index} is {uri}"]
@@ -114,8 +114,8 @@ class AXHypertext:
         try:
             offset = Atspi.Hyperlink.get_start_index(link)
         except GLib.GError as error:
-            msg = f"AXHypertext: Exception in get_link_start_offset: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXHypertext: Exception in get_link_start_offset:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return -1
 
         tokens = ["AXHypertext: Start offset of", obj, f"is {offset}"]
@@ -142,8 +142,8 @@ class AXHypertext:
         try:
             offset = Atspi.Hyperlink.get_end_index(link)
         except GLib.GError as error:
-            msg = f"AXHypertext: Exception in get_link_end_offset: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXHypertext: Exception in get_link_end_offset:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return -1
 
         tokens = ["AXHypertext: End offset of", obj, f"is {offset}"]
@@ -160,8 +160,8 @@ class AXHypertext:
         try:
             index = Atspi.Hypertext.get_link_index(obj, offset)
         except GLib.GError as error:
-            msg = f"AXHypertext: Exception in get_child_at_offset: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXHypertext: Exception in get_child_at_offset:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if index < 0:
@@ -174,8 +174,8 @@ class AXHypertext:
         try:
             child = Atspi.Hyperlink.get_object(link, 0)
         except GLib.GError as error:
-            msg = f"AXHypertext: Exception in get_child_at_offset: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXHypertext: Exception in get_child_at_offset:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         tokens = [f"AXHypertext: Child at offset {offset} in", obj, "is", child]
@@ -193,8 +193,8 @@ class AXHypertext:
         try:
             child = Atspi.Hyperlink.get_object(link, 0)
         except GLib.GError as error:
-            msg = f"AXHypertext: Exception in get_child_at_link_index: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXHypertext: Exception in get_child_at_link_index:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         tokens = [f"AXHypertext: Child for link index {index} in", obj, "is", child]

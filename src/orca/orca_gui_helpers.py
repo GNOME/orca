@@ -246,8 +246,8 @@ def sync_appearance() -> tuple | None:
         _appearance_refs.append((interface_settings, a11y_settings, base_provider, providers))
         return _appearance_refs[0]
     except GLib.Error as error:
-        msg = f"ORCA GUI: Exception syncing appearance: {error}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["ORCA GUI: Exception syncing appearance:", error]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     return None
 
 

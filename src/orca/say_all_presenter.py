@@ -31,7 +31,7 @@ from __future__ import annotations
 
 import unicodedata
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from . import (
     ax_event_synthesizer,
@@ -148,8 +148,8 @@ class SayAllPresenter(Extension):
     def set_style_from_int(self, value: int) -> bool:
         """Sets the Say All style from an integer value."""
 
-        msg = f"SAY ALL PRESENTER: Setting style to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting style to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         style_name = SayAllStyle(value).string_name
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_STYLE, style_name
@@ -397,8 +397,8 @@ class SayAllPresenter(Extension):
 
             skip, reason = self._say_all_should_skip_content(content, contents)
             if skip:
-                msg = f"SAY ALL PRESENTER: Skipping content - {reason}."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["SAY ALL PRESENTER: Skipping content -", reason, "."]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 continue
 
             utterances = speech_presenter.get_presenter().generate_speech_contents(
@@ -635,8 +635,8 @@ class SayAllPresenter(Extension):
     def set_announce_article(self, value: bool) -> bool:
         """Sets whether articles are announced when entered."""
 
-        msg = f"SAY ALL PRESENTER: Setting announce articles to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting announce articles to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_ARTICLE,
@@ -662,8 +662,8 @@ class SayAllPresenter(Extension):
     def set_announce_blockquote(self, value: bool) -> bool:
         """Sets whether blockquotes are announced when entered."""
 
-        msg = f"SAY ALL PRESENTER: Setting announce blockquotes to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting announce blockquotes to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_BLOCKQUOTE,
@@ -688,8 +688,8 @@ class SayAllPresenter(Extension):
     def set_announce_code_block(self, value: bool) -> bool:
         """Sets whether code blocks are announced when entered."""
 
-        msg = f"SAY ALL PRESENTER: Setting announce code blocks to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting announce code blocks to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_CODE_BLOCK,
@@ -714,8 +714,8 @@ class SayAllPresenter(Extension):
     def set_announce_document(self, value: bool) -> bool:
         """Sets whether embedded documents are announced when entered and left."""
 
-        msg = f"SAY ALL PRESENTER: Setting announce documents to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting announce documents to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_DOCUMENT,
@@ -741,8 +741,8 @@ class SayAllPresenter(Extension):
     def set_announce_form(self, value: bool) -> bool:
         """Sets whether non-landmark forms are announced when entered."""
 
-        msg = f"SAY ALL PRESENTER: Setting announce forms to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting announce forms to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ANNOUNCE_FORM, value
         )
@@ -766,8 +766,8 @@ class SayAllPresenter(Extension):
     def set_announce_grouping(self, value: bool) -> bool:
         """Sets whether groupings are announced when entered."""
 
-        msg = f"SAY ALL PRESENTER: Setting announce groupings to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting announce groupings to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_GROUPING,
@@ -793,8 +793,8 @@ class SayAllPresenter(Extension):
     def set_announce_landmark(self, value: bool) -> bool:
         """Sets whether landmarks are announced when entered."""
 
-        msg = f"SAY ALL PRESENTER: Setting announce landmarks to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting announce landmarks to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_LANDMARK,
@@ -820,8 +820,8 @@ class SayAllPresenter(Extension):
     def set_announce_list(self, value: bool) -> bool:
         """Sets whether lists are announced when entered."""
 
-        msg = f"SAY ALL PRESENTER: Setting announce lists to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting announce lists to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ANNOUNCE_LIST, value
         )
@@ -845,8 +845,8 @@ class SayAllPresenter(Extension):
     def set_announce_table(self, value: bool) -> bool:
         """Sets whether tables are announced when entered."""
 
-        msg = f"SAY ALL PRESENTER: Setting announce tables to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting announce tables to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ANNOUNCE_TABLE, value
         )
@@ -869,8 +869,8 @@ class SayAllPresenter(Extension):
     def set_announce_tracked_changes(self, value: bool) -> bool:
         """Sets whether tracked changes are announced when entered."""
 
-        msg = f"SAY ALL PRESENTER: Setting announce tracked changes to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting announce tracked changes to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_TRACKED_CHANGES,
@@ -895,8 +895,8 @@ class SayAllPresenter(Extension):
     def set_only_speak_displayed_text(self, value: bool) -> bool:
         """Sets whether Say All only speaks displayed text."""
 
-        msg = f"SAY ALL PRESENTER: Setting only speak displayed text to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting only speak displayed text to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ONLY_SPEAK_DISPLAYED_TEXT,
@@ -931,12 +931,12 @@ class SayAllPresenter(Extension):
         try:
             style = SayAllStyle[value.upper()]
         except KeyError:
-            msg = f"SAY ALL PRESENTER: Invalid style: {value}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens: list[Any] = ["SAY ALL PRESENTER: Invalid style:", value]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
-        msg = f"SAY ALL PRESENTER: Setting style to {value} ({style.value})."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting style to", value, "(", style.value, ")."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_STYLE,
@@ -962,8 +962,8 @@ class SayAllPresenter(Extension):
     def set_structural_navigation_enabled(self, value: bool) -> bool:
         """Sets whether structural navigation keys can be used in Say All."""
 
-        msg = f"SAY ALL PRESENTER: Setting enable structural navigation to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting enable structural navigation to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_STRUCTURAL_NAVIGATION,
@@ -989,8 +989,8 @@ class SayAllPresenter(Extension):
     def set_rewind_and_fast_forward_enabled(self, value: bool) -> bool:
         """Returns whether Up and Down can be used in Say All."""
 
-        msg = f"SAY ALL PRESENTER: Setting enable rewind and fast forward to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting enable rewind and fast forward to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_REWIND_AND_FAST_FORWARD,
@@ -1021,8 +1021,8 @@ class SayAllPresenter(Extension):
     def set_text_attribute_change_mode_as_string(self, value: str) -> bool:
         """Sets when text attribute changes are spoken during Say All."""
 
-        msg = f"SAY ALL PRESENTER: Setting text attribute change mode to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SAY ALL PRESENTER: Setting text attribute change mode to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,

@@ -211,8 +211,10 @@ class BraillePresenter(Extension):
         """Pans braille in direction, asking the script only when at an edge."""
 
         if isinstance(event, input_event.KeyboardEvent) and not self.use_braille():
-            msg = f"BRAILLE PRESENTER: panBraille{direction.name.title()} command requires braille"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                f"BRAILLE PRESENTER: panBraille{direction.name.title()} command requires braille"
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         flat_review_result = self._pan_flat_review_braille(direction, script, event)
@@ -490,8 +492,8 @@ class BraillePresenter(Extension):
     def set_monitor_is_enabled(self, value: bool) -> bool:
         """Sets whether the braille monitor is enabled."""
 
-        msg = f"BRAILLE PRESENTER: Setting enable braille monitor to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting enable braille monitor to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._monitor_enabled_override = value
         if value:
             braille.set_monitor_cell_count(self.get_monitor_cell_count())
@@ -510,8 +512,8 @@ class BraillePresenter(Extension):
     ) -> bool:
         """Opens value for JSONL recording; an empty string closes any open file (test-only)."""
 
-        msg = f"BRAILLE PRESENTER: Setting log file to {value!r}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [f"BRAILLE PRESENTER: Setting log file to {value!r}."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._output_recorder.set_path(value)
 
     @gsettings_registry.get_registry().gsetting(
@@ -532,8 +534,8 @@ class BraillePresenter(Extension):
     def set_monitor_cell_count(self, value: UInt32) -> bool:
         """Sets the braille monitor cell count."""
 
-        msg = f"BRAILLE PRESENTER: Setting braille monitor cell count to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting braille monitor cell count to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_MONITOR_CELL_COUNT,
@@ -562,8 +564,8 @@ class BraillePresenter(Extension):
     def set_monitor_show_dots(self, value: bool) -> bool:
         """Sets whether the braille monitor shows Unicode braille dots."""
 
-        msg = f"BRAILLE PRESENTER: Setting braille monitor show dots to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting braille monitor show dots to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_MONITOR_SHOW_DOTS,
@@ -589,8 +591,8 @@ class BraillePresenter(Extension):
     def set_monitor_foreground(self, value: str) -> bool:
         """Sets the braille monitor foreground color."""
 
-        msg = f"BRAILLE PRESENTER: Setting braille monitor foreground to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting braille monitor foreground to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_MONITOR_FOREGROUND,
@@ -618,8 +620,8 @@ class BraillePresenter(Extension):
     def set_monitor_background(self, value: str) -> bool:
         """Sets the braille monitor background color."""
 
-        msg = f"BRAILLE PRESENTER: Setting braille monitor background to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting braille monitor background to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_MONITOR_BACKGROUND,
@@ -790,34 +792,40 @@ class BraillePresenter(Extension):
     ) -> BrailleOutputResult | None:
         """Calls a braille output handler and validates the result."""
 
-        tokens = ["BRAILLE OUTPUT HOOK: Calling extension:", handler.module_name]
+        tokens: list[Any] = ["BRAILLE OUTPUT HOOK: Calling extension:", handler.module_name]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         try:
             result = handler.on_braille_output(output)
         except Exception as error:  # pylint: disable=broad-exception-caught
-            msg = (
-                f"BRAILLE PRESENTER: Extension {handler.module_name} "
-                f"failed while handling braille output: {error}"
-            )
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "BRAILLE PRESENTER: Extension",
+                handler.module_name,
+                "failed while handling braille output:",
+                error,
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
         if result is None:
             return None
         if not isinstance(result, BrailleOutputResult):
-            msg = (
-                f"BRAILLE PRESENTER: Extension {handler.module_name} "
-                f"returned unexpected braille output result: {result}"
-            )
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "BRAILLE PRESENTER: Extension",
+                handler.module_name,
+                "returned unexpected braille output result:",
+                result,
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
         if result.text is not None and not isinstance(result.text, str):
-            msg = (
-                f"BRAILLE PRESENTER: Extension {handler.module_name} "
-                f"returned non-string braille text: {result.text}"
-            )
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "BRAILLE PRESENTER: Extension",
+                handler.module_name,
+                "returned non-string braille text:",
+                result.text,
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
         return result
 
@@ -842,8 +850,8 @@ class BraillePresenter(Extension):
         if value == self.get_braille_is_enabled():
             return True
 
-        msg = f"BRAILLE PRESENTER: Setting enable braille to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting enable braille to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_ENABLED, value)
         braille.set_enable_braille(value)
 
@@ -886,12 +894,12 @@ class BraillePresenter(Extension):
         try:
             level = VerbosityLevel[value.upper()]
         except KeyError:
-            msg = f"BRAILLE PRESENTER: Invalid verbosity level: {value}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["BRAILLE PRESENTER: Invalid verbosity level:", value]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
-        msg = f"BRAILLE PRESENTER: Setting verbosity level to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting verbosity level to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_VERBOSITY_LEVEL,
@@ -931,12 +939,12 @@ class BraillePresenter(Extension):
         try:
             level = VerbosityLevel[value.upper()]
         except KeyError:
-            msg = f"BRAILLE PRESENTER: Invalid rolename style: {value}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["BRAILLE PRESENTER: Invalid rolename style:", value]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
-        msg = f"BRAILLE PRESENTER: Setting rolename style to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting rolename style to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ROLENAME_STYLE,
@@ -962,8 +970,8 @@ class BraillePresenter(Extension):
     def set_present_mnemonics(self, value: bool) -> bool:
         """Sets whether mnemonics are presented on the braille display."""
 
-        msg = f"BRAILLE PRESENTER: Setting present mnemonics to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting present mnemonics to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_PRESENT_MNEMONICS,
@@ -989,8 +997,8 @@ class BraillePresenter(Extension):
     def set_display_ancestors(self, value: bool) -> bool:
         """Sets whether ancestors of the current object will be displayed."""
 
-        msg = f"BRAILLE PRESENTER: Setting enable braille context to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting enable braille context to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_DISPLAY_ANCESTORS,
@@ -1016,8 +1024,8 @@ class BraillePresenter(Extension):
     def set_braille_progress_bar_updates(self, value: bool) -> bool:
         """Sets whether braille progress bar updates are enabled."""
 
-        msg = f"BRAILLE PRESENTER: Setting braille progress bar updates to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting braille progress bar updates to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_BRAILLE_PROGRESS_BAR_UPDATES,
@@ -1043,8 +1051,8 @@ class BraillePresenter(Extension):
     def set_progress_bar_braille_interval(self, value: UInt32) -> bool:
         """Sets the braille progress bar update interval in seconds."""
 
-        msg = f"BRAILLE PRESENTER: Setting progress bar braille interval to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting progress bar braille interval to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_PROGRESS_BAR_BRAILLE_INTERVAL,
@@ -1077,8 +1085,8 @@ class BraillePresenter(Extension):
     def set_progress_bar_braille_verbosity(self, value: UInt32) -> bool:
         """Sets the braille progress bar verbosity level."""
 
-        msg = f"BRAILLE PRESENTER: Setting progress bar braille verbosity to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting progress bar braille verbosity to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         level = ProgressBarVerbosity(value)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
@@ -1141,8 +1149,8 @@ class BraillePresenter(Extension):
     def set_contracted_braille_is_enabled(self, value: bool) -> bool:
         """Sets whether contracted braille is enabled."""
 
-        msg = f"BRAILLE PRESENTER: Setting enable contracted braille to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting enable contracted braille to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_CONTRACTED_BRAILLE,
@@ -1169,8 +1177,8 @@ class BraillePresenter(Extension):
     def set_computer_braille_at_cursor_is_enabled(self, value: bool) -> bool:
         """Sets whether computer braille is used at the cursor position."""
 
-        msg = f"BRAILLE PRESENTER: Setting enable computer braille at cursor to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting enable computer braille at cursor to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_COMPUTER_BRAILLE_AT_CURSOR,
@@ -1242,8 +1250,8 @@ class BraillePresenter(Extension):
                 break
 
         if not filename:
-            msg = f"BRAILLE PRESENTER: Invalid contraction table: {value}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["BRAILLE PRESENTER: Invalid contraction table:", value]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
         full_path = os.path.join(tablesdir, filename)
@@ -1261,8 +1269,8 @@ class BraillePresenter(Extension):
     def set_contraction_table_from_path(self, file_path: str) -> bool:
         """Sets the current braille contraction table from a file path."""
 
-        msg = f"BRAILLE PRESENTER: Setting contraction table to {file_path}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting contraction table to", file_path, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_CONTRACTION_TABLE,
@@ -1289,8 +1297,8 @@ class BraillePresenter(Extension):
     def set_end_of_line_indicator_is_enabled(self, value: bool) -> bool:
         """Sets whether the end-of-line indicator is enabled."""
 
-        msg = f"BRAILLE PRESENTER: Setting enable-eol to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting enable-eol to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_END_OF_LINE_INDICATOR,
@@ -1317,8 +1325,8 @@ class BraillePresenter(Extension):
     def set_word_wrap_is_enabled(self, value: bool) -> bool:
         """Sets whether braille word wrap is enabled."""
 
-        msg = f"BRAILLE PRESENTER: Setting enable word wrap to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting enable word wrap to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_WORD_WRAP, value)
         braille.set_enable_word_wrap(value)
         return True
@@ -1341,8 +1349,8 @@ class BraillePresenter(Extension):
     def set_flash_messages_are_enabled(self, value: bool) -> bool:
         """Sets whether 'flash' messages (i.e. announcements) are enabled."""
 
-        msg = f"BRAILLE PRESENTER: Setting enable flash messages to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting enable flash messages to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_FLASH_MESSAGES, value
         )
@@ -1373,8 +1381,8 @@ class BraillePresenter(Extension):
     def set_flash_message_duration(self, value: UInt32) -> bool:
         """Sets flash message duration in milliseconds."""
 
-        msg = f"BRAILLE PRESENTER: Setting braille flash time to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting braille flash time to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_FLASH_MESSAGE_DURATION,
@@ -1385,8 +1393,8 @@ class BraillePresenter(Extension):
     def set_selector_indicator_from_int(self, value: int) -> bool:
         """Sets the braille selector indicator from an int value."""
 
-        msg = f"BRAILLE PRESENTER: Setting selector indicator to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting selector indicator to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         indicator = BrailleIndicator(value)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
@@ -1399,8 +1407,8 @@ class BraillePresenter(Extension):
     def set_link_indicator_from_int(self, value: int) -> bool:
         """Sets the braille link indicator from an int value."""
 
-        msg = f"BRAILLE PRESENTER: Setting link indicator to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting link indicator to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         indicator = BrailleIndicator(value)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
@@ -1413,8 +1421,8 @@ class BraillePresenter(Extension):
     def set_text_attributes_indicator_from_int(self, value: int) -> bool:
         """Sets the braille text attributes indicator from an int value."""
 
-        msg = f"BRAILLE PRESENTER: Setting text attributes indicator to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting text attributes indicator to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         indicator = BrailleIndicator(value)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
@@ -1442,8 +1450,8 @@ class BraillePresenter(Extension):
     def set_flash_messages_are_persistent(self, value: bool) -> bool:
         """Sets whether 'flash' messages are persistent (as opposed to temporary)."""
 
-        msg = f"BRAILLE PRESENTER: Setting flash messages are persistent to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting flash messages are persistent to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_FLASH_MESSAGES_PERSISTENT,
@@ -1469,8 +1477,8 @@ class BraillePresenter(Extension):
     def set_flash_messages_are_detailed(self, value: bool) -> bool:
         """Sets whether 'flash' messages are detailed (as opposed to brief)."""
 
-        msg = f"BRAILLE PRESENTER: Setting flash messages are detailed to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting flash messages are detailed to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_FLASH_MESSAGES_DETAILED,
@@ -1489,8 +1497,8 @@ class BraillePresenter(Extension):
             default="dots78",
         )
         value = BrailleIndicator[nick.upper()].value
-        msg = f"BRAILLE PRESENTER: Getting selector indicator: {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Getting selector indicator:", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return value
 
     @gsettings_registry.get_registry().gsetting(
@@ -1520,12 +1528,12 @@ class BraillePresenter(Extension):
         try:
             indicator = BrailleIndicator[value.upper()]
         except KeyError:
-            msg = f"BRAILLE PRESENTER: Invalid selector indicator: {value}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["BRAILLE PRESENTER: Invalid selector indicator:", value]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
-        msg = f"BRAILLE PRESENTER: Setting selector indicator to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting selector indicator to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SELECTOR_INDICATOR,
@@ -1545,8 +1553,8 @@ class BraillePresenter(Extension):
             default="dots78",
         )
         value = BrailleIndicator[nick.upper()].value
-        msg = f"BRAILLE PRESENTER: Getting link indicator: {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Getting link indicator:", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return value
 
     @gsettings_registry.get_registry().gsetting(
@@ -1576,12 +1584,12 @@ class BraillePresenter(Extension):
         try:
             indicator = BrailleIndicator[value.upper()]
         except KeyError:
-            msg = f"BRAILLE PRESENTER: Invalid link indicator: {value}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["BRAILLE PRESENTER: Invalid link indicator:", value]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
-        msg = f"BRAILLE PRESENTER: Setting link indicator to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting link indicator to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_LINK_INDICATOR,
@@ -1601,8 +1609,8 @@ class BraillePresenter(Extension):
             default="none",
         )
         value = BrailleIndicator[nick.upper()].value
-        msg = f"BRAILLE PRESENTER: Getting text attributes indicator: {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Getting text attributes indicator:", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return value
 
     @gsettings_registry.get_registry().gsetting(
@@ -1632,12 +1640,12 @@ class BraillePresenter(Extension):
         try:
             indicator = BrailleIndicator[value.upper()]
         except KeyError:
-            msg = f"BRAILLE PRESENTER: Invalid text attributes indicator: {value}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["BRAILLE PRESENTER: Invalid text attributes indicator:", value]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
-        msg = f"BRAILLE PRESENTER: Setting text attributes indicator to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Setting text attributes indicator to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_TEXT_ATTRIBUTES_INDICATOR,

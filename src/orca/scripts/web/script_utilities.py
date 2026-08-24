@@ -1164,8 +1164,8 @@ class Utilities(script_utilities.Utilities):
         try:
             char = string[string_offset]
         except IndexError:
-            msg = f"WEB: Could not get char {string_offset} for '{string}'"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["WEB: Could not get char", string_offset, "for '", string, "'"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         else:
             if char == "\ufffc":
                 if child := AXUtilities.find_child_at_offset(obj, offset):
@@ -1529,12 +1529,15 @@ class Utilities(script_utilities.Utilities):
         indent = " " * 8
         for i, (acc, start, end, string) in enumerate(contents):
             rect = self._get_extents(acc, start, end)
-            msg = (
-                f"     {i}. chars: {start}-{end}: '{string}' "
-                f"extents=({rect.x}, {rect.y}, {rect.width}, {rect.height})\n"
-            )
-            msg += AXUtilitiesDebugging.object_details_as_string(acc, indent, False)
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                f"     {i}. chars: {start}-{end}: '",
+                string,
+                f"' extents=({rect.x}, {rect.y}, {rect.width}, {rect.height})",
+                # The details are still one string. They become tokens when the debug value
+                # tree can carry them.
+                "\n" + AXUtilitiesDebugging.object_details_as_string(acc, indent, False),
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def treat_as_end_of_line(self, obj: Atspi.Accessible, offset: int) -> bool:
         """Returns true if the offset in obj should be treated as the end of the line."""
@@ -3057,8 +3060,8 @@ class Utilities(script_utilities.Utilities):
             rv = True
 
         self._cache.set_caret_context_decision(obj, rv)
-        msg = f"INFO: _can_have_caret_context took {time.time() - start_time:.4f}s"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [f"INFO: _can_have_caret_context took {time.time() - start_time:.4f}s"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return rv
 
     def get_caret_context(

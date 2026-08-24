@@ -146,16 +146,16 @@ class CaretNavigator(Extension):
         """Sets whether caret navigation is enabled."""
 
         if self.get_is_enabled() == value:
-            msg = f"CARET NAVIGATOR: Enabled already {value}. Refreshing command group."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["CARET NAVIGATOR: Enabled already", value, ". Refreshing command group."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             command_manager.get_manager().set_group_enabled(
                 guilabels.KB_GROUP_CARET_NAVIGATION,
                 value,
             )
             return True
 
-        msg = f"CARET NAVIGATOR: Setting enabled to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["CARET NAVIGATOR: Setting enabled to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_ENABLED, value)
 
         self._last_input_event = None
@@ -184,8 +184,8 @@ class CaretNavigator(Extension):
         if self.get_triggers_focus_mode() == value:
             return True
 
-        msg = f"CARET NAVIGATOR: Setting triggers focus mode to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["CARET NAVIGATOR: Setting triggers focus mode to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_TRIGGERS_FOCUS_MODE,
@@ -214,8 +214,8 @@ class CaretNavigator(Extension):
         if self.get_layout_mode() == value:
             return True
 
-        msg = f"CARET NAVIGATOR: Setting layout mode to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["CARET NAVIGATOR: Setting layout mode to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_LAYOUT_MODE, value
         )
@@ -288,8 +288,13 @@ class CaretNavigator(Extension):
         else:
             string = "None"
 
-        msg = f"CARET NAVIGATOR: Last navigation event ({string}) is last input event: {result}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "CARET NAVIGATOR: Last navigation event (",
+            string,
+            ") is last input event:",
+            result,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     def last_command_prevents_focus_mode(self) -> bool:
@@ -340,10 +345,10 @@ class CaretNavigator(Extension):
         if not (script and self._is_active_script(script)):
             return
 
-        msg = f"CARET NAVIGATOR: Commands suspended: {suspended}"
+        tokens = ["CARET NAVIGATOR: Commands suspended:", suspended]
         if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens += [":", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._suspended = suspended
         command_manager.get_manager().set_group_suspended(

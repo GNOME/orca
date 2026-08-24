@@ -127,8 +127,8 @@ class AXUtilitiesRelation:
         try:
             relations = Atspi.Accessible.get_relation_set(obj)
         except GLib.GError as error:
-            msg = f"AXUtilitiesRelation: Exception in get_relations: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXUtilitiesRelation: Exception in get_relations:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         if relations is None:

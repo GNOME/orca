@@ -26,7 +26,7 @@ from __future__ import annotations
 import faulthandler
 import os
 import time
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
@@ -120,17 +120,15 @@ class DebuggingToolsManager(Extension):
         AXObject.clear_cache(app, recursive=True, reason="User request.")
         return True
 
-    def _get_running_applications_as_string_iter(
+    def _get_running_applications_as_token_iter(
         self,
         is_command_line: bool,
-    ) -> Generator[str, None, None]:
-        """Generator providing strings with basic details about the running accessible apps."""
+    ) -> Generator[list[Any], None, None]:
+        """Generator providing tokens with basic details about the running accessible apps."""
 
         applications = AXUtilities.get_all_applications(is_debug=True)
-        msg = f"Desktop has {len(applications)} app(s):"
-        if not is_command_line:
-            msg = f"DEBUGGING TOOLS MANAGER: {msg}"
-        yield msg
+        prefix = "" if is_command_line else "DEBUGGING TOOLS MANAGER: "
+        yield [f"{prefix}Desktop has", len(applications), "app(s):"]
 
         for i, app in enumerate(applications):
             pid = AXUtilities.get_process_id(app)
@@ -148,8 +146,7 @@ class DebuggingToolsManager(Extension):
             else:
                 prefix = f"{i + 1:3}."
 
-            msg = f"{prefix} pid: {pid:<10} {name:<25} {cmdline}"
-            yield msg
+            yield [f"{prefix} pid: {pid:<10} {name:<25}", cmdline]
 
     def print_running_applications(
         self,
@@ -166,11 +163,11 @@ class DebuggingToolsManager(Extension):
         if level < debug.debugLevel and not is_command_line:
             return
 
-        for app_string in self._get_running_applications_as_string_iter(is_command_line):
+        for tokens in self._get_running_applications_as_token_iter(is_command_line):
             if is_command_line:
-                print(app_string)  # noqa: T201
+                print(" ".join(str(token) for token in tokens))  # noqa: T201
             else:
-                debug.print_message(level, app_string, True)
+                debug.print_tokens(level, tokens, True)
 
     def print_session_details(self, is_command_line: bool = False) -> None:
         """Prints basic details about the current session."""
@@ -190,8 +187,8 @@ class DebuggingToolsManager(Extension):
         if is_command_line:
             print(msg)  # noqa: T201
         else:
-            msg = f"DEBUGGING TOOLS MANAGER: {msg}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["DEBUGGING TOOLS MANAGER:", msg]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
 
 _manager: DebuggingToolsManager = DebuggingToolsManager()

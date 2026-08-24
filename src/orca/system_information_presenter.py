@@ -195,12 +195,12 @@ class SystemInformationPresenter(Extension):
         try:
             fmt = DateFormat[value.upper()]
         except KeyError:
-            msg = f"SYSTEM INFORMATION PRESENTER: Invalid date format: {value}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["SYSTEM INFORMATION PRESENTER: Invalid date format:", value]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
-        msg = f"SYSTEM INFORMATION PRESENTER: Setting date format to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SYSTEM INFORMATION PRESENTER: Setting date format to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_DATE_FORMAT, fmt.value
         )
@@ -237,12 +237,12 @@ class SystemInformationPresenter(Extension):
         try:
             fmt = TimeFormat[value.upper()]
         except KeyError:
-            msg = f"SYSTEM INFORMATION PRESENTER: Invalid time format: {value}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["SYSTEM INFORMATION PRESENTER: Invalid time format:", value]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
-        msg = f"SYSTEM INFORMATION PRESENTER: Setting time format to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SYSTEM INFORMATION PRESENTER: Setting time format to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_TIME_FORMAT, fmt.value
         )
@@ -409,12 +409,15 @@ class SystemInformationPresenter(Extension):
         for key_name, modifier_type in modifiers:
             bit = 1 << modifier_type
             is_locked = bool(locked & bit)
-            msg = (
-                f"SYSTEM INFORMATION PRESENTER: {key_name}: "
-                f"modifier_type={modifier_type}, bit={bit:#x}, "
-                f"locked & bit={locked & bit:#x}, is_locked={is_locked}"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "SYSTEM INFORMATION PRESENTER:",
+                key_name,
+                ": modifier_type=",
+                modifier_type,
+                f", bit={bit:#x}, locked & bit={locked & bit:#x}, is_locked=",
+                is_locked,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             localized_name = keynames.get_key_name(key_name) or key_name
             if is_locked:

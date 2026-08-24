@@ -30,6 +30,7 @@ import types
 import typing
 import xml.etree.ElementTree as ET
 from collections.abc import Callable
+from typing import Any
 
 import gi
 from dasbus.connection import SessionMessageBus
@@ -539,8 +540,12 @@ class _InterfaceBuilder:
                 secret = get_testing_secret()
                 token = str(bound.arguments.get("token", ""))
                 if secret is None or not hmac.compare_digest(token, secret):
-                    msg = f"DBUS SERVICE: Rejected testing command {method.__name__}: bad token."
-                    debug.print_message(debug.LEVEL_WARNING, msg, True)
+                    tokens = [
+                        "DBUS SERVICE: Rejected testing command",
+                        method.__name__,
+                        ": bad token.",
+                    ]
+                    debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
                     raise PermissionError("invalid testing token")
 
             from . import (  # pylint: disable=import-outside-toplevel
@@ -658,8 +663,8 @@ class OrcaDBusServiceInterface(Publishable):
 
         from . import presentation_manager  # pylint: disable=import-outside-toplevel
 
-        msg = f"DBUS SERVICE: PresentMessage called with: '{message}'"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DBUS SERVICE: PresentMessage called with: '", message, "'"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         presentation_manager.get_manager().present_message(message)
         return True
@@ -669,8 +674,8 @@ class OrcaDBusServiceInterface(Publishable):
 
         from . import presentation_manager  # pylint: disable=import-outside-toplevel
 
-        msg = f"DBUS SERVICE: SpeakMessage called with: '{message}'"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DBUS SERVICE: SpeakMessage called with: '", message, "'"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         presentation_manager.get_manager().speak_message(message)
         return True
@@ -700,8 +705,8 @@ class OrcaDBusServiceInterface(Publishable):
         result = orca_platform.version
         if orca_platform.revision:
             result += f" (rev {orca_platform.revision})"
-        msg = f"DBUS SERVICE: GetVersion called, returning: {result}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DBUS SERVICE: GetVersion called, returning:", result]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     def Quit(self) -> bool:  # pylint: disable=invalid-name
@@ -748,15 +753,15 @@ class OrcaRemoteController:
 
         try:
             self._bus = SessionMessageBus()
-            msg = (
-                f"REMOTE CONTROLLER: SessionMessageBus acquired: "
-                f"{self._bus.connection.get_unique_name()}"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "REMOTE CONTROLLER: SessionMessageBus acquired:",
+                self._bus.connection.get_unique_name(),
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         except DBusError as e:
             self._bus = None
-            msg = f"REMOTE CONTROLLER: Failed to acquire D-Bus session bus: {e}"
-            debug.print_message(debug.LEVEL_SEVERE, msg, True)
+            tokens = ["REMOTE CONTROLLER: Failed to acquire D-Bus session bus:", e]
+            debug.print_tokens(debug.LEVEL_SEVERE, tokens, True)
             return False
 
         self._dbus_service_interface = OrcaDBusServiceInterface()
@@ -764,8 +769,8 @@ class OrcaRemoteController:
             self._bus.publish_object(self.OBJECT_PATH, self._dbus_service_interface)
             self._bus.register_service(self.SERVICE_NAME)
         except DBusError as e:
-            msg = f"REMOTE CONTROLLER: Failed to publish service or request name: {e}"
-            debug.print_message(debug.LEVEL_SEVERE, msg, True)
+            tokens = ["REMOTE CONTROLLER: Failed to publish service or request name:", e]
+            debug.print_tokens(debug.LEVEL_SEVERE, tokens, True)
             if self._dbus_service_interface and self._bus:
                 with contextlib.suppress(DBusError):
                     self._bus.unpublish_object(self.OBJECT_PATH)
@@ -774,10 +779,14 @@ class OrcaRemoteController:
             return False
 
         self._is_running = True
-        msg = (
-            f"REMOTE CONTROLLER: Service started name={self.SERVICE_NAME} path={self.OBJECT_PATH}."
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "REMOTE CONTROLLER: Service started name=",
+            self.SERVICE_NAME,
+            "path=",
+            self.OBJECT_PATH,
+            ".",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._process_pending_registrations()
         self._print_registration_summary()
         return True
@@ -816,8 +825,12 @@ class OrcaRemoteController:
         """Registers a module's decorated D-Bus methods, getters, and setters."""
 
         if not self._is_running or self._bus is None:
-            msg = f"REMOTE CONTROLLER: Service not ready; queuing registration for {module_name}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "REMOTE CONTROLLER: Service not ready; queuing registration for",
+                module_name,
+                ".",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._pending_registrations[module_name] = module_instance
             return
         self._publish_module(module_name, module_instance)
@@ -827,13 +840,13 @@ class OrcaRemoteController:
 
         if module_name in self._pending_registrations:
             del self._pending_registrations[module_name]
-            msg = f"REMOTE CONTROLLER: Removed pending registration for {module_name}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["REMOTE CONTROLLER: Removed pending registration for", module_name, "."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if module_name not in self._registered:
-            msg = f"REMOTE CONTROLLER: Module '{module_name}' is not registered."
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["REMOTE CONTROLLER: Module '", module_name, "' is not registered."]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
         return self._unpublish_module(module_name)
@@ -945,14 +958,20 @@ class OrcaRemoteController:
 
         registration = self._registered.get(module_name)
         if registration is None:
-            msg = f"REMOTE CONTROLLER: Module '{module_name}' not found."
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["REMOTE CONTROLLER: Module '", module_name, "' not found."]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
         method = registration.find_command(command_name)
         if method is None:
-            msg = f"REMOTE CONTROLLER: Unknown command '{command_name}' in '{module_name}'."
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "REMOTE CONTROLLER: Unknown command '",
+                command_name,
+                "' in '",
+                module_name,
+                "'.",
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
         from . import (  # pylint: disable=import-outside-toplevel
@@ -973,14 +992,20 @@ class OrcaRemoteController:
 
         registration = self._registered.get(module_name)
         if registration is None:
-            msg = f"REMOTE CONTROLLER: Module '{module_name}' not found."
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["REMOTE CONTROLLER: Module '", module_name, "' not found."]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
         method = registration.find_getter(property_name)
         if method is None:
-            msg = f"REMOTE CONTROLLER: Unknown getter '{property_name}' in '{module_name}'."
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "REMOTE CONTROLLER: Unknown getter '",
+                property_name,
+                "' in '",
+                module_name,
+                "'.",
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
         return method()
@@ -990,14 +1015,20 @@ class OrcaRemoteController:
 
         registration = self._registered.get(module_name)
         if registration is None:
-            msg = f"REMOTE CONTROLLER: Module '{module_name}' not found."
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["REMOTE CONTROLLER: Module '", module_name, "' not found."]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
         method = registration.find_setter(property_name)
         if method is None:
-            msg = f"REMOTE CONTROLLER: Unknown setter '{property_name}' in '{module_name}'."
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "REMOTE CONTROLLER: Unknown setter '",
+                property_name,
+                "' in '",
+                module_name,
+                "'.",
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
         result = method(value)
@@ -1012,8 +1043,12 @@ class OrcaRemoteController:
             return
 
         if module_name in self._registered:
-            msg = f"REMOTE CONTROLLER: Module {module_name} already registered. Replacing."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens: list[Any] = [
+                "REMOTE CONTROLLER: Module",
+                module_name,
+                "already registered. Replacing.",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._unpublish_module(module_name)
 
         registration = _ModuleRegistration.from_module_instance(module_name, module_instance)
@@ -1028,19 +1063,24 @@ class OrcaRemoteController:
             object_path = f"{self.OBJECT_PATH}/{module_name}"
             self._bus.publish_object(object_path, dbus_object)
         except DBusError as e:
-            msg = f"REMOTE CONTROLLER: Failed to publish module {module_name}: {e}"
-            debug.print_message(debug.LEVEL_SEVERE, msg, True)
+            tokens = ["REMOTE CONTROLLER: Failed to publish module", module_name, ":", e]
+            debug.print_tokens(debug.LEVEL_SEVERE, tokens, True)
             return
 
         registration.set_dbus_object(dbus_object)
         registration.set_object_path(object_path)
         self._registered[module_name] = registration
 
-        msg = (
-            f"REMOTE CONTROLLER: Registered {registration.total_member_count()} member(s) "
-            f"for {module_name} at {object_path}."
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "REMOTE CONTROLLER: Registered",
+            registration.total_member_count(),
+            "member(s) for",
+            module_name,
+            "at",
+            object_path,
+            ".",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _unpublish_module(self, module_name: str) -> bool:
         """Removes a module's D-Bus interface from the bus."""
@@ -1051,12 +1091,12 @@ class OrcaRemoteController:
         try:
             self._bus.unpublish_object(registration.get_object_path())
         except DBusError as e:
-            msg = f"REMOTE CONTROLLER: Error unpublishing {module_name}: {e}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["REMOTE CONTROLLER: Error unpublishing", module_name, ":", e]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
         del self._registered[module_name]
-        msg = f"REMOTE CONTROLLER: Unpublished {module_name}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["REMOTE CONTROLLER: Unpublished", module_name, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     def _process_pending_registrations(self) -> None:
@@ -1064,11 +1104,12 @@ class OrcaRemoteController:
 
         if not self._pending_registrations:
             return
-        msg = (
-            f"REMOTE CONTROLLER: Processing {len(self._pending_registrations)} pending "
-            f"module registrations."
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "REMOTE CONTROLLER: Processing",
+            len(self._pending_registrations),
+            "pending module registrations.",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         for module_name, module_instance in list(self._pending_registrations.items()):
             self._publish_module(module_name, module_instance)
         self._pending_registrations.clear()
@@ -1083,11 +1124,18 @@ class OrcaRemoteController:
         )
         getters = sum(len(reg.get_getters()) for reg in self._registered.values())
         setters = sum(len(reg.get_setters()) for reg in self._registered.values())
-        msg = (
-            f"REMOTE CONTROLLER: Registration summary: {modules} modules, "
-            f"{commands} commands, {getters} getters, {setters} setters."
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "REMOTE CONTROLLER: Registration summary:",
+            modules,
+            "modules,",
+            commands,
+            "commands,",
+            getters,
+            "getters,",
+            setters,
+            "setters.",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
 
 _remote_controller: OrcaRemoteController = OrcaRemoteController()

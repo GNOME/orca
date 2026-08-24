@@ -156,13 +156,13 @@ class MathPresenter(Extension):
         try:
             libmathcat_py.SetRulesDir(rules_dir)
         except OSError as err:
-            msg = f"MATH PRESENTER: SetRulesDir failed for {rules_dir}: {err}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["MATH PRESENTER: SetRulesDir failed for", rules_dir, ":", err]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         version = libmathcat_py.GetVersion()
-        msg = f"MATH PRESENTER: Initialized version {version} with rules from {rules_dir}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["MATH PRESENTER: Initialized version", version, "with rules from", rules_dir]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         libmathcat_py.SetPreference("TTS", "none")
         self._available = True
@@ -193,25 +193,29 @@ class MathPresenter(Extension):
             try:
                 supported = libmathcat_py.GetSupportedLanguages()
             except OSError as err:
-                msg = f"MATH PRESENTER: GetSupportedLanguages failed: {err}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["MATH PRESENTER: GetSupportedLanguages failed:", err]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 supported = []
 
             if lang_code not in supported:
-                msg = f"MATH PRESENTER: Language {lang_code} not supported, "
+                tokens = [
+                    "MATH PRESENTER: Language",
+                    lang_code,
+                    "not supported, falling back to '",
+                ]
                 if "en" in supported:
                     lang_code = "en"
                 elif supported:
                     lang_code = supported[0]
                 else:
                     lang_code = ""
-                msg += f"falling back to {lang_code!r}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens += [lang_code, "'"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             if lang_code:
                 libmathcat_py.SetPreference("Language", lang_code)
-                msg = f"MATH PRESENTER: Language set to {lang_code}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["MATH PRESENTER: Language set to", lang_code]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if speech_style := self.get_speech_style():
             libmathcat_py.SetPreference("SpeechStyle", speech_style)
@@ -257,8 +261,8 @@ class MathPresenter(Extension):
     def set_language(self, value: str) -> bool:
         """Sets the math language."""
 
-        msg = f"MATH PRESENTER: Setting language to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["MATH PRESENTER: Setting language to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_LANGUAGE, value, "s"
         )
@@ -296,8 +300,8 @@ class MathPresenter(Extension):
     def set_speech_style(self, value: str) -> bool:
         """Sets the math speech style."""
 
-        msg = f"MATH PRESENTER: Setting speech style to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["MATH PRESENTER: Setting speech style to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_SPEECH_STYLE, value, "s"
         )
@@ -335,8 +339,8 @@ class MathPresenter(Extension):
     def set_verbosity(self, value: str) -> bool:
         """Sets the math speech verbosity."""
 
-        msg = f"MATH PRESENTER: Setting verbosity to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["MATH PRESENTER: Setting verbosity to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_VERBOSITY, value, "s"
         )
@@ -362,8 +366,8 @@ class MathPresenter(Extension):
     def set_braille_code(self, value: str) -> bool:
         """Sets the math braille code."""
 
-        msg = f"MATH PRESENTER: Setting braille code to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["MATH PRESENTER: Setting braille code to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_BRAILLE_CODE, value, "s"
         )
@@ -406,8 +410,8 @@ class MathPresenter(Extension):
     def set_copy_format(self, value: str) -> bool:
         """Sets the format used when copying math content."""
 
-        msg = f"MATH PRESENTER: Setting copy format to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["MATH PRESENTER: Setting copy format to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_COPY_FORMAT,
@@ -439,8 +443,8 @@ class MathPresenter(Extension):
     def set_nav_mode(self, value: str) -> bool:
         """Sets the math navigation mode."""
 
-        msg = f"MATH PRESENTER: Setting nav mode to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["MATH PRESENTER: Setting nav mode to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_NAV_MODE,
@@ -475,8 +479,8 @@ class MathPresenter(Extension):
     def set_braille_nav_highlight(self, value: str) -> bool:
         """Sets the braille navigation highlight style."""
 
-        msg = f"MATH PRESENTER: Setting braille nav highlight to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["MATH PRESENTER: Setting braille nav highlight to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_BRAILLE_NAV_HIGHLIGHT,
@@ -515,8 +519,8 @@ class MathPresenter(Extension):
     def set_auto_zoom_out(self, value: bool) -> bool:
         """Sets whether auto zoom out is enabled."""
 
-        msg = f"MATH PRESENTER: Setting auto zoom out to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["MATH PRESENTER: Setting auto zoom out to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_AUTO_ZOOM_OUT,
@@ -537,16 +541,16 @@ class MathPresenter(Extension):
                 mathml, _offset = libmathcat_py.GetNavigationMathML()
                 return mathml.strip()
             except OSError as err:
-                msg = f"MATH PRESENTER: GetNavigationMathML failed: {err}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["MATH PRESENTER: GetNavigationMathML failed:", err]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return ""
 
         if copy_format == "speech":
             try:
                 return libmathcat_py.GetSpokenText()
             except OSError as err:
-                msg = f"MATH PRESENTER: GetSpokenText failed: {err}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["MATH PRESENTER: GetSpokenText failed:", err]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return ""
 
         if copy_format in ("latex", "asciimath"):
@@ -556,8 +560,8 @@ class MathPresenter(Extension):
                 libmathcat_py.SetPreference("BrailleCode", braille_code)
                 return libmathcat_py.GetNavigationBraille()
             except OSError as err:
-                msg = f"MATH PRESENTER: GetNavigationBraille({braille_code}) failed: {err}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["MATH PRESENTER: GetNavigationBraille(", braille_code, ") failed:", err]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return ""
             finally:
                 libmathcat_py.SetPreference("BrailleCode", original_code)
@@ -585,8 +589,8 @@ class MathPresenter(Extension):
             libmathcat_py.SetMathML(mathml)
             speech = libmathcat_py.GetSpokenText()
         except OSError as err:
-            msg = f"MATH PRESENTER: GetSpokenText failed: {err}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["MATH PRESENTER: GetSpokenText failed:", err]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
         if debug.debugLevel <= debug.LEVEL_INFO:
@@ -594,11 +598,19 @@ class MathPresenter(Extension):
             style = libmathcat_py.GetPreference("SpeechStyle")
             verbosity = libmathcat_py.GetPreference("Verbosity")
             nav_mode = libmathcat_py.GetPreference("NavMode")
-            msg = (
-                f"MATH PRESENTER: Speech ({lang}, {style},"
-                f" verbosity={verbosity}, nav={nav_mode}): {speech}"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "MATH PRESENTER: Speech (",
+                lang,
+                ",",
+                style,
+                ", verbosity=",
+                verbosity,
+                ", nav=",
+                nav_mode,
+                "):",
+                speech,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return speech
 
     def get_braille_for_math(self, obj: Atspi.Accessible) -> str:
@@ -614,15 +626,15 @@ class MathPresenter(Extension):
             libmathcat_py.SetMathML(mathml)
             braille = libmathcat_py.GetBraille("")
         except OSError as err:
-            msg = f"MATH PRESENTER: GetBraille failed: {err}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["MATH PRESENTER: GetBraille failed:", err]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
         if debug.debugLevel <= debug.LEVEL_INFO:
             code = libmathcat_py.GetPreference("BrailleCode")
             highlight = libmathcat_py.GetPreference("BrailleNavHighlight")
-            msg = f"MATH PRESENTER: Braille ({code}, highlight={highlight}): {braille}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["MATH PRESENTER: Braille (", code, ", highlight=", highlight, "):", braille]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return braille
 
     def get_where_am_i(self) -> str:
@@ -631,8 +643,8 @@ class MathPresenter(Extension):
         try:
             return libmathcat_py.DoNavigateCommand("WhereAmI")
         except OSError as err:
-            msg = f"MATH PRESENTER: WhereAmI failed: {err}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["MATH PRESENTER: WhereAmI failed:", err]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
     def get_where_am_i_all(self) -> str:
@@ -641,8 +653,8 @@ class MathPresenter(Extension):
         try:
             return libmathcat_py.DoNavigateCommand("WhereAmIAll")
         except OSError as err:
-            msg = f"MATH PRESENTER: WhereAmIAll failed: {err}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["MATH PRESENTER: WhereAmIAll failed:", err]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
 

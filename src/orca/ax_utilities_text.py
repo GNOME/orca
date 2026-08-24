@@ -1349,8 +1349,8 @@ class AXUtilitiesText:
                 rv[-1] = (prev_start, min(offset + 1, end_offset), prev_attrs)
             else:
                 # TODO - JD: We're sometimes seeing this from WebKit, e.g. in Evo gitlab messages.
-                msg = f"AXText: Start offset {start} > end offset {end}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["AXText: Start offset", start, "> end offset", end]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             offset = max(end, offset + 1)
 
         if byte_to_char is not None:
@@ -1363,8 +1363,8 @@ class AXUtilitiesText:
                 for s, e, attrs in rv
             ]
 
-        msg = f"AXText: {len(rv)} attribute ranges found."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXText:", len(rv), "attribute ranges found."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return rv
 
     @staticmethod

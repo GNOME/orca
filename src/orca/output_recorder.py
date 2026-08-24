@@ -48,8 +48,8 @@ class OutputRecorder:
                 path, "w", encoding="utf-8", buffering=1
             )
         except OSError as error:
-            msg = f"OUTPUT RECORDER ({self._label}): Could not open {path!r}: {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["OUTPUT RECORDER (", self._label, f"): Could not open {path!r}:", error]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
         return True
 
@@ -62,8 +62,8 @@ class OutputRecorder:
             json.dump(fields, self._file, ensure_ascii=False)
             self._file.write("\n")
         except (OSError, TypeError, ValueError) as error:
-            msg = f"OUTPUT RECORDER ({self._label}): Failed to write record: {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["OUTPUT RECORDER (", self._label, "): Failed to write record:", error]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
     def close(self) -> None:
         """Closes the underlying file, if any."""

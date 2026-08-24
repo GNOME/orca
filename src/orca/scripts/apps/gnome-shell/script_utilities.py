@@ -49,8 +49,8 @@ class Utilities(script_utilities.Utilities):
 
             string = AXText.get_all_text(event.source)
             if string:
-                msg = f"GNOME SHELL: Returning last char in '{string}'"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["GNOME SHELL: Returning last char in '", string, "'"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return string[-1]
 
             msg = "GNOME SHELL: Unable to correct broken text insertion event"

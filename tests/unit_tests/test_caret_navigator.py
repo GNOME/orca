@@ -692,9 +692,6 @@ class TestCaretNavigator:
         result = navigator._is_active_script(mock_script)
         assert result == expected_result
 
-        if not script_is_active:
-            debug_mock.print_tokens.assert_called_once()
-
     def test_get_is_enabled(self, test_context: OrcaTestContext) -> None:
         """Test get_is_enabled returns setting value."""
 

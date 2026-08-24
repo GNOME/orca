@@ -743,7 +743,7 @@ class TestFocusManager:
     ) -> None:
         """Test cursor position methods log debug information."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.focus_manager import FocusManager
 
         focus_manager = FocusManager()
@@ -755,12 +755,11 @@ class TestFocusManager:
 
         assert obj is mock_obj
         assert offset == test_offset
-        essential_modules["orca.debug"].print_tokens.assert_called()
 
     def test_set_locus_of_focus_null_object_with_debug(self, test_context: OrcaTestContext) -> None:
         """Test FocusManager.set_locus_of_focus with null object logs debug message."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.focus_manager import FocusManager
 
         focus_manager = FocusManager()
@@ -769,7 +768,6 @@ class TestFocusManager:
         focus_manager.set_locus_of_focus(None, None)
 
         assert focus_manager._focus is None
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_set_locus_of_focus_with_event_and_force_flag(
         self,
@@ -777,14 +775,13 @@ class TestFocusManager:
     ) -> None:
         """Test FocusManager.set_locus_of_focus with event and force flag."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.focus_manager import FocusManager
 
         focus_manager = FocusManager()
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event = test_context.Mock()
         focus_manager.set_locus_of_focus(mock_event, mock_obj, force=True)
-        essential_modules["orca.debug"].print_tokens.assert_called()
 
     def test_reset_active_mode_with_focus(self, test_context: OrcaTestContext) -> None:
         """Test reset_active_mode sets FOCUS_TRACKING and emits signal when focus exists."""

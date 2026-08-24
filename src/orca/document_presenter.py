@@ -394,8 +394,8 @@ class DocumentPresenter(Extension):
     def _enable_document_navigators(self, script: default.Script, reason: str) -> None:
         """Enables document navigators for the given script."""
 
-        msg = f"DOCUMENT PRESENTER: _enable_document_navigators. Reason: {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DOCUMENT PRESENTER: _enable_document_navigators. Reason:", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         structural_navigator.get_navigator().set_mode(
             script,
@@ -515,8 +515,8 @@ class DocumentPresenter(Extension):
     ) -> bool:
         """Enables sticky browse mode."""
 
-        msg = f"DOCUMENT PRESENTER: enable_sticky_browse_mode({event}, {notify_user})"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DOCUMENT PRESENTER: enable_sticky_browse_mode(", event, ",", notify_user, ")"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not script.utilities.in_document_content():
             if notify_user:
@@ -547,8 +547,8 @@ class DocumentPresenter(Extension):
     ) -> bool:
         """Enables sticky focus mode."""
 
-        msg = f"DOCUMENT PRESENTER: enable_sticky_focus_mode({event}, {notify_user})"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DOCUMENT PRESENTER: enable_sticky_focus_mode(", event, ",", notify_user, ")"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not script.utilities.in_document_content():
             if notify_user:
@@ -815,8 +815,8 @@ class DocumentPresenter(Extension):
         if self.get_native_nav_triggers_focus_mode() == value:
             return True
 
-        msg = f"DOCUMENT PRESENTER: Setting native nav triggers focus mode to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DOCUMENT PRESENTER: Setting native nav triggers focus mode to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_NATIVE_NAV_TRIGGERS_FOCUS_MODE,
@@ -845,8 +845,8 @@ class DocumentPresenter(Extension):
         if self.get_auto_sticky_focus_mode_for_web_apps() == value:
             return True
 
-        msg = f"DOCUMENT PRESENTER: Setting auto sticky focus mode for web apps to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DOCUMENT PRESENTER: Setting auto sticky focus mode for web apps to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_AUTO_STICKY_FOCUS_MODE,
@@ -875,8 +875,8 @@ class DocumentPresenter(Extension):
         if self.get_say_all_on_load() == value:
             return True
 
-        msg = f"DOCUMENT PRESENTER: Setting say all on load to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DOCUMENT PRESENTER: Setting say all on load to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_SAY_ALL_ON_LOAD, value
         )
@@ -903,8 +903,8 @@ class DocumentPresenter(Extension):
         if self.get_page_summary_on_load() == value:
             return True
 
-        msg = f"DOCUMENT PRESENTER: Setting page summary on load to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DOCUMENT PRESENTER: Setting page summary on load to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_PAGE_SUMMARY_ON_LOAD,
@@ -944,8 +944,8 @@ class DocumentPresenter(Extension):
         if self.get_speak_find_results() == value:
             return True
 
-        msg = f"DOCUMENT PRESENTER: Setting speak find results to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DOCUMENT PRESENTER: Setting speak find results to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         name = "all" if value else "none"
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
@@ -967,8 +967,8 @@ class DocumentPresenter(Extension):
         if self.get_only_speak_changed_lines() == value:
             return True
 
-        msg = f"DOCUMENT PRESENTER: Setting only speak changed lines to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DOCUMENT PRESENTER: Setting only speak changed lines to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         name = "if-line-changed" if value else "all"
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
@@ -998,8 +998,8 @@ class DocumentPresenter(Extension):
         if self.get_find_results_minimum_length() == value:
             return True
 
-        msg = f"DOCUMENT PRESENTER: Setting find results minimum length to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DOCUMENT PRESENTER: Setting find results minimum length to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_FIND_RESULTS_MINIMUM_LENGTH,
@@ -1184,8 +1184,8 @@ class DocumentPresenter(Extension):
         nav_result, reason = self._navigation_prevents_focus_mode(script, obj, prev_obj)
         if nav_result is not None:
             prefix = "Using" if nav_result else "Not using"
-            msg = f"DOCUMENT PRESENTER: {prefix} focus mode: {reason}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["DOCUMENT PRESENTER:", prefix, "focus mode:", reason]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return nav_result
 
         do_not_toggle = AXUtilities.is_link(obj) or AXUtilities.is_radio_button(obj)

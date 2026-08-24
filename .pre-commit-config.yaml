@@ -12,6 +12,12 @@ repos:
       - id: codespell
   - repo: local
     hooks:
+      - id: orca-rules
+        name: orca rules
+        entry: python ci/check_orca_rules.py
+        language: python
+        pass_filenames: false
+        types: [python]
       - id: mypy
         name: mypy
         entry: mypy src/orca

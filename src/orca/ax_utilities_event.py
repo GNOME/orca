@@ -393,11 +393,18 @@ class AXUtilitiesEvent:
             return False
 
         similarity = round(SequenceMatcher(None, str1.lower(), str2.lower()).ratio(), 2)
-        msg = (
-            f"AXUtilitiesEvent: Similarity between '{str1}', '{str2}': {similarity} "
-            f"(threshold: {threshold})"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "AXUtilitiesEvent: Similarity between '",
+            str1,
+            "', '",
+            str2,
+            "':",
+            similarity,
+            "(threshold:",
+            threshold,
+            ")",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return similarity >= threshold
 
     @staticmethod
@@ -1039,11 +1046,14 @@ class AXUtilitiesEvent:
             return False
 
         if AXUtilitiesEvent._strings_are_redundant(old_description, new_description):
-            msg = (
-                f"AXUtilitiesEvent: The new description ('{new_description}') "
-                f"is too similar to the old description ('{old_description}')."
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "AXUtilitiesEvent: The new description ('",
+                new_description,
+                "') is too similar to the old description ('",
+                old_description,
+                "').",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         AXUtilitiesEvent._CACHE.set_description(event.source, new_description)
@@ -1215,11 +1225,14 @@ class AXUtilitiesEvent:
         if AXUtilitiesRole.is_terminal(focus):
             text = AXText.get_line_at_offset(focus)[0].strip()
             if AXUtilitiesEvent._strings_are_redundant(text, event.any_data):
-                msg = (
-                    f"AXUtilitiesEvent: The new name ('{event.any_data}') "
-                    f"is too similar to the text at offset ('{text}')."
-                )
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = [
+                    "AXUtilitiesEvent: The new name ('",
+                    event.any_data,
+                    "') is too similar to the text at offset ('",
+                    text,
+                    "').",
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         msg = "AXUtilitiesEvent: Event is presentable."
@@ -1248,11 +1261,14 @@ class AXUtilitiesEvent:
             return False
 
         if AXUtilitiesEvent._strings_are_redundant(old_name, new_name):
-            msg = (
-                f"AXUtilitiesEvent: The new name ('{new_name}') "
-                f"is too similar to the old name ('{old_name}')."
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "AXUtilitiesEvent: The new name ('",
+                new_name,
+                "') is too similar to the old name ('",
+                old_name,
+                "').",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         AXUtilitiesEvent._CACHE.set_name(event.source, new_name)

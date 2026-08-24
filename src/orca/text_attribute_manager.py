@@ -119,8 +119,8 @@ class TextAttributeManager:
         if self.get_attributes_to_speak() == value:
             return True
 
-        msg = f"TEXT ATTRIBUTE MANAGER: Setting attributes to speak to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TEXT ATTRIBUTE MANAGER: Setting attributes to speak to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ATTRIBUTES_TO_SPEAK,
@@ -149,8 +149,8 @@ class TextAttributeManager:
         if self.get_attributes_to_braille() == value:
             return True
 
-        msg = f"TEXT ATTRIBUTE MANAGER: Setting attributes to braille to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TEXT ATTRIBUTE MANAGER: Setting attributes to braille to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ATTRIBUTES_TO_BRAILLE,

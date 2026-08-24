@@ -137,8 +137,8 @@ class SpeechServer(speechserver.SpeechServer):
         try:
             self._client = client = speechd.SSIPClient("Orca", component=self._id)
         except (speechd.SSIPCommunicationError, speechd.SpawnError) as error:
-            msg = f"ERROR: Failed to connect to Speech Dispatcher: {error}"
-            debug.print_message(debug.LEVEL_SEVERE, msg, True)
+            tokens = ["ERROR: Failed to connect to Speech Dispatcher:", error]
+            debug.print_tokens(debug.LEVEL_SEVERE, tokens, True)
             self._client = None
             systemd.get_manager().set_status("Speech", f"not connected ({error})")
             return
@@ -187,8 +187,8 @@ class SpeechServer(speechserver.SpeechServer):
             if self._client is not None:
                 self._client.set_cap_let_recogn(sd_style)
         except Exception as error:
-            msg = f"SPEECH DISPATCHER: set_cap_let_recogn failed: {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["SPEECH DISPATCHER: set_cap_let_recogn failed:", error]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
     def update_punctuation_level(self, level: PunctuationStyle) -> None:
         """Punctuation level changed, inform this speechServer."""
@@ -210,8 +210,8 @@ class SpeechServer(speechserver.SpeechServer):
             try:
                 return command(*args, **kwargs)
             except (AttributeError, speechd.SSIPCommandError) as error:
-                msg = f"SPEECH DISPATCHER: Failed to reconnect: {error}"
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                tokens = ["SPEECH DISPATCHER: Failed to reconnect:", error]
+                debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
                 return None
         except Exception:
             return None
@@ -275,17 +275,31 @@ class SpeechServer(speechserver.SpeechServer):
 
         punctuation_style = self._current_punctuation_level.name
 
-        msg = (
-            f"SPEECH DISPATCHER: {prefix}\n"
-            f"ORCA rate {self._current_voice_properties.get(ACSS.RATE)}, "
-            f"pitch {self._current_voice_properties.get(ACSS.AVERAGE_PITCH)}, "
-            f"pitch-range {self._current_voice_properties.get(ACSS.PITCH_RANGE)}, "
-            f"volume {self._current_voice_properties.get(ACSS.GAIN)}, "
-            f"language {self._get_language_and_dialect(family)[0]}, "
-            f"punctuation: {punctuation_style}\n"
-            f"SD rate {sd_rate}, pitch {sd_pitch}, volume {sd_volume}, language {sd_language}"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "SPEECH DISPATCHER:",
+            prefix,
+            "\nORCA rate",
+            self._current_voice_properties.get(ACSS.RATE),
+            ", pitch",
+            self._current_voice_properties.get(ACSS.AVERAGE_PITCH),
+            ", pitch-range",
+            self._current_voice_properties.get(ACSS.PITCH_RANGE),
+            ", volume",
+            self._current_voice_properties.get(ACSS.GAIN),
+            ", language",
+            self._get_language_and_dialect(family)[0],
+            ", punctuation:",
+            punctuation_style,
+            "\nSD rate",
+            sd_rate,
+            ", pitch",
+            sd_pitch,
+            ", volume",
+            sd_volume,
+            ", language",
+            sd_language,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _apply_acss(self, acss: dict[str, Any] | None) -> None:
         super()._apply_acss(acss)
@@ -342,12 +356,14 @@ class SpeechServer(speechserver.SpeechServer):
                             start, end = index[0:2]
                             context.current_offset = context.start_offset + int(start)
                             context.current_end_offset = context.start_offset + int(end)
-                            msg = (
-                                f"SPEECH DISPATCHER: Got mark "
-                                f"{context.current_offset}:{context.current_end_offset} / "
-                                f"{context.start_offset}:{context.end_offset}"
-                            )
-                            debug.print_message(debug.LEVEL_INFO, msg, True)
+                            tokens = [
+                                "SPEECH DISPATCHER: Got mark",
+                                context.current_offset,
+                                f":{context.current_end_offset} /",
+                                context.start_offset,
+                                f":{context.end_offset}",
+                            ]
+                            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     else:
                         context.current_offset = context.start_offset
                         context.current_end_offset = None
@@ -386,8 +402,8 @@ class SpeechServer(speechserver.SpeechServer):
                     if result:
                         voices = tuple(result)
                 except Exception as error:
-                    msg = f"SPEECH DISPATCHER: list_synthesis_voices failed: {error}"
-                    debug.print_message(debug.LEVEL_WARNING, msg, True)
+                    tokens = ["SPEECH DISPATCHER: list_synthesis_voices failed:", error]
+                    debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
         return self._build_voice_families(voices)
 
@@ -405,14 +421,14 @@ class SpeechServer(speechserver.SpeechServer):
                 self._apply_acss(acss)
                 self._speak(text, acss)
                 return
-            msg = f"SPEECH DISPATCHER: Speaking '{text}' as char"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH DISPATCHER: Speaking '", text, "' as char"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._apply_acss(acss)
             if self._client is not None:
                 self._send_command(self._client.char, text)
         else:
-            msg = f"SPEECH DISPATCHER: Speaking '{text}' as string"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH DISPATCHER: Speaking '", text, "' as string"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._speak(text, acss)
 
     def say_all(
@@ -443,8 +459,8 @@ class SpeechServer(speechserver.SpeechServer):
                 # speak() does. See https://gitlab.gnome.org/GNOME/orca/-/issues/657
                 self._speak(character, acss)
                 return
-            msg = f"SPEECH DISPATCHER: Speaking '{character}' as char"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH DISPATCHER: Speaking '", character, "' as char"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if self._client is not None:
                 if cap_style == CapitalizationStyle.SPELL:
                     self._send_command(self._client.set_cap_let_recogn, "spell")
@@ -469,14 +485,14 @@ class SpeechServer(speechserver.SpeechServer):
         # Example: The user presses '.' and then presses BackSpace and expects the output to
         # be the same.
         if len(event_string) == 1:
-            msg = f"SPEECH DISPATCHER: Speaking '{event_string}' as char"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH DISPATCHER: Speaking '", event_string, "' as char"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._apply_acss(acss)
             if self._client is not None:
                 self._send_command(self._client.char, event_string)
         else:
-            msg = f"SPEECH DISPATCHER: Speaking '{event_string}' as string"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH DISPATCHER: Speaking '", event_string, "' as string"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self.speak(event_string, acss=acss)
 
     def clear_voice_families_cache(self) -> None:
@@ -504,11 +520,16 @@ class SpeechServer(speechserver.SpeechServer):
 
         cache_key = (language, dialect, variant, maximum)
         if cache_key in self._voice_families_cache:
-            msg = (
-                f"SPEECH DISPATCHER: Returning cached result for language='{language}' "
-                f"dialect='{dialect}' variant='{variant}'"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens: list[Any] = [
+                "SPEECH DISPATCHER: Returning cached result for language='",
+                language,
+                "' dialect='",
+                dialect,
+                "' variant='",
+                variant,
+                "'",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return self._voice_families_cache[cache_key]
         start = time.time()
         target_language, target_dialect = self._normalized_language_and_dialect(language, dialect)
@@ -517,33 +538,49 @@ class SpeechServer(speechserver.SpeechServer):
         if self._client is None:
             return result
 
-        msg = (
-            f"SPEECH DISPATCHER: Searching for language='{language}' "
-            f"dialect='{dialect}' variant='{variant}'."
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "SPEECH DISPATCHER: Searching for language='",
+            language,
+            "' dialect='",
+            dialect,
+            "' variant='",
+            variant,
+            "'.",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         language_with_dialect = f"{language}-{dialect}" if dialect else language
         try:
             voices = self._client.list_synthesis_voices(language_with_dialect, variant)
-            msg = f"SPEECH DISPATCHER: Unfiltered voice list has {len(voices)} entries."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "SPEECH DISPATCHER: Unfiltered voice list has",
+                len(voices),
+                "entries.",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if not voices:
                 voices = self._client.list_synthesis_voices(language, variant)
-                msg = f"SPEECH DISPATCHER: Unfiltered voice list (try 2) has {len(voices)} entries."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = [
+                    "SPEECH DISPATCHER: Unfiltered voice list (try 2) has",
+                    len(voices),
+                    "entries.",
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         except (AttributeError, ValueError) as error:
-            msg = f"SPEECH DISPATCHER: specifying language and variant failed: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "SPEECH DISPATCHER: specifying language and variant failed:",
+                error,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             try:
                 voices = self._client.list_synthesis_voices()
             except (AttributeError, ValueError, speechd.SSIPCommandError) as error2:
-                msg = f"SPEECH DISPATCHER: Error listing synthesis voices: {error2}"
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                tokens = ["SPEECH DISPATCHER: Error listing synthesis voices:", error2]
+                debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
                 return []
         except speechd.SSIPCommandError as error:
-            msg = f"SPEECH DISPATCHER: Error listing synthesis voices: {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["SPEECH DISPATCHER: Error listing synthesis voices:", error]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return []
 
         candidates, fallbacks = self._filter_voices_for_language(
@@ -553,15 +590,25 @@ class SpeechServer(speechserver.SpeechServer):
             maximum=maximum,
         )
 
-        msg = (
-            f"SPEECH DISPATCHER: Found {len(candidates)} match(es) for "
-            f"language='{language}' dialect='{dialect}' variant='{variant}' "
-            f"in {time.time() - start:.4f}s."
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "SPEECH DISPATCHER: Found",
+            len(candidates),
+            "match(es) for language='",
+            language,
+            "' dialect='",
+            dialect,
+            "' variant='",
+            variant,
+            f"' in {time.time() - start:.4f}s.",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not candidates and fallbacks:
-            msg = f"SPEECH DISPATCHER: No direct matches found, using {len(fallbacks)} fallback(s)."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "SPEECH DISPATCHER: No direct matches found, using",
+                len(fallbacks),
+                "fallback(s).",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             candidates = fallbacks
 
         self._voice_families_cache[cache_key] = candidates
@@ -615,8 +662,8 @@ class SpeechServer(speechserver.SpeechServer):
         try:
             return result.get(timeout=timeout)
         except queue.Empty:
-            msg = f"{self._LOG_PREFIX}: Speech server health check timed out"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [self._LOG_PREFIX, ": Speech server health check timed out"]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
     def set_output_module(self, module_id: str) -> None:
@@ -651,21 +698,26 @@ class SpeechServer(speechserver.SpeechServer):
                 # This prevents hanging during Python's final garbage collection.
                 gc.collect()
         except Exception as error:
-            msg = f"SPEECH DISPATCHER: Error during shutdown of server {self._id}: {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["SPEECH DISPATCHER: Error during shutdown of server", self._id, ":", error]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
         finally:
             if self._id in SpeechServer._active_servers:
                 del SpeechServer._active_servers[self._id]
 
     def reset(self) -> None:
         try:
-            msg = f"SPEECH DISPATCHER: Resetting server {self._id}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens: list[Any] = ["SPEECH DISPATCHER: Resetting server", self._id]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if self._client is not None:
                 self._client.close()
         except Exception as error:
-            msg = f"SPEECH DISPATCHER: Error during reset of server {self._id}: {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "SPEECH DISPATCHER: Error during reset of server",
+                self._id,
+                ":",
+                error,
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
         finally:
             self.clear_voice_families_cache()
             self._init()
@@ -694,8 +746,8 @@ class SpeechServer(speechserver.SpeechServer):
         try:
             language = self._send_command(self._client.get_language)
         except (AttributeError, speechd.SSIPCommandError) as error:
-            msg = f"SPEECH DISPATCHER: Error getting language: {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["SPEECH DISPATCHER: Error getting language:", error]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
         lang_parts = language.partition("-")
         lang = lang_parts[0]
@@ -727,16 +779,21 @@ class SpeechServer(speechserver.SpeechServer):
                 self._send_command(self._client.set_synthesis_voice, voice_name)
                 self._current_synthesis_voice = voice_name
             except AttributeError as error:
-                msg = f"SPEECH DISPATCHER: Synthesis voice not supported: {error}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["SPEECH DISPATCHER: Synthesis voice not supported:", error]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 self._current_synthesis_voice = None
             except speechd.SSIPCommandError as error:
-                msg = f"SPEECH DISPATCHER: Error setting synthesis voice {voice_name}: {error}"
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                tokens = [
+                    "SPEECH DISPATCHER: Error setting synthesis voice",
+                    voice_name,
+                    ":",
+                    error,
+                ]
+                debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
         if language:
             try:
                 self._send_command(self._client.set_language, language)
             except speechd.SSIPCommandError as error:
-                msg = f"SPEECH DISPATCHER: Error setting language {language}: {error}"
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                tokens = ["SPEECH DISPATCHER: Error setting language", language, ":", error]
+                debug.print_tokens(debug.LEVEL_WARNING, tokens, True)

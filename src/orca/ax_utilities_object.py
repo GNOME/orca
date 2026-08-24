@@ -255,11 +255,12 @@ class AXUtilitiesObject:
         start = time.time()
         matches: list[Atspi.Accessible] = []
         AXUtilitiesObject._find_all_descendants(root, include_if, exclude_if, matches)
-        msg = (
-            f"AXUtilitiesObject: find_all_descendants: {len(matches)} "
-            f"matches found in {time.time() - start:.4f}s"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "AXUtilitiesObject: find_all_descendants:",
+            len(matches),
+            f"matches found in {time.time() - start:.4f}s",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return matches
 
     @staticmethod

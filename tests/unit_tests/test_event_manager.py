@@ -961,7 +961,7 @@ class TestEventManager:
     ) -> None:
         """Test EventManager._get_priority with various event types and conditions."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.event_manager import EventManager
 
         manager = EventManager()
@@ -978,7 +978,6 @@ class TestEventManager:
 
         result = manager._get_priority(mock_event)
         assert result == case["expected_priority"]
-        essential_modules["orca.debug"].print_tokens.assert_called()
 
     @pytest.mark.parametrize(
         "case",

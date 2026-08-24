@@ -28,7 +28,7 @@
 from __future__ import annotations
 
 import subprocess
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from . import (
     command_manager,
@@ -163,8 +163,8 @@ class ProfileManager(Extension):
     def load_profile(self, internal_name: str) -> None:
         """Loads a profile by setting it active and reloading user settings."""
 
-        msg = f"PROFILE MANAGER: Loading profile '{internal_name}'."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["PROFILE MANAGER: Loading profile '", internal_name, "'."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self.set_active_profile(internal_name)
         orca.load_user_settings(skip_reload_message=True)
@@ -173,8 +173,14 @@ class ProfileManager(Extension):
         """Create a new profile by copying the current active profile to dconf."""
 
         current_profile = self.get_active_profile()
-        msg = f"PROFILE MANAGER: Creating profile '{new_profile[1]}' from '{current_profile}'."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "PROFILE MANAGER: Creating profile '",
+            new_profile[1],
+            "' from '",
+            current_profile,
+            "'.",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         registry = gsettings_registry.get_registry()
         old_profile = registry.sanitize_gsettings_path(current_profile)
@@ -222,11 +228,16 @@ class ProfileManager(Extension):
                 ["dconf", "reset", "-f", path],  # noqa: S607 - full path would break across distros
                 check=True,
             )
-            msg = f"PROFILE MANAGER: Cleared GSettings for profile: {internal_name}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens: list[Any] = ["PROFILE MANAGER: Cleared GSettings for profile:", internal_name]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         except (subprocess.CalledProcessError, FileNotFoundError) as e:
-            msg = f"PROFILE MANAGER: Failed to clear GSettings for profile: {internal_name}: {e}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "PROFILE MANAGER: Failed to clear GSettings for profile:",
+                internal_name,
+                ":",
+                e,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def rename_profile(self, old_internal_name: str, new_profile: list[str]) -> None:
         """Renames a profile."""

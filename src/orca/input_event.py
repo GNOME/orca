@@ -700,10 +700,10 @@ class KeyboardEvent(InputEvent):
         else:
             data = "(obscured)"
 
-        debug.print_message(debug.LEVEL_INFO, f"\n{self}")
+        debug.print_tokens(debug.LEVEL_INFO, [f"\n{self}"])
 
-        msg = f"\nvvvvv PROCESS {self.type.value_name.upper()}: {data} vvvvv"
-        debug.print_message(debug.LEVEL_INFO, msg, False)
+        tokens = ["\nvvvvv PROCESS", self.type.value_name.upper(), ":", data, "vvvvv"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
         tokens = ["SCRIPT:", self._script]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -755,32 +755,32 @@ class KeyboardEvent(InputEvent):
         if self.is_pressed_key() and self._handler:
             GLib.timeout_add(1, self._handle)
 
-        msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        msg = f"^^^^^ PROCESS {self.type.value_name.upper()}: {data} ^^^^^\n"
-        debug.print_message(debug.LEVEL_INFO, msg, False)
+        tokens = ["^^^^^ PROCESS", self.type.value_name.upper(), ":", data, "^^^^^\n"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
     def _handle(self) -> bool:
         """Handles this event after a timeout. Returns False to stop the timeout."""
 
         start_time = time.time()
         data = f"'{self.keyval_name}' ({self.hw_code})"
-        msg = f"\nvvvvv HANDLE {self.type.value_name.upper()}: {data} vvvvv"
-        debug.print_message(debug.LEVEL_INFO, msg, False)
+        tokens = ["\nvvvvv HANDLE", self.type.value_name.upper(), ":", data, "vvvvv"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
         if self._handler:
             try:
                 self._handler()
             except GLib.GError as error:
-                msg = f"KEYBOARD EVENT: Exception calling handler: {error}"
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                tokens = ["KEYBOARD EVENT: Exception calling handler:", error]
+                debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
-        msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        msg = f"^^^^^ HANDLE {self.type.value_name.upper()}: {data} ^^^^^\n"
-        debug.print_message(debug.LEVEL_INFO, msg, False)
+        tokens = ["^^^^^ HANDLE", self.type.value_name.upper(), ":", data, "^^^^^\n"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
         return False
 
@@ -813,8 +813,8 @@ class BrailleEvent(InputEvent):
 
         start_time = time.time()
         result = self._process()
-        msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
-        debug.print_message(debug.LEVEL_INFO, msg, False)
+        tokens = [f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
         tokens = ["^^^^^ PROCESS", self, "^^^^^"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, False)
@@ -892,10 +892,18 @@ class MouseButtonEvent(InputEvent):
         if math.sqrt((self.x - x) ** 2 + (self.y - y) ** 2) < 25:
             return
 
-        msg = (
-            f"WARNING: Event coordinates ({self.x}, {self.y}) may be bogus. Updating to ({x}, {y})"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "WARNING: Event coordinates (",
+            self.x,
+            ",",
+            self.y,
+            ") may be bogus. Updating to (",
+            x,
+            ",",
+            y,
+            ")",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self.x, self.y = x, y
 
 

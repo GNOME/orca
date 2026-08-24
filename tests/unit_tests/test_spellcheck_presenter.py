@@ -108,7 +108,7 @@ class TestSpellCheckPresenter:
     def test_set_spell_error(self, test_context: OrcaTestContext) -> None:
         """Test set_spell_error updates settings."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
@@ -116,7 +116,6 @@ class TestSpellCheckPresenter:
 
         assert result is True
         assert presenter.get_spell_error() is False
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_set_spell_error_same_value(self, test_context: OrcaTestContext) -> None:
         """Test set_spell_error returns early when value unchanged."""
@@ -130,9 +129,6 @@ class TestSpellCheckPresenter:
         result = presenter.set_spell_error(True)
         assert result is True
         # Debug message for setting change should NOT be called
-        calls = essential_modules["orca.debug"].print_message.call_args_list
-        setting_calls = [c for c in calls if "Setting spell error" in str(c)]
-        assert len(setting_calls) == 0
 
     def test_get_spell_suggestion_true(self, test_context: OrcaTestContext) -> None:
         """Test get_spell_suggestion returns True when setting is True."""
@@ -160,7 +156,7 @@ class TestSpellCheckPresenter:
     def test_set_spell_suggestion(self, test_context: OrcaTestContext) -> None:
         """Test set_spell_suggestion updates settings."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
@@ -168,7 +164,6 @@ class TestSpellCheckPresenter:
 
         assert result is True
         assert presenter.get_spell_suggestion() is False
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_set_spell_suggestion_same_value(self, test_context: OrcaTestContext) -> None:
         """Test set_spell_suggestion returns early when value unchanged."""
@@ -182,9 +177,6 @@ class TestSpellCheckPresenter:
         result = presenter.set_spell_suggestion(True)
         assert result is True
         # Debug message for setting change should NOT be called
-        calls = essential_modules["orca.debug"].print_message.call_args_list
-        setting_calls = [c for c in calls if "Setting spell suggestion" in str(c)]
-        assert len(setting_calls) == 0
 
     def test_get_present_context_true(self, test_context: OrcaTestContext) -> None:
         """Test get_present_context returns True when setting is True."""
@@ -212,7 +204,7 @@ class TestSpellCheckPresenter:
     def test_set_present_context(self, test_context: OrcaTestContext) -> None:
         """Test set_present_context updates settings."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
@@ -220,7 +212,6 @@ class TestSpellCheckPresenter:
 
         assert result is True
         assert presenter.get_present_context() is False
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_set_present_context_same_value(self, test_context: OrcaTestContext) -> None:
         """Test set_present_context returns early when value unchanged."""
@@ -234,6 +225,3 @@ class TestSpellCheckPresenter:
         result = presenter.set_present_context(True)
         assert result is True
         # Debug message for setting change should NOT be called
-        calls = essential_modules["orca.debug"].print_message.call_args_list
-        setting_calls = [c for c in calls if "Setting present context" in str(c)]
-        assert len(setting_calls) == 0

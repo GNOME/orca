@@ -31,7 +31,7 @@ import threading
 import time
 from dataclasses import dataclass
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from . import command_manager, debug, gsettings_registry
 from .extension import Extension, get_translation
@@ -280,8 +280,8 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
         """Scans the extensions directory and loads approved user extensions."""
 
         if not os.path.isdir(extensions_dir):
-            msg = f"EXTENSION LOADER: Extensions directory not found: {extensions_dir}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EXTENSION LOADER: Extensions directory not found:", extensions_dir]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         approved = self.get_approved_extensions()
@@ -334,44 +334,55 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
         file_hash = self._compute_hash(filepath)
         approved_hash = approved.get(filename)
         if approved_hash is None:
-            msg = (
-                f"EXTENSION LOADER: New extension found: {filename}. "
-                f"Not approved. Hash: {file_hash}"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "EXTENSION LOADER: New extension found:",
+                filename,
+                ". Not approved. Hash:",
+                file_hash,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             profile = gsettings_registry.get_registry().get_active_profile()
-            msg = (
-                f"EXTENSION LOADER: To approve, run: dconf write "
-                f"/org/gnome/orca/{profile}/extensions/"
-                f"approved-user-extensions "
-                f"\"{{'{filename}': '{file_hash}'}}\""
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "EXTENSION LOADER: To approve, run: dconf write",
+                f"/org/gnome/orca/{profile}/extensions/approved-user-extensions",
+                "\"{'",
+                filename,
+                "': '",
+                file_hash,
+                "'}\"",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if approved_hash != file_hash:
-            msg = (
-                f"EXTENSION LOADER: Extension modified: {filename}. "
-                f"Approved hash: {approved_hash} "
-                f"Current hash: {file_hash}. "
-                "Not loading until re-approved."
-            )
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "EXTENSION LOADER: Extension modified:",
+                filename,
+                ". Approved hash:",
+                approved_hash,
+                "Current hash:",
+                file_hash,
+                ". Not loading until re-approved.",
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             profile = gsettings_registry.get_registry().get_active_profile()
-            msg = (
-                f"EXTENSION LOADER: To re-approve, run: dconf write "
-                f"/org/gnome/orca/{profile}/extensions/"
-                f"approved-user-extensions "
-                f"\"{{'{filename}': '{file_hash}'}}\""
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "EXTENSION LOADER: To re-approve, run: dconf write",
+                f"/org/gnome/orca/{profile}/extensions/approved-user-extensions",
+                "\"{'",
+                filename,
+                "': '",
+                file_hash,
+                "'}\"",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if disabled:
             class_name = self.get_class_name(filepath)
             if class_name in disabled:
-                msg = f"EXTENSION LOADER: Extension {class_name} is disabled. Skipping."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["EXTENSION LOADER: Extension", class_name, "is disabled. Skipping."]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return None
 
         extension = self._load_from_file(filepath, filename)
@@ -380,14 +391,18 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
 
         # Static metadata can differ from the subclass selected when the module is loaded.
         if extension.module_name in disabled:
-            msg = f"EXTENSION LOADER: Extension {extension.module_name} is disabled. Skipping."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "EXTENSION LOADER: Extension",
+                extension.module_name,
+                "is disabled. Skipping.",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             extension.disable()
             self._remove_user_extension_modules(filename)
             return None
 
-        msg = f"EXTENSION LOADER: Loaded extension {extension.module_name} from {filename}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["EXTENSION LOADER: Loaded extension", extension.module_name, "from", filename]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return extension
 
     def _sync_user_extension_lists(self) -> None:
@@ -418,8 +433,8 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
             if ext.module_name in disabled:
                 ext.disable()
                 continue
-            msg = f"EXTENSION LOADER: Loading built-in extension {ext.module_name}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EXTENSION LOADER: Loading built-in extension", ext.module_name]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             ext.set_up_commands()
 
         self.set_up_user_commands()
@@ -433,8 +448,8 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
             if ext.module_name in disabled:
                 ext.disable()
                 continue
-            msg = f"EXTENSION LOADER: Loading user extension {ext.module_name}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EXTENSION LOADER: Loading user extension", ext.module_name]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             ext.set_up_commands()
 
     def notify_user_extensions_ready(self) -> None:
@@ -453,8 +468,8 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
     ) -> None:
         """Runs a lifecycle hook for one user extension, logging exceptions."""
 
-        msg = f"EXTENSION LOADER: Calling {extension.module_name}.{hook.__name__}()"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["EXTENSION LOADER: Calling", extension.module_name, f".{hook.__name__}()"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         try:
             hook()
         except Exception:  # pylint: disable=broad-exception-caught
@@ -465,8 +480,8 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
 
         threads: list[tuple[Extension, threading.Thread]] = []
         for ext in self._user_extensions:
-            msg = f"EXTENSION LOADER: Shutting down user extension {ext.module_name}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["EXTENSION LOADER: Shutting down user extension", ext.module_name]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             thread = threading.Thread(target=self._run_shutdown_hook, args=(ext,), daemon=True)
             thread.start()
             threads.append((ext, thread))
@@ -481,8 +496,8 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
         timed_out = [ext.module_name for ext, thread in threads if thread.is_alive()]
         if timed_out:
             names = ", ".join(timed_out)
-            msg = f"EXTENSION LOADER: Shutdown hook timed out for: {names}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["EXTENSION LOADER: Shutdown hook timed out for:", names]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
     @staticmethod
     def _run_shutdown_hook(extension: Extension) -> None:
@@ -774,8 +789,8 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
 
         source_file = ExtensionLoader._get_source_file(filepath)
         if source_file is None:
-            msg = f"EXTENSION LOADER: No loadable source found for {filepath}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens: list[Any] = ["EXTENSION LOADER: No loadable source found for", filepath]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
         namespace = ExtensionLoader._get_user_extension_namespace(filename)
@@ -790,8 +805,8 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
             else:
                 spec = importlib.util.spec_from_file_location(module_name, source_file)
             if spec is None or spec.loader is None:
-                msg = f"EXTENSION LOADER: Could not create spec for {filepath}"
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                tokens = ["EXTENSION LOADER: Could not create spec for", filepath]
+                debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
                 return None
 
             module = importlib.util.module_from_spec(spec)
@@ -801,8 +816,8 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
             spec.loader.exec_module(module)
         except Exception as error:  # pylint: disable=broad-exception-caught
             ExtensionLoader._remove_user_extension_modules(filename)
-            msg = f"EXTENSION LOADER: Failed to load {filepath}: {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["EXTENSION LOADER: Failed to load", filepath, ":", error]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
         for attr_name in dir(module):
@@ -813,15 +828,19 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
                     instance.mark_as_user_extension(namespace)
                     return instance
                 except Exception as error:  # pylint: disable=broad-exception-caught
-                    msg = (
-                        f"EXTENSION LOADER: Failed to instantiate "
-                        f"{attr_name} from {filepath}: {error}"
-                    )
-                    debug.print_message(debug.LEVEL_WARNING, msg, True)
+                    tokens = [
+                        "EXTENSION LOADER: Failed to instantiate",
+                        attr_name,
+                        "from",
+                        filepath,
+                        ":",
+                        error,
+                    ]
+                    debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
                     return None
 
-        msg = f"EXTENSION LOADER: No Extension subclass found in {filepath}"
-        debug.print_message(debug.LEVEL_WARNING, msg, True)
+        tokens = ["EXTENSION LOADER: No Extension subclass found in", filepath]
+        debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
         return None
 
 

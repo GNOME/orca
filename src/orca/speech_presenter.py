@@ -213,8 +213,8 @@ class SpeechPresenter(Extension):
     def set_speak_misspelled_indicator(self, value: bool) -> bool:
         """Sets whether the misspelled indicator is spoken."""
 
-        msg = f"SPEECH PRESENTER: Setting speak misspelled indicator to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speak misspelled indicator to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SPEAK_MISSPELLED_INDICATOR,
@@ -240,8 +240,8 @@ class SpeechPresenter(Extension):
     def set_speak_description(self, value: bool) -> bool:
         """Sets whether object descriptions are spoken."""
 
-        msg = f"SPEECH PRESENTER: Setting speak description to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speak description to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SPEAK_DESCRIPTION,
@@ -267,8 +267,8 @@ class SpeechPresenter(Extension):
     def set_speak_position_in_set(self, value: bool) -> bool:
         """Sets whether the position and set size of objects are spoken."""
 
-        msg = f"SPEECH PRESENTER: Setting speak position in set to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speak position in set to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SPEAK_POSITION_IN_SET,
@@ -294,8 +294,8 @@ class SpeechPresenter(Extension):
     def set_speak_widget_mnemonic(self, value: bool) -> bool:
         """Sets whether widget mnemonics are spoken."""
 
-        msg = f"SPEECH PRESENTER: Setting speak widget mnemonics to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speak widget mnemonics to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SPEAK_WIDGET_MNEMONIC,
@@ -321,8 +321,8 @@ class SpeechPresenter(Extension):
     def set_speak_tutorial_messages(self, value: bool) -> bool:
         """Sets whether tutorial messages are spoken."""
 
-        msg = f"SPEECH PRESENTER: Setting speak tutorial messages to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speak tutorial messages to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SPEAK_TUTORIAL_MESSAGES,
@@ -348,8 +348,8 @@ class SpeechPresenter(Extension):
     def set_repeated_character_limit(self, value: UInt32) -> bool:
         """Sets the count at which repeated, non-alphanumeric symbols will be described."""
 
-        msg = f"SPEECH PRESENTER: Setting repeated character limit to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting repeated character limit to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_REPEATED_CHARACTER_LIMIT,
@@ -375,8 +375,8 @@ class SpeechPresenter(Extension):
     def set_speak_blank_lines(self, value: bool) -> bool:
         """Sets whether blank lines will be spoken."""
 
-        msg = f"SPEECH PRESENTER: Setting speak blank lines to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speak blank lines to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SPEAK_BLANK_LINES,
@@ -402,8 +402,8 @@ class SpeechPresenter(Extension):
     def set_speak_row_in_gui_table(self, value: bool) -> bool:
         """Sets whether Up/Down in GUI tables speaks the row or just the cell."""
 
-        msg = f"SPEECH PRESENTER: Setting speak row in GUI table to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speak row in GUI table to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SPEAK_ROW_IN_GUI_TABLE,
@@ -429,8 +429,8 @@ class SpeechPresenter(Extension):
     def set_speak_row_in_document_table(self, value: bool) -> bool:
         """Sets whether Up/Down in text-document tables speaks the row or just the cell."""
 
-        msg = f"SPEECH PRESENTER: Setting speak row in document table to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speak row in document table to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SPEAK_ROW_IN_DOCUMENT_TABLE,
@@ -456,8 +456,8 @@ class SpeechPresenter(Extension):
     def set_speak_row_in_spreadsheet(self, value: bool) -> bool:
         """Sets whether Up/Down in spreadsheets speaks the row or just the cell."""
 
-        msg = f"SPEECH PRESENTER: Setting speak row in spreadsheet to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speak row in spreadsheet to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SPEAK_ROW_IN_SPREADSHEET,
@@ -483,8 +483,8 @@ class SpeechPresenter(Extension):
     def set_announce_cell_span(self, value: bool) -> bool:
         """Sets whether cell spans are announced when greater than 1."""
 
-        msg = f"SPEECH PRESENTER: Setting announce cell spans to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting announce cell spans to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_CELL_SPAN,
@@ -510,8 +510,8 @@ class SpeechPresenter(Extension):
     def set_announce_cell_coordinates(self, value: bool) -> bool:
         """Sets whether (non-spreadsheet) cell coordinates are announced."""
 
-        msg = f"SPEECH PRESENTER: Setting announce cell coordinates to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting announce cell coordinates to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_CELL_COORDINATES,
@@ -537,8 +537,8 @@ class SpeechPresenter(Extension):
     def set_announce_spreadsheet_cell_coordinates(self, value: bool) -> bool:
         """Sets whether spreadsheet cell coordinates are announced."""
 
-        msg = f"SPEECH PRESENTER: Setting announce spreadsheet cell coordinates to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting announce spreadsheet cell coordinates to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_SPREADSHEET_CELL_COORDINATES,
@@ -568,8 +568,12 @@ class SpeechPresenter(Extension):
     def set_always_announce_selected_range_in_spreadsheet(self, value: bool) -> bool:
         """Sets whether the selected range in spreadsheets is always announced."""
 
-        msg = f"SPEECH PRESENTER: Setting always announce selected spreadsheet range to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "SPEECH PRESENTER: Setting always announce selected spreadsheet range to",
+            value,
+            ".",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ALWAYS_ANNOUNCE_SELECTED_RANGE_IN_SPREADSHEET,
@@ -595,8 +599,8 @@ class SpeechPresenter(Extension):
     def set_announce_cell_headers(self, value: bool) -> bool:
         """Sets whether cell headers are announced."""
 
-        msg = f"SPEECH PRESENTER: Setting announce cell headers to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting announce cell headers to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_CELL_HEADERS,
@@ -621,8 +625,8 @@ class SpeechPresenter(Extension):
     def set_announce_article(self, value: bool) -> bool:
         """Sets whether articles are announced when entered."""
 
-        msg = f"SPEECH PRESENTER: Setting announce articles to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting announce articles to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_ARTICLE,
@@ -648,8 +652,8 @@ class SpeechPresenter(Extension):
     def set_announce_blockquote(self, value: bool) -> bool:
         """Sets whether blockquotes are announced when entered."""
 
-        msg = f"SPEECH PRESENTER: Setting announce blockquotes to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting announce blockquotes to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_BLOCKQUOTE,
@@ -674,8 +678,8 @@ class SpeechPresenter(Extension):
     def set_announce_code_block(self, value: bool) -> bool:
         """Sets whether code blocks are announced when entered."""
 
-        msg = f"SPEECH PRESENTER: Setting announce code blocks to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting announce code blocks to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_CODE_BLOCK,
@@ -701,8 +705,8 @@ class SpeechPresenter(Extension):
     def set_announce_form(self, value: bool) -> bool:
         """Sets whether non-landmark forms are announced when entered."""
 
-        msg = f"SPEECH PRESENTER: Setting announce forms to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting announce forms to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ANNOUNCE_FORM, value
         )
@@ -726,8 +730,8 @@ class SpeechPresenter(Extension):
     def set_announce_grouping(self, value: bool) -> bool:
         """Sets whether groupings are announced when entered."""
 
-        msg = f"SPEECH PRESENTER: Setting announce groupings to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting announce groupings to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_GROUPING,
@@ -753,8 +757,8 @@ class SpeechPresenter(Extension):
     def set_announce_landmark(self, value: bool) -> bool:
         """Sets whether landmarks are announced when entered."""
 
-        msg = f"SPEECH PRESENTER: Setting announce landmarks to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting announce landmarks to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_LANDMARK,
@@ -780,8 +784,8 @@ class SpeechPresenter(Extension):
     def set_announce_list(self, value: bool) -> bool:
         """Sets whether lists are announced when entered."""
 
-        msg = f"SPEECH PRESENTER: Setting announce lists to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting announce lists to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ANNOUNCE_LIST, value
         )
@@ -804,8 +808,8 @@ class SpeechPresenter(Extension):
     def set_announce_document(self, value: bool) -> bool:
         """Sets whether embedded documents are announced when entered and left."""
 
-        msg = f"SPEECH PRESENTER: Setting announce documents to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting announce documents to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ANNOUNCE_DOCUMENT, value
         )
@@ -829,8 +833,8 @@ class SpeechPresenter(Extension):
     def set_announce_table(self, value: bool) -> bool:
         """Sets whether tables are announced when entered."""
 
-        msg = f"SPEECH PRESENTER: Setting announce tables to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting announce tables to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ANNOUNCE_TABLE, value
         )
@@ -853,8 +857,8 @@ class SpeechPresenter(Extension):
     def set_announce_tracked_changes(self, value: bool) -> bool:
         """Sets whether tracked changes are announced when entered."""
 
-        msg = f"SPEECH PRESENTER: Setting announce tracked changes to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting announce tracked changes to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_TRACKED_CHANGES,
@@ -913,8 +917,8 @@ class SpeechPresenter(Extension):
     def set_only_speak_displayed_text(self, value: bool) -> bool:
         """Sets whether only displayed text should be spoken."""
 
-        msg = f"SPEECH PRESENTER: Setting only speak displayed text to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting only speak displayed text to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ONLY_SPEAK_DISPLAYED_TEXT,
@@ -940,8 +944,8 @@ class SpeechPresenter(Extension):
     def set_speak_progress_bar_updates(self, value: bool) -> bool:
         """Sets whether speech progress bar updates are enabled."""
 
-        msg = f"SPEECH PRESENTER: Setting speak progress bar updates to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speak progress bar updates to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SPEAK_PROGRESS_BAR_UPDATES,
@@ -967,8 +971,8 @@ class SpeechPresenter(Extension):
     def set_progress_bar_speech_interval(self, value: UInt32) -> bool:
         """Sets the speech progress bar update interval in seconds."""
 
-        msg = f"SPEECH PRESENTER: Setting progress bar speech interval to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting progress bar speech interval to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_PROGRESS_BAR_SPEECH_INTERVAL,
@@ -1001,8 +1005,8 @@ class SpeechPresenter(Extension):
     def set_progress_bar_speech_verbosity(self, value: UInt32) -> bool:
         """Sets the speech progress bar verbosity level."""
 
-        msg = f"SPEECH PRESENTER: Setting progress bar speech verbosity to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting progress bar speech verbosity to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         level = ProgressBarVerbosity(value)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
@@ -1065,8 +1069,8 @@ class SpeechPresenter(Extension):
     def set_messages_are_detailed(self, value: bool) -> bool:
         """Sets whether informative messages will be detailed or brief."""
 
-        msg = f"SPEECH PRESENTER: Setting messages are detailed to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting messages are detailed to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_MESSAGES_ARE_DETAILED,
@@ -1106,12 +1110,12 @@ class SpeechPresenter(Extension):
         try:
             level = VerbosityLevel[value.upper()]
         except KeyError:
-            msg = f"SPEECH PRESENTER: Invalid verbosity level: {value}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["SPEECH PRESENTER: Invalid verbosity level:", value]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
-        msg = f"SPEECH PRESENTER: Setting verbosity level to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting verbosity level to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_VERBOSITY_LEVEL,
@@ -1190,8 +1194,8 @@ class SpeechPresenter(Extension):
     def set_speak_indentation(self, value: bool) -> bool:
         """Sets whether spoken indentation is enabled."""
 
-        msg = f"SPEECH PRESENTER: Setting spoken indentation to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting spoken indentation to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SPEAK_INDENTATION,
@@ -1217,8 +1221,8 @@ class SpeechPresenter(Extension):
     def set_speak_indentation_only_if_changed(self, value: bool) -> bool:
         """Sets whether indentation will be announced only if it has changed."""
 
-        msg = f"SPEECH PRESENTER: Setting speak indentation only if changed to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speak indentation only if changed to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SPEAK_INDENTATION_ONLY_IF_CHANGED,
@@ -1249,8 +1253,8 @@ class SpeechPresenter(Extension):
     def set_speak_text_attribute_changes(self, value: str) -> bool:
         """Sets when text attribute changes are spoken during navigation."""
 
-        msg = f"SPEECH PRESENTER: Setting speak text attribute changes to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speak text attribute changes to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SPEAK_TEXT_ATTRIBUTE_CHANGES,
@@ -1684,8 +1688,8 @@ class SpeechPresenter(Extension):
             text = self._adjust_for_verbalized_punctuation(obj, text)
         text = self._apply_pronunciation_dictionary(text)
 
-        msg = f"SPEECH PRESENTER: Adjusted text: '{text}'"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Adjusted text: '", text, "'"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return text
 
     def _get_active_script(self) -> default.Script | None:
@@ -1722,8 +1726,8 @@ class SpeechPresenter(Extension):
     def set_monitor_is_enabled(self, value: bool) -> bool:
         """Sets whether the speech monitor is enabled."""
 
-        msg = f"SPEECH PRESENTER: Setting enable speech monitor to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting enable speech monitor to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._monitor_enabled_override = value
         if not value:
             self.destroy_monitor()
@@ -1739,8 +1743,8 @@ class SpeechPresenter(Extension):
     ) -> bool:
         """Opens value for JSONL recording; an empty string closes any open file (test-only)."""
 
-        msg = f"SPEECH PRESENTER: Setting log file to {value!r}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [f"SPEECH PRESENTER: Setting log file to {value!r}."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._output_recorder.set_path(value)
 
     def record_interrupt(self) -> None:
@@ -1766,8 +1770,8 @@ class SpeechPresenter(Extension):
     def set_monitor_font_size(self, value: UInt32) -> bool:
         """Sets the speech monitor font size."""
 
-        msg = f"SPEECH PRESENTER: Setting speech monitor font size to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speech monitor font size to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_MONITOR_FONT_SIZE,
@@ -1795,8 +1799,8 @@ class SpeechPresenter(Extension):
     def set_monitor_foreground(self, value: str) -> bool:
         """Sets the speech monitor foreground color."""
 
-        msg = f"SPEECH PRESENTER: Setting speech monitor foreground to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speech monitor foreground to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_MONITOR_FOREGROUND,
@@ -1824,8 +1828,8 @@ class SpeechPresenter(Extension):
     def set_monitor_background(self, value: str) -> bool:
         """Sets the speech monitor background color."""
 
-        msg = f"SPEECH PRESENTER: Setting speech monitor background to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH PRESENTER: Setting speech monitor background to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_MONITOR_BACKGROUND,
@@ -2027,34 +2031,40 @@ class SpeechPresenter(Extension):
     ) -> SpeechOutputResult | None:
         """Calls a speech output handler and validates the result."""
 
-        tokens = ["SPEECH OUTPUT HOOK: Calling extension:", handler.module_name]
+        tokens: list[Any] = ["SPEECH OUTPUT HOOK: Calling extension:", handler.module_name]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         try:
             result = handler.on_speech_output(output)
         except Exception as error:  # pylint: disable=broad-exception-caught
-            msg = (
-                f"SPEECH PRESENTER: Extension {handler.module_name} "
-                f"failed while handling speech output: {error}"
-            )
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "SPEECH PRESENTER: Extension",
+                handler.module_name,
+                "failed while handling speech output:",
+                error,
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
         if result is None:
             return None
         if not isinstance(result, SpeechOutputResult):
-            msg = (
-                f"SPEECH PRESENTER: Extension {handler.module_name} "
-                f"returned unexpected speech output result: {result}"
-            )
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "SPEECH PRESENTER: Extension",
+                handler.module_name,
+                "returned unexpected speech output result:",
+                result,
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
         if result.text is not None and not isinstance(result.text, str):
-            msg = (
-                f"SPEECH PRESENTER: Extension {handler.module_name} "
-                f"returned non-string speech text: {result.text}"
-            )
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "SPEECH PRESENTER: Extension",
+                handler.module_name,
+                "returned non-string speech text:",
+                result.text,
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
         return result
 
@@ -2071,15 +2081,15 @@ class SpeechPresenter(Extension):
 
         server = speech_manager.get_manager().get_server()
         if not server:
-            msg = f"SPEECH OUTPUT: '{text}' {resolved_voice}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH OUTPUT: '", text, f"' {resolved_voice}"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if consumed:
                 self._record_speech(text, resolved_voice)
                 self.write_to_monitor(text)
             return
 
-        msg = f"SPEECH OUTPUT: '{text}' {resolved_voice}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH OUTPUT: '", text, f"' {resolved_voice}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not consumed:
             server.speak(text, resolved_voice)
         self._record_speech(text, resolved_voice)
@@ -2114,8 +2124,8 @@ class SpeechPresenter(Extension):
 
         for element in content:
             if not isinstance(element, valid_types):
-                msg = f"SPEECH: Bad content sent to speak(): {element}"
-                debug.print_message(debug.LEVEL_INFO, msg, True, True)
+                tokens = ["SPEECH: Bad content sent to speak():", element]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
             elif isinstance(element, list):
                 self._speak_list(element, acss, obj)
             elif isinstance(element, str):
@@ -2177,8 +2187,8 @@ class SpeechPresenter(Extension):
             return
 
         if isinstance(content, str):
-            msg = f"SPEECH: Speak '{content}' acss: {acss}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens: list[Any] = ["SPEECH: Speak '", content, "' acss:", acss]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._speak_single(content, acss, obj)
             return
 
@@ -2193,8 +2203,8 @@ class SpeechPresenter(Extension):
             return
 
         if not isinstance(content, (speech_generator.Pause, ACSS)):
-            msg = f"SPEECH: Bad content sent to speak(): {content}"
-            debug.print_message(debug.LEVEL_INFO, msg, True, True)
+            tokens = ["SPEECH: Bad content sent to speak():", content]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
 
     def present_key_event(self, event: KeyboardEvent) -> None:
         """Presents a key event via speech."""
@@ -2209,8 +2219,8 @@ class SpeechPresenter(Extension):
         event_string = event.get_key_name()
         locking_state_string = event.get_locking_state_string()
         event_string = f"{event_string} {locking_state_string}".strip()
-        msg = f"SPEECH OUTPUT: '{event_string}' {acss}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH OUTPUT: '", event_string, f"' {acss}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         text, consumed = self._process_speech_output(event_string)
 
         server = speech_manager.get_manager().get_server()
@@ -2572,8 +2582,8 @@ class SpeechPresenter(Extension):
             server.say_all(_with_monitor(utterance_iterator), progress_callback)
         else:
             for context, _acss in utterance_iterator:
-                msg = f"SPEECH OUTPUT: '{context.utterance}'"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["SPEECH OUTPUT: '", context.utterance, "'"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def speak_character(
         self,

@@ -801,16 +801,16 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             if grid is self.profiles_grid and not include_profiles:
                 continue
             if grid.has_changes():
-                msg = f"PREFERENCES: Grid '{name}' has unsaved changes"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["PREFERENCES: Grid '", name, "' has unsaved changes"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
         return False
 
     def resume_events(self, reason: str = "") -> bool:
         """Re-register event listeners suspended during UI creation and teardown."""
 
-        msg = f"PREFERENCES: Re-registering events. {reason}"
-        debug.print_message(debug.LEVEL_ALL, msg, True)
+        tokens = ["PREFERENCES: Re-registering events.", reason]
+        debug.print_tokens(debug.LEVEL_ALL, tokens, True)
 
         manager = event_manager.get_manager()
         for event in self._EVENTS_TO_SUSPEND:
@@ -820,8 +820,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
     def suspend_events(self, reason: str = "") -> None:
         """Deregister event listeners that flood Orca during UI creation and teardown."""
 
-        msg = f"PREFERENCES: Suspending events. {reason}"
-        debug.print_message(debug.LEVEL_ALL, msg, True)
+        tokens = ["PREFERENCES: Suspending events.", reason]
+        debug.print_tokens(debug.LEVEL_ALL, tokens, True)
 
         manager = event_manager.get_manager()
         for event in self._EVENTS_TO_SUSPEND:

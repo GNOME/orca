@@ -61,9 +61,9 @@ class Systemd:
         # Reference:
         # https://freedesktop.org/software/systemd/man/sd_notify.html#Standalone%20Implementations
         if self._notify_socket:
-            debug.print_message(
+            debug.print_tokens(
                 debug.LEVEL_INFO,
-                f"SYSTEMD: Sending: {message.decode('utf-8')}",
+                ["SYSTEMD: Sending:", message.decode("utf-8")],
                 True,
             )
             self._notify_socket.sendall(message)
@@ -106,8 +106,8 @@ class Systemd:
         if not self._watchdog_interval:
             return
 
-        msg = f"SYSTEMD: notify_alive called. {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SYSTEMD: notify_alive called.", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         elapsed_ms = (time.time() - self._last_ping) * 1000
         if elapsed_ms >= self._watchdog_interval // 2:
             self._ping_watchdog()

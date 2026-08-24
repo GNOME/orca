@@ -121,8 +121,8 @@ class AXUtilitiesAction:
             key, mods = Gtk.accelerator_parse(sequence)
             result = Gtk.accelerator_get_label(key, mods)
         except GLib.GError as error:
-            msg = f"AXUtilitiesAction: Exception in _get_label_for_key_sequence: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXUtilitiesAction: Exception in _get_label_for_key_sequence:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             sequence = sequence.replace("<", "").replace(">", " ").strip()
         else:
             if result and not result.endswith("+"):

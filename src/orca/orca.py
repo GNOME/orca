@@ -198,15 +198,15 @@ def _ensure_accessibility_enabled() -> int | None:
         bus = SessionMessageBus()
         proxy = bus.get_proxy("org.a11y.Bus", "/org/a11y/bus", "org.freedesktop.DBus.Properties")
         enabled = proxy.Get("org.a11y.Status", "IsEnabled")
-        msg = f"ORCA: Accessibility enabled: {enabled}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["ORCA: Accessibility enabled:", enabled]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not enabled:
             msg = "ORCA: Enabling accessibility."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             proxy.Set("org.a11y.Status", "IsEnabled", GLib.Variant("b", True))
     except GLib.GError as error:
-        msg = f"ORCA: Could not connect to D-Bus session bus: {error}"
-        debug.print_message(debug.LEVEL_SEVERE, msg, True)
+        tokens = ["ORCA: Could not connect to D-Bus session bus:", error]
+        debug.print_tokens(debug.LEVEL_SEVERE, tokens, True)
         print(msg, file=sys.stderr)  # noqa: T201
         return 1
     return None
@@ -255,8 +255,8 @@ def main():
     load_user_settings(is_reload=False)
 
     is_systemd_managed = systemd.get_manager().is_systemd_managed()
-    msg = f"ORCA: Running under systemd: {is_systemd_managed}"
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = ["ORCA: Running under systemd:", is_systemd_managed]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     dbus_service.get_remote_controller().start()
     presentation_manager.get_manager().present_message(messages.START_ORCA)
@@ -266,8 +266,8 @@ def main():
         debug.print_message(debug.LEVEL_INFO, "ORCA: Starting Atspi main event loop", True)
         Atspi.event_main()  # pylint: disable=no-value-for-parameter
     except GLib.Error as error:
-        msg = f"ORCA: Exception starting ATSPI registry: {error}"
-        debug.print_message(debug.LEVEL_SEVERE, msg, True)
+        tokens = ["ORCA: Exception starting ATSPI registry:", error]
+        debug.print_tokens(debug.LEVEL_SEVERE, tokens, True)
         os.kill(os.getpid(), signal.SIGKILL)
     return 0
 

@@ -150,8 +150,8 @@ def _append_braille_command(
 
     available_bindings = tuple(binding for binding in bindings if binding is not None)
     if not available_bindings:
-        msg = f"BRAILLE PRESENTER: Braille bindings unavailable for {name}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE PRESENTER: Braille bindings unavailable for", name]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return
 
     commands.append(

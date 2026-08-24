@@ -33,7 +33,7 @@ import contextlib
 import time
 import weakref
 from enum import Enum
-from typing import TYPE_CHECKING, Protocol
+from typing import TYPE_CHECKING, Any, Protocol
 
 import gi
 
@@ -165,8 +165,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
     def set_keyboard_layout_is_desktop(self, is_desktop: bool) -> bool:
         """Sets whether the keyboard layout is desktop (True) or laptop (False)."""
 
-        msg = f"COMMAND MANAGER: Setting keyboard layout is_desktop to {is_desktop}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["COMMAND MANAGER: Setting keyboard layout is_desktop to", is_desktop, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         layout_changed = self._is_desktop != is_desktop
         if layout_changed:
@@ -194,8 +194,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
         layout = "desktop" if is_desktop else "laptop"
-        msg = f"COMMAND MANAGER: Keyboard layout set to {layout}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["COMMAND MANAGER: Keyboard layout set to", layout, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     def load_keyboard_layout(self, is_desktop: bool | None = None) -> None:
@@ -297,8 +297,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         if not mod_mgr.needs_modifier_refresh():
             return
 
-        msg = f"COMMAND MANAGER: Modifier keys changing to {mod_mgr.get_orca_modifier_keys()}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["COMMAND MANAGER: Modifier keys changing to", mod_mgr.get_orca_modifier_keys()]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         mod_mgr.refresh_orca_modifiers("Keyboard settings changed.")
 
     @dbus_service.command
@@ -410,8 +410,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         if not self._is_desktop:
             return
 
-        msg = f"COMMAND MANAGER: NumLock toggled to {'on' if numlock_on else 'off'}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["COMMAND MANAGER: NumLock toggled to", "on" if numlock_on else "off", "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self._modal_handler is not None:
             msg = "COMMAND MANAGER: Skipping grab updates while a modal handler is active."
@@ -423,8 +423,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
     def _update_numlock_grabs(self) -> None:
         """Updates KP_* grabs based on current NumLock state."""
 
-        msg = f"COMMAND MANAGER: Updating NumLock grabs. NumLock is on: {self._numlock_on}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["COMMAND MANAGER: Updating NumLock grabs. NumLock is on:", self._numlock_on, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         orca_modifiers = orca_modifier_manager.get_manager().get_orca_modifier_keys()
 
@@ -479,10 +479,14 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                 if old_kb is None and default_kb is not None:
                     restored_names.append(cmd.get_name())
         if restored_names:
-            msg = f"COMMAND MANAGER: Restored {len(restored_names)} commands to default bindings:"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "COMMAND MANAGER: Restored",
+                len(restored_names),
+                "commands to default bindings:",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             for name in restored_names:
-                debug.print_message(debug.LEVEL_INFO, f"    {name}", True)
+                debug.print_tokens(debug.LEVEL_INFO, [f"    {name}"], True)
 
     def _add_to_key_index(self, cmd: KeyboardCommand) -> None:
         """Adds a command to the key indexes for fast lookup."""
@@ -549,12 +553,16 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         command_name = cmd.get_name()
         extension_name = self._user_extension_command_names.get(command_name, "unknown")
         conflicting_command_name = conflicting_command.get_name()
-        msg = (
-            f"COMMAND MANAGER: Refusing keybinding {binding_name} for user extension "
-            f"{extension_name} command {command_name}; already used by "
-            f"{conflicting_command_name}."
-        )
-        debug.print_message(debug.LEVEL_WARNING, msg, True)
+        tokens = [
+            "COMMAND MANAGER: Refusing keybinding",
+            binding_name,
+            "for user extension",
+            extension_name,
+            f"command {command_name}; already used by",
+            conflicting_command_name,
+            ".",
+        ]
+        debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
         self._remove_from_key_index(cmd)
         cmd.set_keybinding(None)
         self._user_extension_binding_conflicts.setdefault(extension_name, set()).add(command_name)
@@ -724,8 +732,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             default={},
         )
         if keybindings_dict:
-            msg = f"COMMAND MANAGER: Applying {len(keybindings_dict)} user overrides"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["COMMAND MANAGER: Applying", len(keybindings_dict), "user overrides"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         else:
             msg = "COMMAND MANAGER: No user overrides to apply"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -733,8 +741,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         for command_name, binding_tuples in keybindings_dict.items():
             cmd = self.get_keyboard_command(command_name)
             if cmd is None:
-                msg = f"COMMAND MANAGER: Override for unknown command '{command_name}'"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["COMMAND MANAGER: Override for unknown command '", command_name, "'"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 continue
 
             old_kb = cmd.get_keybinding()
@@ -765,11 +773,15 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                         # Binding unchanged, skip to preserve grabs
                         continue
 
-                    msg = (
-                        f"COMMAND MANAGER: Applying override for '{command_name}': "
-                        f"{old_key} -> {new_key}"
-                    )
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                    tokens = [
+                        "COMMAND MANAGER: Applying override for '",
+                        command_name,
+                        "':",
+                        old_key,
+                        "->",
+                        new_key,
+                    ]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
                     self._remove_from_key_index(cmd)
                     kb = keybindings.KeyBinding(keysym, int(mods), click_count=int(clicks))
@@ -885,11 +897,17 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                 added_count += 1
 
         if removed_count or added_count:
-            msg = (
-                f"COMMAND MANAGER: set_group_enabled({group_label}, {enabled}): "
-                f"removed {removed_count}, added {added_count}"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "COMMAND MANAGER: set_group_enabled(",
+                group_label,
+                ",",
+                enabled,
+                "): removed",
+                removed_count,
+                ", added",
+                added_count,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def set_group_suspended(self, group_label: str, suspended: bool) -> None:
         """Sets the suspended state for all commands in a group."""
@@ -918,11 +936,17 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                 added_count += 1
 
         if removed_count or added_count:
-            msg = (
-                f"COMMAND MANAGER: set_group_suspended({group_label}, {suspended}): "
-                f"removed {removed_count}, added {added_count}"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "COMMAND MANAGER: set_group_suspended(",
+                group_label,
+                ",",
+                suspended,
+                "): removed",
+                removed_count,
+                ", added",
+                added_count,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def set_all_suspended(self, suspended: bool, exceptions: frozenset[str] | None = None) -> None:
         """Sets the suspended state for all commands, optionally excluding exceptions."""
@@ -960,11 +984,15 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             self._prior_suspended = set()
 
         if removed_count or added_count:
-            msg = (
-                f"COMMAND MANAGER: set_all_suspended({suspended}): "
-                f"removed {removed_count}, added {added_count}"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "COMMAND MANAGER: set_all_suspended(",
+                suspended,
+                "): removed",
+                removed_count,
+                ", added",
+                added_count,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     @staticmethod
     def _binding_key(kb: keybindings.KeyBinding | None) -> tuple[str, int, int] | None:
@@ -1020,36 +1048,43 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         msg = f"COMMAND MANAGER: Grab diff: {reason}"
         msg += f" (old: {len(old_bindings)}, new: {len(new_bindings)})"
-        debug.print_message(debug.LEVEL_INFO, f"\nvvvvv {msg} vvvvv", False)
+        debug.print_tokens(debug.LEVEL_INFO, ["\nvvvvv", msg, "vvvvv"], False)
 
         if not removed and not added and not transferred:
             debug.print_message(debug.LEVEL_INFO, "  No grab changes", True)
         else:
             if removed:
-                debug.print_message(debug.LEVEL_INFO, f"  Removed ({len(removed)}):", True)
+                debug.print_tokens(debug.LEVEL_INFO, ["  Removed (", len(removed), "):"], True)
                 for key in removed:
                     binding_str = self._format_binding_key(key)
                     cmd_name = old_key_to_cmd.get(key, "unknown")
-                    debug.print_message(debug.LEVEL_INFO, f"    {binding_str}: {cmd_name}", True)
+                    debug.print_tokens(debug.LEVEL_INFO, [f"    {binding_str}:", cmd_name], True)
             if added:
-                debug.print_message(debug.LEVEL_INFO, f"  Added ({len(added)}):", True)
+                debug.print_tokens(debug.LEVEL_INFO, ["  Added (", len(added), "):"], True)
                 for key in added:
                     binding_str = self._format_binding_key(key)
                     cmd_name = new_key_to_cmd.get(key, "unknown")
-                    msg = f"    {binding_str}: {cmd_name}"
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                    tokens: list[Any] = [f"    {binding_str}:", cmd_name]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if transferred:
-                debug.print_message(debug.LEVEL_INFO, f"  Transferred ({len(transferred)}):", True)
+                debug.print_tokens(
+                    debug.LEVEL_INFO, ["  Transferred (", len(transferred), "):"], True
+                )
                 for key in transferred:
                     binding_str = self._format_binding_key(key)
                     cmd_name = new_key_to_cmd.get(key, "unknown")
-                    debug.print_message(debug.LEVEL_INFO, f"    {binding_str}: {cmd_name}", True)
+                    debug.print_tokens(debug.LEVEL_INFO, [f"    {binding_str}:", cmd_name], True)
 
-        msg = (
-            f"^^^^^ COMMAND MANAGER: Diff completed in {time.time() - start_time:.4f}s. "
-            f"Removed {len(removed)}, added {len(added)}, transferred {len(transferred)} ^^^^^\n"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, False)
+        tokens = [
+            f"^^^^^ COMMAND MANAGER: Diff completed in {time.time() - start_time:.4f}s. Removed",
+            len(removed),
+            ", added",
+            len(added),
+            ", transferred",
+            len(transferred),
+            "^^^^^\n",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
     def _get_active_bindings(
         self,
@@ -1100,10 +1135,10 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
     def set_active_commands(self, commands: dict[str, KeyboardCommand], reason: str = "") -> None:
         """Sets the active commands."""
 
-        msg = "COMMAND MANAGER: Setting active commands"
+        tokens = ["COMMAND MANAGER: Setting active commands"]
         if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens += [":", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         old_bindings = self._get_active_bindings(self._keyboard_commands)
         old_key_to_cmd = self._get_key_to_cmd_mapping(self._keyboard_commands)
@@ -1119,10 +1154,10 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
     def activate_commands(self, reason: str = "") -> None:
         """Applies user overrides and updates grabs for the active script."""
 
-        msg = "COMMAND MANAGER: Activating commands"
+        tokens = ["COMMAND MANAGER: Activating commands"]
         if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens += [":", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         old_bindings = self._get_active_bindings(self._keyboard_commands)
         old_key_to_cmd = self._get_key_to_cmd_mapping(self._keyboard_commands)

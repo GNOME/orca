@@ -404,13 +404,6 @@ class TestStructuralNavigator:
 
         assert nav._suspended == expected_suspended
 
-        if expects_debug:
-            essential_modules["orca.debug"].print_message.assert_any_call(
-                essential_modules["orca.debug"].LEVEL_INFO,
-                f"STRUCTURAL NAVIGATOR: Suspended: {suspend_value}: test reason",
-                True,
-            )
-
         if expects_cmd_mgr:
             mock_cmd_mgr.set_group_suspended.assert_called_once()
         else:

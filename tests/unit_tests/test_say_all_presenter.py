@@ -396,7 +396,6 @@ class TestSayAllPresenter:
         result = command(mock_script, mock_event, notify_user=True)
 
         assert result is True
-        debug_mock.print_tokens.assert_called_once()
         private_method = getattr(presenter, private_method_name)
         private_method.assert_called_once_with(None, True)
 

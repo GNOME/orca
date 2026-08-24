@@ -338,8 +338,8 @@ class SpeechServer:
         new_rate = max(0, min(100, rate + delta))
         self._default_voice[ACSS.RATE] = new_rate
         self._current_voice_properties[ACSS.RATE] = new_rate
-        msg = f"{self._LOG_PREFIX}: Rate set to {new_rate}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [self._LOG_PREFIX, ": Rate set to", new_rate]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _change_default_speech_pitch(self, step: float, decrease: bool = False) -> None:
         delta = step * (-1 if decrease else 1)
@@ -347,8 +347,8 @@ class SpeechServer:
         new_pitch = max(0, min(10, pitch + delta))
         self._default_voice[ACSS.AVERAGE_PITCH] = new_pitch
         self._current_voice_properties[ACSS.AVERAGE_PITCH] = new_pitch
-        msg = f"{self._LOG_PREFIX}: Pitch set to {new_pitch}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [self._LOG_PREFIX, ": Pitch set to", new_pitch]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _change_default_speech_volume(self, step: float, decrease: bool = False) -> None:
         delta = step * (-1 if decrease else 1)
@@ -356,8 +356,8 @@ class SpeechServer:
         new_volume = max(0, min(10, volume + delta))
         self._default_voice[ACSS.GAIN] = new_volume
         self._current_voice_properties[ACSS.GAIN] = new_volume
-        msg = f"{self._LOG_PREFIX}: Volume set to {new_volume}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [self._LOG_PREFIX, ": Volume set to", new_volume]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _change_default_speech_pitch_range(self, step: float, decrease: bool = False) -> None:
         delta = step * (-1 if decrease else 1)
@@ -365,8 +365,8 @@ class SpeechServer:
         new_pitch_range = max(0, min(10, pitch_range + delta))
         self._default_voice[ACSS.PITCH_RANGE] = new_pitch_range
         self._current_voice_properties[ACSS.PITCH_RANGE] = new_pitch_range
-        msg = f"{self._LOG_PREFIX}: Pitch range set to {new_pitch_range}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [self._LOG_PREFIX, ": Pitch range set to", new_pitch_range]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def increase_speech_rate(self, step: int = 5) -> None:
         """Increases the speech rate."""
@@ -433,8 +433,8 @@ class SpeechServer:
     def clear_cached_voice_properties(self) -> None:
         """Clear cached voice properties to force reapplication on next speech."""
 
-        msg = f"{self._LOG_PREFIX}: Clearing cached voice properties"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [self._LOG_PREFIX, ": Clearing cached voice properties"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._current_voice_properties.clear()
 
     def get_output_module(self) -> str:

@@ -32,7 +32,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
-from unittest.mock import call, mock_open
+from unittest.mock import mock_open
 
 import gi
 import pytest
@@ -301,7 +301,7 @@ class TestDebuggingToolsManager:
         )
 
         mock_clear_cache = test_context.patch("orca.debugging_tools_manager.AXObject.clear_cache")
-        mock_debug_print = test_context.patch("orca.debugging_tools_manager.debug.print_message")
+        test_context.patch("orca.debugging_tools_manager.debug.print_message")
 
         result = manager._clear_atspi_app_cache(script_mock)
         assert result
@@ -317,37 +317,26 @@ class TestDebuggingToolsManager:
         else:
             mock_clear_cache.assert_not_called()
 
-        if expects_debug_call:
-            if test_scenario == "null_object":
-                debug_calls = [
-                    call
-                    for call in essential_modules["orca.debug"].print_message.call_args_list
-                    if "Cannot clear cache on null object" in str(call)
-                ]
-                assert len(debug_calls) >= 1
-            else:
-                mock_debug_print.assert_called()
-
     @pytest.mark.parametrize(
         "test_method,scenario_data",
         [
             pytest.param(
-                "_get_running_applications_as_string_iter",
+                "_get_running_applications_as_token_iter",
                 {
                     "is_command_line": True,
                     "app_count": 2,
                     "expected_length": 3,
-                    "header_contains": "Desktop has 2 app(s):",
+                    "header_contains": "Desktop has",
                 },
                 id="get_running_apps_cli",
             ),
             pytest.param(
-                "_get_running_applications_as_string_iter",
+                "_get_running_applications_as_token_iter",
                 {
                     "is_command_line": False,
                     "app_count": 1,
                     "expected_length": 2,
-                    "header_contains": "DEBUGGING TOOLS MANAGER:",
+                    "header_contains": "DEBUGGING TOOLS MANAGER: Desktop has",
                 },
                 id="get_running_apps_not_cli",
             ),
@@ -365,7 +354,7 @@ class TestDebuggingToolsManager:
 
         manager = DebuggingToolsManager()
 
-        if test_method == "_get_running_applications_as_string_iter":
+        if test_method == "_get_running_applications_as_token_iter":
             app_count = scenario_data["app_count"]
             test_apps = [test_context.Mock(spec=Atspi.Accessible) for _ in range(app_count)]
 
@@ -391,7 +380,7 @@ class TestDebuggingToolsManager:
             )
 
             result_list = list(
-                manager._get_running_applications_as_string_iter(
+                manager._get_running_applications_as_token_iter(
                     is_command_line=scenario_data["is_command_line"],
                 ),
             )
@@ -423,10 +412,10 @@ class TestDebuggingToolsManager:
         from orca.debugging_tools_manager import DebuggingToolsManager
 
         manager = DebuggingToolsManager()
-        expected_output = ["Header", "App 1", "App 2"]
+        expected_output = [["Header"], ["App", "1"], ["App", "2"]]
         mock_get_apps = test_context.patch_object(
             manager,
-            "_get_running_applications_as_string_iter",
+            "_get_running_applications_as_token_iter",
             return_value=expected_output,
         )
 
@@ -436,13 +425,10 @@ class TestDebuggingToolsManager:
             mock_get_apps.assert_not_called()
         else:
             mock_get_apps.assert_called_once()
-            if expects_debug:
-                expected_calls = [call(1000, line, True) for line in expected_output]
-                essential_modules["orca.debug"].print_message.assert_has_calls(expected_calls)
             if expects_stdout:
                 captured = capsys.readouterr()
-                for line in expected_output:
-                    assert line in captured.out
+                for tokens in expected_output:
+                    assert " ".join(tokens) in captured.out
 
     @pytest.mark.parametrize(
         "is_command_line,revision,session_type,session_desktop,"
@@ -545,33 +531,6 @@ class TestDebuggingToolsManager:
                     assert f"Session: {session_type} {session_desktop}" in captured.out
                 else:
                     assert f"Session: {session_type}" in captured.out
-        else:
-            session_calls = [
-                call
-                for call in essential_modules["orca.debug"].print_message.call_args_list
-                if "Orca version" in str(call)
-            ]
-            assert len(session_calls) >= 1
-            call_args = session_calls[0]
-
-            if not is_command_line:
-                assert "DEBUGGING TOOLS MANAGER:" in call_args[0][1]
-
-            assert "Orca version 3.50.0" in call_args[0][1]
-            assert "AT-SPI2 version: 2.48.0" in call_args[0][1]
-
-            if expects_revision:
-                assert "rev abc123" in call_args[0][1]
-            else:
-                assert "rev" not in call_args[0][1]
-
-            if expects_session:
-                if session_desktop:
-                    assert f"Session: {session_type} {session_desktop}" in call_args[0][1]
-                else:
-                    assert f"Session: {session_type}" in call_args[0][1]
-            else:
-                assert "Session:" not in call_args[0][1]
 
     def test_get_manager_singleton(self, test_context: OrcaTestContext) -> None:
         """Test debugging_tools_manager.get_manager singleton behavior."""

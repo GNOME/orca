@@ -67,9 +67,19 @@ def print_tokens(
     # pylint: disable=import-outside-toplevel
     from .ax_utilities_debugging import AXUtilitiesDebugging
 
-    text = " ".join(map(AXUtilitiesDebugging.as_string, tokens))
-    text = re.sub(r" (?=[,.:)])(?![\n])", "", text)
+    text = _join_tokens([AXUtilitiesDebugging.as_string(token) for token in tokens])
     _print_text(level, text, timestamp, stack)
+
+
+def _join_tokens(strings: list[str]) -> str:
+    """Joins token strings, where punctuation does not already separate them, with a space."""
+
+    text = ""
+    for i, string in enumerate(strings):
+        if i and not text.endswith(("'", "=", "(")) and not string.startswith(("'", "\n")):
+            text += " "
+        text += string
+    return re.sub(r" (?=[,.:)])(?![\n])", "", text)
 
 
 def print_message(level: int, text: str, timestamp: bool = False, stack: bool = False) -> None:

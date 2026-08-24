@@ -221,10 +221,13 @@ class StructuralNavigator(Extension):
         else:
             string = "None"
 
-        msg = (
-            f"STRUCTURAL NAVIGATOR: Last navigation event ({string}) is last input event: {result}"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "STRUCTURAL NAVIGATOR: Last navigation event (",
+            string,
+            ") is last input event:",
+            result,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     def last_command_prevents_focus_mode(self) -> bool:
@@ -253,8 +256,8 @@ class StructuralNavigator(Extension):
     def set_navigation_wraps(self, value: bool) -> bool:
         """Sets whether navigation wraps when reaching the top/bottom of the document."""
 
-        msg = f"STRUCTURAL NAVIGATOR: Setting navigation wraps to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["STRUCTURAL NAVIGATOR: Setting navigation wraps to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_WRAPS, value)
         return True
 
@@ -276,8 +279,8 @@ class StructuralNavigator(Extension):
     def set_large_object_text_length(self, value: UInt32) -> bool:
         """Sets the minimum number of characters to be considered a 'large object'."""
 
-        msg = f"STRUCTURAL NAVIGATOR: Setting large object text length to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["STRUCTURAL NAVIGATOR: Setting large object text length to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_LARGE_OBJECT_TEXT_LENGTH,
@@ -304,16 +307,16 @@ class StructuralNavigator(Extension):
         """Sets whether structural navigation is enabled."""
 
         if self.get_is_enabled() == value:
-            msg = f"STRUCTURAL NAVIGATOR: Enabled already {value}. Refreshing command group."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["STRUCTURAL NAVIGATOR: Enabled already", value, ". Refreshing command group."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             command_manager.get_manager().set_group_enabled(
                 guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
                 value,
             )
             return True
 
-        msg = f"STRUCTURAL NAVIGATOR: Setting enabled to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["STRUCTURAL NAVIGATOR: Setting enabled to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ENABLED,
@@ -367,8 +370,8 @@ class StructuralNavigator(Extension):
         if self.get_triggers_focus_mode() == value:
             return True
 
-        msg = f"STRUCTURAL NAVIGATOR: Setting triggers focus mode to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["STRUCTURAL NAVIGATOR: Setting triggers focus mode to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_TRIGGERS_FOCUS_MODE,
@@ -393,8 +396,8 @@ class StructuralNavigator(Extension):
     def set_skip_unlabeled_images(self, value: bool) -> bool:
         """Sets whether unlabeled images are skipped during navigation."""
 
-        msg = f"STRUCTURAL NAVIGATOR: Setting skip unlabeled images to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["STRUCTURAL NAVIGATOR: Setting skip unlabeled images to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_SKIP_UNLABELED_IMAGES,
@@ -456,10 +459,10 @@ class StructuralNavigator(Extension):
         if not (script and self._is_active_script(script)):
             return
 
-        msg = f"STRUCTURAL NAVIGATOR: Suspended: {suspended}"
+        tokens = ["STRUCTURAL NAVIGATOR: Suspended:", suspended]
         if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens += [":", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._suspended = suspended
         command_manager.get_manager().set_group_suspended(

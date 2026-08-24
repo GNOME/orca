@@ -327,16 +327,23 @@ class Generator:
             return False
 
         if (str1 in str2 and len(str1.split()) > 3) or (str2 in str1 and len(str2.split()) > 3):
-            msg = f"GENERATOR: Treating '{str2}' as redundant to '{str1}'"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["GENERATOR: Treating '", str2, "' as redundant to '", str1, "'"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         similarity = round(SequenceMatcher(None, str1.lower(), str2.lower()).ratio(), 2)
-        msg = (
-            f"GENERATOR: Similarity between '{str1}', '{str2}': {similarity} "
-            f"(threshold: {threshold})"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "GENERATOR: Similarity between '",
+            str1,
+            "', '",
+            str2,
+            "':",
+            similarity,
+            "(threshold:",
+            threshold,
+            ")",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return similarity >= threshold
 
     def generate_contents(self, contents: Any, context: GeneratorContext) -> list[Any]:
@@ -596,7 +603,7 @@ class Generator:
         name = AXObject.get_name(obj)
         if len(name) == 1:
             if ord(name) in range(0xE000, 0xF8FF):
-                tokens = ["GENERATOR: Name of", obj, "is in unicode private use area."]
+                tokens: list[Any] = ["GENERATOR: Name of", obj, "is in unicode private use area."]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
             if AXUtilities.is_push_button(obj):
@@ -1592,7 +1599,7 @@ class Generator:
         else:
             headers = AXUtilities.get_column_headers(obj)
 
-        tokens = []
+        tokens: list[Any] = []
         for header in headers:
             name = self._generate_accessible_name(header)
             if name and name[0].strip():
@@ -1630,7 +1637,7 @@ class Generator:
         else:
             headers = AXUtilities.get_row_headers(obj)
 
-        tokens = []
+        tokens: list[Any] = []
         for header in headers:
             name = self._generate_accessible_name(header)
             if name and name[0].strip():

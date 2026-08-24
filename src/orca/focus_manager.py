@@ -91,10 +91,10 @@ class FocusManager:
     def clear_state(self, reason: str = "") -> None:
         """Clears everything we're tracking."""
 
-        msg = "FOCUS MANAGER: Clearing all state"
+        tokens = ["FOCUS MANAGER: Clearing all state"]
         if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens += [":", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._focus = None
         self._window = None
         self._object_of_interest = None
@@ -216,10 +216,10 @@ class FocusManager:
     def reset_active_mode(self, reason: str = "") -> None:
         """Resets the active mode."""
 
-        msg = "FOCUS MANAGER: Resetting active mode"
+        tokens = ["FOCUS MANAGER: Resetting active mode"]
         if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens += [":", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if self._focus is not None:
             self._active_mode = FOCUS_TRACKING
             self._focus.emit("mode-changed::" + FOCUS_TRACKING, 1, reason)

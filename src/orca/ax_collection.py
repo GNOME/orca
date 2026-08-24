@@ -126,8 +126,8 @@ class AXCollection:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
-        msg = f"AXCollection: {len(matches)} match(es) found in {time.time() - start:.4f}s"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXCollection:", len(matches), f"match(es) found in {time.time() - start:.4f}s"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return matches
 
     @staticmethod

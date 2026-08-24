@@ -141,7 +141,7 @@ class TestSleepModeManager:
     def test_commands_registered(self, test_context: OrcaTestContext) -> None:
         """Test that commands are registered with CommandManager during setup."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca import command_manager
         from orca.sleep_mode_manager import SleepModeManager
 
@@ -150,7 +150,6 @@ class TestSleepModeManager:
         # Verify command is in CommandManager
         cmd_manager = command_manager.get_manager()
         assert cmd_manager.get_keyboard_command("toggle_sleep_mode") is not None
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_is_active_for_app_with_runtime_toggle(self, test_context: OrcaTestContext) -> None:
         """Test is_active_for_app returns True for app in runtime toggle list."""

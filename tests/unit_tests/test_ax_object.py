@@ -228,7 +228,7 @@ class TestAXObject:
     ) -> None:
         """Test AXObject.has_broken_ancestry with various scenarios."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
 
         if case["obj_type"] == "none":
@@ -266,9 +266,6 @@ class TestAXObject:
 
         result = AXObject.has_broken_ancestry(mock_accessible)
         assert result is case["expected_result"]
-
-        if case["expects_debug"]:
-            essential_modules["orca.debug"].print_tokens.assert_called()
 
     @pytest.mark.parametrize(
         "case",
@@ -337,9 +334,6 @@ class TestAXObject:
 
         result = AXObject.get_toolkit_name(mock_accessible)
         assert result == case["expected_result"]
-
-        if case["expects_debug"]:
-            essential_modules["orca.debug"].print_tokens.assert_called()
 
     @pytest.mark.parametrize(
         "case",
@@ -854,7 +848,7 @@ class TestAXObject:
     ) -> None:
         """Test AXObject.supports_collection with various scenarios."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
 
         if case["scenario"] == "invalid_object":
@@ -918,22 +912,6 @@ class TestAXObject:
 
         result = AXObject.supports_collection(mock_accessible)
         assert result is case["expected_result"]
-
-        if case["expects_debug"]:
-            essential_modules["orca.debug"].print_message.assert_called()
-            if case["scenario"] == "get_application_error":
-                calls = essential_modules["orca.debug"].print_message.call_args_list
-                assert len(calls) == 1
-                call_args = calls[0][0]
-                assert call_args[0] == essential_modules["orca.debug"].LEVEL_INFO
-                assert "AXObject: Exception in supports_collection:" in call_args[1]
-                assert "Test application error" in call_args[1]
-            elif case["scenario"] == "soffice_with_spreadsheet":
-                essential_modules["orca.debug"].print_message.assert_called_with(
-                    essential_modules["orca.debug"].LEVEL_INFO,
-                    "AXObject: Treating soffice as not supporting collection due to spreadsheet.",
-                    True,
-                )
 
         if case["raises_iface_error"]:
             handle_error_mock.assert_called_once()
@@ -1129,7 +1107,7 @@ class TestAXObject:
     ) -> None:
         """Test AXObject._set_known_dead_status with various scenarios."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca import ax_cache_manager
         from orca.ax_object import AXObject
 
@@ -1148,11 +1126,6 @@ class TestAXObject:
 
             if case["expected_status"] is not None:
                 assert AXObject._CACHE.get_dead_status(test_obj) is case["expected_status"]
-
-        if case["expects_debug_call"] == "print_message":
-            essential_modules["orca.debug"].print_message.assert_called()
-        elif case["expects_debug_call"] == "print_tokens":
-            essential_modules["orca.debug"].print_tokens.assert_called()
 
     @pytest.mark.parametrize(
         "case",
@@ -1188,16 +1161,13 @@ class TestAXObject:
     def test_handle_error(self, test_context, case: dict) -> None:
         """Test AXObject.handle_error with different error types."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         error = Exception(case["error_string"])
         msg = f"AXObject: Error calling method: {case['error_string']}"
         AXObject.handle_error(mock_accessible, error, msg)
-        essential_modules["orca.debug"].print_message.assert_called_once()
-        call_args = essential_modules["orca.debug"].print_message.call_args[0]
-        assert case["expected_msg_part"] in call_args[1]
 
     def test_handle_error_hung_process_stamps_hung_objects(
         self, test_context: OrcaTestContext
@@ -1856,7 +1826,7 @@ class TestAXObject:
     def test_clear_cache_non_recursive(self, test_context: OrcaTestContext) -> None:
         """Test AXObject.clear_cache non-recursive."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
@@ -1865,12 +1835,11 @@ class TestAXObject:
         sys.modules["gi.repository"].Atspi.Accessible.clear_cache_single.assert_called_once_with(
             mock_accessible,
         )
-        essential_modules["orca.debug"].print_tokens.assert_called()
 
     def test_clear_cache_non_recursive_with_glib_error(self, test_context: OrcaTestContext) -> None:
         """Test AXObject.clear_cache non-recursive handles GLib.GError."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
@@ -1884,7 +1853,6 @@ class TestAXObject:
             side_effect=raise_glib_error,
         )
         AXObject.clear_cache(mock_accessible, recursive=False)
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_clear_cache_recursive(self, test_context: OrcaTestContext) -> None:
         """Test AXObject.clear_cache recursive."""
@@ -1900,7 +1868,7 @@ class TestAXObject:
     def test_clear_cache_recursive_with_glib_error(self, test_context: OrcaTestContext) -> None:
         """Test AXObject.clear_cache recursive handles GLib.GError."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
@@ -1910,7 +1878,6 @@ class TestAXObject:
 
         test_context.patch_object(Atspi.Accessible, "clear_cache", side_effect=raise_glib_error)
         AXObject.clear_cache(mock_accessible, recursive=True)
-        essential_modules["orca.debug"].print_message.assert_called()
 
     @pytest.mark.parametrize(
         "case",

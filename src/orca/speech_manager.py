@@ -505,8 +505,8 @@ class SpeechManager(Extension):
         """Returns a list of available servers."""
 
         result = self._get_available_servers()
-        msg = f"SPEECH MANAGER: Available servers: {result}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Available servers:", result, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @gsettings_registry.get_registry().gsetting(
@@ -527,8 +527,8 @@ class SpeechManager(Extension):
             return ""
 
         name = server.get_factory_name()
-        msg = f"SPEECH MANAGER: Server is: {name}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Server is:", name, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return name
 
     @dbus_service.setter
@@ -576,8 +576,8 @@ class SpeechManager(Extension):
             return ""
 
         result = server.get_output_module()
-        msg = f"SPEECH MANAGER: Synthesizer is: {result}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Synthesizer is:", result, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @dbus_service.setter
@@ -596,8 +596,8 @@ class SpeechManager(Extension):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        msg = f"SPEECH MANAGER: Setting synthesizer to: {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Setting synthesizer to:", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         server.set_output_module(value)
         return server.get_output_module() == value
 
@@ -618,8 +618,8 @@ class SpeechManager(Extension):
 
         synthesizers = server.get_speech_servers()
         result = [s.get_info()[1] for s in synthesizers]
-        msg = f"SPEECH MANAGER: Available synthesizers: {result}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Available synthesizers:", result, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @dbus_service.getter
@@ -663,7 +663,7 @@ class SpeechManager(Extension):
     ) -> list[tuple[str, str, str]]:
         """Returns a list of available voices for the specified language."""
 
-        tokens = [
+        tokens: list[Any] = [
             "SPEECH MANAGER: get_voices_for_language. Language:",
             language,
             "Variant:",
@@ -684,8 +684,8 @@ class SpeechManager(Extension):
         for name, lang, var in voices:
             result.append((name, lang or "", var or ""))
 
-        msg = f"SPEECH MANAGER: Found {len(result)} voice(s) for '{language}'."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Found", len(result), "voice(s) for '", language, "'."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @gsettings_registry.get_registry().gsetting(
@@ -795,8 +795,8 @@ class SpeechManager(Extension):
 
         available = self.get_available_voices()
         if voice_name not in available:
-            msg = f"SPEECH MANAGER: '{voice_name}' is not in {available}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH MANAGER: '", voice_name, "' is not in", available]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         voices = server.get_voice_families()
@@ -812,8 +812,8 @@ class SpeechManager(Extension):
                 result = True
                 break
 
-        msg = f"SPEECH MANAGER: Set voice to '{voice_name}': {result}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Set voice to '", voice_name, "':", result]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     def get_current_speech_server_info(self) -> tuple[str, str]:
@@ -827,8 +827,8 @@ class SpeechManager(Extension):
             return ("", "")
 
         server_name, server_id = server.get_info()
-        msg = f"SPEECH MANAGER: Speech server info: {server_name}, {server_id}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Speech server info:", server_name, ",", server_id, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return server_name, server_id
 
     def check_speech_setting(self) -> None:
@@ -925,8 +925,8 @@ class SpeechManager(Extension):
                 debug.print_exception(debug.LEVEL_SEVERE)
 
         if not factory:
-            msg = f"SPEECH MANAGER: Failed to import module: {module_name}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens: list[Any] = ["SPEECH MANAGER: Failed to import module:", module_name]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
         server = None
@@ -935,13 +935,16 @@ class SpeechManager(Extension):
 
         if not server:
             if speech_server_info:
-                tokens = ["SPEECH MANAGER: Could not use server info:", speech_server_info]
+                tokens = [
+                    "SPEECH MANAGER: Could not use server info:",
+                    speech_server_info,
+                ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             server = factory.SpeechServer.get_speech_server()
 
         if not server:
-            msg = f"SPEECH MANAGER: No speech server for factory: {module_name}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["SPEECH MANAGER: No speech server for factory:", module_name]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
         return server
 
@@ -1066,8 +1069,8 @@ class SpeechManager(Extension):
         registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_RATE, value)
         self._sync_runtime_value_to_all_voice_types(self.KEY_RATE, value)
 
-        msg = f"SPEECH MANAGER: Set rate to: {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Set rate to:", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     @dbus_service.command
@@ -1167,8 +1170,8 @@ class SpeechManager(Extension):
         registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_PITCH, value)
         self._sync_runtime_value_to_all_voice_types(self.KEY_PITCH, value)
 
-        msg = f"SPEECH MANAGER: Set pitch to: {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Set pitch to:", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     @dbus_service.command
@@ -1268,8 +1271,8 @@ class SpeechManager(Extension):
         registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_PITCH_RANGE, value)
         self._sync_runtime_value_to_all_voice_types(self.KEY_PITCH_RANGE, value)
 
-        msg = f"SPEECH MANAGER: Set pitch range to: {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Set pitch range to:", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     @dbus_service.command
@@ -1369,8 +1372,8 @@ class SpeechManager(Extension):
         registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_VOLUME, value)
         self._sync_runtime_value_to_all_voice_types(self.KEY_VOLUME, value)
 
-        msg = f"SPEECH MANAGER: Set volume to: {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Set volume to:", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     @dbus_service.command
@@ -1468,12 +1471,12 @@ class SpeechManager(Extension):
         try:
             style = CapitalizationStyle[value.upper()]
         except KeyError:
-            msg = f"SPEECH MANAGER: Invalid capitalization style: {value}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["SPEECH MANAGER: Invalid capitalization style:", value]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
-        msg = f"SPEECH MANAGER: Setting capitalization style to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Setting capitalization style to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
             self.KEY_CAPITALIZATION_STYLE,
@@ -1558,12 +1561,12 @@ class SpeechManager(Extension):
         try:
             style = PunctuationStyle[value.upper()]
         except KeyError:
-            msg = f"SPEECH MANAGER: Invalid punctuation level: {value}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["SPEECH MANAGER: Invalid punctuation level:", value]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
-        msg = f"SPEECH MANAGER: Setting punctuation level to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Setting punctuation level to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
             self.KEY_PUNCTUATION_LEVEL,
@@ -1640,8 +1643,8 @@ class SpeechManager(Extension):
             server_id = self._get_setting(self.KEY_SYNTHESIZER, "s", "")
 
         if server_id and server_id != active_id:
-            msg = f"SPEECH MANAGER: Updating synthesizer from {active_id} to {server_id}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["SPEECH MANAGER: Updating synthesizer from", active_id, "to", server_id, "."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             server.set_output_module(server_id)
 
     @dbus_service.command
@@ -1708,8 +1711,8 @@ class SpeechManager(Extension):
     def set_speech_is_muted(self, value: bool) -> bool:
         """Sets whether speech output is temporarily muted."""
 
-        msg = f"SPEECH MANAGER: Setting speech muted to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Setting speech muted to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._mute_speech = value
         return True
 
@@ -1718,8 +1721,8 @@ class SpeechManager(Extension):
         """Returns the valid values for the active voice set."""
 
         result = [gsettings_registry.PRIMARY_VOICE_SET, *sorted(self.get_voice_set_names())]
-        msg = f"SPEECH MANAGER: Available voice sets: {result}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Available voice sets:", result, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @dbus_service.getter
@@ -1733,11 +1736,11 @@ class SpeechManager(Extension):
         """Sets the active voice set used for speech output."""
 
         if name != gsettings_registry.PRIMARY_VOICE_SET and name not in self.get_voice_set_names():
-            msg = f"SPEECH MANAGER: Ignoring unknown voice set {name!r}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [f"SPEECH MANAGER: Ignoring unknown voice set {name!r}."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
-        msg = f"SPEECH MANAGER: Setting active voice set to {name}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Setting active voice set to", name, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._active_voice_set = name
         return True
 
@@ -1813,8 +1816,8 @@ class SpeechManager(Extension):
         if value == self.get_speech_is_enabled():
             return True
 
-        msg = f"SPEECH MANAGER: Setting speech enabled to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Setting speech enabled to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA, self.KEY_ENABLE, value
@@ -1848,8 +1851,8 @@ class SpeechManager(Extension):
     def set_speak_numbers_as_digits(self, value: bool) -> bool:
         """Sets whether numbers are spoken as digits."""
 
-        msg = f"SPEECH MANAGER: Setting speak numbers as digits to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Setting speak numbers as digits to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
             self.KEY_SPEAK_NUMBERS_AS_DIGITS,
@@ -1875,8 +1878,8 @@ class SpeechManager(Extension):
     def set_use_color_names(self, value: bool) -> bool:
         """Sets whether colors are announced by name or as RGB values."""
 
-        msg = f"SPEECH MANAGER: Setting use color names to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Setting use color names to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
             self.KEY_USE_COLOR_NAMES,
@@ -1904,8 +1907,8 @@ class SpeechManager(Extension):
     def set_insert_pauses_between_utterances(self, value: bool) -> bool:
         """Sets whether pauses are inserted between utterances, e.g. between name and role."""
 
-        msg = f"SPEECH MANAGER: Setting insert pauses to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Setting insert pauses to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
             self.KEY_INSERT_PAUSES_BETWEEN_UTTERANCES,
@@ -1933,8 +1936,8 @@ class SpeechManager(Extension):
     def set_use_pronunciation_dictionary(self, value: bool) -> bool:
         """Sets whether the user's pronunciation dictionary should be applied."""
 
-        msg = f"SPEECH MANAGER: Setting use pronunciation dictionary to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Setting use pronunciation dictionary to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
             self.KEY_USE_PRONUNCIATION_DICTIONARY,
@@ -1960,8 +1963,8 @@ class SpeechManager(Extension):
     def set_auto_language_switching(self, value: bool) -> bool:
         """Sets whether automatic language switching for document content is enabled."""
 
-        msg = f"SPEECH MANAGER: Setting auto language switching for content to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Setting auto language switching for content to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
             self.KEY_AUTO_LANGUAGE_SWITCHING,
@@ -1986,8 +1989,8 @@ class SpeechManager(Extension):
     def set_auto_language_switching_ui(self, value: bool) -> bool:
         """Sets whether automatic language switching for UI elements is enabled."""
 
-        msg = f"SPEECH MANAGER: Setting auto language switching for UI to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Setting auto language switching for UI to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
             self.KEY_AUTO_LANGUAGE_SWITCHING_UI,
@@ -2014,8 +2017,8 @@ class SpeechManager(Extension):
     def set_only_switch_configured_languages(self, value: bool) -> bool:
         """Sets whether language switching is limited to configured voice sets."""
 
-        msg = f"SPEECH MANAGER: Setting only switch configured languages to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["SPEECH MANAGER: Setting only switch configured languages to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
             self.KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES,

@@ -46,8 +46,8 @@ class AXValue:
         try:
             value = Atspi.Value.get_current_value(obj)
         except GLib.GError as error:
-            msg = f"AXValue: Exception in get_current_value: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXValue: Exception in get_current_value:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0.0
 
         tokens = ["AXValue: Current value of", obj, f"is {value}"]
@@ -70,8 +70,8 @@ class AXValue:
         try:
             value = Atspi.Value.get_text(obj)
         except GLib.GError as error:
-            msg = f"AXValue: Exception in get_current_value_text: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXValue: Exception in get_current_value_text:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             value = ""
 
         tokens = ["AXValue: Value text of", obj, f"is '{value}'"]
@@ -121,8 +121,8 @@ class AXValue:
         try:
             value = Atspi.Value.get_minimum_value(obj)
         except GLib.GError as error:
-            msg = f"AXValue: Exception in get_minimum_value: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXValue: Exception in get_minimum_value:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0.0
 
         tokens = ["AXValue: Minimum value of", obj, f"is {value}"]
@@ -139,8 +139,8 @@ class AXValue:
         try:
             value = Atspi.Value.get_maximum_value(obj)
         except GLib.GError as error:
-            msg = f"AXValue: Exception in get_maximum_value: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXValue: Exception in get_maximum_value:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0.0
 
         tokens = ["AXValue: Maximum value of", obj, f"is {value}"]

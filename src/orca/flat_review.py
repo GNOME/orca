@@ -331,8 +331,8 @@ class Zone:
     def get_word_at_offset(self, char_offset: int) -> tuple[Word | None, int]:
         """Returns the Word at the specified offset with respect to the accessible object."""
 
-        msg = f"FLAT REVIEW: Searching for word at offset {char_offset}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["FLAT REVIEW: Searching for word at offset", char_offset]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         words = self.get_words()
         for word in words:
@@ -703,11 +703,17 @@ class Context:
                 self._char_index = offset
             break
 
-        msg = (
-            f"FLAT REVIEW: On line {self._line_index}, zone {self._zone_index} "
-            f"word {self._word_index}, char {self._char_index}"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "FLAT REVIEW: On line",
+            self._line_index,
+            ", zone",
+            self._zone_index,
+            "word",
+            self._word_index,
+            ", char",
+            self._char_index,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _split_text_into_zones(
         self,
@@ -971,8 +977,14 @@ class Context:
         try:
             return words[self._word_index]
         except IndexError:
-            msg = f"FLAT REVIEW: Word index {self._word_index} out of range for {len(words)} words"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "FLAT REVIEW: Word index",
+                self._word_index,
+                "out of range for",
+                len(words),
+                "words",
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
     def get_current_word_start_offset(self) -> int | None:
@@ -1135,11 +1147,14 @@ class Context:
                 for word_index in range(self._word_index):
                     focused_region.cursor_offset += len(words[word_index].get_string())
             except IndexError:
-                msg = (
-                    f"FLAT REVIEW: Word index {self._word_index} "
-                    f"out of range for {len(words)} words"
-                )
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                tokens = [
+                    "FLAT REVIEW: Word index",
+                    self._word_index,
+                    "out of range for",
+                    len(words),
+                    "words",
+                ]
+                debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
         focused_region.cursor_offset += self._char_index
         # This is related to contracted braille.
         focused_region.reposition_cursor()

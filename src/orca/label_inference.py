@@ -178,21 +178,29 @@ class LabelInference:
         objects: list[Atspi.Accessible] = []
         if not result:
             result, objects = self._infer_from_text_left(obj)
-            debug.print_message(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Left: '{result}'", True)
+            debug.print_tokens(
+                debug.LEVEL_INFO, ["LABEL INFERENCE: Text Left: '", result, "'"], True
+            )
         if not result or self._prefer_right(obj):
             temp_result = self._infer_from_text_right(obj)
             if temp_result[0] is not None:
                 result, objects = temp_result
-            debug.print_message(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Right: '{result}'", True)
+            debug.print_tokens(
+                debug.LEVEL_INFO, ["LABEL INFERENCE: Text Right: '", result, "'"], True
+            )
         if not result:
             result, objects = self._infer_from_table(obj)
-            debug.print_message(debug.LEVEL_INFO, f"LABEL INFERENCE: Table: '{result}'", True)
+            debug.print_tokens(debug.LEVEL_INFO, ["LABEL INFERENCE: Table: '", result, "'"], True)
         if not result:
             result, objects = self._infer_from_text_above(obj)
-            debug.print_message(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Above: '{result}'", True)
+            debug.print_tokens(
+                debug.LEVEL_INFO, ["LABEL INFERENCE: Text Above: '", result, "'"], True
+            )
         if not result:
             result, objects = self._infer_from_text_below(obj)
-            debug.print_message(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Below: '{result}'", True)
+            debug.print_tokens(
+                debug.LEVEL_INFO, ["LABEL INFERENCE: Text Below: '", result, "'"], True
+            )
 
         # TODO - We probably do not wish to "infer" from these. Instead, we
         # should ensure that this content gets presented as part of the widget.
@@ -200,7 +208,7 @@ class LabelInference:
         # are each something other than a label.)
         if not result:
             result, objects = AXObject.get_name(obj), []
-            debug.print_message(debug.LEVEL_INFO, f"LABEL INFERENCE: Name: '{result}'", True)
+            debug.print_tokens(debug.LEVEL_INFO, ["LABEL INFERENCE: Name: '", result, "'"], True)
 
         if result:
             result = result.strip()
@@ -209,9 +217,9 @@ class LabelInference:
         # Desperate times call for desperate measures....
         if not result:
             result, objects = self._infer_from_text_left(obj, proximity=200)
-            debug.print_message(
+            debug.print_tokens(
                 debug.LEVEL_INFO,
-                f"LABEL INFERENCE: Text Left with proximity of 200: '{result}'",
+                ["LABEL INFERENCE: Text Left with proximity of 200: '", result, "'"],
                 True,
             )
 

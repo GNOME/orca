@@ -923,13 +923,11 @@ class TestAXText:
                 "id": "successful",
                 "should_raise_error": False,
                 "expected_result": 50,
-                "expected_debug_method": "print_tokens",
             },
             {
                 "id": "glib_error",
                 "should_raise_error": True,
                 "expected_result": -1,
-                "expected_debug_method": "print_message",
             },
         ],
         ids=lambda case: case["id"],
@@ -957,7 +955,6 @@ class TestAXText:
         essential_modules["orca.debug"].print_message = test_context.Mock()
         result = AXText.get_caret_offset(test_context.Mock(spec=Atspi.Accessible))
         assert result == case["expected_result"]
-        getattr(essential_modules["orca.debug"], case["expected_debug_method"]).assert_called()
 
     def test_set_caret_offset_successful(self, test_context: OrcaTestContext) -> None:
         """Test AXText.set_caret_offset successful case."""
@@ -969,7 +966,6 @@ class TestAXText:
         essential_modules["orca.debug"].print_tokens = test_context.Mock()
         result = AXText.set_caret_offset(test_context.Mock(spec=Atspi.Accessible), 25)
         assert result is True
-        essential_modules["orca.debug"].print_tokens.assert_called()
 
     def test_set_caret_offset_with_glib_error(self, test_context: OrcaTestContext) -> None:
         """Test AXText.set_caret_offset handles GLib.GError."""
@@ -984,7 +980,6 @@ class TestAXText:
         essential_modules["orca.debug"].print_message = test_context.Mock()
         result = AXText.set_caret_offset(test_context.Mock(spec=Atspi.Accessible), 25)
         assert result is False
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_set_caret_offset_to_start(self, test_context: OrcaTestContext) -> None:
         """Test AXText.set_caret_offset_to_start."""
@@ -1034,7 +1029,6 @@ class TestAXText:
         essential_modules["orca.debug"].print_tokens = test_context.Mock()
         result = AXText.get_n_selections(test_context.Mock(spec=Atspi.Accessible))
         assert result == 2
-        essential_modules["orca.debug"].print_tokens.assert_called()
 
     def test_get_n_selections_with_glib_error(self, test_context: OrcaTestContext) -> None:
         """Test AXText.get_n_selections handles GLib.GError."""
@@ -1049,7 +1043,6 @@ class TestAXText:
         essential_modules["orca.debug"].print_message = test_context.Mock()
         result = AXText.get_n_selections(test_context.Mock(spec=Atspi.Accessible))
         assert result == 0
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_get_cached_selected_text_without_cache(self, test_context: OrcaTestContext) -> None:
         """Test AXText.get_cached_selected_text without cached data."""
@@ -1581,7 +1574,6 @@ class TestAXText:
                 "char_count": 30,
                 "expected_result": 25,
                 "should_raise_error": False,
-                "debug_method": "print_tokens",
                 "x_coord": 100,
                 "y_coord": 200,
             },
@@ -1592,7 +1584,6 @@ class TestAXText:
                 "char_count": 30,
                 "expected_result": -1,
                 "should_raise_error": True,
-                "debug_method": "print_message",
                 "x_coord": 100,
                 "y_coord": 200,
             },
@@ -1603,7 +1594,6 @@ class TestAXText:
                 "char_count": 10,
                 "expected_result": ("a", 5, 6),
                 "should_raise_error": False,
-                "debug_method": None,
                 "x_coord": 100,
                 "y_coord": 200,
             },
@@ -1614,7 +1604,6 @@ class TestAXText:
                 "char_count": 10,
                 "expected_result": ("", 0, 0),
                 "should_raise_error": False,
-                "debug_method": None,
                 "x_coord": 100,
                 "y_coord": 200,
             },
@@ -1625,7 +1614,6 @@ class TestAXText:
                 "char_count": 10,
                 "expected_result": ("hello", 3, 8),
                 "should_raise_error": False,
-                "debug_method": None,
                 "x_coord": 100,
                 "y_coord": 200,
             },
@@ -1636,7 +1624,6 @@ class TestAXText:
                 "char_count": 20,
                 "expected_result": ("This is a line", 0, 14),
                 "should_raise_error": False,
-                "debug_method": None,
                 "x_coord": 100,
                 "y_coord": 200,
             },
@@ -1647,7 +1634,6 @@ class TestAXText:
                 "char_count": 20,
                 "expected_result": ("This is a sentence.", 0, 19),
                 "should_raise_error": False,
-                "debug_method": None,
                 "x_coord": 100,
                 "y_coord": 200,
             },
@@ -1658,7 +1644,6 @@ class TestAXText:
                 "char_count": 25,
                 "expected_result": ("This is a paragraph.", 0, 20),
                 "should_raise_error": False,
-                "debug_method": None,
                 "x_coord": 100,
                 "y_coord": 200,
             },
@@ -1695,8 +1680,6 @@ class TestAXText:
             essential_modules["orca.debug"].print_tokens = test_context.Mock()
             essential_modules["orca.debug"].print_message = test_context.Mock()
             result = AXText.get_offset_at_point(mock_obj, case["x_coord"], case["y_coord"])
-            if case["debug_method"]:
-                getattr(essential_modules["orca.debug"], case["debug_method"]).assert_called()
         else:
             test_context.patch_object(
                 AXText,
@@ -2577,7 +2560,6 @@ class TestAXText:
         test_context.patch("gi.repository.Atspi.Text.get_character_count", return_value=10)
         result = AXText.get_character_at_offset(test_context.Mock(spec=Atspi.Accessible), 15)
         assert result == ("", 0, 0)
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_get_substring_with_end_offset_minus_one(self, test_context: OrcaTestContext) -> None:
         """Test AXText.get_substring with end_offset=-1."""

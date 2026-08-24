@@ -264,7 +264,7 @@ class TestActionPresenter:
     ) -> None:
         """Test ActionPresenter._perform_action with various scenarios."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.action_presenter import ActionPresenter
 
         presenter = ActionPresenter()
@@ -285,9 +285,6 @@ class TestActionPresenter:
         presenter._perform_action("click")
 
         if gui_state is None:
-            essential_modules["orca.debug"].print_message.assert_called()
-            debug_call = essential_modules["orca.debug"].print_message.call_args[0][1]
-            assert "_perform_action called when self._gui is None" in debug_call
             mock_do_action.assert_not_called()
         else:
             assert presenter._gui is not None

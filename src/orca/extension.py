@@ -71,8 +71,8 @@ def get_translation(source_file: str) -> gettext.NullTranslations:
                 translation.add_fallback(catalog)
         return translation or gettext.NullTranslations()
     except Exception as error:  # pylint: disable=broad-exception-caught
-        msg = f"EXTENSION: Failed to load translations for {source_file}: {error}"
-        debug.print_message(debug.LEVEL_WARNING, msg, True)
+        tokens = ["EXTENSION: Failed to load translations for", source_file, ":", error]
+        debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
         return gettext.NullTranslations()
 
 
@@ -267,16 +267,16 @@ class Extension:
         self.module_name: str = type(self).__name__
         self.settings = ExtensionSettings(self.module_name)
         self.controller = dbus_service.get_remote_controller()
-        msg = f"EXTENSION: {self.module_name} Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["EXTENSION:", self.module_name, "Registering D-Bus commands."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self.controller.register_decorated_module(self.module_name, self)
 
     def disable(self) -> None:
         """Disables this extension, preventing command registration."""
 
         self._disabled = True
-        msg = f"EXTENSION: {self.module_name} has been disabled."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["EXTENSION:", self.module_name, "has been disabled."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self.reset_commands(f"disabled extension {self.module_name}")
         self.controller.deregister_module_commands(self.module_name)
 
@@ -304,8 +304,8 @@ class Extension:
 
         commands = self._get_commands()
         if not commands:
-            msg = f"EXTENSION: {self.module_name} No commands to register."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens: list[Any] = ["EXTENSION:", self.module_name, "No commands to register."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         manager = command_manager.get_manager()
@@ -317,8 +317,13 @@ class Extension:
                 manager.add_command(cmd)
             self._registered_command_names.append(cmd.get_name())
 
-        msg = f"EXTENSION: {self.module_name} {len(commands)} command(s) registered."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "EXTENSION:",
+            self.module_name,
+            len(commands),
+            "command(s) registered.",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def mark_as_user_extension(self, settings_namespace: str | None = None) -> None:
         """Marks this extension as user-provided so commands get wrapped."""

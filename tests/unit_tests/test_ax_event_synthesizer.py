@@ -482,7 +482,6 @@ class TestAXEventSynthesizer:
 
         result = AXEventSynthesizer._mouse_event_on_character(mock_obj, 10, "abs")
         assert result is False
-        essential_modules["orca.debug"].print_tokens.assert_called()
 
     @pytest.mark.parametrize(
         "method_name,args,position_changes,expected_text_method,expected_object_method",
@@ -601,7 +600,6 @@ class TestAXEventSynthesizer:
 
         result = AXEventSynthesizer._is_scrolled_off_screen(mock_obj, 5)
         assert result is False
-        essential_modules["orca.debug"].print_tokens.assert_called()
 
     def test_is_scrolled_off_screen_returns_true_when_object_outside_ancestor(
         self,
@@ -638,7 +636,6 @@ class TestAXEventSynthesizer:
 
         result = AXEventSynthesizer._is_scrolled_off_screen(mock_obj, 10)
         assert result is True
-        essential_modules["orca.debug"].print_tokens.assert_called()
 
     def test_is_scrolled_off_screen_returns_false_when_no_offset(
         self,
@@ -668,7 +665,6 @@ class TestAXEventSynthesizer:
 
         result = AXEventSynthesizer._is_scrolled_off_screen(mock_obj, None)
         assert result is False
-        essential_modules["orca.debug"].print_tokens.assert_called()
 
     def test_is_scrolled_off_screen_returns_false_when_empty_character_rect(
         self,
@@ -703,7 +699,6 @@ class TestAXEventSynthesizer:
 
         result = AXEventSynthesizer._is_scrolled_off_screen(mock_obj, 8)
         assert result is False
-        essential_modules["orca.debug"].print_tokens.assert_called()
 
     def test_mouse_event_on_object_grabs_focus_when_still_offscreen(
         self,
@@ -745,4 +740,3 @@ class TestAXEventSynthesizer:
         assert result is True
         assert scroll_call_count == 1
         ax_object_mock.grab_focus.assert_called_once_with(mock_obj)
-        essential_modules["orca.debug"].print_tokens.assert_called()

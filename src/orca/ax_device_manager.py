@@ -136,8 +136,8 @@ class AXDeviceManager:
                 caps | Atspi.DeviceCapability.POINTER_MONITOR,
             )
         except GLib.GError as error:
-            msg = f"AXDeviceManager: Exception in enable_pointer_monitoring: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXDeviceManager: Exception in enable_pointer_monitoring:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         return bool(caps & Atspi.DeviceCapability.POINTER_MONITOR)
@@ -177,8 +177,8 @@ class AXDeviceManager:
         kd.modifiers = 0
         grab_id = self.add_key_grab(kd)
 
-        msg = f"AXDeviceManager: Grab id for {modifier}: {grab_id}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXDeviceManager: Grab id for", modifier, ":", grab_id]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return grab_id
 
     def remove_grab_for_modifier(self, modifier: str, grab_id: int) -> None:
@@ -187,8 +187,8 @@ class AXDeviceManager:
         self._ensure_allowed_call("remove_grab_for_modifier")
 
         self.remove_key_grab(grab_id)
-        msg = f"AXDeviceManager: Grab id removed for {modifier}: {grab_id}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXDeviceManager: Grab id removed for", modifier, ":", grab_id]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def add_key_grab(self, key_definition: Atspi.KeyDefinition, callback: object = None) -> int:
         """Adds a key grab, returns the grab ID or 0 on failure."""
@@ -201,8 +201,8 @@ class AXDeviceManager:
         try:
             return self._device.add_key_grab(key_definition, callback)
         except GLib.GError as error:
-            msg = f"AXDeviceManager: Exception in add_key_grab: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXDeviceManager: Exception in add_key_grab:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0
 
     def remove_key_grab(self, grab_id: int) -> None:
@@ -216,18 +216,18 @@ class AXDeviceManager:
         try:
             self._device.remove_key_grab(grab_id)
         except GLib.GError as error:
-            msg = f"AXDeviceManager: Exception in remove_key_grab: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXDeviceManager: Exception in remove_key_grab:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def grab_keyboard(self, reason: str = "") -> None:
         """Grabs the entire keyboard."""
 
         self._ensure_allowed_call("grab_keyboard")
 
-        msg = "AXDeviceManager: Grabbing keyboard"
+        tokens = ["AXDeviceManager: Grabbing keyboard"]
         if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens += [":", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self._device is None:
             return
@@ -235,18 +235,18 @@ class AXDeviceManager:
         try:
             self._device.grab_keyboard()
         except GLib.GError as error:
-            msg = f"AXDeviceManager: Exception in grab_keyboard: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXDeviceManager: Exception in grab_keyboard:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def ungrab_keyboard(self, reason: str = "") -> None:
         """Releases the keyboard grab."""
 
         self._ensure_allowed_call("ungrab_keyboard")
 
-        msg = "AXDeviceManager: Ungrabbing keyboard"
+        tokens = ["AXDeviceManager: Ungrabbing keyboard"]
         if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens += [":", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self._device is None:
             return
@@ -254,8 +254,8 @@ class AXDeviceManager:
         try:
             self._device.ungrab_keyboard()
         except GLib.GError as error:
-            msg = f"AXDeviceManager: Exception in ungrab_keyboard: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXDeviceManager: Exception in ungrab_keyboard:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     @staticmethod
     def _ensure_allowed_call(method_name: str) -> None:
@@ -269,9 +269,9 @@ class AXDeviceManager:
         if orca.is_orca(filename):
             return
 
-        msg = f"AXDeviceManager: Refusing {method_name} call from outside Orca: {filename}"
-        debug.print_message(debug.LEVEL_WARNING, msg, True)
-        raise PermissionError(msg)
+        tokens = ["AXDeviceManager: Refusing", method_name, "call from outside Orca:", filename]
+        debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
+        raise PermissionError(f"AXDeviceManager: Refusing {method_name} call from outside Orca")
 
     def map_keysym_to_modifier(self, keysym: int) -> int:
         """Maps keysym as a modifier, returns the mapped modifier or 0 on failure."""
@@ -285,8 +285,8 @@ class AXDeviceManager:
         try:
             return self._device.map_keysym_modifier(keysym)
         except GLib.GError as error:
-            msg = f"AXDeviceManager: Exception in map_keysym_modifier: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXDeviceManager: Exception in map_keysym_modifier:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0
 
     def _unmap_modifier(self, keycode: int) -> None:
@@ -296,8 +296,8 @@ class AXDeviceManager:
         try:
             self._device.unmap_modifier(keycode)
         except GLib.GError as error:
-            msg = f"AXDeviceManager: Exception in unmap_modifier: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXDeviceManager: Exception in unmap_modifier:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _unmap_keysym_modifier(self, keysym: int) -> None:
         """Unmaps a single keysym modifier. Only called when device is active."""
@@ -306,8 +306,8 @@ class AXDeviceManager:
         try:
             self._device.unmap_keysym_modifier(keysym)
         except GLib.GError as error:
-            msg = f"AXDeviceManager: Exception in unmap_keysym_modifier: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXDeviceManager: Exception in unmap_keysym_modifier:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def unmap_all_modifiers(self) -> None:
         """Unmaps all previously mapped modifiers."""
@@ -334,8 +334,8 @@ class AXDeviceManager:
         try:
             self._device.generate_mouse_event(obj, x, y, event)
         except GLib.GError as error:
-            msg = f"AXDeviceManager: Exception in generate_mouse_event: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXDeviceManager: Exception in generate_mouse_event:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
         return True
 
@@ -354,12 +354,12 @@ class AXDeviceManager:
         try:
             result = self._device.get_locked_modifiers()
         except GLib.GError as error:
-            msg = f"AXDeviceManager: Exception in get_locked_modifiers: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXDeviceManager: Exception in get_locked_modifiers:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0
 
-        msg = f"AXDeviceManager: get_locked_modifiers returned {result} ({result:#x})"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["AXDeviceManager: get_locked_modifiers returned", result, f"({result:#x})"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
 

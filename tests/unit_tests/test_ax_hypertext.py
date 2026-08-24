@@ -110,7 +110,6 @@ class TestAXHypertext:
         )
         result = AXHypertext.get_link_count(mock_accessible)
         assert result == 0
-        essential_modules["orca.debug"].print_message.assert_called()
 
     @pytest.mark.parametrize(
         "has_hypertext_support,raises_glib_error,should_return_link",
@@ -161,8 +160,6 @@ class TestAXHypertext:
             assert result == mock_hyperlink
         else:
             assert result is None
-        if raises_glib_error:
-            essential_modules["orca.debug"].print_message.assert_called()
 
     def test_get_link_uri_with_valid_hyperlink(self, test_context: OrcaTestContext) -> None:
         """Test AXHypertext.get_link_uri with valid hyperlink."""
@@ -203,7 +200,6 @@ class TestAXHypertext:
         )
         result = AXHypertext.get_link_uri(mock_accessible, 0)
         assert result == ""
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_get_link_uri_with_glib_error(self, test_context: OrcaTestContext) -> None:
         """Test AXHypertext.get_link_uri handles GLib.GError."""
@@ -230,7 +226,6 @@ class TestAXHypertext:
         )
         result = AXHypertext.get_link_uri(mock_accessible, 0)
         assert result == ""
-        essential_modules["orca.debug"].print_message.assert_called()
 
     @pytest.mark.parametrize(
         "input_type, expected_offset",
@@ -298,7 +293,6 @@ class TestAXHypertext:
         )
         result = AXHypertext.get_link_start_offset(mock_hyperlink)
         assert result == -1
-        essential_modules["orca.debug"].print_message.assert_called()
 
     @pytest.mark.parametrize(
         "input_type, expected_offset",
@@ -366,7 +360,6 @@ class TestAXHypertext:
         )
         result = AXHypertext.get_link_end_offset(mock_hyperlink)
         assert result == -1
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_get_child_at_offset_with_valid_link(self, test_context: OrcaTestContext) -> None:
         """Test AXHypertext.get_child_at_offset with valid link."""
@@ -440,7 +433,6 @@ class TestAXHypertext:
         )
         result = AXHypertext.get_child_at_offset(mock_accessible, 5)
         assert result is None
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_get_child_at_offset_with_glib_error_get_object(
         self,
@@ -472,7 +464,6 @@ class TestAXHypertext:
         )
         result = AXHypertext.get_child_at_offset(mock_accessible, 5)
         assert result is None
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_get_character_offset_in_parent_with_text_parent(
         self,

@@ -860,11 +860,14 @@ class Utilities:
 
             word = AXText.get_substring(obj, start, end)
             debug_string = word.replace("\n", "\\n")
-            msg = (
-                f"SCRIPT UTILITIES: Adjusted word at offset {offset} for ongoing word nav is "
-                f"'{debug_string}' ({start}-{end})"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "SCRIPT UTILITIES: Adjusted word at offset",
+                offset,
+                "for ongoing word nav is '",
+                debug_string,
+                f"' ({start}-{end})",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return word, start, end
 
         # Otherwise, attempt some smarts so that the user winds up with the same presentation
@@ -901,11 +904,14 @@ class Utilities:
         start, end = self._strip_newline_from_repeated_word(word, prev_word, start, end)
         word = AXText.get_substring(obj, start, end)
         debug_string = word.replace("\n", "\\n")
-        msg = (
-            f"SCRIPT UTILITIES: Adjusted word at offset {offset} for new word nav is "
-            f"'{debug_string}' ({start}-{end})"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "SCRIPT UTILITIES: Adjusted word at offset",
+            offset,
+            "for new word nav is '",
+            debug_string,
+            f"' ({start}-{end})",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return word, start, end
 
     def handle_container_selection_change(self, obj: Atspi.Accessible) -> bool:

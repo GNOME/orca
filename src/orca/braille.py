@@ -383,11 +383,12 @@ def set_text_attributes_indicator(value: int) -> None:
 def _log_brlapi_unavailable(resource: str, error: BaseException | None = None) -> None:
     """Log why a BrlAPI resource/constructor is unavailable."""
 
+    tokens: list[Any] = ["BRAILLE: BrlAPI", resource, "is unavailable"]
     if error is None:
-        msg = f"BRAILLE: BrlAPI {resource} is unavailable."
+        tokens += ["."]
     else:
-        msg = f"BRAILLE: BrlAPI {resource} is unavailable ({type(error).__name__}): {error}"
-    debug.print_message(debug.LEVEL_WARNING, msg, True)
+        tokens += [f"({type(error).__name__}):", error]
+    debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
 
 def _create_brlapi_write_struct() -> Any | None:
@@ -472,8 +473,8 @@ def _handle_brlapi_failure(token: int, action: str, error: BaseException) -> boo
 
     if token != _STATE.brlapi_token:
         return False
-    msg = f"BRAILLE: {action} failed ({type(error).__name__}): {error}"
-    debug.print_message(debug.LEVEL_WARNING, msg, True)
+    tokens = ["BRAILLE:", action, "failed (", type(error).__name__, "):", error]
+    debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
     _mark_brlapi_dead(f"{action} failed: {error}")
     return False
 
@@ -524,8 +525,8 @@ def _brlapi_task_timeout() -> bool:
     if action is None:
         return False
     elapsed = time.monotonic() - _STATE.brlapi_inflight_since
-    msg = f"BRAILLE: BrlAPI action timed out after {elapsed:.1f}s: {action}"
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = [f"BRAILLE: BrlAPI action timed out after {elapsed:.1f}s:", action]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     _mark_brlapi_dead(f"{action} timed out")
     return False
 
@@ -562,21 +563,21 @@ def _enqueue_brlapi_task(
     """Queue a BrlAPI task if the connection/worker is ready."""
 
     if not _STATE.brlapi_running:
-        msg = f"BRAILLE: Cannot {action}: BrlAPI not running."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE: Cannot", action, ": BrlAPI not running."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
     brlapi = _STATE.brlapi
     if brlapi is None:
-        msg = f"BRAILLE: Cannot {action}: BrlAPI connection unavailable."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE: Cannot", action, ": BrlAPI connection unavailable."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
     if _STATE.brlapi_queue is None:
-        msg = f"BRAILLE: Cannot {action}: BrlAPI worker unavailable."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE: Cannot", action, ": BrlAPI worker unavailable."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
     if _STATE.brlapi_worker is None or not _STATE.brlapi_worker.is_alive():
-        msg = f"BRAILLE: Cannot {action}: BrlAPI worker not running."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE: Cannot", action, ": BrlAPI worker not running."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         _mark_brlapi_dead("worker not running")
         return False
     _STATE.brlapi_queue.put(_BrlapiTask(action, func, brlapi, on_success, on_failure))
@@ -659,8 +660,8 @@ def set_monitor_cell_count(count: int) -> None:
 
     width = _STATE.monitor_cell_count or DEFAULT_DISPLAY_SIZE
     _STATE.display_size = [width, 1]
-    msg = f"BRAILLE: Display size now {width} from on-screen monitor."
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: Display size now", width, "from on-screen monitor."]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
 
 def has_braille_device() -> bool:
@@ -685,8 +686,8 @@ def _brlapi_connect_timeout() -> bool:
     _STATE.brlapi_connect_timeout_source_id = 0
     if not _STATE.brlapi_connecting:
         return False
-    msg = f"BRAILLE: BrlAPI connection timed out after {_BRLAPI_CONNECT_TIMEOUT_MS} ms."
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: BrlAPI connection timed out after", _BRLAPI_CONNECT_TIMEOUT_MS, "ms."]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     _STATE.brlapi_connecting = False
     _STATE.brlapi_token += 1
     _schedule_brlapi_retry()
@@ -699,8 +700,8 @@ def _schedule_brlapi_retry() -> None:
     if _STATE.brlapi_retry_source_id or not _STATE.enable_braille:
         return
     delay_ms = _STATE.brlapi_retry_delay_ms
-    msg = f"BRAILLE: Scheduling BrlAPI retry in {delay_ms} ms."
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: Scheduling BrlAPI retry in", delay_ms, "ms."]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     _STATE.brlapi_retry_source_id = GLib.timeout_add(delay_ms, _retry_brlapi_connection)
 
 
@@ -783,11 +784,14 @@ def _finish_brlapi_connection(
         # A superseded attempt (connect timeout, shutdown, disable) that connected anyway: its
         # worker is now waiting on task_queue, so hand it the teardown.
         if error is None and connection is not None and display_size is not None:
-            msg = (
-                f"BRAILLE: Tearing down superseded BrlAPI connection "
-                f"(token {token}, active token {_STATE.brlapi_token})."
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "BRAILLE: Tearing down superseded BrlAPI connection (token",
+                token,
+                ", active token",
+                _STATE.brlapi_token,
+                ").",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             task_queue.put(
                 _BrlapiTask("leave TTY mode", lambda api: api.leaveTtyMode(), connection)
             )
@@ -801,12 +805,9 @@ def _finish_brlapi_connection(
     _cancel_brlapi_connect_timeout()
 
     if error is not None or connection is None or display_size is None:
-        msg = (
-            f"WARNING: Braille initialization failed: {error}"
-            if error
-            else ("WARNING: Braille initialization failed.")
-        )
-        debug.print_message(debug.LEVEL_WARNING, msg, True)
+        tokens = ["WARNING: Braille initialization failed"]
+        tokens += [":", error] if error else ["."]
+        debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
         status = f"not connected ({error})" if error else "not connected"
         systemd.get_manager().set_status("Braille", status)
 
@@ -827,8 +828,8 @@ def _finish_brlapi_connection(
     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     (x, y) = display_size
-    msg = f"BRAILLE: Display size: ({x},{y})"
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: Display size: (", x, f",{y})"]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     if x > 0:
         _STATE.display_size = [x, 1]
@@ -869,7 +870,7 @@ def _get_default_table() -> str:
         language = "en-us"
     else:
         language = f"{lang}-{dialect}".lower() if dialect else lang.lower()
-        tokens = ["BRAILLE: Default braille language is", language]
+        tokens: list[Any] = ["BRAILLE: Default braille language is", language]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     try:
@@ -897,8 +898,8 @@ def _get_default_table() -> str:
     if not candidates:
         short = language.split("-", maxsplit=1)[0]
         if short != language:
-            msg = f"BRAILLE: No tables for '{language}', trying '{short}'"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["BRAILLE: No tables for '", language, "', trying '", short, "'"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             candidates = [t for t in tables if is_candidate(t, short)]
 
     candidate_tokens: list[Any] = [
@@ -970,14 +971,15 @@ class Region:
         else:
             if string.strip():
                 if contracted is False:
-                    msg = f"BRAILLE: Not contracting '{string}' because caller opted out."
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                    tokens = ["BRAILLE: Not contracting '", string, "' because caller opted out."]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 elif not _STATE.enable_contracted_braille:
-                    msg = (
-                        f"BRAILLE: Not contracting '{string}' "
-                        f"because contracted braille is not enabled."
-                    )
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                    tokens = [
+                        "BRAILLE: Not contracting '",
+                        string,
+                        "' because contracted braille is not enabled.",
+                    ]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 else:
                     tokens = [
                         "BRAILLE: Not contracting '",
@@ -995,8 +997,8 @@ class Region:
     def process_routing_key(self, offset: int) -> None:
         """Handle a routing key press relative to this region."""
 
-        msg = f"BRAILLE REGION: Process routing key. Offset: {offset}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE REGION: Process routing key. Offset:", offset]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def get_attribute_mask(self) -> str:
         """Return the attrOr mask for this region."""
@@ -1042,8 +1044,13 @@ class Region:
                 mode=mode,
             )
         except RuntimeError as error:
-            msg = f"BRAILLE: Failed to contract with table '{self._contraction_table}': {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = [
+                "BRAILLE: Failed to contract with table '",
+                self._contraction_table,
+                "':",
+                error,
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             self._contracted = False
             return line, [], [], cursor_offset
 
@@ -1133,8 +1140,8 @@ class Component(Region):
     def process_routing_key(self, offset: int) -> None:
         """Activate or focus this accessible for a routing key press."""
 
-        msg = f"BRAILLE COMPONENT: Process routing key. Offset: {offset}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE COMPONENT: Process routing key. Offset:", offset]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         script = script_manager.get_manager().get_active_script()
         if script and script.utilities.grab_focus_before_routing(self.accessible):
@@ -1169,11 +1176,14 @@ class Link(Component):
         """Return an attrOr mask that marks link cells."""
 
         if _STATE.link_indicator != INDICATOR_NONE and self.string:
-            msg = (
-                f"BRAILLE: Link underline for link region: "
-                f"'{self.string}' ({len(self.string)} cells)"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "BRAILLE: Link underline for link region: '",
+                self.string,
+                "' (",
+                len(self.string),
+                "cells)",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return chr(_STATE.link_indicator) * len(self.string)
 
 
@@ -1216,14 +1226,18 @@ class _AccessibleTextRegion(Region):
                 mask_end = min(end_offset - self.line_offset - self._start_offset, string_length)
                 if mask_start < mask_end:
                     link_text = self._raw_line[mask_start:mask_end]
-                    msg = (
-                        f"BRAILLE: Link underline in text region: "
-                        f"text offsets [{start_offset}, {end_offset}), "
-                        f"line_offset {self.line_offset}, "
-                        f"mask cells [{mask_start}, {mask_end}), "
-                        f"text '{link_text}'"
-                    )
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                    tokens = [
+                        f"BRAILLE: Link underline in text region: text offsets [{start_offset},",
+                        end_offset,
+                        "), line_offset",
+                        self.line_offset,
+                        f", mask cells [{mask_start},",
+                        mask_end,
+                        "), text '",
+                        link_text,
+                        "'",
+                    ]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 for i in range(mask_start, mask_end):
                     region_mask[i] |= link_indicator
 
@@ -1420,8 +1434,8 @@ class Text(_AccessibleTextRegion):
     def process_routing_key(self, offset: int) -> None:
         """Route the caret in accessible text for the given display offset."""
 
-        msg = f"BRAILLE TEXT: Process routing key. Offset: {offset}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE TEXT: Process routing key. Offset:", offset]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         caret_offset = self.get_caret_offset(offset)
         if caret_offset < 0:
@@ -1526,8 +1540,8 @@ class ReviewText(_AccessibleTextRegion):
     def process_routing_key(self, offset: int) -> None:
         """Route caret for flat review based on the display offset."""
 
-        msg = f"BRAILLE REVIEW TEXT: Process routing key. Offset: {offset}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE REVIEW TEXT: Process routing key. Offset:", offset]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         caret_offset = self.get_caret_offset(offset)
         script = script_manager.get_manager().get_active_script()
@@ -1609,8 +1623,8 @@ class Line:
     def process_routing_key(self, offset: int) -> None:
         """Dispatch a routing key press to the region at the given offset."""
 
-        msg = f"BRAILLE LINE: Process routing key. Offset: {offset}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE LINE: Process routing key. Offset:", offset]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         region_info = self.get_region_at_offset(offset)
         if region_info.region:
@@ -1834,8 +1848,8 @@ def _idle_braille() -> bool:
         def _on_failure(error: BaseException) -> None:
             """Log a failure to idle braille."""
 
-            msg = f"BRAILLE: Idling braille failed: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["BRAILLE: Idling braille failed:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         queued = _enqueue_brlapi_task(
             "idle braille",
@@ -1902,8 +1916,8 @@ def _enable_braille() -> None:
             def _on_failure(error: BaseException) -> None:
                 """Log a failure to restore braille priority."""
 
-                msg = f"BRAILLE: could not restore priority: {error}"
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                tokens = ["BRAILLE: could not restore priority:", error]
+                debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
             queued = _enqueue_brlapi_task(
                 "restore braille priority",
@@ -2057,8 +2071,8 @@ def _compute_target_cursor_cell(
 
     if target_cursor_cell < 0:
         target_cursor_cell = _STATE.display_size[0] + target_cursor_cell + 1
-        msg = f"BRAILLE: Adjusted target_cursor_cell to: {target_cursor_cell}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE: Adjusted target_cursor_cell to:", target_cursor_cell]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     if pan_to_cursor and target_cursor_cell == 0 and on_same_line:
         if last_text_info.cursor_cell == 0:
@@ -2073,8 +2087,8 @@ def _compute_target_cursor_cell(
                 current_text_info.caret_offset - last_text_info.caret_offset
             )
             if new_location <= _STATE.display_size[0]:
-                msg = f"BRAILLE: Setting target_cursor_cell based on offset: {new_location}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["BRAILLE: Setting target_cursor_cell based on offset:", new_location]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 target_cursor_cell = new_location
             else:
                 msg = "BRAILLE: Setting target_cursor_cell to end of display."
@@ -2085,8 +2099,8 @@ def _compute_target_cursor_cell(
                 last_text_info.caret_offset - current_text_info.caret_offset
             )
             if new_location >= 1:
-                msg = f"BRAILLE: Setting target_cursor_cell based on offset: {new_location}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["BRAILLE: Setting target_cursor_cell based on offset:", new_location]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 target_cursor_cell = new_location
             else:
                 msg = "BRAILLE: Setting target_cursor_cell to start of display."
@@ -2107,45 +2121,64 @@ def _update_viewport_for_cursor(
     if not (pan_to_cursor and cursor_offset >= 0):
         return
 
-    msg = f"BRAILLE: display_size={_STATE.display_size[0]} monitor={_STATE.monitor_cell_count}"
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = [
+        "BRAILLE: display_size=",
+        _STATE.display_size[0],
+        "monitor=",
+        _STATE.monitor_cell_count,
+    ]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     if len(line_string) <= _STATE.display_size[0] and cursor_offset < _STATE.display_size[0]:
-        msg = f"BRAILLE: Not adjusting offset {_STATE.viewport[0]}. Cursor offset fits on display."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "BRAILLE: Not adjusting offset",
+            _STATE.viewport[0],
+            ". Cursor offset fits on display.",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     elif target_cursor_cell:
         _STATE.viewport[0] = max(0, cursor_offset - target_cursor_cell + 1)
-        msg = f"BRAILLE: Adjusting offset to {_STATE.viewport[0]} based on target_cursor_cell."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "BRAILLE: Adjusting offset to",
+            _STATE.viewport[0],
+            "based on target_cursor_cell.",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     elif cursor_offset < _STATE.viewport[0]:
         _STATE.viewport[0] = max(0, cursor_offset)
-        msg = f"BRAILLE: Adjusting offset to {_STATE.viewport[0]} (cursor on left)"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE: Adjusting offset to", _STATE.viewport[0], "(cursor on left)"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     elif cursor_offset >= (_STATE.viewport[0] + _STATE.display_size[0]):
         _STATE.viewport[0] = max(0, cursor_offset - _STATE.display_size[0] + 1)
-        msg = f"BRAILLE: Adjusting offset to {_STATE.viewport[0]} (cursor beyond display end)"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE: Adjusting offset to", _STATE.viewport[0], "(cursor beyond display end)"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     else:
         range_for_offset = _get_range_for_offset(cursor_offset)
         _STATE.viewport[0] = max(0, range_for_offset[0])
-        msg = f"BRAILLE: Adjusting offset to {_STATE.viewport[0]} (unhandled condition)"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE: Adjusting offset to", _STATE.viewport[0], "(unhandled condition)"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if cursor_offset >= (_STATE.viewport[0] + _STATE.display_size[0]):
             _STATE.viewport[0] = max(0, cursor_offset - _STATE.display_size[0] + 1)
-            msg = f"BRAILLE: Readjusting offset to {_STATE.viewport[0]} (cursor beyond display end)"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [
+                "BRAILLE: Readjusting offset to",
+                _STATE.viewport[0],
+                "(cursor beyond display end)",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
 
 def _paint_display(line_info: _LineInfo, start_position: int, end_position: int) -> bool:
     """Render the current viewport segment to device and monitor."""
 
-    log_line = f"BRAILLE LINE:  '{line_info.string}'"
-    debug.print_message(debug.LEVEL_INFO, log_line, True)
-    log_line = (
-        f"     VISIBLE:  '{line_info.string[start_position:end_position]}', "
-        f"cursor={_STATE.cursor_cell}"
-    )
-    debug.print_message(debug.LEVEL_INFO, log_line, True)
+    tokens: list[Any] = ["BRAILLE LINE:  '", line_info.string, "'"]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+    tokens = [
+        "     VISIBLE:  '",
+        line_info.string[start_position:end_position],
+        "', cursor=",
+        _STATE.cursor_cell,
+    ]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     substring = line_info.string[start_position:end_position]
     if line_info.attribute_mask:
@@ -2157,13 +2190,14 @@ def _paint_display(line_info: _LineInfo, start_position: int, end_position: int)
 
     if any(ord(c) for c in submask):
         indicator_map = "".join("^" if ord(c) else " " for c in submask)
-        msg = (
-            f"BRAILLE: Attribute mask for visible region "
-            f"[{start_position}, {end_position}):\n"
-            f"         TEXT: '{substring}'\n"
-            f"         MASK:  {indicator_map}"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            f"BRAILLE: Attribute mask for visible region [{start_position},",
+            end_position,
+            "):\n         TEXT: '",
+            substring,
+            f"'\n         MASK:  {indicator_map}",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     if _STATE.enable_braille:
         _enable_braille()
@@ -2224,8 +2258,8 @@ def refresh(
 ) -> None:
     """Render current lines to braille with panning and link indicators."""
 
-    msg = f"BRAILLE: Refresh. Pan: {pan_to_cursor} target: {target_cursor_cell}"
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: Refresh. Pan:", pan_to_cursor, "target:", target_cursor_cell]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     if not _prepare_refresh(stop_flash):
         return
@@ -2265,16 +2299,21 @@ def refresh(
 
     line = _STATE.lines[_STATE.viewport[1]]
     line_info = line.get_info()
-    msg = (
-        f"BRAILLE: Line {_STATE.viewport[1]}: '{line_info.string}' focusOffset: "
-        f"{line_info.focus_offset} {line_info.ranges}"
-    )
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = [
+        "BRAILLE: Line",
+        _STATE.viewport[1],
+        ": '",
+        line_info.string,
+        "' focusOffset:",
+        line_info.focus_offset,
+        line_info.ranges,
+    ]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     cursor_offset = _compute_cursor_offset(line_info, _STATE.region_with_focus)
     if cursor_offset >= 0:
-        msg = f"BRAILLE: Cursor offset in line string is: {cursor_offset}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE: Cursor offset in line string is:", cursor_offset]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     _update_viewport_for_cursor(pan_to_cursor, target_cursor_cell, cursor_offset, line_info.string)
 
@@ -2342,8 +2381,8 @@ def _reset_flash_timer() -> None:
 def _init_flash(flash_time: int) -> None:
     """Sets up / clears the state needed to flash a message."""
 
-    msg = f"BRAILLE: Initializing flash: Source ID: {_STATE.flash_event_source_id}"
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: Initializing flash: Source ID:", _STATE.flash_event_source_id]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     if _STATE.flash_event_source_id:
         if _STATE.flash_event_source_id > 0:
@@ -2366,8 +2405,8 @@ def _init_flash(flash_time: int) -> None:
 def display_message(message: str, flash_time: int = 0) -> None:
     """Display a message for the specified amount of time."""
 
-    msg = f"BRAILLE: Display message: '{message}' (flash_time: {flash_time})"
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: Display message: '", message, "' (flash_time:", flash_time, ")"]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     _init_flash(flash_time)
     region = Region(message, -1)
@@ -2380,19 +2419,23 @@ def _adjust_for_word_wrap(target_cursor_cell: int, ranges: Sequence[list[int]]) 
 
     start_position = _STATE.viewport[0]
     end_position = start_position + _STATE.display_size[0]
-    msg = (
-        f"BRAILLE: Current range: ({start_position}, {end_position}). "
-        f"Target cell: {target_cursor_cell}"
-    )
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = [
+        "BRAILLE: Current range: (",
+        start_position,
+        ",",
+        end_position,
+        "). Target cell:",
+        target_cursor_cell,
+    ]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     if not _STATE.lines or not _STATE.enable_word_wrap:
         return start_position, end_position
 
     ranges = list(filter(lambda x: x[0] <= start_position + target_cursor_cell < x[1], ranges))
     if ranges:
-        msg = f"BRAILLE: Adjusted range: ({ranges[0][0]}, {ranges[-1][1]})"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["BRAILLE: Adjusted range: (", ranges[0][0], ",", ranges[-1][1], ")"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if ranges[-1][1] - ranges[0][0] > _STATE.display_size[0]:
             msg = "BRAILLE: Not adjusting range which is greater than display size"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -2433,8 +2476,16 @@ def pan_left(pan_amount: int = 0) -> bool:
             pan_amount = min(old_start - prev_start, _STATE.display_size[0])
 
     _STATE.viewport[0] = max(0, _STATE.viewport[0] - pan_amount)
-    msg = f"BRAILLE: Panning left. Amount: {pan_amount} (from {old_x} to {_STATE.viewport[0]})"
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = [
+        "BRAILLE: Panning left. Amount:",
+        pan_amount,
+        "(from",
+        old_x,
+        "to",
+        _STATE.viewport[0],
+        ")",
+    ]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     _reset_flash_timer()
     return old_x != _STATE.viewport[0]
 
@@ -2455,8 +2506,16 @@ def pan_right(pan_amount: int = 0) -> bool:
         if new_x < len(line_info.string):
             _STATE.viewport[0] = new_x
 
-    msg = f"BRAILLE: Panning right. Amount: {pan_amount} (from {old_x} to {_STATE.viewport[0]})"
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = [
+        "BRAILLE: Panning right. Amount:",
+        pan_amount,
+        "(from",
+        old_x,
+        "to",
+        _STATE.viewport[0],
+        ")",
+    ]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     _reset_flash_timer()
     return old_x != _STATE.viewport[0]
 
@@ -2475,30 +2534,36 @@ def _next_contracted_braille_setting(event: InputEvent | None) -> bool:
 
     current = _STATE.enable_contracted_braille
     if event is None or event.type != "braille":
-        msg = (
-            "BRAILLE: Toggling contracted braille from non-braille event. "
-            f"Current: {current} New: {not current}"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "BRAILLE: Toggling contracted braille from non-braille event. Current:",
+            current,
+            "New:",
+            not current,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return not current
 
     if BRLAPI_KEY_FLG_TOGGLE_ON is None:
         msg = "BRAILLE: Cannot toggle contracted braille: BrlAPI flag unavailable."
         debug.print_message(debug.LEVEL_WARNING, msg, True)
-        msg = (
-            "BRAILLE: Toggling contracted braille without BrlAPI flag. "
-            f"Current: {current} New: {not current}"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "BRAILLE: Toggling contracted braille without BrlAPI flag. Current:",
+            current,
+            "New:",
+            not current,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return not current
 
     braille_event = cast("Any", event)
     enabled = (braille_event.event["flags"] & BRLAPI_KEY_FLG_TOGGLE_ON) != 0
-    msg = (
-        "BRAILLE: Contracted braille flag from display. "
-        f"Flags: {braille_event.event['flags']} Enabled: {enabled}"
-    )
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = [
+        "BRAILLE: Contracted braille flag from display. Flags:",
+        braille_event.event["flags"],
+        "Enabled:",
+        enabled,
+    ]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     return enabled
 
 
@@ -2514,8 +2579,8 @@ def toggle_contracted_braille(event: InputEvent | None) -> None:
 def process_routing_key(event: BrailleEvent) -> bool:
     """Handle a routing key BrailleEvent and dispatch to the line."""
 
-    msg = f"BRAILLE: Process routing key. Source ID: {_STATE.flash_event_source_id}"
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    tokens = ["BRAILLE: Process routing key. Source ID:", _STATE.flash_event_source_id]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     if _STATE.flash_event_source_id:
         kill_flash()
@@ -2541,8 +2606,8 @@ def _process_braille_event(event: Any) -> bool:
         try:
             consumed = _STATE.callback(event)
         except CALLBACK_ERRORS as error:
-            msg = f"WARNING: Could not process braille event: {error}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["WARNING: Could not process braille event:", error]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             consumed = False
 
     return consumed
@@ -2560,8 +2625,8 @@ def _brlapi_key_reader(_source: Any, _condition: Any) -> bool:
     try:
         key = brlapi.readKey(False)
     except BRLAPI_ERRORS as error:
-        msg = f"WARNING: Could not read BrlApi key: {error}"
-        debug.print_message(debug.LEVEL_WARNING, msg, True)
+        tokens = ["WARNING: Could not read BrlApi key:", error]
+        debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
         _mark_brlapi_dead(f"key read failed: {error}")
         return False
     if key:
@@ -2659,8 +2724,8 @@ def set_brlapi_priority(level: int = BRLAPI_PRIORITY_DEFAULT) -> None:
     def _on_failure(error: BaseException) -> None:
         """Log a failure to set the BrlAPI priority."""
 
-        msg = f"BRAILLE: Cannot set priority: {error}"
-        debug.print_message(debug.LEVEL_WARNING, msg, True)
+        tokens = ["BRAILLE: Cannot set priority:", error]
+        debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
     _enqueue_brlapi_task(
         "set priority",

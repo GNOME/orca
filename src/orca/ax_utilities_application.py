@@ -162,8 +162,8 @@ class AXUtilitiesApplication:
         try:
             app = Atspi.Accessible.get_application(obj)
         except GLib.GError as error:
-            msg = f"AXUtilitiesApplication: Exception in get_application: {error}"
-            AXObject.handle_error(obj, error, msg)
+            tokens = ["AXUtilitiesApplication: Exception in get_application:", error]
+            AXObject.handle_error(obj, error, tokens)
             return None
         if app is not None:
             AXUtilitiesApplication._CACHE.set_application(obj, app)
@@ -182,8 +182,8 @@ class AXUtilitiesApplication:
         try:
             name = Atspi.Accessible.get_toolkit_name(app)
         except GLib.GError as error:
-            msg = f"AXUtilitiesApplication: Exception in get_application_toolkit_name: {error}"
-            AXObject.handle_error(app, error, msg)
+            tokens = ["AXUtilitiesApplication: Exception in get_application_toolkit_name:", error]
+            AXObject.handle_error(app, error, tokens)
             return ""
 
         return name or ""
@@ -199,8 +199,11 @@ class AXUtilitiesApplication:
         try:
             version = Atspi.Accessible.get_toolkit_version(app)
         except GLib.GError as error:
-            msg = f"AXUtilitiesApplication: Exception in get_application_toolkit_version: {error}"
-            AXObject.handle_error(app, error, msg)
+            tokens = [
+                "AXUtilitiesApplication: Exception in get_application_toolkit_version:",
+                error,
+            ]
+            AXObject.handle_error(app, error, tokens)
             return ""
 
         return version or ""
@@ -238,8 +241,8 @@ class AXUtilitiesApplication:
         try:
             pid = Atspi.Accessible.get_process_id(obj)
         except GLib.GError as error:
-            msg = f"AXUtilitiesApplication: Exception in get_process_id: {error}"
-            AXObject.handle_error(obj, error, msg)
+            tokens = ["AXUtilitiesApplication: Exception in get_process_id:", error]
+            AXObject.handle_error(obj, error, tokens)
             return -1
 
         return pid

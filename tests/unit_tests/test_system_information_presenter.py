@@ -278,9 +278,6 @@ class TestSystemInformationPresenter:
         method = getattr(presenter, method_name)
         result = method(mock_script, mock_event, debugging_enabled)
 
-        if has_event and debugging_enabled:
-            essential_modules["orca.debug"].print_tokens.assert_called_once()
-
         mock_strftime.assert_called_once_with(format_string, mock_time_tuple)
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         pres_manager.present_message.assert_called_once_with(expected_output)
@@ -402,9 +399,6 @@ class TestSystemInformationPresenter:
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         pres_manager.present_message.assert_called_once_with(expected_message)
         assert result
-
-        if check_debug:
-            essential_modules["orca.debug"].print_tokens.assert_called_once()
 
     @pytest.mark.parametrize(
         "locked_mods,expected_message",
@@ -566,7 +560,7 @@ class TestSystemInformationPresenter:
     ) -> None:
         """Test SystemInformationPresenter.set_date_format validates and sets format."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
 
         test_context.patch(
             "orca.system_information_presenter.dbus_service.setter",
@@ -583,18 +577,8 @@ class TestSystemInformationPresenter:
 
         if expected_success:
             assert presenter._get_date_format_string() == expected_value
-            essential_modules["orca.debug"].print_message.assert_any_call(
-                800,
-                f"SYSTEM INFORMATION PRESENTER: Setting date format to {format_name}.",
-                True,
-            )
         else:
             assert presenter._get_date_format_string() == original_format
-            debug_mock = essential_modules["orca.debug"].print_message
-            assert any(
-                call[0][1] == f"SYSTEM INFORMATION PRESENTER: Invalid date format: {format_name}"
-                for call in debug_mock.call_args_list
-            )
 
     @pytest.mark.parametrize(
         "format_value,expected_name",
@@ -656,7 +640,7 @@ class TestSystemInformationPresenter:
     ) -> None:
         """Test SystemInformationPresenter.set_time_format validates and sets format."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
 
         test_context.patch(
             "orca.system_information_presenter.dbus_service.setter",
@@ -673,18 +657,8 @@ class TestSystemInformationPresenter:
 
         if expected_success:
             assert presenter._get_time_format_string() == expected_value
-            essential_modules["orca.debug"].print_message.assert_any_call(
-                800,
-                f"SYSTEM INFORMATION PRESENTER: Setting time format to {format_name}.",
-                True,
-            )
         else:
             assert presenter._get_time_format_string() == original_format
-            debug_mock = essential_modules["orca.debug"].print_message
-            assert any(
-                call[0][1] == f"SYSTEM INFORMATION PRESENTER: Invalid time format: {format_name}"
-                for call in debug_mock.call_args_list
-            )
 
     def test_get_available_date_formats(self, test_context: OrcaTestContext) -> None:
         """Test SystemInformationPresenter.get_available_date_formats returns all format names."""

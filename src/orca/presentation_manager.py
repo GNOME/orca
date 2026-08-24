@@ -304,8 +304,8 @@ class PresentationManager:
 
         sound_path = os.path.abspath(os.path.expanduser(path))
         if not os.path.isfile(sound_path):
-            msg = f"PRESENTATION MANAGER: Sound file not found: {path}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["PRESENTATION MANAGER: Sound file not found:", path]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
         icon = sound.Icon(os.path.dirname(sound_path), os.path.basename(sound_path))
@@ -323,8 +323,8 @@ class PresentationManager:
         """Plays a tone."""
 
         if duration <= 0:
-            msg = f"PRESENTATION MANAGER: Invalid tone duration: {duration}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["PRESENTATION MANAGER: Invalid tone duration:", duration]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
         wave_values = {
@@ -338,8 +338,8 @@ class PresentationManager:
         }
         wave_value = wave_values.get(wave)
         if wave_value is None:
-            msg = f"PRESENTATION MANAGER: Unknown tone wave: {wave}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            tokens = ["PRESENTATION MANAGER: Unknown tone wave:", wave]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
         tone = sound.Tone(duration, frequency, min(max(0.0, volume), 1.0), wave_value)

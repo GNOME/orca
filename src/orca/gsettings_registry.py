@@ -251,8 +251,8 @@ class GSettingsRegistry:
         if not self._ignore_runtime:
             runtime = self._runtime_values.get((schema, key, voice_type))
             if runtime is not None:
-                msg = f"GSETTINGS REGISTRY: {schema}/{key} runtime override = {runtime!r}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = [f"GSETTINGS REGISTRY: {schema}/{key} runtime override = {runtime!r}"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 self._cache.set_value(cache_key, runtime)
                 return runtime
 
@@ -286,8 +286,8 @@ class GSettingsRegistry:
 
         if default is _NOT_SET:
             return None
-        msg = f"GSETTINGS REGISTRY: {schema}/{key} using default value = {default!r}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [f"GSETTINGS REGISTRY: {schema}/{key} using default value = {default!r}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return default
 
     @staticmethod
@@ -683,8 +683,8 @@ class GSettingsRegistry:
                 if not app_name or gs.get_user_value(key) is not None:
                     continue
             if value is None:
-                msg = f"GSETTINGS: Skipping None value for {schema_name}/{key}"
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                tokens = [f"GSETTINGS: Skipping None value for {schema_name}/{key}"]
+                debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
                 continue
             writer = writers.get(setting.gtype)
             if writer is not None:
@@ -777,17 +777,17 @@ class GSettingsSchemaHandle:
 
         source = Gio.SettingsSchemaSource.get_default()  # pylint: disable=no-value-for-parameter
         if source is None:
-            msg = f"GSETTINGS REGISTRY: Schema source not available for {self._schema_id}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["GSETTINGS REGISTRY: Schema source not available for", self._schema_id]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         self._schema = source.lookup(self._schema_id, True)
         if self._schema is None:
-            msg = f"GSETTINGS REGISTRY: Schema {self._schema_id} not found"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["GSETTINGS REGISTRY: Schema", self._schema_id, "not found"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         else:
-            msg = f"GSETTINGS REGISTRY: Schema {self._schema_id} loaded"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["GSETTINGS REGISTRY: Schema", self._schema_id, "loaded"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._schema
 
     def has_key(self, key: str) -> bool:
@@ -868,11 +868,11 @@ class GSettingsSchemaHandle:
             gs = self.get_for_app(app_name, profile, sub_path)
             if gs is not None and gs.get_user_value(key) is not None:
                 value = extractor(gs, key)
-                msg = (
-                    f"GSETTINGS SCHEMA HANDLE: {suffix}/{key}"
-                    f" = {value!r} (app:{app_name} profile:{profile})"
-                )
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = [
+                    f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} = {value!r} "
+                    f"(app:{app_name} profile:{profile})"
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return value
             checked.append(f"app:{app_name}")
 
@@ -881,10 +881,10 @@ class GSettingsSchemaHandle:
         if gs is not None and gs.get_user_value(key) is not None:
             value = extractor(gs, key)
             skipped = f" [{', '.join(checked)} not set]" if checked else ""
-            msg = (
+            tokens = [
                 f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} = {value!r} (profile:{profile}){skipped}"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return value
         checked.append(f"profile:{profile}")
 
@@ -894,16 +894,16 @@ class GSettingsSchemaHandle:
             if gs is not None and gs.get_user_value(key) is not None:
                 value = extractor(gs, key)
                 skipped = f" [{', '.join(checked)} not set]"
-                msg = (
-                    f"GSETTINGS SCHEMA HANDLE: {suffix}/{key}"
-                    f" = {value!r} (profile:default fallback){skipped}"
-                )
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = [
+                    f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} = {value!r} "
+                    f"(profile:default fallback){skipped}"
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return value
             checked.append("profile:default")
 
-        msg = f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} not set [{', '.join(checked)}]"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} not set [{', '.join(checked)}]"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return None
 
     def get_boolean(self, key: str, sub_path: str = "", app_name: str | None = None) -> bool | None:
@@ -979,12 +979,16 @@ class GSettingsSchemaHandle:
                     found_any = True
 
         if not found_any:
-            msg = f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} no dict values set"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens: list[Any] = [f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} no dict values set"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
-        msg = f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} merged dict ({len(result)} entries)"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} merged dict (",
+            len(result),
+            "entries)",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     def get_dict(self, key: str, sub_path: str = "", app_name: str | None = None) -> dict | None:

@@ -696,10 +696,10 @@ class Script(default.Script):
                 presentation_manager.get_manager().present_message(messages.PAGE_LOADING_START)
             elif AXObject.get_name(event.source):
                 if not mgr.use_verbose_speech():
-                    msg = AXObject.get_name(event.source)
+                    text = AXObject.get_name(event.source)
                 else:
-                    msg = messages.PAGE_LOADING_END_NAMED % AXObject.get_name(event.source)
-                presentation_manager.get_manager().present_message(msg)
+                    text = messages.PAGE_LOADING_END_NAMED % AXObject.get_name(event.source)
+                presentation_manager.get_manager().present_message(text)
             else:
                 presentation_manager.get_manager().present_message(messages.PAGE_LOADING_END)
 
@@ -978,8 +978,8 @@ class Script(default.Script):
             TextEventReason.NAVIGATION_BY_CHARACTER,
             TextEventReason.NAVIGATION_BY_WORD,
         ):
-            msg = f"WEB: Caret moved due to {reason}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["WEB: Caret moved due to", reason]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if (
                 in_focus_mode
                 and not AXUtilities.is_editable(event.source)
@@ -1160,8 +1160,8 @@ class Script(default.Script):
             return True
 
         if uri.startswith("moz-extension"):
-            msg = f"WEB: Ignoring event from page with URI: {uri}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["WEB: Ignoring event from page with URI:", uri]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         AXUtilities.clear_all_cache_now(event.source, "load-complete event.")

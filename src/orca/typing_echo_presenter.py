@@ -28,7 +28,7 @@ from __future__ import annotations
 import string
 from dataclasses import dataclass
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from . import (
     dbus_service,
@@ -306,8 +306,8 @@ class TypingEchoPresenter(Extension):
     def set_key_echo_enabled(self, value: bool) -> bool:
         """Sets whether echo of key presses is enabled. See also set_character_echo_enabled."""
 
-        msg = f"TYPING ECHO PRESENTER: Setting enable key echo to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Setting enable key echo to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_KEY_ECHO, value)
         return True
 
@@ -329,8 +329,8 @@ class TypingEchoPresenter(Extension):
     def set_character_echo_enabled(self, value: bool) -> bool:
         """Sets whether echo of inserted characters is enabled."""
 
-        msg = f"TYPING ECHO PRESENTER: Setting enable character echo to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Setting enable character echo to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_CHARACTER_ECHO, value
         )
@@ -354,8 +354,8 @@ class TypingEchoPresenter(Extension):
     def set_word_echo_enabled(self, value: bool) -> bool:
         """Sets whether word echo is enabled."""
 
-        msg = f"TYPING ECHO PRESENTER: Setting enable word echo to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Setting enable word echo to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_WORD_ECHO, value)
         return True
 
@@ -377,8 +377,8 @@ class TypingEchoPresenter(Extension):
     def set_sentence_echo_enabled(self, value: bool) -> bool:
         """Sets whether sentence echo is enabled."""
 
-        msg = f"TYPING ECHO PRESENTER: Setting enable sentence echo to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Setting enable sentence echo to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_SENTENCE_ECHO, value
         )
@@ -402,8 +402,8 @@ class TypingEchoPresenter(Extension):
     def set_alphabetic_keys_enabled(self, value: bool) -> bool:
         """Sets whether alphabetic keys will be echoed when key echo is enabled."""
 
-        msg = f"TYPING ECHO PRESENTER: Setting enable alphabetic keys to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Setting enable alphabetic keys to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ALPHABETIC_KEYS, value
         )
@@ -427,8 +427,8 @@ class TypingEchoPresenter(Extension):
     def set_numeric_keys_enabled(self, value: bool) -> bool:
         """Sets whether numeric keys will be echoed when key echo is enabled."""
 
-        msg = f"TYPING ECHO PRESENTER: Setting enable numeric keys to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Setting enable numeric keys to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_NUMERIC_KEYS, value
         )
@@ -452,8 +452,8 @@ class TypingEchoPresenter(Extension):
     def set_punctuation_keys_enabled(self, value: bool) -> bool:
         """Sets whether punctuation keys will be echoed when key echo is enabled."""
 
-        msg = f"TYPING ECHO PRESENTER: Setting enable punctuation keys to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Setting enable punctuation keys to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_PUNCTUATION_KEYS, value
         )
@@ -477,8 +477,8 @@ class TypingEchoPresenter(Extension):
     def set_space_enabled(self, value: bool) -> bool:
         """Sets whether space key will be echoed when key echo is enabled."""
 
-        msg = f"TYPING ECHO PRESENTER: Setting enable space to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Setting enable space to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_SPACE, value)
         return True
 
@@ -500,8 +500,8 @@ class TypingEchoPresenter(Extension):
     def set_modifier_keys_enabled(self, value: bool) -> bool:
         """Sets whether modifier keys will be echoed when key echo is enabled."""
 
-        msg = f"TYPING ECHO PRESENTER: Setting enable modifier keys to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Setting enable modifier keys to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_MODIFIER_KEYS, value
         )
@@ -525,8 +525,8 @@ class TypingEchoPresenter(Extension):
     def set_function_keys_enabled(self, value: bool) -> bool:
         """Sets whether function keys will be echoed when key echo is enabled."""
 
-        msg = f"TYPING ECHO PRESENTER: Setting enable function keys to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Setting enable function keys to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_FUNCTION_KEYS, value
         )
@@ -550,8 +550,8 @@ class TypingEchoPresenter(Extension):
     def set_action_keys_enabled(self, value: bool) -> bool:
         """Sets whether action keys will be echoed when key echo is enabled."""
 
-        msg = f"TYPING ECHO PRESENTER: Setting enable action keys to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Setting enable action keys to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ACTION_KEYS, value
         )
@@ -575,8 +575,8 @@ class TypingEchoPresenter(Extension):
     def set_navigation_keys_enabled(self, value: bool) -> bool:
         """Sets whether navigation keys will be echoed when key echo is enabled."""
 
-        msg = f"TYPING ECHO PRESENTER: Setting enable navigation keys to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Setting enable navigation keys to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_NAVIGATION_KEYS, value
         )
@@ -600,8 +600,8 @@ class TypingEchoPresenter(Extension):
     def set_diacritical_keys_enabled(self, value: bool) -> bool:
         """Sets whether diacritical keys will be echoed when key echo is enabled."""
 
-        msg = f"TYPING ECHO PRESENTER: Setting enable diacritical keys to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Setting enable diacritical keys to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_DIACRITICAL_KEYS, value
         )
@@ -622,8 +622,8 @@ class TypingEchoPresenter(Extension):
     def set_locking_keys_presented(self, value: bool | None) -> bool:
         """Sets whether locking keys are presented."""
 
-        msg = f"TYPING ECHO PRESENTER: Setting present locking keys to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Setting present locking keys to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._present_locking_keys = value
         return True
 
@@ -690,8 +690,8 @@ class TypingEchoPresenter(Extension):
         result = (
             click_count == 1 and self.get_key_echo_enabled() and self.get_modifier_keys_enabled()
         )
-        msg = f"TYPING ECHO PRESENTER: Echoing modifier Orca modifier event: {result}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["TYPING ECHO PRESENTER: Echoing modifier Orca modifier event:", result, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     def _get_echo_for_key_type(self, event: input_event.KeyboardEvent) -> tuple[bool, str] | None:
@@ -730,8 +730,8 @@ class TypingEchoPresenter(Extension):
 
         should_obscure = event.should_obscure()
         name = event.get_key_name() if not should_obscure else "(obscured)"
-        msg = f"TYPING ECHO PRESENTER: should_echo_keyboard_event: '{name}'?"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens: list[Any] = ["TYPING ECHO PRESENTER: should_echo_keyboard_event: '", name, "'?"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not event.is_pressed_key():
             msg = "TYPING ECHO PRESENTER: Not echoing keyboard event: key is not pressed."
@@ -744,14 +744,14 @@ class TypingEchoPresenter(Extension):
         # Treat all command modifiers the same and suppress echo.
         if event.is_alt_control_or_orca_modified() or self.is_character_echoable(event):
             reason = "modifier" if event.is_alt_control_or_orca_modified() else "character echoable"
-            msg = f"TYPING ECHO PRESENTER: Not echoing keyboard event: {reason}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["TYPING ECHO PRESENTER: Not echoing keyboard event:", reason, "."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if event.is_locking_key():
             result = self.get_locking_keys_presented()
-            msg = f"TYPING ECHO PRESENTER: Echoing locking keyboard event: {result}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["TYPING ECHO PRESENTER: Echoing locking keyboard event:", result, "."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
 
         if not self.get_key_echo_enabled():
@@ -761,8 +761,14 @@ class TypingEchoPresenter(Extension):
 
         key_type_result = self._get_echo_for_key_type(event)
         result, label = key_type_result if key_type_result is not None else (False, "unknown")
-        msg = f"TYPING ECHO PRESENTER: Echoing {label} keyboard event: {result}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [
+            "TYPING ECHO PRESENTER: Echoing",
+            label,
+            "keyboard event:",
+            result,
+            ".",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     def is_character_echoable(self, event: input_event.KeyboardEvent) -> bool:

@@ -138,8 +138,8 @@ class _StringContext:
         if not (self._string and self._string.strip() in other.get_string()):
             return False
 
-        msg = f"MOUSE REVIEW: '{self._string}' is substring of '{other.get_string()}'"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["MOUSE REVIEW: '", self._string, "' is substring of '", other.get_string(), "'"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     def get_bounding_box(self) -> tuple[int, int, int, int]:
@@ -234,8 +234,8 @@ class _ItemContext:
 
         interval = self._time - prior.get_time()
         if interval > 0.5:
-            msg = f"MOUSE REVIEW: Not a duplicate: was {interval:.2f}s ago"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = [f"MOUSE REVIEW: Not a duplicate: was {interval:.2f}s ago"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         msg = "MOUSE REVIEW: Treating as duplicate"
@@ -429,9 +429,10 @@ class MousePresenter(Extension):
 
         if self._use_atspi:
             msg = "MOUSE REVIEW ERROR: Not supported by AT-SPI device"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
         else:
             msg = "MOUSE REVIEW ERROR: Wnck or at-spi2-core >= 2.60 required"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _ensure_mouse_review_capable(self) -> bool:
         """Returns True if mouse review support is available, enabling it lazily."""
@@ -518,8 +519,8 @@ class MousePresenter(Extension):
             try:
                 self._event_listener.deregister("mouse:abs")
             except GLib.GError as error:
-                msg = f"MOUSE REVIEW: Exception deregistering 'mouse:abs' listener: {error}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                tokens = ["MOUSE REVIEW: Exception deregistering 'mouse:abs' listener:", error]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             for key, value in self._handler_ids.items():
                 value.disconnect(key)
@@ -566,8 +567,8 @@ class MousePresenter(Extension):
     def set_present_tooltips(self, value: bool) -> bool:
         """Sets whether tooltips displayed due to mouse hover are spoken (requires X11)."""
 
-        msg = f"MOUSE REVIEW: Setting present tooltips to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["MOUSE REVIEW: Setting present tooltips to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_PRESENT_TOOLTIPS, value
         )
@@ -594,8 +595,8 @@ class MousePresenter(Extension):
         if value and not self._ensure_mouse_review_capable():
             return False
 
-        msg = f"MOUSE REVIEW: Setting enable mouse review to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["MOUSE REVIEW: Setting enable mouse review to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if value == self._active:
             return True
 
@@ -929,9 +930,13 @@ class MousePresenter(Extension):
         self._on_mouse_moved_deprecated(event)
         self.in_mouse_event = False
 
-        msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}\n"
-        msg += f"^^^^^ PROCESS OBJECT EVENT {event.type} ^^^^^\n"
-        debug.print_message(debug.LEVEL_INFO, msg, False)
+        tokens = [
+            f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}",
+            "\n^^^^^ PROCESS OBJECT EVENT",
+            event.type,
+            "^^^^^\n",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
     def _listener(self, event) -> None:
         """Generic listener for events of interest."""
@@ -956,9 +961,11 @@ class MousePresenter(Extension):
         self._on_mouse_moved(obj, x, y)
         self.in_mouse_event = False
 
-        msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}\n"
-        msg += "^^^^^ PROCESS POINTER-MOVED EVENT ^^^^^\n"
-        debug.print_message(debug.LEVEL_INFO, msg, False)
+        tokens = [
+            f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}",
+            "\n^^^^^ PROCESS POINTER-MOVED EVENT ^^^^^\n",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
     def _on_pointer_moved(self, _device, obj, x, y) -> None:
         """Listener for pointer-moved events from devices."""

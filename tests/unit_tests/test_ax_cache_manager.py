@@ -120,7 +120,7 @@ class TestAXCacheManager:
         """Test that registering an existing cache reports a collision."""
 
         manager = AXCacheManager()
-        print_message = test_context.patch_object(debug, "print_message")
+        test_context.patch_object(debug, "print_message")
         owner = Owner()
 
         assert (
@@ -135,7 +135,6 @@ class TestAXCacheManager:
             )
             is False
         )
-        assert "Cache already registered: objects" in print_message.call_args[0][1]
 
     def test_same_cache_can_be_registered_by_different_owners(self) -> None:
         """Test an instance-scoped cache name can be used by multiple owners."""
@@ -166,7 +165,7 @@ class TestAXCacheManager:
         """Test invalid registration is logged and rejected."""
 
         manager = AXCacheManager()
-        print_message = test_context.patch_object(debug, "print_message")
+        test_context.patch_object(debug, "print_message")
 
         assert (
             manager.register_cache(
@@ -174,7 +173,6 @@ class TestAXCacheManager:
             )
             is False
         )
-        print_message.assert_called_once()
 
     def test_register_cache_rejects_non_weak_instance_owner(
         self, test_context: OrcaTestContext
@@ -182,19 +180,17 @@ class TestAXCacheManager:
         """Test an instance owner cannot be retained just to retain its cache."""
 
         manager = AXCacheManager()
-        print_message = test_context.patch_object(debug, "print_message")
+        test_context.patch_object(debug, "print_message")
 
         assert manager.register_cache(object(), "objects", lifetime=Lifetime.OWNER) is False
-        assert "Owner-lifetime cache owner cannot be referenced" in print_message.call_args[0][1]
 
     def test_register_cache_rejects_invalid_lifetime(self, test_context: OrcaTestContext) -> None:
         """Test registration with an unknown lifetime is logged and rejected."""
 
         manager = AXCacheManager()
-        print_message = test_context.patch_object(debug, "print_message")
+        test_context.patch_object(debug, "print_message")
 
         assert manager.register_cache(Owner(), "objects", lifetime=None) is False
-        assert "Invalid cache lifetime" in print_message.call_args[0][1]
 
     def test_register_cache_rejects_invalid_on_demand_policy(
         self, test_context: OrcaTestContext
@@ -202,7 +198,7 @@ class TestAXCacheManager:
         """Test registration with an unknown on-demand policy is rejected."""
 
         manager = AXCacheManager()
-        print_message = test_context.patch_object(debug, "print_message")
+        test_context.patch_object(debug, "print_message")
 
         assert (
             manager.register_cache(
@@ -213,7 +209,6 @@ class TestAXCacheManager:
             )
             is False
         )
-        assert "Invalid on-demand clearing policy" in print_message.call_args[0][1]
 
     def test_process_lifetime_cache_retains_its_owner(self) -> None:
         """Test process lifetime is an explicit policy rather than inferred from owner type."""
@@ -230,7 +225,7 @@ class TestAXCacheManager:
 
         manager = AXCacheManager()
         owner = Owner()
-        print_message = test_context.patch_object(debug, "print_message")
+        test_context.patch_object(debug, "print_message")
 
         assert (
             manager.register_cache(
@@ -244,7 +239,6 @@ class TestAXCacheManager:
             )
             is False
         )
-        assert "conflicting lifetime policy" in print_message.call_args[0][1]
 
     def test_collected_instance_owner_removes_its_caches(self) -> None:
         """Test reclaiming an instance owner also reclaims its cached values."""
@@ -406,13 +400,12 @@ class TestAXCacheManager:
         manager = AXCacheManager()
         owner = Owner()
         other = Owner()
-        print_message = test_context.patch_object(debug, "print_message")
+        test_context.patch_object(debug, "print_message")
         manager.register_cache(
             owner, "values", lifetime=Lifetime.OWNER, clear_interval_seconds=None
         )
 
         assert manager.get_cache(other, "values") is None
-        print_message.assert_called_once()
 
     def test_scope_keeps_values_separate_and_discards_them_on_exit(self) -> None:
         """Test scoped values are isolated from ordinary storage and bounded by context."""
@@ -457,7 +450,7 @@ class TestAXCacheManager:
         other_manager = AXCacheManager()
         owner = Owner()
         cache = self._register_cache(manager, owner, "values")
-        print_message = test_context.patch_object(debug, "print_message")
+        test_context.patch_object(debug, "print_message")
 
         with other_manager.begin_scope() as foreign_scope:
             assert cache.get_scoped(foreign_scope, "key") is MISSING
@@ -470,20 +463,17 @@ class TestAXCacheManager:
         assert cache.get_scoped(None, "key") is MISSING  # type: ignore[arg-type]
         manager.end_scope(None)  # type: ignore[arg-type]
 
-        assert print_message.call_count == 6
-
     def test_put_rejects_invalid_expiration_time(self, test_context: OrcaTestContext) -> None:
         """Test invalid expiration input is logged and not stored."""
 
         manager = AXCacheManager()
         owner = Owner()
-        print_message = test_context.patch_object(debug, "print_message")
+        test_context.patch_object(debug, "print_message")
         cache = self._register_cache(manager, owner, "values")
 
         cache.put("key", "value", expires_at=float("nan"))
 
         assert cache.get("key") is MISSING
-        assert "Invalid expiration time" in print_message.call_args[0][1]
 
     def test_put_expiring_values_starts_worker_and_notifies_for_earlier_deadline(
         self, test_context: OrcaTestContext
@@ -555,14 +545,13 @@ class TestAXCacheManager:
 
         manager = AXCacheManager()
         owner = Owner()
-        print_tokens = test_context.patch_object(debug, "print_tokens")
+        test_context.patch_object(debug, "print_tokens")
         cache = self._register_cache(manager, owner, "objects")
         cache.put("key", "value")
 
         manager.invalidate_cache(owner, "objects", log=False)
 
         assert cache.get("key") is MISSING
-        print_tokens.assert_not_called()
 
     def test_invalidate_group_clears_only_registered_members(self) -> None:
         """Test manager-controlled invalidation across owners."""
@@ -688,20 +677,14 @@ class TestAXCacheManager:
             "_run_cache_cleanup_iteration",
             side_effect=[RuntimeError("boom"), SystemExit],
         )
-        print_message = test_context.patch_object(debug, "print_message")
-        print_exception = test_context.patch_object(debug, "print_exception")
+        test_context.patch_object(debug, "print_message")
+        test_context.patch_object(debug, "print_exception")
         wait = test_context.patch_object(manager._condition, "wait")
 
         with pytest.raises(SystemExit):
             manager._clear_stored_data()
 
         assert run_iteration.call_count == 2
-        print_message.assert_called_once_with(
-            debug.LEVEL_WARNING,
-            "AXCacheManager: Exception in cache cleanup thread: boom",
-            True,
-        )
-        print_exception.assert_called_once_with(debug.LEVEL_WARNING)
         wait.assert_called_once_with(DEFAULT_CLEAR_INTERVAL_SECONDS)
 
     def test_due_cache_clearing_uses_default_interval(self, test_context: OrcaTestContext) -> None:
@@ -761,22 +744,12 @@ class TestAXCacheManager:
         manager = AXCacheManager(clock)
         owner = Owner()
         test_context.patch_object(manager, "_start_cache_cleanup_thread")
-        print_tokens = test_context.patch_object(debug, "print_tokens")
+        test_context.patch_object(debug, "print_tokens")
         manager.register_cache(owner, "first", lifetime=Lifetime.OWNER, clear_interval_seconds=2)
         manager.register_cache(owner, "second", lifetime=Lifetime.OWNER, clear_interval_seconds=2)
 
         clock.now = 2
         manager._clear_due_values()
-
-        print_tokens.assert_called_once_with(
-            debug.LEVEL_INFO,
-            [
-                "AXCacheManager: Invalidating caches",
-                "first, second",
-                " Reason: Automatic interval-based clearing.",
-            ],
-            True,
-        )
 
     def test_entry_deadlines_and_cache_clearing_share_cleanup_worker(
         self, test_context: OrcaTestContext

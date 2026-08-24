@@ -426,11 +426,12 @@ class AXEventSynthesizer:
             if AXObject.supports_collection(root):
                 if candidates is None:
                     candidates = AXUtilitiesCollection.find_all_with_role(root, [snapshot.role])
-                    msg = (
-                        f"AXEventSynthesizer: {len(candidates)} role-matched candidates "
-                        "for replacement search."
-                    )
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                    tokens = [
+                        "AXEventSynthesizer:",
+                        len(candidates),
+                        "role-matched candidates for replacement search.",
+                    ]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 match = next((c for c in candidates if is_match(c)), None)
             else:
                 match = AXUtilities.find_descendant(root, is_match)
