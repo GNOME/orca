@@ -151,3 +151,25 @@ class TestAXUtilitiesText:
 
         assert AXUtilitiesText.get_selection_anchor_offset(obj, 7, 3, 6) == 3
         assert AXUtilitiesText.get_selection_anchor_offset(obj, 2, 3, 6) == 6
+
+    def test_get_text_selection_endpoints_searches_once_when_nothing_is_selected(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test the search for the last selected position is skipped if there is no first one."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_text import AXObject, AXText, AXUtilitiesText
+
+        root = test_context.Mock(spec=Atspi.Accessible)
+        child = test_context.Mock(spec=Atspi.Accessible)
+        get_selected_ranges = test_context.patch_object(
+            AXText, "get_selected_ranges", return_value=[]
+        )
+        test_context.patch_object(
+            AXObject, "get_child_count", side_effect=lambda obj: 1 if obj == root else 0
+        )
+        test_context.patch_object(AXObject, "get_child", return_value=child)
+
+        assert AXUtilitiesText.get_text_selection_endpoints(root) == ((None, -1), (None, -1))
+        assert get_selected_ranges.call_count == 2

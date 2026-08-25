@@ -313,8 +313,11 @@ class AXUtilitiesText:
     ]:
         """Returns the first and last selected text positions under root."""
 
-        start = AXUtilitiesText._find_text_selection_endpoint(root, True) or (None, -1)
-        end = AXUtilitiesText._find_text_selection_endpoint(root, False) or (None, -1)
+        start: tuple[Atspi.Accessible | None, int] = (None, -1)
+        end: tuple[Atspi.Accessible | None, int] = (None, -1)
+        if found_start := AXUtilitiesText._find_text_selection_endpoint(root, True):
+            start = found_start
+            end = AXUtilitiesText._find_text_selection_endpoint(root, False) or (None, -1)
         tokens = [
             "AXUtilitiesText: Text selection endpoints under",
             root,
