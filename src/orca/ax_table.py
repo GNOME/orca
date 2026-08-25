@@ -367,9 +367,8 @@ class AXTable:
             return None
         try:
             return int(value)
-        except ValueError:
-            # orca-rules: print-tokens-items
-            tokens = [f"AXTable: Ignoring non-integer attribute value {value!r}"]
+        except ValueError as error:
+            tokens = ["AXTable: Exception in _attribute_as_int:", error]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 

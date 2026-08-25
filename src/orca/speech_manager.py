@@ -1736,8 +1736,11 @@ class SpeechManager(Extension):
         """Sets the active voice set used for speech output."""
 
         if name != gsettings_registry.PRIMARY_VOICE_SET and name not in self.get_voice_set_names():
-            # orca-rules: print-tokens-items
-            tokens = [f"SPEECH MANAGER: Ignoring unknown voice set {name!r}."]
+            tokens = [
+                "SPEECH MANAGER: Ignoring unknown voice set",
+                debug.PreservableValue(name),
+                ".",
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
         tokens = ["SPEECH MANAGER: Setting active voice set to", name, "."]

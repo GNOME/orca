@@ -1746,8 +1746,11 @@ class SpeechPresenter(Extension):
     ) -> bool:
         """Opens value for JSONL recording; an empty string closes any open file (test-only)."""
 
-        # orca-rules: print-tokens-items
-        tokens = [f"SPEECH PRESENTER: Setting log file to {value!r}."]
+        tokens = [
+            "SPEECH PRESENTER: Setting log file to '",
+            debug.PreservableValue(value),
+            "'.",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._output_recorder.set_path(value)
 
@@ -2609,8 +2612,7 @@ class SpeechPresenter(Extension):
         acss = speech_manager.get_manager().apply_voice_set(
             self._resolve_acss(voice[0] if voice else None)
         )
-        msg = f"SPEECH OUTPUT: '{character}'"
-        tokens = [msg, acss]
+        tokens = ["SPEECH OUTPUT: '", character, "'", acss]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         text, consumed = self._process_speech_output(character, obj)
 

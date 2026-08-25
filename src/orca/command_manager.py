@@ -1049,9 +1049,18 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                 if new_kb.has_grabs():
                     added.append(key)
 
-        msg = f"COMMAND MANAGER: Grab diff: {reason}"
-        msg += f" (old: {len(old_bindings)}, new: {len(new_bindings)})"
-        debug.print_tokens(debug.LEVEL_INFO, ["\nvvvvv", msg, "vvvvv"], False)
+        tokens: list[Any] = [
+            "\nvvvvv",
+            "COMMAND MANAGER: Grab diff:",
+            debug.PreservableValue(reason),
+            "(old:",
+            len(old_bindings),
+            ", new:",
+            len(new_bindings),
+            ")",
+            "vvvvv",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
         if not removed and not added and not transferred:
             debug.print_message(debug.LEVEL_INFO, "  No grab changes", True)
@@ -1061,7 +1070,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                 for key in removed:
                     binding_str = self._format_binding_key(key)
                     cmd_name = old_key_to_cmd.get(key, "unknown")
-                    tokens: list[Any] = [
+                    tokens = [
                         "    ",
                         binding_str,
                         ":",

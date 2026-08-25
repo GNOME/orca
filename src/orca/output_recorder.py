@@ -48,8 +48,14 @@ class OutputRecorder:
                 path, "w", encoding="utf-8", buffering=1
             )
         except OSError as error:
-            # orca-rules: print-tokens-items
-            tokens = ["OUTPUT RECORDER (", self._label, f"): Could not open {path!r}:", error]
+            tokens = [
+                "OUTPUT RECORDER (",
+                self._label,
+                "): Could not open '",
+                debug.PreservableValue(path),
+                "':",
+                error,
+            ]
             debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
         return True

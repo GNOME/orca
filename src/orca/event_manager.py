@@ -736,8 +736,14 @@ class EventManager:
         try:
             priority, counter, event = self._event_queue.get_nowait()
             self._queue_println(event, is_enqueue=False)
-            details = f"priority: {priority.name}, counter: {counter}"
-            tokens = ["EVENT MANAGER: Dequeued", event, details]
+            tokens = [
+                "EVENT MANAGER: Dequeued",
+                event,
+                "priority:",
+                debug.PreservableValue(priority.name),
+                ", counter:",
+                counter,
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             start_time = time.time()
             tokens = [
