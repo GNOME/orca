@@ -163,6 +163,7 @@ class OrcaTestContext:
             debug_mock = essential_modules["orca.debug"]
             debug_mock.LEVEL_INFO = 800
             debug_mock.LEVEL_SEVERE = 1000
+            debug_mock.debugLevel = 800
             debug_mock.print_message = self.mocker.Mock()
             debug_mock.print_tokens = self.mocker.Mock()
             debug_mock.println = self.mocker.Mock()

@@ -23,6 +23,7 @@
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-lines
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=too-many-public-methods
@@ -45,6 +46,7 @@ if TYPE_CHECKING:
 GSETTINGS_PATH_PREFIX = "/org/gnome/orca/"
 PRIMARY_VOICE_SET = "primary"
 VOICE_TYPES: list[str] = ["default", "uppercase", "hyperlink", "system"]
+_NOT_SET = object()
 
 
 @dataclass
@@ -84,7 +86,67 @@ class LookupCacheKey(NamedTuple):
     ignore_runtime: bool
 
 
-_NOT_SET = object()
+class SettingPath:
+    """Wrapper representing the path of a setting, for debug logging."""
+
+    __slots__ = ("key", "schema")
+
+    def __init__(self, schema: str, key: str) -> None:
+        self.schema = schema
+        self.key = key
+
+    def __str__(self) -> str:
+        return f"{self.schema}/{self.key}"
+
+
+class SettingSource:
+    """Wrapper representing the source of a setting, for debug logging."""
+
+    __slots__ = ("app", "checked", "profile")
+
+    def __init__(self, app: str, profile: str, checked: tuple[str, ...]) -> None:
+        self.app = app
+        self.profile = profile
+        self.checked = checked
+
+    def __str__(self) -> str:
+        where = f"app:{self.app} profile:{self.profile}" if self.app else f"profile:{self.profile}"
+        skipped = f" [{', '.join(self.checked)} not set]" if self.checked else ""
+        return f" ({where}){skipped}"
+
+
+class SettingValue:
+    """Wrapper representing the value of a setting, for debug logging."""
+
+    __slots__ = ("value",)
+
+    def __init__(self, value: Any) -> None:
+        self.value = value
+
+    def __str__(self) -> str:
+        return repr(self.value)
+
+
+def _log_registry(schema: str, key: str, reason: str, value: Any) -> None:
+    if debug.debugLevel > debug.LEVEL_INFO:
+        return
+    tokens = ["GSETTINGS REGISTRY:", SettingPath(schema, key), reason, SettingValue(value)]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+
+def _log_schema_handle(
+    suffix: str, key: str, value: Any, app: str, profile: str, checked: tuple[str, ...]
+) -> None:
+    if debug.debugLevel > debug.LEVEL_INFO:
+        return
+    tokens = [
+        "GSETTINGS SCHEMA HANDLE:",
+        SettingPath(suffix, key),
+        "= ",
+        SettingValue(value),
+        SettingSource(app, profile, checked),
+    ]
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
 
 class _GSettingsRegistryCache:
@@ -251,9 +313,7 @@ class GSettingsRegistry:
         if not self._ignore_runtime:
             runtime = self._runtime_values.get((schema, key, voice_type))
             if runtime is not None:
-                # orca-rules: print-tokens-items
-                tokens = [f"GSETTINGS REGISTRY: {schema}/{key} runtime override = {runtime!r}"]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                _log_registry(schema, key, "runtime override = ", runtime)
                 self._cache.set_value(cache_key, runtime)
                 return runtime
 
@@ -287,9 +347,7 @@ class GSettingsRegistry:
 
         if default is _NOT_SET:
             return None
-        # orca-rules: print-tokens-items
-        tokens = [f"GSETTINGS REGISTRY: {schema}/{key} using default value = {default!r}"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        _log_registry(schema, key, "using default value = ", default)
         return default
 
     @staticmethod
@@ -870,12 +928,7 @@ class GSettingsSchemaHandle:
             gs = self.get_for_app(app_name, profile, sub_path)
             if gs is not None and gs.get_user_value(key) is not None:
                 value = extractor(gs, key)
-                tokens = [
-                    # orca-rules: print-tokens-items
-                    f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} = {value!r} "
-                    f"(app:{app_name} profile:{profile})"
-                ]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                _log_schema_handle(suffix, key, value, app_name, profile, ())
                 return value
             checked.append(f"app:{app_name}")
 
@@ -883,12 +936,7 @@ class GSettingsSchemaHandle:
         gs = self.get_for_profile(profile, sub_path)
         if gs is not None and gs.get_user_value(key) is not None:
             value = extractor(gs, key)
-            skipped = f" [{', '.join(checked)} not set]" if checked else ""
-            tokens = [
-                # orca-rules: print-tokens-items
-                f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} = {value!r} (profile:{profile}){skipped}"
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            _log_schema_handle(suffix, key, value, "", profile, tuple(checked))
             return value
         checked.append(f"profile:{profile}")
 
@@ -897,13 +945,7 @@ class GSettingsSchemaHandle:
             gs = self.get_for_profile("default", sub_path)
             if gs is not None and gs.get_user_value(key) is not None:
                 value = extractor(gs, key)
-                skipped = f" [{', '.join(checked)} not set]"
-                tokens = [
-                    # orca-rules: print-tokens-items
-                    f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} = {value!r} "
-                    f"(profile:default fallback){skipped}"
-                ]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                _log_schema_handle(suffix, key, value, "", "default fallback", tuple(checked))
                 return value
             checked.append("profile:default")
 
