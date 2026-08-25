@@ -27,7 +27,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from . import braille_presenter, debug, script_manager
 from .ax_object import AXObject
@@ -182,7 +182,12 @@ class FocusManager:
             obj.emit("mode-changed::" + mode, 1, "")
 
         if mode != self._active_mode:
-            tokens = ["FOCUS MANAGER: Switching mode from", self._active_mode, "to", mode]
+            tokens: list[Any] = [
+                "FOCUS MANAGER: Switching mode from",
+                self._active_mode,
+                "to",
+                mode,
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._active_mode = mode
             if mode == FLAT_REVIEW:
@@ -190,7 +195,15 @@ class FocusManager:
             else:
                 braille_presenter.get_presenter().set_brlapi_priority()
 
-        tokens = ["FOCUS MANAGER: Region of interest:", obj, f"({start_offset}, {end_offset})"]
+        tokens = [
+            "FOCUS MANAGER: Region of interest:",
+            obj,
+            "(",
+            start_offset,
+            ",",
+            end_offset,
+            ")",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if obj is not None:
             obj.emit("region-changed", start_offset, end_offset)

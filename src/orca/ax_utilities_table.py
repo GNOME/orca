@@ -314,7 +314,7 @@ class AXUtilitiesTable:
             elif AXTable.get_caption(table):
                 result, reason = False, "Has caption"
 
-        tokens = ["AXUtilitiesTable:", table, f"is layout only: {result} ({reason})"]
+        tokens = ["AXUtilitiesTable:", table, "is layout only:", result, "(", reason, ")"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
@@ -494,7 +494,7 @@ class AXUtilitiesTable:
         if col_label is not None and row_label is not None:
             result = f"{col_label}{row_label}"
 
-        tokens = ["AXUtilitiesTable: Coordinates label for", cell, f": {result}"]
+        tokens = ["AXUtilitiesTable: Coordinates label for", cell, ":", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if result:
             return result
@@ -509,7 +509,7 @@ class AXUtilitiesTable:
         if col_label is not None and row_label is not None:
             result = f"{col_label}{row_label}"
 
-        tokens = ["AXUtilitiesTable: Updated coordinates label based on", row, f": {result}"]
+        tokens = ["AXUtilitiesTable: Updated coordinates label based on", row, ":", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 

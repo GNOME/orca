@@ -294,9 +294,12 @@ class KeyBinding:
                 tokens = [
                     "KEYBINDINGS: AT-SPI returned grab id 0 for",
                     self,
-                    f"keysym={kd.keysym}",
-                    f"keycode={kd.keycode}",
-                    f"modifiers={kd.modifiers}",
+                    "keysym=",
+                    kd.keysym,
+                    "keycode=",
+                    kd.keycode,
+                    "modifiers=",
+                    kd.modifiers,
                 ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 continue

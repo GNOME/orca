@@ -692,7 +692,8 @@ class OrcaDBusServiceInterface(Publishable):
         tokens = [
             "DBUS SERVICE: DisplayMessage called:",
             message,
-            f"persistent={persistent}",
+            "persistent=",
+            persistent,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 

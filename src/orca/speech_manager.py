@@ -478,7 +478,7 @@ class SpeechManager(Extension):
                     result[server_name] = module_name
 
             except (AttributeError, TypeError, ImportError) as error:
-                tokens = [f"SPEECH MANAGER: {module_name} not available:", error]
+                tokens = ["SPEECH MANAGER:", module_name, "not available:", error]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
@@ -592,7 +592,7 @@ class SpeechManager(Extension):
 
         available = self.get_available_synthesizers()
         if value not in available:
-            tokens = [f"SPEECH MANAGER: '{value}' is not in", available]
+            tokens = ["SPEECH MANAGER: '", value, "' is not in", available]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
@@ -1736,6 +1736,7 @@ class SpeechManager(Extension):
         """Sets the active voice set used for speech output."""
 
         if name != gsettings_registry.PRIMARY_VOICE_SET and name not in self.get_voice_set_names():
+            # orca-rules: print-tokens-items
             tokens = [f"SPEECH MANAGER: Ignoring unknown voice set {name!r}."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False

@@ -401,7 +401,11 @@ class AXUtilitiesText:
                     tokens = [
                         "AXUtilitiesText: Using the end of embedded text child",
                         child,
-                        f"at offset {child_offset} for position {offset} in",
+                        "at offset",
+                        child_offset,
+                        "for position",
+                        offset,
+                        "in",
                         obj,
                     ]
                     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -422,7 +426,9 @@ class AXUtilitiesText:
                     tokens = [
                         "AXUtilitiesText: Using embedded object character in",
                         parent,
-                        f"at offset {result} for",
+                        "at offset",
+                        result,
+                        "for",
                         obj,
                     ]
                     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -455,7 +461,11 @@ class AXUtilitiesText:
         tokens = [
             "AXUtilitiesText: Using embedded text child",
             child,
-            f"at offset {child_offset} for selection endpoint {offset} in",
+            "at offset",
+            child_offset,
+            "for selection endpoint",
+            offset,
+            "in",
             obj,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -594,7 +604,7 @@ class AXUtilitiesText:
             )
 
         if all_raw_changes:
-            tokens = ["AXText: All attribute changes for", obj, f": {all_raw_changes}"]
+            tokens = ["AXText: All attribute changes for", obj, ":", all_raw_changes]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         changes: list[tuple[AXTextAttribute, str | None, str | None]] = []
@@ -1126,7 +1136,7 @@ class AXUtilitiesText:
 
         string, start, end = AXText.get_paragraph_at_offset(obj, 0)
         result = string and 0 <= start < end
-        tokens = ["AXText: Paragraph iteration supported on", obj, f": {result}"]
+        tokens = ["AXText: Paragraph iteration supported on", obj, ":", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return bool(result)
 
@@ -1214,7 +1224,17 @@ class AXUtilitiesText:
 
         string, start, end = AXUtilitiesText._CACHE.get_selected_text(obj)
         debug_string = string.replace("\n", "\\n")
-        tokens = ["AXText: Cached selection for", obj, f"is '{debug_string}' ({start}, {end})"]
+        tokens = [
+            "AXText: Cached selection for",
+            obj,
+            "is '",
+            debug_string,
+            "' (",
+            start,
+            ",",
+            end,
+            ")",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return string, start, end
 
@@ -1252,7 +1272,13 @@ class AXUtilitiesText:
             tokens = [
                 "AXText: Selected text of",
                 obj,
-                f"'{debug_string}' ({start_offset}-{end_offset})",
+                "'",
+                debug_string,
+                "' (",
+                start_offset,
+                "-",
+                end_offset,
+                ")",
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return text, start_offset, end_offset
@@ -1311,7 +1337,7 @@ class AXUtilitiesText:
         if end_offset == -1:
             end_offset = AXText.get_character_count(obj)
 
-        tokens = ["AXText: Getting attributes for", obj, f"chars: {start_offset}-{end_offset}"]
+        tokens = ["AXText: Getting attributes for", obj, "chars:", start_offset, "-", end_offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         # VTE (at least in GTK3 terminals) reports attribute run boundaries in UTF-8 byte offsets
@@ -1411,7 +1437,17 @@ class AXUtilitiesText:
 
         line, start, end = AXUtilitiesText.find_first_visible_line(obj, clip_rect)
         debug_string = line.replace("\n", "\\n")
-        tokens = ["AXText: First visible line in", obj, f"is: '{debug_string}' ({start}-{end})"]
+        tokens = [
+            "AXText: First visible line in",
+            obj,
+            "is: '",
+            debug_string,
+            "' (",
+            start,
+            "-",
+            end,
+            ")",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         result = [(line, start, end)]
@@ -1424,7 +1460,17 @@ class AXUtilitiesText:
 
         line, start, end = result[-1]
         debug_string = line.replace("\n", "\\n")
-        tokens = ["AXText: Last visible line in", obj, f"is: '{debug_string}' ({start}-{end})"]
+        tokens = [
+            "AXText: Last visible line in",
+            obj,
+            "is: '",
+            debug_string,
+            "' (",
+            start,
+            "-",
+            end,
+            ")",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 

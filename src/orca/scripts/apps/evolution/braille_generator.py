@@ -51,7 +51,7 @@ class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator)
 
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
-            tokens = [f"EVOLUTION BRAILLE GENERATOR: {func.__name__}:", result]
+            tokens = ["EVOLUTION BRAILLE GENERATOR:", func.__name__, ":", result]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
 

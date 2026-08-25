@@ -30,7 +30,7 @@
 from __future__ import annotations
 
 import re
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from orca import (
     action_presenter,
@@ -179,16 +179,16 @@ class Script(script.Script):
     ) -> Atspi.Event | None:
         cached_event = self.get_queued_event(event_type)
         if not cached_event:
-            tokens = ["SCRIPT: No queued event of type", event_type]
+            tokens: list[Any] = ["SCRIPT: No queued event of type", event_type]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if detail1 is not None and detail1 != cached_event.detail1:
             tokens = [
                 "SCRIPT: Queued event's detail1 (",
-                str(cached_event.detail1),
+                cached_event.detail1,
                 ") doesn't match",
-                str(detail1),
+                detail1,
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
@@ -196,9 +196,9 @@ class Script(script.Script):
         if detail2 is not None and detail2 != cached_event.detail2:
             tokens = [
                 "SCRIPT: Queued event's detail2 (",
-                str(cached_event.detail2),
+                cached_event.detail2,
                 ") doesn't match",
-                str(detail2),
+                detail2,
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
@@ -1290,7 +1290,11 @@ class Script(script.Script):
             offset,
             "is '",
             text,
-            f"' ({start_offset}-{end_offset})",
+            "' (",
+            start_offset,
+            "-",
+            end_offset,
+            ")",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 

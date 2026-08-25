@@ -169,7 +169,7 @@ class SpeechGenerator(generator.Generator):
 
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
-            tokens = [f"SPEECH GENERATOR: {func.__name__}:", result]
+            tokens = ["SPEECH GENERATOR:", func.__name__, ":", result]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
 
@@ -415,10 +415,17 @@ class SpeechGenerator(generator.Generator):
         language_from_content = bool(language)
         family = voice.get(ACSS.FAMILY, {}).copy()
         tokens = [
-            f"SPEECH GENERATOR: {key} voice requested for",
+            "SPEECH GENERATOR:",
+            key,
+            "voice requested for",
             obj,
-            f"language='{language}', dialect='{dialect}'",
-            f"Unmodified voice={voice}",
+            "language='",
+            language,
+            "', dialect='",
+            dialect,
+            "'",
+            "Unmodified voice=",
+            voice,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 

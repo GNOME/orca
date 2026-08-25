@@ -700,7 +700,7 @@ class KeyboardEvent(InputEvent):
         else:
             data = "(obscured)"
 
-        debug.print_tokens(debug.LEVEL_INFO, [f"\n{self}"])
+        debug.print_tokens(debug.LEVEL_INFO, ["\n", self])
 
         tokens = ["\nvvvvv PROCESS", self.type.value_name.upper(), ":", data, "vvvvv"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, False)
@@ -755,7 +755,7 @@ class KeyboardEvent(InputEvent):
         if self.is_pressed_key() and self._handler:
             GLib.timeout_add(1, self._handle)
 
-        tokens = [f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"]
+        tokens = ["TOTAL PROCESSING TIME:", round(time.time() - start_time, 4)]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         tokens = ["^^^^^ PROCESS", self.type.value_name.upper(), ":", data, "^^^^^\n"]
@@ -776,7 +776,7 @@ class KeyboardEvent(InputEvent):
                 tokens = ["KEYBOARD EVENT: Exception calling handler:", error]
                 debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
-        tokens = [f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"]
+        tokens = ["TOTAL PROCESSING TIME:", round(time.time() - start_time, 4)]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         tokens = ["^^^^^ HANDLE", self.type.value_name.upper(), ":", data, "^^^^^\n"]
@@ -801,7 +801,7 @@ class BrailleEvent(InputEvent):
 
         braille_key: int = self.event["command"]
         command = command_manager.get_manager().get_command_for_braille_event(braille_key)
-        tokens = [f"BRAILLE EVENT: Command for braille key {braille_key} is", command]
+        tokens = ["BRAILLE EVENT: Command for braille key", braille_key, "is", command]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return command
 
@@ -813,7 +813,7 @@ class BrailleEvent(InputEvent):
 
         start_time = time.time()
         result = self._process()
-        tokens = [f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"]
+        tokens = ["TOTAL PROCESSING TIME:", round(time.time() - start_time, 4)]
         debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
         tokens = ["^^^^^ PROCESS", self, "^^^^^"]

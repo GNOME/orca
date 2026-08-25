@@ -141,10 +141,18 @@ class ActionPresenter(Extension):
             localized_name = AXAction.get_action_localized_name(obj, i, n_actions)
             description = AXAction.get_action_description(obj, i, n_actions)
             tokens = [
-                f"ACTION PRESENTER: Action {i} on",
+                "ACTION PRESENTER: Action",
+                i,
+                "on",
                 obj,
-                f": '{name}' localized name: '{localized_name}' ",
-                f"localized description: '{description}'",
+                ": '",
+                name,
+                "' localized name: '",
+                localized_name,
+                "'",
+                "localized description: '",
+                description,
+                "'",
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             actions[name] = localized_name or description or name

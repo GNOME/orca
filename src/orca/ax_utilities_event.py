@@ -453,7 +453,7 @@ class AXUtilitiesEvent:
 
         reason = AXUtilitiesEvent._CACHE.get_text_event_reason(event)
         if reason is not None:
-            tokens = ["AXUtilitiesEvent: Cached reason for", event, f": {reason}"]
+            tokens = ["AXUtilitiesEvent: Cached reason for", event, ":", reason]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return reason
 
@@ -470,7 +470,7 @@ class AXUtilitiesEvent:
             raise ValueError(f"Unexpected event type: {event.type}")
 
         AXUtilitiesEvent._CACHE.set_text_event_reason(event, reason)
-        tokens = ["AXUtilitiesEvent: Reason for", event, f": {reason}"]
+        tokens = ["AXUtilitiesEvent: Reason for", event, ":", reason]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return reason
 

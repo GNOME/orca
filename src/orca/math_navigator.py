@@ -262,7 +262,9 @@ class MathNavigator(Extension):
         """Executes a MathCAT navigation command and presents the result."""
 
         tokens = [
-            f"MATH NAVIGATOR: _execute_command: {mathcat_command}. Script:",
+            "MATH NAVIGATOR: _execute_command:",
+            mathcat_command,
+            ". Script:",
             script,
             "Event:",
             event,

@@ -50,7 +50,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
-            tokens = [f"SOFFICE SPEECH GENERATOR: {func.__name__}:", result]
+            tokens = ["SOFFICE SPEECH GENERATOR:", func.__name__, ":", result]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
 

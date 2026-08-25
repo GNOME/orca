@@ -50,7 +50,7 @@ class AXValue:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0.0
 
-        tokens = ["AXValue: Current value of", obj, f"is {value}"]
+        tokens = ["AXValue: Current value of", obj, "is", value]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return value
 
@@ -60,7 +60,7 @@ class AXValue:
 
         text = AXObject.get_attribute(obj, "valuetext", False) or ""
         if text:
-            tokens = ["AXValue: valuetext attribute for", obj, f"is '{text}'"]
+            tokens = ["AXValue: valuetext attribute for", obj, "is '", text, "'"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return text
 
@@ -74,7 +74,7 @@ class AXValue:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             value = ""
 
-        tokens = ["AXValue: Value text of", obj, f"is '{value}'"]
+        tokens = ["AXValue: Value text of", obj, "is '", value, "'"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if value:
             return value
@@ -107,7 +107,7 @@ class AXValue:
 
         value = AXValue.get_current_value(obj)
         result = int((value / (maximum - minimum)) * 100)
-        tokens = ["AXValue: Current value of", obj, f"as percent is is {result}"]
+        tokens = ["AXValue: Current value of", obj, "as percent is is", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
@@ -125,7 +125,7 @@ class AXValue:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0.0
 
-        tokens = ["AXValue: Minimum value of", obj, f"is {value}"]
+        tokens = ["AXValue: Minimum value of", obj, "is", value]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return value
 
@@ -143,6 +143,6 @@ class AXValue:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0.0
 
-        tokens = ["AXValue: Maximum value of", obj, f"is {value}"]
+        tokens = ["AXValue: Maximum value of", obj, "is", value]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return value

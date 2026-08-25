@@ -241,7 +241,9 @@ class FlatReviewFinder(Extension):
             match = re.search(pattern, string)
             debug_string = string.replace("\n", "\\n")
             tokens = [
-                f"FLAT REVIEW FINDER: Looking in {type_string}='",
+                "FLAT REVIEW FINDER: Looking in",
+                type_string,
+                "='",
                 debug_string,
                 "'. Match:",
                 match,
@@ -284,7 +286,7 @@ class FlatReviewFinder(Extension):
     def _do_find(self, query: SearchQuery, context: Context) -> Context | None:
         """Performs the actual search."""
 
-        tokens: list[Any] = ["FLAT REVIEW FINDER: Searching for", str(query)]
+        tokens: list[Any] = ["FLAT REVIEW FINDER: Searching for", query]
         if self._match:
             tokens += [". Last match:", self._match]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

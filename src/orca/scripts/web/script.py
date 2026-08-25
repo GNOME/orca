@@ -31,7 +31,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from orca import (
     braille_presenter,
@@ -246,8 +246,10 @@ class Script(default.Script):
 
         if prior_reason:
             prior_context = self.utilities.get_prior_context()
-            tokens = [
-                f"WEB: Using prior context for presentation: {prior_reason}. Prior context:",
+            tokens: list[Any] = [
+                "WEB: Using prior context for presentation:",
+                prior_reason,
+                ". Prior context:",
                 prior_context,
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -257,7 +259,7 @@ class Script(default.Script):
                 prior_obj, prior_offset = self.utilities.get_caret_context(
                     search_if_needed=False,
                 )
-                tokens = ["WEB: Using:", prior_obj, f"{prior_offset} as prior context."]
+                tokens = ["WEB: Using:", prior_obj, prior_offset, "as prior context."]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         document = self.utilities.get_document_for_object(obj)
@@ -688,7 +690,7 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         elif not mgr.use_verbose_speech():
             should_present = not event.detail1
-            tokens = ["WEB: Brief verbosity set. Should present", obj, f": {should_present}"]
+            tokens = ["WEB: Brief verbosity set. Should present", obj, ":", should_present]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if should_present and AXUtilities.get_uri(event.source).startswith("http"):
@@ -989,7 +991,7 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 handled = True
 
-        tokens = ["WEB: Setting context and focus to: ", obj, ", ", offset, f", notify: {notify}"]
+        tokens = ["WEB: Setting context and focus to: ", obj, ", ", offset, ", notify:", notify]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self.utilities.set_caret_context(obj, offset, document)
         focus_manager.get_manager().set_locus_of_focus(event, obj, notify, force)

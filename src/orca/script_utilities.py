@@ -865,7 +865,11 @@ class Utilities:
                 offset,
                 "for ongoing word nav is '",
                 debug_string,
-                f"' ({start}-{end})",
+                "' (",
+                start,
+                "-",
+                end,
+                ")",
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return word, start, end
@@ -909,7 +913,11 @@ class Utilities:
             offset,
             "for new word nav is '",
             debug_string,
-            f"' ({start}-{end})",
+            "' (",
+            start,
+            "-",
+            end,
+            ")",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return word, start, end

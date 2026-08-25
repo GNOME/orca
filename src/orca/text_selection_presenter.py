@@ -163,9 +163,15 @@ class TextSelectionPresenter:
             tokens = [
                 "TEXT SELECTION PRESENTER: Presenting change in",
                 obj,
-                f"range {start}-{end}",
-                f"message='{message}'",
-                f"ends with child: {ends_with_child}",
+                "range",
+                start,
+                "-",
+                end,
+                "message='",
+                message,
+                "'",
+                "ends with child:",
+                ends_with_child,
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -253,8 +259,20 @@ class TextSelectionPresenter:
         tokens = [
             "TEXT SELECTION PRESENTER: Selection in",
             obj,
-            f"changed from {old_start}-{old_end} ({len(old_string)} chars)",
-            f"to {new_start}-{new_end} ({len(new_string)} chars)",
+            "changed from",
+            old_start,
+            "-",
+            old_end,
+            "(",
+            len(old_string),
+            "chars)",
+            "to",
+            new_start,
+            "-",
+            new_end,
+            "(",
+            len(new_string),
+            "chars)",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -394,9 +412,16 @@ class TextSelectionPresenter:
             "TEXT SELECTION PRESENTER: Expanded changed document text range",
             range_start,
             range_end,
-            f"with endpoint inclusion {include_start}, {include_end}",
-            f"to '{string}'",
-            f"message='{message}'",
+            "with endpoint inclusion",
+            include_start,
+            ",",
+            include_end,
+            "to '",
+            string,
+            "'",
+            "message='",
+            message,
+            "'",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         speak_message = (
@@ -556,8 +581,10 @@ class TextSelectionPresenter:
             obj,
             "Script:",
             script,
-            f"speak message: {speak_message}",
-            f"is document selection: {is_document}",
+            "speak message:",
+            speak_message,
+            "is document selection:",
+            is_document,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if (

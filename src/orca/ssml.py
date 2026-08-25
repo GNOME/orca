@@ -165,7 +165,7 @@ class SSML(dict[str, Any]):
             if c == "\ue000":
                 if i >= len(offsets):
                     # This is really not supposed to happen
-                    tokens = [f"{i}th U+E000 does not have corresponding index"]
+                    tokens = [i, "th U+E000 does not have corresponding index"]
                     debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
                 else:
                     ssml += f'<mark name="{offsets[i][0]}:{offsets[i][1]}"/>'

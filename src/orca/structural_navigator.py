@@ -188,7 +188,7 @@ class StructuralNavigator(Extension):
     def set_mode(self, script: default.Script, mode: NavigationMode) -> None:
         """Sets the structural-navigator mode."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: Setting mode for", script, f"to {mode}"]
+        tokens = ["STRUCTURAL NAVIGATOR: Setting mode for", script, "to", mode]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._mode_for_script[script] = mode
 
@@ -627,7 +627,10 @@ class StructuralNavigator(Extension):
             match,
             "is descendant of",
             obj,
-            f"at offset {child_offset}; caret is at {caret_offset}",
+            "at offset",
+            child_offset,
+            "; caret is at",
+            caret_offset,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return caret_offset > child_offset
@@ -845,7 +848,7 @@ class StructuralNavigator(Extension):
                 if root is None:
                     root = focus_manager.get_manager().get_active_window()
 
-        tokens = ["STRUCTURAL NAVIGATOR: Root for", focus, "is", root, f"mode: {mode}"]
+        tokens = ["STRUCTURAL NAVIGATOR: Root for", focus, "is", root, "mode:", mode]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return root
 

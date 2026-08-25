@@ -368,6 +368,7 @@ class AXTable:
         try:
             return int(value)
         except ValueError:
+            # orca-rules: print-tokens-items
             tokens = [f"AXTable: Ignoring non-integer attribute value {value!r}"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
@@ -537,7 +538,11 @@ class AXTable:
             cell = Atspi.Table.get_accessible_at(table, row, column)
         except GLib.GError as error:
             tokens = [
-                f"AXTable: Exception getting cell at row: {row} col: {column} in",
+                "AXTable: Exception getting cell at row:",
+                row,
+                "col:",
+                column,
+                "in",
                 table,
                 ":",
                 error,
@@ -545,7 +550,7 @@ class AXTable:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
-        tokens = [f"AXTable: Cell at row: {row} col: {column} in", table, "is", cell]
+        tokens = ["AXTable: Cell at row:", row, "col:", column, "in", table, "is", cell]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return cell
 
@@ -625,7 +630,9 @@ class AXTable:
             tokens = [
                 "AXTable: get_row_column_extents_at_index failed for",
                 cell,
-                f"at index {index} in",
+                "at index",
+                index,
+                "in",
                 table,
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -640,7 +647,9 @@ class AXTable:
             tokens = [
                 "AXTable: Table iface row span for",
                 cell,
-                f"{row_span} is greater than row count: {row_count}",
+                row_span,
+                "is greater than row count:",
+                row_count,
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             row_span = 1
@@ -651,7 +660,9 @@ class AXTable:
             tokens = [
                 "AXTable: Table iface col span for",
                 cell,
-                f"{col_span} is greater than col count: {col_count}",
+                col_span,
+                "is greater than col count:",
+                col_count,
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             col_span = 1
@@ -683,7 +694,10 @@ class AXTable:
         tokens = [
             "AXTable: Table iface spans for",
             cell,
-            f"are rowspan: {row_span}, colspan: {col_span}",
+            "are rowspan:",
+            row_span,
+            ", colspan:",
+            col_span,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable._CACHE.set_physical_spans_from_table(cell, (row_span, col_span))
@@ -713,7 +727,10 @@ class AXTable:
         tokens = [
             "AXTable: TableCell iface spans for",
             cell,
-            f"are rowspan: {row_span}, colspan: {col_span}",
+            "are rowspan:",
+            row_span,
+            ", colspan:",
+            col_span,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable._CACHE.set_physical_spans_from_cell(cell, (row_span, col_span))
@@ -739,7 +756,7 @@ class AXTable:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
-        tokens = [f"AXTable: Table iface header for column {column} of", table, "is", header]
+        tokens = ["AXTable: Table iface header for column", column, "of", table, "is", header]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if header is not None:
             return [header]
@@ -786,7 +803,7 @@ class AXTable:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
-        tokens = [f"AXTable: Table iface header for row {row} of", table, "is", header]
+        tokens = ["AXTable: Table iface header for row", row, "of", table, "is", header]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if header is not None:
             return [header]
@@ -872,7 +889,7 @@ class AXTable:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1
 
-        tokens = ["AXTable: Table iface coords for", cell, f"are row: {row}, col: {column}"]
+        tokens = ["AXTable: Table iface coords for", cell, "are row:", row, ", col:", column]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable._CACHE.set_physical_coordinates_from_table(cell, (row, column))
         return row, column
@@ -899,7 +916,7 @@ class AXTable:
         if not success:
             return -1, -1
 
-        tokens = ["AXTable: TableCell iface coords for", cell, f"are row: {row}, col: {column}"]
+        tokens = ["AXTable: TableCell iface coords for", cell, "are row:", row, ", col:", column]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable._CACHE.set_physical_coordinates_from_cell(cell, (row, column))
         return row, column

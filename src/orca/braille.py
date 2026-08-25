@@ -387,7 +387,7 @@ def _log_brlapi_unavailable(resource: str, error: BaseException | None = None) -
     if error is None:
         tokens += ["."]
     else:
-        tokens += [f"({type(error).__name__}):", error]
+        tokens += ["(", type(error).__name__, "):", error]
     debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
 
@@ -525,7 +525,7 @@ def _brlapi_task_timeout() -> bool:
     if action is None:
         return False
     elapsed = time.monotonic() - _STATE.brlapi_inflight_since
-    tokens = [f"BRAILLE: BrlAPI action timed out after {elapsed:.1f}s:", action]
+    tokens = ["BRAILLE: BrlAPI action timed out after", round(elapsed, 1), "s:", action]
     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     _mark_brlapi_dead(f"{action} timed out")
     return False
@@ -828,7 +828,7 @@ def _finish_brlapi_connection(
     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     (x, y) = display_size
-    tokens = ["BRAILLE: Display size: (", x, f",{y})"]
+    tokens = ["BRAILLE: Display size: (", x, ",", y, ")"]
     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     if x > 0:
@@ -1227,11 +1227,15 @@ class _AccessibleTextRegion(Region):
                 if mask_start < mask_end:
                     link_text = self._raw_line[mask_start:mask_end]
                     tokens = [
-                        f"BRAILLE: Link underline in text region: text offsets [{start_offset},",
+                        "BRAILLE: Link underline in text region: text offsets [",
+                        start_offset,
+                        ",",
                         end_offset,
                         "), line_offset",
                         self.line_offset,
-                        f", mask cells [{mask_start},",
+                        ", mask cells [",
+                        mask_start,
+                        ",",
                         mask_end,
                         "), text '",
                         link_text,
@@ -1329,7 +1333,14 @@ class Text(_AccessibleTextRegion):
         tokens = [
             "BRAILLE: Creating text region for",
             accessible,
-            f"label:'{label}', offsets: {start_offset}-{end_offset}, caret: {caret_offset}",
+            "label:'",
+            label,
+            "', offsets:",
+            start_offset,
+            "-",
+            end_offset,
+            ", caret:",
+            caret_offset,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -2191,11 +2202,14 @@ def _paint_display(line_info: _LineInfo, start_position: int, end_position: int)
     if any(ord(c) for c in submask):
         indicator_map = "".join("^" if ord(c) else " " for c in submask)
         tokens = [
-            f"BRAILLE: Attribute mask for visible region [{start_position},",
+            "BRAILLE: Attribute mask for visible region [",
+            start_position,
+            ",",
             end_position,
             "):\n         TEXT: '",
             substring,
-            f"'\n         MASK:  {indicator_map}",
+            "'\n         MASK:  ",
+            indicator_map,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -2269,8 +2283,13 @@ def refresh(
         "BRAILLE: Last text object:",
         last_text_info.accessible,
         (
-            f"(Caret: {last_text_info.caret_offset}, Line: {last_text_info.line_offset}, "
-            f"Cell: {last_text_info.cursor_cell})"
+            "(Caret:",
+            last_text_info.caret_offset,
+            ", Line:",
+            last_text_info.line_offset,
+            ", Cell:",
+            last_text_info.cursor_cell,
+            ")",
         ),
     ]
     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -2282,8 +2301,11 @@ def refresh(
         "BRAILLE: Current text object:",
         current_text_info.accessible,
         (
-            f"(Caret: {current_text_info.caret_offset}, Line: {current_text_info.line_offset}). "
-            "On same line:"
+            "(Caret:",
+            current_text_info.caret_offset,
+            ", Line:",
+            current_text_info.line_offset,
+            "). On same line:",
         ),
         on_same_line,
     ]

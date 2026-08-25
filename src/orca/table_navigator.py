@@ -638,7 +638,15 @@ class TableNavigator(Extension):
         """Presents cell to the user."""
 
         if not AXUtilities.is_table_cell_or_header(cell):
-            tokens = ["TABLE NAVIGATOR: ", cell, f"(row {row}, column {col}) is not cell or header"]
+            tokens = [
+                "TABLE NAVIGATOR: ",
+                cell,
+                "(row",
+                row,
+                ", column",
+                col,
+                ") is not cell or header",
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 

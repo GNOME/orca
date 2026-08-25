@@ -188,7 +188,7 @@ class AXUtilitiesComponent:
             return False
 
         result = rect.x + rect.width < 0 and rect.y + rect.height < 0
-        tokens = ["AXComponent:", obj, f"is off-screen: {result}"]
+        tokens = ["AXComponent:", obj, "is off-screen:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
@@ -274,7 +274,7 @@ class AXUtilitiesComponent:
         """Returns the deepest descendant of obj at the specified point."""
 
         result = AXUtilitiesComponent._get_descendant_at_point(obj, x, y)
-        tokens = ["AXComponent: Descendant of", obj, f"at {x}, {y} is", result]
+        tokens = ["AXComponent: Descendant of", obj, "at", x, ",", y, "is", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 

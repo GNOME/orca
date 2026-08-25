@@ -803,8 +803,16 @@ class Context:
         tokens = [
             "FLAT REVIEW: Current",
             self.get_current_object(),
-            f"line: {self._line_index}, zone: {self._zone_index},",
-            f"word: {self._word_index}, char: {self._char_index})",
+            "line:",
+            self._line_index,
+            ", zone:",
+            self._zone_index,
+            ",",
+            "word:",
+            self._word_index,
+            ", char:",
+            self._char_index,
+            ")",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -836,8 +844,16 @@ class Context:
         tokens = [
             "FLAT REVIEW: Updated",
             self.get_current_object(),
-            f"line: {self._line_index}, zone: {self._zone_index},",
-            f"word: {self._word_index}, char: {self._char_index})",
+            "line:",
+            self._line_index,
+            ", zone:",
+            self._zone_index,
+            ",",
+            "word:",
+            self._word_index,
+            ", char:",
+            self._char_index,
+            ")",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True

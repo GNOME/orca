@@ -241,7 +241,13 @@ class AXUtilitiesHypertext:
             "and",
             end_obj,
             end_offset,
-            f"with endpoint inclusion {include_start}, {include_end}: '{result}'",
+            "with endpoint inclusion",
+            include_start,
+            ",",
+            include_end,
+            ": '",
+            result,
+            "'",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
@@ -295,7 +301,13 @@ class AXUtilitiesHypertext:
         tokens = [
             "AXUtilitiesHypertext: Expanded EOCs for",
             obj,
-            f"range {start_offset}:{end_offset}: '{result}'",
+            "range",
+            start_offset,
+            ":",
+            end_offset,
+            ": '",
+            result,
+            "'",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if OBJECT_REPLACEMENT_CHARACTER in result:
@@ -425,9 +437,14 @@ class AXUtilitiesHypertext:
                 links.append(link)
 
         tokens = [
-            f"AXUtilitiesHypertext: {len(links)} hyperlinks found in",
+            "AXUtilitiesHypertext:",
+            len(links),
+            "hyperlinks found in",
             obj,
-            f"between start: {start_offset} and end: {end_offset}",
+            "between start:",
+            start_offset,
+            "and end:",
+            end_offset,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return links
@@ -442,7 +459,7 @@ class AXUtilitiesHypertext:
             if link is not None:
                 links.append(link)
 
-        tokens = [f"AXUtilitiesHypertext: {len(links)} hyperlinks found in", obj]
+        tokens = ["AXUtilitiesHypertext:", len(links), "hyperlinks found in", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return links
 
@@ -464,7 +481,7 @@ class AXUtilitiesHypertext:
             basename = os.path.splitext(basename)[0]
             basename = re.sub(r"[-_]", " ", basename)
 
-        tokens = ["AXUtilitiesHypertext: Basename for link", obj, f"is '{basename}'"]
+        tokens = ["AXUtilitiesHypertext: Basename for link", obj, "is '", basename, "'"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return basename
 

@@ -135,7 +135,10 @@ class AXEventSynthesizer:
         tokens = [
             "AXEventSynthesizer: Attempting to generate mouse event on",
             obj,
-            f"at relative coordinates {relative_x},{relative_y}",
+            "at relative coordinates",
+            relative_x,
+            ",",
+            relative_y,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -197,7 +200,7 @@ class AXEventSynthesizer:
     def route_to_character(obj: Atspi.Accessible, offset: int | None = None) -> bool:
         """Routes the pointer to the current character in obj."""
 
-        tokens = [f"AXEventSynthesizer: Attempting to route to offset {offset} in", obj]
+        tokens = ["AXEventSynthesizer: Attempting to route to offset", offset, "in", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return AXEventSynthesizer._mouse_event_on_character(obj, offset, "abs")
 
@@ -213,7 +216,7 @@ class AXEventSynthesizer:
     def click_character(obj: Atspi.Accessible, offset: int | None = None, button: int = 1) -> bool:
         """Single click on the current character in obj using the specified button."""
 
-        tokens = [f"AXEventSynthesizer: Attempting to click at offset {offset} in", obj]
+        tokens = ["AXEventSynthesizer: Attempting to click at offset", offset, "in", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return AXEventSynthesizer._mouse_event_on_character(obj, offset, f"b{button}c")
 

@@ -72,14 +72,20 @@ def print_tokens(
 
 
 def _join_tokens(strings: list[str]) -> str:
-    """Joins token strings, where punctuation does not already separate them, with a space."""
+    """Joins token strings, where nothing already separates them, with a space."""
 
     text = ""
     for i, string in enumerate(strings):
-        if i and not text.endswith(("'", "=", "(")) and not string.startswith(("'", "\n")):
+        already_apart = (
+            text.endswith(("'", "=", "(", "["))
+            or text[-1:].isspace()
+            or string.startswith("'")
+            or string[:1].isspace()
+        )
+        if i and not already_apart:
             text += " "
         text += string
-    return re.sub(r" (?=[,.:)])(?![\n])", "", text)
+    return re.sub(r" (?=[,.:)\]])(?![\n])", "", text)
 
 
 def print_message(level: int, text: str, timestamp: bool = False, stack: bool = False) -> None:

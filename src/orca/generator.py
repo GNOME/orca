@@ -316,7 +316,7 @@ class Generator:
 
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
-            tokens = [f"GENERATOR: {func.__name__}:", result]
+            tokens = ["GENERATOR:", func.__name__, ":", result]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
 
@@ -506,11 +506,11 @@ class Generator:
             resolved_role or AXObject.get_role(obj),
         )
         if _generator is None:
-            tokens = [f"{self._mode.name} GENERATOR:", obj, "lacks dedicated generator"]
+            tokens = [self._mode.name, "GENERATOR:", obj, "lacks dedicated generator"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             _generator = self._generate_default_presentation
 
-        tokens = [f"{self._mode.name} GENERATOR:", _generator, "for", obj]
+        tokens = [self._mode.name, "GENERATOR:", _generator, "for", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         original_context = self._context
@@ -523,7 +523,7 @@ class Generator:
         result = _generator(obj)  # type: ignore[misc]
         self._context = original_context
 
-        tokens = [f"{self._mode.name} GENERATOR: Results:", result]
+        tokens = [self._mode.name, "GENERATOR: Results:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self._is_progress_bar_update() and result and result[0]:

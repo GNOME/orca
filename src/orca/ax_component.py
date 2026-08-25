@@ -111,7 +111,7 @@ class AXComponent:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        tokens = ["AXComponent: ", obj, f"contains point {x}, {y}: {result}"]
+        tokens = ["AXComponent: ", obj, "contains point", x, ",", y, ":", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
@@ -129,7 +129,7 @@ class AXComponent:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
-        tokens = ["AXComponent: Child of", obj, f"at {x}, {y} is", result]
+        tokens = ["AXComponent: Child of", obj, "at", x, ",", y, "is", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
@@ -147,7 +147,7 @@ class AXComponent:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        tokens = ["AXComponent: Scrolled", obj, f"to {x}, {y}:", result]
+        tokens = ["AXComponent: Scrolled", obj, "to", x, ",", y, ":", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
@@ -165,6 +165,6 @@ class AXComponent:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        tokens = ["AXComponent: Scrolled", obj, "to", location, f": {result}"]
+        tokens = ["AXComponent: Scrolled", obj, "to", location, ":", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result

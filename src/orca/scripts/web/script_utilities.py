@@ -1023,7 +1023,9 @@ class Utilities(script_utilities.Utilities):
             tokens = [
                 "WEB:",
                 granularity,
-                f"at offset {offset} for",
+                "at offset",
+                offset,
+                "for",
                 obj,
                 ":",
                 "'', Start: 0, End: 0. (obj is None)",
@@ -1035,7 +1037,9 @@ class Utilities(script_utilities.Utilities):
             tokens = [
                 "WEB:",
                 granularity,
-                f"at offset {offset} for",
+                "at offset",
+                offset,
+                "for",
                 obj,
                 ":",
                 "'', Start: 0, End: 1. (treat_as_text_object() returned False)",
@@ -1050,10 +1054,18 @@ class Utilities(script_utilities.Utilities):
             tokens = [
                 "WEB:",
                 granularity,
-                f"at offset {offset} for",
+                "at offset",
+                offset,
+                "for",
                 obj,
                 ":",
-                f"'{s}', Start: {start}, End: {end}.",
+                "'",
+                s,
+                "', Start:",
+                start,
+                ", End:",
+                end,
+                ".",
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return string, start, end
@@ -1068,10 +1080,18 @@ class Utilities(script_utilities.Utilities):
                 tokens = [
                     "WEB:",
                     granularity,
-                    f"at offset {offset} for",
+                    "at offset",
+                    offset,
+                    "for",
                     obj,
                     ":",
-                    f"'{s}', Start: {start}, End: {end}.",
+                    "'",
+                    s,
+                    "', Start:",
+                    start,
+                    ", End:",
+                    end,
+                    ".",
                 ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return string, start, end
@@ -1107,10 +1127,18 @@ class Utilities(script_utilities.Utilities):
         tokens = [
             "WEB:",
             granularity,
-            f"at offset {offset} for",
+            "at offset",
+            offset,
+            "for",
             obj,
             ":",
-            f"'{s}', Start: {start}, End: {end}.",
+            "'",
+            s,
+            "', Start:",
+            start,
+            ", End:",
+            end,
+            ".",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return string, start, end
@@ -1487,7 +1515,7 @@ class Utilities(script_utilities.Utilities):
 
         objects = self._get_contents_for_obj(obj, offset, None)
         if not objects:
-            tokens = ["ERROR: Cannot get object contents for", obj, f"at offset {offset}"]
+            tokens = ["ERROR: Cannot get object contents for", obj, "at offset", offset]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
@@ -1530,12 +1558,27 @@ class Utilities(script_utilities.Utilities):
         for i, (acc, start, end, string) in enumerate(contents):
             rect = self._get_extents(acc, start, end)
             tokens = [
-                f"     {i}. chars: {start}-{end}: '",
+                "     ",
+                i,
+                ". chars: ",
+                start,
+                "-",
+                end,
+                ": '",
                 string,
-                f"' extents=({rect.x}, {rect.y}, {rect.width}, {rect.height})",
+                "' extents=(",
+                rect.x,
+                ",",
+                rect.y,
+                ",",
+                rect.width,
+                ",",
+                rect.height,
+                ")",
                 # The details are still one string. They become tokens when the debug value
                 # tree can carry them.
-                "\n" + AXUtilitiesDebugging.object_details_as_string(acc, indent, False),
+                "\n",
+                AXUtilitiesDebugging.object_details_as_string(acc, indent, False),
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -3060,7 +3103,7 @@ class Utilities(script_utilities.Utilities):
             rv = True
 
         self._cache.set_caret_context_decision(obj, rv)
-        tokens = [f"INFO: _can_have_caret_context took {time.time() - start_time:.4f}s"]
+        tokens = ["INFO: _can_have_caret_context took", round(time.time() - start_time, 4), "s"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return rv
 

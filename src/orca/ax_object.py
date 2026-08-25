@@ -167,7 +167,7 @@ class AXObject:
             app = Atspi.Accessible.get_application(obj)
             name = Atspi.Accessible.get_toolkit_name(app) or ""
         except GLib.GError as error:
-            tokens = ["AXObject: Exception calling _get_toolkit_name_on", app, f": {error}"]
+            tokens = ["AXObject: Exception calling _get_toolkit_name_on", app, ":", error]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
@@ -697,7 +697,9 @@ class AXObject:
             tokens = [
                 "AXObject: ",
                 container,
-                f"'s child at {index} is ",
+                "'s child at",
+                index,
+                "is",
                 real_child,
                 "; not reported child",
                 reported_child,
@@ -1013,9 +1015,9 @@ class AXObject:
         if obj is None:
             return
 
-        tokens = ["AXObject: Clearing AT-SPI cache on", obj, f"Recursive: {recursive}."]
+        tokens = ["AXObject: Clearing AT-SPI cache on", obj, "Recursive: ", recursive, "."]
         if reason:
-            tokens.append(f" Reason: {reason}")
+            tokens.extend([" Reason:", reason])
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not recursive:

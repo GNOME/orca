@@ -251,6 +251,7 @@ class GSettingsRegistry:
         if not self._ignore_runtime:
             runtime = self._runtime_values.get((schema, key, voice_type))
             if runtime is not None:
+                # orca-rules: print-tokens-items
                 tokens = [f"GSETTINGS REGISTRY: {schema}/{key} runtime override = {runtime!r}"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 self._cache.set_value(cache_key, runtime)
@@ -286,6 +287,7 @@ class GSettingsRegistry:
 
         if default is _NOT_SET:
             return None
+        # orca-rules: print-tokens-items
         tokens = [f"GSETTINGS REGISTRY: {schema}/{key} using default value = {default!r}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return default
@@ -683,7 +685,7 @@ class GSettingsRegistry:
                 if not app_name or gs.get_user_value(key) is not None:
                     continue
             if value is None:
-                tokens = [f"GSETTINGS: Skipping None value for {schema_name}/{key}"]
+                tokens = ["GSETTINGS: Skipping None value for", schema_name, "/", key]
                 debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
                 continue
             writer = writers.get(setting.gtype)
@@ -869,6 +871,7 @@ class GSettingsSchemaHandle:
             if gs is not None and gs.get_user_value(key) is not None:
                 value = extractor(gs, key)
                 tokens = [
+                    # orca-rules: print-tokens-items
                     f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} = {value!r} "
                     f"(app:{app_name} profile:{profile})"
                 ]
@@ -882,6 +885,7 @@ class GSettingsSchemaHandle:
             value = extractor(gs, key)
             skipped = f" [{', '.join(checked)} not set]" if checked else ""
             tokens = [
+                # orca-rules: print-tokens-items
                 f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} = {value!r} (profile:{profile}){skipped}"
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -895,6 +899,7 @@ class GSettingsSchemaHandle:
                 value = extractor(gs, key)
                 skipped = f" [{', '.join(checked)} not set]"
                 tokens = [
+                    # orca-rules: print-tokens-items
                     f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} = {value!r} "
                     f"(profile:default fallback){skipped}"
                 ]
@@ -902,7 +907,15 @@ class GSettingsSchemaHandle:
                 return value
             checked.append("profile:default")
 
-        tokens = [f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} not set [{', '.join(checked)}]"]
+        tokens = [
+            "GSETTINGS SCHEMA HANDLE:",
+            suffix,
+            "/",
+            key,
+            "not set [",
+            ", ".join(checked),
+            "]",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return None
 
@@ -979,12 +992,16 @@ class GSettingsSchemaHandle:
                     found_any = True
 
         if not found_any:
-            tokens: list[Any] = [f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} no dict values set"]
+            tokens: list[Any] = ["GSETTINGS SCHEMA HANDLE:", suffix, "/", key, "no dict values set"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         tokens = [
-            f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} merged dict (",
+            "GSETTINGS SCHEMA HANDLE:",
+            suffix,
+            "/",
+            key,
+            "merged dict (",
             len(result),
             "entries)",
         ]

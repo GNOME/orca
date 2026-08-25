@@ -512,7 +512,11 @@ class SpellCheckPresenter:
 
         if self._widgets is None or self._state.completion_announced:
             reason = "Not active" if self._widgets is None else "Completion already announced"
-            tokens: list[Any] = [f"SPELL CHECK PRESENTER: {reason}; not checking for error change"]
+            tokens: list[Any] = [
+                "SPELL CHECK PRESENTER:",
+                reason,
+                "; not checking for error change",
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
@@ -622,7 +626,7 @@ class SpellCheckPresenter:
 
         error_text = AXText.get_all_text(self._widgets.error_widget)
         if error_text and word in error_text and len(error_text.split()) > 1:
-            tokens = ["SPELL CHECK PRESENTER: Using error widget text as context"]
+            tokens: list[Any] = ["SPELL CHECK PRESENTER: Using error widget text as context"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return error_text
 
@@ -630,7 +634,7 @@ class SpellCheckPresenter:
             return ""
 
         string, start, end = AXText.get_line_at_offset(self._widgets.document)
-        tokens = [f"SPELL CHECK PRESENTER: Line at offset {start}-{end}:", string]
+        tokens = ["SPELL CHECK PRESENTER: Line at offset", start, "-", end, ":", string]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not string or word not in string:

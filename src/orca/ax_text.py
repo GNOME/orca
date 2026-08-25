@@ -364,15 +364,23 @@ class AXText:
             return "", 0, 0
 
         if result is None:
-            tokens = ["AXText: get_string_at_offset (char) failed for", obj, f"at {offset}."]
+            tokens = ["AXText: get_string_at_offset (char) failed for", obj, "at", offset, "."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return "", 0, 0
 
         debug_string = result.content.replace("\n", "\\n")
         tokens = [
-            f"AXText: Character at offset {offset} in",
+            "AXText: Character at offset",
+            offset,
+            "in",
             obj,
-            f"'{debug_string}' ({result.start_offset}-{result.end_offset})",
+            "'",
+            debug_string,
+            "' (",
+            result.start_offset,
+            "-",
+            result.end_offset,
+            ")",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         content, start, end = result.content, result.start_offset, result.end_offset
@@ -408,14 +416,22 @@ class AXText:
             return "", 0, 0
 
         if result is None:
-            tokens = ["AXText: get_string_at_offset (word) failed for", obj, f"at {offset}."]
+            tokens = ["AXText: get_string_at_offset (word) failed for", obj, "at", offset, "."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return "", 0, 0
 
         tokens = [
-            f"AXText: Word at offset {offset} in",
+            "AXText: Word at offset",
+            offset,
+            "in",
             obj,
-            f"'{result.content}' ({result.start_offset}-{result.end_offset})",
+            "'",
+            result.content,
+            "' (",
+            result.start_offset,
+            "-",
+            result.end_offset,
+            ")",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         content, start, end = result.content, result.start_offset, result.end_offset
@@ -471,7 +487,7 @@ class AXText:
             return "", 0, 0
 
         if result is None:
-            tokens = ["AXText: get_string_at_offset (line) failed for", obj, f"at {offset}."]
+            tokens = ["AXText: get_string_at_offset (line) failed for", obj, "at", offset, "."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return "", 0, 0
 
@@ -495,9 +511,17 @@ class AXText:
 
         debug_string = result.content.replace("\n", "\\n")
         tokens = [
-            f"AXText: Line at offset {offset} in",
+            "AXText: Line at offset",
+            offset,
+            "in",
             obj,
-            f"'{debug_string}' ({result.start_offset}-{result.end_offset})",
+            "'",
+            debug_string,
+            "' (",
+            result.start_offset,
+            "-",
+            result.end_offset,
+            ")",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -509,9 +533,17 @@ class AXText:
 
             debug_string = result.content.replace("\n", "\\n")
             tokens = [
-                f"AXText: Line at offset {offset} in",
+                "AXText: Line at offset",
+                offset,
+                "in",
                 obj,
-                f"'{debug_string}' ({result.start_offset}-{result.end_offset})",
+                "'",
+                debug_string,
+                "' (",
+                result.start_offset,
+                "-",
+                result.end_offset,
+                ")",
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -566,7 +598,15 @@ class AXText:
         tokens = [
             "AXText: Fallback sentence in",
             obj,
-            f" at offset {offset}: '{fallback_text}' ({fallback_start}-{fallback_end})",
+            "at offset",
+            offset,
+            ": '",
+            fallback_text,
+            "' (",
+            fallback_start,
+            "-",
+            fallback_end,
+            ")",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return fallback_text, fallback_start, fallback_end
@@ -594,7 +634,7 @@ class AXText:
             return AXText._get_sentence_at_offset_fallback(obj, offset)
 
         if result is None:
-            tokens = ["AXText: get_string_at_offset (sentence) failed for", obj, f"at {offset}."]
+            tokens = ["AXText: get_string_at_offset (sentence) failed for", obj, "at", offset, "."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return "", 0, 0
 
@@ -609,9 +649,17 @@ class AXText:
             return AXText._get_sentence_at_offset_fallback(obj, offset)
 
         tokens = [
-            f"AXText: Sentence at offset {offset} in",
+            "AXText: Sentence at offset",
+            offset,
+            "in",
             obj,
-            f"'{result.content}' ({result.start_offset}-{result.end_offset})",
+            "'",
+            result.content,
+            "' (",
+            result.start_offset,
+            "-",
+            result.end_offset,
+            ")",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result.content, result.start_offset, result.end_offset
@@ -639,14 +687,22 @@ class AXText:
             return "", 0, 0
 
         if result is None:
-            tokens = ["AXText: get_string_at_offset (paragraph) failed for", obj, f"at {offset}."]
+            tokens = ["AXText: get_string_at_offset (paragraph) failed for", obj, "at", offset, "."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return "", 0, 0
 
         tokens = [
-            f"AXText: Paragraph at offset {offset} in",
+            "AXText: Paragraph at offset",
+            offset,
+            "in",
             obj,
-            f"'{result.content}' ({result.start_offset}-{result.end_offset})",
+            "'",
+            result.content,
+            "' (",
+            result.start_offset,
+            "-",
+            result.end_offset,
+            ")",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result.content, result.start_offset, result.end_offset
@@ -670,7 +726,7 @@ class AXText:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0
 
-        tokens = ["AXText:", obj, f"reports {count} characters."]
+        tokens = ["AXText:", obj, "reports", count, "characters."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXText._CACHE.set(AXText._CHARACTER_COUNT, key, count)
         return count
@@ -689,7 +745,7 @@ class AXText:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return -1
 
-        tokens = ["AXText:", obj, f"reports caret offset of {offset}."]
+        tokens = ["AXText:", obj, "reports caret offset of", offset, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return offset
 
@@ -707,7 +763,7 @@ class AXText:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        tokens = [f"AXText: Reported result of setting offset to {offset} in", obj, f": {result}"]
+        tokens = ["AXText: Reported result of setting offset to", offset, "in", obj, ":", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
@@ -729,7 +785,17 @@ class AXText:
             return ""
 
         debug_string = result.replace("\n", "\\n")
-        tokens = ["AXText: Text of", obj, f"({start_offset}-{end_offset}): '{debug_string}'"]
+        tokens = [
+            "AXText: Text of",
+            obj,
+            "(",
+            start_offset,
+            "-",
+            end_offset,
+            "): '",
+            debug_string,
+            "'",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
@@ -762,7 +828,7 @@ class AXText:
                 debug_string = result
 
             debug_string = debug_string.replace("\n", "\\n")
-            tokens = ["AXText: Text of", obj, f"'{debug_string}'"]
+            tokens = ["AXText: Text of", obj, "'", debug_string, "'"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXText._CACHE.set(AXText._ALL_TEXT, key, result)
         return result
@@ -781,7 +847,7 @@ class AXText:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0
 
-        tokens = ["AXText:", obj, f"reports {result} selection(s)."]
+        tokens = ["AXText:", obj, "reports", result, "selection(s)."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
@@ -818,7 +884,7 @@ class AXText:
             if 0 <= result.start_offset < result.end_offset:
                 selections.append((result.start_offset, result.end_offset))
 
-        tokens = ["AXText:", obj, f"reports selected ranges: {selections}"]
+        tokens = ["AXText:", obj, "reports selected ranges:", selections]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return selections
 
@@ -881,11 +947,11 @@ class AXText:
             return {}, 0, AXText.get_character_count(obj)
 
         if result is None or result[0] is None:
-            tokens = ["AXText: get_attribute_run failed for", obj, f"at offset {offset}."]
+            tokens = ["AXText: get_attribute_run failed for", obj, "at offset", offset, "."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return {}, 0, AXText.get_character_count(obj)
 
-        tokens = ["AXText: Attributes for", obj, f"at offset {offset} : {result}"]
+        tokens = ["AXText: Attributes for", obj, "at offset", offset, ":", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         # Adjust for web browsers that report indentation and justification at object attributes
@@ -916,7 +982,7 @@ class AXText:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return -1
 
-        tokens = ["AXText: Offset in", obj, f"at {x}, {y} is {offset}"]
+        tokens = ["AXText: Offset in", obj, "at", x, ",", y, "is", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return offset
 
@@ -937,7 +1003,7 @@ class AXText:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return Atspi.Rect()
 
-        tokens = [f"AXText: Offset {offset} in", obj, "has rect", rect]
+        tokens = ["AXText: Offset", offset, "in", obj, "has rect", rect]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return rect
 
@@ -958,7 +1024,7 @@ class AXText:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return Atspi.Rect()
 
-        tokens = [f"AXText: Range {start}-{end} in", obj, "has rect", rect]
+        tokens = ["AXText: Range", start, "-", end, "in", obj, "has rect", rect]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return rect
 
@@ -998,8 +1064,16 @@ class AXText:
         tokens = [
             "AXText: Scrolled",
             obj,
-            f"substring ({start_offset}-{end_offset}) to",
-            f"{x}, {y}: {result}",
+            "substring (",
+            start_offset,
+            "-",
+            end_offset,
+            ") to",
+            x,
+            ",",
+            y,
+            ":",
+            result,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
@@ -1032,9 +1106,14 @@ class AXText:
         tokens = [
             "AXText: Scrolled",
             obj,
-            f"substring ({start_offset}-{end_offset}) to",
+            "substring (",
+            start_offset,
+            "-",
+            end_offset,
+            ") to",
             location,
-            f": {result}",
+            ":",
+            result,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result

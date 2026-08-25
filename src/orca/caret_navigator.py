@@ -253,14 +253,14 @@ class CaretNavigator(Extension):
         """Returns the current caret-navigator enabled state associated with script."""
 
         enabled = self._enabled_for_script.get(script, False)
-        tokens = ["CARET NAVIGATOR: Enabled state for", script, f"is {enabled}"]
+        tokens = ["CARET NAVIGATOR: Enabled state for", script, "is", enabled]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return enabled
 
     def set_enabled_for_script(self, script: default.Script, enabled: bool) -> None:
         """Sets the current caret-navigator enabled state associated with script."""
 
-        tokens = ["CARET NAVIGATOR: Setting enabled state for", script, f"to {enabled}"]
+        tokens = ["CARET NAVIGATOR: Setting enabled state for", script, "to", enabled]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._enabled_for_script[script] = enabled
 

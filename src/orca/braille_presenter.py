@@ -212,7 +212,9 @@ class BraillePresenter(Extension):
 
         if isinstance(event, input_event.KeyboardEvent) and not self.use_braille():
             tokens = [
-                f"BRAILLE PRESENTER: panBraille{direction.name.title()} command requires braille"
+                "BRAILLE PRESENTER: panBraille",
+                direction.name.title(),
+                "command requires braille",
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -512,6 +514,7 @@ class BraillePresenter(Extension):
     ) -> bool:
         """Opens value for JSONL recording; an empty string closes any open file (test-only)."""
 
+        # orca-rules: print-tokens-items
         tokens = [f"BRAILLE PRESENTER: Setting log file to {value!r}."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._output_recorder.set_path(value)

@@ -365,7 +365,13 @@ class SayAllPresenter(Extension):
         tokens = [
             "SAY ALL PRESENTER: Speaking (displayed-text):",
             first_obj,
-            f"'{combined}' ({first_start}-{last_end})",
+            "'",
+            combined,
+            "' (",
+            first_start,
+            "-",
+            last_end,
+            ")",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._script.utilities.set_caret_offset(
@@ -389,9 +395,17 @@ class SayAllPresenter(Extension):
         for i, content in enumerate(contents):
             content_obj, start, end, text = content
             tokens = [
-                f"SAY ALL PRESENTER: CONTENT: {i}.",
+                "SAY ALL PRESENTER: CONTENT:",
+                i,
+                ".",
                 content_obj,
-                f"'{text}' ({start}-{end})",
+                "'",
+                text,
+                "' (",
+                start,
+                "-",
+                end,
+                ")",
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -415,7 +429,12 @@ class SayAllPresenter(Extension):
                 tokens = [
                     "SAY ALL PRESENTER: Skipping content - elements/voices mismatch:",
                     content_obj,
-                    f"'{text}', elements: {len(elements)}, voices: {len(voices)}",
+                    "'",
+                    text,
+                    "', elements:",
+                    len(elements),
+                    ", voices:",
+                    len(voices),
                 ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 continue
@@ -429,7 +448,13 @@ class SayAllPresenter(Extension):
                 tokens = [
                     "SAY ALL PRESENTER: Speaking (contents):",
                     content_obj,
-                    f"'{element}' ({start}-{end})",
+                    "'",
+                    element,
+                    "' (",
+                    start,
+                    "-",
+                    end,
+                    ")",
                 ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 self._script.utilities.set_caret_offset(
@@ -468,10 +493,14 @@ class SayAllPresenter(Extension):
                 tokens = [
                     "SAY ALL PRESENTER: Stuck at",
                     prev_obj,
-                    f"offset {prev_offset}.",
+                    "offset",
+                    prev_offset,
+                    ".",
                     "Moving to",
                     obj,
-                    f"offset {offset}.",
+                    "offset",
+                    offset,
+                    ".",
                 ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 continue

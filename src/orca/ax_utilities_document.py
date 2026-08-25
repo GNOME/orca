@@ -81,7 +81,9 @@ class AXUtilitiesDocument:
         tokens = [
             "AXUtilitiesDocument:",
             document,
-            f"has {len(strings)} selected text range(s).",
+            "has",
+            len(strings),
+            "selected text range(s).",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True, strings

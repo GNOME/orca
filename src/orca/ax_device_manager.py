@@ -358,7 +358,7 @@ class AXDeviceManager:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0
 
-        tokens = ["AXDeviceManager: get_locked_modifiers returned", result, f"({result:#x})"]
+        tokens = ["AXDeviceManager: get_locked_modifiers returned", result, "(", hex(result), ")"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 

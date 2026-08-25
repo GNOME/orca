@@ -757,7 +757,7 @@ class AXUtilities:
             result, reason = cached
 
         if reason:
-            tokens = ["AXUtilities:", obj, f"believed to be layout only: {result}, {reason}"]
+            tokens = ["AXUtilities:", obj, "believed to be layout only:", result, ",", reason]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
@@ -1600,7 +1600,7 @@ class AXUtilities:
         root: Atspi.Accessible,
         bounding_box: Atspi.Rect | None = None,
     ) -> list:
-        tokens = ["AXUtilities: Getting on-screen objects in", root, f"({hex(id(root))})"]
+        tokens = ["AXUtilities: Getting on-screen objects in", root, "(", hex(id(root)), ")"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not AXUtilities.is_on_screen(root, bounding_box):
@@ -1622,7 +1622,7 @@ class AXUtilities:
             bounding_box = AXComponent.get_rect(root)
 
         for i, child in enumerate(AXObject.iter_children(root)):
-            tokens = [f"AXUtilities: Child {i} is", child, f"({hex(id(child))})"]
+            tokens = ["AXUtilities: Child", i, "is", child, "(", hex(id(child)), ")"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             if (
@@ -1655,7 +1655,7 @@ class AXUtilities:
         """Returns a list of onscreen objects in the given root."""
 
         result = AXUtilities._get_on_screen_objects(root, bounding_box)
-        tokens = [f"AXUtilities: {len(result)} onscreen objects found in", root]
+        tokens = ["AXUtilities:", len(result), "onscreen objects found in", root]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 

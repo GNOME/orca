@@ -359,9 +359,12 @@ class SpeechServer(speechserver.SpeechServer):
                             tokens = [
                                 "SPEECH DISPATCHER: Got mark",
                                 context.current_offset,
-                                f":{context.current_end_offset} /",
+                                ":",
+                                context.current_end_offset,
+                                "/",
                                 context.start_offset,
-                                f":{context.end_offset}",
+                                ":",
+                                context.end_offset,
                             ]
                             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     else:
@@ -599,7 +602,9 @@ class SpeechServer(speechserver.SpeechServer):
             dialect,
             "' variant='",
             variant,
-            f"' in {time.time() - start:.4f}s.",
+            "' in",
+            round(time.time() - start, 4),
+            "s.",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not candidates and fallbacks:

@@ -663,9 +663,9 @@ class AXCacheManager:
             return
 
         label = "cache" if len(cache_names) == 1 else "caches"
-        tokens = [f"AXCacheManager: Invalidating {label}", ", ".join(cache_names)]
+        tokens = ["AXCacheManager: Invalidating ", label, ", ".join(cache_names)]
         if reason:
-            tokens.append(f" Reason: {reason}")
+            tokens.extend([" Reason:", reason])
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _start_cache_cleanup_thread(self) -> None:

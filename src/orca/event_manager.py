@@ -211,7 +211,7 @@ class EventManager:
         else:
             priority = EventPriority.NORMAL
 
-        tokens = ["EVENT MANAGER:", event, f"has priority level: {priority.name}"]
+        tokens = ["EVENT MANAGER:", event, "has priority level:", priority.name]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return priority
 
@@ -226,8 +226,13 @@ class EventManager:
                 tokens = [
                     "EVENT MANAGER:",
                     event,
-                    f"(#{counter}) obsoleted: a newer {event.type} for same source"
-                    f" is queued (#{latest})",
+                    "(#",
+                    counter,
+                    ") obsoleted: a newer",
+                    event.type,
+                    "for same source is queued (#",
+                    latest,
+                    ")",
                 ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return event
@@ -710,7 +715,7 @@ class EventManager:
                 self._latest_event[(e.type, hash(e.source))] = counter
             if not self._gidle_id:
                 self._gidle_id = GLib.idle_add(self._dequeue_object_event)
-        tokens = ["EVENT MANAGER: Queued", e, f"priority: {priority.name}, counter: {counter}"]
+        tokens = ["EVENT MANAGER: Queued", e, "priority:", priority.name, ", counter:", counter]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _on_no_focus(self) -> bool:
@@ -736,7 +741,9 @@ class EventManager:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             start_time = time.time()
             tokens = [
-                f"\nvvvvv START {priority.name}-PRIORITY OBJECT EVENT",
+                "\nvvvvv START ",
+                priority.name,
+                "-PRIORITY OBJECT EVENT",
                 event.type.upper(),
                 "(queue size:",
                 self._event_queue.qsize(),
@@ -745,8 +752,11 @@ class EventManager:
             debug.print_tokens(debug.LEVEL_INFO, tokens, False)
             self._process_object_event(event, counter)
             tokens = [
-                f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}",
-                f"\n^^^^^ FINISHED {priority.name}-PRIORITY OBJECT EVENT",
+                "TOTAL PROCESSING TIME:",
+                round(time.time() - start_time, 4),
+                "\n^^^^^ FINISHED ",
+                priority.name,
+                "-PRIORITY OBJECT EVENT",
                 event.type.upper(),
                 "^^^^^\n",
             ]

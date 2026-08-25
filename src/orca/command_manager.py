@@ -486,7 +486,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             for name in restored_names:
-                debug.print_tokens(debug.LEVEL_INFO, [f"    {name}"], True)
+                tokens = ["    ", name]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _add_to_key_index(self, cmd: KeyboardCommand) -> None:
         """Adds a command to the key indexes for fast lookup."""
@@ -558,7 +559,9 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             binding_name,
             "for user extension",
             extension_name,
-            f"command {command_name}; already used by",
+            "command",
+            command_name,
+            "; already used by",
             conflicting_command_name,
             ".",
         ]
@@ -1058,13 +1061,19 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                 for key in removed:
                     binding_str = self._format_binding_key(key)
                     cmd_name = old_key_to_cmd.get(key, "unknown")
-                    debug.print_tokens(debug.LEVEL_INFO, [f"    {binding_str}:", cmd_name], True)
+                    tokens: list[Any] = [
+                        "    ",
+                        binding_str,
+                        ":",
+                        cmd_name,
+                    ]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if added:
                 debug.print_tokens(debug.LEVEL_INFO, ["  Added (", len(added), "):"], True)
                 for key in added:
                     binding_str = self._format_binding_key(key)
                     cmd_name = new_key_to_cmd.get(key, "unknown")
-                    tokens: list[Any] = [f"    {binding_str}:", cmd_name]
+                    tokens = ["    ", binding_str, ":", cmd_name]
                     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if transferred:
                 debug.print_tokens(
@@ -1073,10 +1082,13 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                 for key in transferred:
                     binding_str = self._format_binding_key(key)
                     cmd_name = new_key_to_cmd.get(key, "unknown")
-                    debug.print_tokens(debug.LEVEL_INFO, [f"    {binding_str}:", cmd_name], True)
+                    tokens = ["    ", binding_str, ":", cmd_name]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         tokens = [
-            f"^^^^^ COMMAND MANAGER: Diff completed in {time.time() - start_time:.4f}s. Removed",
+            "^^^^^ COMMAND MANAGER: Diff completed in",
+            round(time.time() - start_time, 4),
+            "s. Removed",
             len(removed),
             ", added",
             len(added),

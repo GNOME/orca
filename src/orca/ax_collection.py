@@ -126,7 +126,13 @@ class AXCollection:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
-        tokens = ["AXCollection:", len(matches), f"match(es) found in {time.time() - start:.4f}s"]
+        tokens = [
+            "AXCollection:",
+            len(matches),
+            "match(es) found in",
+            round(time.time() - start, 4),
+            "s",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return matches
 
@@ -160,6 +166,6 @@ class AXCollection:
         if matches:
             match = matches[0]
 
-        tokens = ["AXCollection: found", match, f"in {time.time() - start:.4f}s"]
+        tokens = ["AXCollection: found", match, "in", round(time.time() - start, 4), "s"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return match

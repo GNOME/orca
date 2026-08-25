@@ -204,7 +204,9 @@ class AXUtilitiesObject:
         tokens = [
             "AXUtilitiesObject: find_descendant: found",
             result,
-            f"in {time.time() - start:.4f}s",
+            "in",
+            round(time.time() - start, 4),
+            "s",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
@@ -258,7 +260,9 @@ class AXUtilitiesObject:
         tokens = [
             "AXUtilitiesObject: find_all_descendants:",
             len(matches),
-            f"matches found in {time.time() - start:.4f}s",
+            "matches found in",
+            round(time.time() - start, 4),
+            "s",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return matches

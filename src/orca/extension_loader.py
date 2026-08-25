@@ -344,7 +344,9 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
             profile = gsettings_registry.get_registry().get_active_profile()
             tokens = [
                 "EXTENSION LOADER: To approve, run: dconf write",
-                f"/org/gnome/orca/{profile}/extensions/approved-user-extensions",
+                "/org/gnome/orca/",
+                profile,
+                "/extensions/approved-user-extensions",
                 "\"{'",
                 filename,
                 "': '",
@@ -368,7 +370,9 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
             profile = gsettings_registry.get_registry().get_active_profile()
             tokens = [
                 "EXTENSION LOADER: To re-approve, run: dconf write",
-                f"/org/gnome/orca/{profile}/extensions/approved-user-extensions",
+                "/org/gnome/orca/",
+                profile,
+                "/extensions/approved-user-extensions",
                 "\"{'",
                 filename,
                 "': '",
@@ -468,7 +472,7 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
     ) -> None:
         """Runs a lifecycle hook for one user extension, logging exceptions."""
 
-        tokens = ["EXTENSION LOADER: Calling", extension.module_name, f".{hook.__name__}()"]
+        tokens = ["EXTENSION LOADER: Calling", extension.module_name, ".", hook.__name__, "()"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         try:
             hook()

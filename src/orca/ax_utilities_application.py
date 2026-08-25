@@ -305,17 +305,17 @@ class AXUtilitiesApplication:
                         state = line.split()[1]
                         break
         except (OSError, IndexError) as error:
-            tokens = [f"AXUtilitiesApplication: Exception checking state of pid {pid}: {error}"]
+            tokens = ["AXUtilitiesApplication: Exception checking state of pid", pid, ":", error]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if state == "Z":
-            tokens = [f"AXUtilitiesApplication: pid {pid} is zombie process"]
+            tokens = ["AXUtilitiesApplication: pid", pid, "is zombie process"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if state == "T":
-            tokens = [f"AXUtilitiesApplication: pid {pid} is suspended/stopped process"]
+            tokens = ["AXUtilitiesApplication: pid", pid, "is suspended/stopped process"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 

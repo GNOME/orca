@@ -64,7 +64,9 @@ class AXUtilitiesCollection:
         tokens = [
             "AXUtilitiesCollection:",
             len(matches),
-            f"matches found in {time.time() - start:.4f}s",
+            "matches found in",
+            round(time.time() - start, 4),
+            "s",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return matches

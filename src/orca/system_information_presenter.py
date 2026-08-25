@@ -414,7 +414,11 @@ class SystemInformationPresenter(Extension):
                 key_name,
                 ": modifier_type=",
                 modifier_type,
-                f", bit={bit:#x}, locked & bit={locked & bit:#x}, is_locked=",
+                ", bit=",
+                hex(bit),
+                ", locked & bit=",
+                hex(locked & bit),
+                ", is_locked=",
                 is_locked,
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)

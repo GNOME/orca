@@ -1672,9 +1672,12 @@ class SpeechPresenter(Extension):
         """Adjusts text for spoken presentation."""
 
         tokens = [
-            f"SPEECH PRESENTER: Adjusting '{text}' from",
+            "SPEECH PRESENTER: Adjusting '",
+            text,
+            "' from",
             obj,
-            f"start_offset: {start_offset}",
+            "start_offset:",
+            start_offset,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -1743,6 +1746,7 @@ class SpeechPresenter(Extension):
     ) -> bool:
         """Opens value for JSONL recording; an empty string closes any open file (test-only)."""
 
+        # orca-rules: print-tokens-items
         tokens = [f"SPEECH PRESENTER: Setting log file to {value!r}."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._output_recorder.set_path(value)
@@ -2081,14 +2085,14 @@ class SpeechPresenter(Extension):
 
         server = speech_manager.get_manager().get_server()
         if not server:
-            tokens = ["SPEECH OUTPUT: '", text, f"' {resolved_voice}"]
+            tokens = ["SPEECH OUTPUT: '", text, "'", resolved_voice]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if consumed:
                 self._record_speech(text, resolved_voice)
                 self.write_to_monitor(text)
             return
 
-        tokens = ["SPEECH OUTPUT: '", text, f"' {resolved_voice}"]
+        tokens = ["SPEECH OUTPUT: '", text, "'", resolved_voice]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not consumed:
             server.speak(text, resolved_voice)
@@ -2219,7 +2223,7 @@ class SpeechPresenter(Extension):
         event_string = event.get_key_name()
         locking_state_string = event.get_locking_state_string()
         event_string = f"{event_string} {locking_state_string}".strip()
-        tokens = ["SPEECH OUTPUT: '", event_string, f"' {acss}"]
+        tokens = ["SPEECH OUTPUT: '", event_string, "'", acss]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         text, consumed = self._process_speech_output(event_string)
 

@@ -59,7 +59,7 @@ class AXDocument:
                 return False, []
 
             selections = list(result or [])
-            tokens = ["AXDocument:", document, f"reports {len(selections)} text selection(s)."]
+            tokens = ["AXDocument:", document, "reports", len(selections), "text selection(s)."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True, selections
 
@@ -110,7 +110,10 @@ class AXDocument:
             "to",
             end_object,
             end_offset,
-            f"with start active: {start_is_active}. Result: {result}",
+            "with start active:",
+            start_is_active,
+            ". Result:",
+            result,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
@@ -129,7 +132,7 @@ class AXDocument:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0
 
-        tokens = ["AXDocument: Page count of", document, f"is {count}"]
+        tokens = ["AXDocument: Page count of", document, "is", count]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return count
 
@@ -152,7 +155,7 @@ class AXDocument:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
-        tokens = ["AXDocument: Locale of", document, f"is '{result}'"]
+        tokens = ["AXDocument: Locale of", document, "is '", result, "'"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 

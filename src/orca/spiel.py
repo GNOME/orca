@@ -463,7 +463,7 @@ class SpeechServer(speechserver.SpeechServer):
 
             def _utterance_error(speaker, utterance, error, sayall_data):
                 debug.print_tokens(debug.LEVEL_INFO, ["ERROR:", utterance.props.text])
-                debug.print_tokens(debug.LEVEL_WARNING, [f"ERROR: {error!r}"])
+                debug.print_tokens(debug.LEVEL_WARNING, ["ERROR:", error])
                 (callback, current_utterance, handlers) = sayall_data
                 if current_utterance == utterance:
                     for handler in handlers:
@@ -477,14 +477,14 @@ class SpeechServer(speechserver.SpeechServer):
                     callback(context, speechserver.SayAllContext.PROGRESS)
 
             def _range_started(_speaker, utterance, start, end, sayall_data):
-                debug.print_tokens(debug.LEVEL_INFO, [f"RANGE STARTED: {start}-{end}"])
+                debug.print_tokens(debug.LEVEL_INFO, ["RANGE STARTED:", start, "-", end])
                 (callback, current_utterance, _handlers) = sayall_data
                 if current_utterance == utterance:
                     # TODO: map start/end to current_offset/current_end_offset
                     callback(context, speechserver.SayAllContext.PROGRESS)
 
             def _word_started(_speaker, utterance, start, end, sayall_data):
-                debug.print_tokens(debug.LEVEL_INFO, [f"WORD STARTED: {start}-{end}"])
+                debug.print_tokens(debug.LEVEL_INFO, ["WORD STARTED:", start, "-", end])
                 (callback, current_utterance, _handlers) = sayall_data
                 if current_utterance == utterance:
                     context.current_offset = start
@@ -493,7 +493,7 @@ class SpeechServer(speechserver.SpeechServer):
                     callback(context, speechserver.SayAllContext.PROGRESS)
 
             def _sentence_started(_speaker, _utterance, start, end, sayall_data):
-                debug.print_tokens(debug.LEVEL_INFO, [f"SENTENCE STARTED: {start}-{end}"])
+                debug.print_tokens(debug.LEVEL_INFO, ["SENTENCE STARTED:", start, "-", end])
                 (callback, current_utterance, _handlers) = sayall_data
                 if current_utterance == _utterance:
                     # TODO: map start/end to current_offset/current_end_offset
@@ -645,7 +645,7 @@ class SpeechServer(speechserver.SpeechServer):
         """Set the speech output module to the specified provider."""
 
         if module_id not in SpeechServer._active_providers:
-            tokens: list[Any] = [f"SPIEL: {module_id} is not in", SpeechServer._active_providers]
+            tokens: list[Any] = ["SPIEL:", module_id, "is not in", SpeechServer._active_providers]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 

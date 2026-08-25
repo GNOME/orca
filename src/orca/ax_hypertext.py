@@ -54,7 +54,7 @@ class AXHypertext:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0
 
-        tokens = ["AXHypertext:", obj, f"reports {count} hyperlinks"]
+        tokens = ["AXHypertext:", obj, "reports", count, "hyperlinks"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return count
 
@@ -86,7 +86,7 @@ class AXHypertext:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
-        tokens = ["AXHypertext: URI of", obj, f"at index {index} is {uri}"]
+        tokens = ["AXHypertext: URI of", obj, "at index", index, "is", uri]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return uri
 
@@ -118,7 +118,7 @@ class AXHypertext:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return -1
 
-        tokens = ["AXHypertext: Start offset of", obj, f"is {offset}"]
+        tokens = ["AXHypertext: Start offset of", obj, "is", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXHypertext._CACHE.set(AXHypertext._LINK_START, key, offset)
         return offset
@@ -146,7 +146,7 @@ class AXHypertext:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return -1
 
-        tokens = ["AXHypertext: End offset of", obj, f"is {offset}"]
+        tokens = ["AXHypertext: End offset of", obj, "is", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return offset
 
@@ -178,7 +178,7 @@ class AXHypertext:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
-        tokens = [f"AXHypertext: Child at offset {offset} in", obj, "is", child]
+        tokens = ["AXHypertext: Child at offset", offset, "in", obj, "is", child]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return child
 
@@ -197,7 +197,7 @@ class AXHypertext:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
-        tokens = [f"AXHypertext: Child for link index {index} in", obj, "is", child]
+        tokens = ["AXHypertext: Child for link index", index, "in", obj, "is", child]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return child
 

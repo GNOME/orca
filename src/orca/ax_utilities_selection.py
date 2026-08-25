@@ -123,7 +123,7 @@ class AXUtilitiesSelection:
 
         result = list(children)
         if len(result) != count:
-            tokens = ["AXUtilitiesSelection: Selected child count of", obj, f"is {count}"]
+            tokens = ["AXUtilitiesSelection: Selected child count of", obj, "is", count]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result

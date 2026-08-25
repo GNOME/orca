@@ -73,7 +73,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
-            tokens = [f"WEB SPEECH GENERATOR: {func.__name__}:", result]
+            tokens = ["WEB SPEECH GENERATOR:", func.__name__, ":", result]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
 
@@ -773,7 +773,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         base_position = original_context.content_position
         for i, content in enumerate(contents):
             obj, start, end, string = content
-            tokens = [f"ITEM {i}: ", obj, f"start: {start}, end: {end} '{string}'"]
+            tokens = ["ITEM", i, ":", obj, "start:", start, ", end:", end, "'", string, "'"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             # A content item can be just the line's trailing newline; skip it rather

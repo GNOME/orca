@@ -204,7 +204,7 @@ class DocumentPresenter(Extension):
 
         uri = AXUtilities.get_uri(document)
         result = bool(uri and uri.startswith("http"))
-        tokens = ["DOCUMENT PRESENTER:", document, f"is top-level web app: {result}. URI: {uri}"]
+        tokens = ["DOCUMENT PRESENTER:", document, "is top-level web app:", result, ". URI:", uri]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
@@ -304,11 +304,14 @@ class DocumentPresenter(Extension):
         """Sets the presentation mode to focus or browse mode."""
 
         tokens = [
-            f"DOCUMENT PRESENTER: set_presentation_mode. Use focus mode: {use_focus_mode},",
+            "DOCUMENT PRESENTER: set_presentation_mode. Use focus mode:",
+            use_focus_mode,
+            ",",
             obj,
             "in",
             document,
-            f"notify user: {notify_user}",
+            "notify user:",
+            notify_user,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -501,7 +504,7 @@ class DocumentPresenter(Extension):
 
         prefix = "is" if result else "is not"
         if reason:
-            tokens = ["DOCUMENT PRESENTER:", obj, f"{prefix} focus mode widget:", reason]
+            tokens = ["DOCUMENT PRESENTER:", obj, prefix, "focus mode widget:", reason]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
@@ -1054,7 +1057,10 @@ class DocumentPresenter(Extension):
         tokens = [
             "DOCUMENT PRESENTER: Find results",
             obj,
-            f"offset: {offset}, selection start offset: {start}",
+            "offset:",
+            offset,
+            ", selection start offset:",
+            start,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 

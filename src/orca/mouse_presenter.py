@@ -33,7 +33,7 @@ import math
 import os
 import time
 from collections import deque
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
@@ -234,7 +234,7 @@ class _ItemContext:
 
         interval = self._time - prior.get_time()
         if interval > 0.5:
-            tokens = [f"MOUSE REVIEW: Not a duplicate: was {interval:.2f}s ago"]
+            tokens = ["MOUSE REVIEW: Not a duplicate: was", round(interval, 2), "s ago"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
@@ -865,7 +865,7 @@ class MousePresenter(Extension):
             self._mouse_moved_common(obj, point_x, point_y)
 
     def _mouse_moved_common(self, window, window_x, window_y) -> None:
-        tokens = [f"MOUSE REVIEW: Window at ({window_x}, {window_y}) is", window]
+        tokens = ["MOUSE REVIEW: Window at (", window_x, ",", window_y, ") is", window]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not window:
             return
@@ -885,12 +885,21 @@ class MousePresenter(Extension):
         obj = None
         if menu:
             obj = AXUtilities.get_descendant_at_point(menu, window_x, window_y)
-            tokens = ["MOUSE REVIEW: Object in", menu, f"at ({window_x}, {window_y}) is", obj]
+            tokens = ["MOUSE REVIEW: Object in", menu, "at (", window_x, ",", window_y, ") is", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if obj is None:
             obj = AXUtilities.get_descendant_at_point(window, window_x, window_y)
-            tokens = ["MOUSE REVIEW: Object in", window, f"at ({window_x}, {window_y}) is", obj]
+            tokens = [
+                "MOUSE REVIEW: Object in",
+                window,
+                "at (",
+                window_x,
+                ",",
+                window_y,
+                ") is",
+                obj,
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         script = script_manager.get_manager().get_script(AXUtilities.get_application(window), obj)
@@ -931,7 +940,8 @@ class MousePresenter(Extension):
         self.in_mouse_event = False
 
         tokens = [
-            f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}",
+            "TOTAL PROCESSING TIME:",
+            round(time.time() - start_time, 4),
             "\n^^^^^ PROCESS OBJECT EVENT",
             event.type,
             "^^^^^\n",
@@ -954,7 +964,7 @@ class MousePresenter(Extension):
             return
 
         start_time = time.time()
-        tokens = ["\nvvvvv PROCESS POINTER-MOVED EVENT", "vvvvv"]
+        tokens: list[Any] = ["\nvvvvv PROCESS POINTER-MOVED EVENT", "vvvvv"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
         self.in_mouse_event = True
@@ -962,7 +972,8 @@ class MousePresenter(Extension):
         self.in_mouse_event = False
 
         tokens = [
-            f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}",
+            "TOTAL PROCESSING TIME:",
+            round(time.time() - start_time, 4),
             "\n^^^^^ PROCESS POINTER-MOVED EVENT ^^^^^\n",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, False)

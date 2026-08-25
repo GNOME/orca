@@ -423,7 +423,7 @@ class AXUtilitiesRelation:
 
         targets = AXUtilitiesRelation._get_relation_targets(obj1, Atspi.RelationType.CONTROLLED_BY)
         result = obj2 in targets
-        tokens = ["AXUtilitiesRelation:", obj1, "is controlled by", obj2, f": {result}"]
+        tokens = ["AXUtilitiesRelation:", obj1, "is controlled by", obj2, ":", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
