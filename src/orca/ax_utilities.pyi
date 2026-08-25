@@ -487,6 +487,7 @@ class AXUtilities:
     def get_document_text_selection_endpoints(
         document: Atspi.Accessible | None,
         root: Atspi.Accessible,
+        search_text_objects: bool = True,
     ) -> tuple[
         tuple[Atspi.Accessible | None, int],
         tuple[Atspi.Accessible | None, int],

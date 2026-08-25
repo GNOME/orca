@@ -456,7 +456,18 @@ class TextSelectionManager:
         if selection_root is None:
             return False
 
-        start, end = self._get_cached_selection(ax_cache_manager.get_object_key(selection_root))
+        return self._has_cached_selection(ax_cache_manager.get_object_key(selection_root))
+
+    def _has_pending_selection_change(self) -> bool:
+        """Returns True if an Orca selection command is awaiting its reported result."""
+
+        command = self._last_selection_command
+        return command is not None and command.get_pending_change() is not None
+
+    def _has_cached_selection(self, key: Hashable) -> bool:
+        """Returns True if the cached boundaries for key describe selected text."""
+
+        start, end = self._get_cached_selection(key)
         return start[0] is not None or end[0] is not None
 
     def _get_cached_selection(self, key: Hashable) -> SelectionBoundaries:
@@ -514,7 +525,14 @@ class TextSelectionManager:
         key = ax_cache_manager.get_object_key(selection_root)
         old_selection = self._get_cached_selection(key)
         old_start, old_end = old_selection
-        start, end = AXUtilities.get_document_text_selection_endpoints(document, selection_root)
+        search_text_objects = (
+            self._has_pending_selection_change()
+            or self._has_cached_selection(key)
+            or AXUtilities.has_selected_text(obj)
+        )
+        start, end = AXUtilities.get_document_text_selection_endpoints(
+            document, selection_root, search_text_objects
+        )
         selection = (start, end)
         tokens = [
             "TEXT SELECTION MANAGER: Updating text selection state for",

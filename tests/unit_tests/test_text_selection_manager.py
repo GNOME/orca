@@ -288,6 +288,7 @@ class TestTextSelectionManager:
             "get_document_text_selection_endpoints",
             return_value=(start, end),
         )
+        test_context.patch_object(AXUtilities, "has_selected_text", return_value=True)
         state, old_selection, selection = manager.update_selection_state(event_source)
 
         assert state == SelectionChangeState.NOT_ORCA
@@ -295,8 +296,56 @@ class TestTextSelectionManager:
         assert selection == (start, end)
         get_object_key.assert_called_once_with(document)
         get_document.assert_called_once_with(event_source, AXUtilities.is_document)
-        get_endpoints.assert_called_once_with(document, document)
+        get_endpoints.assert_called_once_with(document, document, True)
         boundaries_cache.put.assert_called_once_with("root-key", (start, end))
+
+    @pytest.mark.parametrize(
+        "obj_has_selection,cached_boundaries,expected",
+        [
+            pytest.param(True, None, True, id="object_reports_selected_text"),
+            pytest.param(False, "recorded", True, id="root_has_recorded_boundaries"),
+            pytest.param(False, None, False, id="nothing_selected"),
+        ],
+    )
+    def test_update_selection_state_searches_text_objects_only_when_needed(
+        self,
+        test_context: OrcaTestContext,
+        obj_has_selection: bool,
+        cached_boundaries: str | None,
+        expected: bool,
+    ) -> None:
+        """Test the manager only searches text objects if selected text might be found."""
+
+        self._setup_dependencies(test_context)
+        from orca.text_selection_manager import (
+            AXUtilities,
+            TextSelectionManager,
+            ax_cache_manager,
+        )
+
+        manager = TextSelectionManager()
+        boundaries_cache = test_context.Mock()
+        manager._selection_boundaries = boundaries_cache
+        document = test_context.Mock(spec=Atspi.Accessible)
+        event_source = test_context.Mock(spec=Atspi.Accessible)
+        recorded = ((test_context.Mock(spec=Atspi.Accessible), 0), (document, 4))
+        boundaries_cache.get.return_value = (
+            recorded if cached_boundaries else ((None, -1), (None, -1))
+        )
+        test_context.patch_object(ax_cache_manager, "get_object_key", return_value="root-key")
+        test_context.patch_object(
+            AXUtilities, "find_outermost_ancestor_inclusive", return_value=document
+        )
+        get_endpoints = test_context.patch_object(
+            AXUtilities,
+            "get_document_text_selection_endpoints",
+            return_value=((None, -1), (None, -1)),
+        )
+        test_context.patch_object(AXUtilities, "has_selected_text", return_value=obj_has_selection)
+        test_context.patch_object(AXUtilities, "update_cached_selected_text")
+        manager.update_selection_state(event_source)
+
+        get_endpoints.assert_called_once_with(document, document, expected)
 
     def test_unpresentable_selection_change_updates_boundaries_and_text_caches(
         self,

@@ -279,6 +279,26 @@ class TestAXUtilitiesDocument:
         assert result == ((None, -1), (None, -1))
         get_endpoints.assert_not_called()
 
+    def test_get_document_text_selection_endpoints_can_skip_the_text_fallback(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test callers which know there is no selected text can skip the text fallback."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.ax_utilities_document import AXUtilitiesDocument
+
+        document = test_context.Mock(spec=Atspi.Accessible)
+        root = test_context.Mock(spec=Atspi.Accessible)
+        get_endpoints = essential_modules[
+            "orca.ax_utilities_text"
+        ].AXUtilitiesText.get_text_selection_endpoints
+
+        result = AXUtilitiesDocument.get_document_text_selection_endpoints(document, root, False)
+
+        assert result == ((None, -1), (None, -1))
+        get_endpoints.assert_not_called()
+
     @pytest.mark.parametrize(
         "comparison,expected_args",
         [
