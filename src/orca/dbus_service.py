@@ -134,6 +134,14 @@ def testing_command(func):
     return func
 
 
+def testing_user_command(func):
+    """Decorator to mark a test-only D-Bus command which stands in for a user command."""
+
+    # Use a user-command event so input-dependent behavior matches real commands.
+    func.dbus_testing_command_is_user_command = True
+    return testing_command(func)
+
+
 class _Kind(enum.Enum):
     """Decorated-method kinds detected during module registration."""
 
@@ -554,7 +562,8 @@ class _InterfaceBuilder:
                 script_manager,
             )
 
-            if require_token:
+            is_user_command = getattr(method, "dbus_testing_command_is_user_command", False)
+            if require_token and not is_user_command:
                 event = input_event.RemoteControllerTestingEvent()
             else:
                 event = input_event.RemoteControllerEvent()

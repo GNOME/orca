@@ -863,6 +863,26 @@ class TestDBusService:
         monkeypatch.setenv("ORCA_TEST_RPC_SECRET", "s3cret")
         assert classify(tcmd) == (dbus_service._Kind.TESTING, "A testing command.")
 
+    def test_testing_user_command_registers_only_with_secret(
+        self, test_context: OrcaTestContext, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """Test that @testing_user_command is classified only when the launch secret is set."""
+
+        self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        @dbus_service.testing_user_command
+        def ucmd(token=""):  # pylint: disable=unused-argument
+            """A testing user command."""
+
+        classify = dbus_service._ModuleRegistration._classify_method
+
+        monkeypatch.delenv("ORCA_TEST_RPC_SECRET", raising=False)
+        assert classify(ucmd) == (None, "")
+
+        monkeypatch.setenv("ORCA_TEST_RPC_SECRET", "s3cret")
+        assert classify(ucmd) == (dbus_service._Kind.TESTING, "A testing user command.")
+
     @pytest.mark.parametrize(
         ("secret", "token"),
         [
@@ -1083,6 +1103,9 @@ def _stub_orca_internals(test_context: OrcaTestContext) -> dict[str, object]:
     class _RemoteControllerEvent:
         pass
 
+    class _RemoteControllerTestingEvent(_RemoteControllerEvent):
+        pass
+
     class _StubInputEventManager:
         def __init__(self) -> None:
             self.last_event: object | None = None
@@ -1113,6 +1136,7 @@ def _stub_orca_internals(test_context: OrcaTestContext) -> dict[str, object]:
 
     input_event_mod = types.ModuleType("orca.input_event")
     input_event_mod.RemoteControllerEvent = _RemoteControllerEvent
+    input_event_mod.RemoteControllerTestingEvent = _RemoteControllerTestingEvent
 
     iem_mod = types.ModuleType("orca.input_event_manager")
     iem_mod.get_manager = lambda: iem_instance
@@ -1132,6 +1156,7 @@ def _stub_orca_internals(test_context: OrcaTestContext) -> dict[str, object]:
         "orca.presentation_manager": presentation_manager_mod,
         "presentation_manager_instance": presentation_manager_instance,
         "orca.script_manager": sm_mod,
+        "input_event_manager_instance": iem_instance,
     }
     test_context.patch_modules(stubs)
 
@@ -1398,6 +1423,50 @@ class TestInterfaceBuilder:
         assert script == "active-script"
         assert event_type == "_RemoteControllerEvent"
         assert notify is False
+
+    def test_testing_user_command_uses_user_command_event(
+        self, test_context: OrcaTestContext, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """Test a testing user command gets the same event type as a user command."""
+
+        stubs = _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        monkeypatch.setenv("ORCA_TEST_RPC_SECRET", "s3cret")
+        calls: list[tuple] = []
+
+        class Tracker:
+            """Records calls so the test can compare the two kinds of test-only command."""
+
+            @dbus_service.testing_user_command
+            def select_next_character_for_testing(
+                self, token: str = "", script=None, event=None, notify_user: bool = True
+            ) -> bool:
+                """Selects the next character."""
+                calls.append(("user", type(event).__name__, notify_user))
+                return True
+
+            @dbus_service.testing_command
+            def is_idle_for_testing(self, token: str = "", script=None, event=None) -> bool:
+                """Returns whether Orca is idle."""
+                calls.append(("query", type(event).__name__, None))
+                return True
+
+        registration = dbus_service._ModuleRegistration.from_module_instance("Tracker", Tracker())
+        instance = dbus_service._InterfaceBuilder.build(registration)()
+        manager = stubs["input_event_manager_instance"]
+
+        assert instance.SelectNextCharacterForTesting("s3cret", False) is True
+        assert calls[-1] == ("user", "_RemoteControllerEvent", False)
+        assert type(manager.last_event).__name__ == "_RemoteControllerEvent"
+
+        assert instance.IsIdleForTesting("s3cret") is True
+        assert calls[-1] == ("query", "_RemoteControllerTestingEvent", None)
+        assert type(manager.last_event).__name__ == "_RemoteControllerTestingEvent"
+
+        with pytest.raises(PermissionError):
+            instance.SelectNextCharacterForTesting("wrong", False)
+        assert calls[-1] == ("query", "_RemoteControllerTestingEvent", None)
 
     def test_property_descriptors_route_to_underlying_methods(
         self, test_context: OrcaTestContext
