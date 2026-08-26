@@ -167,6 +167,11 @@ class OrcaSession:
 
         self.call("CommandManager", "RefreshKeybindingsForTesting", self._rpc_secret)
 
+    def select_with_caret_navigator(self, command: str, notify_user: bool = True) -> bool:
+        """Runs one of the caret navigator's text-selection commands (test-only RPC)."""
+
+        return self.call("CaretNavigator", command, self._rpc_secret, notify_user)
+
     def set_log_file(self, module: str, path: str) -> None:
         """Points module's JSONL output recorder at path (test-only RPC)."""
 

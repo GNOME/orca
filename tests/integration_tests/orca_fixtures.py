@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import contextlib
 import curses
+import functools
 import os
 import shutil
 import subprocess
@@ -459,6 +460,35 @@ def _resolve_browser_binary(names: tuple[str, ...]) -> str | None:
             stacklevel=2,
         )
     return binary
+
+
+@functools.cache
+def chromium_major_version() -> int | None:
+    """Returns the major Chromium version under test, or None if it cannot be read."""
+
+    binary = _resolve_browser_binary(chromium_browser.BINARY_NAMES)
+    if binary is None:
+        return None
+
+    try:
+        result = subprocess.run(
+            [binary, "--version"], capture_output=True, text=True, timeout=30, check=True
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+
+    for word in result.stdout.split():
+        first, _dot, _rest = word.partition(".")
+        if first.isdigit():
+            return int(first)
+    return None
+
+
+def chromium_is_at_least(major: int) -> bool:
+    """Returns True if Chromium is at least major; an unknown version is not."""
+
+    version = chromium_major_version()
+    return version is not None and version >= major
 
 
 def _document_loaded(accessible: Atspi.Accessible) -> bool:

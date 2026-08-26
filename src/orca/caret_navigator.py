@@ -53,6 +53,8 @@ from .ax_utilities_text import CaretSetReason
 from .extension import Extension
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     import gi
 
     gi.require_version("Atspi", "2.0")
@@ -356,6 +358,55 @@ class CaretNavigator(Extension):
             suspended,
         )
 
+    def _select_with_command(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None,
+        notify_user: bool,
+        command: Callable[[default.Script, input_event.InputEvent | None, bool], bool],
+        selection_forward: bool,
+    ) -> bool:
+        """Extends a text selection by executing command."""
+
+        caret_obj, caret_offset = script.utilities.get_caret_context()
+        obj, offset = AXUtilities.get_text_selection_endpoint_for_caret_context(
+            caret_obj,
+            caret_offset,
+            after_embedded_object=not selection_forward,
+        )
+        if obj is None:
+            msg = "CARET NAVIGATOR: Cannot find an AtspiText endpoint for this object."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        selection_container = self._get_root_object(script, obj)
+        # We'll present the selection change in response to the event that results.
+        if not command(script, event, False):
+            return False
+
+        new_caret_obj, new_caret_offset = script.utilities.get_caret_context()
+        new_obj, new_offset = AXUtilities.get_text_selection_endpoint_for_caret_context(
+            new_caret_obj,
+            new_caret_offset,
+            after_embedded_object=selection_forward,
+        )
+        if new_obj is None:
+            msg = "CARET NAVIGATOR: Cannot find an AtspiText endpoint for the new object."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return text_selection_manager.get_manager().set_text_selection(
+            selection_container,
+            obj,
+            offset,
+            new_obj,
+            new_offset,
+            new_caret_obj,
+            selection_forward=selection_forward,
+            event=event,
+            notify_user=notify_user,
+        )
+
     def _get_root_object(
         self,
         script: default.Script,
@@ -373,6 +424,38 @@ class CaretNavigator(Extension):
         tokens = ["CARET NAVIGATOR: Root is", root]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return root
+
+    def _set_caret_position(
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
+        offset: int,
+        *,
+        reason: CaretSetReason,
+        selection_root: Atspi.Accessible | None = None,
+    ) -> None:
+        """Sets the caret position, preserving selection when the reason requires it."""
+
+        cleared_selection_objs: list[Atspi.Accessible] = []
+        clear_selection = not reason.is_text_selection()
+        if clear_selection:
+            root = selection_root
+            if root is None:
+                root = self._get_root_object(script, obj)
+            manager = text_selection_manager.get_manager()
+            cleared_selection_objs = manager.clear_selection_for_navigation(
+                root,
+                obj,
+            )
+
+        script.utilities.set_caret_position(
+            obj,
+            offset,
+            reason=reason,
+        )
+
+        if cleared_selection_objs:
+            text_selection_presenter.get_presenter().present_selection_removed()
 
     def _is_navigable_object(
         self,
@@ -475,22 +558,116 @@ class CaretNavigator(Extension):
 
         return obj, offset
 
-    def _set_caret_position(
+    def _get_caret_context_for_collapsing_selection(
+        self,
+        selection_root: Atspi.Accessible | None,
+        *,
+        forward: bool,
+    ) -> tuple[Atspi.Accessible, int] | None:
+        """Returns the selection boundary for Orca-driven caret navigation."""
+
+        if selection_root is None:
+            return None
+
+        manager = text_selection_manager.get_manager()
+        start, end = manager.get_known_text_selection_endpoints(selection_root)
+        target_obj, target_offset = end if forward else start
+        if target_obj is None:
+            return None
+        return AXUtilities.get_caret_context_for_text_selection_endpoint(
+            target_obj,
+            target_offset,
+            endpoint_is_start=not forward,
+        )
+
+    def _get_text_selection_character_navigation_context(
         self,
         script: default.Script,
-        obj: Atspi.Accessible,
-        offset: int,
-        *,
-        reason: CaretSetReason,
-    ) -> None:
-        """Sets the caret position after clearing any existing text selection."""
+        forward: bool,
+    ) -> tuple[Atspi.Accessible | None, int]:
+        """Returns the context for moving a text-selection endpoint by character."""
 
-        root = self._get_root_object(script, obj)
-        manager = text_selection_manager.get_manager()
-        cleared_selection_objs = manager.clear_selection_for_navigation(root, obj)
-        script.utilities.set_caret_position(obj, offset, reason=reason)
-        if cleared_selection_objs:
-            text_selection_presenter.get_presenter().present_selection_removed()
+        obj, offset = script.utilities.get_caret_context()
+        if forward:
+            next_obj, next_offset = script.utilities.next_context()
+            if next_obj == obj:
+                return next_obj, next_offset
+
+            if AXObject.supports_text(obj):
+                character_count = AXText.get_character_count(obj)
+                if 0 <= offset < character_count:
+                    string, _start, end = AXText.get_character_at_offset(
+                        obj,
+                        offset,
+                        ensure_whole_characters=True,
+                    )
+                    if string and not AXUtilities.is_eoc(string):
+                        tokens = [
+                            "CARET NAVIGATOR: Selecting through the current character in",
+                            obj,
+                            "before crossing to",
+                            next_obj,
+                        ]
+                        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                        return obj, end
+
+            if AXObject.supports_text(next_obj):
+                string, _start, end = AXText.get_character_at_offset(
+                    next_obj,
+                    next_offset,
+                    ensure_whole_characters=True,
+                )
+                if string:
+                    tokens = [
+                        "CARET NAVIGATOR: Selecting through the first character in",
+                        next_obj,
+                        "after crossing from",
+                        obj,
+                    ]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                    return next_obj, end
+            return next_obj, next_offset
+        return script.utilities.previous_context()
+
+    def _move_text_selection_endpoint_by_character(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None,
+        notify_user: bool,
+        *,
+        forward: bool,
+    ) -> bool:
+        """Moves the active text-selection endpoint one character."""
+
+        obj, offset = self._get_text_selection_character_navigation_context(script, forward)
+        if not self._is_navigable_object(script, obj):
+            return False
+
+        string, char_start, char_end = AXText.get_character_at_offset(
+            obj, offset, ensure_whole_characters=True
+        )
+        if string and offset > char_start:
+            offset = char_end if forward else char_start
+
+        self._last_input_event = event
+        presentation_manager.get_manager().interrupt_presentation()
+        self._set_caret_position(
+            script,
+            obj,
+            offset,
+            reason=CaretSetReason.TEXT_SELECTION_BY_CHARACTER,
+        )
+        focus_manager.get_manager().emit_region_changed(
+            obj,
+            start_offset=offset,
+            mode=focus_manager.CARET_NAVIGATOR,
+        )
+        if not notify_user:
+            return True
+
+        script.update_braille(obj, offset=offset)
+        script.say_character(obj, offset)
+        return True
 
     @dbus_service.command
     @navigation_command
@@ -502,9 +679,19 @@ class CaretNavigator(Extension):
     ) -> bool:
         """Moves to the next character."""
 
-        obj, offset = script.utilities.next_context()
+        selection_root = self._get_root_object(script)
+        context = self._get_caret_context_for_collapsing_selection(
+            selection_root,
+            forward=True,
+        )
+        if context is None:
+            obj, offset = script.utilities.next_context()
+        else:
+            obj, offset = context
         if not self._is_navigable_object(script, obj):
             return False
+        if selection_root is None:
+            selection_root = obj
 
         string, char_start, char_end = AXText.get_character_at_offset(
             obj, offset, ensure_whole_characters=True
@@ -514,7 +701,13 @@ class CaretNavigator(Extension):
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
-        self._set_caret_position(script, obj, offset, reason=CaretSetReason.CARET_NAVIGATION)
+        self._set_caret_position(
+            script,
+            obj,
+            offset,
+            reason=CaretSetReason.CARET_NAVIGATION,
+            selection_root=selection_root,
+        )
         focus_manager.get_manager().emit_region_changed(
             obj,
             start_offset=offset,
@@ -537,9 +730,19 @@ class CaretNavigator(Extension):
     ) -> bool:
         """Moves to the previous character."""
 
-        obj, offset = script.utilities.previous_context()
+        selection_root = self._get_root_object(script)
+        context = self._get_caret_context_for_collapsing_selection(
+            selection_root,
+            forward=False,
+        )
+        if context is None:
+            obj, offset = script.utilities.previous_context()
+        else:
+            obj, offset = context
         if not self._is_navigable_object(script, obj):
             return False
+        if selection_root is None:
+            selection_root = obj
 
         string, char_start, _char_end = AXText.get_character_at_offset(
             obj, offset, ensure_whole_characters=True
@@ -549,7 +752,13 @@ class CaretNavigator(Extension):
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
-        self._set_caret_position(script, obj, offset, reason=CaretSetReason.CARET_NAVIGATION)
+        self._set_caret_position(
+            script,
+            obj,
+            offset,
+            reason=CaretSetReason.CARET_NAVIGATION,
+            selection_root=selection_root,
+        )
         focus_manager.get_manager().emit_region_changed(
             obj,
             start_offset=offset,
@@ -572,7 +781,35 @@ class CaretNavigator(Extension):
     ) -> bool:
         """Moves to the next word."""
 
-        obj, offset = script.utilities.next_context(skip_space=True)
+        return self._move_to_next_word(
+            script,
+            event,
+            notify_user,
+            caret_set_reason=CaretSetReason.CARET_NAVIGATION,
+        )
+
+    def _move_to_next_word(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None,
+        notify_user: bool,
+        *,
+        caret_set_reason: CaretSetReason,
+    ) -> bool:
+        """Moves to the next word."""
+
+        selection_root = None
+        selection_boundary = None
+        if not caret_set_reason.is_text_selection():
+            selection_root = self._get_root_object(script)
+            selection_boundary = self._get_caret_context_for_collapsing_selection(
+                selection_root,
+                forward=True,
+            )
+        if selection_boundary is not None:
+            obj, offset = script.utilities.next_context(*selection_boundary, skip_space=True)
+        else:
+            obj, offset = script.utilities.next_context(skip_space=True)
         if obj is None:
             return False
 
@@ -592,13 +829,21 @@ class CaretNavigator(Extension):
         obj, start, end, string = contents[-1]
         if not self._is_navigable_object(script, obj):
             return False
+        if selection_root is None:
+            selection_root = obj
 
         # Strip trailing whitespace so a paragraph break does not cause the word to be skipped.
         end = start + len(string.rstrip())
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
-        self._set_caret_position(script, obj, end, reason=CaretSetReason.CARET_NAVIGATION)
+        self._set_caret_position(
+            script,
+            obj,
+            end,
+            reason=caret_set_reason,
+            selection_root=selection_root,
+        )
         focus_manager.get_manager().emit_region_changed(
             obj,
             start,
@@ -622,7 +867,35 @@ class CaretNavigator(Extension):
     ) -> bool:
         """Moves to the previous word."""
 
-        obj, offset = script.utilities.previous_context(skip_space=True)
+        return self._move_to_previous_word(
+            script,
+            event,
+            notify_user,
+            caret_set_reason=CaretSetReason.CARET_NAVIGATION,
+        )
+
+    def _move_to_previous_word(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None,
+        notify_user: bool,
+        *,
+        caret_set_reason: CaretSetReason,
+    ) -> bool:
+        """Moves to the previous word."""
+
+        selection_root = None
+        selection_boundary = None
+        if not caret_set_reason.is_text_selection():
+            selection_root = self._get_root_object(script)
+            selection_boundary = self._get_caret_context_for_collapsing_selection(
+                selection_root,
+                forward=False,
+            )
+        if selection_boundary is not None:
+            obj, offset = script.utilities.previous_context(*selection_boundary, skip_space=True)
+        else:
+            obj, offset = script.utilities.previous_context(skip_space=True)
         if obj is None:
             return False
 
@@ -633,10 +906,18 @@ class CaretNavigator(Extension):
         obj, start, end, _string = contents[0]
         if not self._is_navigable_object(script, obj):
             return False
+        if selection_root is None:
+            selection_root = obj
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
-        self._set_caret_position(script, obj, start, reason=CaretSetReason.CARET_NAVIGATION)
+        self._set_caret_position(
+            script,
+            obj,
+            start,
+            reason=caret_set_reason,
+            selection_root=selection_root,
+        )
         focus_manager.get_manager().emit_region_changed(
             obj,
             start,
@@ -661,6 +942,23 @@ class CaretNavigator(Extension):
     ) -> bool:
         """Moves to the next line."""
 
+        return self._move_to_next_line(
+            script,
+            event,
+            notify_user,
+            caret_set_reason=CaretSetReason.CARET_NAVIGATION,
+        )
+
+    def _move_to_next_line(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None,
+        notify_user: bool,
+        *,
+        caret_set_reason: CaretSetReason,
+    ) -> bool:
+        """Moves to the next line."""
+
         if (
             focus_manager.get_manager().in_say_all()
             and say_all_presenter.get_presenter().get_rewind_and_fast_forward_enabled()
@@ -677,19 +975,44 @@ class CaretNavigator(Extension):
         if not (line and line[0]):
             return False
 
-        contents = script.utilities.get_next_line_contents()
+        move_to_line_end = False
+        if caret_set_reason == CaretSetReason.TEXT_SELECTION_BY_LINE:
+            line_obj, _start, end, _string = line[-1]
+            move_to_line_end = line_obj == obj and offset == end
+
+        selection_boundary = None
+        selection_root = None
+        if not caret_set_reason.is_text_selection():
+            selection_root = self._get_root_object(script, obj)
+            selection_boundary = self._get_caret_context_for_collapsing_selection(
+                selection_root,
+                forward=True,
+            )
+        if selection_boundary is not None:
+            contents = script.utilities.get_next_line_contents(*selection_boundary)
+        else:
+            contents = script.utilities.get_next_line_contents()
         if not contents:
             last_obj, last_offset = self._get_end_of_file(script)
-            if self._line_contains_context(line, (last_obj, last_offset)):
+            boundary_line = (
+                script.utilities.get_line_contents_at_offset(*selection_boundary)
+                if selection_boundary is not None
+                else line
+            )
+            if self._line_contains_context(boundary_line, (last_obj, last_offset)):
                 msg = "CARET NAVIGATOR: At end of document; cannot move to next line."
                 debug.print_message(debug.LEVEL_INFO, msg)
-                contents = line
+                contents = boundary_line
 
         if not contents:
             return False
 
         if line != contents:
-            obj, offset, end, _string = contents[0]
+            if move_to_line_end:
+                obj, _start, end, _string = contents[-1]
+                offset = end
+            else:
+                obj, offset, end, _string = contents[0]
         else:
             obj, offset, end, _string = contents[-1]
 
@@ -699,7 +1022,13 @@ class CaretNavigator(Extension):
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
 
-        self._set_caret_position(script, obj, offset, reason=CaretSetReason.CARET_NAVIGATION)
+        self._set_caret_position(
+            script,
+            obj,
+            offset,
+            reason=caret_set_reason,
+            selection_root=selection_root,
+        )
         focus_manager.get_manager().emit_region_changed(
             obj,
             offset,
@@ -724,6 +1053,23 @@ class CaretNavigator(Extension):
     ) -> bool:
         """Moves to the previous line."""
 
+        return self._move_to_previous_line(
+            script,
+            event,
+            notify_user,
+            caret_set_reason=CaretSetReason.CARET_NAVIGATION,
+        )
+
+    def _move_to_previous_line(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None,
+        notify_user: bool,
+        *,
+        caret_set_reason: CaretSetReason,
+    ) -> bool:
+        """Moves to the previous line."""
+
         if (
             focus_manager.get_manager().in_say_all()
             and say_all_presenter.get_presenter().get_rewind_and_fast_forward_enabled()
@@ -740,13 +1086,38 @@ class CaretNavigator(Extension):
         if not (line and line[0]):
             return False
 
-        contents = script.utilities.get_previous_line_contents(obj, offset)
+        if caret_set_reason == CaretSetReason.TEXT_SELECTION_BY_LINE:
+            line_obj, start, end, _string = line[0]
+            if line_obj == obj and start != end and offset == end:
+                contents = line
+            else:
+                contents = script.utilities.get_previous_line_contents(obj, offset)
+        else:
+            contents = None
+
+        selection_boundary = None
+        selection_root = None
+        if not caret_set_reason.is_text_selection():
+            selection_root = self._get_root_object(script, obj)
+            selection_boundary = self._get_caret_context_for_collapsing_selection(
+                selection_root,
+                forward=False,
+            )
+        if selection_boundary is not None:
+            contents = script.utilities.get_previous_line_contents(*selection_boundary)
+        elif contents is None:
+            contents = script.utilities.get_previous_line_contents(obj, offset)
         if not contents:
             first_obj, first_offset = self._get_start_of_file(script)
-            if self._line_contains_context(line, (first_obj, first_offset)):
+            boundary_line = (
+                script.utilities.get_line_contents_at_offset(*selection_boundary)
+                if selection_boundary is not None
+                else line
+            )
+            if self._line_contains_context(boundary_line, (first_obj, first_offset)):
                 msg = "CARET NAVIGATOR: At start of document; cannot move to previous line."
                 debug.print_message(debug.LEVEL_INFO, msg)
-                contents = line
+                contents = boundary_line
 
         if not contents:
             return False
@@ -757,7 +1128,13 @@ class CaretNavigator(Extension):
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
-        self._set_caret_position(script, obj, start, reason=CaretSetReason.CARET_NAVIGATION)
+        self._set_caret_position(
+            script,
+            obj,
+            start,
+            reason=caret_set_reason,
+            selection_root=selection_root,
+        )
         focus_manager.get_manager().emit_region_changed(
             obj,
             start,
@@ -782,6 +1159,23 @@ class CaretNavigator(Extension):
     ) -> bool:
         """Moves to the start of the line."""
 
+        return self._move_to_start_of_line(
+            script,
+            event,
+            notify_user,
+            caret_set_reason=CaretSetReason.CARET_NAVIGATION,
+        )
+
+    def _move_to_start_of_line(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None,
+        notify_user: bool,
+        *,
+        caret_set_reason: CaretSetReason,
+    ) -> bool:
+        """Moves to the start of the line."""
+
         obj, offset = script.utilities.get_caret_context()
         line = script.utilities.get_line_contents_at_offset(obj, offset)
         if not (line and line[0]):
@@ -790,7 +1184,12 @@ class CaretNavigator(Extension):
         self._last_input_event = event
         obj, start, end, _string = line[0]
         presentation_manager.get_manager().interrupt_presentation()
-        self._set_caret_position(script, obj, start, reason=CaretSetReason.CARET_NAVIGATION)
+        self._set_caret_position(
+            script,
+            obj,
+            start,
+            reason=caret_set_reason,
+        )
         focus_manager.get_manager().emit_region_changed(
             obj,
             start,
@@ -815,6 +1214,23 @@ class CaretNavigator(Extension):
     ) -> bool:
         """Moves to the end of the line."""
 
+        return self._move_to_end_of_line(
+            script,
+            event,
+            notify_user,
+            caret_set_reason=CaretSetReason.CARET_NAVIGATION,
+        )
+
+    def _move_to_end_of_line(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None,
+        notify_user: bool,
+        *,
+        caret_set_reason: CaretSetReason,
+    ) -> bool:
+        """Moves to the end of the line."""
+
         obj, offset = script.utilities.get_caret_context()
         line = script.utilities.get_line_contents_at_offset(obj, offset)
         if not (line and line[0]):
@@ -826,7 +1242,12 @@ class CaretNavigator(Extension):
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
-        self._set_caret_position(script, obj, end, reason=CaretSetReason.CARET_NAVIGATION)
+        self._set_caret_position(
+            script,
+            obj,
+            end,
+            reason=caret_set_reason,
+        )
         focus_manager.get_manager().emit_region_changed(
             obj,
             start,
@@ -851,6 +1272,23 @@ class CaretNavigator(Extension):
     ) -> bool:
         """Moves to the start of the file."""
 
+        return self._move_to_start_of_file(
+            script,
+            event,
+            notify_user,
+            caret_set_reason=CaretSetReason.CARET_NAVIGATION,
+        )
+
+    def _move_to_start_of_file(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None,
+        notify_user: bool,
+        *,
+        caret_set_reason: CaretSetReason,
+    ) -> bool:
+        """Moves to the start of the file."""
+
         prior_obj, _prior_offset = script.utilities.get_caret_context()
         obj, start = self._get_start_of_file(script)
         if obj is None:
@@ -863,7 +1301,12 @@ class CaretNavigator(Extension):
         self._last_input_event = event
         obj, start, end, _string = contents[0]
         presentation_manager.get_manager().interrupt_presentation()
-        self._set_caret_position(script, obj, start, reason=CaretSetReason.CARET_NAVIGATION)
+        self._set_caret_position(
+            script,
+            obj,
+            start,
+            reason=caret_set_reason,
+        )
         focus_manager.get_manager().emit_region_changed(
             obj,
             start,
@@ -890,6 +1333,23 @@ class CaretNavigator(Extension):
     ) -> bool:
         """Moves to the end of the file."""
 
+        return self._move_to_end_of_file(
+            script,
+            event,
+            notify_user,
+            caret_set_reason=CaretSetReason.CARET_NAVIGATION,
+        )
+
+    def _move_to_end_of_file(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None,
+        notify_user: bool,
+        *,
+        caret_set_reason: CaretSetReason,
+    ) -> bool:
+        """Moves to the end of the file."""
+
         prior_obj, _prior_offset = script.utilities.get_caret_context()
         obj, end = self._get_end_of_file(script)
         if obj is None:
@@ -902,7 +1362,12 @@ class CaretNavigator(Extension):
         self._last_input_event = event
         obj, start, end, _string = contents[-1]
         presentation_manager.get_manager().interrupt_presentation()
-        self._set_caret_position(script, obj, end, reason=CaretSetReason.CARET_NAVIGATION)
+        self._set_caret_position(
+            script,
+            obj,
+            end,
+            reason=caret_set_reason,
+        )
         focus_manager.get_manager().emit_region_changed(
             obj,
             start,
@@ -917,6 +1382,358 @@ class CaretNavigator(Extension):
             prior_obj = obj
         presenter.present_contents(contents, prior_obj=prior_obj)
         return True
+
+    @navigation_command
+    def select_next_character(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the next character."""
+
+        command = functools.partial(
+            self._move_text_selection_endpoint_by_character,
+            forward=True,
+        )
+        return self._select_with_command(
+            script,
+            event,
+            notify_user,
+            command,
+            selection_forward=True,
+        )
+
+    @navigation_command
+    def select_previous_character(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the previous character."""
+
+        command = functools.partial(
+            self._move_text_selection_endpoint_by_character,
+            forward=False,
+        )
+        return self._select_with_command(
+            script,
+            event,
+            notify_user,
+            command,
+            selection_forward=False,
+        )
+
+    @navigation_command
+    def select_next_word(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the next word."""
+
+        command = functools.partial(
+            self._move_to_next_word,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_BY_WORD,
+        )
+        return self._select_with_command(
+            script,
+            event,
+            notify_user,
+            command,
+            selection_forward=True,
+        )
+
+    @navigation_command
+    def select_previous_word(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the previous word."""
+
+        command = functools.partial(
+            self._move_to_previous_word,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_BY_WORD,
+        )
+        return self._select_with_command(
+            script,
+            event,
+            notify_user,
+            command,
+            selection_forward=False,
+        )
+
+    @navigation_command
+    def select_next_line(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the next line."""
+
+        command = functools.partial(
+            self._move_to_next_line,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_BY_LINE,
+        )
+
+        return self._select_with_command(
+            script,
+            event,
+            notify_user,
+            command,
+            selection_forward=True,
+        )
+
+    @navigation_command
+    def select_previous_line(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the previous line."""
+
+        command = functools.partial(
+            self._move_to_previous_line,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_BY_LINE,
+        )
+
+        return self._select_with_command(
+            script,
+            event,
+            notify_user,
+            command,
+            selection_forward=False,
+        )
+
+    @navigation_command
+    def select_start_of_file(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the start of the file."""
+
+        command = functools.partial(
+            self._move_to_start_of_file,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_TO_FILE_BOUNDARY,
+        )
+        return self._select_with_command(
+            script,
+            event,
+            notify_user,
+            command,
+            selection_forward=False,
+        )
+
+    @navigation_command
+    def select_end_of_file(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the end of the file."""
+
+        command = functools.partial(
+            self._move_to_end_of_file,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_TO_FILE_BOUNDARY,
+        )
+        return self._select_with_command(
+            script,
+            event,
+            notify_user,
+            command,
+            selection_forward=True,
+        )
+
+    @navigation_command
+    def select_start_of_line(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the start of the line."""
+
+        command = functools.partial(
+            self._move_to_start_of_line,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_TO_LINE_BOUNDARY,
+        )
+        return self._select_with_command(
+            script,
+            event,
+            notify_user,
+            command,
+            selection_forward=False,
+        )
+
+    @navigation_command
+    def select_end_of_line(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the end of the line."""
+
+        command = functools.partial(
+            self._move_to_end_of_line,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_TO_LINE_BOUNDARY,
+        )
+        return self._select_with_command(
+            script,
+            event,
+            notify_user,
+            command,
+            selection_forward=True,
+        )
+
+    @dbus_service.testing_user_command
+    def select_next_character_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the next character during integration tests."""
+
+        if script is None:
+            return False
+        return self.select_next_character(script, event, notify_user)
+
+    @dbus_service.testing_user_command
+    def select_previous_character_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the previous character during integration tests."""
+
+        if script is None:
+            return False
+        return self.select_previous_character(script, event, notify_user)
+
+    @dbus_service.testing_user_command
+    def select_next_word_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the next word during integration tests."""
+
+        if script is None:
+            return False
+        return self.select_next_word(script, event, notify_user)
+
+    @dbus_service.testing_user_command
+    def select_previous_word_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the previous word during integration tests."""
+
+        if script is None:
+            return False
+        return self.select_previous_word(script, event, notify_user)
+
+    @dbus_service.testing_user_command
+    def select_next_line_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the next line during integration tests."""
+
+        if script is None:
+            return False
+        return self.select_next_line(script, event, notify_user)
+
+    @dbus_service.testing_user_command
+    def select_previous_line_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the previous line during integration tests."""
+
+        if script is None:
+            return False
+        return self.select_previous_line(script, event, notify_user)
+
+    @dbus_service.testing_user_command
+    def select_start_of_file_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the start of the file during integration tests."""
+
+        if script is None:
+            return False
+        return self.select_start_of_file(script, event, notify_user)
+
+    @dbus_service.testing_user_command
+    def select_end_of_file_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the end of the file during integration tests."""
+
+        if script is None:
+            return False
+        return self.select_end_of_file(script, event, notify_user)
+
+    @dbus_service.testing_user_command
+    def select_start_of_line_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the start of the line during integration tests."""
+
+        if script is None:
+            return False
+        return self.select_start_of_line(script, event, notify_user)
+
+    @dbus_service.testing_user_command
+    def select_end_of_line_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Extends the selection to the end of the line during integration tests."""
+
+        if script is None:
+            return False
+        return self.select_end_of_line(script, event, notify_user)
 
 
 _navigator = CaretNavigator()

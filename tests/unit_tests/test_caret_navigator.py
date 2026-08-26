@@ -76,6 +76,10 @@ class TestCaretNavigator:
             return_value=("", 0, 0)
         )
         test_context.patch(
+            "orca.ax_utilities.AXUtilities.set_document_text_selection_endpoints",
+            return_value=False,
+        )
+        test_context.patch(
             "orca.ax_utilities.AXUtilities.has_selected_text",
             return_value=False,
         )
@@ -83,7 +87,9 @@ class TestCaretNavigator:
             "orca.ax_utilities.AXUtilities.get_document_text_selection_endpoints",
             return_value=((None, -1), (None, -1)),
         )
-
+        test_context.patch(
+            "orca.ax_utilities.AXUtilities.update_cached_selected_text",
+        )
         # Set up cmdnames with all required values for structural_navigator
         cmdnames = essential_modules["orca.cmdnames"]
         cmdnames.STRUCTURAL_NAVIGATION_MODE_CYCLE = "cycle_mode"
@@ -162,9 +168,12 @@ class TestCaretNavigator:
         essential_modules["orca.debug"].print_message = test_context.Mock()
         essential_modules["orca.debug"].LEVEL_INFO = 800
 
+        dbus_service_mock = essential_modules["orca.dbus_service"]
+        dbus_service_mock.testing_command.side_effect = lambda func: func
+        dbus_service_mock.testing_user_command.side_effect = lambda func: func
         controller_mock = test_context.Mock()
         controller_mock.register_decorated_module.return_value = None
-        essential_modules["orca.dbus_service"].get_remote_controller.return_value = controller_mock
+        dbus_service_mock.get_remote_controller.return_value = controller_mock
 
         focus_manager_instance = test_context.Mock()
         focus_manager_instance.get_locus_of_focus.return_value = None
@@ -197,7 +206,10 @@ class TestCaretNavigator:
         """Test character navigation (next/previous) with various conditions."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
+        from orca.caret_navigator import (  # pylint: disable=import-outside-toplevel
+            AXUtilities,
+            CaretNavigator,
+        )
 
         ax_object_mock = essential_modules["orca.ax_object"]
         ax_object_mock.AXObject.supports_text.side_effect = lambda obj: obj is not None
@@ -208,11 +220,13 @@ class TestCaretNavigator:
 
         navigator = CaretNavigator()
         test_context.patch_object(navigator, "_get_root_object", return_value=None)
+        test_context.patch_object(AXUtilities, "get_selected_text", return_value=("", 0, 0))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock() if event_provided else None
+        mock_obj = test_context.Mock()
+        mock_script.utilities.get_caret_context.return_value = (mock_obj, 9)
 
         if context_available:
-            mock_obj = test_context.Mock()
             if direction == "next":
                 mock_script.utilities.next_context.return_value = (mock_obj, 10)
             else:
@@ -233,6 +247,380 @@ class TestCaretNavigator:
             pres_manager.interrupt_presentation.assert_called_once()
             mock_script.update_braille.assert_called_once()
             mock_script.say_character.assert_called_once()
+
+    @pytest.mark.parametrize(
+        "forward,expected_offset",
+        [
+            pytest.param(True, 34, id="right_moves_to_selection_end"),
+            pytest.param(False, 0, id="left_moves_to_selection_start"),
+        ],
+    )
+    def test_character_navigation_clears_selection_and_moves_to_start_or_end(
+        self,
+        test_context: OrcaTestContext,
+        forward: bool,
+        expected_offset: int,
+    ) -> None:
+        """Test character navigation clears selected text and moves to its start or end."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import (
+            AXObject,
+            AXText,
+            AXUtilities,
+            CaretNavigator,
+            CaretSetReason,
+            text_selection_manager,
+            text_selection_presenter,
+        )
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        mock_obj = test_context.Mock()
+        mock_script.utilities.get_caret_context.return_value = (mock_obj, 0)
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            return_value=("selected", 0, 34),
+        )
+        get_root = test_context.patch_object(
+            navigator,
+            "_get_root_object",
+            return_value=mock_obj,
+        )
+        selection_manager = test_context.Mock()
+        selection_manager.get_known_text_selection_endpoints.return_value = (
+            (mock_obj, 0),
+            (mock_obj, 34),
+        )
+        selection_manager.clear_selection_for_navigation.return_value = [mock_obj]
+        test_context.patch_object(
+            text_selection_manager,
+            "get_manager",
+            return_value=selection_manager,
+        )
+        presenter = test_context.Mock()
+        test_context.patch_object(
+            text_selection_presenter,
+            "get_presenter",
+            return_value=presenter,
+        )
+        test_context.patch_object(
+            AXText,
+            "get_character_count",
+            return_value=34,
+        )
+        test_context.patch_object(navigator, "_is_navigable_object", return_value=True)
+
+        command = navigator.next_character if forward else navigator.previous_character
+        assert command(mock_script, mock_event) is True
+        mock_script.utilities.next_context.assert_not_called()
+        mock_script.utilities.previous_context.assert_not_called()
+        mock_script.utilities.set_caret_position.assert_called_once_with(
+            mock_obj,
+            expected_offset,
+            reason=CaretSetReason.CARET_NAVIGATION,
+        )
+        selection_manager.get_known_text_selection_endpoints.assert_called_once_with(mock_obj)
+        get_root.assert_called_once_with(mock_script)
+
+    def test_caret_navigation_clears_selection_in_other_text_objects(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test ordinary caret navigation clears a selection spanning text objects."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import (
+            CaretNavigator,
+            CaretSetReason,
+            text_selection_manager,
+            text_selection_presenter,
+        )
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        root = test_context.Mock()
+        destination = test_context.Mock()
+        other_page = test_context.Mock()
+        test_context.patch_object(navigator, "_get_root_object", return_value=root)
+        selection_manager = test_context.Mock()
+        selection_manager.clear_selection_for_navigation.return_value = [other_page]
+        test_context.patch_object(
+            text_selection_manager,
+            "get_manager",
+            return_value=selection_manager,
+        )
+        presenter = test_context.Mock()
+        test_context.patch_object(
+            text_selection_presenter,
+            "get_presenter",
+            return_value=presenter,
+        )
+
+        navigator._set_caret_position(
+            mock_script,
+            destination,
+            0,
+            reason=CaretSetReason.CARET_NAVIGATION,
+        )
+
+        selection_manager.clear_selection_for_navigation.assert_called_once_with(
+            root,
+            destination,
+        )
+        presenter.present_selection_removed.assert_called_once_with()
+        mock_script.utilities.set_caret_position.assert_called_once_with(
+            destination,
+            0,
+            reason=CaretSetReason.CARET_NAVIGATION,
+        )
+
+    def test_select_next_character_continues_existing_selection(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test selecting the next character continues an existing selection."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import (  # pylint: disable=import-outside-toplevel
+            AXObject,
+            AXText,
+            AXUtilities,
+            CaretNavigator,
+            CaretSetReason,
+        )
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        mock_obj = test_context.Mock()
+        mock_script.utilities.get_caret_context.side_effect = [
+            (mock_obj, 1),
+            (mock_obj, 1),
+            (mock_obj, 2),
+        ]
+        mock_script.utilities.next_context.return_value = (mock_obj, 2)
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        test_context.patch_object(
+            AXText,
+            "get_character_at_offset",
+            return_value=("n", 2, 3),
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            return_value=("L", 0, 1),
+        )
+        set_selected_text = test_context.patch_object(AXUtilities, "set_selected_text")
+        mock_script.utilities.in_document_content.return_value = False
+        test_context.patch_object(navigator, "_is_navigable_object", return_value=True)
+
+        assert navigator.select_next_character(mock_script, mock_event) is True
+        mock_script.utilities.next_context.assert_called_once_with()
+        mock_script.utilities.set_caret_position.assert_called_once_with(
+            mock_obj,
+            2,
+            reason=CaretSetReason.TEXT_SELECTION_BY_CHARACTER,
+        )
+        set_selected_text.assert_called_once_with(mock_obj, 0, 2)
+
+    @pytest.mark.parametrize(
+        "testing_method_name,selection_method_name",
+        [
+            ("select_next_character_for_testing", "select_next_character"),
+            ("select_previous_character_for_testing", "select_previous_character"),
+            ("select_next_word_for_testing", "select_next_word"),
+            ("select_previous_word_for_testing", "select_previous_word"),
+            ("select_next_line_for_testing", "select_next_line"),
+            ("select_previous_line_for_testing", "select_previous_line"),
+            ("select_start_of_file_for_testing", "select_start_of_file"),
+            ("select_end_of_file_for_testing", "select_end_of_file"),
+            ("select_start_of_line_for_testing", "select_start_of_line"),
+            ("select_end_of_line_for_testing", "select_end_of_line"),
+        ],
+    )
+    def test_selection_testing_commands_call_selection_methods(
+        self,
+        test_context: OrcaTestContext,
+        testing_method_name: str,
+        selection_method_name: str,
+    ) -> None:
+        """Test each integration-testing command calls its selection method."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        selection_method = test_context.patch_object(
+            navigator,
+            selection_method_name,
+            return_value=True,
+        )
+
+        testing_method = getattr(navigator, testing_method_name)
+        assert testing_method("token", mock_script, mock_event, False) is True
+        selection_method.assert_called_once_with(mock_script, mock_event, False)
+
+    def test_select_next_character_includes_final_character_before_next_object(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test forward selection reaches the text object's end before leaving it."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXObject, AXText, CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        text_obj = test_context.Mock()
+        next_obj = test_context.Mock()
+        mock_script.utilities.get_caret_context.return_value = (text_obj, 8)
+        mock_script.utilities.next_context.return_value = (next_obj, 1)
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        get_character = test_context.patch_object(
+            AXText,
+            "get_character_at_offset",
+            return_value=("a", 8, 9),
+        )
+        test_context.patch_object(AXText, "get_character_count", return_value=9)
+
+        result = navigator._get_text_selection_character_navigation_context(
+            mock_script,
+            forward=True,
+        )
+
+        assert result == (text_obj, 9)
+        mock_script.utilities.next_context.assert_called_once_with()
+        get_character.assert_called_once_with(
+            text_obj,
+            8,
+            ensure_whole_characters=True,
+        )
+
+    def test_previous_character_clears_selection_and_moves_to_its_start(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test moving left clears selection and moves to its resolved start position."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXUtilities, CaretNavigator, text_selection_manager
+
+        navigator = CaretNavigator()
+        current_obj = test_context.Mock()
+        root = test_context.Mock()
+        endpoint_obj = test_context.Mock()
+        caret_obj = test_context.Mock()
+        selection_manager = test_context.Mock()
+        selection_manager.get_known_text_selection_endpoints.return_value = (
+            (endpoint_obj, 15),
+            (current_obj, 2),
+        )
+        test_context.patch_object(
+            text_selection_manager,
+            "get_manager",
+            return_value=selection_manager,
+        )
+        resolve = test_context.patch_object(
+            AXUtilities,
+            "get_caret_context_for_text_selection_endpoint",
+            return_value=(caret_obj, 0),
+        )
+        has_selected_text = test_context.patch_object(AXUtilities, "has_selected_text")
+        get_endpoints = test_context.patch_object(
+            AXUtilities,
+            "get_document_text_selection_endpoints",
+        )
+
+        result = navigator._get_caret_context_for_collapsing_selection(
+            root,
+            forward=False,
+        )
+
+        assert result == (caret_obj, 0)
+        selection_manager.get_known_text_selection_endpoints.assert_called_once_with(root)
+        resolve.assert_called_once_with(
+            endpoint_obj,
+            15,
+            endpoint_is_start=True,
+        )
+        has_selected_text.assert_not_called()
+        get_endpoints.assert_not_called()
+
+    def test_select_next_character_includes_current_text_before_embedded_child(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test forward selection does not skip text before an embedded child."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXObject, AXText, CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        text_obj = test_context.Mock()
+        child = test_context.Mock()
+        mock_script.utilities.get_caret_context.return_value = (text_obj, 10)
+        mock_script.utilities.next_context.return_value = (child, 0)
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        get_character = test_context.patch_object(
+            AXText,
+            "get_character_at_offset",
+            return_value=(" ", 10, 11),
+        )
+        test_context.patch_object(AXText, "get_character_count", return_value=12)
+
+        result = navigator._get_text_selection_character_navigation_context(
+            mock_script,
+            forward=True,
+        )
+
+        assert result == (text_obj, 11)
+        get_character.assert_called_once_with(
+            text_obj,
+            10,
+            ensure_whole_characters=True,
+        )
+
+    def test_select_next_character_includes_first_character_in_next_object(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test forward selection includes the first character after crossing objects."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXObject, AXText, CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        text_obj = test_context.Mock()
+        next_obj = test_context.Mock()
+        mock_script.utilities.get_caret_context.return_value = (text_obj, 9)
+        mock_script.utilities.next_context.return_value = (next_obj, 1)
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        get_character = test_context.patch_object(
+            AXText,
+            "get_character_at_offset",
+            return_value=(",", 1, 2),
+        )
+        test_context.patch_object(AXText, "get_character_count", return_value=9)
+
+        result = navigator._get_text_selection_character_navigation_context(
+            mock_script,
+            forward=True,
+        )
+
+        assert result == (next_obj, 2)
+        get_character.assert_called_once_with(
+            next_obj,
+            1,
+            ensure_whole_characters=True,
+        )
 
     @pytest.mark.parametrize(
         "direction,context_result,word_contents,expected_result",
@@ -300,6 +688,69 @@ class TestCaretNavigator:
         else:
             mock_script.utilities.set_caret_position.assert_not_called()
             pres_manager.interrupt_presentation.assert_not_called()
+
+    @pytest.mark.parametrize(
+        "direction,boundary,context_result,word_contents,expected_offset",
+        [
+            pytest.param(
+                "next",
+                ("selection-end", 20),
+                ("next-word", 21),
+                [("next-word", 21, 30, "following")],
+                30,
+                id="next_word_from_selection_end",
+            ),
+            pytest.param(
+                "previous",
+                ("selection-start", 10),
+                ("previous-word", 9),
+                [("previous-word", 1, 9, "previous")],
+                1,
+                id="previous_word_from_selection_start",
+            ),
+        ],
+    )
+    def test_word_navigation_starts_from_selection_boundary(
+        self,
+        test_context: OrcaTestContext,
+        direction: str,
+        boundary: tuple,
+        context_result: tuple,
+        word_contents: list,
+        expected_offset: int,
+    ) -> None:
+        """Test word navigation starts from the appropriate selection boundary."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import CaretNavigator, CaretSetReason
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        root = test_context.Mock()
+        test_context.patch_object(navigator, "_get_root_object", return_value=root)
+        get_boundary = test_context.patch_object(
+            navigator,
+            "_get_caret_context_for_collapsing_selection",
+            return_value=boundary,
+        )
+        test_context.patch_object(navigator, "_is_navigable_object", return_value=True)
+        set_caret_position = test_context.patch_object(navigator, "_set_caret_position")
+        context_method = getattr(mock_script.utilities, f"{direction}_context")
+        context_method.return_value = context_result
+        mock_script.utilities.get_word_contents_at_offset.return_value = word_contents
+
+        assert getattr(navigator, f"{direction}_word")(mock_script, mock_event)
+
+        context_method.assert_called_once_with(*boundary, skip_space=True)
+        get_boundary.assert_called_once_with(root, forward=direction == "next")
+        set_caret_position.assert_called_once_with(
+            mock_script,
+            word_contents[0][0],
+            expected_offset,
+            reason=CaretSetReason.CARET_NAVIGATION,
+            selection_root=root,
+        )
 
     @pytest.mark.parametrize(
         "test_method,expected_result",
@@ -380,10 +831,19 @@ class TestCaretNavigator:
             "find_deepest_descendant",
             return_value="panel",
         )
+        test_context.patch_object(
+            AXUtilities,
+            "is_ancestor",
+            side_effect=lambda obj, root, _same: obj == root,
+        )
+        test_context.patch_object(AXUtilities, "is_web_element", return_value=False)
+        get_parent = test_context.patch_object(AXObject, "get_parent", return_value="scroll pane")
         test_context.patch_object(AXText, "get_character_count", return_value=34)
 
         assert navigator._get_end_of_file(mock_script) == ("text", 34)
         find_deepest.assert_not_called()
+        mock_script.utilities.in_document_content.assert_called_once_with("text")
+        get_parent.assert_not_called()
 
     def test_get_end_of_file_uses_parent_of_document_static_text(
         self,
@@ -486,6 +946,30 @@ class TestCaretNavigator:
         presenter = essential_modules["orca.presentation_manager"].get_manager()
         presenter.interrupt_presentation.assert_not_called()
         presenter.present_contents.assert_not_called()
+
+    def test_toggle_disabled_clears_caret_context(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test returning caret control to the application clears Orca's context."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.caret_navigator import CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_cmd_mgr = test_context.Mock()
+        mock_cmd_mgr.is_group_enabled.return_value = True
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
+        set_is_enabled = test_context.patch_object(
+            navigator,
+            "set_is_enabled",
+            return_value=True,
+        )
+
+        assert navigator.toggle_enabled(mock_script, notify_user=False) is True
+        mock_script.utilities.clear_caret_context.assert_called_once_with()
+        set_is_enabled.assert_called_once_with(False)
 
     @pytest.mark.parametrize(
         "navigation_type,in_say_all,current_line,next_prev_contents,expected_result",
@@ -596,6 +1080,258 @@ class TestCaretNavigator:
         elif in_say_all:
             assert navigator._last_input_event != mock_event
 
+    def test_next_line_does_not_move_to_ui_control(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test next-line navigation does not move into a neighboring UI control."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.caret_navigator import CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        mock_script.utilities.get_caret_context.return_value = ("text", 26)
+        mock_script.utilities.get_line_contents_at_offset.return_value = [
+            ("text", 26, 34, "The end."),
+        ]
+        mock_script.utilities.get_next_line_contents.return_value = [
+            ("scrollbar", 0, 0, ""),
+        ]
+        is_navigable = test_context.patch_object(
+            navigator,
+            "_is_navigable_object",
+            return_value=False,
+        )
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.interrupt_presentation.reset_mock()
+
+        assert navigator.next_line(mock_script, mock_event) is False
+        is_navigable.assert_called_once_with(mock_script, "scrollbar")
+        mock_script.utilities.set_caret_position.assert_not_called()
+        pres_manager.interrupt_presentation.assert_not_called()
+        assert navigator._last_input_event is None
+
+    def test_select_next_line_from_line_end_moves_to_end_of_next_line(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test line selection at a line end includes the entire next line."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import CaretNavigator, CaretSetReason
+
+        navigator = CaretNavigator()
+        script = test_context.Mock()
+        event = test_context.Mock()
+        current_obj = test_context.Mock()
+        next_obj = test_context.Mock()
+        current_line = [(current_obj, 0, 4, "One.")]
+        next_line = [(next_obj, 0, 6, "Two.\n")]
+        script.utilities.get_caret_context.return_value = (current_obj, 4)
+        script.utilities.get_line_contents_at_offset.return_value = current_line
+        script.utilities.get_next_line_contents.return_value = next_line
+        test_context.patch_object(navigator, "_is_navigable_object", return_value=True)
+        set_caret_position = test_context.patch_object(navigator, "_set_caret_position")
+
+        assert navigator._move_to_next_line(
+            script,
+            event,
+            False,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_BY_LINE,
+        )
+        set_caret_position.assert_called_once_with(
+            script,
+            next_obj,
+            6,
+            reason=CaretSetReason.TEXT_SELECTION_BY_LINE,
+            selection_root=None,
+        )
+
+    def test_select_previous_line_from_line_end_moves_to_start_of_current_line(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test backward line selection at a line end includes the current line."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import CaretNavigator, CaretSetReason
+
+        navigator = CaretNavigator()
+        script = test_context.Mock()
+        event = test_context.Mock()
+        obj = test_context.Mock()
+        line = [(obj, 4, 8, "Two.")]
+        script.utilities.get_caret_context.return_value = (obj, 8)
+        script.utilities.get_line_contents_at_offset.return_value = line
+        test_context.patch_object(navigator, "_is_navigable_object", return_value=True)
+        set_caret_position = test_context.patch_object(navigator, "_set_caret_position")
+
+        assert navigator._move_to_previous_line(
+            script,
+            event,
+            False,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_BY_LINE,
+        )
+        script.utilities.get_previous_line_contents.assert_not_called()
+        set_caret_position.assert_called_once_with(
+            script,
+            obj,
+            4,
+            reason=CaretSetReason.TEXT_SELECTION_BY_LINE,
+            selection_root=None,
+        )
+
+    def test_previous_line_moves_before_start_of_selection(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test Up clears a multi-object selection and moves above its start."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.caret_navigator import (
+            AXUtilities,
+            CaretNavigator,
+            CaretSetReason,
+            text_selection_manager,
+        )
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        page1 = test_context.Mock()
+        page2 = test_context.Mock()
+        root = test_context.Mock()
+        current_line = [(page2, 12, 30, "Here's a new page.")]
+        previous_line = [(page1, 65, 77, "Another one!")]
+        mock_script.utilities.get_caret_context.return_value = (page2, 51)
+        mock_script.utilities.get_line_contents_at_offset.return_value = current_line
+        mock_script.utilities.get_previous_line_contents.return_value = previous_line
+        selection_manager = test_context.Mock()
+        selection_manager.get_known_text_selection_endpoints.return_value = (
+            (page1, 78),
+            (page2, 50),
+        )
+        test_context.patch_object(
+            text_selection_manager,
+            "get_manager",
+            return_value=selection_manager,
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_caret_context_for_text_selection_endpoint",
+            side_effect=lambda obj, offset, *, endpoint_is_start: (obj, offset),
+        )
+        test_context.patch_object(navigator, "_get_root_object", return_value=root)
+        test_context.patch_object(navigator, "_is_navigable_object", return_value=True)
+        set_caret_position = test_context.patch_object(navigator, "_set_caret_position")
+
+        assert navigator.previous_line(mock_script, mock_event) is True
+
+        mock_script.utilities.get_previous_line_contents.assert_called_once_with(page1, 78)
+        set_caret_position.assert_called_once_with(
+            mock_script,
+            page1,
+            65,
+            reason=CaretSetReason.CARET_NAVIGATION,
+            selection_root=root,
+        )
+        presenter = essential_modules["orca.presentation_manager"].get_manager()
+        presenter.present_contents.assert_called_once_with(previous_line, prior_obj=page2)
+
+    def test_next_line_moves_after_end_of_selection(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test Down clears a multi-object selection and moves below its end."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.caret_navigator import (
+            AXUtilities,
+            CaretNavigator,
+            CaretSetReason,
+            text_selection_manager,
+        )
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        page1 = test_context.Mock()
+        page2 = test_context.Mock()
+        root = test_context.Mock()
+        current_line = [(page1, 65, 77, "Another one!")]
+        next_line = [(page2, 31, 50, "I really like pages.")]
+        mock_script.utilities.get_caret_context.return_value = (page1, 65)
+        mock_script.utilities.get_line_contents_at_offset.return_value = current_line
+        mock_script.utilities.get_next_line_contents.return_value = next_line
+        selection_manager = test_context.Mock()
+        selection_manager.get_known_text_selection_endpoints.return_value = (
+            (page1, 65),
+            (page2, 30),
+        )
+        test_context.patch_object(
+            text_selection_manager,
+            "get_manager",
+            return_value=selection_manager,
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_caret_context_for_text_selection_endpoint",
+            side_effect=lambda obj, offset, *, endpoint_is_start: (obj, offset),
+        )
+        test_context.patch_object(navigator, "_get_root_object", return_value=root)
+        test_context.patch_object(navigator, "_is_navigable_object", return_value=True)
+        set_caret_position = test_context.patch_object(navigator, "_set_caret_position")
+
+        assert navigator.next_line(mock_script, mock_event) is True
+
+        mock_script.utilities.get_next_line_contents.assert_called_once_with(page2, 30)
+        set_caret_position.assert_called_once_with(
+            mock_script,
+            page2,
+            31,
+            reason=CaretSetReason.CARET_NAVIGATION,
+            selection_root=root,
+        )
+        presenter = essential_modules["orca.presentation_manager"].get_manager()
+        presenter.present_contents.assert_called_once_with(next_line, prior_obj=page1)
+
+    @pytest.mark.parametrize(
+        "is_page,expected_prior_obj",
+        [
+            pytest.param(True, "destination", id="page_role_suppressed"),
+            pytest.param(False, "source", id="source_context_preserved"),
+        ],
+    )
+    def test_end_of_file_does_not_present_page_role(
+        self,
+        test_context: OrcaTestContext,
+        is_page: bool,
+        expected_prior_obj: str | None,
+    ) -> None:
+        """Test end-of-file presentation does not include a page role."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXUtilities, CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        contents = [("destination", 26, 34, "The end.")]
+        mock_script.utilities.get_caret_context.return_value = ("source", 12)
+        mock_script.utilities.get_line_contents_at_offset.return_value = contents
+        test_context.patch_object(navigator, "_get_end_of_file", return_value=("destination", 34))
+        test_context.patch_object(AXUtilities, "is_page", return_value=is_page)
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_contents.reset_mock()
+
+        assert navigator.end_of_file(mock_script, mock_event) is True
+        pres_manager.present_contents.assert_called_once_with(
+            contents,
+            prior_obj=expected_prior_obj,
+        )
+
     @pytest.mark.parametrize(
         "navigation_type,line_contents,expected_result",
         [
@@ -616,7 +1352,7 @@ class TestCaretNavigator:
             pytest.param("end_of_line", [("obj", 5, 15, "text")], True, id="end_of_line_no_space"),
         ],
     )
-    def test_line_boundary_navigation(
+    def test_start_and_end_of_line_navigation(
         self,
         test_context: OrcaTestContext,
         navigation_type: str,
@@ -892,6 +1628,811 @@ class TestCaretNavigator:
         assert navigator._enabled_for_script[mock_script] is True
         mock_cmd_mgr.set_group_enabled.assert_called_once()
 
+    def test_select_next_line_selects_unterminated_final_line(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test selecting the final line uses the end of the text."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import (
+            AXObject,
+            AXText,
+            AXUtilities,
+            CaretNavigator,
+            CaretSetReason,
+        )
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        mock_obj = test_context.Mock()
+        mock_script.utilities.get_caret_context.side_effect = [
+            (mock_obj, 26),
+            (mock_obj, 34),
+        ]
+        mock_script.utilities.get_line_contents_at_offset.return_value = [
+            (mock_obj, 26, 34, "The end."),
+        ]
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        test_context.patch_object(AXText, "get_character_count", return_value=34)
+        mock_script.utilities.in_document_content.return_value = False
+        test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            return_value=("Hello world.\nBla bla bla.\n", 0, 26),
+        )
+        set_selected_text = test_context.patch_object(AXUtilities, "set_selected_text")
+        next_line = test_context.patch_object(navigator, "_move_to_next_line", return_value=True)
+        end_of_line = test_context.patch_object(
+            navigator,
+            "_move_to_end_of_line",
+            return_value=True,
+        )
+        test_context.patch_object(
+            navigator,
+            "_get_end_of_file",
+            return_value=(mock_obj, 34),
+        )
+
+        assert navigator.select_next_line(mock_script, mock_event) is True
+        next_line.assert_called_once_with(
+            mock_script,
+            mock_event,
+            False,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_BY_LINE,
+        )
+        end_of_line.assert_not_called()
+        set_selected_text.assert_called_once_with(mock_obj, 0, 34)
+
+    def test_select_next_line_at_object_end_adds_selection_in_next_object(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test selecting the next line starts a selection in the next object."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import (
+            AXText,
+            AXUtilities,
+            CaretNavigator,
+            CaretSetReason,
+            text_selection_manager,
+        )
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        old_obj = test_context.Mock()
+        new_obj = test_context.Mock()
+        document = test_context.Mock()
+        old_selection = ("First page.", 0, 11)
+        new_selection = ("Next", 0, 4)
+        mock_script.utilities.get_caret_context.side_effect = [
+            (old_obj, 11),
+            (new_obj, 4),
+        ]
+        mock_script.utilities.get_line_contents_at_offset.return_value = [
+            (old_obj, 0, 11, "First page."),
+        ]
+        mock_script.utilities.active_document.return_value = document
+        test_context.patch_object(
+            AXText,
+            "get_character_count",
+            side_effect=lambda obj: 11 if obj == old_obj else 20,
+        )
+        get_selected_text = test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            side_effect=[old_selection, ("", 0, 0), old_selection, old_selection, new_selection],
+        )
+        set_selected_text = test_context.patch_object(
+            AXUtilities,
+            "set_selected_text",
+            return_value=True,
+        )
+        next_line = test_context.patch_object(navigator, "_move_to_next_line", return_value=True)
+        end_of_line = test_context.patch_object(
+            navigator,
+            "_move_to_end_of_line",
+            return_value=True,
+        )
+
+        assert navigator.select_next_line(mock_script, mock_event) is True
+
+        next_line.assert_called_once_with(
+            mock_script,
+            mock_event,
+            False,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_BY_LINE,
+        )
+        end_of_line.assert_not_called()
+        set_selected_text.assert_called_once_with(new_obj, 0, 4)
+        assert get_selected_text.call_args_list == [
+            call(old_obj),
+            call(new_obj),
+        ]
+        selection_manager = text_selection_manager.get_manager()
+        command = selection_manager.get_current_selection_command()
+        assert command is not None
+        assert command.get_objects() == (old_obj, new_obj)
+        assert command.should_notify_user()
+
+    def test_select_next_line_does_not_treat_web_element_end_as_file_end(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test selection moves from a complete web element to the next visual line."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import (
+            AXObject,
+            AXText,
+            AXUtilities,
+            CaretNavigator,
+            CaretSetReason,
+        )
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        current_obj = test_context.Mock()
+        final_obj = test_context.Mock()
+        next_obj = test_context.Mock()
+        mock_script.utilities.get_caret_context.side_effect = [
+            (current_obj, 0),
+            (next_obj, 0),
+        ]
+        line = [(current_obj, 0, 26, "current line")]
+        mock_script.utilities.get_line_contents_at_offset.return_value = line
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        test_context.patch_object(AXText, "get_character_count", return_value=26)
+        test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            return_value=("", 0, 0),
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_text_selection_endpoint_for_caret_context",
+            side_effect=lambda obj, offset, *, after_embedded_object: (obj, offset),
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "set_document_text_selection_endpoints",
+            return_value=True,
+        )
+        test_context.patch_object(
+            navigator,
+            "_get_end_of_file",
+            return_value=(final_obj, 10),
+        )
+        next_line = test_context.patch_object(navigator, "_move_to_next_line", return_value=True)
+        end_of_line = test_context.patch_object(
+            navigator,
+            "_move_to_end_of_line",
+            return_value=True,
+        )
+
+        assert navigator.select_next_line(mock_script, mock_event) is True
+        next_line.assert_called_once_with(
+            mock_script,
+            mock_event,
+            False,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_BY_LINE,
+        )
+        end_of_line.assert_not_called()
+
+    def test_selection_across_objects_uses_document_interface(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test selection across objects uses the document interface."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXUtilities, CaretNavigator, text_selection_manager
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        old_obj = test_context.Mock()
+        new_obj = test_context.Mock()
+        document = test_context.Mock()
+        selection_manager = text_selection_manager.get_manager()
+        mock_script.utilities.get_caret_context.side_effect = [
+            (old_obj, 10),
+            (new_obj, 5),
+        ]
+        mock_script.utilities.active_document.return_value = document
+        test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            return_value=("selection", 0, 10),
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_document_text_selection_endpoints",
+            return_value=((old_obj, 2), (old_obj, 10)),
+        )
+        set_selected_text = test_context.patch_object(AXUtilities, "set_selected_text")
+        test_context.patch_object(
+            AXUtilities,
+            "get_text_selection_endpoint_for_caret_context",
+            side_effect=lambda obj, offset, *, after_embedded_object: (obj, offset),
+        )
+        set_document_selection = test_context.patch_object(
+            AXUtilities,
+            "set_document_text_selection_endpoints",
+            return_value=True,
+        )
+        move = test_context.Mock(return_value=True)
+
+        assert (
+            navigator._select_with_command(
+                mock_script,
+                mock_event,
+                False,
+                move,
+                selection_forward=True,
+            )
+            is True
+        )
+
+        set_document_selection.assert_called_once_with(
+            document,
+            old_obj,
+            2,
+            new_obj,
+            5,
+        )
+        set_selected_text.assert_not_called()
+        command = selection_manager.get_current_selection_command()
+        assert command is not None
+        assert command.get_objects() == (new_obj,)
+        assert not command.should_notify_user()
+
+    def test_selection_through_embedded_object_ends_after_its_character(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test forward selection through an image ends after its character in the parent."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXUtilities, CaretNavigator, text_selection_manager
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        heading = test_context.Mock()
+        image = test_context.Mock()
+        link = test_context.Mock()
+        document = test_context.Mock()
+        selection_manager = text_selection_manager.get_manager()
+        mock_script.utilities.get_caret_context.side_effect = [
+            (heading, 29),
+            (image, 0),
+        ]
+        mock_script.utilities.active_document.return_value = document
+        get_selection_point = test_context.patch_object(
+            AXUtilities,
+            "get_text_selection_endpoint_for_caret_context",
+            side_effect=[(heading, 29), (link, 1)],
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            return_value=("selected heading", 0, 29),
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_document_text_selection_endpoints",
+            return_value=((heading, 0), (heading, 29)),
+        )
+        set_document_selection = test_context.patch_object(
+            AXUtilities,
+            "set_document_text_selection_endpoints",
+            return_value=True,
+        )
+        move = test_context.Mock(return_value=True)
+
+        assert (
+            navigator._select_with_command(
+                mock_script,
+                mock_event,
+                False,
+                move,
+                selection_forward=True,
+            )
+            is True
+        )
+
+        set_document_selection.assert_called_once_with(
+            document,
+            heading,
+            0,
+            link,
+            1,
+        )
+        assert get_selection_point.call_args_list == [
+            call(heading, 29, after_embedded_object=False),
+            call(image, 0, after_embedded_object=True),
+        ]
+        command = selection_manager.get_current_selection_command()
+        assert command is not None
+        assert command.get_objects() == (image,)
+        assert not command.should_notify_user()
+
+    def test_selection_continues_from_embedded_object(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test selection can continue when the Orca caret is on a non-text object."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXUtilities, CaretNavigator, text_selection_manager
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        heading = test_context.Mock()
+        image = test_context.Mock()
+        link = test_context.Mock()
+        paragraph = test_context.Mock()
+        document = test_context.Mock()
+        selection_manager = text_selection_manager.get_manager()
+        mock_script.utilities.get_caret_context.side_effect = [
+            (image, 0),
+            (paragraph, 12),
+        ]
+        mock_script.utilities.active_document.return_value = document
+        get_selection_point = test_context.patch_object(
+            AXUtilities,
+            "get_text_selection_endpoint_for_caret_context",
+            side_effect=[(link, 0), (paragraph, 12)],
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            return_value=("embedded object", 0, 1),
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_document_text_selection_endpoints",
+            return_value=((heading, 0), (link, 0)),
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_selection_anchor_offset",
+            return_value=1,
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "text_selection_positions_are_equivalent",
+            side_effect=[False, True],
+        )
+        set_document_selection = test_context.patch_object(
+            AXUtilities,
+            "set_document_text_selection_endpoints",
+            return_value=True,
+        )
+        move = test_context.Mock(return_value=True)
+
+        assert (
+            navigator._select_with_command(
+                mock_script,
+                mock_event,
+                False,
+                move,
+                selection_forward=True,
+            )
+            is True
+        )
+
+        move.assert_called_once_with(mock_script, mock_event, False)
+        set_document_selection.assert_called_once_with(
+            document,
+            heading,
+            0,
+            paragraph,
+            12,
+        )
+        assert get_selection_point.call_args_list == [
+            call(image, 0, after_embedded_object=False),
+            call(paragraph, 12, after_embedded_object=True),
+        ]
+        command = selection_manager.get_current_selection_command()
+        assert command is not None
+        assert command.get_objects() == (paragraph,)
+        assert not command.should_notify_user()
+
+    def test_select_next_character_keeps_end_as_anchor_for_backward_selection(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test selecting right in a backward selection keeps its end as the anchor."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXUtilities, CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        obj = test_context.Mock()
+        document = test_context.Mock()
+        mock_script.utilities.get_caret_context.side_effect = [
+            (obj, 3),
+            (obj, 4),
+        ]
+        mock_script.utilities.active_document.return_value = document
+        test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            return_value=("selected", 3, 10),
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_document_text_selection_endpoints",
+            return_value=((obj, 3), (obj, 10)),
+        )
+        set_selected_text = test_context.patch_object(AXUtilities, "set_selected_text")
+        test_context.patch_object(
+            AXUtilities,
+            "get_text_selection_endpoint_for_caret_context",
+            side_effect=lambda obj, offset, *, after_embedded_object: (obj, offset),
+        )
+        set_document_selection = test_context.patch_object(
+            AXUtilities,
+            "set_document_text_selection_endpoints",
+            return_value=True,
+        )
+        move = test_context.Mock(return_value=True)
+
+        assert (
+            navigator._select_with_command(
+                mock_script,
+                mock_event,
+                False,
+                move,
+                selection_forward=True,
+            )
+            is True
+        )
+
+        set_document_selection.assert_called_once_with(
+            document,
+            obj,
+            10,
+            obj,
+            4,
+        )
+        set_selected_text.assert_not_called()
+
+    def test_selecting_backward_unselects_text_after_new_position(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test selecting backward keeps text before the new position selected."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import (
+            AXText,
+            AXUtilities,
+            CaretNavigator,
+        )
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        page1 = test_context.Mock()
+        page2 = test_context.Mock()
+        document = test_context.Mock()
+        mock_script.utilities.get_caret_context.side_effect = [
+            (page2, 51),
+            (page2, 31),
+        ]
+        mock_script.utilities.active_document.return_value = document
+        test_context.patch_object(
+            AXUtilities,
+            "get_text_selection_endpoint_for_caret_context",
+            side_effect=lambda obj, offset, *, after_embedded_object: (obj, offset),
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            return_value=("More pages!\nHere's a new page.\nI really like pages.", 0, 52),
+        )
+        set_document_selection = test_context.patch_object(
+            AXUtilities,
+            "set_document_text_selection_endpoints",
+            return_value=False,
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_document_text_selection_endpoints",
+            return_value=((page1, 0), (page2, 50)),
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_selection_anchor_offset",
+            return_value=51,
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "text_selection_positions_are_equivalent",
+            side_effect=[False, True],
+        )
+        test_context.patch_object(AXText, "get_character_count", return_value=51)
+        set_selected_text = test_context.patch_object(
+            AXUtilities,
+            "set_selected_text",
+            return_value=True,
+        )
+        move = test_context.Mock(return_value=True)
+
+        assert (
+            navigator._select_with_command(
+                mock_script,
+                None,
+                False,
+                move,
+                selection_forward=False,
+            )
+            is True
+        )
+
+        set_document_selection.assert_called_once_with(document, page1, 0, page2, 31)
+        set_selected_text.assert_called_once_with(page2, 0, 31)
+
+    def test_selecting_backward_into_object_selects_through_its_end(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test selecting backward into an object selects through its end."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXText, AXUtilities, CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        old_obj = test_context.Mock()
+        new_obj = test_context.Mock()
+        mock_script.utilities.get_caret_context.side_effect = [
+            (old_obj, 0),
+            (new_obj, 12),
+        ]
+        mock_script.utilities.active_document.return_value = test_context.Mock()
+        old_selection = ("Old", 0, 3)
+        test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            side_effect=[
+                old_selection,
+                ("", 0, 0),
+                old_selection,
+                old_selection,
+                ("trailing", 12, 20),
+            ],
+        )
+        set_selected_text = test_context.patch_object(
+            AXUtilities,
+            "set_selected_text",
+            return_value=True,
+        )
+        test_context.patch_object(AXText, "get_character_count", return_value=20)
+        move = test_context.Mock(return_value=True)
+
+        assert (
+            navigator._select_with_command(
+                mock_script,
+                None,
+                False,
+                move,
+                selection_forward=False,
+            )
+            is True
+        )
+
+        set_selected_text.assert_called_once_with(new_obj, 12, 20)
+
+    def test_selecting_backward_into_selected_object_ends_at_new_position(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test backward selection in the destination ends at the new position."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXUtilities, CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        old_obj = test_context.Mock()
+        new_obj = test_context.Mock()
+        mock_script.utilities.get_caret_context.side_effect = [
+            (old_obj, 0),
+            (new_obj, 81),
+        ]
+        mock_script.utilities.active_document.return_value = test_context.Mock()
+        empty_selection = ("", 0, 0)
+        test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            side_effect=[
+                empty_selection,
+                ("whole first page", 0, 89),
+                empty_selection,
+                empty_selection,
+                ("remaining", 0, 81),
+            ],
+        )
+        set_selected_text = test_context.patch_object(
+            AXUtilities,
+            "set_selected_text",
+            return_value=True,
+        )
+        move = test_context.Mock(return_value=True)
+
+        assert (
+            navigator._select_with_command(
+                mock_script,
+                None,
+                False,
+                move,
+                selection_forward=False,
+            )
+            is True
+        )
+
+        set_selected_text.assert_called_once_with(new_obj, 0, 81)
+
+    def test_selecting_forward_into_selected_object_starts_at_new_position(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test forward selection in the destination starts at the new position."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXText, AXUtilities, CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        old_obj = test_context.Mock()
+        new_obj = test_context.Mock()
+        mock_script.utilities.get_caret_context.side_effect = [
+            (old_obj, 20),
+            (new_obj, 8),
+        ]
+        mock_script.utilities.active_document.return_value = test_context.Mock()
+        empty_selection = ("", 0, 0)
+        test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            side_effect=[
+                empty_selection,
+                ("whole second page", 0, 20),
+                empty_selection,
+                empty_selection,
+                ("remaining", 8, 20),
+            ],
+        )
+        set_selected_text = test_context.patch_object(
+            AXUtilities,
+            "set_selected_text",
+            return_value=True,
+        )
+        test_context.patch_object(AXText, "get_character_count", return_value=20)
+        move = test_context.Mock(return_value=True)
+
+        assert (
+            navigator._select_with_command(
+                mock_script,
+                None,
+                False,
+                move,
+                selection_forward=True,
+            )
+            is True
+        )
+
+        set_selected_text.assert_called_once_with(new_obj, 8, 20)
+
+    def test_selection_preserves_anchor_when_reported_range_omits_newline(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test a newline omitted from the reported range does not replace the anchor."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import AXObject, AXUtilities, CaretNavigator
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        mock_obj = test_context.Mock()
+        mock_script.utilities.get_caret_context.side_effect = [
+            (mock_obj, 13),
+            (mock_obj, 26),
+        ]
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        mock_script.utilities.in_document_content.return_value = False
+        test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            return_value=("Hello world.", 0, 12),
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_selection_anchor_offset",
+            return_value=0,
+        )
+        set_selected_text = test_context.patch_object(AXUtilities, "set_selected_text")
+        move = test_context.Mock(return_value=True)
+
+        assert (
+            navigator._select_with_command(
+                mock_script,
+                mock_event,
+                False,
+                move,
+                selection_forward=True,
+            )
+            is True
+        )
+        move.assert_called_once_with(mock_script, mock_event, False)
+        set_selected_text.assert_called_once_with(mock_obj, 0, 26)
+
+    def test_select_previous_line_unselects_only_final_line(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test selecting the previous line from the text end unselects only the final line."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import (
+            AXObject,
+            AXUtilities,
+            CaretNavigator,
+            CaretSetReason,
+        )
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        mock_obj = test_context.Mock()
+        mock_script.utilities.get_caret_context.side_effect = [
+            (mock_obj, 34),
+            (mock_obj, 26),
+        ]
+        mock_script.utilities.get_line_contents_at_offset.return_value = [
+            (mock_obj, 26, 34, "The end."),
+        ]
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        mock_script.utilities.in_document_content.return_value = False
+        test_context.patch_object(
+            AXUtilities,
+            "get_selected_text",
+            return_value=("Hello world.\nBla bla bla.\nThe end.", 0, 34),
+        )
+        set_selected_text = test_context.patch_object(AXUtilities, "set_selected_text")
+        previous_line = test_context.patch_object(
+            navigator,
+            "_move_to_previous_line",
+            return_value=True,
+        )
+        start_of_line = test_context.patch_object(
+            navigator,
+            "_move_to_start_of_line",
+            return_value=True,
+        )
+
+        assert navigator.select_previous_line(mock_script, mock_event) is True
+        previous_line.assert_called_once_with(
+            mock_script,
+            mock_event,
+            False,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_BY_LINE,
+        )
+        start_of_line.assert_not_called()
+        set_selected_text.assert_called_once_with(mock_obj, 0, 26)
+
     def test_last_command_prevents_focus_mode_true(self, test_context: OrcaTestContext) -> None:
         """Test last_command_prevents_focus_mode returns True."""
 
@@ -952,7 +2493,7 @@ class TestCaretNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         from orca import focus_manager
-        from orca.caret_navigator import CaretNavigator
+        from orca.caret_navigator import AXUtilities, CaretNavigator
 
         ax_object_mock = essential_modules["orca.ax_object"]
         ax_object_mock.AXObject.supports_text.side_effect = lambda obj: obj is not None
@@ -967,16 +2508,19 @@ class TestCaretNavigator:
         focus_manager_mock.CARET_NAVIGATOR = focus_manager.CARET_NAVIGATOR
 
         navigator = CaretNavigator()
-        test_context.patch_object(navigator, "_get_root_object", return_value=None)
+        get_root = test_context.patch_object(navigator, "_get_root_object", return_value=None)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         mock_obj = test_context.Mock()
 
+        mock_script.utilities.get_caret_context.return_value = (mock_obj, 9)
         mock_script.utilities.next_context.return_value = (mock_obj, 10)
+        test_context.patch_object(AXUtilities, "get_selected_text", return_value=("", 0, 0))
 
         result = navigator.next_character(mock_script, mock_event)
 
         assert result is True
+        get_root.assert_called_once_with(mock_script)
         manager_instance.emit_region_changed.assert_called()
         call_kwargs = manager_instance.emit_region_changed.call_args
         assert call_kwargs.kwargs.get("mode") == focus_manager.CARET_NAVIGATOR

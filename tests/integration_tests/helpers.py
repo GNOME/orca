@@ -101,6 +101,13 @@ def capture(
     return spoken, brailled
 
 
+def say_selection(session: NativeAppSession) -> list[str]:
+    """Presents the selected text and returns the speech."""
+
+    session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
+    return speech(session)
+
+
 def tab_and_swallow_presentation(session: NativeAppSession) -> None:
     """Tabs to the next control and throws away everything Orca presented about it."""
 

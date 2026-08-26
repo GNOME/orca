@@ -27,10 +27,10 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
+from .helpers import say_selection
 from .web_native_selection_helpers import (
     assert_walks,
     native_selection,
-    say_selection,
     select_line,
 )
 

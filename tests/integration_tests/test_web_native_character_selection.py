@@ -27,11 +27,11 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
+from .helpers import say_selection, speech
 from .web_native_selection_helpers import (
     LONG_PARAGRAPH,
     assert_walks,
     native_selection,
-    say_selection,
     select_character,
 )
 
@@ -145,3 +145,29 @@ def test_selection_to_the_right_after_structural_navigation(
 
         assert select_character(session, keyboard.KEYSYM_RIGHT) == ["Q", "selected"]
         assert say_selection(session) == ["Selected text is:  Q"]
+
+
+@pytest.mark.native_app
+def test_caret_navigation_after_native_selection(
+    web_native_text_selection: NativeAppSession,
+) -> None:
+    """Tests caret navigation starts from the appropriate native-selection boundary."""
+
+    session = web_native_text_selection
+
+    with native_selection(session):
+        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["S", "selected"]
+        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["t", "selected"]
+        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["r", "selected"]
+
+        keyboard.tap_key(keyboard.KEYSYM_LEFT)
+        assert speech(session) == ["Text unselected.", "S"]
+        assert say_selection(session) == ["No selected text."]
+
+        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["S", "selected"]
+        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["t", "selected"]
+        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["r", "selected"]
+
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        assert speech(session) == ["Text unselected.", "u"]
+        assert say_selection(session) == ["No selected text."]

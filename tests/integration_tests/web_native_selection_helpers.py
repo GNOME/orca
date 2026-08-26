@@ -72,13 +72,6 @@ def select_line(session: NativeAppSession, key: str) -> list[str]:
     return speech(session)
 
 
-def say_selection(session: NativeAppSession) -> list[str]:
-    """Speaks the selection and returns the speech."""
-
-    session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
-    return speech(session)
-
-
 def assert_walks(
     selected: list[list[str]],
     unselected: list[list[str]],
