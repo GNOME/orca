@@ -1052,7 +1052,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         tokens: list[Any] = [
             "\nvvvvv",
             "COMMAND MANAGER: Grab diff:",
-            debug.PreservableValue(reason),
+            reason,
             "(old:",
             len(old_bindings),
             ", new:",

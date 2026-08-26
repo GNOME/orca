@@ -44,18 +44,6 @@ debugFile: TextIO | None = None
 _printing = threading.local()
 
 
-class PreservableValue:
-    """A value which must be logged as-is."""
-
-    __slots__ = ("value",)
-
-    def __init__(self, value: str) -> None:
-        self.value = value
-
-    def __str__(self) -> str:
-        return self.value
-
-
 def print_exception(level: int) -> None:
     """Prints out information regarding the current exception."""
     if level >= debugLevel:

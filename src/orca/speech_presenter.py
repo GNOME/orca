@@ -1746,11 +1746,7 @@ class SpeechPresenter(Extension):
     ) -> bool:
         """Opens value for JSONL recording; an empty string closes any open file (test-only)."""
 
-        tokens = [
-            "SPEECH PRESENTER: Setting log file to '",
-            debug.PreservableValue(value),
-            "'.",
-        ]
+        tokens = ["SPEECH PRESENTER: Setting log file to '", value, "'."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._output_recorder.set_path(value)
 

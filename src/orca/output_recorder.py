@@ -52,7 +52,7 @@ class OutputRecorder:
                 "OUTPUT RECORDER (",
                 self._label,
                 "): Could not open '",
-                debug.PreservableValue(path),
+                path,
                 "':",
                 error,
             ]

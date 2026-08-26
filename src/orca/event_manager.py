@@ -740,7 +740,7 @@ class EventManager:
                 "EVENT MANAGER: Dequeued",
                 event,
                 "priority:",
-                debug.PreservableValue(priority.name),
+                priority.name,
                 ", counter:",
                 counter,
             ]
