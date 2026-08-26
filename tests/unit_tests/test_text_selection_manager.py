@@ -250,6 +250,80 @@ class TestTextSelectionManager:
         assert manager.has_known_selection(obj) is expected
         get_endpoints.assert_not_called()
 
+    def test_get_known_text_selection_endpoints_returns_cached_state(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test known endpoints are returned without querying the accessible application."""
+
+        self._setup_dependencies(test_context)
+        from orca.text_selection_manager import (
+            AXUtilities,
+            TextSelectionManager,
+            ax_cache_manager,
+        )
+
+        manager = TextSelectionManager()
+        root = test_context.Mock(spec=Atspi.Accessible)
+        start = (test_context.Mock(spec=Atspi.Accessible), 2)
+        end = (test_context.Mock(spec=Atspi.Accessible), 8)
+        boundaries_cache = test_context.Mock()
+        boundaries_cache.get.return_value = (start, end)
+        manager._selection_boundaries = boundaries_cache
+        test_context.patch_object(ax_cache_manager, "get_object_key", return_value="root-key")
+        has_selected_text = test_context.patch_object(AXUtilities, "has_selected_text")
+        get_endpoints = test_context.patch_object(
+            AXUtilities,
+            "get_document_text_selection_endpoints",
+        )
+
+        assert manager.get_known_text_selection_endpoints(root) == (start, end)
+        boundaries_cache.get.assert_called_once_with(
+            "root-key",
+            ((None, -1), (None, -1)),
+        )
+        has_selected_text.assert_not_called()
+        get_endpoints.assert_not_called()
+
+    def test_get_known_text_selection_endpoints_prefers_command_state(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test command endpoints take precedence over older cached endpoints."""
+
+        self._setup_dependencies(test_context)
+        from orca.text_selection_manager import (
+            AXUtilities,
+            TextSelectionCommand,
+            TextSelectionManager,
+            _TextSelectionEndpoint,
+        )
+
+        manager = TextSelectionManager()
+        root = test_context.Mock(spec=Atspi.Accessible)
+        anchor_obj = test_context.Mock(spec=Atspi.Accessible)
+        focus_obj = test_context.Mock(spec=Atspi.Accessible)
+        anchor = _TextSelectionEndpoint(anchor_obj, 8)
+        focus = _TextSelectionEndpoint(focus_obj, 2)
+        manager._last_selection_command = TextSelectionCommand(
+            _event=test_context.Mock(),
+            _objects=(anchor_obj, focus_obj),
+            _selection_container=root,
+            _selection_anchor=anchor,
+            _selection_focus=focus,
+            _pending_change=None,
+            _should_notify_user=True,
+        )
+        boundaries_cache = test_context.Mock()
+        manager._selection_boundaries = boundaries_cache
+        test_context.patch_object(AXUtilities, "compare_text_positions", return_value=1)
+
+        assert manager.get_known_text_selection_endpoints(root) == (
+            (focus_obj, 2),
+            (anchor_obj, 8),
+        )
+        boundaries_cache.get.assert_not_called()
+
     def test_update_selection_state_updates_boundaries(
         self,
         test_context: OrcaTestContext,
@@ -455,6 +529,7 @@ class TestTextSelectionManager:
             True,
             selection_container=document,
             selection_anchor=_TextSelectionEndpoint(anchor_obj, 0),
+            selection_focus=_TextSelectionEndpoint(requested_end_obj, 8),
             pending_change=_PendingSelectionChange(
                 container=document,
                 anchor=_TextSelectionEndpoint(anchor_obj, 0),
@@ -537,6 +612,7 @@ class TestTextSelectionManager:
             True,
             selection_container=document,
             selection_anchor=_TextSelectionEndpoint(start[0], start[1]),
+            selection_focus=_TextSelectionEndpoint(end[0], end[1]),
             pending_change=_PendingSelectionChange(
                 container=document,
                 anchor=_TextSelectionEndpoint(start[0], start[1]),
@@ -725,6 +801,7 @@ class TestTextSelectionManager:
             True,
             selection_container=container,
             selection_anchor=_TextSelectionEndpoint(invalid_anchor_obj, 2),
+            selection_focus=None,
             pending_change=None,
         )
         test_context.patch_object(
@@ -1463,6 +1540,7 @@ class TestTextSelectionManager:
             True,
             selection_container=document,
             selection_anchor=None,
+            selection_focus=None,
             pending_change=None,
         )
 
@@ -1491,6 +1569,7 @@ class TestTextSelectionManager:
             False,
             selection_container=None,
             selection_anchor=None,
+            selection_focus=None,
             pending_change=None,
         )
         input_manager = input_event_manager.get_manager.return_value
@@ -1542,6 +1621,7 @@ class TestTextSelectionManager:
             True,
             selection_container=None,
             selection_anchor=None,
+            selection_focus=None,
             pending_change=None,
         )
         input_manager = input_event_manager.get_manager.return_value
@@ -1569,6 +1649,7 @@ class TestTextSelectionManager:
             True,
             selection_container=None,
             selection_anchor=None,
+            selection_focus=None,
             pending_change=None,
         )
         input_manager = input_event_manager.get_manager.return_value
@@ -1601,6 +1682,7 @@ class TestTextSelectionManager:
             True,
             selection_container=None,
             selection_anchor=None,
+            selection_focus=None,
             pending_change=None,
         )
         assert manager.defer_page_change_for_current_selection(2)
@@ -1611,6 +1693,7 @@ class TestTextSelectionManager:
             True,
             selection_container=None,
             selection_anchor=None,
+            selection_focus=None,
             pending_change=None,
         )
 

@@ -100,6 +100,7 @@ class TextSelectionCommand:
     _objects: tuple[Atspi.Accessible, ...]
     _selection_container: Atspi.Accessible | None
     _selection_anchor: _TextSelectionEndpoint | None
+    _selection_focus: _TextSelectionEndpoint | None
     _pending_change: _PendingSelectionChange | None
     _should_notify_user: bool
 
@@ -122,6 +123,11 @@ class TextSelectionCommand:
         """Returns the anchor associated with this selection command."""
 
         return self._selection_anchor
+
+    def get_selection_focus(self) -> _TextSelectionEndpoint | None:
+        """Returns the focus associated with this selection command."""
+
+        return self._selection_focus
 
     def get_pending_change(self) -> _PendingSelectionChange | None:
         """Returns the selection change awaiting its reported result."""
@@ -470,6 +476,38 @@ class TextSelectionManager:
         start, end = self._get_cached_selection(key)
         return start[0] is not None or end[0] is not None
 
+    @staticmethod
+    def _get_text_selection_endpoints(
+        anchor: _TextSelectionEndpoint | None,
+        focus: _TextSelectionEndpoint | None,
+    ) -> SelectionBoundaries:
+        """Returns the ordered endpoints, or empty endpoints when no selection exists."""
+
+        if anchor is None or focus is None:
+            return (None, -1), (None, -1)
+        anchor_position = anchor.accessible_object, anchor.offset
+        focus_position = focus.accessible_object, focus.offset
+        if anchor_position == focus_position:
+            return (None, -1), (None, -1)
+        if AXUtilities.compare_text_positions(*anchor_position, *focus_position) > 0:
+            return focus_position, anchor_position
+        return anchor_position, focus_position
+
+    def get_known_text_selection_endpoints(
+        self,
+        selection_root: Atspi.Accessible,
+    ) -> SelectionBoundaries:
+        """Returns selection endpoints already known for selection_root without querying it."""
+
+        command = self._last_selection_command
+        if command is not None and command.get_selection_container() == selection_root:
+            return self._get_text_selection_endpoints(
+                command.get_selection_anchor(),
+                command.get_selection_focus(),
+            )
+
+        return self._get_cached_selection(ax_cache_manager.get_object_key(selection_root))
+
     def _get_cached_selection(self, key: Hashable) -> SelectionBoundaries:
         """Returns the cached selection boundaries for key."""
 
@@ -799,6 +837,7 @@ class TextSelectionManager:
             notify_user,
             selection_container=snapshot.selection_container,
             selection_anchor=result.anchor,
+            selection_focus=new_focus if result.anchor is not None else None,
             pending_change=result.pending_change,
         )
         return True
@@ -990,19 +1029,12 @@ class TextSelectionManager:
         if cached_selection is not None:
             add_selection(cached_selection)
         if command is not None:
-            pending_change = command.get_pending_change()
-            if pending_change is not None:
-                anchor = (
-                    pending_change.anchor.accessible_object,
-                    pending_change.anchor.offset,
+            add_selection(
+                self._get_text_selection_endpoints(
+                    command.get_selection_anchor(),
+                    command.get_selection_focus(),
                 )
-                focus = (
-                    pending_change.focus.accessible_object,
-                    pending_change.focus.offset,
-                )
-                if AXUtilities.compare_text_positions(*anchor, *focus) > 0:
-                    anchor, focus = focus, anchor
-                add_selection((anchor, focus))
+            )
             for obj in command.get_objects():
                 add_candidate(obj)
 
@@ -1036,6 +1068,7 @@ class TextSelectionManager:
         *,
         selection_container: Atspi.Accessible | None,
         selection_anchor: _TextSelectionEndpoint | None,
+        selection_focus: _TextSelectionEndpoint | None,
         pending_change: _PendingSelectionChange | None,
     ) -> None:
         """Records an Orca selection command triggered by event."""
@@ -1049,6 +1082,7 @@ class TextSelectionManager:
             _objects=objects,
             _selection_container=selection_container,
             _selection_anchor=selection_anchor,
+            _selection_focus=selection_focus,
             _pending_change=pending_change,
             _should_notify_user=notify_user,
         )
