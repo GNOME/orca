@@ -493,6 +493,16 @@ class AXUtilities:
         tuple[Atspi.Accessible | None, int],
     ]: ...
     @staticmethod
+    def get_text_selection_endpoints_from_document_interface(
+        document: Atspi.Accessible | None,
+    ) -> tuple[
+        bool,
+        tuple[
+            tuple[Atspi.Accessible | None, int],
+            tuple[Atspi.Accessible | None, int],
+        ],
+    ]: ...
+    @staticmethod
     def set_document_text_selection_endpoints(
         document: Atspi.Accessible,
         anchor_obj: Atspi.Accessible,

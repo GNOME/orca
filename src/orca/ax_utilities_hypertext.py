@@ -268,14 +268,12 @@ class AXUtilitiesHypertext:
 
             return math_presenter.get_presenter().expand_embedded_math(obj)
 
-        if not AXUtilitiesHypertext.can_expand_embedded_object_as_text(obj):
+        if AXUtilitiesRole.is_grid(obj):
+            tokens = ["AXUtilitiesHypertext: Not expanding EOCs in grid", obj]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
-        if AXUtilitiesRole.is_grid(obj) or AXUtilitiesObject.find_descendant(
-            obj, AXUtilitiesRole.is_grid
-        ):
-            tokens = ["AXUtilitiesHypertext: Not expanding EOCs in", obj, "which contains a grid."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if not AXUtilitiesHypertext.can_expand_embedded_object_as_text(obj):
             return ""
 
         text = AXText.get_substring(obj, start_offset, end_offset)

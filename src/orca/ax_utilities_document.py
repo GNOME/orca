@@ -99,29 +99,11 @@ class AXUtilitiesDocument:
     ]:
         """Returns the inclusive start and exclusive end of the document selection."""
 
-        if document is not None:
-            success, selections = AXDocument.get_text_selections(document)
-            if selections:
-                selection = selections[0]
-                if (
-                    selection.start_object is not None
-                    and selection.end_object is not None
-                    and selection.start_offset >= 0
-                    and selection.end_offset >= 0
-                ):
-                    start = selection.start_object, selection.start_offset
-                    end = selection.end_object, selection.end_offset
-                    tokens = [
-                        "AXUtilitiesDocument: Text selection boundaries in",
-                        document,
-                        "are",
-                        start,
-                        end,
-                    ]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    return start, end
-            if success:
-                return (None, -1), (None, -1)
+        success, endpoints = (
+            AXUtilitiesDocument.get_text_selection_endpoints_from_document_interface(document)
+        )
+        if success:
+            return endpoints
 
         if not search_text_objects:
             msg = "AXUtilitiesDocument: Not searching text objects for selection boundaries."
@@ -134,6 +116,47 @@ class AXUtilitiesDocument:
         if end[0] is not None:
             end = end[0], end[1] + 1
         return start, end
+
+    @staticmethod
+    def get_text_selection_endpoints_from_document_interface(
+        document: Atspi.Accessible | None,
+    ) -> tuple[
+        bool,
+        tuple[
+            tuple[Atspi.Accessible | None, int],
+            tuple[Atspi.Accessible | None, int],
+        ],
+    ]:
+        """Returns whether the document getter succeeded and the selection endpoints."""
+
+        no_selection = (None, -1), (None, -1)
+        if document is None:
+            return False, no_selection
+
+        success, selections = AXDocument.get_text_selections(document)
+        if not selections:
+            return success, no_selection
+
+        selection = selections[0]
+        if (
+            selection.start_object is None
+            or selection.end_object is None
+            or selection.start_offset < 0
+            or selection.end_offset < 0
+        ):
+            return success, no_selection
+
+        start = selection.start_object, selection.start_offset
+        end = selection.end_object, selection.end_offset
+        tokens = [
+            "AXUtilitiesDocument: Text selection boundaries in",
+            document,
+            "are",
+            start,
+            end,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return success, (start, end)
 
     @staticmethod
     def set_document_text_selection_endpoints(

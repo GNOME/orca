@@ -494,25 +494,34 @@ class TestAXUtilitiesHypertext:
 
         assert AXUtilitiesHypertext.expand_eocs(parent) == "Question "
 
-    def test_expand_eocs_does_not_expand_grid_subtree(
+    def test_expand_eocs_does_not_expand_grid(
         self,
         test_context: OrcaTestContext,
     ) -> None:
-        """Test EOCs are not expanded in a subtree containing a grid."""
+        """Test grid contents are not expanded."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        from orca.ax_utilities_hypertext import AXText, AXUtilitiesHypertext
+        dependencies = self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import (
+            AXText,
+            AXUtilitiesHypertext,
+            AXUtilitiesRole,
+        )
 
-        obj = test_context.Mock(spec=Atspi.Accessible)
+        parent = test_context.Mock(spec=Atspi.Accessible)
         grid = test_context.Mock(spec=Atspi.Accessible)
-        essential_modules[
+        test_context.patch_object(
+            AXText,
+            "get_substring",
+            side_effect=lambda obj, _start, _end: "before \ufffc after" if obj == parent else "",
+        )
+        test_context.patch_object(AXText, "get_character_count", return_value=5)
+        test_context.patch_object(AXUtilitiesHypertext, "find_child_at_offset", return_value=grid)
+        AXUtilitiesRole.is_grid.side_effect = lambda obj: obj == grid
+
+        assert AXUtilitiesHypertext.expand_eocs(parent, 0, -1) == "before  after"
+        dependencies[
             "orca.ax_utilities_object"
-        ].AXUtilitiesObject.find_descendant.return_value = grid
-        test_context.patch_object(AXText, "get_substring", return_value="grid text")
-
-        result = AXUtilitiesHypertext.expand_eocs(obj, 0, -1)
-
-        assert result == ""
+        ].AXUtilitiesObject.find_descendant.assert_not_called()
 
     def test_expand_eocs_does_not_expand_object_with_embedded_role(
         self,

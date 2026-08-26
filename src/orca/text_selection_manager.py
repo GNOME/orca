@@ -464,12 +464,6 @@ class TextSelectionManager:
 
         return self._has_cached_selection(ax_cache_manager.get_object_key(selection_root))
 
-    def _has_pending_selection_change(self) -> bool:
-        """Returns True if an Orca selection command is awaiting its reported result."""
-
-        command = self._last_selection_command
-        return command is not None and command.get_pending_change() is not None
-
     def _has_cached_selection(self, key: Hashable) -> bool:
         """Returns True if the cached boundaries for key describe selected text."""
 
@@ -553,6 +547,30 @@ class TextSelectionManager:
         if state == SelectionChangeState.PRESENTABLE and start[0] is None and end[0] is None:
             self._clear_cached_selection_state(selection_root)
 
+    def _get_selection_endpoints_for_change(
+        self,
+        document: Atspi.Accessible | None,
+        selection_root: Atspi.Accessible,
+    ) -> SelectionBoundaries:
+        """Returns the current selection endpoints."""
+
+        success, endpoints = AXUtilities.get_text_selection_endpoints_from_document_interface(
+            document
+        )
+        if success:
+            return endpoints
+
+        command = self._last_selection_command
+        if command is not None and self._get_current_selection_command() is command:
+            pending_change = command.get_pending_change()
+            if pending_change is not None and pending_change.container == selection_root:
+                return self._get_text_selection_endpoints(
+                    pending_change.anchor,
+                    pending_change.focus,
+                )
+
+        return AXUtilities.get_document_text_selection_endpoints(None, selection_root)
+
     def update_selection_state(
         self,
         obj: Atspi.Accessible,
@@ -563,15 +581,8 @@ class TextSelectionManager:
         key = ax_cache_manager.get_object_key(selection_root)
         old_selection = self._get_cached_selection(key)
         old_start, old_end = old_selection
-        search_text_objects = (
-            self._has_pending_selection_change()
-            or self._has_cached_selection(key)
-            or AXUtilities.has_selected_text(obj)
-        )
-        start, end = AXUtilities.get_document_text_selection_endpoints(
-            document, selection_root, search_text_objects
-        )
-        selection = (start, end)
+        selection = self._get_selection_endpoints_for_change(document, selection_root)
+        start, end = selection
         tokens = [
             "TEXT SELECTION MANAGER: Updating text selection state for",
             obj,

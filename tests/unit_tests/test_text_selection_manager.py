@@ -359,10 +359,9 @@ class TestTextSelectionManager:
         )
         get_endpoints = test_context.patch_object(
             AXUtilities,
-            "get_document_text_selection_endpoints",
-            return_value=(start, end),
+            "get_text_selection_endpoints_from_document_interface",
+            return_value=(True, (start, end)),
         )
-        test_context.patch_object(AXUtilities, "has_selected_text", return_value=True)
         state, old_selection, selection = manager.update_selection_state(event_source)
 
         assert state == SelectionChangeState.NOT_ORCA
@@ -370,25 +369,14 @@ class TestTextSelectionManager:
         assert selection == (start, end)
         get_object_key.assert_called_once_with(document)
         get_document.assert_called_once_with(event_source, AXUtilities.is_document)
-        get_endpoints.assert_called_once_with(document, document, True)
+        get_endpoints.assert_called_once_with(document)
         boundaries_cache.put.assert_called_once_with("root-key", (start, end))
 
-    @pytest.mark.parametrize(
-        "obj_has_selection,cached_boundaries,expected",
-        [
-            pytest.param(True, None, True, id="object_reports_selected_text"),
-            pytest.param(False, "recorded", True, id="root_has_recorded_boundaries"),
-            pytest.param(False, None, False, id="nothing_selected"),
-        ],
-    )
-    def test_update_selection_state_searches_text_objects_only_when_needed(
+    def test_update_selection_state_searches_text_objects_without_document_endpoints(
         self,
         test_context: OrcaTestContext,
-        obj_has_selection: bool,
-        cached_boundaries: str | None,
-        expected: bool,
     ) -> None:
-        """Test the manager only searches text objects if selected text might be found."""
+        """Test text objects provide endpoints when the document interface cannot."""
 
         self._setup_dependencies(test_context)
         from orca.text_selection_manager import (
@@ -402,24 +390,29 @@ class TestTextSelectionManager:
         manager._selection_boundaries = boundaries_cache
         document = test_context.Mock(spec=Atspi.Accessible)
         event_source = test_context.Mock(spec=Atspi.Accessible)
-        recorded = ((test_context.Mock(spec=Atspi.Accessible), 0), (document, 4))
-        boundaries_cache.get.return_value = (
-            recorded if cached_boundaries else ((None, -1), (None, -1))
-        )
+        start = (test_context.Mock(spec=Atspi.Accessible), 0)
+        end = (test_context.Mock(spec=Atspi.Accessible), 8)
+        boundaries_cache.get.return_value = ((None, -1), (None, -1))
         test_context.patch_object(ax_cache_manager, "get_object_key", return_value="root-key")
         test_context.patch_object(
             AXUtilities, "find_outermost_ancestor_inclusive", return_value=document
         )
-        get_endpoints = test_context.patch_object(
+        get_document_endpoints = test_context.patch_object(
+            AXUtilities,
+            "get_text_selection_endpoints_from_document_interface",
+            return_value=(False, ((None, -1), (None, -1))),
+        )
+        search_text_objects = test_context.patch_object(
             AXUtilities,
             "get_document_text_selection_endpoints",
-            return_value=((None, -1), (None, -1)),
+            return_value=(start, end),
         )
-        test_context.patch_object(AXUtilities, "has_selected_text", return_value=obj_has_selection)
-        test_context.patch_object(AXUtilities, "update_cached_selected_text")
-        manager.update_selection_state(event_source)
 
-        get_endpoints.assert_called_once_with(document, document, expected)
+        _state, _old_selection, selection = manager.update_selection_state(event_source)
+
+        assert selection == (start, end)
+        get_document_endpoints.assert_called_once_with(document)
+        search_text_objects.assert_called_once_with(None, document)
 
     def test_unpresentable_selection_change_updates_boundaries_and_text_caches(
         self,
@@ -452,8 +445,8 @@ class TestTextSelectionManager:
         )
         test_context.patch_object(
             AXUtilities,
-            "get_document_text_selection_endpoints",
-            return_value=selection,
+            "get_text_selection_endpoints_from_document_interface",
+            return_value=(True, selection),
         )
         test_context.patch_object(
             AXUtilities,
@@ -506,8 +499,8 @@ class TestTextSelectionManager:
         )
         test_context.patch_object(
             AXUtilities,
-            "get_document_text_selection_endpoints",
-            return_value=intermediate_selection,
+            "get_text_selection_endpoints_from_document_interface",
+            return_value=(True, intermediate_selection),
         )
         test_context.patch_object(AXUtilities, "compare_text_positions", return_value=-1)
         test_context.patch_object(
@@ -577,8 +570,8 @@ class TestTextSelectionManager:
         test_context.patch_object(ax_cache_manager, "get_object_key", return_value="root-key")
         test_context.patch_object(
             AXUtilities,
-            "get_document_text_selection_endpoints",
-            return_value=(start, end),
+            "get_text_selection_endpoints_from_document_interface",
+            return_value=(True, (start, end)),
         )
         test_context.patch_object(
             AXUtilities,
