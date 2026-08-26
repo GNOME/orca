@@ -59,12 +59,14 @@ class Command:
         enabled: bool = True,
         suspended: bool = False,
         transient: bool = False,
+        activation_group: str | None = None,
     ) -> None:
         """Initializes a command."""
 
         self._name = name
         self._function = function
         self._group_label = group_label
+        self._activation_group = activation_group
         self._description = description
         self._enabled = enabled
         self._suspended = suspended
@@ -97,6 +99,11 @@ class Command:
         """Returns the group label for display grouping."""
 
         return self._group_label
+
+    def get_activation_group(self) -> str:
+        """Returns the group used to enable and suspend this command."""
+
+        return self._activation_group or self._group_label
 
     def get_description(self) -> str:
         """Returns the command description."""
@@ -160,10 +167,20 @@ class KeyboardCommand(Command):  # pylint: disable=too-many-instance-attributes
         suspended: bool = False,
         is_group_toggle: bool = False,
         transient: bool = False,
+        activation_group: str | None = None,
     ) -> None:
         """Initializes a keyboard command."""
 
-        super().__init__(name, function, group_label, description, enabled, suspended, transient)
+        super().__init__(
+            name,
+            function,
+            group_label,
+            description,
+            enabled=enabled,
+            suspended=suspended,
+            transient=transient,
+            activation_group=activation_group,
+        )
 
         # The default bindings.
         self._desktop_keybinding = desktop_keybinding

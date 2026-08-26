@@ -709,14 +709,16 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         return bool(self._user_extension_binding_conflicts.get(extension_name))
 
-    def _get_keyboard_commands_by_group_label(
+    def _get_keyboard_commands_by_activation_group(
         self,
-        group_label: str,
+        activation_group: str,
     ) -> tuple[KeyboardCommand, ...]:
-        """Returns all keyboard commands with the specified group label."""
+        """Returns all keyboard commands in the specified activation group."""
 
         return tuple(
-            cmd for cmd in self._keyboard_commands.values() if cmd.get_group_label() == group_label
+            cmd
+            for cmd in self._keyboard_commands.values()
+            if cmd.get_activation_group() == activation_group
         )
 
     # pylint: disable-next=too-many-locals
@@ -858,27 +860,27 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             group_a in group_set and group_b in group_set for group_set in self._exclusive_groups
         )
 
-    def is_group_enabled(self, group_label: str) -> bool:
-        """Returns the enabled state of the specified command group."""
+    def is_group_enabled(self, activation_group: str) -> bool:
+        """Returns the enabled state of the specified activation group."""
 
-        stored = self._group_enabled.get(group_label)
+        stored = self._group_enabled.get(activation_group)
         if stored is not None:
             return stored
-        for cmd in self._get_keyboard_commands_by_group_label(group_label):
+        for cmd in self._get_keyboard_commands_by_activation_group(activation_group):
             if not cmd.is_group_toggle():
                 return cmd.is_enabled()
         return False
 
-    def set_group_enabled(self, group_label: str, enabled: bool) -> None:
-        """Sets the enabled state for all commands in a group."""
+    def set_group_enabled(self, activation_group: str, enabled: bool) -> None:
+        """Sets the enabled state for all commands in an activation group."""
 
-        self._group_enabled[group_label] = enabled
+        self._group_enabled[activation_group] = enabled
 
         orca_modifiers = orca_modifier_manager.get_manager().get_orca_modifier_keys()
         added_count = 0
         removed_count = 0
 
-        for cmd in self._get_keyboard_commands_by_group_label(group_label):
+        for cmd in self._get_keyboard_commands_by_activation_group(activation_group):
             # Group toggle commands are skipped since they must remain active to re-enable
             # the group.
             if cmd.is_group_toggle():
@@ -902,7 +904,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         if removed_count or added_count:
             tokens = [
                 "COMMAND MANAGER: set_group_enabled(",
-                group_label,
+                activation_group,
                 ",",
                 enabled,
                 "): removed",
@@ -912,14 +914,14 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-    def set_group_suspended(self, group_label: str, suspended: bool) -> None:
-        """Sets the suspended state for all commands in a group."""
+    def set_group_suspended(self, activation_group: str, suspended: bool) -> None:
+        """Sets the suspended state for all commands in an activation group."""
 
         orca_modifiers = orca_modifier_manager.get_manager().get_orca_modifier_keys()
         added_count = 0
         removed_count = 0
 
-        for cmd in self._get_keyboard_commands_by_group_label(group_label):
+        for cmd in self._get_keyboard_commands_by_activation_group(activation_group):
             if cmd.is_group_toggle():
                 continue
 
@@ -941,7 +943,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         if removed_count or added_count:
             tokens = [
                 "COMMAND MANAGER: set_group_suspended(",
-                group_label,
+                activation_group,
                 ",",
                 suspended,
                 "): removed",

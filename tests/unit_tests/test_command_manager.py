@@ -76,6 +76,7 @@ class TestCommand:
         assert command.get_name() == "testCommand"
         assert command.get_function() == function
         assert command.get_group_label() == "Test Group"
+        assert command.get_activation_group() == "Test Group"
         assert command.get_description() == ""
 
     def test_init_full(self, test_context: OrcaTestContext) -> None:
@@ -92,11 +93,13 @@ class TestCommand:
             "Full description",
             enabled=False,
             suspended=True,
+            activation_group="Full activation group",
         )
 
         assert command.get_name() == "fullCommand"
         assert command.get_function() == function
         assert command.get_group_label() == "Full Group"
+        assert command.get_activation_group() == "Full activation group"
         assert command.get_description() == "Full description"
         assert command.is_enabled() is False
         assert command.is_suspended() is True
@@ -114,6 +117,7 @@ class TestCommand:
 
         command.set_group_label("New Group")
         assert command.get_group_label() == "New Group"
+        assert command.get_activation_group() == "New Group"
 
     def test_init_enabled_suspended_defaults(self, test_context: OrcaTestContext) -> None:
         """Test that enabled defaults to True and suspended defaults to False."""
