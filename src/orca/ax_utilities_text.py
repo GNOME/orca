@@ -1198,7 +1198,8 @@ class AXUtilitiesText:
     def clear_all_selected_text(obj: Atspi.Accessible) -> None:
         """Attempts to clear the selected text."""
 
-        for i in range(AXText.get_n_selections(obj)):
+        # Remove from the end so earlier selection indices remain valid.
+        for i in reversed(range(AXText.get_n_selections(obj))):
             AXText.remove_selection(obj, i)
 
     @staticmethod

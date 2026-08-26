@@ -1985,7 +1985,7 @@ class TestAXText:
         test_context.patch_object(AXText, "get_n_selections", return_value=3)
         test_context.patch_object(AXText, "remove_selection", new=mock_remove_selection)
         AXUtilitiesText.clear_all_selected_text(test_context.Mock(spec=Atspi.Accessible))
-        assert removed_selections == [0, 1, 2]
+        assert removed_selections == [2, 1, 0]
 
     def test_remove_selection(self, test_context: OrcaTestContext) -> None:
         """Test AXText.remove_selection."""
