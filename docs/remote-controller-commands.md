@@ -16,6 +16,7 @@ Additional information about using the remote controller can be found in [remote
 These commands are available directly on the main service object at `/org/gnome/Orca1/Service`.
 
 - **`DisplayMessage`**(`message` (s), `persistent` (b)) → `b`: Displays message on the braille display.
+- **`GetAtspiVersion`**() → `s`: Returns the version of AT-SPI2 Orca is using.
 - **`GetVersion`**() → `s`: Returns Orca's version and revision if available.
 - **`PresentMessage`**(`message` (s)) → `b`: Presents message to the user via speech and braille.
 - **`Quit`**() → `b`: Quits Orca.

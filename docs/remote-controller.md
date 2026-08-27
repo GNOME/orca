@@ -35,6 +35,16 @@ gdbus call --session --dest org.gnome.Orca1.Service \
 
 **Returns:** String containing the version (and revision if available)
 
+### Get the AT-SPI2 Version
+
+```bash
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service \
+    --method org.gnome.Orca1.Service.GetAtspiVersion
+```
+
+**Returns:** String containing the version of AT-SPI2 Orca is using
+
 ### Present a Custom Message in Speech and/or Braille
 
 ```bash

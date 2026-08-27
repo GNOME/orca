@@ -709,6 +709,15 @@ class OrcaDBusServiceInterface(Publishable):
         presentation_manager.get_manager().display_message(message, persistent=persistent)
         return True
 
+    def GetAtspiVersion(self) -> str:  # pylint: disable=invalid-name
+        """Returns the version of AT-SPI2 Orca is using."""
+
+        version = Atspi.get_version()  # pylint: disable=no-value-for-parameter
+        result = f"{version[0]}.{version[1]}.{version[2]}"
+        tokens = ["DBUS SERVICE: GetAtspiVersion called, returning:", result]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return result
+
     def GetVersion(self) -> str:  # pylint: disable=invalid-name
         """Returns Orca's version and revision if available."""
 
@@ -860,6 +869,16 @@ class OrcaRemoteController:
             return False
 
         return self._unpublish_module(module_name)
+
+    def get_atspi_version_internal(self) -> str:
+        """Returns the version of AT-SPI2 Orca is using without a D-Bus round-trip."""
+
+        if self._dbus_service_interface is None:
+            msg = "REMOTE CONTROLLER: Cannot get AT-SPI2 version; service not started."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return ""
+
+        return self._dbus_service_interface.GetAtspiVersion()
 
     def get_version_internal(self) -> str:
         """Returns Orca's version and revision without a D-Bus round-trip."""

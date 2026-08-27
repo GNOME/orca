@@ -330,6 +330,14 @@ Returns Orca's version and revision (if available) as a string, for example
 version = self.controller.get_version_internal()
 ```
 
+### `get_atspi_version_internal()`
+
+Returns the version of AT-SPI2 Orca is using as a string, for example `"2.56.0"`.
+
+```python
+atspi_version = self.controller.get_atspi_version_internal()
+```
+
 ### `present_message_internal(message)`
 
 Presents a message using Orca's normal message presentation. This can include

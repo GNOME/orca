@@ -1046,6 +1046,15 @@ class TestOrcaDBusIntegration:
         assert len(str(version)) > 0
 
     @pytest.mark.dbus
+    def test_get_atspi_version(self, dbus_service_proxy):
+        """Test the GetAtspiVersion service command."""
+
+        version = str(dbus_service_proxy.GetAtspiVersion())
+        parts = version.split(".")
+        assert len(parts) == 3, f"Expected a major.minor.micro version, got: {version}"
+        assert all(part.isdigit() for part in parts), f"Non-numeric version part in: {version}"
+
+    @pytest.mark.dbus
     def test_list_modules(self, bus):
         """Test listing available modules via introspection of the service root."""
 
