@@ -992,6 +992,10 @@ class CaretNavigator(Extension):
             contents = script.utilities.get_next_line_contents(*selection_boundary)
         else:
             contents = script.utilities.get_next_line_contents()
+        if caret_set_reason == CaretSetReason.TEXT_SELECTION_BY_LINE and contents:
+            candidate = contents[-1] if line == contents or move_to_line_end else contents[0]
+            if not self._is_navigable_object(script, candidate[0]):
+                contents = []
         if not contents:
             last_obj, last_offset = self._get_end_of_file(script)
             boundary_line = (
@@ -1003,6 +1007,8 @@ class CaretNavigator(Extension):
                 msg = "CARET NAVIGATOR: At end of document; cannot move to next line."
                 debug.print_message(debug.LEVEL_INFO, msg)
                 contents = boundary_line
+                if caret_set_reason == CaretSetReason.TEXT_SELECTION_BY_LINE:
+                    move_to_line_end = True
 
         if not contents:
             return False
@@ -1015,6 +1021,8 @@ class CaretNavigator(Extension):
                 obj, offset, end, _string = contents[0]
         else:
             obj, offset, end, _string = contents[-1]
+            if move_to_line_end:
+                offset = end
 
         if not self._is_navigable_object(script, obj):
             return False

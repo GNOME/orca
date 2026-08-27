@@ -1104,6 +1104,11 @@ class TestCaretNavigator:
             "_is_navigable_object",
             return_value=False,
         )
+        test_context.patch_object(
+            navigator,
+            "_get_end_of_file",
+            return_value=("other text", 34),
+        )
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         pres_manager.interrupt_presentation.reset_mock()
 
@@ -1112,6 +1117,45 @@ class TestCaretNavigator:
         mock_script.utilities.set_caret_position.assert_not_called()
         pres_manager.interrupt_presentation.assert_not_called()
         assert navigator._last_input_event is None
+
+    def test_select_next_line_moves_to_end_when_next_contents_are_outside_document(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test line selection includes the final line before an adjacent UI control."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import CaretNavigator, CaretSetReason
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        current_line = [("text", 26, 34, "The end.")]
+        mock_script.utilities.get_caret_context.return_value = ("text", 26)
+        mock_script.utilities.get_line_contents_at_offset.return_value = current_line
+        mock_script.utilities.get_next_line_contents.return_value = [("scrollbar", 0, 0, "")]
+        test_context.patch_object(
+            navigator,
+            "_is_navigable_object",
+            side_effect=lambda _script, obj: obj == "text",
+        )
+        test_context.patch_object(
+            navigator,
+            "_get_end_of_file",
+            return_value=("text", 34),
+        )
+
+        assert navigator._move_to_next_line(
+            mock_script,
+            mock_event,
+            False,
+            caret_set_reason=CaretSetReason.TEXT_SELECTION_BY_LINE,
+        )
+        mock_script.utilities.set_caret_position.assert_called_once_with(
+            "text",
+            34,
+            reason=CaretSetReason.TEXT_SELECTION_BY_LINE,
+        )
 
     def test_select_next_line_from_line_end_moves_to_end_of_next_line(
         self,
