@@ -1091,6 +1091,12 @@ class CaretNavigator(Extension):
             return False
 
         line = script.utilities.get_line_contents_at_offset(obj, offset)
+        if (
+            caret_set_reason == CaretSetReason.TEXT_SELECTION_BY_LINE
+            and line
+            and any(start < 0 or end < start for _obj, start, end, _string in line)
+        ):
+            line = script.utilities.get_line_contents_at_offset(obj, max(0, offset - 1))
         if not (line and line[0]):
             return False
 
@@ -1363,12 +1369,20 @@ class CaretNavigator(Extension):
         if obj is None:
             return False
 
-        contents = script.utilities.get_line_contents_at_offset(obj, end)
+        character_count = AXText.get_character_count(obj)
+        line_offset = min(end, max(0, character_count - 1))
+        contents = script.utilities.get_line_contents_at_offset(obj, line_offset)
         if not contents:
             return False
 
         self._last_input_event = event
         obj, start, end, _string = contents[-1]
+        character_count = AXText.get_character_count(obj)
+        if character_count > 0 and not 0 <= start <= end <= character_count:
+            tokens = ["CARET NAVIGATOR: Invalid end-of-file line range:", contents[-1]]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
         presentation_manager.get_manager().interrupt_presentation()
         self._set_caret_position(
             script,

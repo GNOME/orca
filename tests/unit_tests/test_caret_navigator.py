@@ -1208,7 +1208,10 @@ class TestCaretNavigator:
         obj = test_context.Mock()
         line = [(obj, 4, 8, "Two.")]
         script.utilities.get_caret_context.return_value = (obj, 8)
-        script.utilities.get_line_contents_at_offset.return_value = line
+        script.utilities.get_line_contents_at_offset.side_effect = [
+            [(obj, -2, -1, "")],
+            line,
+        ]
         test_context.patch_object(navigator, "_is_navigable_object", return_value=True)
         set_caret_position = test_context.patch_object(navigator, "_set_caret_position")
 
@@ -1218,6 +1221,10 @@ class TestCaretNavigator:
             False,
             caret_set_reason=CaretSetReason.TEXT_SELECTION_BY_LINE,
         )
+        assert script.utilities.get_line_contents_at_offset.call_args_list == [
+            call(obj, 8),
+            call(obj, 7),
+        ]
         script.utilities.get_previous_line_contents.assert_not_called()
         set_caret_position.assert_called_once_with(
             script,
@@ -1357,7 +1364,9 @@ class TestCaretNavigator:
         """Test end-of-file presentation does not include a page role."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.caret_navigator import AXUtilities, CaretNavigator
+        from orca.ax_text import AXText
+        from orca.ax_utilities import AXUtilities
+        from orca.caret_navigator import CaretNavigator
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
@@ -1366,11 +1375,16 @@ class TestCaretNavigator:
         mock_script.utilities.get_caret_context.return_value = ("source", 12)
         mock_script.utilities.get_line_contents_at_offset.return_value = contents
         test_context.patch_object(navigator, "_get_end_of_file", return_value=("destination", 34))
+        test_context.patch_object(AXText, "get_character_count", return_value=34)
         test_context.patch_object(AXUtilities, "is_page", return_value=is_page)
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         pres_manager.present_contents.reset_mock()
 
         assert navigator.end_of_file(mock_script, mock_event) is True
+        mock_script.utilities.get_line_contents_at_offset.assert_called_once_with(
+            "destination",
+            33,
+        )
         pres_manager.present_contents.assert_called_once_with(
             contents,
             prior_obj=expected_prior_obj,
