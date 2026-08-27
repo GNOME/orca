@@ -73,8 +73,10 @@ class CaretNavigator(Extension):
 
     _SCHEMA = "caret-navigation"
     KEY_ENABLED = "enabled"
+    KEY_SELECTION_ENABLED = "selection-enabled"
     KEY_TRIGGERS_FOCUS_MODE = "triggers-focus-mode"
     KEY_LAYOUT_MODE = "layout-mode"
+    SELECTION_ACTIVATION_GROUP = "caret-selection"
 
     def _get_setting(self, key: str, default: bool) -> bool:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -154,6 +156,10 @@ class CaretNavigator(Extension):
                 guilabels.KB_GROUP_CARET_NAVIGATION,
                 value,
             )
+            command_manager.get_manager().set_group_enabled(
+                self.SELECTION_ACTIVATION_GROUP,
+                value and self.get_selection_enabled(),
+            )
             return True
 
         tokens = ["CARET NAVIGATOR: Setting enabled to", value, "."]
@@ -162,7 +168,43 @@ class CaretNavigator(Extension):
 
         self._last_input_event = None
         command_manager.get_manager().set_group_enabled(guilabels.KB_GROUP_CARET_NAVIGATION, value)
+        command_manager.get_manager().set_group_enabled(
+            self.SELECTION_ACTIVATION_GROUP,
+            value and self.get_selection_enabled(),
+        )
 
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_SELECTION_ENABLED,
+        schema="caret-navigation",
+        gtype="b",
+        default=False,
+        summary="Enable Orca-controlled text selection",
+        user_visible=False,
+    )
+    def get_selection_enabled(self) -> bool:
+        """Returns whether Orca-controlled text selection is enabled."""
+
+        return self._get_setting(self.KEY_SELECTION_ENABLED, False)
+
+    def set_selection_enabled(self, value: bool) -> bool:
+        """Sets whether Orca-controlled text selection is enabled."""
+
+        if self.get_selection_enabled() != value:
+            tokens = ["CARET NAVIGATOR: Setting text selection enabled to", value, "."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            gsettings_registry.get_registry().set_runtime_value(
+                self._SCHEMA,
+                self.KEY_SELECTION_ENABLED,
+                value,
+            )
+
+        manager = command_manager.get_manager()
+        manager.set_group_enabled(
+            self.SELECTION_ACTIVATION_GROUP,
+            value and manager.is_group_enabled(guilabels.KB_GROUP_CARET_NAVIGATION),
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -276,6 +318,10 @@ class CaretNavigator(Extension):
             guilabels.KB_GROUP_CARET_NAVIGATION,
             effective,
         )
+        command_manager.get_manager().set_group_enabled(
+            self.SELECTION_ACTIVATION_GROUP,
+            effective and self.get_selection_enabled(),
+        )
 
     def last_input_event_was_navigation_command(self) -> bool:
         """Returns true if the last input event was a navigation command."""
@@ -355,6 +401,10 @@ class CaretNavigator(Extension):
         self._suspended = suspended
         command_manager.get_manager().set_group_suspended(
             guilabels.KB_GROUP_CARET_NAVIGATION,
+            suspended,
+        )
+        command_manager.get_manager().set_group_suspended(
+            self.SELECTION_ACTIVATION_GROUP,
             suspended,
         )
 

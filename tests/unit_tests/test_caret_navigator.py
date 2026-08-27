@@ -164,6 +164,9 @@ class TestCaretNavigator:
         cmdnames.CONTAINER_START = "container_start"
         cmdnames.CONTAINER_END = "container_end"
 
+        guilabels = essential_modules["orca.guilabels"]
+        guilabels.KB_GROUP_CARET_NAVIGATION = "Caret navigation"
+
         essential_modules["orca.orca_i18n"]._ = lambda x: x
         essential_modules["orca.debug"].print_message = test_context.Mock()
         essential_modules["orca.debug"].LEVEL_INFO = 800
@@ -781,7 +784,10 @@ class TestCaretNavigator:
             navigator._suspended = False
             navigator.suspend_commands(mock_script, True, "test reason")
             assert navigator._suspended == expected_result
-            mock_cmd_mgr.set_group_suspended.assert_called_once()
+            assert mock_cmd_mgr.set_group_suspended.call_args_list == [
+                call("Caret navigation", True),
+                call("caret-selection", True),
+            ]
 
         elif test_method == "toggle_enabled":
             mock_cmd_mgr = test_context.Mock()
@@ -793,7 +799,10 @@ class TestCaretNavigator:
 
             result = navigator.toggle_enabled(mock_script, mock_event)
             assert result == expected_result
-            mock_cmd_mgr.set_group_enabled.assert_called_once()
+            assert mock_cmd_mgr.set_group_enabled.call_args_list == [
+                call("Caret navigation", False),
+                call("caret-selection", False),
+            ]
 
     def test_navigator_initialization(self, test_context: OrcaTestContext) -> None:
         """Test CaretNavigator initialization."""
@@ -810,6 +819,46 @@ class TestCaretNavigator:
         # Commands are registered in CommandManager
         cmd_manager = command_manager.get_manager()
         assert cmd_manager is not None
+
+    def test_selection_commands_have_shifted_bindings_and_are_disabled_by_default(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test selection commands mirror navigation with Shift and default to disabled."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        keybindings = essential_modules["orca.keybindings"]
+        keybindings.SHIFT_MODIFIER_MASK = 1
+        keybindings.CTRL_SHIFT_MODIFIER_MASK = 3
+        keybindings.KeyBinding.side_effect = lambda key, modifiers: (key, modifiers)
+        from orca.caret_navigator import CaretNavigator
+
+        commands = {
+            command.get_name(): command
+            for command in CaretNavigator()._get_commands()
+            if command.get_name().startswith("select_")
+        }
+        expected_bindings = {
+            "select_next_character": ("Right", 1),
+            "select_previous_character": ("Left", 1),
+            "select_next_word": ("Right", 3),
+            "select_previous_word": ("Left", 3),
+            "select_next_line": ("Down", 1),
+            "select_previous_line": ("Up", 1),
+            "select_start_of_file": ("Home", 3),
+            "select_end_of_file": ("End", 3),
+            "select_start_of_line": ("Home", 1),
+            "select_end_of_line": ("End", 1),
+        }
+
+        assert set(commands) == set(expected_bindings)
+        for name, binding in expected_bindings.items():
+            assert commands[name].get_default_keybinding(True) == binding
+            assert commands[name].get_group_label() == "Caret navigation"
+            assert commands[name].get_activation_group() == "caret-selection"
+            assert commands[name].is_enabled() is False
+            assert commands[name].is_user_visible() is False
+            assert commands[name].get_description() == ""
 
     def test_get_end_of_file_keeps_native_text_object(
         self,
@@ -1507,7 +1556,10 @@ class TestCaretNavigator:
         navigator = CaretNavigator()
         result = navigator.set_is_enabled(True)
         assert result is True
-        mock_cmd_mgr.set_group_enabled.assert_called_once()
+        assert mock_cmd_mgr.set_group_enabled.call_args_list == [
+            call("Caret navigation", True),
+            call("caret-selection", False),
+        ]
 
     def test_set_is_enabled_updates_setting(self, test_context: OrcaTestContext) -> None:
         """Test set_is_enabled updates setting and calls CommandManager."""
@@ -1530,7 +1582,10 @@ class TestCaretNavigator:
         assert result is True
         assert navigator.get_is_enabled() is True
         assert navigator._last_input_event is None
-        mock_cmd_mgr.set_group_enabled.assert_called_once()
+        assert mock_cmd_mgr.set_group_enabled.call_args_list == [
+            call("Caret navigation", True),
+            call("caret-selection", False),
+        ]
 
     def test_set_is_enabled_no_active_script(self, test_context: OrcaTestContext) -> None:
         """Test set_is_enabled updates state even with no active script."""
@@ -1550,7 +1605,38 @@ class TestCaretNavigator:
 
         result = navigator.set_is_enabled(True)
         assert result is True
-        mock_cmd_mgr.set_group_enabled.assert_called_once()
+        assert mock_cmd_mgr.set_group_enabled.call_args_list == [
+            call("Caret navigation", True),
+            call("caret-selection", False),
+        ]
+
+    def test_selection_enabled_setting_defaults_to_false(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test Orca-controlled text selection is disabled by default."""
+
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import CaretNavigator
+
+        assert CaretNavigator().get_selection_enabled() is False
+
+    def test_set_selection_enabled_updates_setting_and_command_group(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test enabling text selection enables its commands when caret navigation is active."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        mock_cmd_mgr = test_context.Mock()
+        mock_cmd_mgr.is_group_enabled.return_value = True
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
+        from orca.caret_navigator import CaretNavigator
+
+        navigator = CaretNavigator()
+        assert navigator.set_selection_enabled(True) is True
+        assert navigator.get_selection_enabled() is True
+        mock_cmd_mgr.set_group_enabled.assert_called_once_with("caret-selection", True)
 
     def test_get_triggers_focus_mode(self, test_context: OrcaTestContext) -> None:
         """Test get_triggers_focus_mode returns setting value."""
@@ -1641,7 +1727,10 @@ class TestCaretNavigator:
 
         navigator.set_enabled_for_script(mock_script, True)
         assert navigator._enabled_for_script[mock_script] is True
-        mock_cmd_mgr.set_group_enabled.assert_called_once()
+        assert mock_cmd_mgr.set_group_enabled.call_args_list == [
+            call("Caret navigation", False),
+            call("caret-selection", False),
+        ]
 
     def test_set_enabled_for_script_inactive_script(self, test_context: OrcaTestContext) -> None:
         """Test set_enabled_for_script doesn't call set_group_enabled for inactive script."""
@@ -1684,7 +1773,10 @@ class TestCaretNavigator:
 
         navigator.set_enabled_for_script(mock_script, True)
         assert navigator._enabled_for_script[mock_script] is True
-        mock_cmd_mgr.set_group_enabled.assert_called_once()
+        assert mock_cmd_mgr.set_group_enabled.call_args_list == [
+            call("Caret navigation", True),
+            call("caret-selection", False),
+        ]
 
     def test_select_next_line_selects_unterminated_final_line(
         self,

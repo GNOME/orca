@@ -45,8 +45,19 @@ def get_commands(owner: CaretNavigator) -> list[Command]:
     kb_unmodified_home = keybindings.KeyBinding("Home", keybindings.NO_MODIFIER_MASK)
     kb_ctrl_end = keybindings.KeyBinding("End", keybindings.CTRL_MODIFIER_MASK)
     kb_ctrl_home = keybindings.KeyBinding("Home", keybindings.CTRL_MODIFIER_MASK)
+    kb_shift_right = keybindings.KeyBinding("Right", keybindings.SHIFT_MODIFIER_MASK)
+    kb_shift_left = keybindings.KeyBinding("Left", keybindings.SHIFT_MODIFIER_MASK)
+    kb_ctrl_shift_right = keybindings.KeyBinding("Right", keybindings.CTRL_SHIFT_MODIFIER_MASK)
+    kb_ctrl_shift_left = keybindings.KeyBinding("Left", keybindings.CTRL_SHIFT_MODIFIER_MASK)
+    kb_shift_down = keybindings.KeyBinding("Down", keybindings.SHIFT_MODIFIER_MASK)
+    kb_shift_up = keybindings.KeyBinding("Up", keybindings.SHIFT_MODIFIER_MASK)
+    kb_ctrl_shift_end = keybindings.KeyBinding("End", keybindings.CTRL_SHIFT_MODIFIER_MASK)
+    kb_ctrl_shift_home = keybindings.KeyBinding("Home", keybindings.CTRL_SHIFT_MODIFIER_MASK)
+    kb_shift_end = keybindings.KeyBinding("End", keybindings.SHIFT_MODIFIER_MASK)
+    kb_shift_home = keybindings.KeyBinding("Home", keybindings.SHIFT_MODIFIER_MASK)
 
     enabled = owner.get_is_enabled() and not owner._suspended  # pylint: disable=protected-access
+    selection_enabled = owner.get_selection_enabled() and enabled
     toggle_enabled = not owner._suspended  # pylint: disable=protected-access
 
     return [
@@ -156,5 +167,115 @@ def get_commands(owner: CaretNavigator) -> list[Command]:
             owner.GROUP_LABEL,
             cmdnames.TOGGLE_LAYOUT_MODE,
             enabled=enabled,
+        ),
+        KeyboardCommand(
+            "select_next_character",
+            owner.select_next_character,
+            owner.GROUP_LABEL,
+            "",
+            desktop_keybinding=kb_shift_right,
+            laptop_keybinding=kb_shift_right,
+            enabled=selection_enabled,
+            activation_group=owner.SELECTION_ACTIVATION_GROUP,
+            user_visible=False,
+        ),
+        KeyboardCommand(
+            "select_previous_character",
+            owner.select_previous_character,
+            owner.GROUP_LABEL,
+            "",
+            desktop_keybinding=kb_shift_left,
+            laptop_keybinding=kb_shift_left,
+            enabled=selection_enabled,
+            activation_group=owner.SELECTION_ACTIVATION_GROUP,
+            user_visible=False,
+        ),
+        KeyboardCommand(
+            "select_next_word",
+            owner.select_next_word,
+            owner.GROUP_LABEL,
+            "",
+            desktop_keybinding=kb_ctrl_shift_right,
+            laptop_keybinding=kb_ctrl_shift_right,
+            enabled=selection_enabled,
+            activation_group=owner.SELECTION_ACTIVATION_GROUP,
+            user_visible=False,
+        ),
+        KeyboardCommand(
+            "select_previous_word",
+            owner.select_previous_word,
+            owner.GROUP_LABEL,
+            "",
+            desktop_keybinding=kb_ctrl_shift_left,
+            laptop_keybinding=kb_ctrl_shift_left,
+            enabled=selection_enabled,
+            activation_group=owner.SELECTION_ACTIVATION_GROUP,
+            user_visible=False,
+        ),
+        KeyboardCommand(
+            "select_next_line",
+            owner.select_next_line,
+            owner.GROUP_LABEL,
+            "",
+            desktop_keybinding=kb_shift_down,
+            laptop_keybinding=kb_shift_down,
+            enabled=selection_enabled,
+            activation_group=owner.SELECTION_ACTIVATION_GROUP,
+            user_visible=False,
+        ),
+        KeyboardCommand(
+            "select_previous_line",
+            owner.select_previous_line,
+            owner.GROUP_LABEL,
+            "",
+            desktop_keybinding=kb_shift_up,
+            laptop_keybinding=kb_shift_up,
+            enabled=selection_enabled,
+            activation_group=owner.SELECTION_ACTIVATION_GROUP,
+            user_visible=False,
+        ),
+        KeyboardCommand(
+            "select_start_of_file",
+            owner.select_start_of_file,
+            owner.GROUP_LABEL,
+            "",
+            desktop_keybinding=kb_ctrl_shift_home,
+            laptop_keybinding=kb_ctrl_shift_home,
+            enabled=selection_enabled,
+            activation_group=owner.SELECTION_ACTIVATION_GROUP,
+            user_visible=False,
+        ),
+        KeyboardCommand(
+            "select_end_of_file",
+            owner.select_end_of_file,
+            owner.GROUP_LABEL,
+            "",
+            desktop_keybinding=kb_ctrl_shift_end,
+            laptop_keybinding=kb_ctrl_shift_end,
+            enabled=selection_enabled,
+            activation_group=owner.SELECTION_ACTIVATION_GROUP,
+            user_visible=False,
+        ),
+        KeyboardCommand(
+            "select_start_of_line",
+            owner.select_start_of_line,
+            owner.GROUP_LABEL,
+            "",
+            desktop_keybinding=kb_shift_home,
+            laptop_keybinding=kb_shift_home,
+            enabled=selection_enabled,
+            activation_group=owner.SELECTION_ACTIVATION_GROUP,
+            user_visible=False,
+        ),
+        KeyboardCommand(
+            "select_end_of_line",
+            owner.select_end_of_line,
+            owner.GROUP_LABEL,
+            "",
+            desktop_keybinding=kb_shift_end,
+            laptop_keybinding=kb_shift_end,
+            enabled=selection_enabled,
+            activation_group=owner.SELECTION_ACTIVATION_GROUP,
+            user_visible=False,
         ),
     ]
