@@ -186,7 +186,7 @@ class LearnModePresenter(Extension):
         """Shows a simple gui listing Orca's keyboard commands."""
 
         commands_by_group: dict[str, list[KeyboardCommand]] = {}
-        for cmd in command_manager.get_manager().get_all_keyboard_commands():
+        for cmd in command_manager.get_manager().get_user_visible_keyboard_commands():
             if not cmd.get_description():
                 continue
 

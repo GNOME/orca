@@ -699,6 +699,11 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         return tuple(self._keyboard_commands.values())
 
+    def get_user_visible_keyboard_commands(self) -> tuple[KeyboardCommand, ...]:
+        """Returns the keyboard commands exposed to users."""
+
+        return tuple(cmd for cmd in self._keyboard_commands.values() if cmd.is_user_visible())
+
     def get_all_braille_commands(self) -> tuple[BrailleCommand, ...]:
         """Returns all registered braille commands."""
 
@@ -748,6 +753,9 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             if cmd is None:
                 tokens = ["COMMAND MANAGER: Override for unknown command '", command_name, "'"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                continue
+
+            if not cmd.is_user_visible():
                 continue
 
             old_kb = cmd.get_keybinding()

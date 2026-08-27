@@ -60,6 +60,7 @@ class Command:
         suspended: bool = False,
         transient: bool = False,
         activation_group: str | None = None,
+        user_visible: bool = True,
     ) -> None:
         """Initializes a command."""
 
@@ -71,6 +72,7 @@ class Command:
         self._enabled = enabled
         self._suspended = suspended
         self._transient = transient
+        self._user_visible = user_visible
 
     def __str__(self) -> str:
         """Returns a string representation of the command."""
@@ -145,6 +147,11 @@ class Command:
 
         self._transient = transient
 
+    def is_user_visible(self) -> bool:
+        """Returns True if this command should be exposed to users."""
+
+        return self._user_visible
+
     def execute(self, script: default.Script, event: input_event.InputEvent | None = None) -> bool:
         """Executes this command's function and returns True if handled."""
 
@@ -168,6 +175,7 @@ class KeyboardCommand(Command):  # pylint: disable=too-many-instance-attributes
         is_group_toggle: bool = False,
         transient: bool = False,
         activation_group: str | None = None,
+        user_visible: bool = True,
     ) -> None:
         """Initializes a keyboard command."""
 
@@ -180,6 +188,7 @@ class KeyboardCommand(Command):  # pylint: disable=too-many-instance-attributes
             suspended=suspended,
             transient=transient,
             activation_group=activation_group,
+            user_visible=user_visible,
         )
 
         # The default bindings.

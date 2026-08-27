@@ -552,7 +552,8 @@ class TestLearnModePresenter:
         alpha_command = make_command("Alpha command", "Test Group", mock_keybinding)
 
         command_manager_mock = essential_modules["orca.command_manager"]
-        command_manager_mock.get_manager.return_value.get_all_keyboard_commands.return_value = (
+        manager = command_manager_mock.get_manager.return_value
+        manager.get_user_visible_keyboard_commands.return_value = (
             unbound_command,
             screen_reader_command,
             alpha_command,

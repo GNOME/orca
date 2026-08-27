@@ -84,8 +84,13 @@ def generate_documentation(
 
     root = build_schema_tree(src_dir)
 
-    schemas, _settings, _enums = _discover_schemas(src_dir)
+    schemas, settings, _enums = _discover_schemas(src_dir)
     schema_names_by_id = {schema_id: schema_name for schema_name, schema_id in schemas.items()}
+    hidden_settings = {
+        (setting.get("schema"), setting.get("key"))
+        for setting in settings
+        if setting.get("user_visible") is False
+    }
 
     enum_values: dict[str, list[tuple[str, str]]] = {}
     for enum_el in sorted(root.findall("enum"), key=lambda el: el.get("id", "")):
@@ -234,7 +239,12 @@ def generate_documentation(
             schema_el.findall("key"),
             key=lambda el: (el.get("name", "") != "version", el.get("name", "")),
         )
-        keys = [key for key in keys_all if key.get("name", "") != "version"]
+        keys = [
+            key
+            for key in keys_all
+            if key.get("name", "") != "version"
+            and (schema_name, key.get("name", "")) not in hidden_settings
+        ]
 
         lines.append(f"### `{schema_id}` (schema-name: `{schema_name}`)")
         lines.append("")

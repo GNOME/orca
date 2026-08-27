@@ -677,20 +677,31 @@ class TestCommandManager:  # pylint: disable=too-many-public-methods
         function1 = self._create_mock_function(test_context)
         function2 = self._create_mock_function(test_context)
         function3 = self._create_mock_function(test_context)
+        hidden_function = self._create_mock_function(test_context)
 
         cmd1 = KeyboardCommand("cmd1", function1, "Group A")
         cmd2 = KeyboardCommand("cmd2", function2, "Group B")
         cmd3 = KeyboardCommand("cmd3", function3, "Group A")
+        hidden_cmd = KeyboardCommand(
+            "hidden",
+            hidden_function,
+            "Group A",
+            user_visible=False,
+        )
 
         manager.add_command(cmd1)
         manager.add_command(cmd2)
         manager.add_command(cmd3)
+        manager.add_command(hidden_cmd)
 
         all_commands = manager.get_all_keyboard_commands()
-        assert len(all_commands) == 3
+        assert len(all_commands) == 4
         assert cmd1 in all_commands
         assert cmd2 in all_commands
         assert cmd3 in all_commands
+        assert hidden_cmd in all_commands
+
+        assert manager.get_user_visible_keyboard_commands() == (cmd1, cmd2, cmd3)
 
     def test_user_extension_command_conflicting_with_orca_command_is_unbound(
         self,

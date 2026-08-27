@@ -289,7 +289,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if app_name:
             self._categories[app_name] = []
 
-        all_commands = command_manager.get_manager().get_all_keyboard_commands()
+        all_commands = command_manager.get_manager().get_user_visible_keyboard_commands()
 
         for cmd in all_commands:
             group_label = cmd.get_group_label()

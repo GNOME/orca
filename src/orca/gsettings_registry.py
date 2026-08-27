@@ -60,6 +60,7 @@ class SettingDescriptor:
     voice_type: str | None = None
     genum: str | None = None
     migration_key: str | None = None
+    user_visible: bool = True
 
 
 @dataclass
@@ -552,6 +553,7 @@ class GSettingsRegistry:
         genum: str | None = None,
         voice_type: str | None = None,
         migration_key: str | None = None,
+        user_visible: bool = True,
     ) -> Callable[[Callable], Callable]:
         """Decorator marking a method's associated GSettings key."""
 
@@ -564,6 +566,7 @@ class GSettingsRegistry:
                 voice_type=voice_type,
                 genum=genum,
                 migration_key=migration_key,
+                user_visible=user_visible,
             )
             func.gsetting_key = key  # type: ignore[attr-defined]
             return func

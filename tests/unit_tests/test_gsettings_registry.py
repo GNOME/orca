@@ -217,9 +217,33 @@ class TestGsettingDecorator:
         assert desc.gtype == "b"
         assert desc.default is True
         assert desc.migration_key is None
+        assert desc.user_visible is True
 
         # Clean up
         del registry._descriptors[("test-schema", "test-key")]
+
+    def test_decorator_registers_hidden_setting(self, test_context: OrcaTestContext) -> None:
+        """Test @gsetting records that a setting should not be exposed to users."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import get_registry
+
+        registry = get_registry()
+
+        @registry.gsetting(
+            key="hidden",
+            schema="test",
+            gtype="b",
+            default=False,
+            summary="Test",
+            user_visible=False,
+        )
+        def some_getter():
+            return False
+
+        assert registry._descriptors[("test", "hidden")].user_visible is False
+
+        del registry._descriptors[("test", "hidden")]
 
     def test_decorator_registers_migration_key(self, test_context: OrcaTestContext) -> None:
         """Test @gsetting decorator stores migration_key in the descriptor."""
