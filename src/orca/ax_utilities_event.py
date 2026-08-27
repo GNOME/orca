@@ -1260,7 +1260,10 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if AXUtilitiesEvent._strings_are_redundant(old_name, new_name):
+        if AXUtilitiesRole.is_combo_box(event.source):
+            msg = "AXUtilitiesEvent: The source is a combo box."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+        elif AXUtilitiesEvent._strings_are_redundant(old_name, new_name):
             tokens = [
                 "AXUtilitiesEvent: The new name ('",
                 new_name,

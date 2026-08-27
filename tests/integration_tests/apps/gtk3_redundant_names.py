@@ -20,7 +20,7 @@
 
 # pylint: disable=no-member
 
-"""A GTK3 window whose containers share a name with the widget they contain."""
+"""A GTK3 window with names that Orca may treat as redundant."""
 
 import sys
 
@@ -30,6 +30,14 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk
 
 APP_TITLE = "OrcaRedundantNames"
+
+CONTRACTION_TABLES = (
+    "English, U.S., contracted",
+    "English, U.S., uncontracted",
+    "English, unified, contracted",
+    "English, unified, uncontracted",
+    "Esperanto",
+)
 
 
 def main() -> int:
@@ -60,6 +68,17 @@ def main() -> int:
     panel_button = Gtk.Button(label="Weather")
     same_name_panel.pack_start(panel_button, False, False, 0)
     box.pack_start(same_name_panel, False, False, 0)
+
+    table_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+    table_label = Gtk.Label.new_with_mnemonic("Contraction _Table:")
+    table_combo = Gtk.ComboBoxText()
+    for table in CONTRACTION_TABLES:
+        table_combo.append_text(table)
+    table_combo.set_active(0)
+    table_label.set_mnemonic_widget(table_combo)
+    table_row.pack_start(table_label, False, False, 0)
+    table_row.pack_start(table_combo, False, False, 0)
+    box.pack_start(table_row, False, False, 0)
 
     window.add(box)
     window.connect("map", lambda _widget: same_name_button.grab_focus())

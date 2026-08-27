@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Tests presentation of widgets whose container shares their name."""
+"""Tests presentation of names Orca may treat as redundant."""
 
 from __future__ import annotations
 
@@ -27,14 +27,20 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture
+from .helpers import BrailleLine, capture, tab_and_swallow_presentation
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
 
+_FRAME = "OrcaRedundantNames application frame "
 _DETAILS_LINE = "OrcaRedundantNames application frame panel Details button"
 _OPTIONS_LINE = "OrcaRedundantNames application frame Options panel Save button"
 _WEATHER_LINE = "OrcaRedundantNames application frame Weather button"
+
+
+def _combo_line(table: str) -> BrailleLine:
+    full = f"{_FRAME}Contraction Table: {table} combo box Alt+T"
+    return BrailleLine(20, full, full[len(_FRAME) : len(_FRAME) + 32], "\x00" * len(full))
 
 
 @pytest.mark.native_app
@@ -86,4 +92,57 @@ def test_container_name_matching_focused_widget(gtk3_redundant_names: NativeAppS
             BrailleLine(1, _WEATHER_LINE, "Weather button", "\x00" * 51),
             BrailleLine(1, _WEATHER_LINE, "Weather button", "\x00" * 51),
         ],
+    )
+
+
+@pytest.mark.native_app
+def test_arrowing_a_combo_box_with_similar_item_names(
+    gtk3_redundant_names: NativeAppSession,
+) -> None:
+    """Tests arrowing a combo box with similar item names."""
+
+    session = gtk3_redundant_names
+    for _ in range(3):
+        tab_and_swallow_presentation(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
+    assert capture(session) == (
+        ["Contraction Table: English, U.S., contracted combo box", "Alt+T"],
+        [_combo_line("English, U.S., contracted")],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Contraction Table: English, U.S., uncontracted", "Alt+T"],
+        [_combo_line("English, U.S., uncontracted")],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Contraction Table: English, unified, contracted", "Alt+T"],
+        [_combo_line("English, unified, contracted")],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Contraction Table: English, unified, uncontracted", "Alt+T"],
+        [_combo_line("English, unified, uncontracted")],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Contraction Table: Esperanto", "Alt+T"],
+        [_combo_line("Esperanto")],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    assert capture(session) == (
+        ["Contraction Table: English, unified, uncontracted", "Alt+T"],
+        [_combo_line("English, unified, uncontracted")],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    assert capture(session) == (
+        ["Contraction Table: English, unified, contracted", "Alt+T"],
+        [_combo_line("English, unified, contracted")],
     )
