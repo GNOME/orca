@@ -209,8 +209,11 @@ class Utilities:
         """Returns the active document."""
 
         window = focus_manager.get_manager().get_active_window()
-        documents = list(filter(self.is_document, AXUtilities.get_embeds(window)))
-        documents = list(filter(AXUtilities.is_showing, documents))
+        documents = [
+            obj
+            for obj in AXUtilities.get_embeds(window)
+            if self.is_document(obj) and AXUtilities.is_showing(obj)
+        ]
         if len(documents) == 1:
             tokens = ["SCRIPT UTILITIES: Active document (via embeds):", documents[0]]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
