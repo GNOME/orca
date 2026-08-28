@@ -1260,6 +1260,10 @@ class Script(script.Script):
             obj,
             offset,
         )
+        if not word and offset == AXText.get_character_count(obj):
+            self.say_character(obj, offset)
+            AXUtilities.set_last_text_unit_spoken(TextUnit.WORD)
+            return
 
         speech_pres = speech_presenter.get_presenter()
         if "\n" in word:

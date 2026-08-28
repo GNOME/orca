@@ -35,6 +35,7 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
+from orca.ax_utilities_text import TextUnit
 
 if TYPE_CHECKING:
     import gi
@@ -71,7 +72,21 @@ class Utilities(script_utilities.Utilities):
         if caret_navigator.get_navigator().last_input_event_was_navigation_command():
             return super().get_word_at_offset_adjusted_for_navigation(obj, offset)
 
-        return AXText.get_word_at_offset(obj, offset)
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
+
+        word, start, end = AXText.get_word_at_offset(obj, offset)
+        if (
+            offset == AXText.get_character_count(obj)
+            and AXUtilities.get_last_text_unit_spoken() == TextUnit.WORD
+        ):
+            prev_obj, prev_offset = focus_manager.get_manager().get_penultimate_cursor_position()
+            if prev_obj == obj:
+                _prev_word, prev_start, prev_end = AXText.get_word_at_offset(obj, prev_offset)
+                if (start, end) == (prev_start, prev_end):
+                    return "", offset, offset
+
+        return word, start, end
 
     def _is_top_level_object(self, obj: Atspi.Accessible) -> bool:
         # https://bugs.documentfoundation.org/show_bug.cgi?id=160806
