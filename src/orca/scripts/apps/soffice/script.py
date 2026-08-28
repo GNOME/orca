@@ -40,6 +40,7 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
+from orca.ax_utilities_event import TextEventReason
 from orca.ax_utilities_text import CaretSetReason
 from orca.scripts import default
 
@@ -209,6 +210,17 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        manager = focus_manager.get_manager()
+        obj, offset = manager.get_last_cursor_position()
+        reason = AXUtilities.get_text_event_reason(event)
+        if (event.source, event.detail1) == (obj, offset) and reason in (
+            TextEventReason.NAVIGATION_BY_LINE,
+            TextEventReason.NAVIGATION_TO_FILE_BOUNDARY,
+        ):
+            msg = "SOFFICE: Event ignored: Event is for last saved cursor position."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         if AXUtilities.is_spreadsheet_cell(focus_manager.get_manager().get_locus_of_focus()):
             if not self.utilities.is_cell_being_edited(event.source):
                 msg = "SOFFICE: Event ignored: Source is not cell being edited."
@@ -310,7 +322,7 @@ class Script(default.Script):
                 focus_manager.get_manager().set_locus_of_focus(event, combobox, True)
                 return True
 
-        if AXUtilities.is_paragraph(event.source):
+        if AXUtilities.is_paragraph(event.source) or AXUtilities.is_heading(event.source):
             input_manager = input_event_manager.get_manager()
             if input_manager.last_event_was_left() or input_manager.last_event_was_right():
                 focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
