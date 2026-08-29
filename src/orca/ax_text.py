@@ -557,7 +557,7 @@ class AXText:
             return []
 
         boundaries = [0]
-        pattern = r"[.!?]+(?=\s|\ufffc|$)"
+        pattern = r"[.!?]+(?=\s|\ufffc|$)|\n[^\S\n]*\n"
         for match in re.finditer(pattern, text):
             end_pos = match.end()
             # Skip whitespace to find start of next sentence. Do not skip embedded object
@@ -647,6 +647,13 @@ class AXText:
             and not result.content
         ):
             return AXText._get_sentence_at_offset_fallback(obj, offset)
+
+        if re.search(r"\n[^\S\n]*\n", result.content):
+            fallback = AXText._get_sentence_at_offset_fallback(obj, offset)
+            if result.start_offset <= fallback[1] <= offset < fallback[
+                2
+            ] <= result.end_offset and fallback[1:] != (result.start_offset, result.end_offset):
+                return fallback
 
         tokens = [
             "AXText: Sentence at offset",

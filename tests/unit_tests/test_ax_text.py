@@ -3339,6 +3339,11 @@ class TestAXText:
             pytest.param("Hello! World?", [0, 7, 13], id="exclamation_and_question"),
             pytest.param("Hello... World.", [0, 9, 15], id="ellipsis"),
             pytest.param("Hello.  World.", [0, 8, 14], id="double_space_after_period"),
+            pytest.param(
+                "Hi all, \n\nIn Thunderbird 153.0.",
+                [0, 10, 31],
+                id="unpunctuated_paragraph_before_blank_line",
+            ),
         ],
         ids=lambda case: case if isinstance(case, str) else None,
     )

@@ -424,7 +424,6 @@ class SayAllPresenter(Extension):
                 index=i,
                 total=len(contents),
             )
-            self._prior_obj = content_obj
             elements, voices = self._parse_utterances(utterances)
             if len(elements) != len(voices):
                 tokens = [
@@ -440,10 +439,18 @@ class SayAllPresenter(Extension):
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 continue
 
-            for element, voice in zip(elements, voices, strict=True):
-                if not element or (isinstance(element, str) and not element.strip()):
-                    continue
+            presentations = [
+                (element, voice)
+                for element, voice in zip(elements, voices, strict=True)
+                if element and (not isinstance(element, str) or element.strip())
+            ]
+            if not presentations:
+                if self._prior_obj and AXUtilities.is_ancestor(self._prior_obj, content_obj):
+                    self._prior_obj = content_obj
+                continue
 
+            self._prior_obj = content_obj
+            for element, voice in presentations:
                 context = speechserver.SayAllContext(content_obj, element, start, end)
                 self._contexts.append(context)
                 tokens = [

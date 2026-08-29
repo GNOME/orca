@@ -2037,7 +2037,15 @@ class SpeechGenerator(generator.Generator):
         content_start = self._get_start_offset(obj)
         content_end = self._get_end_offset(obj)
 
-        text, start_offset = AXText.get_line_at_offset(obj)[0:2]
+        if content_start is not None and content_end is not None:
+            text = self._get_content_string(obj)
+            if text is None:
+                text = AXText.get_substring(obj, content_start, content_end)
+            start_offset, end_offset = content_start, content_end
+        else:
+            text, start_offset = AXText.get_line_at_offset(obj)[0:2]
+            end_offset = start_offset + len(text)
+
         if text == "\n":
             if self._get_content_position(obj).total > 1:
                 return [""]
@@ -2052,13 +2060,7 @@ class SpeechGenerator(generator.Generator):
                 result.extend(self.voice(string=text, obj=obj))
                 return result
 
-        newline_offset = start_offset + len(text) - 1 if text.endswith("\n") else -1
-
-        if content_start is not None and content_end is not None:
-            start_offset = content_start
-            end_offset = content_end
-        else:
-            end_offset = start_offset + len(text)
+        newline_offset = start_offset + len(text.rstrip("\n")) if text.endswith("\n") else -1
 
         if start_offset <= newline_offset < end_offset:
             end_offset = newline_offset

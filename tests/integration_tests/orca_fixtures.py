@@ -626,6 +626,7 @@ _web_inline_landmarks = _make_web_fixture("web_inline_landmarks.html")
 _web_inline_list = _make_web_fixture("web_inline_list.html")
 _web_inline_list_wrap = _make_web_fixture("web_inline_list_wrap.html")
 _web_nested_headings = _make_web_fixture("web_nested_headings.html")
+_web_nested_blockquotes = _make_web_fixture("web_nested_blockquotes.html")
 _web_label_inference = _make_web_fixture("web_label_inference.html")
 _web_structural_navigation = _make_web_fixture("web_structural_navigation.html")
 _web_native_text_selection = _make_web_fixture(

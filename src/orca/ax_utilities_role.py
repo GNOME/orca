@@ -353,6 +353,7 @@ class AXUtilitiesRole:
             AXUtilitiesRole._TEXT_BLOCK_ROLES = frozenset(
                 {
                     Atspi.Role.ARTICLE,
+                    Atspi.Role.BLOCK_QUOTE,
                     Atspi.Role.CAPTION,
                     Atspi.Role.COLUMN_HEADER,
                     Atspi.Role.COMMENT,
