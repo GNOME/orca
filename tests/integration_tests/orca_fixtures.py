@@ -132,6 +132,18 @@ _gtk3_text_view = _make_native_app_fixture(
     ),
     required_font=gtk3_text_view.FONT_FAMILY,
 )
+_gtk3_text_view_blank_line = _make_native_app_fixture(
+    gtk3_text_view,
+    name="gtk3_text_view_blank_line",
+    scope="function",
+    required_font=gtk3_text_view.FONT_FAMILY,
+    lines=(
+        "First sentence.",
+        "",
+        "Second sentence.",
+        "",
+    ),
+)
 _gtk3_text_view_emoji = _make_native_app_fixture(
     gtk3_text_view,
     name="gtk3_text_view_emoji",

@@ -810,108 +810,45 @@ class TestSayAllPresenter:
         focus_instance.emit_region_changed.assert_not_called()
 
     @pytest.mark.parametrize(
-        "end_offset, expected_next_context_offset",
+        "end_offset,is_eoc,expected_offset",
         [
-            pytest.param(16, 15, id="normal_offset_passes_end_minus_one"),
-            pytest.param(1, 0, id="small_offset_passes_end_minus_one"),
-            pytest.param(0, 0, id="zero_offset_passes_zero_not_negative"),
-            pytest.param(100, 99, id="large_offset_passes_end_minus_one"),
+            pytest.param(16, False, 16, id="text-end-offset"),
+            pytest.param(16, True, 15, id="embedded-object-at-end-offset"),
+            pytest.param(0, True, 0, id="embedded-object-at-zero-offset"),
         ],
     )
-    def test_say_all_iter_next_context_uses_end_offset_minus_one(
+    def test_advance_to_next_skips_space_and_preserves_offset_handling(
         self,
         test_context: OrcaTestContext,
         end_offset: int,
-        expected_next_context_offset: int,
+        is_eoc: bool,
+        expected_offset: int,
     ) -> None:
-        """Test that _say_all_iter passes end_offset - 1 to next_context.
+        """Tests advancing past whitespace without skipping embedded objects."""
 
-        The end offset from sentence contents is exclusive (position end is NOT
-        part of the content). find_next_caret_in_order looks at offset + 1, so
-        passing end directly would skip position end. We must pass end - 1 so
-        that find_next_caret_in_order looks at position end, which is where
-        embedded object characters (FFFC) representing child elements may be.
-        """
-
-        essential_modules = self._setup_dependencies(test_context)
-        from orca import gsettings_registry
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities import AXUtilities
         from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-
-        # Set up the presenter's script
         presenter._script = mock_script
-
-        # Set up settings for sentence-by-sentence say all
-        gsettings_registry.get_registry().set_runtime_value("say-all", "style", "sentence")
-
-        # Mock utilities - return contents once, then return empty to exit loop
-        call_count = [0]
-
-        def mock_get_sentence_contents(_obj, _offset):
-            call_count[0] += 1
-            if call_count[0] == 1:
-                return [(mock_obj, 0, end_offset, "Test sentence.")]
-            return []
-
-        mock_script.utilities.get_sentence_contents_at_offset.side_effect = (
-            mock_get_sentence_contents
-        )
-        mock_script.utilities.filter_contents_for_presentation.side_effect = lambda x: x
-
-        # next_context returns None to end the loop
         mock_script.utilities.next_context.return_value = (None, -1)
-
-        # Mock speech presenter to return something so the content is processed
-        speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
-        speech_pres.generate_speech_contents.return_value = [["Test"], []]
-
-        # Mock AXUtilities
-        ax_utilities_mock = essential_modules["orca.ax_utilities"]
-        ax_utilities_mock.is_text.return_value = False
-        ax_utilities_mock.is_terminal.return_value = False
-
-        # Mock _say_all_should_skip_content to avoid dependency issues
         test_context.patch_object(
-            presenter,
-            "_say_all_should_skip_content",
-            return_value=(False, ""),
+            AXUtilities,
+            "character_at_offset_is_eoc",
+            return_value=is_eoc,
         )
 
-        # Mock debug
-        debug_mock = essential_modules["orca.debug"]
-        debug_mock.LEVEL_INFO = 800
-        debug_mock.print_tokens = test_context.Mock()
-        debug_mock.print_message = test_context.Mock()
+        contents = [(mock_obj, 0, end_offset, "Test sentence.")]
+        presenter._advance_to_next(mock_obj, 0, contents, None)
 
-        # Mock focus_manager for set_locus_of_focus
-        focus_manager_mock = essential_modules["orca.focus_manager"]
-        manager_instance = test_context.Mock()
-        focus_manager_mock.get_manager.return_value = manager_instance
-
-        # Mock event_synthesizer
-        essential_modules[
-            "orca.ax_event_synthesizer"
-        ].get_synthesizer.return_value.scroll_into_view = test_context.Mock()
-
-        # Mock utilities.set_caret_offset
-        mock_script.utilities.set_caret_offset = test_context.Mock()
-
-        # Consume the generator to trigger next_context call
-        generator = presenter._say_all_iter(mock_obj, 0)
-        for _ in generator:
-            pass
-
-        # Verify next_context was called with end_offset - 1 (or 0 if that would be negative)
-        mock_script.utilities.next_context.assert_called_once()
-        call_args = mock_script.utilities.next_context.call_args
-        # next_context is called with positional args: (last_obj, offset, restrict_to=...)
-        actual_offset = call_args[0][1]
-        assert actual_offset == expected_next_context_offset, (
-            f"Expected next_context to be called with offset {expected_next_context_offset}, "
-            f"but was called with {actual_offset}"
+        mock_script.utilities.next_context.assert_called_once_with(
+            mock_obj,
+            expected_offset,
+            skip_space=True,
+            restrict_to=None,
         )
 
     def test_stop_clears_all_state(self, test_context: OrcaTestContext) -> None:

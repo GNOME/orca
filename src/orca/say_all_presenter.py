@@ -312,6 +312,7 @@ class SayAllPresenter(Extension):
             next_obj, next_offset = self._script.utilities.next_context(
                 last_obj,
                 last_offset,
+                skip_space=True,
                 restrict_to=restrict_to,
             )
         else:

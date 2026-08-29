@@ -636,6 +636,10 @@ class Utilities:
             prev_obj, prev_offset = self.previous_context(obj, 0)
             return self.get_line_contents_at_offset(prev_obj, prev_offset)
 
+        prev_obj, prev_offset = self.previous_context(obj, this_start)
+        if prev_obj is not None:
+            return self.get_line_contents_at_offset(prev_obj, prev_offset)
+
         return [(obj, 0, 0, "")]
 
     def get_line_contents_at_offset(
@@ -671,7 +675,16 @@ class Utilities:
 
         _this_line, _this_start, this_end = AXText.get_line_at_offset(obj, offset)
         if this_end == AXText.get_character_count(obj):
+            if offset < this_end:
+                last_char = AXText.get_character_at_offset(obj, this_end - 1)[0]
+                if not last_char or last_char in "\r\n":
+                    return self.get_line_contents_at_offset(obj, this_end)
+
             next_obj, next_offset = self.next_context(obj, this_end)
+            return self.get_line_contents_at_offset(next_obj, next_offset)
+
+        next_obj, next_offset = self.next_context(obj, max(this_end, offset))
+        if next_obj is not None:
             return self.get_line_contents_at_offset(next_obj, next_offset)
 
         return [(obj, 0, 0, "")]
@@ -712,10 +725,11 @@ class Utilities:
 
         prev_offset = offset - 1
         if skip_space:
-            char = AXText.get_character_at_offset(obj, prev_offset)[0]
-            while char and char.isspace():
-                prev_offset -= 1
+            while prev_offset >= 0:
                 char = AXText.get_character_at_offset(obj, prev_offset)[0]
+                if char and not char.isspace():
+                    break
+                prev_offset -= 1
 
         if prev_offset >= 0:
             return obj, prev_offset
@@ -742,10 +756,12 @@ class Utilities:
 
         next_offset = offset + 1
         if skip_space:
-            char = AXText.get_character_at_offset(obj, next_offset)[0]
-            while char and char.isspace():
-                next_offset += 1
+            character_count = AXText.get_character_count(obj)
+            while next_offset <= character_count:
                 char = AXText.get_character_at_offset(obj, next_offset)[0]
+                if char and not char.isspace():
+                    break
+                next_offset += 1
 
         if next_offset <= AXText.get_character_count(obj):
             return obj, next_offset

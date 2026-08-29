@@ -1415,13 +1415,15 @@ class CaretNavigator(Extension):
         """Moves to the end of the file."""
 
         prior_obj, _prior_offset = script.utilities.get_caret_context()
-        obj, end = self._get_end_of_file(script)
-        if obj is None:
+        target_obj, target_offset = self._get_end_of_file(script)
+        if target_obj is None:
             return False
 
-        character_count = AXText.get_character_count(obj)
-        line_offset = min(end, max(0, character_count - 1))
-        contents = script.utilities.get_line_contents_at_offset(obj, line_offset)
+        target_character_count = AXText.get_character_count(target_obj)
+        contents = script.utilities.get_line_contents_at_offset(target_obj, target_offset)
+        if contents and any(start < 0 or end < start for _obj, start, end, _text in contents):
+            line_offset = min(target_offset, max(0, target_character_count - 1))
+            contents = script.utilities.get_line_contents_at_offset(target_obj, line_offset)
         if not contents:
             return False
 
@@ -1433,11 +1435,14 @@ class CaretNavigator(Extension):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
+        caret_offset = end
+        if obj == target_obj and target_offset == target_character_count:
+            caret_offset = target_offset
         presentation_manager.get_manager().interrupt_presentation()
         self._set_caret_position(
             script,
             obj,
-            end,
+            caret_offset,
             reason=caret_set_reason,
         )
         focus_manager.get_manager().emit_region_changed(

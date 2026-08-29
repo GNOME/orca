@@ -1432,11 +1432,71 @@ class TestCaretNavigator:
         assert navigator.end_of_file(mock_script, mock_event) is True
         mock_script.utilities.get_line_contents_at_offset.assert_called_once_with(
             "destination",
-            33,
+            34,
         )
         pres_manager.present_contents.assert_called_once_with(
             contents,
             prior_obj=expected_prior_obj,
+        )
+
+    def test_end_of_file_retries_invalid_line_range(self, test_context: OrcaTestContext) -> None:
+        """Test end-of-file retries at the preceding offset after an invalid line range."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_text import AXText
+        from orca.caret_navigator import CaretNavigator, CaretSetReason
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        mock_script.utilities.get_caret_context.return_value = ("source", 12)
+        mock_script.utilities.get_line_contents_at_offset.side_effect = [
+            [("destination", -2, -1, "")],
+            [("destination", 26, 34, "The end.")],
+        ]
+        test_context.patch_object(navigator, "_get_end_of_file", return_value=("destination", 34))
+        test_context.patch_object(AXText, "get_character_count", return_value=34)
+        set_caret_position = test_context.patch_object(navigator, "_set_caret_position")
+
+        assert navigator.end_of_file(mock_script, mock_event, notify_user=False) is True
+        assert mock_script.utilities.get_line_contents_at_offset.call_args_list == [
+            call("destination", 34),
+            call("destination", 33),
+        ]
+        set_caret_position.assert_called_once_with(
+            mock_script,
+            "destination",
+            34,
+            reason=CaretSetReason.CARET_NAVIGATION,
+        )
+
+    def test_end_of_file_keeps_trailing_blank_line(self, test_context: OrcaTestContext) -> None:
+        """Test end-of-file moves to a valid trailing blank line."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_text import AXText
+        from orca.caret_navigator import CaretNavigator, CaretSetReason
+
+        navigator = CaretNavigator()
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        trailing_blank = [("destination", 89, 89, "")]
+        mock_script.utilities.get_caret_context.return_value = ("source", 0)
+        mock_script.utilities.get_line_contents_at_offset.return_value = trailing_blank
+        test_context.patch_object(navigator, "_get_end_of_file", return_value=("destination", 89))
+        test_context.patch_object(AXText, "get_character_count", return_value=89)
+        set_caret_position = test_context.patch_object(navigator, "_set_caret_position")
+
+        assert navigator.end_of_file(mock_script, mock_event, notify_user=False) is True
+        mock_script.utilities.get_line_contents_at_offset.assert_called_once_with(
+            "destination",
+            89,
+        )
+        set_caret_position.assert_called_once_with(
+            mock_script,
+            "destination",
+            89,
+            reason=CaretSetReason.CARET_NAVIGATION,
         )
 
     @pytest.mark.parametrize(

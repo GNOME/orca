@@ -105,6 +105,8 @@ orca_integration_tests = [
   'integration_tests/test_learn_mode.py',
   'integration_tests/test_caret_navigation.py',
   'integration_tests/test_caret_navigation_orca_controlled.py',
+  'integration_tests/test_caret_navigation_orca_controlled_blank_line.py',
+  'integration_tests/test_say_all_text_view.py',
   'integration_tests/test_caret_selection_text_view.py',
   'integration_tests/test_caret_selection_terminal.py',
   'integration_tests/test_web_caret_selection.py',
