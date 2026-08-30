@@ -3,159 +3,28 @@
 # This file is distributed under the same license as the orca package.
 #
 # Marek Černocký <marek@manet.cz>, 2015, 2016, 2017, 2018, 2019, 2020, 2021.
+# Patrik Sivek <patriksivek@gnome.org>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"POT-Creation-Date: 2025-09-08 20:05+0000\n"
-"PO-Revision-Date: 2025-09-09 15:56+0200\n"
-"Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
-"Language-Team: čeština <gnome-cs-list@gnome.org>\n"
+"POT-Creation-Date: 2026-08-29 11:06+0000\n"
+"PO-Revision-Date: 2026-08-30 21:54+0200\n"
+"Last-Translator: Patrik Sivek <patriksivek@gnome.org>\n"
+"Language-Team: Czech\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Gtranslator 50.0\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
 msgid "translator-credits"
-msgstr "Marek Černocký <marek@manet.cz>"
-
-#. (itstool) path: info/title
-#: C/commands_bookmarks.page:6
-msgctxt "sort"
-msgid "4. Bookmarks"
-msgstr "4. Záložky"
-
-#. (itstool) path: info/title
-#: C/commands_bookmarks.page:7
-msgctxt "link"
-msgid "Bookmarks"
-msgstr "Záložky"
-
-#. (itstool) path: info/desc
-#: C/commands_bookmarks.page:8
-msgid "Commands to bookmark and retrieve objects"
-msgstr "Příkazy pro vytváření záložek a získávání objektů podle nich"
-
-#. (itstool) path: credit/name
-#: C/commands_bookmarks.page:12 C/commands_braille.page:12
-#: C/commands_chat.page:12 C/commands_controlling_orca.page:11
-#: C/commands_debugging.page:10 C/commands_find.page:12
-#: C/commands_flat_review.page:12 C/commands_live_regions.page:12
-#: C/commands_mouse.page:13 C/commands.page:8 C/commands_profiles.page:12
-#: C/commands_reading.page:14 C/commands_speech_settings.page:12
-#: C/commands_structural_navigation.page:12 C/commands_table.page:12
-#: C/commands_time_date_notifications.page:12 C/commands_where_am_i.page:12
-#: C/howto_bookmarks.page:7 C/howto_documents.page:10
-#: C/howto_flat_review.page:8 C/howto_forms.page:10 C/howto_key_bindings.page:8
-#: C/howto_keyboard_layout.page:8 C/howto_learn_modes.page:10
-#: C/howto_live_regions.page:10 C/howto_mouse_review.page:8
-#: C/howto_notifications.page:8 C/howto_orca_find.page:8
-#: C/howto_profiles.page:8 C/howto_setting_up_orca.page:12
-#: C/howto_structural_navigation.page:12 C/howto_tables.page:10
-#: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
-#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:10
-#: C/introduction.page:10 C/preferences_braille.page:11
-#: C/preferences_chat.page:11 C/preferences_general.page:11
-#: C/preferences_introduction.page:8 C/preferences_key_bindings.page:12
-#: C/preferences_key_echo.page:11 C/preferences.page:7
-#: C/preferences_pronunciation.page:12 C/preferences_speech.page:11
-#: C/preferences_spellcheck.page:10 C/preferences_table_navigation.page:14
-#: C/preferences_text_attributes.page:13 C/preferences_voice.page:11
-#: C/preferences_web.page:12
-msgid "Joanmarie Diggs"
-msgstr "Joanmarie Diggs"
-
-#. (itstool) path: license/p
-#: C/commands_bookmarks.page:16 C/commands_braille.page:16
-#: C/commands_chat.page:16 C/commands_controlling_orca.page:15
-#: C/commands_debugging.page:14 C/commands_find.page:16
-#: C/commands_flat_review.page:16 C/commands_live_regions.page:16
-#: C/commands_mouse.page:17 C/commands.page:12 C/commands_profiles.page:16
-#: C/commands_reading.page:18 C/commands_speech_settings.page:16
-#: C/commands_structural_navigation.page:16 C/commands_table.page:16
-#: C/commands_time_date_notifications.page:16 C/commands_where_am_i.page:16
-#: C/howto_bookmarks.page:11 C/howto_documents.page:14
-#: C/howto_flat_review.page:12 C/howto_forms.page:14
-#: C/howto_key_bindings.page:12 C/howto_keyboard_layout.page:12
-#: C/howto_learn_modes.page:14 C/howto_live_regions.page:14
-#: C/howto_mouse_review.page:12 C/howto_notifications.page:12
-#: C/howto_orca_find.page:12 C/howto_profiles.page:12
-#: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
-#: C/howto_tables.page:14 C/howto_text_attributes.page:14
-#: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
-#: C/howto_whereami.page:14 C/index.page:14 C/introduction.page:14
-#: C/preferences_braille.page:15 C/preferences_chat.page:15
-#: C/preferences_general.page:15 C/preferences_introduction.page:12
-#: C/preferences_key_bindings.page:16 C/preferences_key_echo.page:15
-#: C/preferences.page:11 C/preferences_pronunciation.page:16
-#: C/preferences_speech.page:15 C/preferences_spellcheck.page:14
-#: C/preferences_table_navigation.page:18 C/preferences_text_attributes.page:17
-#: C/preferences_voice.page:15 C/preferences_web.page:16
-msgid "Creative Commons Share Alike 3.0"
-msgstr "Creative Commons Share Alike 3.0"
-
-#. (itstool) path: page/title
-#: C/commands_bookmarks.page:19
-msgid "Bookmark Commands"
-msgstr "Příkazy pro záložky"
-
-#. (itstool) path: page/p
-#: C/commands_bookmarks.page:20
-msgid ""
-"<app>Orca</app> provides several commands which can be used to \"bookmark\" "
-"a given object for the purpose of navigating back to it later."
 msgstr ""
-"<app>Orca</app> nabízí několik příkazů, pomocí kterých lze pro zadaný objekt "
-"použít „záložku“, abyste se k tomuto objektu mohli později snadno vracet."
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:26
-msgid ""
-"Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
-"<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
-msgstr ""
-"Uložit záložku do očíslované pozice: <keyseq><key>Modifikátor Orca</key> "
-"<key>Alt</key><key>1</key></keyseq> – <key>6</key>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:32
-msgid ""
-"Save the defined bookmarks for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>Alt</key><key>B</key></keyseq>"
-msgstr ""
-"Uložit definovanou záložku pro aplikaci nebo stránku: "
-"<keyseq><key>Modifikátor Orca</key><key>Alt</key><key>B</key></keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:38
-msgid ""
-"Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
-"<key>1</key></keyseq>-<key>6</key>"
-msgstr ""
-"Přejít na určenou očíslovanou záložku: <keyseq><key>Modifikátor Orca</"
-"key><key>1</key></keyseq> – <key>6</key>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:44
-msgid ""
-"Go to the previous bookmark for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>Shift</key><key>B</key> </keyseq>"
-msgstr ""
-"Přejít na předchozí záložku pro aplikaci nebo stránku: "
-"<keyseq><key>Modifikátor Orca</key><key>Shift</key><key>B</key></keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:51
-msgid ""
-"Go to the next bookmark for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>B</key></keyseq>"
-msgstr ""
-"Přejít na následující záložku pro aplikaci nebo stránku: "
-"<keyseq><key>Modifikátor Orca</key><key>B</key></keyseq>"
+"Marek Černocký <marek@manet.cz>\n"
+"Patrik Sivek <sivekpatrik@gmail.com>"
 
 #. (itstool) path: info/title
 #: C/commands_braille.page:6
@@ -174,8 +43,65 @@ msgstr "Braille"
 msgid "Commands executable on braille displays"
 msgstr "Příkazy spustitelné na braillském řádku"
 
+#. (itstool) path: credit/name
+#: C/commands_braille.page:12 C/commands_chat.page:12
+#: C/commands_controlling_orca.page:11 C/commands_debugging.page:10
+#: C/commands_find.page:12 C/commands_flat_review.page:12
+#: C/commands_live_regions.page:12 C/commands_mouse.page:13 C/commands.page:8
+#: C/commands_profiles.page:12 C/commands_reading.page:14
+#: C/commands_speech_settings.page:12 C/commands_structural_navigation.page:12
+#: C/commands_table.page:12 C/commands_time_date_notifications.page:12
+#: C/commands_where_am_i.page:12 C/howto_documents.page:10
+#: C/howto_flat_review.page:8 C/howto_forms.page:10 C/howto_key_bindings.page:8
+#: C/howto_keyboard_layout.page:8 C/howto_learn_modes.page:10
+#: C/howto_live_regions.page:10 C/howto_mouse_review.page:8
+#: C/howto_notifications.page:7 C/howto_orca_find.page:8
+#: C/howto_profiles.page:8 C/howto_setting_up_orca.page:12
+#: C/howto_structural_navigation.page:12 C/howto_tables.page:10
+#: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
+#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:10
+#: C/introduction.page:10 C/preferences_braille.page:11
+#: C/preferences_chat.page:11 C/preferences_general.page:11
+#: C/preferences_introduction.page:8 C/preferences_key_bindings.page:12
+#: C/preferences_key_echo.page:11 C/preferences.page:7
+#: C/preferences_pronunciation.page:12 C/preferences_speech.page:11
+#: C/preferences_spellcheck.page:10 C/preferences_table_navigation.page:14
+#: C/preferences_text_attributes.page:13 C/preferences_voice.page:11
+#: C/preferences_web.page:12
+msgid "Joanmarie Diggs"
+msgstr "Joanmarie Diggs"
+
+#. (itstool) path: license/p
+#: C/commands_braille.page:16 C/commands_chat.page:16
+#: C/commands_controlling_orca.page:15 C/commands_debugging.page:14
+#: C/commands_find.page:16 C/commands_flat_review.page:16
+#: C/commands_live_regions.page:16 C/commands_mouse.page:17 C/commands.page:12
+#: C/commands_profiles.page:16 C/commands_reading.page:18
+#: C/commands_speech_settings.page:16 C/commands_structural_navigation.page:16
+#: C/commands_table.page:16 C/commands_time_date_notifications.page:16
+#: C/commands_where_am_i.page:16 C/howto_documents.page:14
+#: C/howto_flat_review.page:12 C/howto_forms.page:14
+#: C/howto_key_bindings.page:12 C/howto_keyboard_layout.page:12
+#: C/howto_learn_modes.page:14 C/howto_live_regions.page:14
+#: C/howto_mouse_review.page:12 C/howto_notifications.page:11
+#: C/howto_orca_find.page:12 C/howto_profiles.page:12
+#: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
+#: C/howto_tables.page:14 C/howto_text_attributes.page:14
+#: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
+#: C/howto_whereami.page:14 C/index.page:14 C/introduction.page:14
+#: C/preferences_braille.page:15 C/preferences_chat.page:15
+#: C/preferences_general.page:15 C/preferences_introduction.page:12
+#: C/preferences_key_bindings.page:16 C/preferences_key_echo.page:15
+#: C/preferences.page:11 C/preferences_pronunciation.page:16
+#: C/preferences_speech.page:15 C/preferences_spellcheck.page:14
+#: C/preferences_table_navigation.page:18 C/preferences_text_attributes.page:17
+#: C/preferences_voice.page:15 C/preferences_web.page:16
+msgid "Creative Commons Share Alike 3.0"
+msgstr "Creative Commons Share Alike 3.0"
+
 #. (itstool) path: page/title
-#: C/commands_braille.page:19
+#. (itstool) path: section/title
+#: C/commands_braille.page:19 C/commands_controlling_orca.page:73
 msgid "Braille Commands"
 msgstr "Příkazy pro braillský řádek"
 
@@ -287,31 +213,38 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:30
-msgid ""
-"Present previous chat room messages: <keyseq><key>Orca Modifier</"
-"key><key>F1</key></keyseq> through <key>F9</key>"
+msgid "Present previous chat room message: (Unbound)"
 msgstr ""
-"Prezentovat předchozí zprávu v diskuzní místnosti: <keyseq><key>Modifikátor "
-"Orca</key><key>F1</key></keyseq> až <key>F9</key>"
+"Prezentovat předchozí zprávu v diskuzní místnosti: (bez klávesové zkratky)"
 
 #. (itstool) path: item/p
-#: C/commands_chat.page:36
+#: C/commands_chat.page:35
+msgid "Present next chat room message: (Unbound)"
+msgstr ""
+"Prezentovat následující zprávu v diskuzní místnosti: (bez klávesové zkratky)"
+
+#. (itstool) path: item/p
+#: C/commands_chat.page:40
 msgid "Enable/disable announcement of room name with messages: (Unbound)"
 msgstr ""
 "Povolit/zakázat oznamování názvu místnosti spolu se zprávou: (bez klávesové "
 "zkratky)"
 
 #. (itstool) path: item/p
-#: C/commands_chat.page:41
+#: C/commands_chat.page:45
+msgid "Toggle chat room specific message histories: (unbound)"
+msgstr "Přepnout historii zpráv specifické místnosti: (bez klávesové zkratky)"
+
+#. (itstool) path: item/p
+#: C/commands_chat.page:50
 msgid "Enable/disable announcement of buddy typing status: (Unbound)"
 msgstr ""
 "Povolit/zakázat oznámení, že kamarád zveřejňuje stav: (bez klávesové zkratky)"
 
 #. (itstool) path: item/p
-#: C/commands_chat.page:44
-msgid "Enable/disable room-specific histories: (Unbound)"
-msgstr ""
-"Povolit/zakázat historii pro konkrétní místnost: (bez klávesové zkratky)"
+#: C/commands_chat.page:53
+msgid "Toggle room name presentation: (Unbound)"
+msgstr "Přepnout prezentování názvu místnosti: (bez klávesové zkratky)"
 
 #. (itstool) path: info/title
 #: C/commands_controlling_orca.page:5
@@ -355,11 +288,12 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:29
 msgid ""
-"Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
-"key><key>Alt</key><key>S</key></keyseq>."
+"Toggle <app>Orca</app> on and off in supported desktop environments: "
+"<keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 msgstr ""
-"Zapnout a vypnout čtečku <app>Orca</app> v GNOME: <keyseq><key>Super</key> "
-"<key>Alt</key> <key>S</key></keyseq>"
+"Chcete-li zapnout či vypnout čtečku <app>Orca</app> v podporovaných "
+"pracovních prostředích, použijte <keyseq><key>Super</key><key>Alt</"
+"key><key>S</key></keyseq>."
 
 #. (itstool) path: note/p
 #: C/commands_controlling_orca.page:34
@@ -398,20 +332,62 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:56
 msgid ""
-"Pass the next command on to the current application: <keyseq><key>Orca "
-"Modifier</key><key>BackSpace</key></keyseq>"
+"Toggle all Orca command keys: <keyseq><key>Alt&gt;</key><key>BackSpace</"
+"key></keyseq>"
 msgstr ""
-"Předat následující příkaz do aktuální aplikace: <keyseq><key>Modifikátor "
-"Orca</key><key>BackSpace</key></keyseq>"
+"Zapnout nebo vypnout všechny kurzorové klávesy Orca: <keyseq><key>Alt&gt;</"
+"key><key>BackSpace</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:62
+msgid "Toggle keyboard layout: (Unbound)"
+msgstr "Přepnout rozložení klávesnice: (bez klávesové zkratky)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:65 C/commands_speech_settings.page:57
+msgid "Cycle to the next key echo level: (Unbound)"
+msgstr ""
+"Cyklicky přejít na následujcí úroveň oznamování kláves: (bez klávesové "
+"zkratky)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:68
+msgid "Quit the screen reader: (Unbound)"
+msgstr "Ukončit aplikaci čtečky obrazovky: (bez klávesové zkratky)"
+
+#. (itstool) path: section/p
+#: C/commands_controlling_orca.page:74
+msgid ""
+"The following commands can be used to control and customize Orca's braille "
+"output."
+msgstr ""
+"Následující příkazy umožňují správu a přizpůsobení braillského výstupu Orca."
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:77
+msgid "Pan the braille display to the left: (Unbound)"
+msgstr "Posunout braillský řádek doleva: (bez klávesové zkratky)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:80
+msgid "Pan the braille display to the right: (Unbound)"
+msgstr "Posunout braillský řádek doprava: (bez klávesové zkratky)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:83
+msgid "Turn contracted braille on and off: (Unbound)"
+msgstr ""
+"Vypnout nebo zapnout režim zkratkopisu braillského řádku: (bez klávesové "
+"zkratky)"
 
 #. (itstool) path: section/title
-#: C/commands_controlling_orca.page:64
+#: C/commands_controlling_orca.page:88
 msgid "Commands for Learning to Use <app>Orca</app>"
 msgstr "Příkazy pro výuku používání čtečky <app>Orca</app>"
 
 #. (itstool) path: section/p
 #. (itstool) path: page/p
-#: C/commands_controlling_orca.page:65 C/howto_learn_modes.page:18
+#: C/commands_controlling_orca.page:89 C/howto_learn_modes.page:18
 msgid ""
 "In Learn Mode, <app>Orca</app> will announce each keystroke you pressed "
 "along with any associated <app>Orca</app> command that keystroke is bound "
@@ -424,14 +400,14 @@ msgstr ""
 "všechny příkazy <app>Orca</app>, které můžete použít."
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:73
+#: C/commands_controlling_orca.page:97
 msgid "Enter Learn Mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
 "Vstoupit do výukového režimu: <keyseq><key>Modifikátor Orca</key><key>H</"
 "key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:79
+#: C/commands_controlling_orca.page:103
 msgid "Exit Learn Mode: <keyseq><key>Esc</key></keyseq>"
 msgstr "Ukončit výukový režim: <keyseq><key>Esc</key></keyseq>"
 
@@ -474,8 +450,19 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_debugging.page:26
+msgid "Capture snapshot for debugging: (Unbound)"
+msgstr "Vytvořit snímek pro ladění: (bez klávesové zkratky)"
+
+#. (itstool) path: item/p
+#: C/commands_debugging.page:29
 msgid "Cycle to the next debug level: (Unbound)"
 msgstr "Přejít cyklicky na následující úroveň ladění: (bez klávesové zkratky)"
+
+#. (itstool) path: item/p
+#: C/commands_debugging.page:32
+msgid "Clear the AT-SPI cache for the current application: (Unbound)"
+msgstr ""
+"Vymazat mezipaměť AT-SPI pro aktuální aplikaci: (bez klávesové zkratky)"
 
 #. (itstool) path: info/title
 #: C/commands_find.page:6
@@ -1093,6 +1080,22 @@ msgstr ""
 "Připojit obsah pod plošným náhledem ke stávajícímu obsahu ve schránce: (bez "
 "klávesové zkratky)"
 
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:197
+msgid "Move flat review to the bottom left: (Unbound)"
+msgstr "Přesunout plošný náhled vlevo dolů: (bez klávesové zkratky)"
+
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:198
+msgid "Show flat review contents: (Unbound)"
+msgstr "Zobrazit obsah plošného náhledu: (bez klávesové zkratky)"
+
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:199
+msgid "Toggle restricting flat review to the current object: (Unbound)"
+msgstr ""
+"Přepnout omezený plošný náhled na aktuální objekt: (bez klávesové zkratky)"
+
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
 msgctxt "sort"
@@ -1127,50 +1130,43 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:27
 msgid ""
-"Monitor live regions: <keyseq><key>Orca Modifier</key><key>Shift</"
-"key><key>Backslash</key></keyseq>"
+"Monitor live regions: <keyseq><key>Orca Modifier</key><key>Backslash</key></"
+"keyseq>"
 msgstr ""
-"Sledovat živé oblasti: <keyseq><key>Modifikátor Orca</key> <key>Shift</key> "
-"<key>\\</key></keyseq>"
+"Sledovat živé oblasti: <keyseq><key>Modifikátor Orca</key><key>\\</key></"
+"keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:33
-msgid "Advance live region politeness setting: <key>Backslash</key>"
-msgstr "Pokročilé nastavení chování živé oblasti: <key>\\</key>"
+msgid "Advance live region politeness setting: (Unbound)"
+msgstr "Přepnout na další úroveň chování živé oblasti: (bez klávesové zkratky)"
 
 #. (itstool) path: item/p
-#: C/commands_live_regions.page:38
+#: C/commands_live_regions.page:36
+msgid "Set default politeness level to off: (Unbound)"
+msgstr "Nastavit výchozí chování živé oblasti na vypnuto"
+
+#. (itstool) path: item/p
+#: C/commands_live_regions.page:39
 msgid ""
-"Set default politeness level to off: <keyseq><key>Shift</key><key>Backslash</"
-"key></keyseq>"
+"Go to next/previous live region in the document's reading order: "
+"<keyseq><key>D</key></keyseq>/<keyseq><key>Shift</key><key>D</key></keyseq>"
 msgstr ""
-"Nastavit výchozí úroveň chování na vypnuto: <keyseq><key>Shift</key> "
-"<key>\\</key></keyseq>"
+"Přejít na následující/předchozí živou oblast v pořadí čtení dokumentu: "
+"<keyseq><key>D</key></keyseq>/<keyseq><key>Shift</key><key>D</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_live_regions.page:44
-msgid ""
-"Go to next/previous live region: <keyseq><key>D</key></keyseq>/"
-"<keyseq><key>Shift</key><key>D</key></keyseq>"
+#: C/commands_live_regions.page:45
+msgid "Review the next/previous saved live region message: (Unbound)"
 msgstr ""
-"Přejít na následující/předchozí živou oblast: <keyseq><key>D</key></keyseq>/"
-"<keyseq><key>Shift</key><key>D</key></keyseq>"
+"Náhled následující/předchozí uložené živé oblasti: (bez klávesové zkratky)"
 
 #. (itstool) path: item/p
-#: C/commands_live_regions.page:50
+#: C/commands_live_regions.page:48
 msgid ""
 "Go to last live region which made an announcement: <keyseq><key>Y</key></"
 "keyseq>"
 msgstr "Přejít na poslední živou oblast, která provedla oznámení: <key>Y</key>"
-
-#. (itstool) path: item/p
-#: C/commands_live_regions.page:56
-msgid ""
-"Review live region announcements: <keyseq><key>Orca Modifier</key><key>F1</"
-"key></keyseq> through <key>F9</key>"
-msgstr ""
-"Znovu se podívat na živou oblast, která provedla oznámení: "
-"<keyseq><key>Modifikátor Orca</key> <key>F1</key></keyseq> až <key>F9</key>"
 
 #. (itstool) path: info/title
 #: C/commands_mouse.page:5
@@ -1400,6 +1396,11 @@ msgstr ""
 #: C/commands_profiles.page:30
 msgid "Cycle to the next profile: (Unbound)"
 msgstr "Cyklicky přejít na následující profil: (bez klávesové zkratky)"
+
+#. (itstool) path: item/p
+#: C/commands_profiles.page:35
+msgid "Present the current profile: (Unbound)"
+msgstr "Prezentovat aktuální profil: (bez klávesové zkratky)"
 
 #. (itstool) path: info/title
 #: C/commands_reading.page:8
@@ -1712,8 +1713,8 @@ msgstr "Příkazy pro přizpůsobení výstupu čtečky <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/commands_speech_settings.page:19
-msgid "Speech Settings Commands"
-msgstr "Příkazy pro nastavení řeči"
+msgid "Speech And Verbosity Settings Commands"
+msgstr "Příkazy pro nastavení řeči a upovídanosti"
 
 #. (itstool) path: page/p
 #: C/commands_speech_settings.page:20
@@ -1773,13 +1774,6 @@ msgstr ""
 "klávesové zkratky)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:57
-msgid "Cycle to the next key echo level: (Unbound)"
-msgstr ""
-"Cyklicky přejít na následujcí úroveň oznamování kláves: (bez klávesové "
-"zkratky)"
-
-#. (itstool) path: item/p
 #: C/commands_speech_settings.page:60
 msgid "Cycle to the next capitalization style: (Unbound)"
 msgstr ""
@@ -1814,6 +1808,11 @@ msgstr "Snížit hlasitost: (bez klávesové zkratky)"
 #: C/commands_speech_settings.page:78
 msgid "Increase the volume: (Unbound)"
 msgstr "Zvýšit hlasitost: (bez klávesové zkratky)"
+
+#. (itstool) path: item/p
+#: C/commands_speech_settings.page:81
+msgid "Cycle to the next speech synthesizer: (Unbound)"
+msgstr "Cyklicky přejít na další hlasový výstup: (bez klávesové zkratky)"
 
 #. (itstool) path: info/title
 #: C/commands_structural_navigation.page:6
@@ -1995,16 +1994,12 @@ msgstr "Formuláře"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:133
-#, fuzzy
-#| msgid ""
-#| "Next and previous image: <keyseq><key>G</key></keyseq> and "
-#| "<keyseq><key>Shift</key><key>G</key></keyseq>"
 msgid ""
 "Next and previous form field: <keyseq><key>F</key></keyseq> and "
 "<keyseq><key>Shift</key><key>F</key></keyseq>"
 msgstr ""
-"Následující a předchozí obrázek: <keyseq><key>G</key></keyseq> a "
-"<keyseq><key>Shift</key><key>G</key></keyseq>"
+"Následující a předchozí formulářové pole: <keyseq><key>F</key></keyseq> a "
+"<keyseq><key>Shift</key><key>F</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:140
@@ -2677,87 +2672,6 @@ msgstr ""
 "klávesové zkratky)"
 
 #. (itstool) path: info/title
-#: C/howto_bookmarks.page:4
-msgctxt "sort"
-msgid "6. Bookmarks"
-msgstr "6. Záložky"
-
-#. (itstool) path: info/desc
-#: C/howto_bookmarks.page:5
-msgid "Storing and retrieving objects"
-msgstr "Jak ukládat a získávat objekty"
-
-#. (itstool) path: page/title
-#: C/howto_bookmarks.page:14
-msgid "Bookmarks"
-msgstr "Záložky"
-
-#. (itstool) path: page/p
-#: C/howto_bookmarks.page:15
-msgid ""
-"<app>Orca</app>'s Bookmarks support allows you to indicate that an object is "
-"of interest. It includes the following features:"
-msgstr ""
-"Podpora záložek ve čtečce <app>Orca</app> vám umožňuje poznačit si objekt, "
-"který vás zajímá. To představuje následující funkce:"
-
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:21
-msgid ""
-"You are not limited to a single object: You can set up to six bookmarks per "
-"environment. You can also save bookmarks so that they will persist from Orca "
-"session to Orca session."
-msgstr ""
-"Nejste omezeni jen na jeden objekt: V jednom prostředí můžete nastavit až "
-"šest záložek. Záložky si můžete také uložit, takže zůstanou uchovány i mezi "
-"jednotlivými sezeními."
-
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:28
-msgid ""
-"Having set a bookmark you can navigate to it later, and do so regardless of "
-"whether or not you have chosen to permanently save the bookmarks associated "
-"with your current environment. Navigation can be based on the number of the "
-"bookmark should you wish to jump directly to a specific item. Alternatively, "
-"you can navigate to the next or previous bookmark just like you can a <link "
-"xref=\"howto_structural_navigation\">Structural Navigation</link> object."
-msgstr ""
-"Když máte nastavenou záložku, můžete se na ni později přesunout a to bez "
-"ohledu na to, jestli máte nebo nemáte zvolené trvalé ukládání záložek "
-"patřících k aktuálnímu prostředí. Pokud se chcete přesunout přímo na "
-"konkrétní položku, může k tomu posloužit číslo záložky. Případně se můžete "
-"přesouvat na následující a předchozí záložky, podobně jako je tomu u <link "
-"xref=\"howto_structural_navigation\">strukturované navigace</link> po "
-"objektech."
-
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:39
-msgid ""
-"Bookmarkable objects can be widgets within an application or objects on the "
-"web page you are reading. Which environment you are in determines what "
-"happens as you navigate amongst bookmarks: If you are in web content, the "
-"caret will be moved to the bookmark so that you can continue reading; "
-"otherwise, <link xref=\"howto_flat_review\">Flat Review</link> will be "
-"activated with the bookmark becoming the current review item."
-msgstr ""
-"Objektem, který leze přidat do záložek, může být widget v aplikaci nebo "
-"objekt na webové stránce, kterou čtete. Od toho, v jakém se nacházíte "
-"prostředí, se bude odvíjet, co se stane, když se pohybujete mezi záložkami. "
-"Když jste ve webovém obsahu, přemístí se na záložku kurzor, takže od ní "
-"můžete pokračovat ve čtení. Jinak se aktivuje <link "
-"xref=\"howto_flat_review\">plošný náhled</link>, ve kterém se záložka stane "
-"aktuální položkou."
-
-#. (itstool) path: page/p
-#: C/howto_bookmarks.page:50
-msgid ""
-"The specific keybindings associated with each of the above tasks can be "
-"found in <link xref=\"commands_bookmarks\">Bookmark Commands</link>."
-msgstr ""
-"Klávesové zkratky přiřazené jednotlivým výše zmíněným funkcím můžete najít v "
-"<link xref=\"commands_bookmarks\">příkazech pro záložky</link>."
-
-#. (itstool) path: info/title
 #: C/howto_documents.page:5
 msgctxt "sort"
 msgid "1. Documents"
@@ -3413,13 +3327,13 @@ msgid ""
 "Live regions have an associated \"politeness\" level which is set by the "
 "author as a means to convey the importance of the information and to suggest "
 "when users should be informed by their assistive technology of updates made "
-"within that region. Live regions can be \"off\", \"polite\", or "
-"\"assertive\" to the point of being \"rude.\""
+"within that region. Live regions can be \"off\", \"polite\", or \"assertive."
+"\""
 msgstr ""
 "Živé oblasti mají přiřazenu úroveň „chování“, kterou jim nastavil autor, aby "
 "tím sdělil její informační důležitost a doporučil uživateli, jestli má být "
 "svojí asistenční technologií informován o změnách v této živé oblast. Živé "
-"oblasti mohou být „vypnuté“, „slušné“, „důrazné“ a až „hrubé“."
+"oblasti mohou být „vypnuté“, „slušné“ až „důrazné“."
 
 #. (itstool) path: section/title
 #: C/howto_live_regions.page:37
@@ -3546,23 +3460,23 @@ msgstr ""
 "přepínat, protože nastavení a klávesové zkratky jsou na sobě nezávislé."
 
 #. (itstool) path: info/title
-#: C/howto_notifications.page:5
+#: C/howto_notifications.page:4
 msgctxt "sort"
 msgid "5. Notifications"
 msgstr "5. Upozornění"
 
 #. (itstool) path: info/desc
-#: C/howto_notifications.page:6
+#: C/howto_notifications.page:5
 msgid "Reading previously-received messages"
 msgstr "Jak přečíst dříve obdržené zprávy"
 
 #. (itstool) path: page/title
-#: C/howto_notifications.page:15
+#: C/howto_notifications.page:14
 msgid "Notifications"
 msgstr "Upozornění"
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:16
+#: C/howto_notifications.page:15
 msgid ""
 "The GNOME Desktop includes a \"notification area\" which can be used by "
 "applications to present information to the user. Examples of notifications "
@@ -3576,7 +3490,7 @@ msgstr ""
 "nebo o nízkém stavu nabití baterie."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:23
+#: C/howto_notifications.page:22
 msgid ""
 "Because notifications are intended to present information to users without "
 "interrupting what the user is doing, these messages tend to appear and "
@@ -3595,22 +3509,22 @@ msgstr ""
 "zobrazeným zprávám v upozorněních."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:35
+#: C/howto_notifications.page:34
 msgid "Present the last (most recent) notification message"
 msgstr "Prezentovat poslední (tj. nejnovější) zprávu v upozorněních"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:38
+#: C/howto_notifications.page:37
 msgid "Present the previous notification message"
 msgstr "Prezentovat předchozí zprávu v upozorněních"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:41
+#: C/howto_notifications.page:40
 msgid "Present list of all notification messages"
 msgstr "Prezentovat seznam všech zpráv v upozorněních"
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:44
+#: C/howto_notifications.page:43
 msgid ""
 "The first two commands are designed mainly for quick access to a message you "
 "just received. The last command is the most powerful as it stores your "
@@ -3621,7 +3535,7 @@ msgstr ""
 "zpráv v upozorněních."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:49
+#: C/howto_notifications.page:48
 msgid ""
 "When you enter the list of notification messages, you will be told the size "
 "of the list and prompted with the following choices:"
@@ -3630,40 +3544,40 @@ msgstr ""
 "seznamu a nabídnuty následující možnosti:"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:54
+#: C/howto_notifications.page:53
 msgid "Press H for help."
 msgstr "Zmáčknout H pro nápovědu."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:55
+#: C/howto_notifications.page:54
 msgid "Use Up, Down, Home or End to navigate in the list."
 msgstr ""
 "Použít <key>↑</key>, <key>↓</key>, <key>Home</key> nebo <key>End</key> pro "
 "pohyb v seznamu."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:56
+#: C/howto_notifications.page:55
 msgid "Press Escape to exit."
 msgstr "Zmáčknutím <key>Esc</key> seznam opustit."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:57
+#: C/howto_notifications.page:56
 msgid "Press Space to repeat the last message read."
 msgstr "Zmáčknutím <key>mezerníku</key> zopakovat poslední přečtenou zprávu."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:58
+#: C/howto_notifications.page:57
 msgid "Press one digit to read a specific message."
 msgstr "Zmáčknutím jedné číslice nechat přečíst konkrétní zprávu."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:60
+#: C/howto_notifications.page:59
 msgid "Note that the most recently-received message is at the top of the list."
 msgstr ""
 "Všimněte si, že nejnovější přijatá zpráva se nachází na začátku seznamu."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:63
+#: C/howto_notifications.page:62
 msgid ""
 "Each of <app>Orca</app>'s notification review commands is unbound by "
 "default. You can bind any or all of them to the shortcut or shortcuts you "
@@ -4657,19 +4571,16 @@ msgstr "Změna modifikátoru Orca"
 
 #. (itstool) path: item/p
 #: C/howto_the_orca_modifier.page:53
-#, fuzzy
-#| msgid ""
-#| "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
-#| "pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>."
 msgid ""
 "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
 "pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>. "
 "Alternatively, you can start Orca with the preferences dialog open from a "
 "terminal: type <cmd>orca -s</cmd> and press <key>Return</key>."
 msgstr ""
-"Zobrazte si zmáčknutím <keyseq><key>Modifikátor Orca</key><key>mezerník</"
-"key></keyseq> dialogové okno <link xref=\"preferences\">Předvolby Orca</"
-"link>."
+"Chcete-li si zobrazit <link xref=\"preferences\">předvolby Orca</link>, "
+"stiskněte <keyseq><key>Modifikátor Orca</key><key>Mezerník</key></keyseq>. "
+"Alternativně si můžete otevřít Orca s otevřeným dialogem předvoleb z "
+"konzoly: napište <cmd>orca -s</cmd> a stiskněte <key>Enter</key>."
 
 #. (itstool) path: item/p
 #: C/howto_the_orca_modifier.page:62
@@ -8184,6 +8095,170 @@ msgstr ""
 #: C/preferences_web.page:218
 msgid "Default value: 4"
 msgstr "Výchozí hodnota: 4"
+
+#~ msgctxt "sort"
+#~ msgid "4. Bookmarks"
+#~ msgstr "4. Záložky"
+
+#~ msgctxt "link"
+#~ msgid "Bookmarks"
+#~ msgstr "Záložky"
+
+#~ msgid "Commands to bookmark and retrieve objects"
+#~ msgstr "Příkazy pro vytváření záložek a získávání objektů podle nich"
+
+#~ msgid "Bookmark Commands"
+#~ msgstr "Příkazy pro záložky"
+
+#~ msgid ""
+#~ "<app>Orca</app> provides several commands which can be used to "
+#~ "\"bookmark\" a given object for the purpose of navigating back to it "
+#~ "later."
+#~ msgstr ""
+#~ "<app>Orca</app> nabízí několik příkazů, pomocí kterých lze pro zadaný "
+#~ "objekt použít „záložku“, abyste se k tomuto objektu mohli později snadno "
+#~ "vracet."
+
+#~ msgid ""
+#~ "Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
+#~ "<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
+#~ msgstr ""
+#~ "Uložit záložku do očíslované pozice: <keyseq><key>Modifikátor Orca</key> "
+#~ "<key>Alt</key><key>1</key></keyseq> – <key>6</key>"
+
+#~ msgid ""
+#~ "Save the defined bookmarks for the application or page: <keyseq><key>Orca "
+#~ "Modifier</key><key>Alt</key><key>B</key></keyseq>"
+#~ msgstr ""
+#~ "Uložit definovanou záložku pro aplikaci nebo stránku: "
+#~ "<keyseq><key>Modifikátor Orca</key><key>Alt</key><key>B</key></keyseq>"
+
+#~ msgid ""
+#~ "Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
+#~ "<key>1</key></keyseq>-<key>6</key>"
+#~ msgstr ""
+#~ "Přejít na určenou očíslovanou záložku: <keyseq><key>Modifikátor Orca</"
+#~ "key><key>1</key></keyseq> – <key>6</key>"
+
+#~ msgid ""
+#~ "Go to the previous bookmark for the application or page: "
+#~ "<keyseq><key>Orca Modifier</key><key>Shift</key><key>B</key> </keyseq>"
+#~ msgstr ""
+#~ "Přejít na předchozí záložku pro aplikaci nebo stránku: "
+#~ "<keyseq><key>Modifikátor Orca</key><key>Shift</key><key>B</key></keyseq>"
+
+#~ msgid ""
+#~ "Go to the next bookmark for the application or page: <keyseq><key>Orca "
+#~ "Modifier</key><key>B</key></keyseq>"
+#~ msgstr ""
+#~ "Přejít na následující záložku pro aplikaci nebo stránku: "
+#~ "<keyseq><key>Modifikátor Orca</key><key>B</key></keyseq>"
+
+#~ msgid ""
+#~ "Present previous chat room messages: <keyseq><key>Orca Modifier</"
+#~ "key><key>F1</key></keyseq> through <key>F9</key>"
+#~ msgstr ""
+#~ "Prezentovat předchozí zprávu v diskuzní místnosti: "
+#~ "<keyseq><key>Modifikátor Orca</key><key>F1</key></keyseq> až <key>F9</key>"
+
+#~ msgid "Enable/disable room-specific histories: (Unbound)"
+#~ msgstr ""
+#~ "Povolit/zakázat historii pro konkrétní místnost: (bez klávesové zkratky)"
+
+#~ msgid ""
+#~ "Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
+#~ "key><key>Alt</key><key>S</key></keyseq>."
+#~ msgstr ""
+#~ "Zapnout a vypnout čtečku <app>Orca</app> v GNOME: <keyseq><key>Super</"
+#~ "key> <key>Alt</key> <key>S</key></keyseq>"
+
+#~ msgid ""
+#~ "Pass the next command on to the current application: <keyseq><key>Orca "
+#~ "Modifier</key><key>BackSpace</key></keyseq>"
+#~ msgstr ""
+#~ "Předat následující příkaz do aktuální aplikace: <keyseq><key>Modifikátor "
+#~ "Orca</key><key>BackSpace</key></keyseq>"
+
+#~ msgid ""
+#~ "Set default politeness level to off: <keyseq><key>Shift</"
+#~ "key><key>Backslash</key></keyseq>"
+#~ msgstr ""
+#~ "Nastavit výchozí úroveň chování na vypnuto: <keyseq><key>Shift</key> "
+#~ "<key>\\</key></keyseq>"
+
+#~ msgid ""
+#~ "Review live region announcements: <keyseq><key>Orca Modifier</"
+#~ "key><key>F1</key></keyseq> through <key>F9</key>"
+#~ msgstr ""
+#~ "Znovu se podívat na živou oblast, která provedla oznámení: "
+#~ "<keyseq><key>Modifikátor Orca</key> <key>F1</key></keyseq> až <key>F9</"
+#~ "key>"
+
+#~ msgctxt "sort"
+#~ msgid "6. Bookmarks"
+#~ msgstr "6. Záložky"
+
+#~ msgid "Storing and retrieving objects"
+#~ msgstr "Jak ukládat a získávat objekty"
+
+#~ msgid "Bookmarks"
+#~ msgstr "Záložky"
+
+#~ msgid ""
+#~ "<app>Orca</app>'s Bookmarks support allows you to indicate that an object "
+#~ "is of interest. It includes the following features:"
+#~ msgstr ""
+#~ "Podpora záložek ve čtečce <app>Orca</app> vám umožňuje poznačit si "
+#~ "objekt, který vás zajímá. To představuje následující funkce:"
+
+#~ msgid ""
+#~ "You are not limited to a single object: You can set up to six bookmarks "
+#~ "per environment. You can also save bookmarks so that they will persist "
+#~ "from Orca session to Orca session."
+#~ msgstr ""
+#~ "Nejste omezeni jen na jeden objekt: V jednom prostředí můžete nastavit až "
+#~ "šest záložek. Záložky si můžete také uložit, takže zůstanou uchovány i "
+#~ "mezi jednotlivými sezeními."
+
+#~ msgid ""
+#~ "Having set a bookmark you can navigate to it later, and do so regardless "
+#~ "of whether or not you have chosen to permanently save the bookmarks "
+#~ "associated with your current environment. Navigation can be based on the "
+#~ "number of the bookmark should you wish to jump directly to a specific "
+#~ "item. Alternatively, you can navigate to the next or previous bookmark "
+#~ "just like you can a <link xref=\"howto_structural_navigation\">Structural "
+#~ "Navigation</link> object."
+#~ msgstr ""
+#~ "Když máte nastavenou záložku, můžete se na ni později přesunout a to bez "
+#~ "ohledu na to, jestli máte nebo nemáte zvolené trvalé ukládání záložek "
+#~ "patřících k aktuálnímu prostředí. Pokud se chcete přesunout přímo na "
+#~ "konkrétní položku, může k tomu posloužit číslo záložky. Případně se "
+#~ "můžete přesouvat na následující a předchozí záložky, podobně jako je tomu "
+#~ "u <link xref=\"howto_structural_navigation\">strukturované navigace</"
+#~ "link> po objektech."
+
+#~ msgid ""
+#~ "Bookmarkable objects can be widgets within an application or objects on "
+#~ "the web page you are reading. Which environment you are in determines "
+#~ "what happens as you navigate amongst bookmarks: If you are in web "
+#~ "content, the caret will be moved to the bookmark so that you can continue "
+#~ "reading; otherwise, <link xref=\"howto_flat_review\">Flat Review</link> "
+#~ "will be activated with the bookmark becoming the current review item."
+#~ msgstr ""
+#~ "Objektem, který leze přidat do záložek, může být widget v aplikaci nebo "
+#~ "objekt na webové stránce, kterou čtete. Od toho, v jakém se nacházíte "
+#~ "prostředí, se bude odvíjet, co se stane, když se pohybujete mezi "
+#~ "záložkami. Když jste ve webovém obsahu, přemístí se na záložku kurzor, "
+#~ "takže od ní můžete pokračovat ve čtení. Jinak se aktivuje <link "
+#~ "xref=\"howto_flat_review\">plošný náhled</link>, ve kterém se záložka "
+#~ "stane aktuální položkou."
+
+#~ msgid ""
+#~ "The specific keybindings associated with each of the above tasks can be "
+#~ "found in <link xref=\"commands_bookmarks\">Bookmark Commands</link>."
+#~ msgstr ""
+#~ "Klávesové zkratky přiřazené jednotlivým výše zmíněným funkcím můžete "
+#~ "najít v <link xref=\"commands_bookmarks\">příkazech pro záložky</link>."
 
 #~ msgid ""
 #~ "Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
