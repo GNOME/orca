@@ -50,6 +50,7 @@ lint.ignore = [
   "PLR0912",# Too many branches
   "PLR0913",# Too many arguments
   "PLR0915",# Too many statements
+  "PLR0917",# Too many positional arguments
   "PLR2004",# Magic value used in comparison
   "RET501", # Explicit return None — often intentional for clarity
   "RET504", # Assignment before return — aids debugging and readability
