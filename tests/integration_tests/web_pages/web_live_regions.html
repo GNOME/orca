@@ -42,6 +42,16 @@ function appendWhileBusy(id) {
   }
   addNext();
 }
+function insertEmptyRegionThenFill(containerId) {
+  var container = document.getElementById(containerId);
+  container.textContent = '';
+  var region = document.createElement('span');
+  region.setAttribute('aria-live', 'polite');
+  var wrapper = document.createElement('div');
+  wrapper.appendChild(region);
+  container.appendChild(wrapper);
+  setTimeout(function () { region.textContent = 'Message read'; }, 100);
+}
 function finalizeWhileBusy(id) {
   var region = document.getElementById(id);
   region.setAttribute('aria-busy', 'true');
@@ -83,5 +93,8 @@ function finalizeWhileBusy(id) {
 
 <p><button type="button" onclick="finalizeWhileBusy('finalize-busy')">Finalize</button></p>
 <div id="finalize-busy" aria-live="polite"></div>
+
+<p><button type="button" onclick="insertEmptyRegionThenFill('filled')">Fill</button></p>
+<div id="filled"></div>
 </body>
 </html>

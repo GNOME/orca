@@ -178,6 +178,22 @@ class EventManager:
                 self._latest_event = {}
         input_event_manager.get_manager().pause_key_watcher(pause, reason)
 
+    def _get_text_changed_priority(self, event: Atspi.Event) -> EventPriority:
+        """Returns the priority of a text-changed event, which is higher for live regions."""
+
+        if not event.type.startswith("object:text-changed:insert"):
+            return EventPriority.MEDIUM_HIGH
+
+        if not AXUtilities.has_live_region_role(event.source):
+            return EventPriority.MEDIUM_HIGH
+
+        live = AXObject.get_attribute(event.source, "container-live")
+        if live == "assertive":
+            return EventPriority.IMPORTANT
+        if live == "polite":
+            return EventPriority.HIGH
+        return EventPriority.MEDIUM_HIGH
+
     def _get_priority(self, event: Atspi.Event) -> EventPriority:
         """Returns the priority associated with event."""
 
@@ -205,7 +221,7 @@ class EventManager:
         elif event_type.startswith("object:children-changed"):
             priority = EventPriority.LOW
         elif event_type.startswith("object:text-changed"):
-            priority = EventPriority.MEDIUM_HIGH
+            priority = self._get_text_changed_priority(event)
         elif event_type.startswith("object:property-change:accessible-description"):
             priority = EventPriority.LOWER
         else:

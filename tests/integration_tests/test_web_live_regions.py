@@ -69,6 +69,7 @@ _TOP_TO_BOTTOM = (
 
 
 _BOTTOM_TO_TOP = (
+    ["Fill", "button"],
     ["Finalize", "button"],
     ["Append", "button"],
     ["Rewrite", "button"],
@@ -209,3 +210,18 @@ def test_busy_live_region_finalized_with_its_content(web_live_regions: NativeApp
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
     assert speech(session, wait_async=True) == ["Complete rewritten answer"]
+
+
+@pytest.mark.native_app
+def test_live_region_inserted_empty_and_then_filled(web_live_regions: NativeAppSession) -> None:
+    """Tests adding an empty live region to the page and then putting text in it."""
+
+    session = web_live_regions
+    reset_web_state(session)
+
+    for _ in range(10):
+        keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert speech(session) == ["Fill", "button"]
+
+    keyboard.tap_key(keyboard.KEYSYM_SPACE)
+    assert speech(session, wait_async=True) == ["Message read"]

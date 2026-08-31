@@ -346,6 +346,7 @@ class TestEventManager:
             ax_utilities.is_frame.return_value = True
         elif case["event_type"] == "object:announcement":
             mock_event.detail1 = Atspi.Live.POLITE if case["expected_priority"] == 3 else 0
+        ax_utilities.AXUtilities.has_live_region_role.return_value = False
         priority = manager._get_priority(mock_event)
         assert priority == case["expected_priority"]
 
@@ -371,6 +372,33 @@ class TestEventManager:
         mock_event.detail1 = 999
         priority = manager._get_priority(mock_event)
         assert priority == EventPriority.NORMAL
+
+    def test_get_priority_live_region_levels(self, test_context: OrcaTestContext) -> None:
+        """Test EventManager._get_priority for live region text insertions."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.event_manager import EventManager, EventPriority
+
+        manager = EventManager()
+        mock_event = test_context.Mock(spec=Atspi.Event)
+        mock_event.type = "object:text-changed:insert"
+        mock_event.source = test_context.Mock()
+        ax_utilities = essential_modules["orca.ax_utilities"].AXUtilities
+        ax_utilities.has_live_region_role.return_value = True
+        ax_object = essential_modules["orca.ax_object"].AXObject
+
+        ax_object.get_attribute.return_value = "assertive"
+        assert manager._get_priority(mock_event) == EventPriority.IMPORTANT
+
+        ax_object.get_attribute.return_value = "polite"
+        assert manager._get_priority(mock_event) == EventPriority.HIGH
+
+        ax_object.get_attribute.return_value = "off"
+        assert manager._get_priority(mock_event) == EventPriority.MEDIUM_HIGH
+
+        ax_utilities.has_live_region_role.return_value = False
+        ax_object.get_attribute.return_value = "assertive"
+        assert manager._get_priority(mock_event) == EventPriority.MEDIUM_HIGH
 
     @pytest.mark.parametrize(
         "case",
