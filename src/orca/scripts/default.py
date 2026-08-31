@@ -618,6 +618,9 @@ class Script(script.Script):
 
         manager = focus_manager.get_manager()
         if event.source == manager.get_locus_of_focus():
+            if AXUtilities.is_combo_box(event.source):
+                return True
+
             # Force the update so that braille is refreshed.
             manager.set_locus_of_focus(event, event.source, True, True)
             return True
@@ -691,6 +694,10 @@ class Script(script.Script):
             focus,
             lambda c: c == mouse_item or AXUtilities.is_layout_only(c),
         )
+        if AXUtilities.is_combo_box(event.source) and event.source == focus:
+            self.present_object(event.source, reason=PresentationReason.STATE_CHANGE)
+            return True
+
         if child is not None:
             if AXUtilities.is_page_tab(child) and not AXUtilities.is_focused(child):
                 self.present_object(child, generate_braille=False)

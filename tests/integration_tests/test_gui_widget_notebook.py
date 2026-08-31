@@ -40,6 +40,7 @@ if TYPE_CHECKING:
 
 def _prepare(session: NativeAppSession) -> None:
     session.orca.set("BraillePresenter", "DisplayAncestors", False)
+    session.orca.set("SpeechPresenter", "SpeakPositionInSet", False)
     keyboard.tap_key(keyboard.KEYSYM_F12)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
@@ -204,6 +205,132 @@ def test_combo_box_open_navigate_select(gtk3_widget_notebook: NativeAppSession) 
     assert helpers.speech(session) == ["Green"]
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     assert helpers.speech(session) == ["Color combo box Green"]
+
+
+@pytest.mark.native_app
+def test_combo_box_arrow_navigation_while_collapsed(
+    gtk3_widget_notebook: NativeAppSession,
+) -> None:
+    """Tests combo box arrow navigation while collapsed."""
+
+    session = gtk3_widget_notebook
+    _prepare(session)
+    _tab_to(session, 4)
+
+    assert _press(session, keyboard.KEYSYM_DOWN) == (
+        ["Green"],
+        [helpers.BrailleLine(7, "Color Green combo box", "Color Green combo box", "\x00" * 21)],
+    )
+    assert _press(session, keyboard.KEYSYM_DOWN) == (
+        ["Blue"],
+        [helpers.BrailleLine(7, "Color Blue combo box", "Color Blue combo box", "\x00" * 20)],
+    )
+    assert _press(session, keyboard.KEYSYM_UP) == (
+        ["Green"],
+        [helpers.BrailleLine(7, "Color Green combo box", "Color Green combo box", "\x00" * 21)],
+    )
+    assert _press(session, keyboard.KEYSYM_TAB) == (
+        ["City text", "Madrid", "selected"],
+        [
+            helpers.BrailleLine(
+                12, "City Madrid $l", "City Madrid $l", "\x00" * 5 + "\xc0" * 6 + "\x00" * 3
+            )
+        ],
+    )
+
+
+@pytest.mark.native_app
+def test_position_in_set_when_arrowing_a_combo_box(
+    gtk3_widget_notebook: NativeAppSession,
+) -> None:
+    """Tests position in set when arrowing a combo box."""
+
+    session = gtk3_widget_notebook
+    _prepare(session)
+    session.orca.set("SpeechPresenter", "SpeakPositionInSet", True)
+    _tab_to(session, 4)
+
+    assert _press(session, keyboard.KEYSYM_DOWN) == (
+        ["Green", "2 of 3"],
+        [helpers.BrailleLine(7, "Color Green combo box", "Color Green combo box", "\x00" * 21)],
+    )
+    assert _press(session, keyboard.KEYSYM_DOWN) == (
+        ["Blue", "3 of 3"],
+        [helpers.BrailleLine(7, "Color Blue combo box", "Color Blue combo box", "\x00" * 20)],
+    )
+
+
+@pytest.mark.native_app
+def test_position_in_set_when_arrowing_radio_buttons(
+    gtk3_widget_notebook: NativeAppSession,
+) -> None:
+    """Tests position in set when arrowing radio buttons."""
+
+    session = gtk3_widget_notebook
+    _prepare(session)
+    session.orca.set("SpeechPresenter", "SpeakPositionInSet", True)
+    _tab_to(session, 7)
+
+    assert _press(session, keyboard.KEYSYM_DOWN) == (
+        ["Medium selected radio button", "2 of 3"],
+        [helpers.BrailleLine(1, "&=y Medium radio button", "&=y Medium radio button", "\x00" * 23)],
+    )
+    assert _press(session, keyboard.KEYSYM_UP) == (
+        ["Small selected radio button", "1 of 3"],
+        [helpers.BrailleLine(1, "&=y Small radio button", "&=y Small radio button", "\x00" * 22)],
+    )
+
+
+@pytest.mark.native_app
+def test_position_in_set_when_arrowing_page_tabs(
+    gtk3_widget_notebook: NativeAppSession,
+) -> None:
+    """Tests position in set when arrowing page tabs."""
+
+    session = gtk3_widget_notebook
+    _prepare(session)
+    session.orca.set("SpeechPresenter", "SpeakPositionInSet", True)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+    assert _press(session, keyboard.KEYSYM_RIGHT) == (
+        ["Messages page tab", "2 of 5"],
+        [helpers.BrailleLine(1, "Messages page tab", "Messages page tab", "\x00" * 17)],
+    )
+    assert _press(session, keyboard.KEYSYM_RIGHT) == (
+        ["Labels page tab", "3 of 5"],
+        [helpers.BrailleLine(1, "Labels page tab", "Labels page tab", "\x00" * 15)],
+    )
+
+
+@pytest.mark.native_app
+def test_position_in_set_when_arrowing_a_list(
+    gtk3_widget_notebook: NativeAppSession,
+) -> None:
+    """Tests position in set when arrowing a list."""
+
+    session = gtk3_widget_notebook
+    _prepare(session)
+    session.orca.set("SpeechPresenter", "SpeakPositionInSet", True)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
+    for _ in range(3):
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+    assert _press(session, keyboard.KEYSYM_TAB) == (
+        ["List with 3 items", "report.pdf", "shared", "1 of 3"],
+        [helpers.BrailleLine(1, "report.pdf shared ", "report.pdf shared ", "\x00" * 18)],
+    )
+    assert _press(session, keyboard.KEYSYM_DOWN) == (
+        ["notes.txt", "private", "2 of 3"],
+        [helpers.BrailleLine(1, "notes.txt private ", "notes.txt private ", "\x00" * 18)],
+    )
+    assert _press(session, keyboard.KEYSYM_UP) == (
+        ["report.pdf", "shared", "1 of 3"],
+        [helpers.BrailleLine(1, "report.pdf shared ", "report.pdf shared ", "\x00" * 18)],
+    )
 
 
 @pytest.mark.native_app

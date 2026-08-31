@@ -2587,9 +2587,17 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         label_and_name = self._generate_accessible_label_and_name(obj)
+        value = self._generate_value(obj)
+        include_value = bool(value and value[0] and value[0] not in label_and_name)
+        if self._is_minimal():
+            result += value if include_value else self._generate_accessible_name(obj)
+            result += self._generate_pause(obj)
+            result += self._generate_position_in_list(obj)
+            return result
+
         result += label_and_name
         result += self._generate_accessible_role(obj)
-        if self._is_ancestor() or self._is_minimal():
+        if self._is_ancestor():
             if AXUtilities.is_editable(obj):
                 text_substring = self._generate_text_substring(obj)
                 if text_substring:
@@ -2598,8 +2606,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generate_state_expanded(obj)
             return result
 
-        value = self._generate_value(obj)
-        if value and value[0] and value[0] not in label_and_name:
+        if include_value:
             result += value
         result += self._generate_pause(obj)
         result += self._generate_position_in_list(obj)

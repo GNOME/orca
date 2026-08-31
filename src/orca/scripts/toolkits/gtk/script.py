@@ -136,10 +136,6 @@ class Script(default.Script):
         ):
             return super()._on_selection_changed(event)
 
-        is_focused = AXUtilities.is_focused(event.source)
-        if AXUtilities.is_combo_box(event.source) and not is_focused:
-            return True
-
         if (
             AXUtilities.is_layered_pane(event.source)
             and AXUtilities.selected_child_count(event.source) > 1

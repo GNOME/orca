@@ -577,3 +577,28 @@ def test_where_am_i_on_form_controls(web_form_fields: NativeAppSession) -> None:
             helpers.BrailleLine(1, "Submit button", "Submit button", "\x00" * 13),
         ],
     )
+
+
+@pytest.mark.native_app
+def test_position_in_set_when_arrowing_a_combo_box(web_form_fields: NativeAppSession) -> None:
+    """Tests position in set when arrowing a combo box."""
+
+    session = web_form_fields
+    helpers.reset_web_state(session)
+    session.orca.set("SpeechPresenter", "SpeakPositionInSet", True)
+    for _ in range(4):
+        helpers.tab_and_swallow_presentation(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
+        ["Banana", "2 of 3"],
+        [helpers.BrailleLine(7, "Fruit Banana combo box", "Fruit Banana combo box", "\x00" * 22)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
+        ["Cherry", "3 of 3"],
+        [helpers.BrailleLine(7, "Fruit Cherry combo box", "Fruit Cherry combo box", "\x00" * 22)],
+    )
+
+    session.orca.set("SpeechPresenter", "SpeakPositionInSet", False)

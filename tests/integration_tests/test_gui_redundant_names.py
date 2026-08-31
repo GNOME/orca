@@ -146,3 +146,29 @@ def test_arrowing_a_combo_box_with_similar_item_names(
         ["English, unified, contracted"],
         [_combo_line("English, unified, contracted")],
     )
+
+
+@pytest.mark.native_app
+def test_position_in_set_when_arrowing_a_combo_box(
+    gtk3_redundant_names: NativeAppSession,
+) -> None:
+    """Tests position in set when arrowing a combo box."""
+
+    session = gtk3_redundant_names
+    session.orca.set("SpeechPresenter", "SpeakPositionInSet", True)
+    for _ in range(3):
+        tab_and_swallow_presentation(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["English, U.S., uncontracted", "2 of 5"],
+        [_combo_line("English, U.S., uncontracted")],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["English, unified, contracted", "3 of 5"],
+        [_combo_line("English, unified, contracted")],
+    )
+
+    session.orca.set("SpeechPresenter", "SpeakPositionInSet", False)
