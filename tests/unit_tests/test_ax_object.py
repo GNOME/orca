@@ -1133,41 +1133,30 @@ class TestAXObject:
             {
                 "id": "object_not_exist",
                 "error_string": "accessible/123 does not exist",
-                "expected_msg_part": "object no longer exists",
             },
             {
                 "id": "object_not_exist_at_path",
                 "error_string": 'Object does not exist at path "/a/b/c"',
-                "expected_msg_part": 'Object does not exist at path "/a/b/c"',
             },
             {
                 "id": "app_not_exist",
                 "error_string": "The application no longer exists",
-                "expected_msg_part": "app no longer exists",
-            },
-            {
-                "id": "process_appears_to_be_hung",
-                "error_string": "The process appears to be hung.",
-                "expected_msg_part": "The process appears to be hung.",
-            },
-            {
-                "id": "other_error",
-                "error_string": "Some other error",
-                "expected_msg_part": "Some other error",
             },
         ],
         ids=lambda case: case["id"],
     )
-    def test_handle_error(self, test_context, case: dict) -> None:
-        """Test AXObject.handle_error with different error types."""
+    def test_handle_error_marks_object_dead(self, test_context, case: dict) -> None:
+        """Test AXObject.handle_error marks defunct objects as known dead."""
 
         self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
+        AXObject._CACHE.set_dead_status(mock_accessible, False)
         error = Exception(case["error_string"])
-        msg = f"AXObject: Error calling method: {case['error_string']}"
-        AXObject.handle_error(mock_accessible, error, msg)
+        tokens = ["AXObject: Error calling method:", error]
+        AXObject.handle_error(mock_accessible, error, tokens)
+        assert AXObject._CACHE.get_dead_status(mock_accessible) is True
 
     def test_handle_error_hung_process_stamps_hung_objects(
         self, test_context: OrcaTestContext

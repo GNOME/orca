@@ -224,9 +224,6 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        assert (
-            nav._last_input_event is None or nav._last_input_event is not None
-        )  # May be set by other tests
         assert isinstance(nav._suspended, bool)
         assert isinstance(nav._mode_for_script, dict)
         # Verify commands are registered in CommandManager

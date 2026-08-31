@@ -1464,20 +1464,6 @@ class TestEventManager:
         result = manager._ignore(mock_event)
         assert result is False
 
-    def test_queue_println(self, test_context: OrcaTestContext) -> None:
-        """Test EventManager._queue_println."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.event_manager import EventManager
-
-        manager = EventManager()
-        mock_event = test_context.Mock(spec=Atspi.Event)
-        mock_event.type = "test:event"
-        debug_mock = essential_modules["orca.debug"]
-        debug_mock.debugLevel = 10
-        manager._queue_println(mock_event)
-        manager._queue_println(mock_event, is_enqueue=False)
-
     def test_enqueue_object_event_ignored(self, test_context: OrcaTestContext) -> None:
         """Test EventManager._enqueue_object_event for ignored events."""
 
@@ -1898,7 +1884,11 @@ class TestEventManager:
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_is_obsoleted = test_context.Mock(return_value=test_context.Mock())
         test_context.patch_object(manager, "_is_obsoleted_by", new=mock_is_obsoleted)
+        mock_handle_early = test_context.patch_object(manager, "_handle_early_event_processing")
         manager._process_object_event(mock_event)
+
+        mock_is_obsoleted.assert_called_once_with(mock_event, -1)
+        mock_handle_early.assert_not_called()
 
     def test_process_object_event_dead_source(self, test_context: OrcaTestContext) -> None:
         """Test EventManager._process_object_event with dead event source."""
@@ -1930,35 +1920,6 @@ class TestEventManager:
             None,
             "Active window is dead or defunct",
         )
-
-    def test_process_object_event_no_listener(self, test_context: OrcaTestContext) -> None:
-        """Test EventManager._process_object_event with no matching listener."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.event_manager import EventManager
-
-        manager = EventManager()
-        mock_event = test_context.Mock(spec=Atspi.Event)
-        mock_event.type = "object:unknown-event"
-        mock_event.source = test_context.Mock()
-        mock_is_obsoleted = test_context.Mock(return_value=None)
-        test_context.patch_object(manager, "_is_obsoleted_by", new=mock_is_obsoleted)
-        ax_object = essential_modules["orca.ax_object"]
-        ax_utilities = essential_modules["orca.ax_utilities"]
-        ax_object.is_dead.return_value = False
-        ax_utilities.is_defunct.return_value = False
-        ax_utilities.is_iconified.return_value = False
-        mock_script = test_context.Mock()
-        mock_script.listeners = {}
-        script_mgr = essential_modules["script_manager_instance"]
-        script_mgr.get_active_script.return_value = mock_script
-        mock_get_script = test_context.Mock(return_value=mock_script)
-        mock_is_activatable = test_context.Mock(return_value=(False, "test"))
-        mock_should_process = test_context.Mock(return_value=True)
-        test_context.patch_object(manager, "_get_script_for_event", new=mock_get_script)
-        test_context.patch_object(manager, "_is_activatable_event", new=mock_is_activatable)
-        test_context.patch_object(manager, "_should_process_event", new=mock_should_process)
-        manager._process_object_event(mock_event)
 
     def test_get_manager(self, test_context: OrcaTestContext) -> None:
         """Test event_manager.get_manager."""

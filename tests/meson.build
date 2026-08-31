@@ -35,6 +35,7 @@ unit_tests = [
   'unit_tests/test_ax_utilities_object.py',
   'unit_tests/test_ax_utilities_relation.py',
   'unit_tests/test_ax_utilities_role.py',
+  'unit_tests/test_ax_utilities_selection.py',
   'unit_tests/test_ax_utilities_state.py',
   'unit_tests/test_ax_utilities_text.py',
   'unit_tests/test_ax_value.py',
@@ -57,6 +58,7 @@ unit_tests = [
   'unit_tests/test_input_event.py',
   'unit_tests/test_input_event_manager.py',
   'unit_tests/test_keybindings.py',
+  'unit_tests/test_label_inference.py',
   'unit_tests/test_language_utilities.py',
   'unit_tests/test_learn_mode_presenter.py',
   'unit_tests/test_live_region_presenter.py',
@@ -71,6 +73,7 @@ unit_tests = [
   'unit_tests/test_pronunciation_dictionary_manager.py',
   'unit_tests/test_profile_manager.py',
   'unit_tests/test_say_all_presenter.py',
+  'unit_tests/test_script.py',
   'unit_tests/test_script_manager.py',
   'unit_tests/test_sleep_mode_manager.py',
   'unit_tests/test_sound_presenter.py',
@@ -85,6 +88,7 @@ unit_tests = [
   'unit_tests/test_text_attribute_manager.py',
   'unit_tests/test_text_selection_manager.py',
   'unit_tests/test_text_selection_presenter.py',
+  'unit_tests/test_web_script_utilities.py',
   'unit_tests/test_where_am_i_presenter.py',
 ]
 

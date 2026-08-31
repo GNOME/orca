@@ -769,20 +769,6 @@ class TestFocusManager:
 
         assert focus_manager._focus is None
 
-    def test_set_locus_of_focus_with_event_and_force_flag(
-        self,
-        test_context: OrcaTestContext,
-    ) -> None:
-        """Test FocusManager.set_locus_of_focus with event and force flag."""
-
-        self._setup_dependencies(test_context)
-        from orca.focus_manager import FocusManager
-
-        focus_manager = FocusManager()
-        mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        mock_event = test_context.Mock()
-        focus_manager.set_locus_of_focus(mock_event, mock_obj, force=True)
-
     def test_reset_active_mode_with_focus(self, test_context: OrcaTestContext) -> None:
         """Test reset_active_mode sets FOCUS_TRACKING and emits signal when focus exists."""
 

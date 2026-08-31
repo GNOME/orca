@@ -737,20 +737,6 @@ class TestAXCacheManager:
             assert cache.get("key") is MISSING
             assert cache.get_scoped(scope, "key") == "scoped"
 
-    def test_bulk_clearing_logs_caches_once(self, test_context: OrcaTestContext) -> None:
-        """Test one diagnostic reports caches cleared in the same scheduled pass."""
-
-        clock = FakeClock()
-        manager = AXCacheManager(clock)
-        owner = Owner()
-        test_context.patch_object(manager, "_start_cache_cleanup_thread")
-        test_context.patch_object(debug, "print_tokens")
-        manager.register_cache(owner, "first", lifetime=Lifetime.OWNER, clear_interval_seconds=2)
-        manager.register_cache(owner, "second", lifetime=Lifetime.OWNER, clear_interval_seconds=2)
-
-        clock.now = 2
-        manager._clear_due_values()
-
     def test_entry_deadlines_and_cache_clearing_share_cleanup_worker(
         self, test_context: OrcaTestContext
     ) -> None:

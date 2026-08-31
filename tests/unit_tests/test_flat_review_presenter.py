@@ -736,23 +736,6 @@ class TestFlatReviewPresenter:
 
         assert essential_modules["orca.flat_review"].Context.call_count >= 2
 
-    def test_braille_integration(self, test_context: OrcaTestContext) -> None:
-        """Test flat review integration with braille system."""
-
-        self._setup_dependencies(test_context)
-        from orca import command_manager
-        from orca.flat_review_presenter import FlatReviewPresenter
-
-        presenter = FlatReviewPresenter()
-        presenter.set_up_commands()
-
-        # Verify that braille commands are registered
-        manager = command_manager.get_manager()
-        # Check for braille commands (may not have brlapi available in test environment)
-        braille_commands = list(manager.get_all_braille_commands())
-        # Either braille commands exist or braille isn't available
-        assert braille_commands is not None
-
     def test_dbus_command_registration(self, test_context: OrcaTestContext) -> None:
         """Test D-Bus command registration during setup."""
 
