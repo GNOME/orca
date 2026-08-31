@@ -113,36 +113,36 @@ def test_arrowing_a_combo_box_with_similar_item_names(
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        ["Contraction Table: English, U.S., uncontracted", "Alt+T"],
+        ["English, U.S., uncontracted"],
         [_combo_line("English, U.S., uncontracted")],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        ["Contraction Table: English, unified, contracted", "Alt+T"],
+        ["English, unified, contracted"],
         [_combo_line("English, unified, contracted")],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        ["Contraction Table: English, unified, uncontracted", "Alt+T"],
+        ["English, unified, uncontracted"],
         [_combo_line("English, unified, uncontracted")],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        ["Contraction Table: Esperanto", "Alt+T"],
+        ["Esperanto"],
         [_combo_line("Esperanto")],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        ["Contraction Table: English, unified, uncontracted", "Alt+T"],
+        ["English, unified, uncontracted"],
         [_combo_line("English, unified, uncontracted")],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        ["Contraction Table: English, unified, contracted", "Alt+T"],
+        ["English, unified, contracted"],
         [_combo_line("English, unified, contracted")],
     )

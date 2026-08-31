@@ -516,6 +516,9 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_accessible_label(self, obj: Atspi.Accessible) -> list[Any]:
+        if self._get_prior_obj() == obj:
+            return []
+
         result = super()._generate_accessible_label(obj)
         if result:
             result.extend(self.voice(DEFAULT, obj=obj))
@@ -1351,6 +1354,9 @@ class SpeechGenerator(generator.Generator):
             self._context.speak_widget_mnemonic
             or self._get_reason() == PresentationReason.WHERE_AM_I_DETAILED
         ):
+            return []
+
+        if self._get_prior_obj() == obj and not self._is_where_am_i():
             return []
 
         if result := super()._generate_keyboard_mnemonic(obj):
