@@ -9,4 +9,6 @@ codespell
 ruff
 mypy
 pylint
+pytest
+pytest-mock
 types-psutil

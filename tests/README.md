@@ -1,6 +1,4 @@
-# Orca Tests: Work in Progress
-
-This is the beginning of Orca's new unit test and integration test support.
+# Orca Tests
 
 These tests, especially the new integration tests, are currently intended
 for use by the maintainer. Documenting the expected dependencies and versions,
@@ -14,20 +12,6 @@ that the test harness should not first kill any running instance of Orca
 because doing so might be unexpected. If you rely on Orca in your active
 session, you can still run the tests by signing in as a second local user
 (via `su` or `ssh`) and running them from there.
-
-## Status
-
-* Basic test coverage for the D-Bus Remote Controller: DONE
-* Advanced test coverage for the D-Bus Remote Controller: TODO
-* Unit test coverage of the AX* utilities: DONE
-* Unit test coverage of the "Managers": DONE
-* Unit test coverage of the "Presenters": DONE
-* Unit test coverage of the "Navigators": DONE
-* Unit test coverage of generators: TODO
-* Unit test coverage of scripts: TODO
-* Integration test coverage: IN PROGRESS
-* Meson support: DONE
-* Integration into Orca's Gitlab CI: TODO
 
 ## Dependencies
 
@@ -43,7 +27,7 @@ them.
 * xvfb
 * The DejaVu Sans Mono font, which the text-view tests wrap against
 * VTE 2.91, the GTK3 version, plus ncurses, less, nano, and vim, for the terminal tests
-* chromium or chromium-browser, for the web tests
+* chrome (beta preferred) or chromium for the web tests
 
 ## Running Tests
 
@@ -55,8 +39,6 @@ meson test -C _build --suite unit        # Unit tests only
 meson test -C _build --suite integration # Integration tests only
 ```
 
-The integration tests are excluded from the default test setup, so ask for them by suite.
-
 ### Using Pytest
 
 ```bash
@@ -65,7 +47,7 @@ coverage run -m pytest tests/unit_tests # Unit tests with coverage
 python3 -m pytest tests/unit_tests/test_ax_text.py -v # Specific file
 ```
 
-## Adding New Tests
+## Adding New Unit Tests
 
 ### 1. Create Test File
 
@@ -198,14 +180,8 @@ test_context.patch_env(
 
 #### Shared Dependencies
 
-Most tests should use `test_context.setup_shared_dependencies()` which provides common modules like:
-
-* `orca.debug` - Debugging and logging
-* `orca.messages` - User messages
-* `orca.input_event` - Event handling
-* `orca.settings` - Configuration
-* `orca.keybindings` - Keyboard shortcuts
-* And many others with pre-configured behaviors
+Most tests should use `test_context.setup_shared_dependencies()` which provides
+common modules.
 
 ### 4. Parameterized Tests
 
