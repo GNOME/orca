@@ -1,4 +1,4 @@
-# Orca v51.rc
+# Orca v51.0
 
 [TOC]
 
@@ -53,7 +53,7 @@ Orca has the following dependencies:
 * libwnck3: Used for mouse review in X11 (optional, deprecated)
 
 You are strongly encouraged to also have the latest stable versions
-of AT-SPI2 and ATK for the GNOME 50.x release.
+of AT-SPI2 and ATK for the GNOME 51.x release.
 
 ## Note for Braille Users
 
