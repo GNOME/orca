@@ -1,3 +1,57 @@
+51.rc - 1 September 2026
+
+MathCAT:
+
+* Bump version to 7.6-rc.3
+
+Extensions:
+
+* Add support to get Atspi version from the currently-running Orca.
+
+Web:
+
+* Give assertive live regions a higher priority in the event manager's
+  queue so they reach the live region presenter sooner.
+
+* Improve presentation after dead/replaced-object recovery.
+
+General:
+
+* Implement support (behind a flag) for Orca-controlled text selection.
+  This will make it possible for app and browser developers to fix bugs
+  before this new Orca feature goes live in the v52 release.
+
+* Fix several issues related to Orca controlling the caret in non-web
+  content.
+
+* Improve performance related to ancestor lookup.
+
+* Handle timeout from GPaste during clipboard presenter activation.
+
+* Fix some terminal chattiness issues.
+
+* Fix Say All line repetition in GTK4 text views.
+
+* Fix several issues related to presentation of GTK3 comboboxes.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  be              Belarusian                Vasil Pupkin
+  ca              Catalan                   Xavi Ivars
+  cs              Czech                     Patrik Sivek
+  de              German                    Christian Kirbach
+  eu              Basque                    Asier Saratsua Garmendia
+  fa              Persian                   Danial Behzadi
+  gl              Galician                  Francisco Diéguez Souto
+  id              Indonesian                Andika Triwidada
+  lt              Lithuanian                Aurimas Černius
+  nl              Dutch                     Nathan Follens
+  sv              Swedish                   Anders Jonsson
+  ug              Uighur                    Abduqadir Abliz
+  zh_CN           Chinese (China)           luming zh
+
+=========
+
 51.beta - 3 August 2026
 
 Extensions:

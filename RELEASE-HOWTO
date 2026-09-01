@@ -86,7 +86,7 @@ To move to a newer MathCAT:
   (https://github.com/daisy/MathCATForPython/blob/main/src/lib.rs). We compile
   it directly, so it must match the crate we pin.
 
-* If the X.Y.Z base changes (not just the beta suffix), also bump `version:`
+* If the X.Y.Z base changes (not just the beta/rc suffix), also bump `version:`
   in our meson.build to that base (for example 0.7.6).
 
 * Build, then commit the updated Cargo.lock together with your changes.
