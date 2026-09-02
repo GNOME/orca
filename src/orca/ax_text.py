@@ -564,8 +564,8 @@ class AXText:
             # characters since they represent child objects that must be traversed.
             while end_pos < len(text) and text[end_pos].isspace():
                 end_pos += 1
-            # Only add boundary if we haven't reached the end and it's not a duplicate.
-            if end_pos < len(text) and end_pos not in boundaries:
+            # Boundaries are strictly increasing, so only the last one can be a duplicate.
+            if end_pos < len(text) and end_pos != boundaries[-1]:
                 boundaries.append(end_pos)
 
         if boundaries[-1] != len(text):
