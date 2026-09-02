@@ -1250,6 +1250,10 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         # Select the language that matches the config, or the voice set's language
         config_family = config.get(ACSS.FAMILY, {})
+        if is_primary and not config_family:
+            # Speech servers prepend the default family to their list of voice families.
+            families = self._voices_grid.get_voice_families()
+            config_family = families[0] if families else {}
         config_lang = config_family.get(speechserver.VoiceFamily.LANG, "")
         config_dialect = config_family.get(speechserver.VoiceFamily.DIALECT, "")
         if config_lang:

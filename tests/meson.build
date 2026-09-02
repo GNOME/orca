@@ -80,6 +80,7 @@ unit_tests = [
   'unit_tests/test_speech_generator.py',
   'unit_tests/test_speech_manager.py',
   'unit_tests/test_speech_presenter.py',
+  'unit_tests/test_speechserver.py',
   'unit_tests/test_spellcheck_presenter.py',
   'unit_tests/test_structural_navigator.py',
   'unit_tests/test_system_information_presenter.py',
