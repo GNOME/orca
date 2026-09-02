@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-07-20 15:17+0000\n"
-"PO-Revision-Date: 2026-09-02 21:28+0300\n"
+"PO-Revision-Date: 2026-09-02 23:50+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -556,10 +556,8 @@ msgstr "Bengalce"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:118
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Belarusian, computer"
-msgstr "Macarca 8 nokta bilgisayar"
+msgstr "Beyaz Rusça, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -585,10 +583,8 @@ msgstr "Beyaz Rusça"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:136
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Bulgarian, computer"
-msgstr "Macarca 8 nokta bilgisayar"
+msgstr "Bulgarca, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -623,11 +619,8 @@ msgstr "Tibetçe, bilgisayar"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:160
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Combo Boxes"
 msgid "boxes"
-msgstr "Açılır Kutular"
+msgstr "boxes"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -689,10 +682,8 @@ msgstr "Kıptîce"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:202
-#, fuzzy
-#| msgid "Search complete."
 msgid "Czech, computer"
-msgstr "Arama tamamlandı."
+msgstr "Çekçe, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -736,10 +727,8 @@ msgstr "Galce, kısaltılmamış"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:232
-#, fuzzy
-#| msgid "Welsh Grade 1"
 msgid "Welsh, contracted"
-msgstr "Galce Derece 1"
+msgstr "Galce, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -909,11 +898,8 @@ msgstr "Almanca, kısmi kısaltılmış, büyük harflerle"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:364
-#, fuzzy
-#| msgctxt "checkbox"
-#| msgid "partially checked"
 msgid "German, partially contracted"
-msgstr "kısmen işaretli"
+msgstr "Almanca, kısmi kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -930,10 +916,8 @@ msgstr "Almanca, kısaltılmış, büyük harflerle"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:376
-#, fuzzy
-#| msgid "German Grade 0"
 msgid "German, contracted"
-msgstr "Almanca Derece 0"
+msgstr "Almanca, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -941,10 +925,8 @@ msgstr "Almanca Derece 0"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:382
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Dravidian, computer"
-msgstr "Macarca 8 nokta bilgisayar"
+msgstr "Dravidce, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -971,7 +953,7 @@ msgstr "en-chess"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:400
 msgid "English, contracted, grade 3"
-msgstr "İngilizce, kısaltılmış, 3. sınıf"
+msgstr "İngilizce, kısaltılmış, derece 3"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1096,11 +1078,8 @@ msgstr "İngilizce, A.B.D., kısaltılmış"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:484
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "underline"
 msgid "en-us-interline"
-msgstr "alt çizgi"
+msgstr "en-us-interline"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1117,10 +1096,8 @@ msgstr "en-us-mathtext"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:496
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "English, Canada, computer"
-msgstr "Macarca 8 nokta bilgisayar"
+msgstr "İngilizce, Kanada, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1146,10 +1123,8 @@ msgstr "Esperanto"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:514
-#, fuzzy
-#| msgid "Search complete."
 msgid "Spanish, computer"
-msgstr "Arama tamamlandı."
+msgstr "İspanyolca, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1157,10 +1132,8 @@ msgstr "Arama tamamlandı."
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:520
-#, fuzzy
-#| msgid "Spanish Grade 1"
 msgid "Spanish, uncontracted"
-msgstr "İspanyolca Derece 1"
+msgstr "İspanyolca, kısaltılmamış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1168,10 +1141,8 @@ msgstr "İspanyolca Derece 1"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:526
-#, fuzzy
-#| msgid "Spanish Grade 1"
 msgid "Spanish, contracted"
-msgstr "İspanyolca Derece 1"
+msgstr "İspanyolca, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1179,10 +1150,8 @@ msgstr "İspanyolca Derece 1"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:532
-#, fuzzy
-#| msgid "Spanish Grade 1"
 msgid "Spanish, Norway"
-msgstr "İspanyolca Derece 1"
+msgstr "İspanyolca, Norveç"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1199,10 +1168,8 @@ msgstr "Estonca"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:544
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Estonian, computer"
-msgstr "Macarca 8 nokta bilgisayar"
+msgstr "Estonca, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1219,10 +1186,8 @@ msgstr "Etiopik"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:556
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Persian, computer"
-msgstr "Macarca 8 nokta bilgisayar"
+msgstr "Farsça, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1275,10 +1240,8 @@ msgstr "Fransızca, kısaltılmamış"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:592
-#, fuzzy
-#| msgid "Search complete."
 msgid "French, computer"
-msgstr "Arama tamamlandı."
+msgstr "Fransızca, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1304,10 +1267,8 @@ msgstr "İrlandaca, kısaltılmamış"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:610
-#, fuzzy
-#| msgid "right control"
 msgid "Irish, contracted"
-msgstr "sağ kontrol"
+msgstr "İrlandaca, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1432,10 +1393,8 @@ msgstr "Hintçe"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:694
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Croatian, computer"
-msgstr "Macarca 8 nokta bilgisayar"
+msgstr "Hırvatça, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1452,10 +1411,8 @@ msgstr "Hırvatça"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:706
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Hungarian, computer"
-msgstr "Macarca 8 nokta bilgisayar"
+msgstr "Macarca, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1463,10 +1420,8 @@ msgstr "Macarca 8 nokta bilgisayar"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:712
-#, fuzzy
-#| msgid "Hungarian Grade 1"
 msgid "Hungarian, uncontracted"
-msgstr "Macarca Derece 1"
+msgstr "Macarca, kısaltılmamış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1474,10 +1429,8 @@ msgstr "Macarca Derece 1"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:718
-#, fuzzy
-#| msgid "Hungarian Grade 1"
 msgid "Hungarian, contracted"
-msgstr "Macarca Derece 1"
+msgstr "Macarca, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1485,10 +1438,8 @@ msgstr "Macarca Derece 1"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:724
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Armenian, computer"
-msgstr "Macarca 8 nokta bilgisayar"
+msgstr "Ermenice, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1505,11 +1456,8 @@ msgstr "Uluslararası Fonetik Alfabe"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:736
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "List"
 msgid "is"
-msgstr "Liste"
+msgstr "is"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1706,10 +1654,8 @@ msgstr "Litvanca, 8 nokta"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:874
-#, fuzzy
-#| msgid "lst"
 msgid "lt"
-msgstr "lst"
+msgstr "lt"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1843,10 +1789,8 @@ msgstr "Birmanca, kısaltılmış"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:964
-#, fuzzy
-#| msgid "Line"
 msgid "ne"
-msgstr "Satır"
+msgstr "ne"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1881,10 +1825,8 @@ msgstr "Norveççe, kısaltılmamış, 8 nokta"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:988
-#, fuzzy
-#| msgid "Norwegian Grade 0"
 msgid "Norwegian, computer"
-msgstr "Norveççe Derece 0"
+msgstr "Norveççe, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1901,10 +1843,8 @@ msgstr "Norveççe, kısaltılmamış, 6 nokta"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1000
-#, fuzzy
-#| msgid "Norwegian Grade 1"
 msgid "Norwegian, contracted, grade 1"
-msgstr "Norveççe Derece 1"
+msgstr "Norveççe, kısaltılmış, derece 1"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1912,10 +1852,8 @@ msgstr "Norveççe Derece 1"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1006
-#, fuzzy
-#| msgid "Norwegian Grade 2"
 msgid "Norwegian, contracted, grade 2"
-msgstr "Norveççe Derece 2"
+msgstr "Norveççe, kısaltılmış, derece 2"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1923,10 +1861,8 @@ msgstr "Norveççe Derece 2"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1012
-#, fuzzy
-#| msgid "Norwegian Grade 3"
 msgid "Norwegian, contracted, grade 3"
-msgstr "Norveççe Derece 3"
+msgstr "Norveççe, kısaltılmış, derece 3"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2051,10 +1987,8 @@ msgstr "Portekizce, bilgisayar, 8 nokta"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1096
-#, fuzzy
-#| msgid "Portuguese Grade 1"
 msgid "Portuguese, uncontracted"
-msgstr "Portekizce Derece 1"
+msgstr "Portekizce, kısaltılmamış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2062,10 +1996,8 @@ msgstr "Portekizce Derece 1"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1102
-#, fuzzy
-#| msgid "Portuguese Grade 1"
 msgid "Portuguese, contracted"
-msgstr "Portekizce Derece 1"
+msgstr "Portekizce, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2091,10 +2023,8 @@ msgstr "Rumence, kısaltılmamış"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1120
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Romanian, computer"
-msgstr "Macarca 8 nokta bilgisayar"
+msgstr "Rumence, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2120,11 +2050,8 @@ msgstr "Rusça, bilgisayar, 8 nokta"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1138
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "union with plus"
 msgid "Russian, with capitals"
-msgstr "artılı birleşim"
+msgstr "Rusça, büyük harflerle"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2195,10 +2122,8 @@ msgstr "Sintçe"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1186
-#, fuzzy
-#| msgid "spin"
 msgid "sin"
-msgstr "döndür"
+msgstr "sin"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2233,10 +2158,8 @@ msgstr "sk-sk"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1210
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Slovenian, computer"
-msgstr "Macarca 8 nokta bilgisayar"
+msgstr "Slovence, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2254,7 +2177,7 @@ msgstr "Slovence"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1222
 msgid "Sami, 6-dot"
-msgstr ""
+msgstr "Sami, 6 nokta"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2263,7 +2186,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1228
 msgid "Sami, 8-dot"
-msgstr ""
+msgstr "Sami, 8 nokta"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2272,7 +2195,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1234
 msgid "Sesotho, uncontracted"
-msgstr ""
+msgstr "Sothoca, kısaltılmamış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2281,7 +2204,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1240
 msgid "Sesotho, contracted"
-msgstr ""
+msgstr "Sothoca, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2290,7 +2213,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1246
 msgid "Serbian, Cyrillic"
-msgstr ""
+msgstr "Sırpça, Kiril"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2308,7 +2231,7 @@ msgstr "Sırpça"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1258
 msgid "Swedish, computer, 1989"
-msgstr ""
+msgstr "İsveççe, bilgisayar, 1989"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2317,7 +2240,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1264
 msgid "Swedish, computer, 1996"
-msgstr ""
+msgstr "İsveççe, bilgisayar, 1996"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2326,7 +2249,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1270
 msgid "Swedish, uncontracted, 6-dot, detailed"
-msgstr ""
+msgstr "İsveççe, kısaltılmamış, 6 nokta, ayrıntılı"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2335,7 +2258,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1276
 msgid "Swedish, uncontracted, 6-dot, phonetics"
-msgstr ""
+msgstr "İsveççe, kısaltılmamış, 6 nokta, fonetik"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2344,7 +2267,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1282
 msgid "Swedish, partially contracted, 6-dot, detailed"
-msgstr ""
+msgstr "İsveççe, kısmi kısaltılmış, 6 nokta, ayrıntılı"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2353,7 +2276,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1288
 msgid "Swedish, contracted, 6-dot, detailed"
-msgstr ""
+msgstr "İsveççe, kısaltılmış, 6 nokta, ayrıntılı"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2362,7 +2285,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1294
 msgid "Swedish, uncontracted, 8-dot, detailed"
-msgstr ""
+msgstr "İsveççe, kısaltılmamış, 8 nokta, ayrıntılı"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2371,7 +2294,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1300
 msgid "Swedish, uncontracted, 8-dot"
-msgstr ""
+msgstr "İsveççe, kısaltılmış, 8 nokta"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2380,7 +2303,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1306
 msgid "Swedish, partially contracted, 8-dot, detailed"
-msgstr ""
+msgstr "İsveççe, kısmi kısaltılmış, 8 nokta, ayrıntılı"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2389,7 +2312,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1312
 msgid "Swedish, partially contracted, 8-dot"
-msgstr ""
+msgstr "İsveççe, kısmi kısaltılmış, 8 nokta"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2398,7 +2321,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1318
 msgid "Swedish, contracted, 8-dot, detailed"
-msgstr ""
+msgstr "İsveççe, kısaltılmış, 8 nokta, ayrıntlı"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2407,7 +2330,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1324
 msgid "Swedish, contracted, 8-dot"
-msgstr ""
+msgstr "İsveççe, kısaltılmış, 8 nokta"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2416,7 +2339,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1330
 msgid "Swedish, uncontracted, 6-dot"
-msgstr ""
+msgstr "İsveççe, kısaltılmamış, 6 nokta"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2425,7 +2348,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1336
 msgid "Swedish, partially contracted, 6-dot"
-msgstr ""
+msgstr "İsveççe, kısmi kısaltılmış, 6 nokta"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2434,7 +2357,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1342
 msgid "Swedish, contracted, 6-dot"
-msgstr ""
+msgstr "İsveççe, kısaltılmış, 6 nokta"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2443,7 +2366,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1348
 msgid "Swahili, contracted, grade 1.2"
-msgstr ""
+msgstr "Svahili, kısaltılmış, derece 1.2"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2452,7 +2375,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1354
 msgid "Swahili, contracted, grade 1.3"
-msgstr ""
+msgstr "Svahili, kısaltılmış, derece 1.3"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2461,7 +2384,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1360
 msgid "Swahili, contracted, grade 1.4"
-msgstr ""
+msgstr "Svahili, kısaltılmış, derece 1.4"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2470,7 +2393,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1366
 msgid "Swahili, contracted, grade 1.5"
-msgstr ""
+msgstr "Svahili, kısaltılmış, derece 1.5"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2479,7 +2402,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1372
 msgid "Swahili, uncontracted"
-msgstr ""
+msgstr "Svahili, kısaltılmamış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2488,7 +2411,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1378
 msgid "Swahili, contracted, grade 2"
-msgstr ""
+msgstr "Svahili, kısaltılmış, derece 2"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2533,7 +2456,7 @@ msgstr "Telugu"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1408
 msgid "Thai, computer"
-msgstr ""
+msgstr "Tayca, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2542,7 +2465,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1414
 msgid "Thai, uncontracted"
-msgstr ""
+msgstr "Tayca, kısaltılmamış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2550,11 +2473,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1420
-#, fuzzy
-#| msgctxt "checkbox"
-#| msgid "partially checked"
 msgid "Thai, partially contracted"
-msgstr "kısmen işaretli"
+msgstr "Tayca, kısmi kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2563,7 +2483,7 @@ msgstr "kısmen işaretli"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1426
 msgid "Thai, contracted"
-msgstr ""
+msgstr "Tayca, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2572,7 +2492,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1432
 msgid "Turkish, uncontracted"
-msgstr ""
+msgstr "Türkçe, kısaltılmamış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2581,7 +2501,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1438
 msgid "Turkish, contracted"
-msgstr ""
+msgstr "Türkçe, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2590,7 +2510,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1444
 msgid "Turkish, computer"
-msgstr ""
+msgstr "Türkçe, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2599,7 +2519,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1450
 msgid "Setswana, uncontracted"
-msgstr ""
+msgstr "Tsvana, kısaltılmamış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2608,7 +2528,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1456
 msgid "Setswana, contracted"
-msgstr ""
+msgstr "Tsvana, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2634,10 +2554,8 @@ msgstr "Ugaritçe"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1474
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Ukrainian, computer"
-msgstr "Macarca 8 nokta bilgisayar"
+msgstr "Ukraynaca, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2645,11 +2563,8 @@ msgstr "Macarca 8 nokta bilgisayar"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1480
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "union with plus"
 msgid "Ukrainian, with capitals"
-msgstr "artılı birleşim"
+msgstr "Ukraynaca, büyük harflerle"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2666,10 +2581,8 @@ msgstr "Ukraynaca"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1492
-#, fuzzy
-#| msgid "On-screen braille"
 msgid "unicode-braille"
-msgstr "Ekranda braille"
+msgstr "unicode-braille"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2678,7 +2591,7 @@ msgstr "Ekranda braille"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1498
 msgid "Urdu, uncontracted"
-msgstr ""
+msgstr "Urduca, kısaltılmamış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2687,7 +2600,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1504
 msgid "Urdu, contracted"
-msgstr ""
+msgstr "Urduca, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2705,7 +2618,7 @@ msgstr "Özbekçe"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1516
 msgid "Tshivenda, uncontracted"
-msgstr ""
+msgstr "Venda, kısaltılmamış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2714,7 +2627,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1522
 msgid "Tshivenda, contracted"
-msgstr ""
+msgstr "Venda, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2723,7 +2636,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1528
 msgid "Vietnamese, computer"
-msgstr ""
+msgstr "Vietnamca, bilgisayar"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2732,7 +2645,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1534
 msgid "Vietnamese, Saigon, contracted"
-msgstr ""
+msgstr "Vietnamca, Saigon, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2741,7 +2654,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1540
 msgid "Vietnamese, uncontracted"
-msgstr ""
+msgstr "Vietnamca, kısaltılmamış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2750,7 +2663,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1546
 msgid "Vietnamese, partially contracted"
-msgstr ""
+msgstr "Vietnamca, kısmi kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2759,7 +2672,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1552
 msgid "Vietnamese, contracted"
-msgstr ""
+msgstr "Vietnamca, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2768,7 +2681,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1558
 msgid "isiXhosa, uncontracted"
-msgstr ""
+msgstr "Xhosa, kısaltılmamış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2777,7 +2690,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1564
 msgid "isiXhosa, contracted"
-msgstr ""
+msgstr "Xhosa, kısaltılmış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2795,7 +2708,7 @@ msgstr "Yidiş"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1576
 msgid "Mandarin, mainland China, without tones"
-msgstr ""
+msgstr "Mandarin, Çin ana karası, tonlama olmadan"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2804,7 +2717,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1582
 msgid "Cantonese"
-msgstr ""
+msgstr "Kantonca"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2813,7 +2726,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1588
 msgid "Mandarin, Taiwan, bopomofo"
-msgstr ""
+msgstr "Mandarin, Tayvan, bopomofo"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2822,7 +2735,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1594
 msgid "Mandarin, mainland China, common braille scheme"
-msgstr ""
+msgstr "Mandarin, Çin ana karası, ortak braille şeması"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2831,7 +2744,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1600
 msgid "Mandarin, mainland China, with tones"
-msgstr ""
+msgstr "Mandarin, Çin ana karası, tonlamalarla"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2840,7 +2753,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1606
 msgid "Mandarin, mainland China, double-phonic"
-msgstr ""
+msgstr "Mandarin, Çin ana karası, çift harfli fonetik"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2849,7 +2762,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1612
 msgid "isiZulu, uncontracted"
-msgstr ""
+msgstr "Zuluca, kısaltılmamış"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2858,7 +2771,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1618
 msgid "isiZulu, contracted"
-msgstr ""
+msgstr "Zuluca, kısaltılmış"
 
 #. pylint: disable=import-error
 #. Translators: this command will move the mouse pointer to the current item,
@@ -3004,10 +2917,8 @@ msgstr "Düz bakışı kısıtlamayı geçerli nesneyle değiştir"
 #. sequence of words in a sequence of lines.  This command moves the flat review
 #. location to the object which currently has focus.
 #: src/orca/cmdnames.py:136
-#, fuzzy
-#| msgid "Move flat review to the home position"
 msgid "Move flat review to the object with focus"
-msgstr "Düz bakışı başlangıç konumuna taşı"
+msgstr "Düz bakışı odaklı nesneye taşı"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -3016,7 +2927,7 @@ msgstr "Düz bakışı başlangıç konumuna taşı"
 #. object at the current flat review location.
 #: src/orca/cmdnames.py:143
 msgid "Move focus to the flat review location"
-msgstr ""
+msgstr "Odağı düz bakış konumuna taşı"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -3295,21 +3206,16 @@ msgstr ""
 #. information for the current text character, such as font name, font size,
 #. bold, italic, underline, foreground color, and background color.
 #: src/orca/cmdnames.py:372
-#, fuzzy
-#| msgid "Present battery status"
 msgid "Present character formatting"
-msgstr "Pil durumunu sun"
+msgstr "Karakter biçimlendirmesini sun"
 
 #. Translators: This is a command description. The command opens a window
 #. containing available formatting information for the current text character,
 #. such as font name, font size, bold, italic, underline, foreground color, and
 #. background color.
 #: src/orca/cmdnames.py:378
-#, fuzzy
-#| msgid "%d character too long"
-#| msgid_plural "%d characters too long"
 msgid "Show character formatting"
-msgstr "%d karakter çok uzun"
+msgstr "Karakter biçimlendirmesini göster"
 
 #. Translators: a refreshable braille display is an external hardware device that
 #. presents braille characters to the user. There are a limited number of cells
@@ -3414,18 +3320,14 @@ msgstr "Konuşma ses düzeyini azalt"
 #. Translators: the speech inflection is the pitch range used by the
 #. speech synthesis engine. More inflection means more variation in pitch.
 #: src/orca/cmdnames.py:454
-#, fuzzy
-#| msgid "Increase the speech pitch"
 msgid "Increase the speech inflection"
-msgstr "Konuşma perdesini yükselt"
+msgstr "Konuşma çekimini yükselt"
 
 #. Translators: the speech inflection is the pitch range used by the
 #. speech synthesis engine. Less inflection means a more monotone voice.
 #: src/orca/cmdnames.py:458
-#, fuzzy
-#| msgid "Decrease the speech pitch"
 msgid "Decrease the speech inflection"
-msgstr "Konuşma perdesini düşür"
+msgstr "Konuşma çekimini düşür"
 
 #. Translators: Orca allows the user to turn speech synthesis on or off.
 #. We call it 'silencing'.
@@ -3487,33 +3389,25 @@ msgstr "Klavye düzenini değiştir"
 #. quitting an Orca instance managed as a systemd service, because systemd may
 #. treat that as a failure and restart Orca.
 #: src/orca/cmdnames.py:507
-#, fuzzy
-#| msgid "Quit the screen reader"
 msgid "Quit the screen reader application"
-msgstr "Ekran okuyucudan çık"
+msgstr "Ekran okuyucu uygulamasından çık"
 
 #. Translators: the preferences window allows users to set their preferences
 #. for Orca.
 #: src/orca/cmdnames.py:511
-#, fuzzy
-#| msgid "Display the preferences configuration dialog"
 msgid "Display the preferences window"
-msgstr "Tercihler yapılandırma penceresini göster"
+msgstr "Tercihler penceresini göster"
 
 #. Translators: the application preferences window allows users to set their
 #. preferences for a specific application within Orca.
 #: src/orca/cmdnames.py:515
-#, fuzzy
-#| msgid "Display the application preferences configuration dialog"
 msgid "Display the application preferences window"
-msgstr "Uygulama tercihlerini yapılandırma penceresini göster"
+msgstr "Uygulama tercihleri penceresini göster"
 
 #. Translators: Orca allows the user to enable/disable spoken indentation.
 #: src/orca/cmdnames.py:518
-#, fuzzy
-#| msgid "Toggle room name presentation"
 msgid "Toggle spoken indentation"
-msgstr "Oda adı nu aç ya da kapat"
+msgstr "Sesli girintiyi aç ya da kapat"
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -3548,19 +3442,16 @@ msgstr "Sonraki konuşma sentezleyiciye geçiş yap"
 #. named set. The "%s" is replaced with the name of the set, e.g. a language name
 #. or "Global" for the user's primary set.
 #: src/orca/cmdnames.py:544
-#, fuzzy, python-format
-#| msgid "Switch back to %s"
+#, python-format
 msgid "Switch voice to: %s"
-msgstr "Şuna geri dön: %s"
+msgstr "Sesi şuna geçir: %s"
 
 #. Translators: Orca can hold several "voice sets": collections of voices, such as
 #. one set per language. This command switches the voice Orca speaks with to the
 #. next set in the list, wrapping around to the first set after the last.
 #: src/orca/cmdnames.py:549
-#, fuzzy
-#| msgid "Cycle to the next key echo level"
 msgid "Cycle to the next voice set"
-msgstr "Sonraki tuş geri bildirim düzeyine geçiş yap"
+msgstr "Sonraki ses takımına geç"
 
 #. Translators: Orca has a feature whereby users can set up different "profiles,"
 #. which are collection of settings which apply to a given task, such as a
@@ -3608,10 +3499,8 @@ msgstr "Sonraki tuş geri bildirim düzeyine geçiş yap"
 #. announce formatting changes such as bold, italic, etc. This command cycles
 #. through the available modes: off, editable text only, and always.
 #: src/orca/cmdnames.py:588
-#, fuzzy
-#| msgid "Cycle to the next settings profile"
 msgid "Cycle to the next text attribute change mode"
-msgstr "Sonraki ayarlar profiline geçiş yap"
+msgstr "Sonraki metin öznitelik değişim kipine geç"
 
 #. Translators: this is a debug message that Orca users will not normally see. It
 #. describes a debug routine that allows the user to adjust the level of debug
@@ -3662,10 +3551,8 @@ msgstr "Geçerli tarihi sun"
 #. Translators: Orca has a command to present the state of modifier keys such as
 #. Caps Lock and Num Lock (e.g. "caps lock on. num lock off.").
 #: src/orca/cmdnames.py:624
-#, fuzzy
-#| msgid "Present the status bar"
 msgid "Present the state of modifier keys"
-msgstr "Durum çubuğunu sun"
+msgstr "Düzenleyici tuşların durumunu sun"
 
 #. Translators: Orca has a command to present the pixel size and location of
 #. the current object. This string is how this command is described in the list
@@ -4024,26 +3911,20 @@ msgstr "Tablo gezinimi tuşlarını aç ya da kapat"
 #. Translators: this is for navigating among annotations in a document.
 #. Annotations include content insertions, content deletions, suggestions, and highlights.
 #: src/orca/cmdnames.py:884
-#, fuzzy
-#| msgid "Go to previous button"
 msgid "Go to previous annotation"
-msgstr "Önceki düğmeye git"
+msgstr "Önceki nota git"
 
 #. Translators: this is for navigating among annotations in a document.
 #. Annotations include content insertions, content deletions, suggestions, and highlights.
 #: src/orca/cmdnames.py:888
-#, fuzzy
-#| msgid "Go to next button"
 msgid "Go to next annotation"
-msgstr "Sonraki düğmeye git"
+msgstr "Sonraki nota git"
 
 #. Translators: this is for navigating among annotations in a document.
 #. Annotations include content insertions, content deletions, suggestions, and highlights.
 #: src/orca/cmdnames.py:892
-#, fuzzy
-#| msgid "Display a list of buttons"
 msgid "Display a list of annotations"
-msgstr "Düğmelerin listesini göster"
+msgstr "Açıklama listesini göster"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:895
@@ -4343,24 +4224,18 @@ msgstr "Duyuru yapmış son canlı bölgeye git"
 
 #. Translators: this is for navigating among math expressions in a document.
 #: src/orca/cmdnames.py:1082
-#, fuzzy
-#| msgid "Go to previous live region"
 msgid "Go to previous math expression"
-msgstr "Önceki canlı bölgeye git"
+msgstr "Önceki matematik ifadesine git"
 
 #. Translators: this is for navigating among math expressions in a document.
 #: src/orca/cmdnames.py:1085
-#, fuzzy
-#| msgid "Go to next live region"
 msgid "Go to next math expression"
-msgstr "Sonraki canlı bölgeye git"
+msgstr "Sonraki matematik ifadesine git"
 
 #. Translators: this is for navigating among math expressions in a document.
 #: src/orca/cmdnames.py:1088
-#, fuzzy
-#| msgid "Display a list of headings"
 msgid "Display a list of math expressions"
-msgstr "Başlıkların listesini göster"
+msgstr "Matematik ifadelerinin listesini göster"
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
@@ -4510,40 +4385,32 @@ msgstr "Sütunun en altına git"
 #. (https://daisy.github.io/MathCAT). This command enters that mode when
 #. the user is on a math element.
 #: src/orca/cmdnames.py:1183
-#, fuzzy
-#| msgid "Control caret navigation"
 msgctxt "mathcat"
 msgid "Enter math navigation mode"
-msgstr "Karet gezinimini denetle"
+msgstr "Matematik gezinim kipine gir"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command exits that mode.
 #: src/orca/cmdnames.py:1187
-#, fuzzy
-#| msgid "Caret navigation"
 msgctxt "mathcat"
 msgid "Exit math navigation mode"
-msgstr "Karet gezinimi"
+msgstr "Matematik gezinim kipinden çık"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the next sibling
 #. at the current level of the math expression tree.
 #: src/orca/cmdnames.py:1192
-#, fuzzy
-#| msgid "Go to next list item"
 msgctxt "mathcat"
 msgid "Move to next item"
-msgstr "Sonraki liste ögesine git"
+msgstr "Sonraki ögeye taşı"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the previous
 #. sibling at the current level of the math expression tree.
 #: src/orca/cmdnames.py:1197
-#, fuzzy
-#| msgid "Go to previous list item"
 msgctxt "mathcat"
 msgid "Move to previous item"
-msgstr "Önceki liste ögesine git"
+msgstr "Önceki ögeye taşı"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves from an item down
@@ -4551,7 +4418,7 @@ msgstr "Önceki liste ögesine git"
 #: src/orca/cmdnames.py:1202
 msgctxt "mathcat"
 msgid "Zoom in"
-msgstr ""
+msgstr "Yakınlaştır"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves from an item back
@@ -4559,7 +4426,7 @@ msgstr ""
 #: src/orca/cmdnames.py:1207
 msgctxt "mathcat"
 msgid "Zoom out"
-msgstr ""
+msgstr "Uzaklaştır"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command descends as deep as
@@ -4567,7 +4434,7 @@ msgstr ""
 #: src/orca/cmdnames.py:1212
 msgctxt "mathcat"
 msgid "Zoom in completely"
-msgstr ""
+msgstr "Tümüyle yakınlaştır"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command goes all the way back
@@ -4575,105 +4442,85 @@ msgstr ""
 #: src/orca/cmdnames.py:1217
 msgctxt "mathcat"
 msgid "Zoom out completely"
-msgstr ""
+msgstr "Tümüyle uzaklaştır"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the first item.
 #: src/orca/cmdnames.py:1221
-#, fuzzy
-#| msgid "Move to top"
 msgctxt "mathcat"
 msgid "Move to start"
-msgstr "En üste taşı"
+msgstr "Başa taşı"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the last item.
 #: src/orca/cmdnames.py:1225
-#, fuzzy
-#| msgid "Move to top"
 msgctxt "mathcat"
 msgid "Move to end"
-msgstr "En üste taşı"
+msgstr "Sona taşı"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the start of
 #. the current line in a multi-line math expression.
 #: src/orca/cmdnames.py:1230
-#, fuzzy
-#| msgid "Go to next separator"
 msgctxt "mathcat"
 msgid "Move to line start"
-msgstr "Sonraki ayraca git"
+msgstr "Satır başına taşı"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the end of
 #. the current line in a multi-line math expression.
 #: src/orca/cmdnames.py:1235
-#, fuzzy
-#| msgid "Go to next entry"
 msgctxt "mathcat"
 msgid "Move to line end"
-msgstr "Sonraki girdiye git"
+msgstr "Satır sonuna taşı"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the top of the
 #. current column in a math table (matrix, determinant, etc.).
 #: src/orca/cmdnames.py:1240
-#, fuzzy
-#| msgid "Move to bottom"
 msgctxt "mathcat"
 msgid "Move to column start"
-msgstr "En alta taşı"
+msgstr "Sütun başına taşı"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the bottom of
 #. the current column in a math table (matrix, determinant, etc.).
 #: src/orca/cmdnames.py:1245
-#, fuzzy
-#| msgid "Move down one"
 msgctxt "mathcat"
 msgid "Move to column end"
-msgstr "Bir aşağı taşı"
+msgstr "Sütun sonuna taşı"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the previous
 #. cell in a math table or columnar arithmetic expression.
 #: src/orca/cmdnames.py:1250
-#, fuzzy
-#| msgid "Go to previous clickable"
 msgctxt "mathcat"
 msgid "Move to previous cell"
-msgstr "Önceki tıklanabilire git"
+msgstr "Önceki hücreye taşı"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the next cell
 #. in a math table or columnar arithmetic expression.
 #: src/orca/cmdnames.py:1255
-#, fuzzy
-#| msgid "Go to next clickable"
 msgctxt "mathcat"
 msgid "Move to next cell"
-msgstr "Sonraki tıklanabilire git"
+msgstr "Sonraki hücreye taşı"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves up one cell in
 #. a math table or columnar arithmetic expression.
 #: src/orca/cmdnames.py:1260
-#, fuzzy
-#| msgid "Go up one cell"
 msgctxt "mathcat"
 msgid "Move up one cell"
-msgstr "Bir hücre yukarı git"
+msgstr "Bir hücre yukarı taşı"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves down one cell in
 #. a math table or columnar arithmetic expression.
 #: src/orca/cmdnames.py:1265
-#, fuzzy
-#| msgid "Go down one cell"
 msgctxt "mathcat"
 msgid "Move down one cell"
-msgstr "Bir hücre aşağı git"
+msgstr "Bir hücre aşağı taşı"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command cycles the navigation
@@ -4681,7 +4528,7 @@ msgstr "Bir hücre aşağı git"
 #: src/orca/cmdnames.py:1270
 msgctxt "mathcat"
 msgid "Increase navigation granularity"
-msgstr ""
+msgstr "Gezinim ayrıntılığını yükselt"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command cycles the navigation
@@ -4689,47 +4536,39 @@ msgstr ""
 #: src/orca/cmdnames.py:1275
 msgctxt "mathcat"
 msgid "Decrease navigation granularity"
-msgstr ""
+msgstr "Gezinim ayrıntılığını düşür"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command toggles whether navigation
 #. reads the math content or describes its structure.
 #: src/orca/cmdnames.py:1280
-#, fuzzy
-#| msgid "Toggle mouse review mode"
 msgctxt "mathcat"
 msgid "Toggle speech mode"
-msgstr "Fare bakış kipini değiştir"
+msgstr "Konuşma kipini değiştir"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command speaks the previous math
 #. item as you would say it aloud.
 #: src/orca/cmdnames.py:1285
-#, fuzzy
-#| msgid "Go to previous list item"
 msgctxt "mathcat"
 msgid "Read previous item"
-msgstr "Önceki liste ögesine git"
+msgstr "Önceki ögeyi oku"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command speaks the next math
 #. item as you would say it aloud.
 #: src/orca/cmdnames.py:1290
-#, fuzzy
-#| msgid "Current item"
 msgctxt "mathcat"
 msgid "Read next item"
-msgstr "Şimdiki öge"
+msgstr "Sonraki ögeyi oku"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command speaks the current math
 #. item as you would say it aloud.
 #: src/orca/cmdnames.py:1295
-#, fuzzy
-#| msgid "Current item"
 msgctxt "mathcat"
 msgid "Read current item"
-msgstr "Şimdiki öge"
+msgstr "Şimdiki ögeyi oku"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command speaks the content of
@@ -4737,37 +4576,31 @@ msgstr "Şimdiki öge"
 #: src/orca/cmdnames.py:1300
 msgctxt "mathcat"
 msgid "Read current cell"
-msgstr ""
+msgstr "Geçerli hücreyi oku"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command gives a structural
 #. summary of the previous math item rather than reading its content.
 #: src/orca/cmdnames.py:1305
-#, fuzzy
-#| msgid "Go to previous list item"
 msgctxt "mathcat"
 msgid "Describe previous item"
-msgstr "Önceki liste ögesine git"
+msgstr "Önceki ögeyi açıkla"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command gives a structural
 #. summary of the next math item rather than reading its content.
 #: src/orca/cmdnames.py:1310
-#, fuzzy
-#| msgid "Current item"
 msgctxt "mathcat"
 msgid "Describe next item"
-msgstr "Şimdiki öge"
+msgstr "Sonraki ögeyi açıkla"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command gives a structural
 #. summary of the current math item rather than reading its content.
 #: src/orca/cmdnames.py:1315
-#, fuzzy
-#| msgid "Present current time"
 msgctxt "mathcat"
 msgid "Describe current item"
-msgstr "Geçerli saati sun"
+msgstr "Geçerli ögeyi açıkla"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command announces the user's
@@ -4775,17 +4608,15 @@ msgstr "Geçerli saati sun"
 #: src/orca/cmdnames.py:1320
 msgctxt "mathcat"
 msgid "Where am I"
-msgstr ""
+msgstr "Neredeyim"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command announces the user's
 #. full context within the math expression.
 #: src/orca/cmdnames.py:1325
-#, fuzzy
-#| msgid "Messages are _detailed"
 msgctxt "mathcat"
 msgid "Where am I (detailed)"
-msgstr "_Ayrıtılı iletiler"
+msgstr "Neredeyim (ayrıntılı)"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command returns to the position
@@ -4793,27 +4624,23 @@ msgstr "_Ayrıtılı iletiler"
 #: src/orca/cmdnames.py:1330
 msgctxt "mathcat"
 msgid "Return to last position"
-msgstr ""
+msgstr "Son konuma dön"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). Place markers are bookmarks within
 #. a math expression, identified by a digit 0-9. This command jumps to one.
 #: src/orca/cmdnames.py:1335
-#, fuzzy
-#| msgid "Go to next landmark"
 msgctxt "mathcat"
 msgid "Go to place marker"
-msgstr "Sonraki sınır işaretine git"
+msgstr "Yer imleyiciye git"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). Place markers are bookmarks within
 #. a math expression, identified by a digit 0-9. This command sets one.
 #: src/orca/cmdnames.py:1340
-#, fuzzy
-#| msgid "Speak and mark"
 msgctxt "mathcat"
 msgid "Set place marker"
-msgstr "Seslendir ve imle"
+msgstr "Yer imleyici belirle"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). Place markers are bookmarks within
@@ -4821,7 +4648,7 @@ msgstr "Seslendir ve imle"
 #: src/orca/cmdnames.py:1345
 msgctxt "mathcat"
 msgid "Read place marker"
-msgstr ""
+msgstr "Yer imleyiciyi oku"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). Place markers are bookmarks within
@@ -4829,18 +4656,16 @@ msgstr ""
 #: src/orca/cmdnames.py:1350
 msgctxt "mathcat"
 msgid "Describe place marker"
-msgstr ""
+msgstr "Yer imleyiciyi açıkla"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command copies the current
 #. navigation node to the clipboard in the user's preferred format
 #. (MathML, LaTeX, ASCIIMath, or Speech).
 #: src/orca/cmdnames.py:1356
-#, fuzzy
-#| msgid "Copied contents to clipboard."
 msgctxt "mathcat"
 msgid "Copy to clipboard"
-msgstr "Panoya kopyalanmış içerikler."
+msgstr "Panoya kopyala"
 
 #. Translators: When presenting the content of a line on a web page, Orca by
 #. default presents the full line, including any links or form fields on that
@@ -5920,11 +5745,9 @@ msgstr "_Aktifleştir"
 #. that an article has been entered before speaking the contents. At the end of
 #. the article, Orca will announce that the article is being exited.
 #: src/orca/guilabels.py:41
-#, fuzzy
-#| msgid "vertical"
 msgctxt "Context"
 msgid "Articles"
-msgstr "dikey"
+msgstr "Maddeler"
 
 #. Translators: Some users want to hear additional information when entering
 #. different types of content. If this checkbox is checked, Orca will announce
@@ -5942,7 +5765,7 @@ msgstr "Blok Alıntılar"
 #: src/orca/guilabels.py:53
 msgctxt "Context"
 msgid "Code blocks"
-msgstr ""
+msgstr "Kod blokları"
 
 #. Translators: Some users want to hear additional information when entering
 #. different types of content. When enabled, Orca will announce when a document
@@ -5951,7 +5774,7 @@ msgstr ""
 #: src/orca/guilabels.py:59
 msgctxt "Context"
 msgid "Embedded documents"
-msgstr ""
+msgstr "Gömülü belgeler"
 
 #. Translators: Some users want to hear additional information when entering
 #. different types of content. If this checkbox is checked, Orca will announce
@@ -6008,11 +5831,9 @@ msgstr "Tablolar"
 #. tracked changes (insertions, deletions, highlights, suggestions) when navigating
 #. through document content containing revision markup.
 #: src/orca/guilabels.py:100
-#, fuzzy
-#| msgid "Save Changes?"
 msgctxt "Context"
 msgid "Tracked changes"
-msgstr "Değişiklikler Kaydedilsin Mi?"
+msgstr "İzlenen değişiklikler"
 
 #. Translators: This is a shorter version of "Automatic focus mode during caret/structural
 #. navigation" used on sub-pages where the navigation type context is already clear.
@@ -6214,11 +6035,9 @@ msgstr "Simge"
 #. This string describes the do-nothing-at-all case where only the voice will
 #. be applied when presenting capital letters.
 #: src/orca/guilabels.py:245
-#, fuzzy
-#| msgid "Voice"
 msgctxt "capitalization style"
 msgid "Voice only"
-msgstr "Ses"
+msgstr "Yalnızca ses"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -6339,15 +6158,12 @@ msgid "Pronunciation Dictionary"
 msgstr "Telaffuz Sözlüğü"
 
 #: src/orca/guilabels.py:343
-#, fuzzy
-#| msgid ""
-#| "Customize how words are spoken. Add a word and its replacement below."
 msgid ""
 "Customize how words are spoken by adding words and replacement text to the "
 "pronunciation dictionary."
 msgstr ""
-"Sözcüklerin nasıl seslendirileceğini özelleştir. Aşağıya sözcük ve "
-"karşılığını ekle."
+"Telaffuz sözlüğüne sözcük ve karşılığını ekleyerek sözcüklerin nasıl "
+"seslendirileceğini özelleştir."
 
 #. Translators: This is a label for a column header in Orca's pronunciation
 #. dictionary. The pronunciation dictionary allows the user to correct words
@@ -6541,19 +6357,15 @@ msgstr "Kısayol tuşu"
 #. are related to managing the screen reader, such as opening preferences or
 #. quitting Orca.
 #: src/orca/guilabels.py:491
-#, fuzzy
-#| msgid "Screen Reader"
 msgid "Screen Reader Management"
-msgstr "Ekran Okuyucu"
+msgstr "Ekran Okuyucu Yönetimi"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to bypass mode. Bypass mode causes Orca to pass subsequent
 #. command keys to the current application instead of handling them itself.
 #: src/orca/guilabels.py:496
-#, fuzzy
-#| msgid "Browse mode"
 msgid "Bypass mode"
-msgstr "Göz atma kipi"
+msgstr "Es geçme kipi"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to debugging.
@@ -6597,10 +6409,8 @@ msgstr "Karet gezinimi"
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to math navigation via MathCAT.
 #: src/orca/guilabels.py:525
-#, fuzzy
-#| msgid "Caret navigation"
 msgid "Math navigation"
-msgstr "Karet gezinimi"
+msgstr "Matematik gezinimi"
 
 #: src/orca/guilabels.py:530
 msgid ""
@@ -6651,15 +6461,18 @@ msgid ""
 "Shift+Alt+Ctrl+Q. This can be changed in Commands. An application must be "
 "running to add it to the sleep mode applications list."
 msgstr ""
+"Uyku kipi, Orca’nın verilen uygulama için çalışmıyormuş gibi davranmasına "
+"neden olur. Uyku kipini açıp kapatan öntanımlı tuş birleşimi şudur: "
+"Shift+Alt+Ctrl+Q. Bu, Komutlar’da değiştirilebilir. Bir uygulamanın uyku "
+"kipi uygulamalar listesine eklenebilmesi için o uygulamanın çalışması "
+"gerekmektedir."
 
 #. Translators: This label appears above a list of applications on the Sleep Mode
 #. preferences page. The user can select which applications should automatically
 #. have sleep mode enabled.
 #: src/orca/guilabels.py:573
-#, fuzzy
-#| msgid "Toggle sleep mode for the current application"
 msgid "Always use sleep mode with these applications"
-msgstr "Geçerli uygulama için uyku kipini aç ya da kapat"
+msgstr "Bu uygulamalamalarla hep uyku kipini kullan"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to mouse interaction, such as routing the pointer, clicking
@@ -6732,7 +6545,7 @@ msgstr ""
 #. navigation (e.g. pressing G to jump to next image).
 #: src/orca/guilabels.py:625
 msgid "Skip unlabeled images"
-msgstr ""
+msgstr "Etiketsiz görselleri atla"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to table navigation, such as moving to the next cell in a
@@ -6787,19 +6600,15 @@ msgstr "Düz bakış içerikleri"
 #. review" feature, which lets the user explore the contents of a window in a
 #. spatial fashion, line by line and word by word.
 #: src/orca/guilabels.py:669
-#, fuzzy
-#| msgid "Flat review"
 msgid "Flat Review"
-msgstr "Düz bakış"
+msgstr "Düz Bakış"
 
 #. Translators: This is a label for the setting which determines when flat
 #. review should move to follow the location of the keyboard focus and text
 #. caret as the user navigates the application normally.
 #: src/orca/guilabels.py:674
-#, fuzzy
-#| msgid "Could not find current location."
 msgid "Follow the focus and caret location"
-msgstr "Geçerli konum bulunamadı."
+msgstr "Odağı ve karet konumunu izle"
 
 #. Translators: This is one of the choices for when flat review should follow
 #. the focus and caret location. "Always" means flat review moves whenever the
@@ -6807,7 +6616,7 @@ msgstr "Geçerli konum bulunamadı."
 #: src/orca/guilabels.py:679
 msgctxt "flat review focus tracking"
 msgid "Always"
-msgstr ""
+msgstr "Her zaman"
 
 #. Translators: This is one of the choices for when flat review should follow
 #. the focus and caret location. "Automatically" means flat review decides on
@@ -6815,7 +6624,7 @@ msgstr ""
 #: src/orca/guilabels.py:684
 msgctxt "flat review focus tracking"
 msgid "Automatically"
-msgstr ""
+msgstr "Kendiliğinden"
 
 #. Translators: This is one of the choices for when flat review should follow
 #. the focus and caret location. "Never" means flat review stays where the user
@@ -6823,30 +6632,26 @@ msgstr ""
 #: src/orca/guilabels.py:689
 msgctxt "flat review focus tracking"
 msgid "Never"
-msgstr ""
+msgstr "Asla"
 
 #. Translators: This is a label for the setting which determines if Orca will
 #. speak the content at the flat review location when that content changes.
 #: src/orca/guilabels.py:693
-#, fuzzy
-#| msgid "Speak the current flat review line"
 msgid "Speak changes at review location"
-msgstr "Geçerli düz bakış satırını seslendir"
+msgstr "Geçerli bakış konumundaki değişiklikleri seslendir"
 
 #. Translators: This is a label for the setting which determines if Orca will
 #. refresh the braille display with the content at the flat review location
 #. when that content changes.
 #: src/orca/guilabels.py:698
 msgid "Display changes at review location"
-msgstr ""
+msgstr "Bakış konumundaki değişikliklei göster"
 
 #. Translators: This is a label for the setting which determines if Orca will
 #. restrict flat review to the current object rather than the whole window.
 #: src/orca/guilabels.py:702
-#, fuzzy
-#| msgid "Toggle restricting flat review to the current object"
 msgid "Restrict flat review to the current object"
-msgstr "Düz bakışı kısıtlamayı geçerli nesneyle değiştir"
+msgstr "Düz bakışı geçerli nesneye kısıtla"
 
 #. Translators: This is a label for the setting which determines if Orca will
 #. use the "desktop" or "laptop" keyboard layout. The desktop layout is
@@ -6942,11 +6747,8 @@ msgstr "Seslendir ve imle"
 #. Translators: This is the title of a window which displays formatting
 #. information associated with the current text character.
 #: src/orca/guilabels.py:772
-#, fuzzy
-#| msgctxt "Typing echo"
-#| msgid "Character"
 msgid "Character Formatting"
-msgstr "Karakter"
+msgstr "Karakter Biçimlendirme"
 
 #. Translators: This is the title of a window which displays formatting
 #. information associated with the current text character. The string is the
@@ -6954,7 +6756,7 @@ msgstr "Karakter"
 #: src/orca/guilabels.py:777
 #, python-format
 msgid "Character Formatting for: '%s'"
-msgstr ""
+msgstr "Şunun İçin Karakter Biçimlendirmesi: '%s'"
 
 #. Translators: This is an option in a combo box for how a text attribute should
 #. be presented. If selected, the attribute will not be presented.
@@ -7145,12 +6947,9 @@ msgstr "Yukarı ve aşağı ok"
 #. content deletions, suggestions, and highlights. This is the title for a column
 #. which contains the text of an annotation.
 #: src/orca/guilabels.py:924
-#, fuzzy
-#| msgctxt "role"
-#| msgid "information"
 msgctxt "structural navigation"
 msgid "Annotation"
-msgstr "bilgi"
+msgstr "Not"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7306,7 +7105,7 @@ msgstr "Liste Ögesi"
 #: src/orca/guilabels.py:1029
 msgctxt "structural navigation"
 msgid "Math Expression"
-msgstr ""
+msgstr "Matematik İfadesi"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7378,11 +7177,9 @@ msgstr "Değer"
 #. could with native keyboard navigation. Annotations include content insertions,
 #. content deletions, suggestions, and highlights. This is the title of such a dialog box.
 #: src/orca/guilabels.py:1079
-#, fuzzy
-#| msgid "Actions"
 msgctxt "structural navigation"
 msgid "Annotations"
-msgstr "Eylemler"
+msgstr "Notlar"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7523,11 +7320,9 @@ msgstr "Liste Ögeleri"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: src/orca/guilabels.py:1170
-#, fuzzy
-#| msgid "Match options:"
 msgctxt "structural navigation"
 msgid "Math Expressions"
-msgstr "Eşleşme seçenekleri:"
+msgstr "Matematik İfadeleri"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7953,22 +7748,22 @@ msgstr "Yardım"
 #. are Python code written by end users, not built-in Orca features.
 #: src/orca/guilabels.py:1483
 msgid "User Extensions"
-msgstr ""
+msgstr "Kullanıcı Uzantıları"
 
 #: src/orca/guilabels.py:1490
 msgid ""
 "User extensions are Python files or packages in ~/.local/share/orca/"
 "extensions. Only approve extensions that you trust."
 msgstr ""
+"Kullanıcı uzantıları ~/.local/share/orca/extensions içindeki Python "
+"dosyaları ya da paketleridir. Yalnızca güvendiğiniz uzantıları onaylayın."
 
 #. Translators: This message is shown in the User Extensions preferences page
 #. when Orca does not find any user extension files or packages in
 #. ~/.local/share/orca/extensions.
 #: src/orca/guilabels.py:1497
-#, fuzzy
-#| msgid "No profiles found."
 msgid "No user extensions found."
-msgstr "Hiçbir profil bulunamadı."
+msgstr "Kullanıcı uzantısı bulunamadı."
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button approves the selected user extension so Orca can load and
@@ -7976,7 +7771,7 @@ msgstr "Hiçbir profil bulunamadı."
 #: src/orca/guilabels.py:1502
 msgctxt "user extensions"
 msgid "Approve"
-msgstr ""
+msgstr "Onayla"
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. It is shown when a previously-approved extension has changed on disk and must
@@ -7984,14 +7779,14 @@ msgstr ""
 #: src/orca/guilabels.py:1507
 msgctxt "user extensions"
 msgid "Re-approve"
-msgstr ""
+msgstr "Yeniden onayla"
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button removes Orca's approval for the selected user extension.
 #: src/orca/guilabels.py:1511
 msgctxt "user extensions"
 msgid "Revoke"
-msgstr ""
+msgstr "Geri çek"
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button asks the user to confirm deleting the selected extension
@@ -8000,8 +7795,6 @@ msgstr ""
 #. user extension. The button removes one item from a list setting exposed by the
 #. extension, for instance a list of application names.
 #: src/orca/guilabels.py:1516 src/orca/guilabels.py:1559
-#, fuzzy
-#| msgid "Delete"
 msgctxt "user extensions"
 msgid "Delete"
 msgstr "Sil"
@@ -8011,7 +7804,7 @@ msgstr "Sil"
 #: src/orca/guilabels.py:1520
 msgctxt "user extensions"
 msgid "Delete user extension?"
-msgstr ""
+msgstr "Kullanıcı uzantısı silinsin mi?"
 
 #: src/orca/guilabels.py:1527
 #, python-format
@@ -8020,16 +7813,17 @@ msgid ""
 "The following extension will be permanently deleted from your user "
 "extensions folder: %s. Do you want to continue?"
 msgstr ""
+"Şu uzantı kullanıcı uzantıları klasörünüzden kalıcı olarak silinecektir: %s. "
+"Sürdürmek istiyor musunuz?"
 
 #. Translators: This message is presented when Orca fails to delete a user
 #. extension file or package directory from ~/.local/share/orca/extensions. The
 #. string substitution is the display name of the extension.
 #: src/orca/guilabels.py:1534
-#, fuzzy, python-format
-#| msgid "Profile could not be loaded: %s"
+#, python-format
 msgctxt "user extensions"
 msgid "Could not delete: %s."
-msgstr "Profil yüklenemiyor: %s"
+msgstr "Silinemedi: %s."
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button opens a dialog with metadata about the selected extension,
@@ -8037,60 +7831,47 @@ msgstr "Profil yüklenemiyor: %s"
 #: src/orca/guilabels.py:1539
 msgctxt "user extensions"
 msgid "Info"
-msgstr ""
+msgstr "Bilgi"
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button opens a dialog with settings provided by the selected
 #. user extension.
 #: src/orca/guilabels.py:1544
-#, fuzzy
-#| msgctxt "VoiceType"
-#| msgid "%s Settings"
 msgctxt "user extensions"
 msgid "Settings"
-msgstr "%s Ayarları"
+msgstr "Ayarlar"
 
 #. Translators: This is a button label in the generated settings dialog for a
 #. user extension. The button adds one item to a list setting exposed by the
 #. extension, for instance a list of application names.
 #: src/orca/guilabels.py:1549
-#, fuzzy
-#| msgid "0 items"
 msgctxt "user extensions"
 msgid "New item"
-msgstr "0 öge"
+msgstr "Yeni öge"
 
 #. Translators: This is a button label in the generated settings dialog for a
 #. user extension. The button opens a file chooser so the user can choose a file
 #. or folder path for a setting exposed by the extension.
 #: src/orca/guilabels.py:1554
-#, fuzzy
-#| msgid "Browse mode"
 msgctxt "user extensions"
 msgid "Browse..."
-msgstr "Göz atma kipi"
+msgstr "Göz at..."
 
 #. Translators: This error message appears in the generated settings dialog for a
 #. user extension when the user enters an invalid item in a list setting. The
 #. exact list setting depends on the extension.
 #: src/orca/guilabels.py:1564
-#, fuzzy
-#| msgctxt "error"
-#| msgid "invalid entry"
 msgctxt "user extensions"
 msgid "Invalid item."
-msgstr "geçersiz girdi"
+msgstr "Geçersiz öge."
 
 #. Translators: This error message appears in the generated settings dialog for a
 #. user extension when the user enters an item that is already present in the same
 #. list setting.
 #: src/orca/guilabels.py:1569
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "there exists"
 msgctxt "user extensions"
 msgid "Item already exists."
-msgstr "vardır"
+msgstr "Öge halihazırda var."
 
 #. Translators: This is a fallback label in the generated settings dialog for a
 #. user extension. It is used for the first field in a dictionary entry editor
@@ -8100,15 +7881,12 @@ msgstr "vardır"
 #: src/orca/guilabels.py:1574 src/orca/guilabels.py:1610
 msgctxt "user extensions"
 msgid "Name"
-msgstr ""
+msgstr "Ad"
 
 #. Translators: This is a fallback label in the generated settings dialog for a
 #. user extension. It is used for the second field in a dictionary entry editor
 #. when the extension does not provide a more specific label.
 #: src/orca/guilabels.py:1579
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Value"
 msgctxt "user extensions"
 msgid "Value"
 msgstr "Değer"
@@ -8117,45 +7895,36 @@ msgstr "Değer"
 #. user extension when the user enters an invalid value in a dictionary setting.
 #. The exact dictionary setting depends on the extension.
 #: src/orca/guilabels.py:1584
-#, fuzzy
-#| msgid "%d value"
-#| msgid_plural "%d values"
 msgctxt "user extensions"
 msgid "Invalid value."
-msgstr "%d değer"
+msgstr "Geçersiz değer."
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by the name of the person or people who wrote the extension.
 #: src/orca/guilabels.py:1588
 msgctxt "user extensions"
 msgid "Author"
-msgstr ""
+msgstr "Yazar"
 
 #. Translators: This is a label in the user extension information dialog. It
 #. refers to the company, project, or similar entity associated with the
 #. extension.
 #: src/orca/guilabels.py:1593
-#, fuzzy
-#| msgid "Pronunciation"
 msgctxt "user extensions"
 msgid "Organization"
-msgstr "Telaffuz"
+msgstr "Organizasyon"
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by a copyright holder or copyright notice supplied by the extension
 #. author.
 #: src/orca/guilabels.py:1598
-#, fuzzy
-#| msgid "right"
 msgctxt "user extensions"
 msgid "Copyright"
-msgstr "sağ"
+msgstr "Telif hakkı"
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by a short explanation of what the extension does.
 #: src/orca/guilabels.py:1602
-#, fuzzy
-#| msgid "Description"
 msgctxt "user extensions"
 msgid "Description"
 msgstr "Açıklama"
@@ -8163,24 +7932,19 @@ msgstr "Açıklama"
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by the filesystem path to the extension file or package directory.
 #: src/orca/guilabels.py:1606
-#, fuzzy
-#| msgid "Notification"
 msgctxt "user extensions"
 msgid "Location"
-msgstr "Bildirim"
+msgstr "Konum"
 
 #: src/orca/guilabels.py:1617
 msgctxt "user extensions"
 msgid "Some commands were unbound due to conflicts."
-msgstr ""
+msgstr "Bazı komutlar, çakışmalar nedeniyle bağlanmadı."
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by whether the extension is approved, not approved, disabled, invalid,
 #. or needs to be approved again.
 #: src/orca/guilabels.py:1623
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "State"
 msgctxt "user extensions"
 msgid "Status"
 msgstr "Durum"
@@ -8195,22 +7959,17 @@ msgstr "Sürüm"
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by a URL for the extension or its author.
 #: src/orca/guilabels.py:1631
-#, fuzzy
-#| msgid "same site"
 msgctxt "user extensions"
 msgid "Website"
-msgstr "aynı site"
+msgstr "Web sitesi"
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means Orca found a Python file or
 #. package, but it does not contain a valid Orca extension.
 #: src/orca/guilabels.py:1636
-#, fuzzy
-#| msgctxt "error"
-#| msgid "invalid"
 msgctxt "user extensions"
 msgid "Invalid"
-msgstr "geçersiz"
+msgstr "Geçersiz"
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the user has approved this
@@ -8218,29 +7977,23 @@ msgstr "geçersiz"
 #: src/orca/guilabels.py:1641
 msgctxt "user extensions"
 msgid "Approved"
-msgstr ""
+msgstr "Onaylandı"
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the extension has been
 #. approved, but the user has currently turned it off.
 #: src/orca/guilabels.py:1646
-#, fuzzy
-#| msgctxt "indentation and justification"
-#| msgid "Disabled"
 msgctxt "user extensions"
 msgid "Disabled"
-msgstr "Devre dışı bırakıldı"
+msgstr "Devre dışı"
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the user has not yet
 #. approved this extension, so Orca will not load or run it.
 #: src/orca/guilabels.py:1651
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Not supported"
 msgctxt "user extensions"
 msgid "Not approved"
-msgstr "Desteklenmiyor"
+msgstr "Onaysız"
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the extension was approved
@@ -8249,7 +8002,7 @@ msgstr "Desteklenmiyor"
 #: src/orca/guilabels.py:1657
 msgctxt "user extensions"
 msgid "Modified; re-approval required"
-msgstr ""
+msgstr "Düzenlendi; yeniden onay gerekli"
 
 #. Translators: This is the label for a widget in the preferences dialog.
 #: src/orca/guilabels.py:1660
@@ -8539,17 +8292,14 @@ msgstr ""
 "komutlarını kullarak belge içinde gezebilirsiniz."
 
 #: src/orca/guilabels.py:1882
-#, fuzzy
-#| msgid ""
-#| "The \"Container Announcements\" settings determine what additional "
-#| "details will be announced as Say All moves through the document."
 msgid ""
 "The announcement settings determine which document changes, text formatting "
 "changes, and container boundaries will be announced as Say All moves through "
 "the document."
 msgstr ""
-"\"Taşıyıcı Duyuruları\" ayarları, Tümünü Söyle komutu belgede ilerlerken "
-"hangi ek ayrıntıların duyurulacağını belirler."
+"Tümünü Söyle komutu belgede gezinirken hangi belge değişiklikleri, metin "
+"biçimlendirme değişiklikleri ve taşıyıcı sınırlarının duyurulacağını "
+"belirleyen duyuru ayarları."
 
 #: src/orca/guilabels.py:1887
 msgid "Speak object under mo_use"
@@ -8606,10 +8356,8 @@ msgstr "Sıklık (saniye):"
 #. Caps Lock for the "laptop" keyboard layout. This string is a label for choosing
 #. which key(s) should be used as the Orca modifier.
 #: src/orca/guilabels.py:1925
-#, fuzzy
-#| msgid "Screen Reader _Modifier Key(s):"
 msgid "Screen Reader Modifier Keys"
-msgstr "Ekran Okuyucu _Girişken Tuşu/Tuşları:"
+msgstr "Ekran Okuyucu Düzenleyici Tuşları"
 
 #. Translators: This refers to the Insert key being used as the Orca modifier.
 #: src/orca/guilabels.py:1928
@@ -8620,24 +8368,18 @@ msgstr "Insert"
 #. It is important that the translation be different from the one for "Insert" so
 #. that users can distinguish between the two keys.
 #: src/orca/guilabels.py:1933
-#, fuzzy
-#| msgid "Insert"
 msgid "Keypad Insert"
-msgstr "Insert"
+msgstr "Tuş Takımı Insert Tuşu"
 
 #. Translators: This refers to the Caps Lock key being used as the Orca modifier.
 #: src/orca/guilabels.py:1936
-#, fuzzy
-#| msgid "Caps_Lock"
 msgid "Caps Lock"
-msgstr "Büyük _Harf Kilidi"
+msgstr "Caps Lock"
 
 #. Translators: This refers to the Shift Lock key being used as the Orca modifier.
 #: src/orca/guilabels.py:1939
-#, fuzzy
-#| msgid "shift lock"
 msgid "Shift Lock"
-msgstr "büyük harf kilidi"
+msgstr "Shift Lock"
 
 #. Translators: Orca can optionally speak additional details as the user
 #. navigates (e.g. via the arrow keys) within document content. If this widget
@@ -8740,11 +8482,8 @@ msgstr "Açıklama"
 #. Translators: This is a label for a widget associated with whether Orca will
 #. speak indentation information for text content.
 #: src/orca/guilabels.py:2021
-#, fuzzy
-#| msgctxt "role"
-#| msgid "dedication"
 msgid "Indentation"
-msgstr "ithaf"
+msgstr "Girintileme"
 
 #. Translators: This is the label for a widget on the Speech preferences page.
 #. When checked, indentation will only be announced when it has changed from
@@ -8765,34 +8504,28 @@ msgstr "Hatalı yazılmış sözcük belirteci"
 #. Translators: This is a label for a widget associated with when Orca will
 #. announce text formatting changes (e.g. bold, italic) when navigating.
 #: src/orca/guilabels.py:2037
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attribute changes"
-msgstr "Metin öznitelikleri"
+msgstr "Metin öznitelik değişimleri"
 
 #. Translators: This is an option for the text attribute changes setting.
 #: src/orca/guilabels.py:2040
-#, fuzzy
-#| msgid "off"
 msgctxt "text attribute changes"
 msgid "Off"
-msgstr "seçili değil"
+msgstr "Kapalı"
 
 #. Translators: This is an option for the text attribute changes setting.
 #. When selected, formatting changes are only announced in editable content.
 #: src/orca/guilabels.py:2044
-#, fuzzy
-#| msgid "editable content"
 msgctxt "text attribute changes"
 msgid "Editable text only"
-msgstr "düzenlenebilir içerik"
+msgstr "Yalnızca düzenlenebilir metin"
 
 #. Translators: This is an option for the text attribute changes setting.
 #. When selected, formatting changes are always announced.
 #: src/orca/guilabels.py:2048
 msgctxt "text attribute changes"
 msgid "Always"
-msgstr ""
+msgstr "Her zaman"
 
 #. Translators: This is a label for a widget associated with whether Orca will
 #. speak blank lines when navigating in document content.
@@ -8992,10 +8725,8 @@ msgstr "Taşıyıcı Duyuruları"
 #. Translators: This is the label for a group of settings which control
 #. announcements of document revision markup and text formatting changes.
 #: src/orca/guilabels.py:2204
-#, fuzzy
-#| msgid "Container Announcements"
 msgid "Change Announcements"
-msgstr "Taşıyıcı Duyuruları"
+msgstr "Değişim Duyuruları"
 
 #. Translators: This is a heading for a group of toggleable widgets. Each one controls
 #. whether Orca announces entering a type of container (e.g. blockquotes, forms,
@@ -9062,64 +8793,52 @@ msgstr "Telaffuz"
 #. to mathematical expressions such as equations, fractions, and formulas encountered
 #. in documents and web pages. Presentation refers to how they are spoken and brailled.
 #: src/orca/guilabels.py:2261
-#, fuzzy
-#| msgid "Match options:"
 msgid "Math presentation"
-msgstr "Eşleşme seçenekleri:"
+msgstr "Matematik sunumu"
 
 #. Translators: This refers to a human language such as English, Spanish, or German.
 #: src/orca/guilabels.py:2264
-#, fuzzy
-#| msgid "_Language:"
 msgid "Language:"
-msgstr "_Dil:"
+msgstr "Dil:"
 
 #. Translators: This is the style used when speaking mathematical expressions.
 #. "ClearSpeak" produces natural-sounding speech (e.g. "x squared") while
 #. "SimpleSpeak" is more literal and structured (e.g. "x superscript 2 end superscript").
 #: src/orca/guilabels.py:2269
-#, fuzzy
-#| msgid "Speech _system:"
 msgid "Speech style:"
-msgstr "Konuşma _sistemi:"
+msgstr "Konuşma biçemi:"
 
 #. Translators: This is a verbosity level for speaking mathematical expressions.
 #. "Terse" provides minimal information, for example "square root x" instead of
 #. "the square root of x".
 #: src/orca/guilabels.py:2274
 msgid "Terse"
-msgstr ""
+msgstr "Öz"
 
 #. Translators: This is a verbosity level for speaking mathematical expressions.
 #. "Medium" is the default and provides a moderate amount of detail.
 #: src/orca/guilabels.py:2278
 msgid "Medium"
-msgstr ""
+msgstr "Orta"
 
 #. Translators: This is a verbosity level for speaking mathematical expressions.
 #. "Verbose" provides the most detail, for example "the square root of x" instead
 #. of "square root x".
 #: src/orca/guilabels.py:2283
-#, fuzzy
-#| msgid "Ver_bose"
 msgid "Verbose"
-msgstr "_Ayrıntı"
+msgstr "Ayrıntılı"
 
 #. Translators: This is the braille code used to represent mathematical expressions.
 #. Examples include "Nemeth" (common in the US) and "UEB" (Unified English Braille).
 #: src/orca/guilabels.py:2287
-#, fuzzy
-#| msgid "Braille"
 msgid "Braille code:"
-msgstr "Braille"
+msgstr "Braille kodu:"
 
 #. Translators: This is the format used when copying math content to the clipboard.
 #. Options include MathML, LaTeX, ASCIIMath, and Speech.
 #: src/orca/guilabels.py:2291
-#, fuzzy
-#| msgid "Dat_e format:"
 msgid "Copy format:"
-msgstr "Tarih bi_çimi:"
+msgstr "Kopya biçimi:"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. the label for a setting that controls navigation granularity. In Enhanced
@@ -9127,10 +8846,8 @@ msgstr "Tarih bi_çimi:"
 #. Simple mode, each element is visited individually. In Character mode,
 #. individual symbols are visited one at a time.
 #: src/orca/guilabels.py:2298
-#, fuzzy
-#| msgid "Navigation keys"
 msgid "Navigation mode:"
-msgstr "Yön tuşları"
+msgstr "Gezinim kipi:"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. the label for a setting that controls how the current position is indicated
@@ -9138,10 +8855,8 @@ msgstr "Yön tuşları"
 #. the position. The options control which cells get those dots: none, only the
 #. first character, the first and last characters, or all characters.
 #: src/orca/guilabels.py:2305
-#, fuzzy
-#| msgid "Table navigation"
 msgid "Braille navigation highlight:"
-msgstr "Tablo gezinimi"
+msgstr "Braille gezinim vurgusu:"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. When this
 #. setting is enabled, navigating past the edge of a 2D structure like a matrix
@@ -9149,32 +8864,26 @@ msgstr "Tablo gezinimi"
 #. staying inside the structure.
 #: src/orca/guilabels.py:2311
 msgid "Automatically exit 2D math structures"
-msgstr ""
+msgstr "2B matematik yapılarından kendiliğinden çık"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the navigation granularity options. In Enhanced mode, MathCAT groups
 #. related items together for faster navigation.
 #: src/orca/guilabels.py:2316
 msgid "Enhanced"
-msgstr ""
+msgstr "Gelişmiş"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the navigation granularity options. In Simple mode, each math
 #. element is visited individually.
 #: src/orca/guilabels.py:2321
-#, fuzzy
-#| msgctxt "role"
-#| msgid "example"
 msgid "Simple"
-msgstr "örnek"
+msgstr "Basit"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the navigation granularity options. In Character mode, individual
 #. symbols are visited one at a time.
 #: src/orca/guilabels.py:2326
-#, fuzzy
-#| msgctxt "Typing echo"
-#| msgid "Character"
 msgid "Character"
 msgstr "Karakter"
 
@@ -9182,9 +8891,6 @@ msgstr "Karakter"
 #. one of the braille highlight options. When set to None, the current position
 #. during math navigation is not highlighted on the braille display.
 #: src/orca/guilabels.py:2331
-#, fuzzy
-#| msgctxt "braille dots"
-#| msgid "None"
 msgctxt "braille nav highlight"
 msgid "None"
 msgstr "Hiçbiri"
@@ -9193,27 +8899,22 @@ msgstr "Hiçbiri"
 #. one of the braille highlight options. When set to First character, only the
 #. first cell of the current math item is highlighted with dots 7 and 8.
 #: src/orca/guilabels.py:2336
-#, fuzzy
-#| msgid "%d characters"
-#| msgid_plural "%d characters"
 msgid "First character"
-msgstr "%d karakter"
+msgstr "İlk karakter"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the braille highlight options. When set to End points, the first and
 #. last cells of the current math item are highlighted with dots 7 and 8.
 #: src/orca/guilabels.py:2341
 msgid "End points"
-msgstr ""
+msgstr "Bitiş noktaları"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the braille highlight options. When set to All cells, every cell of
 #. the current math item is highlighted with dots 7 and 8.
 #: src/orca/guilabels.py:2346
-#, fuzzy
-#| msgid "All cha_nnels"
 msgid "All cells"
-msgstr "Tüm ka_nallar"
+msgstr "Tüm hücreler"
 
 #. Translators: This is the label of the Sound page in the Orca Preferences dialog.
 #. On that page there are settings related to sound output, including volume
@@ -9275,26 +8976,22 @@ msgstr "Ses"
 #. Translators: This is the label for a section in the Voice Sets preferences
 #. page where users can select and manage voice sets for different languages.
 #: src/orca/guilabels.py:2392
-#, fuzzy
-#| msgid "Voice Type Settings"
 msgid "Voice Sets"
-msgstr "Ses Türü Ayarları"
+msgstr "Ses Takımları"
 
 #. Translators: This is a label for a combo box that selects which voice set
 #. to configure. A voice set is a named collection of voice settings, such as
 #. the primary set or a language-specific set (e.g. Italian).
 #: src/orca/guilabels.py:2397
-#, fuzzy
-#| msgid "_Voice type:"
 msgid "Voice set:"
-msgstr "_Ses türü:"
+msgstr "Ses takımı:"
 
 #. Translators: This is the title of a confirmation dialog shown when the user
 #. is about to delete a voice set. The %s is replaced with the voice set name.
 #: src/orca/guilabels.py:2401
 #, python-format
 msgid "Delete voice set '%s'?"
-msgstr ""
+msgstr "'%s' ses takımı silinsin mi?"
 
 #. Translators: This is the label for the global (default) voice set in the
 #. voice set selector combo box. It represents the main voice configuration
@@ -9302,13 +8999,13 @@ msgstr ""
 #: src/orca/guilabels.py:2406
 msgctxt "VoiceSet"
 msgid "Global"
-msgstr ""
+msgstr "Küresel"
 
 #. Translators: This is the accessible name for a button that creates a new
 #. voice set for a specific language.
 #: src/orca/guilabels.py:2410
 msgid "New Voice Set"
-msgstr ""
+msgstr "Yeni Ses Takımı"
 
 #: src/orca/guilabels.py:2418
 #, python-format
@@ -9318,6 +9015,9 @@ msgid ""
 "the current profile. Additional voice sets can be created for specific "
 "languages."
 msgstr ""
+"Ses takımları, ses türlerinin (öntanımlı, büyük harf, bağlantı ve sistem "
+"gibi) derlemidir. \"%s\" ses takımı geçerli profil için ses türlerini "
+"içerir. Belirli diller için ek ses takımları oluşturulabilir."
 
 #. Translators: This is the label of the Voice Types page in the Orca
 #. Preferences dialog, where users configure voices for different contexts
@@ -9347,31 +9047,24 @@ msgstr "%s Ayarları"
 #. Translators: This is the heading for a group of language switching settings
 #. in the Voice preferences dialog.
 #: src/orca/guilabels.py:2452
-#, fuzzy
-#| msgid "Automatic language switching"
 msgid "Language Switching"
-msgstr "Kendiliğinden dil değişimi"
+msgstr "Dil Değişimi"
 
 #. Translators: This is a label for a setting that controls whether Orca will
 #. automatically switch the speech synthesizer's language based on the language
 #. of document content being spoken (e.g. text in a web page or word processor).
 #. It appears under a "Language Switching" group heading.
 #: src/orca/guilabels.py:2458
-#, fuzzy
-#| msgid "Document mode"
 msgid "Document content"
-msgstr "Belge kipi"
+msgstr "Belge içeriği"
 
 #. Translators: This is a label for a setting that controls whether Orca will
 #. automatically switch the speech synthesizer's language based on the language
 #. of UI elements being spoken (e.g. buttons, labels, and menus).
 #. It appears under a "Language Switching" group heading.
 #: src/orca/guilabels.py:2464
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "element of"
 msgid "UI elements"
-msgstr "elemanıdır"
+msgstr "Arayüz elemanları"
 
 #. Translators: This is a label for a setting that controls whether Orca will
 #. only switch to languages that the user has explicitly configured a voice for.
@@ -9379,7 +9072,7 @@ msgstr "elemanıdır"
 #. a voice change. It appears under a "Language Switching" group heading.
 #: src/orca/guilabels.py:2470
 msgid "Limit switching to configured voices"
-msgstr ""
+msgstr "Geçişi, yapılandırılan seslere sınırla"
 
 #. Translators: This label is for a group of buttons on the Text Attributes
 #. pane of the Orca Preferences dialog. On that pane there is a long list of
@@ -9548,11 +9241,8 @@ msgstr "Ses yüksek_liği:"
 #. inflection (pitch range) of the current voice. More inflection means the voice
 #. varies its pitch more when speaking; less inflection means it sounds more monotone.
 #: src/orca/guilabels.py:2596
-#, fuzzy
-#| msgctxt "Braille indicator"
-#| msgid "Selection:"
 msgid "_Inflection:"
-msgstr "Seçim:"
+msgstr "_Çekim:"
 
 #. Translators: Having multiple voice types in Orca makes it possible for the
 #. user to more quickly identify properties of text non-visually, such as the
@@ -9940,32 +9630,26 @@ msgstr "kalın"
 #: src/orca/messages.py:57
 #, python-format
 msgid "%s off"
-msgstr ""
+msgstr "%s kapalı"
 
 #. Translators: This is presented when the user cycles the text attribute change
 #. announcement mode. In this mode, formatting changes are not announced.
 #: src/orca/messages.py:61
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attributes: off."
-msgstr "Metin öznitelikleri"
+msgstr "Metin öznitelikleri: kapalı."
 
 #. Translators: This is presented when the user cycles the text attribute change
 #. announcement mode. In this mode, formatting changes are only announced in
 #. editable content.
 #: src/orca/messages.py:66
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attributes: editable text."
-msgstr "Metin öznitelikleri"
+msgstr "Metin öznitelikleri: düzenlenebilir metin."
 
 #. Translators: This is presented when the user cycles the text attribute change
 #. announcement mode. In this mode, formatting changes are always announced.
 #: src/orca/messages.py:70
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attributes: on."
-msgstr "Metin öznitelikleri"
+msgstr "Metin öznitelikleri: açık."
 
 #. Translators: Orca has a command which toggles all (other) Orca commands so that
 #. the associated keystroke can by consumed by the native application. For example,
@@ -10258,61 +9942,59 @@ msgstr "DOSYA"
 #. which allows the user to approve a user extension for loading.
 #: src/orca/messages.py:288
 msgid "Approve a user extension for loading"
-msgstr ""
+msgstr "Kullanıcı uzantısını yükleme için onayla"
 
 #. Translators: This is the description of command line option '--revoke-extension'
 #. which allows the user to revoke approval for a user extension.
 #: src/orca/messages.py:292
 msgid "Revoke approval for a user extension"
-msgstr ""
+msgstr "Kullanıcı uzantısı için onayı geri çek"
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '--approve-extension' or '--revoke-extension' command line options.
 #: src/orca/messages.py:296
-#, fuzzy
-#| msgid "NAME"
 msgid "FILENAME"
-msgstr "AD"
+msgstr "DOSYA ADI"
 
 #. Translators: This message is presented when the user tries to approve an
 #. extension file that does not exist. The string substitution is the file path.
 #: src/orca/messages.py:300
-#, fuzzy, python-format
-#| msgid "string not found"
+#, python-format
 msgid "Extension not found: %s"
-msgstr "dizge bulunamadı"
+msgstr "Uzantı bulunamadı: %s"
 
 #. Translators: This message is presented when a user extension has been approved
 #. for loading. The string substitution is the extension filename.
 #: src/orca/messages.py:304
 #, python-format
 msgid "Approved extension: %s"
-msgstr ""
+msgstr "Onaylanan uzantı: %s"
 
 #. Translators: This message is presented when approval for a user extension has
 #. been revoked. The string substitution is the extension filename.
 #: src/orca/messages.py:308
 #, python-format
 msgid "Revoked approval for: %s"
-msgstr ""
+msgstr "Şunun için onay geri çekildi: %s"
 
 #. Translators: This message is presented when the user tries to revoke an
 #. extension that was not approved. The string substitution is the filename.
 #: src/orca/messages.py:312
 #, python-format
 msgid "Extension not approved: %s"
-msgstr ""
+msgstr "Uzantı onaysız: %s"
 
 #: src/orca/messages.py:317
 #, python-format
 msgid "Warning: %s is currently disabled and will not load until enabled."
 msgstr ""
+"Uyarı: %s şu anda devre dışıdır ve etkinleştirilene dek yüklenmeyecektir."
 
 #. Translators: This is the description of command line option '-s, --setup'
 #. that will place the user in Orca's GUI preferences window.
 #: src/orca/messages.py:322
 msgid "Show the preferences window"
-msgstr ""
+msgstr "Tercihler penceresini göster"
 
 # URL olduğu için sondaki nokta hata verdirmesi lazım.
 #. Translators: This text is the description displayed when Orca is launched
@@ -10489,21 +10171,17 @@ msgstr "Sohbet iletisi yok"
 #. be said is code or preformatted text, such as content inside an HTML 'pre'
 #. or 'code' element.
 #: src/orca/messages.py:451
-#, fuzzy
-#| msgid "root start"
 msgctxt "content"
 msgid "code start"
-msgstr "kök başlangıcı"
+msgstr "kod başlangıcı"
 
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of code or preformatted text, such as content inside an HTML 'pre'
 #. or 'code' element.
 #: src/orca/messages.py:456
-#, fuzzy
-#| msgid "root end"
 msgctxt "content"
 msgid "code end"
-msgstr "kök bitişi"
+msgstr "kod bitişi"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is content marked for deletion in a document, such as content which
@@ -10819,7 +10497,7 @@ msgstr "Düz bakış geçerli nesneye kısıtlandı"
 #. focus nor the caret could be moved there.
 #: src/orca/messages.py:677
 msgid "Location unchanged"
-msgstr ""
+msgstr "Konum değişmedi"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -11128,9 +10806,6 @@ msgstr "Yankı sözcük ve tümce olarak ayarlandı."
 #. Translators: This brief message indicates that indentation will not be
 #. spoken.
 #: src/orca/messages.py:918
-#, fuzzy
-#| msgctxt "indentation and justification"
-#| msgid "Disabled"
 msgctxt "indentation"
 msgid "Disabled"
 msgstr "Devre dışı bırakıldı"
@@ -11138,16 +10813,11 @@ msgstr "Devre dışı bırakıldı"
 #. Translators: This detailed message indicates that indentation will not be
 #. spoken.
 #: src/orca/messages.py:922
-#, fuzzy
-#| msgid "Simplified navigation disabled."
 msgid "Spoken indentation disabled."
-msgstr "Basitleştirilmiş gezinim devre dışı bırakıldı."
+msgstr "Sesli girinti devre dışı bırakıldı."
 
 #. Translators: This brief message indicates that indentation will be spoken.
 #: src/orca/messages.py:925
-#, fuzzy
-#| msgctxt "indentation and justification"
-#| msgid "Enabled"
 msgctxt "indentation"
 msgid "Enabled"
 msgstr "Etkinleştirildi"
@@ -11155,10 +10825,8 @@ msgstr "Etkinleştirildi"
 #. Translators: This detailed message indicates that indentation will be
 #. spoken.
 #: src/orca/messages.py:929
-#, fuzzy
-#| msgid "Simplified navigation enabled."
 msgid "Spoken indentation enabled."
-msgstr "Basitleştirilmiş gezinim etkinleştirildi."
+msgstr "Sesli girinti etkinleştirildi."
 
 #. Translators: Orca announces when a widget has an associated error, such as
 #. disallowed characters in an input, or a must-check box that is not checked
@@ -11195,12 +10863,9 @@ msgstr ""
 #. Translators: This message is presented when a user is navigating within
 #. an article and then navigates out of it.
 #: src/orca/messages.py:962
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving part."
 msgctxt "role"
 msgid "leaving article."
-msgstr "bölümden çıkılıyor."
+msgstr "maddeden çıkılıyor."
 
 #. Translators: This message is presented when a user is navigating within a
 #. blockquote and then navigates out of it.
@@ -11211,12 +10876,9 @@ msgstr "blok alıntıdan çıkılıyor."
 #. Translators: This message is presented when a user is navigating within
 #. a code block and then navigates out of it.
 #: src/orca/messages.py:970
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving index."
 msgctxt "role"
 msgid "leaving code."
-msgstr "indeksten çıkılıyor."
+msgstr "koddan çıkılıyor."
 
 #. Translators: In web content, authors can identify an element which contains
 #. detailed information about another element. For instance, for a password
@@ -11235,11 +10897,8 @@ msgstr "ayrıntılardan çıkılıyor."
 #. document (e.g. an embedded PDF viewer or the rendered preview of a document)
 #. and then navigates out of it into the surrounding page.
 #: src/orca/messages.py:986
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving credit."
 msgid "leaving document."
-msgstr "jenerikten çıkılıyor."
+msgstr "belgeden çıkılıyor."
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
@@ -11802,10 +11461,8 @@ msgstr "Geçerli konum bulunamadı."
 #. message is presented when the current character does not expose any formatting
 #. information to Orca.
 #: src/orca/messages.py:1377
-#, fuzzy
-#| msgid "Battery status unknown"
 msgid "Character format unknown."
-msgstr "Pil durumu bilinmiyor"
+msgstr "Karakter biçimi bilinmiyor."
 
 #. Translators: Orca has a command which presents formatting information for the
 #. current text character. Examples of this information include font family, font
@@ -11815,7 +11472,7 @@ msgstr "Pil durumu bilinmiyor"
 #. values.
 #: src/orca/messages.py:1385
 msgid "Default character format."
-msgstr ""
+msgstr "Öntanımlı karakter biçimi."
 
 #. Translators: This string is used to present the state of a locking key, such
 #. as Caps Lock. If Caps Lock is "off", then letters typed will appear in
@@ -11841,7 +11498,7 @@ msgstr "açık"
 #. is presented if the modifier key state cannot be obtained from the system.
 #: src/orca/messages.py:1403
 msgid "Modifier key state is not available."
-msgstr ""
+msgstr "Düzenleyici tuş durumu kullanılamıyor."
 
 #. Translators: This is to inform the user of the presence of the red squiggly
 #. line which indicates that a given word is not spelled correctly.
@@ -12054,10 +11711,8 @@ msgstr "%s üstünde hiçbir eylem bulunamadı"
 #. suggestions, and highlights. This is a detailed message which will be presented to
 #. the user if no more annotations can be found.
 #: src/orca/messages.py:1568
-#, fuzzy
-#| msgid "No more buttons."
 msgid "No more annotations."
-msgstr "Başka düğme yok."
+msgstr "Başka not yok."
 
 #. Translators: This is for navigating document content by moving from blockquote
 #. to blockquote. This is a detailed message which will be presented to the user
@@ -12152,10 +11807,8 @@ msgstr "Başka bir grafik yok."
 #. search, etc. This is a detailed message which will be presented to the user if
 #. no more landmarks can be found.
 #: src/orca/messages.py:1637
-#, fuzzy
-#| msgid "No more links."
 msgid "No more landmarks."
-msgstr "Başka bir bağlantı yok."
+msgstr "Başka sınır işareti yok."
 
 #. Translators: This is for navigating document content by moving from link to
 #. link (regardless of visited state). This is a detailed message which will be
@@ -12191,10 +11844,8 @@ msgstr "Başka canlı bölge yok."
 #. expression to math expression. This is a detailed message which will be
 #. presented to the user if no more math expressions can be found.
 #: src/orca/messages.py:1664
-#, fuzzy
-#| msgid "No more live regions."
 msgid "No more math expressions."
-msgstr "Başka canlı bölge yok."
+msgstr "Başka matematik ifadesi yok."
 
 #. Translators: This is for navigating document content by moving from paragraph
 #. to paragraph. This is a detailed message which will be presented to the user
@@ -12655,19 +12306,13 @@ msgstr "daha yumuşak."
 
 #. Translators: This string announces speech inflection (pitch range) change.
 #: src/orca/messages.py:1991
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "square intersection"
 msgid "more inflection."
-msgstr "kare kesişim"
+msgstr "daha çok çekim."
 
 #. Translators: This string announces speech inflection (pitch range) change.
 #: src/orca/messages.py:1994
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "double intersection"
 msgid "less inflection."
-msgstr "çift kesişim"
+msgstr "daha az çekim."
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -12836,13 +12481,13 @@ msgstr "Tablo gezinimi etkinleştirildi."
 #. expressions via MathCAT. This string is presented when entering that mode.
 #: src/orca/messages.py:2115
 msgid "MathCAT on."
-msgstr ""
+msgstr "MathCAT açık."
 
 #. Translators: Orca has a modal math navigation mode for exploring math
 #. expressions via MathCAT. This string is presented when leaving that mode.
 #: src/orca/messages.py:2119
 msgid "MathCAT off."
-msgstr ""
+msgstr "MathCAT kapalı."
 
 #. Translators: Orca has a modal math navigation mode for exploring math
 #. expressions via MathCAT. This is presented when the user tries to enter
@@ -13614,7 +13259,7 @@ msgstr "%s içinde ayrıntılar var"
 #: src/orca/object_properties.py:103
 msgctxt "role"
 msgid "code"
-msgstr ""
+msgstr "kod"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
