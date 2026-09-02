@@ -808,6 +808,9 @@ class TestSayAllPresenter:
 
         assert presenter._say_all_is_running is False
         focus_instance.emit_region_changed.assert_not_called()
+        focus_instance.reset_active_mode.assert_called_once_with(
+            "SAY ALL PRESENTER: Stopped Say All.",
+        )
 
     @pytest.mark.parametrize(
         "end_offset,is_eoc,expected_offset",

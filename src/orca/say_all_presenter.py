@@ -628,13 +628,13 @@ class SayAllPresenter(Extension):
                         return
                     if manager.last_event_was_up() and self._rewind(context):
                         return
-                    self._say_all_is_running = False
+                    self.stop()
                     return
                 navigator = structural_navigator.get_navigator()
                 if navigator.last_input_event_was_navigation_command():
                     if self.get_structural_navigation_enabled():
                         return
-                    self._say_all_is_running = False
+                    self.stop()
                     return
                 presentation_manager.get_manager().interrupt_presentation()
                 AXUtilities.set_caret_offset_with_reason(
