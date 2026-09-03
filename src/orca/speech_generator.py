@@ -3484,10 +3484,14 @@ class SpeechGenerator(generator.Generator):
 
         result = self._generate_default_prefix(obj)
         result += self._generate_accessible_label_and_name(obj)
-        result += self._generate_state_read_only(obj)
-        result += self._generate_accessible_role(obj)
+        read_only = self._generate_state_read_only(obj)
+        result += read_only
+        if read_only:
+            result += self._generate_accessible_role(obj)
         result += self._generate_text_indentation(obj)
         result += self._generate_text_line(obj)
+        if not read_only:
+            result += self._generate_accessible_role(obj)
         result += self._generate_pause(obj)
         result += self._generate_keyboard_mnemonic(obj)
         result += self._generate_default_suffix(obj)
