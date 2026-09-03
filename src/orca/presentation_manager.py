@@ -529,9 +529,7 @@ class PresentationManager:
         """Returns a scope treating the tree as stable, or a null one where it cannot be."""
 
         # A terminal's or editable's contents can change while being presented.
-        if AXUtilities.is_editable(obj) or AXUtilities.find_ancestor_inclusive(
-            obj, AXUtilities.is_terminal
-        ):
+        if AXUtilities.is_editable(obj) or AXUtilities.is_terminal(obj):
             return contextlib.nullcontext()
         return ax_cache_manager.stable_tree_scope()
 
