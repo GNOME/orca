@@ -524,6 +524,45 @@ class TestTextSelectionPresenter:
         ]
         update_cache.assert_called_once_with(nested_obj)
 
+    def test_document_selection_change_without_elements_uses_event_source(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test an empty document result falls back to the event source's text selection."""
+
+        dependencies = self._setup_dependencies(test_context)
+        from orca.text_selection_manager import SelectionChangeState
+        from orca.text_selection_presenter import AXUtilities, TextSelectionPresenter
+
+        presenter = TextSelectionPresenter()
+        script = test_context.Mock()
+        event_source = test_context.Mock()
+        no_selection = ((None, -1), (None, -1))
+        selection_manager = dependencies["orca.text_selection_manager"].get_manager.return_value
+        selection_manager.update_selection_state.return_value = (
+            SelectionChangeState.NOT_ORCA,
+            no_selection,
+            no_selection,
+        )
+        test_context.patch_object(
+            AXUtilities,
+            "get_text_selection_elements",
+            side_effect=[[], []],
+        )
+        handle_basic = test_context.patch_object(
+            presenter,
+            "_handle_basic_change",
+            return_value=True,
+        )
+        present_document = test_context.patch_object(
+            presenter,
+            "_present_document_text_change",
+        )
+
+        assert presenter._handle_document_change(script, event_source, True)
+        handle_basic.assert_called_once_with(script, event_source, True)
+        present_document.assert_not_called()
+
     def test_unpresentable_document_selection_change_is_ignored(
         self,
         test_context: OrcaTestContext,

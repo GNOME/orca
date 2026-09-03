@@ -601,7 +601,14 @@ class TextSelectionManager:
             selection_root,
             selection,
         )
-        if start[0] is None and end[0] is None and AXUtilities.has_selected_text(selection_root):
+        old_selection_exists = old_start[0] is not None or old_end[0] is not None
+        # A successful empty document result can also mean the method is unimplemented.
+        if (
+            start[0] is None
+            and end[0] is None
+            and AXUtilities.has_selected_text(selection_root)
+            and (state != SelectionChangeState.NOT_ORCA or old_selection_exists)
+        ):
             msg = "TEXT SELECTION MANAGER: Ignoring indeterminate selection boundaries."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             state = SelectionChangeState.UNPRESENTABLE

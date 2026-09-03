@@ -508,6 +508,11 @@ class TextSelectionPresenter:
         end_obj, _end_offset = end
         old_elements = AXUtilities.get_text_selection_elements(old_start_obj, old_end_obj)
         new_elements = AXUtilities.get_text_selection_elements(start_obj, end_obj)
+        if not old_elements and not new_elements:
+            msg = "TEXT SELECTION PRESENTER: Falling back to event source selection change."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return self._handle_basic_change(script, obj, speak_message)
+
         if start == old_start and end == old_end:
             msg = "TEXT SELECTION PRESENTER: Ignoring duplicate document selection boundaries."
             debug.print_message(debug.LEVEL_INFO, msg, True)
