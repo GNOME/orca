@@ -1929,6 +1929,7 @@ class SpeechPresenter(Extension):
             text=text,
             language=family.get(VoiceFamily.LANG, "") or "",
             dialect=family.get(VoiceFamily.DIALECT, "") or "",
+            voice_type=voice.get(ACSS.VOICE_TYPE) or "",
         )
 
     def write_to_monitor(self, text: str) -> None:

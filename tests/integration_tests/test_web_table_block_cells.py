@@ -33,10 +33,13 @@ if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
 
 _FTSE_ROW = "FTSE 100 10,908.41 +37.39"
+_FTSE_MASK = "\xc0" * 8 + "\x00" * 17
 _DAX_ROW = "DAX 24,235.31 -92.11"
+_DAX_MASK = "\xc0" * 3 + "\x00" * 17
 _HEADER_ROW = "Name Price Change"
 _CLIPPED_HEADER_ROW = "TREND DIRECTION NAME PRICE CHANGE % CHG"
 _NIKKEI_ROW = "Trending up arrow Nikkei 42,062.98 +112.50 0.27%"
+_NIKKEI_MASK = "\x00" * 18 + "\xc0" * 6 + "\x00" * 24
 _SENSEX_ROW = "Sensex 81,254.00 +64.20"
 _RISING_ROW = "Rising +1.90"
 
@@ -77,7 +80,7 @@ def test_paragraph_wrapped_cells_are_read_as_a_full_row(
             "Price column header 10,908.41",
             "Change column header +37.39",
         ],
-        [BrailleLine(1, _FTSE_ROW, _FTSE_ROW, "\x00" * len(_FTSE_ROW))],
+        [BrailleLine(1, _FTSE_ROW, _FTSE_ROW, _FTSE_MASK)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -88,7 +91,7 @@ def test_paragraph_wrapped_cells_are_read_as_a_full_row(
             "Price column header 24,235.31",
             "Change column header -92.11",
         ],
-        [BrailleLine(1, _DAX_ROW, _DAX_ROW, "\x00" * len(_DAX_ROW))],
+        [BrailleLine(1, _DAX_ROW, _DAX_ROW, _DAX_MASK)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -114,13 +117,13 @@ def test_upward_navigation_keeps_paragraph_wrapped_rows_intact(
             "Price column header 24,235.31",
             "Change column header -92.11",
         ],
-        [BrailleLine(1, _DAX_ROW, _DAX_ROW, "\x00" * len(_DAX_ROW))],
+        [BrailleLine(1, _DAX_ROW, _DAX_ROW, _DAX_MASK)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
         ["FTSE 100", "Price column header 10,908.41", "Change column header +37.39"],
-        [BrailleLine(1, _FTSE_ROW, _FTSE_ROW, "\x00" * len(_FTSE_ROW))],
+        [BrailleLine(1, _FTSE_ROW, _FTSE_ROW, _FTSE_MASK)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
@@ -183,7 +186,7 @@ def test_clipped_header_labels_join_the_visible_ones(
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
         ["Trending up arrow", "Nikkei", "42,062.98", "+112.50", "0.27%"],
-        [BrailleLine(1, _NIKKEI_ROW, _NIKKEI_ROW[:32], "\x00" * len(_NIKKEI_ROW))],
+        [BrailleLine(1, _NIKKEI_ROW, _NIKKEI_ROW[:32], _NIKKEI_MASK)],
     )
 
 

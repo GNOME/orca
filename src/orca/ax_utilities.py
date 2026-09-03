@@ -76,6 +76,7 @@ class _AXUtilitiesCache:
     IS_ENTRY_DESCENDANT = "AXUtilities.is-entry-descendant"
     IS_GRID_DESCENDANT = "AXUtilities.is-grid-descendant"
     IS_LABEL_OR_CAPTION_DESCENDANT = "AXUtilities.is-label-or-caption-descendant"
+    IS_LINK_DESCENDANT = "AXUtilities.is-link-descendant"
     IS_MENU_DESCENDANT = "AXUtilities.is-menu-descendant"
     IS_TOOL_BAR_DESCENDANT = "AXUtilities.is-tool-bar-descendant"
     IS_TOOL_TIP_DESCENDANT = "AXUtilities.is-tool-tip-descendant"
@@ -97,6 +98,7 @@ class _AXUtilitiesCache:
             self.IS_ENTRY_DESCENDANT,
             self.IS_GRID_DESCENDANT,
             self.IS_LABEL_OR_CAPTION_DESCENDANT,
+            self.IS_LINK_DESCENDANT,
             self.IS_MENU_DESCENDANT,
             self.IS_TOOL_BAR_DESCENDANT,
             self.IS_TOOL_TIP_DESCENDANT,
@@ -130,6 +132,7 @@ class _AXUtilitiesCache:
                 self.IS_ENTRY_DESCENDANT,
                 self.IS_GRID_DESCENDANT,
                 self.IS_LABEL_OR_CAPTION_DESCENDANT,
+                self.IS_LINK_DESCENDANT,
                 self.IS_MENU_DESCENDANT,
                 self.IS_TOOL_BAR_DESCENDANT,
                 self.IS_TOOL_TIP_DESCENDANT,
@@ -1014,6 +1017,20 @@ class AXUtilities:
             AXUtilities._CACHE.IS_LABEL_OR_CAPTION_DESCENDANT,
             obj,
             AXUtilitiesRole.is_label_or_caption,
+            inclusive,
+        )
+
+    @staticmethod
+    def is_link_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has a link ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities._CACHE.IS_LINK_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_link,
             inclusive,
         )
 

@@ -1162,6 +1162,16 @@ class Component(Region):
                 msg = "INFO: Processing routing key failed"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    def get_attribute_mask(self) -> str:
+        """Return an attrOr mask that marks cells which are inside a link."""
+
+        if _STATE.link_indicator != INDICATOR_NONE and AXUtilities.is_link_descendant(
+            self.accessible
+        ):
+            return chr(_STATE.link_indicator) * len(self.string)
+
+        return super().get_attribute_mask()
+
 
 class Link(Component):
     """Component representing a hyperlink."""
@@ -1216,6 +1226,9 @@ class _AccessibleTextRegion(Region):
         attr_indicator = _STATE.text_attributes_indicator
         selection_indicator = _STATE.selector_indicator
         link_indicator = _STATE.link_indicator
+
+        if link_indicator != INDICATOR_NONE and AXUtilities.is_link_descendant(self.accessible):
+            region_mask = [link_indicator] * string_length
 
         if self._indicate_links and link_indicator != INDICATOR_NONE:
             links = AXUtilities.get_all_links(self.accessible)

@@ -96,7 +96,7 @@ def test_small_standalone_image_is_filtered_from_content(
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     speech, braille = capture(session)
     assert speech[-1] == "Unlabeled image"
-    assert set(braille[0].mask) == {"\x00"}
+    assert set(braille[0].mask) == {"\xc0"}
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (

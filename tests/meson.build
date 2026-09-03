@@ -136,6 +136,8 @@ orca_integration_tests = [
   'integration_tests/test_web_aria_document.py',
   'integration_tests/test_web_iframes.py',
   'integration_tests/test_web_nested_headings.py',
+  'integration_tests/test_web_nested_link_text.py',
+  'integration_tests/test_web_multi_line_content.py',
   'integration_tests/test_web_nested_blockquotes.py',
   'integration_tests/test_web_grid_navigation.py',
   'integration_tests/test_web_headings.py',

@@ -47,6 +47,7 @@ class SpeechRecord:
     text: str
     language: str = ""
     dialect: str = ""
+    voice_type: str = ""
 
 
 @dataclass
@@ -285,6 +286,7 @@ class OutputReader:
             text=data.get("text", ""),
             language=data.get("language", ""),
             dialect=data.get("dialect", ""),
+            voice_type=data.get("voice_type", ""),
         )
 
     @staticmethod
