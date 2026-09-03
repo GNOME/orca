@@ -552,15 +552,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return result
 
         role = self._get_resolved_role(obj)
-        start = self._get_start_offset(obj)
-        end = self._get_end_offset(obj)
 
-        ancestor_with_usable_role = self._get_ancestor_with_usable_role(obj)
         if not self._should_speak_role(obj):
-            # Only the focused object absorbs an ancestor's role; an ancestor presented as
-            # context must not borrow a role from further up the tree.
-            if ancestor_with_usable_role and not self._is_ancestor():
-                return self._generate_accessible_role(ancestor_with_usable_role)
+            if self._is_ancestor():
+                return []
+            if ancestor := self._get_ancestor_with_usable_role(obj):
+                return self._generate_accessible_role(ancestor)
             return []
 
         result = []
@@ -569,6 +566,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if is_editable and not self._script.utilities.is_content_editable_with_embedded_objects(
             obj,
         ):
+            start = self._get_start_offset(obj)
+            end = self._get_end_offset(obj)
             if self._is_say_all() and start:
                 return []
             if mgr.last_event_was_forward_caret_navigation() and start:
@@ -620,8 +619,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.append(self.get_localized_role_name(obj))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj))
 
-        if ancestor_with_usable_role:
-            result[1:1] = self._generate_accessible_role(ancestor_with_usable_role)
+        if ancestor := self._get_ancestor_with_usable_role(obj):
+            result[1:1] = self._generate_accessible_role(ancestor)
 
         return result
 
