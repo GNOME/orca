@@ -26,7 +26,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-07-20 15:17+0000\n"
-"PO-Revision-Date: 2026-08-06 23:25+0200\n"
+"PO-Revision-Date: 2026-09-03 22:26+0200\n"
 "Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -447,7 +447,7 @@ msgstr "emb"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:40
 msgid "Afrikaans, uncontracted"
-msgstr ""
+msgstr "Afrikaans (Vollschrift)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -456,7 +456,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:46
 msgid "Afrikaans, contracted"
-msgstr ""
+msgstr "Afrikaans (kurzschrift)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -510,7 +510,7 @@ msgstr "Arabisch, Computer"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:82
 msgid "Arabic, uncontracted"
-msgstr ""
+msgstr "Arabisch (Vollschrift)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -518,10 +518,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:88
-#, fuzzy
-#| msgid "Arabic Grade 1"
 msgid "Arabic, contracted"
-msgstr "Arabisch Grad 1"
+msgstr "Arabisch (Kurzschrift)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -586,7 +584,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:130
 msgid "Belarusian"
-msgstr ""
+msgstr "Belarussisch"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -735,7 +733,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:226
 msgid "Welsh, uncontracted"
-msgstr ""
+msgstr "Walisisch (Vollschrift)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -743,10 +741,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:232
-#, fuzzy
-#| msgid "Welsh Grade 1"
 msgid "Welsh, contracted"
-msgstr "Walisisch Grad 1"
+msgstr "Walisisch (Kurzschrift)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -809,7 +805,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:280 src/orca/brltablenames.py:292
 msgid "Danish, contracted, 6-dot, 1993"
-msgstr ""
+msgstr "Dänisch (Kurzschrift) 6-Punkt, 1993"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -818,7 +814,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:286
 msgid "Danish, contracted, 6-dot, 2022"
-msgstr ""
+msgstr "Dänisch (Kurzschrift) 6-Punkt, 2022"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -890,7 +886,7 @@ msgstr "Deutsch, Rechner, 8-Punkt"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:346
 msgid "German, uncontracted, with capitals"
-msgstr ""
+msgstr "Deutsch (Vollschrift) mit Großbuchstaben"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -899,7 +895,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:352
 msgid "German, uncontracted"
-msgstr ""
+msgstr "Deutsch (Vollschrift)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -908,7 +904,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:358
 msgid "German, partially contracted, with capitals"
-msgstr ""
+msgstr "Deutsch (teilweise Kurzschrift) mit Großbuchstaben"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -916,11 +912,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:364
-#, fuzzy
-#| msgctxt "checkbox"
-#| msgid "partially checked"
 msgid "German, partially contracted"
-msgstr "teilweise ausgewählt"
+msgstr "Deutsch (teilweise Kurzschrift)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -929,7 +922,7 @@ msgstr "teilweise ausgewählt"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:370
 msgid "German, contracted, with capitals"
-msgstr ""
+msgstr "Deutsch (Kurzschrift) mit Großbuchstaben"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -937,10 +930,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:376
-#, fuzzy
-#| msgid "German Grade 0"
 msgid "German, contracted"
-msgstr "Deutsche Basisschrift"
+msgstr "Deutsch (Kurzschrift)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1296,7 +1287,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:604
 msgid "Irish, uncontracted"
-msgstr ""
+msgstr "Irisch (Vollschrift)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1304,10 +1295,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:610
-#, fuzzy
-#| msgid "right control"
 msgid "Irish, contracted"
-msgstr "Steuerung rechts"
+msgstr "Irisch (Kurzschrift)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1415,7 +1404,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:682
 msgid "Hebrew, modern"
-msgstr ""
+msgstr "Hebräisch (modern)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1423,8 +1412,6 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:688
-#| msgctxt "color name"
-#| msgid "indigo"
 msgid "Hindi"
 msgstr "Hindi"
 
@@ -1465,10 +1452,8 @@ msgstr "Ungarisch 8-Punkt-Rechner"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:712
-#, fuzzy
-#| msgid "Hungarian Grade 1"
 msgid "Hungarian, uncontracted"
-msgstr "Ungarisch Grad 1"
+msgstr "Ungarisch (Vollschrift)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1476,10 +1461,8 @@ msgstr "Ungarisch Grad 1"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:718
-#, fuzzy
-#| msgid "Hungarian Grade 1"
 msgid "Hungarian, contracted"
-msgstr "Ungarisch Grad 1"
+msgstr "Ungarisch (Kurzschrift)"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
