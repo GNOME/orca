@@ -2300,6 +2300,7 @@ class SpeechPresenter(Extension):
         eliminate_pauses: bool = False,
         index: int | None = None,
         total: int | None = None,
+        next_obj: Atspi.Accessible | None = None,
     ) -> SpeechGeneratorContext:
         """Builds the settings context for speech generators."""
 
@@ -2326,6 +2327,7 @@ class SpeechPresenter(Extension):
         auto_switch = speech_mgr.get_active_voice_set() == gsettings_registry.PRIMARY_VOICE_SET
 
         return SpeechGeneratorContext(
+            next_content_subject=next_obj,
             enabled=speech_mgr.get_speech_is_enabled(),
             verbose=self.use_verbose_speech(),
             focus=mgr.get_locus_of_focus(),
@@ -2394,11 +2396,16 @@ class SpeechPresenter(Extension):
         eliminate_pauses: bool = False,
         index: int | None = None,
         total: int | None = None,
+        next_obj: Atspi.Accessible | None = None,
     ) -> list:
         """Generates speech utterances for contents without speaking them."""
 
         context = self._build_generator_context(
-            prior_obj=prior_obj, eliminate_pauses=eliminate_pauses, index=index, total=total
+            prior_obj=prior_obj,
+            eliminate_pauses=eliminate_pauses,
+            index=index,
+            total=total,
+            next_obj=next_obj,
         )
         return script.get_speech_generator().generate_contents(contents, context)
 

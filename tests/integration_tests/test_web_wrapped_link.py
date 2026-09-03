@@ -56,7 +56,7 @@ def test_line_navigation_across_wrapped_link(web_wrapped_link: NativeAppSession)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert helpers.capture(session) == (
-        ["Rowland", " plus others here."],
+        ["Rowland", "link", " plus others here."],
         [
             helpers.BrailleLine(
                 1,

@@ -289,35 +289,41 @@ class SayAllPresenter(Extension):
             return True, "is punctuation only"
         return False, ""
 
-    def _advance_to_next(
+    def _get_next_context(
         self,
         obj: Atspi.Accessible,
-        _offset: int,
         contents: list,
         restrict_to: Atspi.Accessible | None,
     ) -> tuple[Atspi.Accessible | None, int]:
-        """Advances to the next content position during say-all iteration."""
+        """Returns the content position which follows the current contents."""
 
         assert self._script is not None
-        if contents:
-            last_obj, last_offset = contents[-1][0], contents[-1][2]
-            # last_offset is the start of the next text unit (per AT-SPI2 semantics).
-            # next_context() looks for the position after the provided offset. In the case of
-            # text, we will wind up with the same text unit for last_offset and last_offset - 1.
-            # However, if the character at last_offset is an embedded object, we'll skip over
-            # its contents if we pass last_offset directly. Only decrement in that case so that
-            # next_context() can still cross object boundaries at end of text.
-            if AXUtilities.character_at_offset_is_eoc(last_obj, last_offset):
-                last_offset = max(0, last_offset - 1)
-            next_obj, next_offset = self._script.utilities.next_context(
-                last_obj,
-                last_offset,
-                skip_space=True,
-                restrict_to=restrict_to,
-            )
-        else:
-            next_obj = self._script.utilities.find_next_object(obj, restrict_to)
-            next_offset = 0
+        if not contents:
+            return self._script.utilities.find_next_object(obj, restrict_to), 0
+
+        last_obj, last_offset = contents[-1][0], contents[-1][2]
+        # last_offset is the start of the next text unit (per AT-SPI2 semantics).
+        # next_context() looks for the position after the provided offset. In the case of
+        # text, we will wind up with the same text unit for last_offset and last_offset - 1.
+        # However, if the character at last_offset is an embedded object, we'll skip over
+        # its contents if we pass last_offset directly. Only decrement in that case so that
+        # next_context() can still cross object boundaries at end of text.
+        if AXUtilities.character_at_offset_is_eoc(last_obj, last_offset):
+            last_offset = max(0, last_offset - 1)
+        return self._script.utilities.next_context(
+            last_obj,
+            last_offset,
+            skip_space=True,
+            restrict_to=restrict_to,
+        )
+
+    def _advance_to_next(
+        self,
+        next_obj: Atspi.Accessible | None,
+        next_offset: int,
+        restrict_to: Atspi.Accessible | None,
+    ) -> tuple[Atspi.Accessible | None, int]:
+        """Advances to the next content position during say-all iteration."""
 
         # The web context walkers ignore restrict_to, so stop Say All at the embedded document.
         if (
@@ -388,6 +394,7 @@ class SayAllPresenter(Extension):
     def _generate_speech_contexts(
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
+        next_obj: Atspi.Accessible | None = None,
     ) -> Generator[list[speechserver.SayAllContext | ACSS], None, None]:
         """Yields [SayAllContext, ACSS] pairs for each content item."""
 
@@ -423,6 +430,7 @@ class SayAllPresenter(Extension):
                 prior_obj=self._prior_obj,
                 index=i,
                 total=len(contents),
+                next_obj=contents[i + 1][0] if i + 1 < len(contents) else next_obj,
             )
             elements, voices = self._parse_utterances(utterances)
             if len(elements) != len(voices):
@@ -531,13 +539,15 @@ class SayAllPresenter(Extension):
             filtered = self._script.utilities.filter_contents_for_presentation(contents)
             self._contents.extend(filtered)
 
+            next_obj, next_offset = self._get_next_context(obj, contents, restrict_to)
+
             if self.get_only_speak_displayed_text():
                 if (result := self._build_displayed_text_context(filtered)) is not None:
                     yield list(result)
             else:
-                yield from self._generate_speech_contexts(filtered)
+                yield from self._generate_speech_contexts(filtered, next_obj)
 
-            obj, offset = self._advance_to_next(obj, offset, contents, restrict_to)
+            obj, offset = self._advance_to_next(next_obj, next_offset, restrict_to)
 
         self.stop()
 

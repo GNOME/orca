@@ -62,8 +62,7 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: WebSession)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        # KNOWN ISSUE: "link" should be presented after "localStorage"
-        ["Jump to the ", "localStorage", " glossary entry now."],
+        ["Jump to the ", "localStorage", "link", " glossary entry now."],
         [
             _line(
                 "Jump to the localStorage glossary entry now.",
@@ -74,8 +73,7 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: WebSession)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        # KNOWN ISSUE: "link" should be presented after "bold term"
-        ["Jump to the ", "bold term", " glossary entry now."],
+        ["Jump to the ", "bold term", "link", " glossary entry now."],
         [
             _line(
                 "Jump to the bold term glossary entry now.",
@@ -86,12 +84,11 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: WebSession)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        # KNOWN ISSUE: link should be presented after "revoke"; not before
-        ["Jump to the ", "grant/", "link", "revoke", " glossary entry now."],
+        ["Jump to the ", "grant/", "revoke", "link", " glossary entry now."],
         [
             _line(
-                "Jump to the grant/revoke revoke glossary entry now.",
-                _PLAIN * 12 + _LINK * 12 + _PLAIN + _LINK * 6 + _PLAIN * 20,
+                "Jump to the grant/revoke glossary entry now.",
+                _PLAIN * 12 + _LINK * 12 + _PLAIN * 20,
             )
         ],
     )
@@ -104,20 +101,18 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: WebSession)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        # KNOWN ISSUE: link should be presented after "two"; not before
-        ["Jump to the ", "one", " and ", "link", "two", " glossary entry now."],
+        ["Jump to the ", "one", " and ", "two", "link", " glossary entry now."],
         [
             _line(
-                "Jump to the one one and two two glossary entry now.",
-                _PLAIN * 12 + _LINK * 3 + _PLAIN + _LINK * 11 + _PLAIN + _LINK * 3 + _PLAIN * 20,
+                "Jump to the one and two glossary entry now.",
+                _PLAIN * 12 + _LINK * 11 + _PLAIN * 20,
             )
         ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        # KNOWN ISSUE: "link" should be presented after "wrapped"
-        ["Jump to the ", "wrapped", " glossary entry now."],
+        ["Jump to the ", "wrapped", "link", " glossary entry now."],
         [
             _line(
                 "Jump to the wrapped glossary entry now.",
@@ -137,6 +132,63 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: WebSession)
         ],
     )
 
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Jump to the ", "read", "write", "link", " glossary entry now."],
+        [
+            _line(
+                "Jump to the read write glossary entry now.",
+                _PLAIN * 12 + _LINK * 4 + _PLAIN + _LINK * 5 + _PLAIN * 20,
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Jump to the ", "get", "set", "link", " glossary entry now."],
+        [
+            _line(
+                "Jump to the get set glossary entry now.",
+                _PLAIN * 12 + _LINK * 3 + _PLAIN + _LINK * 3 + _PLAIN * 20,
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Jump to the ", "redgreenblue", "link", " glossary entry now."],
+        [
+            _line(
+                "Jump to the redgreenblue glossary entry now.",
+                _PLAIN * 12 + _LINK * 12 + _PLAIN * 20,
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["open", "close", "heading 1"],
+        [_line("open close", _PLAIN * 10)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Jump to the ", "north", "link"],
+        [_line("Jump to the north ", _PLAIN * 12 + _LINK * 5 + _PLAIN)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["south", "link"],
+        [_line("south ", _LINK * 5 + _PLAIN)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["east", "link", " glossary entry now."],
+        [_line("east glossary entry now.", _LINK * 4 + _PLAIN * 20)],
+    )
+
 
 @pytest.mark.web
 def test_tab_navigation_over_nested_link_text(web_nested_link_text: WebSession) -> None:
@@ -154,6 +206,10 @@ def test_tab_navigation_over_nested_link_text(web_nested_link_text: WebSession) 
         "one and two",
         "wrapped",
         "chart",
+        "readwrite",
+        "getset",
+        "redgreenblue",
+        "north south east",
     ):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
         assert capture(session) == (
@@ -187,21 +243,18 @@ def test_say_all_over_nested_link_text(web_nested_link_text: WebSession) -> None
         "link",
         " glossary entry now.",
         "Jump to the ",
-        # KNOWN ISSUE: link should be presented after "revoke"; not before
         "grant/",
-        "link",
         "revoke",
+        "link",
         " glossary entry now.",
         "Jump to the ",
         "sessionStorage",
         "link",
         "Jump to the ",
-        # KNOWN ISSUE: link should be presented once, after "two"; not twice, before each run
         "one",
-        "link",
         " and ",
-        "link",
         "two",
+        "link",
         " glossary entry now.",
         "Jump to the ",
         "wrapped",
@@ -210,6 +263,29 @@ def test_say_all_over_nested_link_text(web_nested_link_text: WebSession) -> None
         "Jump to the ",
         "chart",
         "image",
+        "link",
+        " glossary entry now.",
+        "Jump to the ",
+        "read",
+        "write",
+        "link",
+        " glossary entry now.",
+        "Jump to the ",
+        "get",
+        "set",
+        "link",
+        " glossary entry now.",
+        "Jump to the ",
+        "redgreenblue",
+        "link",
+        " glossary entry now.",
+        "open",
+        "close",
+        "heading 1",
+        "Jump to the ",
+        "north",
+        "south",
+        "east",
         "link",
         " glossary entry now.",
         "After.",

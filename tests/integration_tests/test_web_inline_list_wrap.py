@@ -53,10 +53,12 @@ _DOWN_LINES = [
             "The One Where ",
             "link",
         ],
-        "Recently featured: The Path to Rome · Morris Park Aerodrome · "
-        '"The One Where Michael Leaves',
+        (
+            "Recently featured: The Path to Rome · Morris Park Aerodrome · "
+            '"The One Where Michael Leaves'
+        ),
     ),
-    (["Michael Leaves", '"'], 'The One Where Michael Leaves "'),
+    (["Michael Leaves", "link", '"'], 'The One Where Michael Leaves "'),
     (["leaving list.", "Line below the box."], "Line below the box."),
 ]
 

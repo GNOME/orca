@@ -77,6 +77,7 @@ def test_paragraph_wrapped_cells_are_read_as_a_full_row(
         [
             "Name column header",
             "FTSE 100",
+            "link",
             "Price column header 10,908.41",
             "Change column header +37.39",
         ],
@@ -88,6 +89,7 @@ def test_paragraph_wrapped_cells_are_read_as_a_full_row(
         [
             "Name column header",
             "DAX",
+            "link",
             "Price column header 24,235.31",
             "Change column header -92.11",
         ],
@@ -114,6 +116,7 @@ def test_upward_navigation_keeps_paragraph_wrapped_rows_intact(
             "table with 3 rows 3 columns",
             "Name column header",
             "DAX",
+            "link",
             "Price column header 24,235.31",
             "Change column header -92.11",
         ],
@@ -122,7 +125,7 @@ def test_upward_navigation_keeps_paragraph_wrapped_rows_intact(
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        ["FTSE 100", "Price column header 10,908.41", "Change column header +37.39"],
+        ["FTSE 100", "link", "Price column header 10,908.41", "Change column header +37.39"],
         [BrailleLine(1, _FTSE_ROW, _FTSE_ROW, _FTSE_MASK)],
     )
 
@@ -185,7 +188,7 @@ def test_clipped_header_labels_join_the_visible_ones(
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        ["Trending up arrow", "Nikkei", "42,062.98", "+112.50", "0.27%"],
+        ["Trending up arrow", "Nikkei", "link", "42,062.98", "+112.50", "0.27%"],
         [BrailleLine(1, _NIKKEI_ROW, _NIKKEI_ROW[:32], _NIKKEI_MASK)],
     )
 

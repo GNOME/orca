@@ -49,6 +49,7 @@ def test_say_all_omits_redundant_content(web_redundant_content: NativeAppSession
         "Visit ",
         "house",
         "image",
+        "link",
         " now.",
         "Status: ",
         "entry",

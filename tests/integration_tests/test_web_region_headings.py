@@ -132,7 +132,6 @@ def test_say_all_heading_labelled_regions(web_region_headings: NativeAppSession)
         "Aftermath text.",
         "leaving region.",
         "Before ",
-        "heading 2",
         "middle",
         "link",
         " after",

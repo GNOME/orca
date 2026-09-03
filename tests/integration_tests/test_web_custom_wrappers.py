@@ -45,7 +45,7 @@ def test_line_assembly_custom_element_wrappers(web_custom_wrappers: NativeAppSes
     # braille mask marks Ahrix as the link.
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        ["Ahrix", "Verified", "image"],
+        ["Ahrix", "link", "Verified", "image"],
         [
             BrailleLine(
                 cursor_cell=1,

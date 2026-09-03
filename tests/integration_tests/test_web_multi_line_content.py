@@ -53,15 +53,13 @@ def test_line_navigation_through_a_multi_line_heading(
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        # KNOWN ISSUE: each line of the heading should be presented as a heading
-        ["bar\n"],
+        ["bar\n", "heading 1"],
         [BrailleLine(1, "bar h1", "bar h1", _PLAIN * 6)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        # KNOWN ISSUE: each line of the heading should be presented as a heading
-        ["baz"],
+        ["baz", "heading 1"],
         [BrailleLine(1, "baz h1", "baz h1", _PLAIN * 6)],
     )
 
@@ -86,15 +84,13 @@ def test_line_navigation_through_a_multi_line_link(
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        # KNOWN ISSUE: each line of the link should be presented as a link
-        ["two\n"],
+        ["two\n", "link"],
         [BrailleLine(1, "one two three", "one two three", _LINK * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        # KNOWN ISSUE: each line of the link should be presented as a link
-        ["three"],
+        ["three", "link"],
         [BrailleLine(1, "one two three", "one two three", _LINK * 13)],
     )
 
@@ -148,15 +144,13 @@ def test_upward_line_navigation_through_a_multi_line_link(
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        # KNOWN ISSUE: each line of the link should be presented as a link
-        ["two\n"],
+        ["two\n", "link"],
         [BrailleLine(1, "one two three", "one two three", _LINK * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        # KNOWN ISSUE: each line of the link should be presented as a link
-        ["one\n"],
+        ["one\n", "link"],
         [BrailleLine(1, "one two three", "one two three", _LINK * 13)],
     )
 
@@ -181,15 +175,13 @@ def test_upward_line_navigation_through_a_multi_line_heading(
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        # KNOWN ISSUE: each line of the heading should be presented as a heading
-        ["bar\n"],
+        ["bar\n", "heading 1"],
         [BrailleLine(1, "bar h1", "bar h1", _PLAIN * 6)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        # KNOWN ISSUE: each line of the heading should be presented as a heading
-        ["foo\n"],
+        ["foo\n", "heading 1"],
         [BrailleLine(1, "foo h1", "foo h1", _PLAIN * 6)],
     )
 
@@ -206,25 +198,22 @@ def test_line_navigation_through_a_multi_line_link_in_a_heading(
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         capture(session)
 
-    _heading = "alpha beta gamma h1"
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
         ["alpha\n", "link heading 1"],
-        [BrailleLine(1, _heading, _heading, _LINK * 16 + _PLAIN * 3)],
+        [BrailleLine(1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        # KNOWN ISSUE: each line should be presented as a link and a heading
-        ["beta\n"],
-        [BrailleLine(1, _heading, _heading, _LINK * 16 + _PLAIN * 3)],
+        ["beta\n", "link heading 1"],
+        [BrailleLine(1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        # KNOWN ISSUE: each line should be presented as a link and a heading
-        ["gamma"],
-        [BrailleLine(1, _heading, _heading, _LINK * 16 + _PLAIN * 3)],
+        ["gamma", "link heading 1"],
+        [BrailleLine(1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3)],
     )
 
 
@@ -248,15 +237,13 @@ def test_line_navigation_through_a_multi_line_heading_in_a_link(
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        # KNOWN ISSUE: each line should be presented as a heading and a link
-        ["epsilon\n"],
+        ["epsilon\n", "heading 1 link"],
         [BrailleLine(1, "epsilon h1", "epsilon h1", _LINK * 7 + _PLAIN * 3)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        # KNOWN ISSUE: each line should be presented as a heading and a link
-        ["zeta"],
+        ["zeta", "heading 1 link"],
         [BrailleLine(1, "zeta h1", "zeta h1", _LINK * 4 + _PLAIN * 3)],
     )
 
@@ -273,25 +260,22 @@ def test_upward_line_navigation_through_a_multi_line_link_in_a_heading(
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         capture(session)
 
-    _heading = "alpha beta gamma h1"
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
         ["gamma", "link heading 1"],
-        [BrailleLine(1, _heading, _heading, _LINK * 16 + _PLAIN * 3)],
+        [BrailleLine(1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        # KNOWN ISSUE: each line should be presented as a link and a heading
-        ["beta\n"],
-        [BrailleLine(1, _heading, _heading, _LINK * 16 + _PLAIN * 3)],
+        ["beta\n", "link heading 1"],
+        [BrailleLine(1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        # KNOWN ISSUE: each line should be presented as a link and a heading
-        ["alpha\n"],
-        [BrailleLine(1, _heading, _heading, _LINK * 16 + _PLAIN * 3)],
+        ["alpha\n", "link heading 1"],
+        [BrailleLine(1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3)],
     )
 
 
@@ -312,14 +296,12 @@ def test_upward_line_navigation_through_a_multi_line_heading_in_a_link(
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        # KNOWN ISSUE: each line should be presented as a heading and a link
-        ["epsilon\n"],
+        ["epsilon\n", "heading 1 link"],
         [BrailleLine(1, "epsilon h1", "epsilon h1", _LINK * 7 + _PLAIN * 3)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        # KNOWN ISSUE: each line should be presented as a heading and a link
-        ["delta\n"],
+        ["delta\n", "heading 1 link"],
         [BrailleLine(1, "delta h1", "delta h1", _LINK * 5 + _PLAIN * 3)],
     )

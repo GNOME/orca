@@ -820,7 +820,7 @@ class TestSayAllPresenter:
             pytest.param(0, True, 0, id="embedded-object-at-zero-offset"),
         ],
     )
-    def test_advance_to_next_skips_space_and_preserves_offset_handling(
+    def test_get_next_context_skips_space_and_preserves_offset_handling(
         self,
         test_context: OrcaTestContext,
         end_offset: int,
@@ -845,7 +845,7 @@ class TestSayAllPresenter:
         )
 
         contents = [(mock_obj, 0, end_offset, "Test sentence.")]
-        presenter._advance_to_next(mock_obj, 0, contents, None)
+        presenter._get_next_context(mock_obj, contents, None)
 
         mock_script.utilities.next_context.assert_called_once_with(
             mock_obj,

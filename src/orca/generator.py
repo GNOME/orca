@@ -752,7 +752,7 @@ class Generator:
         parent = AXObject.get_parent(obj)
         if AXUtilities.is_link(obj, self._get_resolved_role()):
             link = obj
-        elif AXUtilities.is_link(parent):
+        elif AXUtilities.is_link(parent) and not self._is_ancestor():
             link = parent
         if link:
             basename = AXUtilities.get_link_basename(link, remove_extension=True)

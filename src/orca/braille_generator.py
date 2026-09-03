@@ -1153,15 +1153,15 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the link role."""
 
         result = self._generate_default_prefix(obj)
-        result += [
-            braille.Link(
-                obj,
-                self._as_string(
-                    self._generate_accessible_label_and_name(obj)
-                    or self._generate_text_content(obj),
-                ),
-            ),
-        ]
+        string = ""
+        start = self._get_start_offset(obj, 0) or 0
+        if "\ufffc" in AXText.get_substring(obj, start, AXText.get_character_count(obj)):
+            string = self._get_content_string(obj) or ""
+        if not string:
+            string = self._as_string(
+                self._generate_accessible_label_and_name(obj) or self._generate_text_content(obj),
+            )
+        result += [braille.Link(obj, string)]
         rolename = self._generate_accessible_role(obj)
         if rolename:
             result += [

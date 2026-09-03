@@ -112,7 +112,7 @@ def test_line_navigation_omits_useless_images(web_useless_images: NativeAppSessi
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(web_useless_images) == (
         ["Read more ", "link"],
-        [BrailleLine(1, "Read more", "Read more", "\xc0" * 9)],
+        [BrailleLine(1, "Read more ", "Read more ", "\xc0" * 10)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)

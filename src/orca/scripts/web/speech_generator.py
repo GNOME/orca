@@ -541,28 +541,31 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.in_document_content(obj):
             return super()._generate_accessible_role(obj)
 
-        # Do this check before the roledescription check, e.g. navigation within VSCode's editor.
-        if obj == self._get_prior_obj() and not self._is_where_am_i():
-            return []
+        role_subject = next_obj = None
+        if self._context is not None:
+            role_subject = self._context.role_subject
+            next_obj = self._context.next_content_subject
 
-        roledescription = AXObject.get_role_description(obj)
-        if roledescription:
+        if roledescription := AXObject.get_role_description(obj):
+            if obj == self._get_prior_obj() == role_subject and not self._is_where_am_i():
+                return []
+
             result: list[Any] = [roledescription]
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj))
             return result
 
-        role = self._get_resolved_role(obj)
-
         if not self._should_speak_role(obj):
             if self._is_ancestor():
                 return []
-            if ancestor := self._get_ancestor_with_usable_role(obj):
-                return self._generate_accessible_role(ancestor)
-            return []
+            ancestor = self._get_ancestor_with_usable_role(obj)
+            if ancestor in (None, next_obj):
+                return []
+            return self._generate_accessible_role(ancestor)
 
         result = []
         mgr = input_event_manager.get_manager()
         is_editable = AXUtilities.is_editable(obj)
+        role = self._get_resolved_role(obj)
         if is_editable and not self._script.utilities.is_content_editable_with_embedded_objects(
             obj,
         ):
@@ -759,6 +762,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result: list[Any] = []
         contents = self._script.utilities.filter_contents_for_presentation(contents, True)
+        contents = [content for content in contents if not content[3] or content[3].strip("\n")]
         tokens = ["WEB: Generating speech contents (length:", len(contents), ")"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -774,11 +778,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             obj, start, end, string = content
             tokens = ["ITEM", i, ":", obj, "start:", start, ", end:", end, "'", string, "'"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-            # A content item can be just the line's trailing newline; skip it rather
-            # than present it as "newline" or "blank".
-            if string and not string.strip("\n"):
-                continue
 
             if announce_attrs and i > 0:
                 curr_attrs, run_start, run_end = AXText.get_text_attributes_at_offset(obj, start)
@@ -814,6 +813,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 content_item=ContentItem(start_offset=start, end_offset=end, string=string),
                 content_position=position,
                 content_subject=subject,
+                next_content_subject=(
+                    contents[i + 1][0]
+                    if i + 1 < len(contents)
+                    else original_context.next_content_subject
+                ),
             )
             utterance = self.generate_speech(subject, self._context)
             if isinstance(utterance, list):

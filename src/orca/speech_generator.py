@@ -73,6 +73,7 @@ if TYPE_CHECKING:
 class SpeechGeneratorContext(GeneratorContext):
     """Settings context for speech generators."""
 
+    next_content_subject: Atspi.Accessible | None
     in_preferences_window: bool
     auto_language_switching_content: bool
     auto_language_switching_ui: bool
@@ -560,13 +561,23 @@ class SpeechGenerator(generator.Generator):
         role = self._get_resolved_role(obj)
         index = self._get_content_position(obj).index
         total = self._get_content_position(obj).total
+        content = AXObject.get_name(obj) or AXText.get_all_text(obj)
+        next_obj = self._context.next_content_subject if self._context is not None else None
 
         def use_ancestor_role(x):
-            if not (AXUtilities.is_heading(x) or AXUtilities.is_link(x)):
+            x_role = AXObject.get_role(x)
+            if x_role == role:
                 return False
-            if AXObject.get_role(x) == role:
+            if not (AXUtilities.is_heading(x, x_role) or AXUtilities.is_link(x, x_role)):
                 return False
-            return index == total - 1 or AXObject.get_name(x) == AXObject.get_name(obj)
+            if next_obj is None or not AXUtilities.is_ancestor(next_obj, x, True):
+                return True
+            if index == total - 1:
+                return True
+            x_content = AXObject.get_name(x) or AXText.get_all_text(x)
+            if content == x_content:
+                return True
+            return content.strip() and x_content.endswith(content)
 
         return AXUtilities.find_ancestor(obj, use_ancestor_role)
 
@@ -640,7 +651,20 @@ class SpeechGenerator(generator.Generator):
         if AXUtilities.is_panel(obj, role) and (AXUtilities.is_selected(obj) or not entered_group):
             return False
 
-        return obj != self._get_prior_obj() or self._is_where_am_i()
+        if self._is_where_am_i():
+            return True
+
+        role_subject = (self._context.role_subject if self._context is not None else None) or obj
+        if obj == self._get_prior_obj() == role_subject:
+            if not (AXUtilities.is_heading(obj, role) or AXUtilities.is_link(obj, role)):
+                return False
+            return input_event_manager.get_manager().last_event_was_line_navigation()
+
+        next_obj = self._context.next_content_subject if self._context is not None else None
+        if next_obj is None or self._is_ancestor():
+            return True
+
+        return not AXUtilities.is_ancestor(next_obj, obj)
 
     @log_generator_output
     def _generate_accessible_role(self, obj: Atspi.Accessible) -> list[Any]:
