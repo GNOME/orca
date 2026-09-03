@@ -35,6 +35,7 @@ from typing import TYPE_CHECKING, Any
 
 from . import (
     ax_event_synthesizer,
+    caret_navigator,
     dbus_service,
     debug,
     focus_manager,
@@ -633,15 +634,16 @@ class SayAllPresenter(Extension):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             manager = input_event_manager.get_manager()
             if manager.last_event_was_keyboard():
-                if manager.last_event_was_caret_navigation():
-                    if manager.last_event_was_down() and self._fast_forward(context):
-                        return
-                    if manager.last_event_was_up() and self._rewind(context):
-                        return
+                if manager.last_event_was_down() and self._fast_forward(context):
+                    return
+                if manager.last_event_was_up() and self._rewind(context):
+                    return
+                caret_nav = caret_navigator.get_navigator()
+                if caret_nav.last_input_event_was_navigation_command():
                     self.stop()
                     return
-                navigator = structural_navigator.get_navigator()
-                if navigator.last_input_event_was_navigation_command():
+                structural_nav = structural_navigator.get_navigator()
+                if structural_nav.last_input_event_was_navigation_command():
                     if self.get_structural_navigation_enabled():
                         return
                     self.stop()

@@ -52,6 +52,7 @@ class TestSayAllPresenter:
 
         additional_modules = [
             "orca.ax_event_synthesizer",
+            "orca.caret_navigator",
             "orca.structural_navigator",
             "orca.input_event",
             "orca.keybindings",
@@ -706,15 +707,15 @@ class TestSayAllPresenter:
             "say-all",
         )
 
-    def test_progress_callback_uses_focus_tracking_mode_when_interrupted(
+    def test_progress_callback_native_navigation_uses_focus_tracking_mode(
         self,
         test_context: OrcaTestContext,
     ) -> None:
-        """Test that _progress_callback uses FOCUS_TRACKING mode when interrupted by keyboard."""
+        """Test native navigation uses the normal interrupted-speech cleanup path."""
 
         self._setup_dependencies(test_context)
+        from orca import caret_navigator, input_event_manager, speechserver, structural_navigator
         from orca import focus_manager as fm
-        from orca import input_event_manager, speechserver, structural_navigator
         from orca.ax_text import AXText
         from orca.say_all_presenter import SayAllPresenter
 
@@ -739,8 +740,14 @@ class TestSayAllPresenter:
         iem_instance.last_event_was_keyboard.return_value = True
         iem_instance.last_event_was_down.return_value = False
         iem_instance.last_event_was_up.return_value = False
-        iem_instance.last_event_was_caret_navigation.return_value = False
+        iem_instance.last_event_was_caret_navigation.return_value = True
         test_context.patch_object(input_event_manager, "get_manager", return_value=iem_instance)
+
+        caret_navigator_instance = test_context.Mock()
+        caret_navigator_instance.last_input_event_was_navigation_command.return_value = False
+        test_context.patch_object(
+            caret_navigator, "get_navigator", return_value=caret_navigator_instance
+        )
 
         navigator_instance = test_context.Mock()
         navigator_instance.last_input_event_was_navigation_command.return_value = False
@@ -774,8 +781,8 @@ class TestSayAllPresenter:
         """Test that a navigation command interrupting Say All ends it without re-presenting."""
 
         self._setup_dependencies(test_context)
+        from orca import caret_navigator, input_event_manager, speechserver, structural_navigator
         from orca import focus_manager as fm
-        from orca import input_event_manager, speechserver, structural_navigator
         from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
@@ -793,8 +800,15 @@ class TestSayAllPresenter:
         iem_instance.last_event_was_keyboard.return_value = True
         iem_instance.last_event_was_down.return_value = False
         iem_instance.last_event_was_up.return_value = False
-        iem_instance.last_event_was_caret_navigation.return_value = caret_navigation
         test_context.patch_object(input_event_manager, "get_manager", return_value=iem_instance)
+
+        caret_navigator_instance = test_context.Mock()
+        caret_navigator_instance.last_input_event_was_navigation_command.return_value = (
+            caret_navigation
+        )
+        test_context.patch_object(
+            caret_navigator, "get_navigator", return_value=caret_navigator_instance
+        )
 
         navigator_instance = test_context.Mock()
         navigator_instance.last_input_event_was_navigation_command.return_value = (
