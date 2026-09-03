@@ -62,6 +62,7 @@ class TestSpeechGeneratorVoice:
         ax_utilities_mock = essential_modules["orca.ax_utilities"]
         ax_utilities_mock.AXUtilities = test_context.Mock()
         ax_utilities_mock.AXUtilities.is_link = test_context.Mock(return_value=False)
+        ax_utilities_mock.AXUtilities.is_link_descendant = test_context.Mock(return_value=False)
 
         return essential_modules
 
