@@ -544,6 +544,9 @@ class TestTextSelectionPresenter:
             no_selection,
             no_selection,
         )
+        dependencies[
+            "orca.input_event_manager"
+        ].get_manager.return_value.last_event_was_caret_selection.return_value = True
         test_context.patch_object(
             AXUtilities,
             "get_text_selection_elements",
@@ -562,6 +565,39 @@ class TestTextSelectionPresenter:
         assert presenter._handle_document_change(script, event_source, True)
         handle_basic.assert_called_once_with(script, event_source, True)
         present_document.assert_not_called()
+
+    def test_empty_document_selection_result_does_not_duplicate_caret_navigation(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test caret navigation does not repeat a selection removal."""
+
+        dependencies = self._setup_dependencies(test_context)
+        from orca.text_selection_manager import SelectionChangeState
+        from orca.text_selection_presenter import AXUtilities, TextSelectionPresenter
+
+        presenter = TextSelectionPresenter()
+        script = test_context.Mock()
+        event_source = test_context.Mock()
+        no_selection = ((None, -1), (None, -1))
+        selection_manager = dependencies["orca.text_selection_manager"].get_manager.return_value
+        selection_manager.update_selection_state.return_value = (
+            SelectionChangeState.NOT_ORCA,
+            no_selection,
+            no_selection,
+        )
+        dependencies[
+            "orca.input_event_manager"
+        ].get_manager.return_value.last_event_was_caret_selection.return_value = False
+        test_context.patch_object(
+            AXUtilities,
+            "get_text_selection_elements",
+            side_effect=[[], []],
+        )
+        handle_basic = test_context.patch_object(presenter, "_handle_basic_change")
+
+        assert not presenter._handle_document_change(script, event_source, True)
+        handle_basic.assert_not_called()
 
     def test_unpresentable_document_selection_change_is_ignored(
         self,

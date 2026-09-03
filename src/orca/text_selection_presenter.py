@@ -509,6 +509,8 @@ class TextSelectionPresenter:
         old_elements = AXUtilities.get_text_selection_elements(old_start_obj, old_end_obj)
         new_elements = AXUtilities.get_text_selection_elements(start_obj, end_obj)
         if not old_elements and not new_elements:
+            if not input_event_manager.get_manager().last_event_was_caret_selection():
+                return False
             msg = "TEXT SELECTION PRESENTER: Falling back to event source selection change."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return self._handle_basic_change(script, obj, speak_message)
