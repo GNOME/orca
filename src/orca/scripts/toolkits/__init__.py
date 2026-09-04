@@ -1,3 +1,3 @@
 """Orca's application scripts."""
 
-__all__ = ["Chromium", "Gecko", "Qt", "WebKitGTK", "gtk"]
+__all__ = ["Chromium", "Gecko", "Qt", "Servo", "WebKitGTK", "gtk"]

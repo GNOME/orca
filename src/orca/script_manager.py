@@ -109,6 +109,7 @@ class ScriptManager:
             "metacity": "switcher",
             "budgie-daemon": "switcher",
             "xfce4-notifyd": "notification-daemon",
+            "servoshell": "Servo",
         }
         alt_names = list(app_names.keys())
         if name.endswith((".py", ".bin")):
