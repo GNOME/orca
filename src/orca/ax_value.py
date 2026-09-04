@@ -106,8 +106,8 @@ class AXValue:
             return None
 
         value = AXValue.get_current_value(obj)
-        result = int((value / (maximum - minimum)) * 100)
-        tokens = ["AXValue: Current value of", obj, "as percent is is", result]
+        result = int(((value - minimum) / (maximum - minimum)) * 100)
+        tokens = ["AXValue: Current value of", obj, "as percent is", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Multithumb Slider ready</title>
+<style>
+.rail { position: relative; width: 20em; height: 1em; background: #eee; }
+.thumb { position: absolute; top: 0; width: 1em; height: 1em; background: #034575; }
+.vertical-rail { position: relative; width: 1em; height: 8em; background: #eee; }
+.vertical-thumb { position: absolute; left: 0; width: 1em; height: 1em; background: #034575; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const minThumb = document.getElementById("min-price");
+  const maxThumb = document.getElementById("max-price");
+  const vertical = document.getElementById("temperature");
+
+  function moveHorizontal(thumb, delta) {
+    const min = Number(thumb.getAttribute("aria-valuemin"));
+    const max = Number(thumb.getAttribute("aria-valuemax"));
+    const value = Math.min(max, Math.max(min, Number(thumb.getAttribute("aria-valuenow")) + delta));
+    thumb.setAttribute("aria-valuenow", String(value));
+    thumb.setAttribute("aria-valuetext", "$" + value);
+    thumb.style.left = value + "%";
+    if (thumb === minThumb) maxThumb.setAttribute("aria-valuemin", String(value));
+    else minThumb.setAttribute("aria-valuemax", String(value));
+  }
+
+  [minThumb, maxThumb].forEach(function (thumb) {
+    thumb.addEventListener("keydown", function (event) {
+      let handled = true;
+      if (event.key === "ArrowRight" || event.key === "ArrowUp") moveHorizontal(thumb, 1);
+      else if (event.key === "ArrowLeft" || event.key === "ArrowDown") moveHorizontal(thumb, -1);
+      else if (event.key === "PageUp") moveHorizontal(thumb, 10);
+      else if (event.key === "PageDown") moveHorizontal(thumb, -10);
+      else handled = false;
+      if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    });
+  });
+
+  vertical.addEventListener("keydown", function (event) {
+    const min = Number(vertical.getAttribute("aria-valuemin"));
+    const max = Number(vertical.getAttribute("aria-valuemax"));
+    let delta = 0;
+    if (event.key === "ArrowUp" || event.key === "ArrowRight") delta = 1;
+    else if (event.key === "ArrowDown" || event.key === "ArrowLeft") delta = -1;
+    else return;
+    const value = Math.min(max, Math.max(min, Number(vertical.getAttribute("aria-valuenow")) + delta));
+    vertical.setAttribute("aria-valuenow", String(value));
+    vertical.setAttribute("aria-valuetext", value + " degrees");
+    vertical.style.bottom = value + "%";
+    event.preventDefault();
+    event.stopPropagation();
+  });
+});
+</script>
+</head>
+<body>
+<h1>Multithumb Slider</h1>
+
+<div id="price-label">Price range</div>
+<div class="rail">
+  <div class="thumb"
+       id="min-price"
+       role="slider"
+       tabindex="0"
+       aria-label="Minimum price"
+       aria-valuemin="0"
+       aria-valuemax="75"
+       aria-valuenow="25"
+       aria-valuetext="$25"
+       style="left: 25%"></div>
+  <div class="thumb"
+       id="max-price"
+       role="slider"
+       tabindex="0"
+       aria-label="Maximum price"
+       aria-valuemin="25"
+       aria-valuemax="100"
+       aria-valuenow="75"
+       aria-valuetext="$75"
+       style="left: 75%"></div>
+</div>
+
+<div id="temperature-label">Temperature</div>
+<div class="vertical-rail">
+  <div class="vertical-thumb"
+       id="temperature"
+       role="slider"
+       tabindex="0"
+       aria-orientation="vertical"
+       aria-labelledby="temperature-label"
+       aria-valuemin="50"
+       aria-valuemax="90"
+       aria-valuenow="68"
+       aria-valuetext="68 degrees"
+       style="bottom: 68%"></div>
+</div>
+</body>
+</html>

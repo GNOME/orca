@@ -289,6 +289,15 @@ class TestAXValue:
                 "max_val": 100.0,
                 "expected_result": 75,
             },
+            {
+                "id": "non_zero_minimum",
+                "supports_value": True,
+                "current_value": 68.0,
+                "is_indeterminate": False,
+                "min_val": 50.0,
+                "max_val": 90.0,
+                "expected_result": 45,
+            },
         ],
         ids=lambda case: case["id"],
     )
