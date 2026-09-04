@@ -269,6 +269,41 @@ class TestSayAllPresenter:
         pres_manager.interrupt_presentation.assert_called_once()
         pres_manager.present_message.assert_called_once_with("Location not found")
 
+    def test_say_all_can_preserve_existing_presentation(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test SayAllPresenter.say_all can start without interrupting queued presentation."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.say_all_presenter import SayAllPresenter
+
+        presenter = SayAllPresenter()
+        mock_script = test_context.Mock()
+        focus_obj = test_context.Mock(spec=Atspi.Accessible)
+
+        focus_manager_mock = essential_modules["orca.focus_manager"]
+        manager_instance = test_context.Mock()
+        focus_manager_mock.get_manager.return_value = manager_instance
+        manager_instance.get_locus_of_focus.return_value = focus_obj
+
+        essential_modules["orca.AXObject"].is_dead.return_value = False
+
+        from orca import speech_presenter
+
+        speech_pres = speech_presenter.get_presenter()
+        speech_pres.say_all.reset_mock()
+
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.interrupt_presentation.reset_mock()
+        result = presenter.say_all(mock_script, obj=focus_obj, interrupt=False)
+        assert result is True
+
+        pres_manager.interrupt_presentation.assert_not_called()
+        manager_instance.emit_region_changed.assert_called_once_with(
+            focus_obj, mode=focus_manager_mock.SAY_ALL
+        )
+        speech_pres.say_all.assert_called_once()
+
     @pytest.mark.parametrize(
         "direction,enabled,contents_available,obj_valid,expected_result",
         [

@@ -165,8 +165,9 @@ class SayAllPresenter(Extension):
         notify_user: bool = True,
         obj: Atspi.Accessible | None = None,
         offset: int | None = None,
+        interrupt: bool = True,
     ) -> bool:
-        """Speaks the entire document or text, starting from the current position."""
+        """Speaks the entire document or text, optionally interrupting current presentation."""
 
         self._contexts = []
         self._contents = []
@@ -181,11 +182,14 @@ class SayAllPresenter(Extension):
             event,
             "notify_user:",
             notify_user,
+            "interrupt:",
+            interrupt,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._script = script
-        presentation_manager.get_manager().interrupt_presentation()
+        if interrupt:
+            presentation_manager.get_manager().interrupt_presentation()
         obj = obj or focus_manager.get_manager().get_locus_of_focus()
         if not obj or AXObject.is_dead(obj):
             presentation_manager.get_manager().present_message(messages.LOCATION_NOT_FOUND_FULL)

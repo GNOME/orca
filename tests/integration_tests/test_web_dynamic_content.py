@@ -110,24 +110,30 @@ def test_reload_rereads_page(web_dynamic_content: NativeAppSession) -> None:
 
     session = web_dynamic_content
     reset_web_state(session)
+    summary_before = session.orca.get("DocumentPresenter", "PageSummaryOnLoad")
+    session.orca.set("DocumentPresenter", "PageSummaryOnLoad", False)
+    try:
+        for _ in range(4):
+            keyboard.tap_key(keyboard.KEYSYM_TAB)
+        assert speech(session) == ["Reload", "button"]
 
-    for _ in range(4):
-        keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Reload", "button"]
-
-    keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session, overall=4.0) == [
-        "Dynamic content",
-        "heading 1",
-        "Add",
-        "button",
-        "Remove",
-        "button",
-        "Toggle",
-        "button",
-        "Reload",
-        "button",
-    ]
+        keyboard.tap_key(keyboard.KEYSYM_SPACE)
+        assert speech(session, overall=4.0) == [
+            "Orca Web Dynamic Content ready",
+            "document web",
+            "Dynamic content",
+            "heading 1",
+            "Add",
+            "button",
+            "Remove",
+            "button",
+            "Toggle",
+            "button",
+            "Reload",
+            "button",
+        ]
+    finally:
+        session.orca.set("DocumentPresenter", "PageSummaryOnLoad", summary_before)
 
 
 @pytest.mark.native_app
@@ -137,12 +143,10 @@ def test_reload_presents_page_summary(web_dynamic_content: NativeAppSession) -> 
     session = web_dynamic_content
     reset_web_state(session)
 
-    # The summary is presented in _on_busy_changed right before the on-load Say All.
-    # With Say All enabled (the default) the summary is immediately interrupted by the
-    # page re-read, so disable it here to observe the summary itself.
+    # The summary should remain queued ahead of the automatic page re-read.
     say_all_before = session.orca.get("DocumentPresenter", "SayAllOnLoad")
     summary_before = session.orca.get("DocumentPresenter", "PageSummaryOnLoad")
-    session.orca.set("DocumentPresenter", "SayAllOnLoad", False)
+    session.orca.set("DocumentPresenter", "SayAllOnLoad", True)
     session.orca.set("DocumentPresenter", "PageSummaryOnLoad", True)
     try:
         for _ in range(4):
@@ -156,6 +160,14 @@ def test_reload_presents_page_summary(web_dynamic_content: NativeAppSession) -> 
             "Page has 1 heading.",
             "Dynamic content",
             "heading 1",
+            "Add",
+            "button",
+            "Remove",
+            "button",
+            "Toggle",
+            "button",
+            "Reload",
+            "button",
         ]
     finally:
         session.orca.set("DocumentPresenter", "SayAllOnLoad", say_all_before)

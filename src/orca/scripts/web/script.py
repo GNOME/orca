@@ -693,6 +693,9 @@ class Script(default.Script):
             tokens = ["WEB: Brief verbosity set. Should present", obj, ":", should_present]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        if event.detail1:
+            presentation_manager.get_manager().interrupt_presentation()
+
         if should_present and AXUtilities.get_uri(event.source).startswith("http"):
             if event.detail1:
                 presentation_manager.get_manager().present_message(messages.PAGE_LOADING_START)
@@ -774,7 +777,7 @@ class Script(default.Script):
         elif speech_manager.get_manager().get_speech_is_enabled_and_not_muted():
             msg = "WEB: Doing SayAll"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            say_all_presenter.get_presenter().say_all(self, None)
+            say_all_presenter.get_presenter().say_all(self, None, interrupt=False)
         else:
             msg = "WEB: Not doing SayAll due to speech being disabled or muted"
             debug.print_message(debug.LEVEL_INFO, msg, True)
