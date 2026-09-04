@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Switch ready</title>
+<style>
+[role="switch"] { display: block; padding: 2px 4px; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll('div[role="switch"]').forEach(function (widget) {
+    widget.addEventListener("keydown", function (event) {
+      if (event.key !== " " && event.key !== "Enter") return;
+      widget.setAttribute("aria-checked", widget.getAttribute("aria-checked") === "true" ? "false" : "true");
+      event.preventDefault();
+      event.stopPropagation();
+    });
+  });
+});
+</script>
+</head>
+<body>
+<h1>Switch</h1>
+
+<div role="switch" aria-checked="false" tabindex="0" id="theme">
+  <span class="label">Dark theme</span>
+  <span class="on" aria-hidden="true">On</span>
+  <span class="off" aria-hidden="true">Off</span>
+</div>
+
+<p><label><input type="checkbox" role="switch" id="sound"> Sound effects</label></p>
+
+<p><button type="button" aria-pressed="false">Bold</button></p>
+</body>
+</html>

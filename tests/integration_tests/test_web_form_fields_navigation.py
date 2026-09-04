@@ -299,7 +299,7 @@ def test_browse_mode_line_navigation(web_form_fields: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert helpers.capture(session) == (
-        ["Wi-Fi", "switch not pressed"],
+        ["Wi-Fi", "off switch"],
         [helpers.BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16)],
     )
 
@@ -343,7 +343,7 @@ def test_character_navigation_left_to_right(web_form_fields: NativeAppSession) -
             ["Blue color", "not selected"],
         ]
         + [[c] for c in "Quantity"]
-        + [["3"], ["Submit"], ["Mute", "not pressed"], ["Wi-Fi", "not pressed"]]
+        + [["3"], ["Submit"], ["Mute", "not pressed"], ["Wi-Fi", "off"]]
     )
     result = []
     for _ in expected:
@@ -417,7 +417,7 @@ def test_word_navigation_left_to_right(web_form_fields: NativeAppSession) -> Non
         ["3"],
         ["Submit"],
         ["Mute", "not pressed"],
-        ["Wi-Fi", "not pressed"],
+        ["Wi-Fi", "off"],
     ]
     result = []
     for _ in expected:

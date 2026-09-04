@@ -194,16 +194,16 @@ def test_tab_navigation_and_state_changes(web_form_fields: NativeAppSession) -> 
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert helpers.capture(session) == (
-        ["Wi-Fi", "switch not pressed"],
+        ["Wi-Fi", "off switch"],
         [helpers.BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16)],
     )
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
     assert helpers.capture(session) == (
-        ["pressed"],
+        ["on"],
         [helpers.BrailleLine(1, "&=y Wi-Fi switch", "&=y Wi-Fi switch", "\x00" * 16)],
     )
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
     assert helpers.capture(session) == (
-        ["not pressed"],
+        ["off"],
         [helpers.BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16)],
     )

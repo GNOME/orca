@@ -125,6 +125,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_sliders,
     _web_sortable_table,
     _web_structural_navigation,
+    _web_switch,
     _web_table_block_cells,
     _web_tables,
     _web_text_attributes,

@@ -85,8 +85,8 @@ def test_say_all_over_form_fields(web_form_fields: NativeAppSession) -> None:
         "toggle button",
         "not pressed",
         "Wi-Fi",
+        "off",
         "switch",
-        "not pressed",
     ]
 
 
@@ -190,7 +190,7 @@ def test_structural_navigation_by_form_field(web_form_fields: NativeAppSession) 
 
     keyboard.tap_key(keyboard.KEYSYM_F)
     assert helpers.capture(session) == (
-        ["f", "Wi-Fi", "switch not pressed"],
+        ["f", "Wi-Fi", "off switch"],
         [helpers.BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16)],
     )
 
@@ -205,7 +205,7 @@ def test_structural_navigation_by_form_field(web_form_fields: NativeAppSession) 
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_F)
     assert helpers.capture(session) == (
-        ["F", "Wrapping to bottom.", "Wi-Fi", "switch not pressed"],
+        ["F", "Wrapping to bottom.", "Wi-Fi", "off switch"],
         [
             helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
             helpers.BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16),
@@ -424,7 +424,7 @@ def test_structural_navigation_by_button(web_form_fields: NativeAppSession) -> N
 
     keyboard.tap_key(keyboard.KEYSYM_B)
     assert helpers.capture(session) == (
-        ["b", "Wi-Fi", "switch not pressed"],
+        ["b", "Wi-Fi", "off switch"],
         [helpers.BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16)],
     )
 
@@ -439,7 +439,7 @@ def test_structural_navigation_by_button(web_form_fields: NativeAppSession) -> N
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_B)
     assert helpers.capture(session) == (
-        ["B", "Wrapping to bottom.", "Wi-Fi", "switch not pressed"],
+        ["B", "Wrapping to bottom.", "Wi-Fi", "off switch"],
         [
             helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
             helpers.BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16),

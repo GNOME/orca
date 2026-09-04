@@ -845,6 +845,7 @@ class Generator:
             ),
             (lambda: AXUtilities.is_feed_article(obj, role), "ROLE_ARTICLE_IN_FEED"),
             (lambda: AXUtilities.is_feed(obj, role), "ROLE_FEED"),
+            (lambda: AXUtilities.is_switch(obj, role), Atspi.Role.SWITCH),
             (
                 lambda: (
                     AXUtilities.is_separator(obj, role)

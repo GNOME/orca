@@ -221,6 +221,7 @@ orca_integration_tests = [
   'integration_tests/test_terminal_typing.py',
   'integration_tests/test_web_multithumb_slider.py',
   'integration_tests/test_web_window_splitter.py',
+  'integration_tests/test_web_switch.py',
 ]
 
 integration_wrapper = configure_file(
