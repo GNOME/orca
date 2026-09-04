@@ -46,6 +46,8 @@ def test_caret_navigation_top_to_bottom(web_sliders: NativeAppSession) -> None:
         ["Volume", "horizontal slider", "2", "50 percent."],
         ["Download"],
         ["30 percent."],
+        ["Disk usage", "level bar", "50"],
+        ["Battery charge", "level bar", "80 percent"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert helpers.speech(session) == expected
@@ -63,6 +65,9 @@ def test_caret_navigation_top_to_bottom_layout_off(web_sliders: NativeAppSession
         ["Volume", "horizontal slider", "2", "50 percent."],
         ["Download"],
         ["30 percent."],
+        ["Disk usage"],
+        ["Disk usage", "level bar", "50"],
+        ["Battery charge", "level bar", "80 percent"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert helpers.speech(session) == expected
@@ -77,6 +82,8 @@ def test_caret_navigation_bottom_to_top(web_sliders: NativeAppSession) -> None:
     helpers.move_to_bottom(session)
 
     for expected in (
+        ["Disk usage", "level bar", "50"],
+        ["30 percent."],
         ["Download"],
         ["Volume", "horizontal slider", "2", "50 percent."],
         ["Sliders", "heading 1"],
@@ -94,6 +101,9 @@ def test_caret_navigation_bottom_to_top_layout_off(web_sliders: NativeAppSession
     session.orca.set("CaretNavigator", "LayoutMode", False)
     helpers.move_to_bottom(session)
     for expected in (
+        ["Disk usage", "level bar", "50"],
+        ["Disk usage"],
+        ["30 percent."],
         ["Download"],
         ["Volume", "horizontal slider", "2", "50 percent."],
         ["Volume"],

@@ -48,6 +48,7 @@ def test_field_state_announcements_on_focus(web_field_states: NativeAppSession) 
     assert _tab(session) == ["Name", "entry required", "Focus mode"]
     assert _tab(session) == ["Email", "entry", "invalid entry"]
     assert _tab(session) == ["Password", "password text", "At least eight characters."]
+    assert _tab(session) == ["City", "entry", "Where you live now."]
     assert _tab(session) == ["More options", "toggle button collapsed"]
 
 
@@ -58,7 +59,7 @@ def test_disclosure_expand_and_collapse(web_field_states: NativeAppSession) -> N
     session = web_field_states
     reset_web_state(session)
 
-    for _ in range(4):
+    for _ in range(5):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()

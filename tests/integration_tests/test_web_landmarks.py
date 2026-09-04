@@ -37,7 +37,7 @@ if TYPE_CHECKING:
 # Layout mode groups each landmark's label and empty entry onto one visual line.
 _TOP_TO_BOTTOM = (
     ["leaving banner.", "navigation", "Primary", "Home", "link"],
-    ["leaving navigation.", "navigation", "Secondary", "Help", "link"],
+    ["leaving navigation.", "navigation", "Secondary", "Help", "link", "(Current page)"],
     ["leaving navigation.", "search", "Search", "entry"],
     ["leaving search.", "main content", "Main content", "heading 1"],
     ["Body paragraph."],
@@ -50,7 +50,7 @@ _TOP_TO_BOTTOM = (
 # Layout off presents each object separately, so the entries split from their labels.
 _TOP_TO_BOTTOM_LAYOUT_OFF = (
     ["leaving banner.", "navigation", "Primary", "Home", "link"],
-    ["leaving navigation.", "navigation", "Secondary", "Help", "link"],
+    ["leaving navigation.", "navigation", "Secondary", "Help", "link", "(Current page)"],
     ["leaving navigation.", "search", "Search "],
     ["Search", "entry"],
     ["leaving search.", "main content", "Main content", "heading 1"],
@@ -96,7 +96,7 @@ _BOTTOM_TO_TOP = (
     ["leaving complementary content.", "main content", "Body paragraph."],
     ["Main content", "heading 1"],
     ["leaving main content.", "search", "Search", "entry"],
-    ["leaving search.", "navigation", "Secondary", "Help", "link"],
+    ["leaving search.", "navigation", "Secondary", "Help", "link", "(Current page)"],
     ["leaving navigation.", "navigation", "Primary", "Home", "link"],
     ["leaving navigation.", "banner", "Site banner text."],
 )
@@ -111,7 +111,7 @@ _BOTTOM_TO_TOP_LAYOUT_OFF = (
     ["Main content", "heading 1"],
     ["leaving main content.", "search", "Search", "entry"],
     ["Search "],
-    ["leaving search.", "navigation", "Secondary", "Help", "link"],
+    ["leaving search.", "navigation", "Secondary", "Help", "link", "(Current page)"],
     ["leaving navigation.", "navigation", "Primary", "Home", "link"],
     ["leaving navigation.", "banner", "Site banner text."],
 )
@@ -217,8 +217,8 @@ def test_structural_navigation_by_landmark_forward(web_landmarks: NativeAppSessi
 
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
-        ["m", "leaving navigation.", "navigation", "Secondary", "Help", "link"],
-        [BrailleLine(1, "Help", "Help", "\xc0" * 4)],
+        ["m", "leaving navigation.", "navigation", "Secondary", "Help", "link", "(Current page)"],
+        [BrailleLine(1, "Help (Current page)", "Help (Current page)", "\xc0" * 4 + "\x00" * 15)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
@@ -333,8 +333,8 @@ def test_structural_navigation_by_landmark_backward(web_landmarks: NativeAppSess
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
-        ["M", "leaving search.", "navigation", "Secondary", "Help", "link"],
-        [BrailleLine(1, "Help", "Help", "\xc0" * 4)],
+        ["M", "leaving search.", "navigation", "Secondary", "Help", "link", "(Current page)"],
+        [BrailleLine(1, "Help (Current page)", "Help (Current page)", "\xc0" * 4 + "\x00" * 15)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
@@ -402,6 +402,7 @@ def test_say_all_landmarks(web_landmarks: NativeAppSession) -> None:
         "link",
         "Help",
         "link",
+        "(Current page)",
         "leaving navigation.",
         "main content",
         "Main content",
