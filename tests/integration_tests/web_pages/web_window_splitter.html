@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Window Splitter ready</title>
+<style>
+.window { display: flex; width: 30em; height: 8em; border: 1px solid #aaa; }
+.window.stacked { flex-direction: column; }
+.pane { padding: 4px; }
+.splitter { width: 8px; background: #ccc; cursor: col-resize; }
+.stacked .splitter { width: auto; height: 8px; cursor: row-resize; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll('[role="separator"]').forEach(function (splitter) {
+    const pane = document.getElementById(splitter.getAttribute("aria-controls"));
+    const vertical = splitter.getAttribute("aria-orientation") === "vertical";
+    const decrease = vertical ? "ArrowLeft" : "ArrowUp";
+    const increase = vertical ? "ArrowRight" : "ArrowDown";
+
+    function setValue(value) {
+      const min = Number(splitter.getAttribute("aria-valuemin"));
+      const max = Number(splitter.getAttribute("aria-valuemax"));
+      const clamped = Math.min(max, Math.max(min, value));
+      splitter.setAttribute("aria-valuenow", String(clamped));
+      pane.style[vertical ? "width" : "height"] = clamped + "%";
+    }
+
+    splitter.addEventListener("keydown", function (event) {
+      const value = Number(splitter.getAttribute("aria-valuenow"));
+      let handled = true;
+      switch (event.key) {
+        case decrease:
+          setValue(value - 10);
+          break;
+        case increase:
+          setValue(value + 10);
+          break;
+        case "Home":
+          setValue(Number(splitter.getAttribute("aria-valuemin")));
+          break;
+        case "End":
+          setValue(Number(splitter.getAttribute("aria-valuemax")));
+          break;
+        default:
+          handled = false;
+      }
+      if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    });
+  });
+});
+</script>
+</head>
+<body>
+<h1>Window Splitter</h1>
+
+<div class="window">
+  <div class="pane" id="primary" style="width: 50%">
+    <h2>Notes</h2>
+    <p>The first pane holds the notes.</p>
+  </div>
+  <div class="splitter"
+       id="splitter"
+       role="separator"
+       tabindex="0"
+       aria-label="Notes pane size"
+       aria-orientation="vertical"
+       aria-controls="primary"
+       aria-valuenow="50"
+       aria-valuemin="0"
+       aria-valuemax="100"></div>
+  <div class="pane" id="secondary">
+    <h2>Details</h2>
+    <p>The second pane holds the details.</p>
+  </div>
+</div>
+
+<div class="window stacked">
+  <div class="pane" id="upper" style="height: 40%">
+    <h2>Messages</h2>
+    <p>The upper pane holds the message list.</p>
+  </div>
+  <div class="splitter"
+       id="stacked-splitter"
+       role="separator"
+       tabindex="0"
+       aria-label="Message list size"
+       aria-orientation="horizontal"
+       aria-controls="upper"
+       aria-valuenow="40"
+       aria-valuemin="0"
+       aria-valuemax="100"></div>
+  <div class="pane" id="lower">
+    <h2>Preview</h2>
+    <p>The lower pane holds the preview.</p>
+  </div>
+</div>
+</body>
+</html>

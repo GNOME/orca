@@ -463,6 +463,9 @@ class DocumentPresenter(Extension):
         if AXUtilities.is_button_with_popup(obj, role):
             return True, "it's a button with popup"
 
+        if role == Atspi.Role.SEPARATOR and AXUtilities.is_focusable(obj):
+            return True, "it's a focusable separator"
+
         if role == Atspi.Role.EMBEDDED:
             if script.utilities.has_name_and_action_and_no_useful_children(obj):
                 return False, "has name and action and no useful children"

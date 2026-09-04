@@ -281,6 +281,7 @@ class Generator:
             Atspi.Role.RADIO_BUTTON: self._generate_radio_button,
             Atspi.Role.RADIO_MENU_ITEM: self._generate_radio_menu_item,
             "ROLE_REGION": self._generate_region,
+            "ROLE_SPLITTER": self._generate_split_pane,
             Atspi.Role.ROOT_PANE: self._generate_root_pane,
             Atspi.Role.ROW_HEADER: self._generate_row_header,
             Atspi.Role.SCROLL_BAR: self._generate_scroll_bar,
@@ -816,7 +817,7 @@ class Generator:
         return result
 
     @log_generator_output
-    def _get_functional_role(self, obj):
+    def _get_functional_role(self, obj: Atspi.Accessible) -> Atspi.Role | str:
         role = AXObject.get_role(obj)
         role_checks: list[tuple[Callable[[], bool], Atspi.Role | str]] = [
             (
@@ -844,6 +845,14 @@ class Generator:
             ),
             (lambda: AXUtilities.is_feed_article(obj, role), "ROLE_ARTICLE_IN_FEED"),
             (lambda: AXUtilities.is_feed(obj, role), "ROLE_FEED"),
+            (
+                lambda: (
+                    AXUtilities.is_separator(obj, role)
+                    and AXUtilities.is_focusable(obj)
+                    and AXObject.supports_value(obj)
+                ),
+                "ROLE_SPLITTER",
+            ),
         ]
         for predicate, result in role_checks:
             if predicate():
