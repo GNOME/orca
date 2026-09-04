@@ -2115,8 +2115,6 @@ class Utilities(script_utilities.Utilities):
                 reason = "off-screen label"
             elif self._is_useless_image(obj):
                 reason = "useless image"
-            elif self.is_link_ancestor_of_image_in_contents(obj, contents):
-                reason = "link ancestor of image in contents"
             elif AXUtilities.is_error_for_contents(obj, contents):
                 reason = "error for contents"
             elif self._is_labelling_contents(obj, contents):
@@ -2325,24 +2323,6 @@ class Utilities(script_utilities.Utilities):
 
         self._cache.set_for_object(namespace, obj, rv)
         return rv
-
-    def is_link_ancestor_of_image_in_contents(
-        self,
-        link: Atspi.Accessible,
-        contents: list[tuple[Atspi.Accessible, int, int, str]],
-    ) -> bool:
-        """Returns true if link is an ancestor of an image in contents."""
-
-        if not self.is_link(link):
-            return False
-
-        for obj, _start, _end, _string in contents:
-            if not AXUtilities.is_image(obj):
-                continue
-            if AXUtilities.find_ancestor(obj, lambda x: x == link):
-                return True
-
-        return False
 
     def is_inferred_label_for_contents(
         self,

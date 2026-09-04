@@ -39,14 +39,14 @@ def test_say_all_omits_redundant_content(web_redundant_content: NativeAppSession
 
     session = web_redundant_content
     reset_web_state(session)
-    # Warm the line-contents caches: the first Say All after load can halt in editable content.
+    # Ensure we're really at the top of the page.
     move_to_bottom(session)
     move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-    # KNOWN ISSUE: the wrapping link is dropped, leaving only its image.
     assert speech(session) == [
         "Visit ",
+        "Home ",
         "house",
         "image",
         "link",
