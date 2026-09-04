@@ -103,18 +103,18 @@ ANNOUNCE_TRACKED_CHANGES = C_("Context", "Tracked changes")
 # navigation" used on sub-pages where the navigation type context is already clear.
 AUTOMATIC_FOCUS_MODE = _("Automatic focus mode")
 
-# Translators: This explains what the "Automatic focus mode" setting does. It appears
-# in info boxes on the Caret Navigation and Structural Navigation preferences pages.
-# Please translate "Automatic focus mode" consistently with the AUTOMATIC_FOCUS_MODE
-# string above.
 AUTOMATIC_FOCUS_MODE_INFO = _(
+    # Translators: This explains what the "Automatic focus mode" setting does. It appears
+    # in info boxes on the Caret Navigation and Structural Navigation preferences pages.
+    # Please translate "Automatic focus mode" consistently with the AUTOMATIC_FOCUS_MODE
+    # string above.
     "Automatic focus mode causes Orca to switch to focus mode when you navigate "
     "into a form field or other interactive widget.",
 )
 
-# Translators: This is an informational message on the Native Navigation
-# preferences page explaining what native navigation means.
 NATIVE_NAVIGATION_INFO = _(
+    # Translators: This is an informational message on the Native Navigation
+    # preferences page explaining what native navigation means.
     "Native navigation refers to keyboard commands handled by the application, "
     "such as Tab, Page Up, Page Down, and Enter.",
 )
@@ -127,9 +127,9 @@ NATIVE_NAVIGATION_INFO = _(
 # messages.py.
 AUTO_STICKY_FOCUS_MODE = _("Automatic sticky focus mode for web applications")
 
-# Translators: This explains what the "Automatic sticky focus mode for web
-# applications" setting does.
 AUTO_STICKY_FOCUS_MODE_INFO = _(
+    # Translators: This explains what the "Automatic sticky focus mode for web
+    # applications" setting does.
     "Automatic sticky focus mode causes Orca to detect web applications and "
     "Electron apps and stay in focus mode until toggled off by command.",
 )
@@ -312,12 +312,11 @@ CHAT_SPEAK_ROOM_NAME_LAST = _("Speak room name last")
 # both for presentation and navigation.
 CONTENT_LAYOUT_MODE = _("Layout mode")
 
-# Translators: This is an informational message on the Caret Navigation preferences
-# page explaining what layout mode is. When translating "layout mode", please use
-# terminology consistent with that of `CONTENT_LAYOUT_MODE = _("Layout mode")`
-# above.
-
 LAYOUT_MODE_INFO = _(
+    # Translators: This is an informational message on the Caret Navigation preferences
+    # page explaining what layout mode is. When translating "layout mode", please use
+    # terminology consistent with that of `CONTENT_LAYOUT_MODE = _("Layout mode")`
+    # above.
     "If layout mode is enabled, Orca will present the full line as it "
     "appears on the screen. Otherwise, Orca will treat each object as if "
     "it were on a separate line.",
@@ -337,9 +336,9 @@ DEFAULT_SYNTHESIZER = _("Default Synthesizer")
 # speech synthesizer to say what the user finds most helpful.
 PRONUNCIATION_DICTIONARY = _("Pronunciation Dictionary")
 
-# Translators: This is an informational message on the Pronunciation Dictionary
-# preferences page explaining what the dictionary does.
 PRONUNCIATION_DICTIONARY_INFO = _(
+    # Translators: This is an informational message on the Pronunciation Dictionary
+    # preferences page explaining what the dictionary does.
     "Customize how words are spoken by adding words and replacement text to "
     "the pronunciation dictionary.",
 )
@@ -524,9 +523,9 @@ KB_GROUP_CARET_NAVIGATION = _("Caret navigation")
 # are related to math navigation via MathCAT.
 KB_GROUP_MATH_NAVIGATION = _("Math navigation")
 
-# Translators: This is an informational message on the Caret Navigation
-# preferences page explaining what caret navigation does.
 CARET_NAVIGATION_INFO = _(
+    # Translators: This is an informational message on the Caret Navigation
+    # preferences page explaining what caret navigation does.
     "When enabled, Orca handles the arrow keys, Home, and End to move through "
     "content by character, word, or line.",
 )
@@ -557,10 +556,10 @@ KB_GROUP_LIVE_REGIONS = _("Live regions")
 # are related to sleep mode.
 KB_GROUP_SLEEP_MODE = _("Sleep mode")
 
-# Translators: This is an informational message on the Sleep Mode preferences page
-# explaining what sleep mode does. When translating "Commands", please use
-# terminology consistent with that of `COMMANDS = _("Commands")` above.
 SLEEP_MODE_INFO = _(
+    # Translators: This is an informational message on the Sleep Mode preferences page
+    # explaining what sleep mode does. When translating "Commands", please use
+    # terminology consistent with that of `COMMANDS = _("Commands")` above.
     "Sleep mode causes Orca to behave as if it were not running for a given "
     "application. The default keybinding to toggle sleep mode on or off is "
     "Shift+Alt+Ctrl+Q. This can be changed in Commands. An application must "
@@ -591,9 +590,9 @@ KB_GROUP_SYSTEM_INFORMATION = _("System information")
 # paragraph, form field, etc. in a given direction.
 KB_GROUP_STRUCTURAL_NAVIGATION = _("Structural navigation")
 
-# Translators: This is an informational message on the Structural Navigation
-# preferences page explaining what structural navigation does.
 STRUCTURAL_NAVIGATION_INFO = _(
+    # Translators: This is an informational message on the Structural Navigation
+    # preferences page explaining what structural navigation does.
     "When enabled, alphanumeric keys can be used to quickly jump between "
     "elements. For example, H moves to the next heading, K to the next link. "
     "Add Shift to move backwards.",
@@ -608,13 +607,13 @@ STRUCTURAL_NAVIGATION_WRAP_AROUND = _("Wrap around")
 # navigation to large objects.
 STRUCTURAL_NAVIGATION_LARGE_OBJECT_LENGTH = _("Large object length")
 
-# Translators: This is an informational message on the Structural Navigation
-# preferences page explaining what the "Large object length" setting does.
-# When translating "large object", please use terminology consistent with that of
-# `STRUCTURAL_NAVIGATION_LARGE_OBJECT_LENGTH = _("Large object length")` above.
-# See also cmdnames.py's `LARGE_OBJECT_NEXT = _("Go to next large object")`
-# and `LARGE_OBJECT_PREVIOUS = _("Go to previous large object")`.
 LARGE_OBJECT_INFO = _(
+    # Translators: This is an informational message on the Structural Navigation
+    # preferences page explaining what the "Large object length" setting does.
+    # When translating "large object", please use terminology consistent with that of
+    # `STRUCTURAL_NAVIGATION_LARGE_OBJECT_LENGTH = _("Large object length")` above.
+    # See also cmdnames.py's `LARGE_OBJECT_NEXT = _("Go to next large object")`
+    # and `LARGE_OBJECT_PREVIOUS = _("Go to previous large object")`.
     "Large object length defines the minimum number of characters an element "
     "must have to be included when using the large object navigation shortcuts.",
 )
@@ -780,12 +779,12 @@ CHARACTER_FORMATTING_FOR = _("Character Formatting for: '%s'")
 # be presented. If selected, the attribute will not be presented.
 TEXT_ATTRIBUTES_PRESENTATION_NONE = C_("text attributes", "None")
 
-# Translators: This is the message in a dialog informing the user that he/she
-# attempted to save a new user profile under a name which already exists.
-# A "user profile" is a collection of settings which apply to a given task, such
-# as a "Spanish" profile which would use Spanish text-to-speech and Spanish
-# braille and selected when reading Spanish content.
 PROFILE_CONFLICT_MESSAGE = _(
+    # Translators: This is the message in a dialog informing the user that he/she
+    # attempted to save a new user profile under a name which already exists.
+    # A "user profile" is a collection of settings which apply to a given task, such
+    # as a "Spanish" profile which would use Spanish text-to-speech and Spanish
+    # braille and selected when reading Spanish content.
     "Profile %s already exists.\nContinue updating the existing profile with these new changes?",
 )
 
@@ -830,23 +829,23 @@ PROFILE_NAME_LABEL = _("_Profile Name:")
 # is about to remove a user profile, and action that cannot be undone.
 PROFILE_REMOVE_LABEL = _("Remove user profile")
 
-# Translators: Profiles in Orca make it possible for users to quickly switch
-# amongst a group of pre-defined settings (e.g. an 'English' profile for reading
-# text written in English using an English-language speech synthesizer and
-# braille rules, and a similar 'Spanish' profile for reading Spanish text.
-# The following is a message in a dialog informing the user that he/she
-# is about to remove a user profile, an action that cannot be undone.
 PROFILE_REMOVE_MESSAGE = _(
+    # Translators: Profiles in Orca make it possible for users to quickly switch
+    # amongst a group of pre-defined settings (e.g. an 'English' profile for reading
+    # text written in English using an English-language speech synthesizer and
+    # braille rules, and a similar 'Spanish' profile for reading Spanish text.
+    # The following is a message in a dialog informing the user that he/she
+    # is about to remove a user profile, an action that cannot be undone.
     "You are about to remove profile %s. "
     "All unsaved settings and settings saved in this "
     "profile will be lost. Do you want to continue "
     "and remove this profile and all related settings?",
 )
 
-# Translators: This is a message in a dialog shown when the user tries to create
-# a new profile while there are unsaved changes in the preferences dialog.
-# Creating a new profile copies the saved settings, not the unsaved changes.
 PROFILE_CREATE_UNSAVED_WARNING = _(
+    # Translators: This is a message in a dialog shown when the user tries to create
+    # a new profile while there are unsaved changes in the preferences dialog.
+    # Creating a new profile copies the saved settings, not the unsaved changes.
     "You have unsaved changes. Creating a new profile will copy your "
     "current saved settings, not your unsaved changes. Your unsaved "
     "changes will be lost.\n\nDo you want to continue?",
@@ -1259,11 +1258,11 @@ SPIEL = _("Spiel")
 # when presenting an application's spell check dialog.
 SPELL_CHECK = C_("OptionGroup", "Spell Check")
 
-# Translators: This is a description that appears at the top of the Spell Check
-# preferences page. It explains that these settings only work when the screen
-# reader can identify the components of an application's spell checker (e.g., the
-# misspelled word, suggestions list, etc.).
 SPELL_CHECK_DESCRIPTION = _(
+    # Translators: This is a description that appears at the top of the Spell Check
+    # preferences page. It explains that these settings only work when the screen
+    # reader can identify the components of an application's spell checker (e.g., the
+    # misspelled word, suggestions list, etc.).
     "These settings apply when the screen reader can identify the "
     "elements of the application's spell check dialog.",
 )
@@ -1482,11 +1481,11 @@ DIALOG_HELP = _("Help")
 # are Python code written by end users, not built-in Orca features.
 USER_EXTENSIONS = _("User Extensions")
 
-# Translators: This is an informational message on the User Extensions
-# preferences page. User extensions are Python code files or Python package
-# directories placed in the user's Orca data directory. "Approve" refers to the
-# user explicitly allowing Orca to load and run that code.
 EXTENSIONS_INFO = _(
+    # Translators: This is an informational message on the User Extensions
+    # preferences page. User extensions are Python code files or Python package
+    # directories placed in the user's Orca data directory. "Approve" refers to the
+    # user explicitly allowing Orca to load and run that code.
     "User extensions are Python files or packages in ~/.local/share/orca/extensions. "
     "Only approve extensions that you trust."
 )
@@ -1519,11 +1518,11 @@ EXTENSIONS_DELETE = C_("user extensions", "Delete")
 # a user extension file or package directory from ~/.local/share/orca/extensions.
 EXTENSIONS_DELETE_CONFIRMATION_TITLE = C_("user extensions", "Delete user extension?")
 
-# Translators: This is the message in a confirmation dialog shown before deleting
-# a user extension file or package directory from ~/.local/share/orca/extensions.
-# The string substitution is the display name of the extension.
 EXTENSIONS_DELETE_CONFIRMATION_MESSAGE = C_(
     "user extensions",
+    # Translators: This is the message in a confirmation dialog shown before deleting
+    # a user extension file or package directory from ~/.local/share/orca/extensions.
+    # The string substitution is the display name of the extension.
     "The following extension will be permanently deleted from your user "
     "extensions folder: %s. Do you want to continue?",
 )
@@ -1609,11 +1608,11 @@ EXTENSIONS_INFO_LOCATION = C_("user extensions", "Location")
 # followed by the user-visible name of the extension.
 EXTENSIONS_INFO_NAME = C_("user extensions", "Name")
 
-# Translators: This note is shown for an enabled user extension when one or more
-# of its commands could not use their requested keyboard shortcuts because those
-# shortcuts are already used by other Orca commands.
 EXTENSIONS_INFO_KEYBINDING_CONFLICT = C_(
     "user extensions",
+    # Translators: This note is shown for an enabled user extension when one or more
+    # of its commands could not use their requested keyboard shortcuts because those
+    # shortcuts are already used by other Orca commands.
     "Some commands were unbound due to conflicts.",
 )
 
@@ -1825,12 +1824,12 @@ GENERAL_PROFILES = _("Profiles")
 # page, indicating which profile is currently selected and being edited.
 CURRENT_PROFILE = _("Current Profile")
 
-# Translators: This is an informational message shown at the top of the Profiles
-# preferences page. It explains to the user what profiles are and how they work.
-# The quoted profile name is `PROFILE_DEFAULT = C_("Profile", "Default")` defined
-# earlier in this file.
 PROFILES_INFO = (
     _(
+        # Translators: This is an informational message shown at the top of the Profiles
+        # preferences page. It explains to the user what profiles are and how they work.
+        # The quoted profile name is `PROFILE_DEFAULT = C_("Profile", "Default")` defined
+        # earlier in this file.
         'Profiles are collections of settings. The "%s" profile is '
         "loaded at startup. To edit an existing profile, select it below and then "
         "adjust settings on the other pages. To rename or delete the selected profile, "
@@ -1857,28 +1856,28 @@ GENERAL_SAY_ALL = _("Say All")
 # commands, doing a say all by line would work better.
 SAY_ALL_BY = _("Say All By")
 
-# Translators: This is an informational message on the Say All preferences page
-# explaining what Say All does. Please translate this message consistent with the
-# strings in `GENERAL_SAY_ALL = _("Say All")` and SAY_ALL_BY = _("Say All By")`
 SAY_ALL_INFO = _(
+    # Translators: This is an informational message on the Say All preferences page
+    # explaining what Say All does. Please translate this message consistent with the
+    # strings in `GENERAL_SAY_ALL = _("Say All")` and SAY_ALL_BY = _("Say All By")`
     "Say All reads from the current location to the end of the document, "
     'pausing after each sentence or line based on the "Say All By" value.',
 )
 
-# Translators: This is an informational message on the Say All preferences page
-# explaining the options found under the section with the following label:
-# `SAY_ALL_REWIND_AND_FAST_FORWARD_BY = _("Rewind and Fast Forward By")`
-# Please translate "structural navigation" using terminology consistent with
-# `KB_GROUP_STRUCTURAL_NAVIGATION = _("Structural navigation")`
 SAY_ALL_NAVIGATION_INFO = _(
+    # Translators: This is an informational message on the Say All preferences page
+    # explaining the options found under the section with the following label:
+    # `SAY_ALL_REWIND_AND_FAST_FORWARD_BY = _("Rewind and Fast Forward By")`
+    # Please translate "structural navigation" using terminology consistent with
+    # `KB_GROUP_STRUCTURAL_NAVIGATION = _("Structural navigation")`
     "If enabled, you can use the arrow keys and/or structural navigation commands "
     "to move within the document while Say All is active.",
 )
 
-# Translators: This is an informational message on the Say All preferences page.
-# It explains that the settings under Change Announcements and Container
-# Announcements control which additional details are spoken during Say All.
 SAY_ALL_ANNOUNCEMENTS_INFO = _(
+    # Translators: This is an informational message on the Say All preferences page.
+    # It explains that the settings under Change Announcements and Container
+    # Announcements control which additional details are spoken during Say All.
     "The announcement settings determine which document changes, text formatting "
     "changes, and container boundaries will be announced as Say All moves through "
     "the document.",
@@ -2162,17 +2161,17 @@ SPEECH_MONITOR_FOREGROUND = _("Text color")
 # in the on-screen speech monitor.
 SPEECH_MONITOR_BACKGROUND = _("Background color")
 
-# Translators: This is an informational message displayed at the top of the on-screen
-# speech display preferences page, briefly explaining the feature and how to toggle it.
 SPEECH_MONITOR_INFO = _(
+    # Translators: This is an informational message displayed at the top of the on-screen
+    # speech display preferences page, briefly explaining the feature and how to toggle it.
     "The on-screen speech display is a window that shows what the screen reader "
     "is speaking. The default keybinding to show or hide it is Orca+Shift+d. "
     "This can be changed in Commands.",
 )
 
-# Translators: This is an informational message displayed at the top of the on-screen
-# braille display preferences page, briefly explaining the feature and how to toggle it.
 BRAILLE_MONITOR_INFO = _(
+    # Translators: This is an informational message displayed at the top of the on-screen
+    # braille display preferences page, briefly explaining the feature and how to toggle it.
     "The on-screen braille display is a window intended for developers that shows "
     "what would be presented on a braille display. To show or hide it, assign a "
     "keybinding in Commands.",
@@ -2214,10 +2213,10 @@ ANNOUNCE_WHEN_ENTERING = _("Announce when entering")
 # as the user types on the keyboard.
 ECHO = _("Echo")
 
-# Translators: This text appears at the top of the Echo preferences page. It explains
-# the difference between key echo (speaking the key pressed) and typing echo (speaking
-# what was inserted as a result of typing).
 ECHO_INFO = _(
+    # Translators: This text appears at the top of the Echo preferences page. It explains
+    # the difference between key echo (speaking the key pressed) and typing echo (speaking
+    # what was inserted as a result of typing).
     "Key echo speaks the key you pressed. Typing echo speaks what was inserted "
     "into the document as a result of your typing.",
 )
@@ -2374,11 +2373,11 @@ SPEECH = _("Speech")
 # dialog.
 TEXT_ATTRIBUTES = _("Text Attributes")
 
-# Translators: This text appears at the top of the Text Attributes preferences
-# page. It explains that users can configure which text formatting attributes
-# (such as bold, italic, underline) should be announced via speech and/or braille,
-# and that the order of the attributes controls the order in which they are presented.
 TEXT_ATTRIBUTES_INFO = _(
+    # Translators: This text appears at the top of the Text Attributes preferences
+    # page. It explains that users can configure which text formatting attributes
+    # (such as bold, italic, underline) should be announced via speech and/or braille,
+    # and that the order of the attributes controls the order in which they are presented.
     "Configure which text attributes are spoken and/or marked in braille, "
     "and the order in which they are presented.",
 )
@@ -2409,12 +2408,12 @@ VOICE_SET_GLOBAL = C_("VoiceSet", "Global")
 # voice set for a specific language.
 VOICE_SET_CREATE_NEW = _("New Voice Set")
 
-# Translators: This is an informational message shown at the top of the Voice
-# Sets page explaining what voice sets are. The "%s" is replaced with the
-# name of the global voice set, which comes from this localized string above:
-# `VOICE_SET_GLOBAL = C_("VoiceSet", "Global")`
 VOICE_SET_INFO = (
     _(
+        # Translators: This is an informational message shown at the top of the Voice
+        # Sets page explaining what voice sets are. The "%s" is replaced with the
+        # name of the global voice set, which comes from this localized string above:
+        # `VOICE_SET_GLOBAL = C_("VoiceSet", "Global")`
         "Voice sets are collections of voice types (such as default, uppercase, "
         'hyperlink, and system). The "%s" voice set contains the voice types '
         "for the current profile. Additional voice sets can be created for "

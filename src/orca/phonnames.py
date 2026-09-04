@@ -21,29 +21,29 @@
 
 from .orca_i18n import _  # pylint: disable=import-error
 
-# Translators: this is a structure to assist in the generation of
-# spoken military-style spelling.  For example, 'abc' becomes 'alpha
-# bravo charlie'.
-#
-# It is a simple structure that consists of pairs of
-#
-# letter : word(s)
-#
-# where the letter and word(s) are separate by colons and each
-# pair is separated by commas.  For example, we see:
-#
-# a : alpha, b : bravo, c : charlie,
-#
-# And so on.  The complete set should consist of all the letters from
-# the alphabet for your language paired with the common
-# military/phonetic word(s) used to describe that letter.
-#
-# The Wikipedia entry
-# http://en.wikipedia.org/wiki/NATO_phonetic_alphabet has a few
-# interesting tidbits about local conventions in the sections
-# "Additions in German, Danish and Norwegian" and "Variants".
-#
 __phonlist = _(
+    # Translators: this is a structure to assist in the generation of
+    # spoken military-style spelling.  For example, 'abc' becomes 'alpha
+    # bravo charlie'.
+    #
+    # It is a simple structure that consists of pairs of
+    #
+    # letter : word(s)
+    #
+    # where the letter and word(s) are separate by colons and each
+    # pair is separated by commas.  For example, we see:
+    #
+    # a : alpha, b : bravo, c : charlie,
+    #
+    # And so on.  The complete set should consist of all the letters from
+    # the alphabet for your language paired with the common
+    # military/phonetic word(s) used to describe that letter.
+    #
+    # The Wikipedia entry
+    # http://en.wikipedia.org/wiki/NATO_phonetic_alphabet has a few
+    # interesting tidbits about local conventions in the sections
+    # "Additions in German, Danish and Norwegian" and "Variants".
+    #
     "a : alpha, b : bravo, c : charlie, "
     "d : delta, e : echo, f : foxtrot, "
     "g : golf, h : hotel, i : india, "

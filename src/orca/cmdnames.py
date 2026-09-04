@@ -359,10 +359,10 @@ FLAT_REVIEW_APPEND = _("Append the contents under flat review to the clipboard")
 # and copy the text. This string describes that command.
 FLAT_REVIEW_SHOW_CONTENTS = _("Show flat review contents")
 
-# Translators: when users are navigating a table, they sometimes want the
-# entire row of a table read; other times they just want the current cell
-# to be presented to them.
 TOGGLE_TABLE_CELL_READ_MODE = _(
+    # Translators: when users are navigating a table, they sometimes want the
+    # entire row of a table read; other times they just want the current cell
+    # to be presented to them.
     "Toggle whether to read just the current table cell or the whole row",
 )
 

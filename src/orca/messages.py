@@ -225,9 +225,9 @@ CLI_LOAD_PROFILE_ERROR = _("Profile could not be loaded: %s")
 # from some other environment than the graphical desktop.
 CLI_NO_DESKTOP_ERROR = _("Cannot start the screen reader because it cannot connect to the Desktop.")
 
-# Translators: This message is presented to the user when he/she tries to launch
-# Orca, but Orca is already running.
 CLI_OTHER_ORCAS_ERROR = _(
+    # Translators: This message is presented to the user when he/she tries to launch
+    # Orca, but Orca is already running.
     "Another screen reader process is already running for this "
     "session.\nRun “orca --replace” to replace that "
     "process with a new one.",
@@ -311,9 +311,9 @@ CLI_EXTENSION_REVOKED = _("Revoked approval for: %s")
 # extension that was not approved. The string substitution is the filename.
 CLI_EXTENSION_NOT_APPROVED = _("Extension not approved: %s")
 
-# Translators: This warning is presented after approving an extension that is
-# currently disabled. The string substitution is the extension's class name.
 CLI_EXTENSION_APPROVED_BUT_DISABLED = _(
+    # Translators: This warning is presented after approving an extension that is
+    # currently disabled. The string substitution is the extension's class name.
     "Warning: %s is currently disabled and will not load until enabled."
 )
 
@@ -944,13 +944,13 @@ INVALID_ENTRY_FIXED = C_("error", "Entry valid.")
 # entering Learn Mode.
 LEARN_MODE_START_BRAILLE = _("Learn mode.  Press escape to exit.")
 
-# Translators: Orca has a "Learn Mode" that will allow the user to type any key
-# on the keyboard and hear what the effects of that key would be.  The effects
-# might be what Orca would do if it had a handler for the particular key
-# combination, or they might just be to echo the name of the key if Orca doesn't
-# have a handler. This message is what is spoken to the user when entering Learn
-# Mode.
 LEARN_MODE_START_SPEECH = _(
+    # Translators: Orca has a "Learn Mode" that will allow the user to type any key
+    # on the keyboard and hear what the effects of that key would be.  The effects
+    # might be what Orca would do if it had a handler for the particular key
+    # combination, or they might just be to echo the name of the key if Orca doesn't
+    # have a handler. This message is what is spoken to the user when entering Learn
+    # Mode.
     "Entering learn mode.  Press any key to hear its function.  "
     "To view the screen reader's documentation, press F1. "
     "To get a list of the screen reader's shortcuts, press F2. "
@@ -2592,10 +2592,10 @@ def pixel_count(n_pixels):
 def repeated_char_count(repeated_char, count):
     """Returns a string description of the number of repeated characters in a line."""
 
-    # Translators: Orca will tell you how many characters are repeated on a line
-    # of text. For example: "22 space characters". The %d is the number and the
-    # %s is the spoken word for the character.
     return ngettext(
+        # Translators: Orca will tell you how many characters are repeated on a line
+        # of text. For example: "22 space characters". The %d is the number and the
+        # %s is the spoken word for the character.
         "%(count)d %(repeatChar)s character",
         "%(count)d %(repeatChar)s characters",
         count,
@@ -2605,9 +2605,9 @@ def repeated_char_count(repeated_char, count):
 def selected_items_count(selected, total):
     """Returns a string description of the number of selected items in a group."""
 
-    # Translators: This message is presented to indicate the number of selected
-    # objects (e.g. icons) and the total number of those objects.
     return ngettext(
+        # Translators: This message is presented to indicate the number of selected
+        # objects (e.g. icons) and the total number of those objects.
         "%(index)d of %(total)d item selected",
         "%(index)d of %(total)d items selected",
         total,
@@ -2663,11 +2663,11 @@ def table_size(n_rows, n_columns):
             # 15 columns"). When both counts are unknown, it presents this.
             return _("table of unknown size")
 
-        # Translators: This message describes a table for which the number of
-        # rows is unknown, but the number of columns is known. This might occur
-        # in a vertically infinitely scrollable table or grid on the web.
         return (
             ngettext(
+                # Translators: This message describes a table for which the number of
+                # rows is unknown, but the number of columns is known. This might occur
+                # in a vertically infinitely scrollable table or grid on the web.
                 "table with %d column, row count unknown",
                 "table with %d columns, row count unknown",
                 n_columns,
@@ -2676,11 +2676,11 @@ def table_size(n_rows, n_columns):
         )
 
     if n_columns == -1:
-        # Translators: This message describes a table for which the number of
-        # columns is unknown, but the number of rows is known. This might occur
-        # in a horizontally infinitely scrollable table or grid on the web.
         return (
             ngettext(
+                # Translators: This message describes a table for which the number of
+                # columns is unknown, but the number of rows is known. This might occur
+                # in a horizontally infinitely scrollable table or grid on the web.
                 "table with %d row, column count unknown",
                 "table with %d rows, column count unknown",
                 n_rows,
