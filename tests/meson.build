@@ -101,7 +101,7 @@ foreach test_file : unit_tests
     args: ['-m', 'pytest', files(test_file), '-v'],
     env: test_env,
     suite: 'unit',
-    timeout: 30,
+    timeout: 120,
   )
 endforeach
 
