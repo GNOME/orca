@@ -122,6 +122,46 @@ def test_tab_navigation_and_state_changes(web_form_fields: NativeAppSession) -> 
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert helpers.capture(session) == (
+        ["All topics", "check box partially checked"],
+        [
+            helpers.BrailleLine(
+                1, "<-> All topics check box", "<-> All topics check box", "\x00" * 24
+            )
+        ],
+    )
+    keyboard.tap_key(keyboard.KEYSYM_SPACE)
+    assert helpers.capture(session) == (
+        ["checked"],
+        [
+            helpers.BrailleLine(
+                1, "<x> All topics check box", "<x> All topics check box", "\x00" * 24
+            )
+        ],
+    )
+    keyboard.tap_key(keyboard.KEYSYM_SPACE)
+    assert helpers.capture(session) == (
+        ["not checked"],
+        [
+            helpers.BrailleLine(
+                1, "< > All topics check box", "< > All topics check box", "\x00" * 24
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert helpers.capture(session) == (
+        ["News", "check box not checked"],
+        [helpers.BrailleLine(1, "< > News check box", "< > News check box", "\x00" * 18)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert helpers.capture(session) == (
+        ["Events", "check box not checked"],
+        [helpers.BrailleLine(1, "< > Events check box", "< > Events check box", "\x00" * 20)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert helpers.capture(session) == (
         ["Pick a color", "panel", "Red color", "not selected radio button"],
         [
             helpers.BrailleLine(

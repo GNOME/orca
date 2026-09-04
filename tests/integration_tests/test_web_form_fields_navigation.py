@@ -236,6 +236,28 @@ def test_browse_mode_line_navigation(web_form_fields: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert helpers.capture(session) == (
+        ["All topics", "check box partially checked"],
+        [
+            helpers.BrailleLine(
+                1, "<-> All topics check box", "<-> All topics check box", "\x00" * 24
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
+        ["News", "check box checked"],
+        [helpers.BrailleLine(1, "<x> News check box", "<x> News check box", "\x00" * 18)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
+        ["Events", "check box not checked"],
+        [helpers.BrailleLine(1, "< > Events check box", "< > Events check box", "\x00" * 20)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
         ["Pick a color", "panel"],
         [helpers.BrailleLine(1, "Pick a color", "Pick a color", "\x00" * 12)],
     )
@@ -335,7 +357,13 @@ def test_character_navigation_left_to_right(web_form_fields: NativeAppSession) -
     text = "orm fieldsNameJane DoeBioFirst line of bio. Second sentence here.foo bar bazFruit"
     expected = (
         [[c] for c in text]
-        + [["Fruit Apple"], ["Subscribe", "not checked"]]
+        + [
+            ["Fruit Apple"],
+            ["Subscribe", "not checked"],
+            ["All topics", "partially checked"],
+            ["News", "checked"],
+            ["Events", "not checked"],
+        ]
         + [[c] for c in "Pick a color"]
         + [
             ["Red color", "not selected"],
@@ -371,7 +399,13 @@ def test_character_navigation_right_to_left(web_form_fields: NativeAppSession) -
             ["Red color", "not selected"],
         ]
         + [[c] for c in "Pick a color"[::-1]]
-        + [["Subscribe", "not checked"], ["Fruit Apple"]]
+        + [
+            ["Events", "not checked"],
+            ["News", "checked"],
+            ["All topics", "partially checked"],
+            ["Subscribe", "not checked"],
+            ["Fruit Apple"],
+        ]
         + [[c] for c in forward[::-1]]
     )
     result = []
@@ -408,6 +442,9 @@ def test_word_navigation_left_to_right(web_form_fields: NativeAppSession) -> Non
         ["Fruit"],
         ["Fruit Apple"],
         ["Subscribe", "not checked"],
+        ["All topics", "partially checked"],
+        ["News", "checked"],
+        ["Events", "not checked"],
         ["Pick "],
         ["a "],
         ["color"],
@@ -447,6 +484,9 @@ def test_word_navigation_right_to_left(web_form_fields: NativeAppSession) -> Non
         ["color"],
         ["a "],
         ["Pick "],
+        ["Events", "not checked"],
+        ["News", "checked"],
+        ["All topics", "partially checked"],
         ["Subscribe", "not checked"],
         ["Fruit Apple"],
         ["Fruit"],

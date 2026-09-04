@@ -7,6 +7,36 @@
 function flip(el, attr) {
   el.setAttribute(attr, el.getAttribute(attr) === "true" ? "false" : "true");
 }
+
+function toggleTopic(el) {
+  flip(el, "aria-checked");
+  const topics = document.querySelectorAll(".topic");
+  const checked = Array.from(topics).filter(function (topic) {
+    return topic.getAttribute("aria-checked") === "true";
+  }).length;
+  const all = document.getElementById("all-topics");
+  if (checked === 0) all.setAttribute("aria-checked", "false");
+  else if (checked === topics.length) all.setAttribute("aria-checked", "true");
+  else all.setAttribute("aria-checked", "mixed");
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll('[role="checkbox"]').forEach(function (box) {
+    box.addEventListener("keydown", function (event) {
+      if (event.key !== " ") return;
+      box.click();
+      event.preventDefault();
+    });
+  });
+});
+
+function toggleAllTopics(el) {
+  const checking = el.getAttribute("aria-checked") !== "true";
+  el.setAttribute("aria-checked", checking ? "true" : "false");
+  document.querySelectorAll(".topic").forEach(function (topic) {
+    topic.setAttribute("aria-checked", checking ? "true" : "false");
+  });
+}
 </script>
 </head>
 <body>
@@ -27,6 +57,10 @@ function flip(el, attr) {
 </select></p>
 
 <p><label><input type="checkbox" id="subscribe"> Subscribe</label></p>
+
+<div role="checkbox" id="all-topics" aria-checked="mixed" aria-controls="news events" tabindex="0" onclick="toggleAllTopics(this)">All topics</div>
+<div role="checkbox" class="topic" id="news" aria-checked="true" tabindex="0" onclick="toggleTopic(this)">News</div>
+<div role="checkbox" class="topic" id="events" aria-checked="false" tabindex="0" onclick="toggleTopic(this)">Events</div>
 
 <fieldset>
   <legend>Pick a color</legend>

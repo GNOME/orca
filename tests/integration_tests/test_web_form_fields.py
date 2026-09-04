@@ -67,6 +67,15 @@ def test_say_all_over_form_fields(web_form_fields: NativeAppSession) -> None:
         "Subscribe",
         "check box",
         "not checked",
+        "All topics",
+        "check box",
+        "partially checked",
+        "News",
+        "check box",
+        "checked",
+        "Events",
+        "check box",
+        "not checked",
         "Red color",
         "not selected",
         "radio button",
@@ -129,6 +138,28 @@ def test_structural_navigation_by_form_field(web_form_fields: NativeAppSession) 
     assert helpers.capture(session) == (
         ["f", "Subscribe", "check box not checked"],
         [helpers.BrailleLine(1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_F)
+    assert helpers.capture(session) == (
+        ["f", "All topics", "check box partially checked"],
+        [
+            helpers.BrailleLine(
+                1, "<-> All topics check box", "<-> All topics check box", "\x00" * 24
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_F)
+    assert helpers.capture(session) == (
+        ["f", "News", "check box checked"],
+        [helpers.BrailleLine(1, "<x> News check box", "<x> News check box", "\x00" * 18)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_F)
+    assert helpers.capture(session) == (
+        ["f", "Events", "check box not checked"],
+        [helpers.BrailleLine(1, "< > Events check box", "< > Events check box", "\x00" * 20)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
@@ -294,7 +325,29 @@ def test_structural_navigation_by_checkbox(web_form_fields: NativeAppSession) ->
 
     keyboard.tap_key(keyboard.KEYSYM_X)
     assert helpers.capture(session) == (
-        ["x", "Wrapping to top.", "Subscribe", "not checked"],
+        ["x", "All topics", "check box partially checked"],
+        [
+            helpers.BrailleLine(
+                1, "<-> All topics check box", "<-> All topics check box", "\x00" * 24
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_X)
+    assert helpers.capture(session) == (
+        ["x", "News", "check box checked"],
+        [helpers.BrailleLine(1, "<x> News check box", "<x> News check box", "\x00" * 18)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_X)
+    assert helpers.capture(session) == (
+        ["x", "Events", "check box not checked"],
+        [helpers.BrailleLine(1, "< > Events check box", "< > Events check box", "\x00" * 20)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_X)
+    assert helpers.capture(session) == (
+        ["x", "Wrapping to top.", "Subscribe", "check box not checked"],
         [
             helpers.BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
             helpers.BrailleLine(
@@ -305,12 +358,10 @@ def test_structural_navigation_by_checkbox(web_form_fields: NativeAppSession) ->
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_X)
     assert helpers.capture(session) == (
-        ["X", "Wrapping to bottom.", "Subscribe", "not checked"],
+        ["X", "Wrapping to bottom.", "Events", "check box not checked"],
         [
             helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
-            helpers.BrailleLine(
-                1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23
-            ),
+            helpers.BrailleLine(1, "< > Events check box", "< > Events check box", "\x00" * 20),
         ],
     )
 
@@ -504,7 +555,7 @@ def test_fieldset_legend_role_only_on_entry(web_form_fields: NativeAppSession) -
     session = web_form_fields
     helpers.move_to_top(session)
 
-    for _ in range(9):
+    for _ in range(12):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         helpers.capture(session)
 
@@ -555,7 +606,8 @@ def test_where_am_i_on_form_controls(web_form_fields: NativeAppSession) -> None:
         ],
     )
 
-    helpers.tab_and_swallow_presentation(session)
+    for _ in range(4):
+        helpers.tab_and_swallow_presentation(session)
     assert _where_am_i(session) == (
         ["Pick a color", "Red color", "not selected radio button"],
         [
