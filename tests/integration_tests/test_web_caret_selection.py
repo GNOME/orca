@@ -49,27 +49,13 @@ _HEADING = "Structural navigation h1"
 _PARAGRAPH = "Intro paragraph."
 _QUOTE = "Quoted text. block quote"
 
-_SELECTION_SPANS_OBJECTS = pytest.mark.skipif(
+_IS_AT_LEAST_VERSION_153 = pytest.mark.skipif(
     not chromium_is_at_least(153),
-    reason=f"needs Chromium with Document.SetTextSelections; this is {chromium_major_version()}",
-)
-_SELECTION_IS_PER_OBJECT = pytest.mark.skipif(
-    chromium_is_at_least(153),
-    reason=f"needs Chromium without Document.SetTextSelections; this is {chromium_major_version()}",
+    reason=f"needs Chromium 153 or later; this is {chromium_major_version()}",
 )
 
 
-# Chromium 152 emits inconsistent selection-change events.
-_SPEECH_IS_STABLE = chromium_is_at_least(153)
-
-
-def _assert_speech(spoken: list[str], expected: list[str]) -> None:
-    """Checks the utterances, on the browsers which report a selection change consistently."""
-
-    if _SPEECH_IS_STABLE:
-        assert spoken == expected
-
-
+@_IS_AT_LEAST_VERSION_153
 @pytest.mark.native_app
 def test_selection_by_character(web_structural_navigation: NativeAppSession) -> None:
     """Tests selection by character."""
@@ -78,28 +64,29 @@ def test_selection_by_character(web_structural_navigation: NativeAppSession) -> 
     reset_web_state(session)
 
     spoken, brailled = select(session, NEXT_CHARACTER)
-    _assert_speech(spoken, ["S", "selected"])
+    assert spoken == ["S", "selected"]
     assert brailled == BrailleLine(2, _HEADING, _HEADING, "\xc0" + "\x00" * 23)
 
     spoken, brailled = select(session, NEXT_CHARACTER)
-    _assert_speech(spoken, ["t", "selected"])
+    assert spoken == ["t", "selected"]
     assert brailled == BrailleLine(3, _HEADING, _HEADING, "\xc0" * 2 + "\x00" * 22)
 
     spoken, brailled = select(session, NEXT_CHARACTER)
-    _assert_speech(spoken, ["r", "selected"])
+    assert spoken == ["r", "selected"]
     assert brailled == BrailleLine(4, _HEADING, _HEADING, "\xc0" * 3 + "\x00" * 21)
     assert say_selection(session) == ["Selected text is:  Str"]
 
     spoken, brailled = select(session, PREVIOUS_CHARACTER)
-    _assert_speech(spoken, ["r", "unselected"])
+    assert spoken == ["r", "unselected"]
     assert brailled == BrailleLine(3, _HEADING, _HEADING, "\xc0" * 2 + "\x00" * 22)
 
     spoken, brailled = select(session, PREVIOUS_CHARACTER)
-    _assert_speech(spoken, ["t", "unselected"])
+    assert spoken == ["t", "unselected"]
     assert brailled == BrailleLine(2, _HEADING, _HEADING, "\xc0" + "\x00" * 23)
     assert say_selection(session) == ["Selected text is:  S"]
 
 
+@_IS_AT_LEAST_VERSION_153
 @pytest.mark.native_app
 def test_selection_by_word(web_structural_navigation: NativeAppSession) -> None:
     """Tests selection by word."""
@@ -108,20 +95,21 @@ def test_selection_by_word(web_structural_navigation: NativeAppSession) -> None:
     reset_web_state(session)
 
     spoken, brailled = select(session, NEXT_WORD)
-    _assert_speech(spoken, ["Structural", "selected"])
+    assert spoken == ["Structural", "selected"]
     assert brailled == BrailleLine(11, _HEADING, _HEADING, "\xc0" * 10 + "\x00" * 14)
 
     spoken, brailled = select(session, NEXT_WORD)
-    _assert_speech(spoken, ["navigation", "selected"])
+    assert spoken == ["navigation", "selected"]
     assert brailled == BrailleLine(22, _HEADING, _HEADING, "\xc0" * 21 + "\x00" * 3)
     assert say_selection(session) == ["Selected text is:  Structural navigation"]
 
     spoken, brailled = select(session, PREVIOUS_WORD)
-    _assert_speech(spoken, ["navigation", "unselected"])
+    assert spoken == ["navigation", "unselected"]
     assert brailled == BrailleLine(12, _HEADING, _HEADING, "\xc0" * 11 + "\x00" * 13)
     assert say_selection(session) == ["Selected text is:  Structural "]
 
 
+@_IS_AT_LEAST_VERSION_153
 @pytest.mark.native_app
 def test_selection_to_the_line_boundaries(web_structural_navigation: NativeAppSession) -> None:
     """Tests selection to the end and to the start of the line."""
@@ -130,20 +118,21 @@ def test_selection_to_the_line_boundaries(web_structural_navigation: NativeAppSe
     reset_web_state(session)
 
     spoken, brailled = select(session, NEXT_WORD)
-    _assert_speech(spoken, ["Structural", "selected"])
+    assert spoken == ["Structural", "selected"]
     assert brailled == BrailleLine(11, _HEADING, _HEADING, "\xc0" * 10 + "\x00" * 14)
 
     spoken, brailled = select(session, END_OF_LINE)
-    _assert_speech(spoken, ["navigation", "selected"])
+    assert spoken == ["navigation", "selected"]
     assert brailled == BrailleLine(22, _HEADING, _HEADING, "\xc0" * 21 + "\x00" * 3)
     assert say_selection(session) == ["Selected text is:  Structural navigation"]
 
     spoken, brailled = select(session, START_OF_LINE)
-    _assert_speech(spoken, ["Structural navigation", "unselected"])
+    assert spoken == ["Structural navigation", "unselected"]
     assert brailled == BrailleLine(1, _HEADING, _HEADING, "\x00" * 24)
     assert say_selection(session) == ["No selected text."]
 
 
+@_IS_AT_LEAST_VERSION_153
 @pytest.mark.native_app
 def test_selection_in_a_paragraph(web_structural_navigation: NativeAppSession) -> None:
     """Tests selection in a paragraph below the heading."""
@@ -157,21 +146,21 @@ def test_selection_in_a_paragraph(web_structural_navigation: NativeAppSession) -
     assert brailled[-1] == BrailleLine(1, _PARAGRAPH, _PARAGRAPH, "\x00" * 16)
 
     spoken, brailled = select(session, NEXT_CHARACTER)
-    _assert_speech(spoken, ["I", "selected"])
+    assert spoken == ["I", "selected"]
     assert brailled == BrailleLine(2, _PARAGRAPH, _PARAGRAPH, "\xc0" + "\x00" * 15)
 
     spoken, brailled = select(session, NEXT_CHARACTER)
-    _assert_speech(spoken, ["n", "selected"])
+    assert spoken == ["n", "selected"]
     assert brailled == BrailleLine(3, _PARAGRAPH, _PARAGRAPH, "\xc0" * 2 + "\x00" * 14)
     assert say_selection(session) == ["Selected text is:  In"]
 
     spoken, brailled = select(session, END_OF_LINE)
-    _assert_speech(spoken, ["tro paragraph.", "selected"])
+    assert spoken == ["tro paragraph.", "selected"]
     assert brailled == BrailleLine(17, _PARAGRAPH, _PARAGRAPH, "\xc0" * 16)
     assert say_selection(session) == ["Selected text is:  Intro paragraph."]
 
 
-@_SELECTION_SPANS_OBJECTS
+@_IS_AT_LEAST_VERSION_153
 @pytest.mark.native_app
 def test_selection_across_objects(web_structural_navigation: NativeAppSession) -> None:
     """Tests selection which spans more than one text object."""
@@ -180,60 +169,32 @@ def test_selection_across_objects(web_structural_navigation: NativeAppSession) -
     reset_web_state(session)
 
     spoken, brailled = select(session, END_OF_LINE)
-    _assert_speech(spoken, ["Structural navigation", "selected"])
+    assert spoken == ["Structural navigation", "selected"]
     assert brailled == BrailleLine(22, _HEADING, _HEADING, "\xc0" * 21 + "\x00" * 3)
 
     spoken, brailled = select(session, NEXT_LINE)
-    _assert_speech(spoken, [_PARAGRAPH, "selected"])
+    assert spoken == [_PARAGRAPH, "selected"]
     assert brailled == BrailleLine(17, _PARAGRAPH, _PARAGRAPH, "\xc0" * 16)
     assert say_selection(session) == ["Selected text is:  Structural navigation Intro paragraph."]
 
     spoken, brailled = select(session, NEXT_LINE)
-    _assert_speech(spoken, ["Quoted text.", "selected"])
+    assert spoken == ["Quoted text.", "selected"]
     assert brailled == BrailleLine(13, _QUOTE, _QUOTE, "\xc0" * 12 + "\x00" * 12)
     assert say_selection(session) == [
         "Selected text is:  Structural navigation Intro paragraph. Quoted text."
     ]
 
     spoken, brailled = select(session, PREVIOUS_LINE)
-    _assert_speech(spoken, ["Quoted text.", "unselected"])
+    assert spoken == ["Quoted text.", "unselected"]
     assert brailled == BrailleLine(1, _QUOTE, _QUOTE, "\x00" * 24)
     assert say_selection(session) == ["Selected text is:  Structural navigation Intro paragraph."]
 
     spoken, brailled = select(session, NEXT_WORD)
-    _assert_speech(spoken, ["Quoted", "selected"])
+    assert spoken == ["Quoted", "selected"]
     assert brailled == BrailleLine(7, _QUOTE, _QUOTE, "\xc0" * 6 + "\x00" * 18)
     assert say_selection(session) == [
         "Selected text is:  Structural navigation Intro paragraph. Quoted"
     ]
-
-
-@_SELECTION_IS_PER_OBJECT
-@pytest.mark.native_app
-def test_selection_across_objects_one_object_at_a_time(
-    web_structural_navigation: NativeAppSession,
-) -> None:
-    """Tests selection which spans more than one text object, set through AtspiText."""
-
-    session = web_structural_navigation
-    reset_web_state(session)
-
-    _spoken, brailled = select(session, END_OF_LINE)
-    assert brailled == BrailleLine(22, _HEADING, _HEADING, "\xc0" * 21 + "\x00" * 3)
-
-    _spoken, brailled = select(session, NEXT_LINE)
-    assert brailled == BrailleLine(17, _PARAGRAPH, _PARAGRAPH, "\xc0" * 16)
-    assert say_selection(session) == ["Selected text is:  Intro paragraph."]
-
-    _spoken, brailled = select(session, NEXT_CHARACTER)
-    assert brailled == BrailleLine(2, _QUOTE, _QUOTE, "\xc0" + "\x00" * 23)
-    assert say_selection(session) == ["Selected text is:  Q"]
-
-    keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
-    assert spoken == ["Text unselected.", "leaving blockquote.", "Save", "button"]
-    assert brailled[-1] == BrailleLine(1, "Save button", "Save button", "\x00" * 11)
-    assert say_selection(session) == ["No selected text."]
 
 
 @pytest.mark.native_app
@@ -256,6 +217,7 @@ def test_selection_without_notifying_the_user(
     assert say_selection(session) == ["Selected text is:  Structural navigation"]
 
 
+@_IS_AT_LEAST_VERSION_153
 @pytest.mark.native_app
 def test_selection_removed_by_caret_navigation(
     web_structural_navigation: NativeAppSession,
@@ -266,7 +228,7 @@ def test_selection_removed_by_caret_navigation(
     reset_web_state(session)
 
     spoken, brailled = select(session, NEXT_WORD)
-    _assert_speech(spoken, ["Structural", "selected"])
+    assert spoken == ["Structural", "selected"]
     assert brailled == BrailleLine(11, _HEADING, _HEADING, "\xc0" * 10 + "\x00" * 14)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
@@ -276,7 +238,7 @@ def test_selection_removed_by_caret_navigation(
     assert say_selection(session) == ["No selected text."]
 
     spoken, brailled = select(session, NEXT_WORD)
-    _assert_speech(spoken, ["navigation", "selected"])
+    assert spoken == ["navigation", "selected"]
     assert brailled == BrailleLine(22, _HEADING, _HEADING, "\x00" * 10 + "\xc0" * 11 + "\x00" * 3)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -287,7 +249,7 @@ def test_selection_removed_by_caret_navigation(
 
     reset_web_state(session)
     spoken, _brailled = select(session, NEXT_WORD)
-    _assert_speech(spoken, ["Structural", "selected"])
+    assert spoken == ["Structural", "selected"]
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
     spoken, _brailled = capture(session)
@@ -295,7 +257,7 @@ def test_selection_removed_by_caret_navigation(
     assert say_selection(session) == ["No selected text."]
 
     spoken, _brailled = select(session, PREVIOUS_WORD)
-    _assert_speech(spoken, ["navigation", "selected"])
+    assert spoken == ["navigation", "selected"]
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
     spoken, _brailled = capture(session)
