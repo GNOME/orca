@@ -399,6 +399,8 @@ class CaretNavigator(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._suspended = suspended
+        if suspended and not self.last_input_event_was_navigation_command():
+            self._last_input_event = None
         command_manager.get_manager().set_group_suspended(
             guilabels.KB_GROUP_CARET_NAVIGATION,
             suspended,

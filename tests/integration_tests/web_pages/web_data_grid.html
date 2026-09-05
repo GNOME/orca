@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Data Grid ready</title>
+<style>
+table { border-collapse: collapse; }
+th, td { padding: 2px 6px; border: 1px solid #aaa; text-align: left; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const grid = document.getElementById("grid");
+  const rows = Array.from(grid.querySelectorAll("tr"));
+  const cells = rows.map(function (row) {
+    return Array.from(row.querySelectorAll('[role="columnheader"], [role="gridcell"]'));
+  });
+
+  function cellPosition(cell) {
+    for (let row = 0; row < cells.length; row++) {
+      const column = cells[row].indexOf(cell);
+      if (column !== -1) return [row, column];
+    }
+    return [0, 0];
+  }
+
+  function focusCell(row, column) {
+    const target = cells[row] && cells[row][column];
+    if (!target) return;
+    cells.forEach(function (rowCells) {
+      rowCells.forEach(function (candidate) { candidate.tabIndex = -1; });
+    });
+    target.tabIndex = 0;
+    target.focus();
+  }
+
+  grid.addEventListener("keydown", function (event) {
+    const cell = event.target.closest('[role="columnheader"], [role="gridcell"]');
+    if (!cell) return;
+    const [row, column] = cellPosition(cell);
+    let handled = true;
+    switch (event.key) {
+      case "ArrowRight":
+        focusCell(row, column + 1);
+        break;
+      case "ArrowLeft":
+        focusCell(row, column - 1);
+        break;
+      case "ArrowDown":
+        focusCell(row + 1, column);
+        break;
+      case "ArrowUp":
+        focusCell(row - 1, column);
+        break;
+      case "Home":
+        if (event.ctrlKey) focusCell(0, 0);
+        else focusCell(row, 0);
+        break;
+      case "End":
+        if (event.ctrlKey) focusCell(cells.length - 1, cells[cells.length - 1].length - 1);
+        else focusCell(row, cells[row].length - 1);
+        break;
+      default:
+        handled = false;
+    }
+    if (handled) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  });
+
+  cells.forEach(function (rowCells) {
+    rowCells.forEach(function (cell) { cell.tabIndex = -1; });
+  });
+  cells[0][0].tabIndex = 0;
+});
+</script>
+</head>
+<body>
+<h1>Data Grid</h1>
+
+<table id="grid" role="grid" aria-labelledby="grid-label">
+  <caption id="grid-label">Rainfall</caption>
+  <thead>
+    <tr role="row">
+      <th role="columnheader" scope="col">Month</th>
+      <th role="columnheader" scope="col">Station</th>
+      <th role="columnheader" scope="col">Millimetres</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr role="row">
+      <td role="gridcell">January</td>
+      <td role="gridcell">Kendal</td>
+      <td role="gridcell">88</td>
+    </tr>
+    <tr role="row">
+      <td role="gridcell">February</td>
+      <td role="gridcell">Truro</td>
+      <td role="gridcell">61</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>
