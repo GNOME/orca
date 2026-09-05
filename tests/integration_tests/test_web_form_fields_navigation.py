@@ -230,6 +230,25 @@ def test_browse_mode_line_navigation(web_form_fields: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert helpers.capture(session) == (
+        ["Preferred contact"],
+        [helpers.BrailleLine(1, "Preferred contact", "Preferred contact", "\x00" * 17)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
+        ["Preferred contact", "combo box", "Email", "opens listbox"],
+        [
+            helpers.BrailleLine(
+                19,
+                "Preferred contact Email combo box",
+                "Preferred contact Email combo bo",
+                "\x00" * 33,
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
         ["Subscribe", "check box not checked"],
         [helpers.BrailleLine(1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23)],
     )
@@ -267,9 +286,9 @@ def test_browse_mode_line_navigation(web_form_fields: NativeAppSession) -> None:
         ["Red color", "not selected radio button"],
         [
             helpers.BrailleLine(
-                14,
-                " Pick a color& y Red color radio button",
-                " Pick a color& y Red color radio",
+                1,
+                "Pick a color & y Red color radio button",
+                "& y Red color radio button",
                 "\x00" * 39,
             )
         ],
@@ -280,9 +299,9 @@ def test_browse_mode_line_navigation(web_form_fields: NativeAppSession) -> None:
         ["Green color", "not selected radio button"],
         [
             helpers.BrailleLine(
-                14,
-                " Pick a color& y Green color radio button",
-                " Pick a color& y Green color rad",
+                1,
+                "Pick a color & y Green color radio button",
+                "& y Green color radio button",
                 "\x00" * 41,
             )
         ],
@@ -293,10 +312,48 @@ def test_browse_mode_line_navigation(web_form_fields: NativeAppSession) -> None:
         ["Blue color", "not selected radio button"],
         [
             helpers.BrailleLine(
-                14,
-                " Pick a color& y Blue color radio button",
-                " Pick a color& y Blue color radi",
+                1,
+                "Pick a color & y Blue color radio button",
+                "& y Blue color radio button",
                 "\x00" * 40,
+            )
+        ],
+    )
+
+    # The group's label is inside the group, as the APG example has it, so its text is
+    # both the group's name and a line of content.
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
+        ["leaving panel.", "Seat", "panel", "Seat"],
+        [helpers.BrailleLine(1, "Seat", "Seat", "\x00" * 4)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
+        ["Aisle", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                1, "Seat & y Aisle radio button", "& y Aisle radio button", "\x00" * 27
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
+        ["Middle", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                1, "Seat & y Middle radio button", "& y Middle radio button", "\x00" * 28
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
+        ["Window", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                1, "Seat & y Window radio button", "& y Window radio button", "\x00" * 28
             )
         ],
     )
@@ -357,8 +414,10 @@ def test_character_navigation_left_to_right(web_form_fields: NativeAppSession) -
     text = "orm fieldsNameJane DoeBioFirst line of bio. Second sentence here.foo bar bazFruit"
     expected = (
         [[c] for c in text]
+        + [["Fruit Apple"]]
+        + [[c] for c in "Preferred contact"]
         + [
-            ["Fruit Apple"],
+            ["Preferred contact Email"],
             ["Subscribe", "not checked"],
             ["All topics", "partially checked"],
             ["News", "checked"],
@@ -369,6 +428,12 @@ def test_character_navigation_left_to_right(web_form_fields: NativeAppSession) -
             ["Red color", "not selected"],
             ["Green color", "not selected"],
             ["Blue color", "not selected"],
+        ]
+        + [[c] for c in "Seat"]
+        + [
+            ["Aisle", "not selected"],
+            ["Middle", "not selected"],
+            ["Window", "not selected"],
         ]
         + [[c] for c in "Quantity"]
         + [["3"], ["Submit"], ["Mute", "not pressed"], ["Wi-Fi", "off"]]
@@ -394,6 +459,12 @@ def test_character_navigation_right_to_left(web_form_fields: NativeAppSession) -
         [["Mute", "not pressed"], ["Submit"], ["3"]]
         + [[c] for c in "Quantity"[::-1]]
         + [
+            ["Window", "not selected"],
+            ["Middle", "not selected"],
+            ["Aisle", "not selected"],
+        ]
+        + [[c] for c in "Seat"[::-1]]
+        + [
             ["Blue color", "not selected"],
             ["Green color", "not selected"],
             ["Red color", "not selected"],
@@ -404,8 +475,10 @@ def test_character_navigation_right_to_left(web_form_fields: NativeAppSession) -
             ["News", "checked"],
             ["All topics", "partially checked"],
             ["Subscribe", "not checked"],
-            ["Fruit Apple"],
+            ["Preferred contact Email"],
         ]
+        + [[c] for c in "Preferred contact"[::-1]]
+        + [["Fruit Apple"]]
         + [[c] for c in forward[::-1]]
     )
     result = []
@@ -441,6 +514,9 @@ def test_word_navigation_left_to_right(web_form_fields: NativeAppSession) -> Non
         ["baz"],
         ["Fruit"],
         ["Fruit Apple"],
+        ["Preferred "],
+        ["contact"],
+        ["Preferred contact Email"],
         ["Subscribe", "not checked"],
         ["All topics", "partially checked"],
         ["News", "checked"],
@@ -451,6 +527,10 @@ def test_word_navigation_left_to_right(web_form_fields: NativeAppSession) -> Non
         ["Red color", "not selected"],
         ["Green color", "not selected"],
         ["Blue color", "not selected"],
+        ["Seat"],
+        ["Aisle", "not selected"],
+        ["Middle", "not selected"],
+        ["Window", "not selected"],
         ["3"],
         ["Submit"],
         ["Mute", "not pressed"],
@@ -478,6 +558,10 @@ def test_word_navigation_right_to_left(web_form_fields: NativeAppSession) -> Non
         ["3"],
         # Caret at the label start auto-focuses the spin button in Chromium.
         ["Quantity", "spin button", "3"],
+        ["Window", "not selected"],
+        ["Middle", "not selected"],
+        ["Aisle", "not selected"],
+        ["Seat"],
         ["Blue color", "not selected"],
         ["Green color", "not selected"],
         ["Red color", "not selected"],
@@ -488,6 +572,9 @@ def test_word_navigation_right_to_left(web_form_fields: NativeAppSession) -> Non
         ["News", "checked"],
         ["All topics", "partially checked"],
         ["Subscribe", "not checked"],
+        ["Preferred contact Email"],
+        ["contact"],
+        ["Preferred "],
         ["Fruit Apple"],
         ["Fruit"],
         ["baz"],

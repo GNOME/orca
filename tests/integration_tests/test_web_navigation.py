@@ -249,9 +249,9 @@ def test_structural_navigation_by_form_field(web_basic: NativeAppSession) -> Non
         ["f", "form", "Pick a color", "panel", "Red color", "not selected radio button"],
         [
             BrailleLine(
-                14,
-                " Pick a color& y Red color radio button",
-                " Pick a color& y Red color radio",
+                1,
+                "Pick a color & y Red color radio button",
+                "& y Red color radio button",
                 "\x00" * 39,
             )
         ],
@@ -262,9 +262,9 @@ def test_structural_navigation_by_form_field(web_basic: NativeAppSession) -> Non
         ["f", "Green color", "not selected radio button"],
         [
             BrailleLine(
-                14,
-                " Pick a color& y Green color radio button",
-                " Pick a color& y Green color rad",
+                1,
+                "Pick a color & y Green color radio button",
+                "& y Green color radio button",
                 "\x00" * 41,
             )
         ],
@@ -275,9 +275,9 @@ def test_structural_navigation_by_form_field(web_basic: NativeAppSession) -> Non
         ["f", "Blue color", "not selected radio button"],
         [
             BrailleLine(
-                14,
-                " Pick a color& y Blue color radio button",
-                " Pick a color& y Blue color radi",
+                1,
+                "Pick a color & y Blue color radio button",
+                "& y Blue color radio button",
                 "\x00" * 40,
             )
         ],
@@ -289,9 +289,9 @@ def test_structural_navigation_by_form_field(web_basic: NativeAppSession) -> Non
         [
             BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
             BrailleLine(
-                14,
-                " Pick a color& y Red color radio button",
-                " Pick a color& y Red color radio",
+                1,
+                "Pick a color & y Red color radio button",
+                "& y Red color radio button",
                 "\x00" * 39,
             ),
         ],
@@ -303,9 +303,9 @@ def test_structural_navigation_by_form_field(web_basic: NativeAppSession) -> Non
         [
             BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
             BrailleLine(
-                14,
-                " Pick a color& y Blue color radio button",
-                " Pick a color& y Blue color radi",
+                1,
+                "Pick a color & y Blue color radio button",
+                "& y Blue color radio button",
                 "\x00" * 40,
             ),
         ],
@@ -316,9 +316,9 @@ def test_structural_navigation_by_form_field(web_basic: NativeAppSession) -> Non
         ["F", "Green color", "not selected radio button"],
         [
             BrailleLine(
-                14,
-                " Pick a color& y Green color radio button",
-                " Pick a color& y Green color rad",
+                1,
+                "Pick a color & y Green color radio button",
+                "& y Green color radio button",
                 "\x00" * 41,
             )
         ],
@@ -329,9 +329,9 @@ def test_structural_navigation_by_form_field(web_basic: NativeAppSession) -> Non
         ["F", "Red color", "not selected radio button"],
         [
             BrailleLine(
-                14,
-                " Pick a color& y Red color radio button",
-                " Pick a color& y Red color radio",
+                1,
+                "Pick a color & y Red color radio button",
+                "& y Red color radio button",
                 "\x00" * 39,
             )
         ],
@@ -343,9 +343,9 @@ def test_structural_navigation_by_form_field(web_basic: NativeAppSession) -> Non
         [
             BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
             BrailleLine(
-                14,
-                " Pick a color& y Blue color radio button",
-                " Pick a color& y Blue color radi",
+                1,
+                "Pick a color & y Blue color radio button",
+                "& y Blue color radio button",
                 "\x00" * 40,
             ),
         ],
@@ -507,9 +507,9 @@ def test_radio_group_in_focus_mode(web_basic: NativeAppSession) -> None:
         ["f", "form", "Pick a color", "panel", "Red color", "not selected radio button"],
         [
             BrailleLine(
-                14,
-                " Pick a color& y Red color radio button",
-                " Pick a color& y Red color radio",
+                1,
+                "Pick a color & y Red color radio button",
+                "& y Red color radio button",
                 "\x00" * 39,
             )
         ],
@@ -526,15 +526,15 @@ def test_radio_group_in_focus_mode(web_basic: NativeAppSession) -> None:
         ["Green color", "selected radio button"],
         [
             BrailleLine(
-                14,
-                " Pick a color& y Red color radio button",
-                " Pick a color& y Red color radio",
+                1,
+                "Pick a color & y Red color radio button",
+                "& y Red color radio button",
                 "\x00" * 39,
             ),
             BrailleLine(
-                14,
-                " Pick a color&=y Green color radio button",
-                " Pick a color&=y Green color rad",
+                1,
+                "Pick a color &=y Green color radio button",
+                "&=y Green color radio button",
                 "\x00" * 41,
             ),
         ],
@@ -545,9 +545,9 @@ def test_radio_group_in_focus_mode(web_basic: NativeAppSession) -> None:
         ["Blue color", "selected radio button"],
         [
             BrailleLine(
-                14,
-                " Pick a color&=y Blue color radio button",
-                " Pick a color&=y Blue color radi",
+                1,
+                "Pick a color &=y Blue color radio button",
+                "&=y Blue color radio button",
                 "\x00" * 40,
             )
         ],

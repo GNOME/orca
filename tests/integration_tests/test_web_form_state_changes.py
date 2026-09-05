@@ -93,6 +93,19 @@ def test_tab_navigation_and_state_changes(web_form_fields: NativeAppSession) -> 
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert helpers.capture(session) == (
+        ["Preferred contact", "combo box", "Email", "opens listbox"],
+        [
+            helpers.BrailleLine(
+                19,
+                "Preferred contact Email combo box",
+                "Preferred contact Email combo bo",
+                "\x00" * 33,
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert helpers.capture(session) == (
         ["Subscribe", "check box not checked", "Browse mode"],
         [
             helpers.BrailleLine(
@@ -165,11 +178,21 @@ def test_tab_navigation_and_state_changes(web_form_fields: NativeAppSession) -> 
         ["Pick a color", "panel", "Red color", "not selected radio button"],
         [
             helpers.BrailleLine(
-                14,
-                " Pick a color& y Red color radio button",
-                " Pick a color& y Red color radio",
+                1,
+                "Pick a color & y Red color radio button",
+                "& y Red color radio button",
                 "\x00" * 39,
             ),
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert helpers.capture(session) == (
+        ["leaving panel.", "Seat", "panel", "Aisle", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                1, "Seat & y Aisle radio button", "& y Aisle radio button", "\x00" * 27
+            )
         ],
     )
 
@@ -246,4 +269,83 @@ def test_tab_navigation_and_state_changes(web_form_fields: NativeAppSession) -> 
     assert helpers.capture(session) == (
         ["off"],
         [helpers.BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16)],
+    )
+
+
+@pytest.mark.native_app
+def test_arrowing_a_native_radio_group_in_browse_mode(
+    web_form_fields: NativeAppSession,
+) -> None:
+    """Tests arrowing through a native radio group in browse mode."""
+
+    session = web_form_fields
+    helpers.reset_web_state(session)
+    for _ in range(10):
+        helpers.tab_and_swallow_presentation(session)
+
+    # The arrow keys are Orca's caret navigation here, so the browser never sees them
+    # and no radio button is selected.
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
+        ["Green color", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                1,
+                "Pick a color & y Green color radio button",
+                "& y Green color radio button",
+                "\x00" * 41,
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    assert helpers.capture(session) == (
+        ["Red color", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                1,
+                "Pick a color & y Red color radio button",
+                "& y Red color radio button",
+                "\x00" * 39,
+            )
+        ],
+    )
+
+
+@pytest.mark.native_app
+def test_arrowing_an_aria_radio_group_in_focus_mode(
+    web_form_fields: NativeAppSession,
+) -> None:
+    """Tests arrowing through an ARIA radio group in focus mode."""
+
+    session = web_form_fields
+    helpers.reset_web_state(session)
+    for _ in range(11):
+        helpers.tab_and_swallow_presentation(session)
+
+    session.orca.press_orca_key(keyboard.KEYSYM_A)
+    assert helpers.speech(session) == ["Focus mode"]
+
+    # In focus mode the arrow keys reach the page, so the group selects as it moves.
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session)[0] == ["Middle", "selected radio button"]
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.capture(session) == (
+        ["Window", "selected radio button"],
+        [
+            helpers.BrailleLine(
+                1, "Seat &=y Window radio button", "&=y Window radio button", "\x00" * 28
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    assert helpers.capture(session) == (
+        ["Middle", "selected radio button"],
+        [
+            helpers.BrailleLine(
+                1, "Seat &=y Middle radio button", "&=y Middle radio button", "\x00" * 28
+            )
+        ],
     )

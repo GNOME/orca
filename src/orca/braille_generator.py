@@ -1450,7 +1450,7 @@ class BrailleGenerator(generator.Generator):
         result = self._generate_default_prefix(obj)
         group = self._generate_radio_button_group(obj)
         if group:
-            result += [braille.Region(" " + self._as_string(group))]
+            result += [braille.Region(self._as_string(group) + " ")]
 
         result += [
             braille.Component(

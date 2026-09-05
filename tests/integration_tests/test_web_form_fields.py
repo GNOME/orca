@@ -64,6 +64,10 @@ def test_say_all_over_form_fields(web_form_fields: NativeAppSession) -> None:
         "combo box",
         "Apple",
         "opens menu",
+        "Preferred contact",
+        "combo box",
+        "Email",
+        "opens listbox",
         "Subscribe",
         "check box",
         "not checked",
@@ -83,6 +87,18 @@ def test_say_all_over_form_fields(web_form_fields: NativeAppSession) -> None:
         "not selected",
         "radio button",
         "Blue color",
+        "not selected",
+        "radio button",
+        "leaving panel.",
+        "Seat",
+        "panel",
+        "Aisle",
+        "not selected",
+        "radio button",
+        "Middle",
+        "not selected",
+        "radio button",
+        "Window",
         "not selected",
         "radio button",
         "Quantity",
@@ -136,6 +152,19 @@ def test_structural_navigation_by_form_field(web_form_fields: NativeAppSession) 
 
     keyboard.tap_key(keyboard.KEYSYM_F)
     assert helpers.capture(session) == (
+        ["f", "Preferred contact", "combo box", "Email", "opens listbox"],
+        [
+            helpers.BrailleLine(
+                19,
+                "Preferred contact Email combo box",
+                "Preferred contact Email combo bo",
+                "\x00" * 33,
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_F)
+    assert helpers.capture(session) == (
         ["f", "Subscribe", "check box not checked"],
         [helpers.BrailleLine(1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23)],
     )
@@ -167,9 +196,9 @@ def test_structural_navigation_by_form_field(web_form_fields: NativeAppSession) 
         ["f", "Pick a color", "panel", "Red color", "not selected radio button"],
         [
             helpers.BrailleLine(
-                14,
-                " Pick a color& y Red color radio button",
-                " Pick a color& y Red color radio",
+                1,
+                "Pick a color & y Red color radio button",
+                "& y Red color radio button",
                 "\x00" * 39,
             )
         ],
@@ -180,9 +209,9 @@ def test_structural_navigation_by_form_field(web_form_fields: NativeAppSession) 
         ["f", "Green color", "not selected radio button"],
         [
             helpers.BrailleLine(
-                14,
-                " Pick a color& y Green color radio button",
-                " Pick a color& y Green color rad",
+                1,
+                "Pick a color & y Green color radio button",
+                "& y Green color radio button",
                 "\x00" * 41,
             )
         ],
@@ -193,10 +222,40 @@ def test_structural_navigation_by_form_field(web_form_fields: NativeAppSession) 
         ["f", "Blue color", "not selected radio button"],
         [
             helpers.BrailleLine(
-                14,
-                " Pick a color& y Blue color radio button",
-                " Pick a color& y Blue color radi",
+                1,
+                "Pick a color & y Blue color radio button",
+                "& y Blue color radio button",
                 "\x00" * 40,
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_F)
+    assert helpers.capture(session) == (
+        ["f", "leaving panel.", "Seat", "panel", "Aisle", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                1, "Seat & y Aisle radio button", "& y Aisle radio button", "\x00" * 27
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_F)
+    assert helpers.capture(session) == (
+        ["f", "Middle", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                1, "Seat & y Middle radio button", "& y Middle radio button", "\x00" * 28
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_F)
+    assert helpers.capture(session) == (
+        ["f", "Window", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                1, "Seat & y Window radio button", "& y Window radio button", "\x00" * 28
             )
         ],
     )
@@ -378,9 +437,9 @@ def test_structural_navigation_by_radio_button(web_form_fields: NativeAppSession
         ["r", "Pick a color", "panel", "Red color", "not selected radio button"],
         [
             helpers.BrailleLine(
-                14,
-                " Pick a color& y Red color radio button",
-                " Pick a color& y Red color radio",
+                1,
+                "Pick a color & y Red color radio button",
+                "& y Red color radio button",
                 "\x00" * 39,
             )
         ],
@@ -391,9 +450,9 @@ def test_structural_navigation_by_radio_button(web_form_fields: NativeAppSession
         ["r", "Green color", "not selected radio button"],
         [
             helpers.BrailleLine(
-                14,
-                " Pick a color& y Green color radio button",
-                " Pick a color& y Green color rad",
+                1,
+                "Pick a color & y Green color radio button",
+                "& y Green color radio button",
                 "\x00" * 41,
             )
         ],
@@ -404,9 +463,9 @@ def test_structural_navigation_by_radio_button(web_form_fields: NativeAppSession
         ["r", "Blue color", "not selected radio button"],
         [
             helpers.BrailleLine(
-                14,
-                " Pick a color& y Blue color radio button",
-                " Pick a color& y Blue color radi",
+                1,
+                "Pick a color & y Blue color radio button",
+                "& y Blue color radio button",
                 "\x00" * 40,
             )
         ],
@@ -414,13 +473,51 @@ def test_structural_navigation_by_radio_button(web_form_fields: NativeAppSession
 
     keyboard.tap_key(keyboard.KEYSYM_R)
     assert helpers.capture(session) == (
-        ["r", "Wrapping to top.", "Red color", "not selected radio button"],
+        ["r", "leaving panel.", "Seat", "panel", "Aisle", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                1, "Seat & y Aisle radio button", "& y Aisle radio button", "\x00" * 27
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_R)
+    assert helpers.capture(session) == (
+        ["r", "Middle", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                1, "Seat & y Middle radio button", "& y Middle radio button", "\x00" * 28
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_R)
+    assert helpers.capture(session) == (
+        ["r", "Window", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                1, "Seat & y Window radio button", "& y Window radio button", "\x00" * 28
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_R)
+    assert helpers.capture(session) == (
+        [
+            "r",
+            "Wrapping to top.",
+            "leaving panel.",
+            "Pick a color",
+            "panel",
+            "Red color",
+            "not selected radio button",
+        ],
         [
             helpers.BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
             helpers.BrailleLine(
-                14,
-                " Pick a color& y Red color radio button",
-                " Pick a color& y Red color radio",
+                1,
+                "Pick a color & y Red color radio button",
+                "& y Red color radio button",
                 "\x00" * 39,
             ),
         ],
@@ -428,27 +525,52 @@ def test_structural_navigation_by_radio_button(web_form_fields: NativeAppSession
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_R)
     assert helpers.capture(session) == (
-        ["R", "Wrapping to bottom.", "Blue color", "not selected radio button"],
+        [
+            "R",
+            "Wrapping to bottom.",
+            "leaving panel.",
+            "Seat",
+            "panel",
+            "Window",
+            "not selected radio button",
+        ],
         [
             helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
             helpers.BrailleLine(
-                14,
-                " Pick a color& y Blue color radio button",
-                " Pick a color& y Blue color radi",
-                "\x00" * 40,
+                1, "Seat & y Window radio button", "& y Window radio button", "\x00" * 28
             ),
         ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_R)
     assert helpers.capture(session) == (
-        ["R", "Green color", "not selected radio button"],
+        ["R", "Middle", "not selected radio button"],
         [
             helpers.BrailleLine(
-                14,
-                " Pick a color& y Green color radio button",
-                " Pick a color& y Green color rad",
-                "\x00" * 41,
+                1, "Seat & y Middle radio button", "& y Middle radio button", "\x00" * 28
+            )
+        ],
+    )
+
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_R)
+    assert helpers.capture(session) == (
+        ["R", "Aisle", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                1, "Seat & y Aisle radio button", "& y Aisle radio button", "\x00" * 27
+            )
+        ],
+    )
+
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_R)
+    assert helpers.capture(session) == (
+        ["R", "leaving panel.", "Pick a color", "panel", "Blue color", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                1,
+                "Pick a color & y Blue color radio button",
+                "& y Blue color radio button",
+                "\x00" * 40,
             )
         ],
     )
@@ -525,6 +647,19 @@ def test_structural_navigation_by_combo_box(web_form_fields: NativeAppSession) -
 
     keyboard.tap_key(keyboard.KEYSYM_C)
     assert helpers.capture(session) == (
+        ["c", "Preferred contact", "combo box", "Email", "opens listbox"],
+        [
+            helpers.BrailleLine(
+                19,
+                "Preferred contact Email combo box",
+                "Preferred contact Email combo bo",
+                "\x00" * 33,
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_C)
+    assert helpers.capture(session) == (
         ["c", "Wrapping to top.", "Search", "editable combo box", "opens listbox"],
         [
             helpers.BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
@@ -534,11 +669,22 @@ def test_structural_navigation_by_combo_box(web_form_fields: NativeAppSession) -
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_C)
     assert helpers.capture(session) == (
-        ["C", "Wrapping to bottom.", "Fruit", "combo box", "Apple", "opens menu"],
+        ["C", "Wrapping to bottom.", "Preferred contact", "combo box", "Email", "opens listbox"],
         [
             helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
-            helpers.BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21),
+            helpers.BrailleLine(
+                19,
+                "Preferred contact Email combo box",
+                "Preferred contact Email combo bo",
+                "\x00" * 33,
+            ),
         ],
+    )
+
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_C)
+    assert helpers.capture(session) == (
+        ["C", "Fruit", "combo box", "Apple", "opens menu"],
+        [helpers.BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_C)
@@ -555,7 +701,7 @@ def test_fieldset_legend_role_only_on_entry(web_form_fields: NativeAppSession) -
     session = web_form_fields
     helpers.move_to_top(session)
 
-    for _ in range(12):
+    for _ in range(14):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         helpers.capture(session)
 
@@ -593,7 +739,8 @@ def test_where_am_i_on_form_controls(web_form_fields: NativeAppSession) -> None:
         [helpers.BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
     )
 
-    helpers.tab_and_swallow_presentation(session)
+    for _ in range(2):
+        helpers.tab_and_swallow_presentation(session)
     assert _where_am_i(session) == (
         ["Subscribe", "check box not checked"],
         [
@@ -612,15 +759,15 @@ def test_where_am_i_on_form_controls(web_form_fields: NativeAppSession) -> None:
         ["Pick a color", "Red color", "not selected radio button"],
         [
             helpers.BrailleLine(
-                14,
-                " Pick a color& y Red color radio button",
-                " Pick a color& y Red color radio",
+                1,
+                "Pick a color & y Red color radio button",
+                "& y Red color radio button",
                 "\x00" * 39,
             )
         ],
     )
 
-    for _ in range(2):
+    for _ in range(3):
         helpers.tab_and_swallow_presentation(session)
     assert _where_am_i(session) == (
         ["Submit", "button"],
