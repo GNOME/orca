@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Accordion ready</title>
+<style>
+.accordion h3 { margin: 0; }
+.accordion-trigger { display: block; width: 100%; text-align: left; padding: 4px; }
+.accordion-panel { padding: 4px; border: 1px solid #ccc; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const triggers = Array.from(document.querySelectorAll(".accordion-trigger"));
+
+  function toggle(trigger) {
+    const expanded = trigger.getAttribute("aria-expanded") === "true";
+    trigger.setAttribute("aria-expanded", expanded ? "false" : "true");
+    document.getElementById(trigger.getAttribute("aria-controls")).hidden = expanded;
+  }
+
+  triggers.forEach(function (trigger) {
+    trigger.addEventListener("click", function () { toggle(trigger); });
+    trigger.addEventListener("keydown", function (event) {
+      const index = triggers.indexOf(trigger);
+      let handled = true;
+      switch (event.key) {
+        case "ArrowDown":
+          triggers[(index + 1) % triggers.length].focus();
+          break;
+        case "ArrowUp":
+          triggers[(index - 1 + triggers.length) % triggers.length].focus();
+          break;
+        case "Home":
+          triggers[0].focus();
+          break;
+        case "End":
+          triggers[triggers.length - 1].focus();
+          break;
+        default:
+          handled = false;
+      }
+      if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    });
+  });
+});
+</script>
+</head>
+<body>
+<h1>Accordion</h1>
+
+<div id="accordionGroup" class="accordion">
+  <h3>
+    <button type="button" aria-expanded="true" class="accordion-trigger" aria-controls="sect1" id="accordion1id">
+      <span class="accordion-title">Contact details</span>
+    </button>
+  </h3>
+  <div id="sect1" role="region" aria-labelledby="accordion1id" class="accordion-panel">
+    <p><label for="cufc1">Name:</label> <input type="text" name="Name" id="cufc1"></p>
+      </div>
+  <h3>
+    <button type="button" aria-expanded="false" class="accordion-trigger" aria-controls="sect2" id="accordion2id">
+      <span class="accordion-title">Delivery address</span>
+    </button>
+  </h3>
+  <div id="sect2" role="region" aria-labelledby="accordion2id" class="accordion-panel" hidden>
+    <p><label for="b-add1">Street:</label> <input type="text" name="b-add1" id="b-add1"></p>
+      </div>
+  <h3>
+    <button type="button" aria-expanded="false" class="accordion-trigger" aria-controls="sect3" id="accordion3id">
+      <span class="accordion-title">Payment</span>
+    </button>
+  </h3>
+  <div id="sect3" role="region" aria-labelledby="accordion3id" class="accordion-panel" hidden>
+    <p><label for="s-add1">Street:</label> <input type="text" name="s-add1" id="s-add1"></p>
+  </div>
+</div>
+</body>
+</html>

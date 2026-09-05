@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Disclosure ready</title>
+<style>
+.disclosure-nav { margin: 0; padding: 0; list-style: none; }
+.disclosure-nav > li { display: inline-block; position: relative; }
+.disclosure-nav > li > ul { display: none; position: absolute; margin: 0; padding: 4px; list-style: none; border: 1px solid #034575; background: #eee; }
+.disclosure-nav > li > ul[data-open="true"] { display: block; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".disclosure-nav > li > button").forEach(function (button) {
+    const list = button.parentElement.querySelector("ul");
+    function close() {
+      button.setAttribute("aria-expanded", "false");
+      list.dataset.open = "false";
+    }
+    button.addEventListener("click", function () {
+      if (button.getAttribute("aria-expanded") === "true") {
+        close();
+        return;
+      }
+      button.setAttribute("aria-expanded", "true");
+      list.dataset.open = "true";
+    });
+    button.parentElement.addEventListener("keydown", function (event) {
+      if (event.key !== "Escape") return;
+      close();
+      button.focus();
+      event.preventDefault();
+      event.stopPropagation();
+    });
+  });
+
+  const details = document.getElementById("more");
+  document.getElementById("more-button").addEventListener("click", function (event) {
+    const expanded = event.currentTarget.getAttribute("aria-expanded") === "true";
+    event.currentTarget.setAttribute("aria-expanded", expanded ? "false" : "true");
+    details.hidden = expanded;
+  });
+});
+</script>
+</head>
+<body>
+<h1>Disclosure</h1>
+
+<p>
+  <button type="button" id="more-button" aria-expanded="false" aria-controls="more">Read more</button>
+</p>
+<div id="more" hidden>
+  <p>The disclosed content is a short paragraph.</p>
+</div>
+
+<nav aria-label="Field guide">
+  <ul class="disclosure-nav">
+    <li>
+      <button type="button" aria-expanded="false" aria-controls="id_birds_menu">Birds</button>
+      <ul id="id_birds_menu">
+        <li><a href="#warblers">Warblers</a></li>
+        <li><a href="#finches">Finches</a></li>
+      </ul>
+    </li>
+    <li>
+      <button type="button" aria-expanded="false" aria-controls="id_trees_menu">Trees</button>
+      <ul id="id_trees_menu">
+        <li><a href="#oaks">Oaks</a></li>
+        <li><a href="#pines">Pines</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</body>
+</html>

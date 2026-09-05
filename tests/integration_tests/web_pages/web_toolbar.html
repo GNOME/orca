@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Toolbar ready</title>
+<style>
+.format { display: flex; padding: 2px; border: 1px solid #aaa; }
+.format .group { display: flex; margin-right: 0.5em; }
+.format .item { margin: 1px; padding: 2px 4px; }
+.format [aria-disabled="true"] { color: #888; }
+.menu-popup { position: relative; }
+.menu-popup [role="menu"] {
+  display: none;
+  position: absolute;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  border: 2px solid #034575;
+  background-color: #eee;
+}
+.menu-popup [role="menu"] li { display: block; width: 8em; padding: 2px; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const toolbar = document.querySelector('[role="toolbar"]');
+  const items = Array.from(toolbar.querySelectorAll(".item"));
+  const menuButton = toolbar.querySelector(".menu-button");
+  const menu = document.getElementById("menu1");
+  const menuItems = Array.from(menu.querySelectorAll('[role="menuitemradio"]'));
+  const spinbutton = toolbar.querySelector('[role="spinbutton"]');
+
+  function focusItem(item) {
+    items.forEach(function (x) { x.tabIndex = -1; });
+    item.tabIndex = 0;
+    item.focus();
+  }
+
+  function openMenu() {
+    menu.style.display = "block";
+    menuButton.setAttribute("aria-expanded", "true");
+    const checked = menuItems.find(function (x) { return x.getAttribute("aria-checked") === "true"; });
+    (checked || menuItems[0]).focus();
+  }
+
+  function closeMenu() {
+    menu.style.display = "none";
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.focus();
+  }
+
+  function setSpinbuttonValue(value) {
+    const min = Number(spinbutton.getAttribute("aria-valuemin"));
+    const max = Number(spinbutton.getAttribute("aria-valuemax"));
+    const clamped = Math.min(max, Math.max(min, value));
+    spinbutton.setAttribute("aria-valuenow", String(clamped));
+    spinbutton.setAttribute("aria-valuetext", clamped + "pt");
+    spinbutton.querySelector(".value").textContent = clamped + "pt";
+  }
+
+  function activate(item) {
+    if (item.hasAttribute("aria-pressed")) {
+      item.setAttribute("aria-pressed", item.getAttribute("aria-pressed") === "true" ? "false" : "true");
+      return true;
+    }
+    if (item.getAttribute("role") === "radio") {
+      item.parentElement.querySelectorAll('[role="radio"]').forEach(function (radio) {
+        radio.setAttribute("aria-checked", radio === item ? "true" : "false");
+      });
+      return true;
+    }
+    if (item === menuButton) {
+      openMenu();
+      return true;
+    }
+    return false;
+  }
+
+  toolbar.addEventListener("keydown", function (event) {
+    const item = event.target.closest(".item");
+    if (!item) return;
+    const index = items.indexOf(item);
+    let handled = true;
+    switch (event.key) {
+      case "ArrowRight":
+        focusItem(items[(index + 1) % items.length]);
+        break;
+      case "ArrowLeft":
+        focusItem(items[(index - 1 + items.length) % items.length]);
+        break;
+      case "Home":
+        focusItem(items[0]);
+        break;
+      case "End":
+        focusItem(items[items.length - 1]);
+        break;
+      case "ArrowDown":
+        if (item === spinbutton) setSpinbuttonValue(Number(spinbutton.getAttribute("aria-valuenow")) - 1);
+        else if (item === menuButton) openMenu();
+        else handled = false;
+        break;
+      case "ArrowUp":
+        if (item === spinbutton) setSpinbuttonValue(Number(spinbutton.getAttribute("aria-valuenow")) + 1);
+        else handled = false;
+        break;
+      case "Enter":
+      case " ":
+        handled = activate(item);
+        break;
+      default:
+        handled = false;
+    }
+    if (handled) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  });
+
+  menu.addEventListener("keydown", function (event) {
+    const index = menuItems.indexOf(document.activeElement);
+    let handled = true;
+    switch (event.key) {
+      case "ArrowDown":
+        menuItems[(index + 1) % menuItems.length].focus();
+        break;
+      case "ArrowUp":
+        menuItems[(index - 1 + menuItems.length) % menuItems.length].focus();
+        break;
+      case "Enter":
+      case " ":
+        menuItems.forEach(function (x) {
+          x.setAttribute("aria-checked", x === menuItems[index] ? "true" : "false");
+        });
+        menuButton.setAttribute("aria-label", "Font: " + menuItems[index].textContent.trim());
+        closeMenu();
+        break;
+      case "Escape":
+        closeMenu();
+        break;
+      default:
+        handled = false;
+    }
+    if (handled) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  });
+
+  items.forEach(function (item, i) { item.tabIndex = i === 0 ? 0 : -1; });
+  menuItems.forEach(function (item) { item.tabIndex = -1; });
+});
+</script>
+</head>
+<body>
+<h1>Toolbar</h1>
+
+<div class="format" role="toolbar" aria-label="Text Formatting" aria-controls="textarea1">
+  <div class="group characteristics">
+    <button type="button" class="item bold" aria-pressed="false" value="bold" tabindex="0">Bold</button>
+    <button type="button" class="item italic" aria-pressed="false" value="italic" tabindex="-1">Italic</button>
+    <button type="button" class="item underline" aria-pressed="false" value="underline" tabindex="-1">Underline</button>
+  </div>
+  <div class="group" role="radiogroup" aria-label="Text Alignment">
+    <button type="button" role="radio" class="item align-left" aria-checked="true" tabindex="-1">Text Align Left</button>
+    <button type="button" role="radio" class="item align-center" aria-checked="false" tabindex="-1">Text Align Center</button>
+    <button type="button" role="radio" class="item align-right" aria-checked="false" tabindex="-1">Text Align Right</button>
+  </div>
+  <div class="group">
+    <button type="button" class="item copy" aria-disabled="true" tabindex="-1">Copy</button>
+    <button type="button" class="item paste" aria-disabled="true" tabindex="-1">Paste</button>
+  </div>
+  <div class="menu-popup group">
+    <button type="button" aria-haspopup="true" aria-expanded="false" aria-controls="menu1" class="item menu-button" tabindex="-1" aria-label="Font: Sans-serif">
+      SANS-SERIF
+    </button>
+    <ul role="menu" id="menu1" aria-label="Font Family">
+      <li role="menuitemradio" aria-checked="true">Sans-serif</li>
+      <li role="menuitemradio" aria-checked="false">Serif</li>
+      <li role="menuitemradio" aria-checked="false">Monospace</li>
+    </ul>
+  </div>
+  <div class="group">
+    <div class="item spinbutton" role="spinbutton" tabindex="-1" aria-valuenow="14" aria-valuetext="14pt" aria-valuemin="8" aria-valuemax="40" aria-label="Font size in points">
+      <span class="value">14pt</span>
+    </div>
+  </div>
+  <div class="group">
+    <label class="input"><input id="checkbox" class="item nightmode" type="checkbox" tabindex="-1"> Night Mode</label>
+    <a id="link" class="item link" href="#help" tabindex="-1">Help</a>
+  </div>
+</div>
+
+<p><label for="textarea1">Text Sample</label></p>
+<textarea id="textarea1" rows="3" cols="40">Fourscore and seven years ago.</textarea>
+</body>
+</html>
