@@ -693,7 +693,7 @@ class Script(default.Script):
             tokens = ["WEB: Brief verbosity set. Should present", obj, ":", should_present]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if event.detail1:
+        if event.detail1 and AXUtilities.is_ancestor(focus, event.source, True):
             presentation_manager.get_manager().interrupt_presentation()
 
         if should_present and AXUtilities.get_uri(event.source).startswith("http"):
