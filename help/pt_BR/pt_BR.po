@@ -7,20 +7,21 @@
 # Rafael Fontenelle <rafaelff@gnome.org>, 2013.
 # Leônidas Araújo <leorusvellt@hotmail.com>, 2022.
 # Álvaro Burns <>, 2026.
+# Rafael Coelho Costa <coelho38r@proton.me>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2026-02-05 15:56+0000\n"
-"PO-Revision-Date: 2026-02-04 19:07-0300\n"
-"Last-Translator: Álvaro Burns <>\n"
+"POT-Creation-Date: 2026-09-05 07:09+0000\n"
+"PO-Revision-Date: 2026-09-05 08:44-0300\n"
+"Last-Translator: Rafael Coelho Costa <coelho38r@proton.me>\n"
 "Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Gtranslator 49.0\n"
+"X-Generator: Gtranslator 50.0\n"
 "X-DL-Team: pt_BR\n"
 "X-DL-Module: orca\n"
 "X-DL-Branch: master\n"
@@ -224,47 +225,42 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:30
-#, fuzzy
-#| msgid "Present the previous notification message: (Unbound)"
 msgid "Present previous chat room message: (Unbound)"
-msgstr "Apresenta a mensagem de notificação anterior: (Sem atalho definido)"
+msgstr ""
+"Apresenta a mensagem anterior da sala de bate-papo: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:35
-#, fuzzy
-#| msgid "Present the next notification message: (Unbound)"
 msgid "Present next chat room message: (Unbound)"
-msgstr "Apresentar a próxima mensagem de notificação: (Sem atalho definido)"
+msgstr ""
+"Apresenta a próxima mensagem da sala de bate-papo: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:40
 msgid "Enable/disable announcement of room name with messages: (Unbound)"
 msgstr ""
-"Habilita/desabilita o anúncio do nome da sala com mensagens: (Sem atalho "
+"Habilita/desabilita o anúncio do nome da sala com mensagens: (sem atalho "
 "definido)"
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:45
-#, fuzzy
-#| msgid "Provide chat room specific message histories"
 msgid "Toggle chat room specific message histories: (unbound)"
-msgstr "Fornece históricos de mensagens específicos para as salas de bate-papo"
+msgstr ""
+"Ativa/desativa os históricos de mensagens específicos de cada sala de bate-"
+"papo: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:50
 msgid "Enable/disable announcement of buddy typing status: (Unbound)"
 msgstr ""
-"Habilita/desabilita o anúncio do status de digitação de amigos: (Sem atalho "
+"Habilita/desabilita o anúncio do estado de digitação de amigos: (sem atalho "
 "definido)"
 
 # Usando mesma tradução da UI para "Cycle to the next speaking of punctuation level"
 #. (itstool) path: item/p
 #: C/commands_chat.page:53
-#, fuzzy
-#| msgid "Cycle to the next spoken punctuation level: (Unbound)"
 msgid "Toggle room name presentation: (Unbound)"
-msgstr ""
-"Circula para o próximo nível de fala de pontuação: (Sem atalho definido)"
+msgstr "Ativa/desativa a apresentação do nome da sala: (sem atalho definido)"
 
 #. (itstool) path: info/title
 #: C/commands_controlling_orca.page:5
@@ -307,16 +303,12 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:29
-#, fuzzy
-#| msgid ""
-#| "To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
-#| "key><key>Alt</key><key>S</key></keyseq>."
 msgid ""
 "Toggle <app>Orca</app> on and off in supported desktop environments: "
 "<keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 msgstr ""
-"Para alternar o <app>Orca</app> em ligado e desligado no GNOME, pressione as "
-"teclas <keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
+"Ativa ou desativa o <app>Orca</app> em ambientes de área de trabalho "
+"compatíveis: <keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: note/p
 #: C/commands_controlling_orca.page:34
@@ -355,31 +347,27 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:56
-#, fuzzy
-#| msgid ""
-#| "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgid ""
 "Toggle all Orca command keys: <keyseq><key>Alt&gt;</key><key>BackSpace</"
 "key></keyseq>"
 msgstr ""
-"Célula acima: <keyseq><key>Alt</key><key>Shift</key><key>Cima</key></keyseq>"
+"Ativa/desativa todas as teclas de comando do Orca: <keyseq><key>Alt></"
+"key><key>BackSpace</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:62
 msgid "Toggle keyboard layout: (Unbound)"
-msgstr ""
+msgstr "Alterna a disposição de teclado: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:65 C/commands_speech_settings.page:57
 msgid "Cycle to the next key echo level: (Unbound)"
-msgstr "Circular para o próximo nível de eco de tecla: (Sem atalho definido)"
+msgstr "Circular para o próximo nível de eco de tecla: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:68
-#, fuzzy
-#| msgid "Decrease the rate: (Unbound)"
 msgid "Quit the screen reader: (Unbound)"
-msgstr "Diminui a velocidade: (Sem atalho definido)"
+msgstr "Encerra o leitor de tela: (sem atalho definido)"
 
 #. (itstool) path: section/p
 #: C/commands_controlling_orca.page:74
@@ -387,25 +375,23 @@ msgid ""
 "The following commands can be used to control and customize Orca's braille "
 "output."
 msgstr ""
+"Os comandos a seguir podem ser usados para controlar e personalizar a saída "
+"em Braille do Orca."
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:77
-#, fuzzy
-#| msgid "Pan braille display to the left: Line Left"
 msgid "Pan the braille display to the left: (Unbound)"
-msgstr "Varre a linha Braille para a esquerda: Linha à esquerda"
+msgstr "Varre a linha Braille para a esquerda: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:80
-#, fuzzy
-#| msgid "Pan braille display to the right: Line Right"
 msgid "Pan the braille display to the right: (Unbound)"
-msgstr "Varre a linha Braille para a direita: Linha à direita"
+msgstr "Varre a linha Braille para a direita: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:83
 msgid "Turn contracted braille on and off: (Unbound)"
-msgstr ""
+msgstr "Ativa ou desativa o Braille contraído: (sem atalho definido)"
 
 #. (itstool) path: section/title
 #: C/commands_controlling_orca.page:88
@@ -478,20 +464,17 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_debugging.page:26
 msgid "Capture snapshot for debugging: (Unbound)"
-msgstr ""
+msgstr "Captura instantânea para depuração: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_debugging.page:29
 msgid "Cycle to the next debug level: (Unbound)"
-msgstr "Alterna para o próximo nível de depuração: (Sem atalho definido)"
+msgstr "Alterna para o próximo nível de depuração: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_debugging.page:32
-#, fuzzy
-#| msgid "Cycle to the next capitalization style: (Unbound)"
 msgid "Clear the AT-SPI cache for the current application: (Unbound)"
-msgstr ""
-"Circula para o próximo estilo de letras maiúsculas: (Sem atalho definido)"
+msgstr "Limpa o cache do AT-SPI para o aplicativo atual: (sem atalho definido)"
 
 #. (itstool) path: info/title
 #: C/commands_find.page:6
@@ -1082,25 +1065,20 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:197
-#, fuzzy
-#| msgid "Copy the contents under flat review to the clipboard: (Unbound)"
 msgid "Move flat review to the bottom left: (Unbound)"
 msgstr ""
-"Copie o conteúdo sob revisão plana para a área de transferência: (Sem atalho "
-"definido)"
+"Move a revisão plana para o canto inferior esquerdo: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:198
 msgid "Show flat review contents: (Unbound)"
-msgstr ""
+msgstr "Mostrar conteúdo de revisão plana: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:199
-#, fuzzy
-#| msgid "Copy the contents under flat review to the clipboard: (Unbound)"
 msgid "Toggle restricting flat review to the current object: (Unbound)"
 msgstr ""
-"Copie o conteúdo sob revisão plana para a área de transferência: (Sem atalho "
+"Ativa/desativa a restrição da revisão plana ao objeto atual: (Sem atalho "
 "definido)"
 
 #. (itstool) path: info/title
@@ -1146,12 +1124,12 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:33
 msgid "Advance live region politeness setting: (Unbound)"
-msgstr "Avança configuração da polidez da região ativa: (Sem atalho definido)"
+msgstr "Avança configuração da polidez da região ativa: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:36
 msgid "Set default politeness level to off: (Unbound)"
-msgstr "Desativa o nível de polidez padrão: (Sem atalho definido)"
+msgstr "Desativa o nível de polidez padrão: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:39
@@ -1309,7 +1287,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_mouse.page:69
 msgid "Enable/disable mouse review mode: (Unbound)"
-msgstr "Habilita/desabilita o modo de revisão do mouse: (Sem atalho definido)"
+msgstr "Habilita/desabilita o modo de revisão do mouse: (sem atalho definido)"
 
 #. (itstool) path: info/title
 #: C/commands.page:5
@@ -1403,14 +1381,12 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_profiles.page:30
 msgid "Cycle to the next profile: (Unbound)"
-msgstr "Alterna para o próximo perfil: (Sem atalho definido)"
+msgstr "Alterna para o próximo perfil: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_profiles.page:35
-#, fuzzy
-#| msgid "Cycle to the next profile: (Unbound)"
 msgid "Present the current profile: (Unbound)"
-msgstr "Alterna para o próximo perfil: (Sem atalho definido)"
+msgstr "Apresenta o perfil atual: (sem atalho definido)"
 
 #. (itstool) path: info/title
 #: C/commands_reading.page:8
@@ -1622,7 +1598,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_reading.page:241
 msgid "Speak the link details: (Unbound)"
-msgstr "Fale os detalhes do link: (Sem atalho definido)"
+msgstr "Fale os detalhes do link: (sem atalho definido)"
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:246
@@ -1697,13 +1673,13 @@ msgstr ""
 "O <app>Orca</app> fornece um comando para alternar entre o modo Layout e o "
 "modo Objeto. Este comando não possui atalho definido por padrão. Consulte "
 "<link xref=\"howto_key_bindings\">Associações de teclas</link> para obter "
-"informações sobre como vincular comandos Sem atalho definidos."
+"informações sobre como vincular comandos sem atalho definidos."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:288
 msgid "Switch between Layout mode and Object mode: (Unbound)"
 msgstr ""
-"Alterna entre o Modo de Layout e o Modo de Objeto: (Sem atalho definido)"
+"Alterna entre o Modo de Layout e o Modo de Objeto: (sem atalho definido)"
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
@@ -1724,10 +1700,8 @@ msgstr "Comandos para personalizar a saída do <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/commands_speech_settings.page:19
-#, fuzzy
-#| msgid "Speech Settings Commands"
 msgid "Speech And Verbosity Settings Commands"
-msgstr "Comandos de configuração de fala"
+msgstr "Comandos de configuração de fala e verbosidade"
 
 #. (itstool) path: page/p
 #: C/commands_speech_settings.page:20
@@ -1773,62 +1747,60 @@ msgstr ""
 #: C/commands_speech_settings.page:46
 msgid "Enable/disable speaking of indentation and justification: (Unbound)"
 msgstr ""
-"Habilita/desabilita a fala de recuo e justificação: (Sem atalho definido)"
+"Habilita/desabilita a fala de recuo e justificação: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:51
 msgid "Change the spoken number style: (Unbound)"
-msgstr "Circula para o estilo do número falado: (Sem atalho definido)"
+msgstr "Circula para o estilo do número falado: (sem atalho definido)"
 
 # Usando mesma tradução da UI para "Cycle to the next speaking of punctuation level"
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:54
 msgid "Cycle to the next spoken punctuation level: (Unbound)"
 msgstr ""
-"Circula para o próximo nível de fala de pontuação: (Sem atalho definido)"
+"Circula para o próximo nível de fala de pontuação: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:60
 msgid "Cycle to the next capitalization style: (Unbound)"
 msgstr ""
-"Circula para o próximo estilo de letras maiúsculas: (Sem atalho definido)"
+"Circula para o próximo estilo de letras maiúsculas: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:63
 msgid "Decrease the rate: (Unbound)"
-msgstr "Diminui a velocidade: (Sem atalho definido)"
+msgstr "Diminui a velocidade: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:66
 msgid "Increase the rate: (Unbound)"
-msgstr "Aumenta a velocidade: (Sem atalho definido)"
+msgstr "Aumenta a velocidade: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:69
 msgid "Decrease the pitch: (Unbound)"
-msgstr "Diminui a tonalidade: (Sem atalho definido)"
+msgstr "Diminui a tonalidade: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:72
 msgid "Increase the pitch: (Unbound)"
-msgstr "Aumenta a tonalidade: (Sem atalho definido)"
+msgstr "Aumenta a tonalidade: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:75
 msgid "Decrease the volume: (Unbound)"
-msgstr "Diminui o volume: (Sem atalho definido)"
+msgstr "Diminui o volume: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:78
 msgid "Increase the volume: (Unbound)"
-msgstr "Aumenta o volume: (Sem atalho definido)"
+msgstr "Aumenta o volume: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:81
-#, fuzzy
-#| msgid "Cycle to the next key echo level: (Unbound)"
 msgid "Cycle to the next speech synthesizer: (Unbound)"
-msgstr "Circular para o próximo nível de eco de tecla: (Sem atalho definido)"
+msgstr "Alterna para o próximo sintetizador de voz: (sem atalho definido)"
 
 #. (itstool) path: info/title
 #: C/commands_structural_navigation.page:6
@@ -2578,12 +2550,12 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:53
 msgid "Present the previous notification message: (Unbound)"
-msgstr "Apresenta a mensagem de notificação anterior: (Sem atalho definido)"
+msgstr "Apresenta a mensagem de notificação anterior: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:56
 msgid "Present the next notification message: (Unbound)"
-msgstr "Apresentar a próxima mensagem de notificação: (Sem atalho definido)"
+msgstr "Apresentar a próxima mensagem de notificação: (sem atalho definido)"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:59
@@ -3050,7 +3022,7 @@ msgstr ""
 #. (itstool) path: steps/title
 #: C/howto_key_bindings.page:21
 msgid "Binding an Unbound Command"
-msgstr "Associando um Comando Sem atalho definido Definido"
+msgstr "Associando um comando sem atalho definido"
 
 #. (itstool) path: item/p
 #: C/howto_key_bindings.page:23 C/howto_key_bindings.page:60
@@ -6283,7 +6255,7 @@ msgid ""
 "display."
 msgstr ""
 "Abaixo da lista de atalhos de teclado do <app>Orca</app>, você encontrará um "
-"grupo de comandos \"Sem atalho definido\". Estes são comandos que achamos "
+"grupo de comandos \"sem atalho definido\". Estes são comandos que achamos "
 "que serão muito úteis para alguns usuários, mas não necessariamente para a "
 "maioria. Em vez de \"usar\" um pressionamento de tecla para esses comandos, "
 "os deixamos sem atribuição por padrão. No final da lista estão as "
