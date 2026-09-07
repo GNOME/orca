@@ -62,6 +62,14 @@ if TYPE_CHECKING:
     TerminalRepaintRecord = tuple[Hashable, InputEvent | None, str]
 
 
+class CheckedState(enum.Enum):
+    """The tri-state checked value of a check box."""
+
+    UNCHECKED = enum.auto()
+    CHECKED = enum.auto()
+    MIXED = enum.auto()
+
+
 class TextEventReason(enum.Enum):
     """Enum representing the reason for an object:text- event."""
 
@@ -124,6 +132,7 @@ class _AXUtilitiesEventCache:
     LAST_KNOWN_DESCRIPTION = "AXUtilitiesEvent.last-known-description"
     LAST_KNOWN_NAME = "AXUtilitiesEvent.last-known-name"
     LAST_KNOWN_CHECKED = "AXUtilitiesEvent.last-known-checked"
+    LAST_KNOWN_CHECKED_STATE = "AXUtilitiesEvent.last-known-checked-state"
     LAST_KNOWN_EXPANDED = "AXUtilitiesEvent.last-known-expanded"
     LAST_KNOWN_INDETERMINATE = "AXUtilitiesEvent.last-known-indeterminate"
     LAST_KNOWN_INVALID_ENTRY = "AXUtilitiesEvent.last-known-invalid-entry"
@@ -138,6 +147,7 @@ class _AXUtilitiesEventCache:
         LAST_KNOWN_DESCRIPTION,
         LAST_KNOWN_NAME,
         LAST_KNOWN_CHECKED,
+        LAST_KNOWN_CHECKED_STATE,
         LAST_KNOWN_EXPANDED,
         LAST_KNOWN_INDETERMINATE,
         LAST_KNOWN_INVALID_ENTRY,
@@ -206,6 +216,22 @@ class _AXUtilitiesEventCache:
         """Stores the state for obj."""
 
         cache = self._caches.get(namespace)
+        if cache is not None:
+            cache.put(ax_cache_manager.get_object_key(obj), state)
+
+    def get_checked_state(self, obj: Atspi.Accessible) -> CheckedState | None:
+        """Returns the cached tri-state checked value for obj."""
+
+        cache = self._caches.get(self.LAST_KNOWN_CHECKED_STATE)
+        if cache is None:
+            return None
+
+        return cache.get(ax_cache_manager.get_object_key(obj), None)
+
+    def set_checked_state(self, obj: Atspi.Accessible, state: CheckedState) -> None:
+        """Stores the tri-state checked value for obj."""
+
+        cache = self._caches.get(self.LAST_KNOWN_CHECKED_STATE)
         if cache is not None:
             cache.put(ax_cache_manager.get_object_key(obj), state)
 
@@ -432,6 +458,8 @@ class AXUtilitiesEvent:
             obj,
             AXUtilitiesState.is_indeterminate(obj, state_set),
         )
+        if AXUtilitiesRole.is_check_box(obj):
+            AXUtilitiesEvent._CACHE.set_checked_state(obj, AXUtilitiesEvent._get_checked_state(obj))
         AXUtilitiesEvent._CACHE.set_state(
             AXUtilitiesEvent._CACHE.LAST_KNOWN_PRESSED,
             obj,
@@ -988,21 +1016,9 @@ class AXUtilitiesEvent:
     def is_presentable_checked_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as a checked-state change."""
 
-        old_state = AXUtilitiesEvent._CACHE.get_state(
-            AXUtilitiesEvent._CACHE.LAST_KNOWN_CHECKED,
-            event.source,
-        )
-        new_state = AXUtilitiesState.is_checked(event.source)
-        if old_state == new_state:
-            msg = "AXUtilitiesEvent: The new state matches the old state."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+        if not AXUtilitiesEvent._checked_state_changed(event):
             return False
 
-        AXUtilitiesEvent._CACHE.set_state(
-            AXUtilitiesEvent._CACHE.LAST_KNOWN_CHECKED,
-            event.source,
-            new_state,
-        )
         focus = focus_manager.get_manager().get_locus_of_focus()
         if event.source != focus:
             if not AXUtilitiesObject.is_ancestor(event.source, focus):
@@ -1027,6 +1043,47 @@ class AXUtilitiesEvent:
 
         msg = "AXUtilitiesEvent: Event is presentable."
         debug.print_message(debug.LEVEL_INFO, msg, True)
+        return True
+
+    @staticmethod
+    def _get_checked_state(obj: Atspi.Accessible) -> CheckedState:
+        """Returns obj's current tri-state checked value."""
+
+        if AXUtilitiesState.is_indeterminate(obj):
+            return CheckedState.MIXED
+        if AXUtilitiesState.is_checked(obj):
+            return CheckedState.CHECKED
+        return CheckedState.UNCHECKED
+
+    @staticmethod
+    def _checked_state_changed(event: Atspi.Event) -> bool:
+        """Returns True if the source's checked state differs from the last known state."""
+
+        matches_msg = "AXUtilitiesEvent: The new state matches the old state."
+        if AXUtilitiesRole.is_check_box(event.source):
+            old_value = AXUtilitiesEvent._CACHE.get_checked_state(event.source)
+            AXObject.clear_cache(event.source, False, "Deriving the tri-state checked value.")
+            new_value = AXUtilitiesEvent._get_checked_state(event.source)
+            AXUtilitiesEvent._CACHE.set_checked_state(event.source, new_value)
+            if old_value == new_value:
+                debug.print_message(debug.LEVEL_INFO, matches_msg, True)
+                return False
+            return True
+
+        old_state = AXUtilitiesEvent._CACHE.get_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_CHECKED,
+            event.source,
+        )
+        new_state = AXUtilitiesState.is_checked(event.source)
+        AXUtilitiesEvent._CACHE.set_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_CHECKED,
+            event.source,
+            new_state,
+        )
+        if old_state == new_state:
+            debug.print_message(debug.LEVEL_INFO, matches_msg, True)
+            return False
+
         return True
 
     @staticmethod
@@ -1141,6 +1198,12 @@ class AXUtilitiesEvent:
     @staticmethod
     def is_presentable_indeterminate_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as an indeterminate-state change."""
+
+        if AXUtilitiesRole.is_check_box(event.source):
+            return (
+                AXUtilitiesEvent._checked_state_changed(event)
+                and event.source == focus_manager.get_manager().get_locus_of_focus()
+            )
 
         old_state = AXUtilitiesEvent._CACHE.get_state(
             AXUtilitiesEvent._CACHE.LAST_KNOWN_INDETERMINATE,

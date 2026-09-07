@@ -52,6 +52,7 @@ from .apps import (
     gtk3_text_view,
     gtk3_toolbar,
     gtk3_tree_view,
+    gtk3_tri_state_checkbox,
     gtk3_two_entries,
     gtk3_two_windows,
     gtk3_widget_notebook,
@@ -159,6 +160,7 @@ _gtk3_text_view_emoji = _make_native_app_fixture(
 )
 _gtk3_multi_select_list = _make_native_app_fixture(gtk3_multi_select_list, scope="function")
 _gtk3_tree_view = _make_native_app_fixture(gtk3_tree_view, scope="function")
+_gtk3_tri_state_checkbox = _make_native_app_fixture(gtk3_tri_state_checkbox, scope="function")
 _gtk3_two_entries = _make_native_app_fixture(gtk3_two_entries, scope="function")
 _gtk3_two_windows = _make_native_app_fixture(gtk3_two_windows, scope="function")
 _gtk3_widget_notebook = _make_native_app_fixture(gtk3_widget_notebook)
@@ -651,6 +653,7 @@ _web_weird_headings = _make_web_fixture("web_weird_headings.html")
 _web_sliders = _make_web_fixture("web_sliders.html")
 _web_text_attributes = _make_web_fixture("web_text_attributes.html")
 _web_tree = _make_web_fixture("web_tree.html")
+_web_tri_state_checkbox = _make_web_fixture("web_tri_state_checkbox.html")
 _web_live_regions = _make_web_fixture("web_live_regions.html")
 _web_dialogs = _make_web_fixture("web_dialogs.html")
 _web_aria_spinbutton = _make_web_fixture("web_aria_spinbutton.html")

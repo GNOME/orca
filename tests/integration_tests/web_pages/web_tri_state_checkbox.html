@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Tri State Checkbox ready</title>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const forward = document.getElementById("forward");
+  let state = 0;
+  forward.addEventListener("click", function () {
+    state = (state + 1) % 3;
+    forward.indeterminate = state === 1;
+    forward.checked = state === 2;
+  });
+
+  const backward = document.getElementById("backward");
+  let backwardState = 2;
+  backward.addEventListener("click", function () {
+    backwardState = (backwardState + 2) % 3;
+    backward.indeterminate = backwardState === 1;
+    backward.checked = backwardState === 2;
+  });
+});
+</script>
+</head>
+<body>
+<h1>Tri state checkbox</h1>
+<label><input id="forward" type="checkbox"> Forward</label>
+<label><input id="backward" type="checkbox" checked> Backward</label>
+</body>
+</html>
