@@ -202,8 +202,7 @@ def test_word_navigation_over_nested_link_text(web_nested_link_text: WebSession)
         ["."],
         ["After"],
         ["after"],
-        # KNOWN ISSUE: The heading role should not be spoken during word navigation.
-        ["here", "heading 3"],
+        ["here"],
         ["link "],
         ["a "],
         ["Before "],
