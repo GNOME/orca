@@ -333,8 +333,11 @@ class GSettingsRegistry:
             "a{sv}": handle.get_dict,
         }
         accessor = accessors.get("s" if genum else gtype)
-        # For explicit app lookups, skip the app layer (already checked above).
-        effective_app_arg = "" if app_name else None
+        # Include the app layer when merging dictionaries. Other app settings were checked above.
+        if gtype in ("a{ss}", "a{saas}", "a{sv}"):
+            effective_app_arg = app_name
+        else:
+            effective_app_arg = "" if app_name else None
         result = accessor(key, lookup_sub_path, effective_app_arg) if accessor is not None else None
         if result is not None:
             self._cache.set_value(cache_key, result)

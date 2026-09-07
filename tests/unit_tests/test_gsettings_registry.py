@@ -1470,6 +1470,59 @@ class TestLayeredGetDict:
             gs.get_user_value.return_value = variant
         return gs
 
+    @pytest.mark.parametrize("profile", ["default", "work"])
+    def test_explicit_app_lookup_merges_inherited_entries(
+        self,
+        test_context: OrcaTestContext,
+        profile: str,
+    ) -> None:
+        """Explicit app lookups include app entries and preserve inherited pronunciations."""
+
+        self._setup(test_context)
+        from orca import gsettings_registry
+        from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
+
+        registry = GSettingsRegistry()
+        test_context.patch_object(gsettings_registry, "get_registry", return_value=registry)
+        registry.set_active_profile(profile)
+        registry.set_active_app("orca")
+
+        handle = GSettingsSchemaHandle("org.gnome.Orca.Pronunciations", "pronunciations")
+        registry._handles["pronunciations"] = handle
+        test_context.patch_object(handle, "has_key", return_value=True)
+
+        default_entries = {"inherited": "default pronunciation", "overridden": "default"}
+        profile_entries = {"profile": "work pronunciation", "overridden": "work"}
+        app_entries = {"tst": "test", "overridden": "pluma"}
+        profile_settings = {
+            "default": self._make_gs_with_entries(test_context, default_entries),
+            "work": self._make_gs_with_entries(test_context, profile_entries),
+        }
+        test_context.patch_object(
+            handle,
+            "get_for_profile",
+            side_effect=lambda name, _sub_path="": profile_settings[name],
+        )
+        app_settings = self._make_gs_with_entries(test_context, app_entries)
+        get_for_app = test_context.patch_object(
+            handle,
+            "get_for_app",
+            side_effect=lambda name, *_args: app_settings if name == "pluma" else None,
+        )
+
+        expected = default_entries | (profile_entries if profile == "work" else {}) | app_entries
+        assert (
+            registry.layered_lookup(
+                "pronunciations",
+                "entries",
+                "a{ss}",
+                app_name="pluma",
+                default={},
+            )
+            == expected
+        )
+        get_for_app.assert_called_with("pluma", profile, "")
+
     def test_non_default_profile_inherits_default(
         self,
         test_context: OrcaTestContext,
