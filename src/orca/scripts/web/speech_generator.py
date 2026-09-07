@@ -555,7 +555,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return result
 
         if not self._should_speak_role(obj):
-            if self._is_ancestor():
+            manager = input_event_manager.get_manager()
+            if (
+                self._is_ancestor()
+                or manager.last_event_was_word_navigation()
+                or manager.last_event_was_character_navigation()
+            ):
                 return []
             ancestor = self._get_ancestor_with_usable_role(obj)
             if ancestor in (None, next_obj):

@@ -191,6 +191,37 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: WebSession)
 
 
 @pytest.mark.web
+def test_word_navigation_over_nested_link_text(web_nested_link_text: WebSession) -> None:
+    """Tests word navigation over nested link text."""
+
+    session = web_nested_link_text
+    move_to_bottom(session)
+    speech(session)
+
+    expected = [
+        ["."],
+        ["After"],
+        ["after"],
+        # KNOWN ISSUE: The heading role should not be spoken during word navigation.
+        ["here", "heading 3"],
+        ["link "],
+        ["a "],
+        ["Before "],
+        ["fox"],
+        ["brown "],
+        ["quick "],
+        ["The "],
+    ]
+    for utterances in expected:
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
+        assert speech(session) == utterances
+
+    for utterances in [["The "], ["quick "], ["brown "], ["fox"], ["Before "], ["a "]]:
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+        assert speech(session) == utterances
+
+
+@pytest.mark.web
 def test_tab_navigation_over_nested_link_text(web_nested_link_text: WebSession) -> None:
     """Tests tab navigation over nested link text."""
 
@@ -288,6 +319,14 @@ def test_say_all_over_nested_link_text(web_nested_link_text: WebSession) -> None
         "east",
         "link",
         " glossary entry now.",
+        "The quick brown fox",
+        "link",
+        "heading 2",
+        "Before ",
+        "a link here",
+        "link",
+        " after",
+        "heading 3",
         "After.",
     ]
 
