@@ -41,6 +41,7 @@ from .gsettings_fixtures import (  # noqa: F401
     _gsettings_registry,
 )
 from .orca_fixtures import (  # noqa: F401
+    _gtk3_multi_select_list,
     _gtk3_redundant_names,
     _gtk3_terminal_flatrev,
     _gtk3_terminal_nano,
@@ -124,6 +125,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_redundant_content,
     _web_region_headings,
     _web_removed_child_recovery,
+    _web_selection,
     _web_sister_projects,
     _web_sister_projects_2,
     _web_sliders,

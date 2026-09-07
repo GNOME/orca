@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Selection ready</title>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll('[role="listbox"], [role="tree"]').forEach(function (container) {
+    const items = Array.from(container.querySelectorAll('[role="option"], [role="treeitem"]'));
+    items.forEach(function (item) { item.tabIndex = -1; });
+    items[0].tabIndex = 0;
+
+    container.addEventListener("keydown", function (event) {
+      const current = event.target.closest('[role="option"], [role="treeitem"]');
+      if (!current) return;
+      const index = items.indexOf(current);
+      let handled = true;
+      if (event.key === " ") {
+        const selected = current.getAttribute("aria-selected") === "true";
+        current.setAttribute("aria-selected", selected ? "false" : "true");
+      } else if (event.key === "ArrowDown" && index < items.length - 1) {
+        items.forEach(function (item) { item.tabIndex = -1; });
+        items[index + 1].tabIndex = 0;
+        items[index + 1].focus();
+      } else {
+        handled = false;
+      }
+      if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    });
+  });
+});
+</script>
+</head>
+<body>
+<h1>Selection</h1>
+
+<ul role="listbox" aria-multiselectable="true" aria-label="Toppings">
+  <li role="option" aria-selected="false">Olives</li>
+  <li role="option" aria-selected="false">Peppers</li>
+</ul>
+
+<ul role="tree" aria-label="Food">
+  <li role="treeitem" aria-selected="false" aria-expanded="false" aria-level="1" aria-setsize="1" aria-posinset="1">
+    <span>Fruits</span>
+    <ul role="group">
+      <li role="treeitem" aria-level="2" aria-setsize="1" aria-posinset="1"><span>Apple</span></li>
+    </ul>
+  </li>
+</ul>
+</body>
+</html>

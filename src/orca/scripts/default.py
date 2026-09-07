@@ -670,9 +670,9 @@ class Script(script.Script):
         # need to gain some smarts w.r.t. state changes.
 
         if event.detail1:
-            presentation_manager.get_manager().speak_message(messages.TEXT_SELECTED)
+            presentation_manager.get_manager().present_message(messages.TEXT_SELECTED)
         else:
-            presentation_manager.get_manager().speak_message(messages.TEXT_UNSELECTED)
+            presentation_manager.get_manager().present_message(messages.TEXT_UNSELECTED)
 
         return True
 

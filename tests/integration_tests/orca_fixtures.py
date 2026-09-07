@@ -46,6 +46,7 @@ from orca.output_reader import OutputReader
 
 from .apps import (
     chromium_browser,
+    gtk3_multi_select_list,
     gtk3_redundant_names,
     gtk3_terminal,
     gtk3_text_view,
@@ -156,6 +157,7 @@ _gtk3_text_view_emoji = _make_native_app_fixture(
         "End.",
     ),
 )
+_gtk3_multi_select_list = _make_native_app_fixture(gtk3_multi_select_list, scope="function")
 _gtk3_tree_view = _make_native_app_fixture(gtk3_tree_view, scope="function")
 _gtk3_two_entries = _make_native_app_fixture(gtk3_two_entries, scope="function")
 _gtk3_two_windows = _make_native_app_fixture(gtk3_two_windows, scope="function")
@@ -681,6 +683,7 @@ _web_attribute_mask = _make_web_fixture("web_attribute_mask.html", caret_browsin
 _web_region_headings = _make_web_fixture("web_region_headings.html")
 _web_data_grid = _make_web_fixture("web_data_grid.html")
 _web_feed = _make_web_fixture("web_feed.html")
+_web_selection = _make_web_fixture("web_selection.html")
 _web_switch = _make_web_fixture("web_switch.html")
 _web_accordion = _make_web_fixture("web_accordion.html")
 _web_disclosure = _make_web_fixture("web_disclosure.html")
