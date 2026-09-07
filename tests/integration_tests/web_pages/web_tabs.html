@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Tabs ready</title>
+<style>
+.tabs [role="tablist"] { margin: 0; padding: 0; }
+.tabs [role="tab"] { position: relative; margin: 0; padding: 0.3em 0.5em; border: 1px solid hsl(219deg 1% 72%); background: hsl(220deg 20% 94%); }
+.tabs [role="tab"][aria-selected="true"] { border-bottom-color: white; background: white; }
+.tabs [role="tabpanel"] { padding: 0.5em; border: 1px solid hsl(219deg 1% 72%); }
+.tabs [role="tabpanel"].is-hidden { display: none; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll('[role="tablist"]').forEach(function (tablist) {
+    const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+    const automatic = tablist.classList.contains("automatic");
+
+    function select(tab) {
+      tabs.forEach(function (candidate) {
+        const panel = document.getElementById(candidate.getAttribute("aria-controls"));
+        const selected = candidate === tab;
+        candidate.setAttribute("aria-selected", selected ? "true" : "false");
+        candidate.tabIndex = selected ? 0 : -1;
+        panel.classList.toggle("is-hidden", !selected);
+      });
+    }
+
+    function focusTab(tab) {
+      if (automatic) select(tab);
+      tab.focus();
+    }
+
+    tablist.addEventListener("keydown", function (event) {
+      const tab = event.target.closest('[role="tab"]');
+      if (!tab) return;
+      const index = tabs.indexOf(tab);
+      let handled = true;
+      switch (event.key) {
+        case "ArrowLeft":
+          focusTab(tabs[(index - 1 + tabs.length) % tabs.length]);
+          break;
+        case "ArrowRight":
+          focusTab(tabs[(index + 1) % tabs.length]);
+          break;
+        case "Home":
+          focusTab(tabs[0]);
+          break;
+        case "End":
+          focusTab(tabs[tabs.length - 1]);
+          break;
+        default:
+          handled = false;
+      }
+      if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    });
+
+    tablist.addEventListener("click", function (event) {
+      const tab = event.target.closest('[role="tab"]');
+      if (tab) select(tab);
+    });
+  });
+});
+</script>
+</head>
+<body>
+<h1>Tabs</h1>
+
+<div class="tabs">
+  <h2 id="tablist-1">Weather stations</h2>
+  <div role="tablist" aria-labelledby="tablist-1" class="manual">
+    <button id="tab-1" type="button" role="tab" aria-selected="true" aria-controls="tabpanel-1">
+      <span class="focus">Aberdeen</span>
+    </button>
+    <button id="tab-2" type="button" role="tab" aria-selected="false" aria-controls="tabpanel-2" tabindex="-1">
+      <span class="focus">Brindisi</span>
+    </button>
+    <button id="tab-3" type="button" role="tab" aria-selected="false" aria-controls="tabpanel-3" tabindex="-1">
+      <span class="focus">Cusco</span>
+    </button>
+  </div>
+  <div id="tabpanel-1" role="tabpanel" aria-labelledby="tab-1">
+    <p>Aberdeen reports steady rain.</p>
+  </div>
+  <div id="tabpanel-2" role="tabpanel" aria-labelledby="tab-2" class="is-hidden">
+    <p>Brindisi reports clear skies.</p>
+  </div>
+  <div id="tabpanel-3" role="tabpanel" aria-labelledby="tab-3" class="is-hidden">
+    <p>Cusco reports morning frost.</p>
+  </div>
+</div>
+
+<div class="tabs">
+  <h2 id="tablist-2">Seasons</h2>
+  <div role="tablist" aria-labelledby="tablist-2" class="automatic">
+    <button id="tab-4" type="button" role="tab" aria-selected="true" aria-controls="tabpanel-4">
+      <span class="focus">Spring</span>
+    </button>
+    <button id="tab-5" type="button" role="tab" aria-selected="false" aria-controls="tabpanel-5" tabindex="-1">
+      <span class="focus">Autumn</span>
+    </button>
+  </div>
+  <div id="tabpanel-4" role="tabpanel" aria-labelledby="tab-4">
+    <p>Spring runs from March to May.</p>
+  </div>
+  <div id="tabpanel-5" role="tabpanel" aria-labelledby="tab-5" class="is-hidden">
+    <p>Autumn runs from September to November.</p>
+  </div>
+</div>
+</body>
+</html>

@@ -231,6 +231,8 @@ orca_integration_tests = [
   'integration_tests/test_web_accordion.py',
   'integration_tests/test_web_disclosure.py',
   'integration_tests/test_web_toolbar.py',
+  'integration_tests/test_web_listbox.py',
+  'integration_tests/test_web_tabs.py',
   'integration_tests/test_web_treegrid.py',
 ]
 

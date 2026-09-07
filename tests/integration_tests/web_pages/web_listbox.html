@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Listbox ready</title>
+<style>
+[role="listbox"] { margin: 0; padding: 0; width: 16em; height: 8em; overflow-y: auto; border: 1px solid #aaa; list-style: none; }
+[role="listbox"] ul { margin: 0; padding: 0; list-style: none; }
+[role="option"] { display: block; padding: 2px 4px; }
+[role="option"][aria-selected="true"] { background: #bde4ff; }
+[role="presentation"] { display: block; padding: 2px 4px; font-weight: bold; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll('[role="listbox"]').forEach(function (listbox) {
+    const options = Array.from(listbox.querySelectorAll('[role="option"]'));
+    const multiselectable = listbox.getAttribute("aria-multiselectable") === "true";
+
+    function current() {
+      const id = listbox.getAttribute("aria-activedescendant");
+      const index = options.findIndex(function (option) { return option.id === id; });
+      return index === -1 ? 0 : index;
+    }
+
+    function setActive(index, select) {
+      const option = options[index];
+      listbox.setAttribute("aria-activedescendant", option.id);
+      if (!select) return;
+      if (multiselectable) {
+        option.setAttribute("aria-selected", option.getAttribute("aria-selected") === "true" ? "false" : "true");
+        return;
+      }
+      options.forEach(function (candidate) {
+        candidate.setAttribute("aria-selected", candidate === option ? "true" : "false");
+      });
+    }
+
+    listbox.addEventListener("keydown", function (event) {
+      const index = current();
+      let handled = true;
+      switch (event.key) {
+        case "ArrowDown":
+          if (index < options.length - 1) setActive(index + 1, !multiselectable);
+          break;
+        case "ArrowUp":
+          if (index > 0) setActive(index - 1, !multiselectable);
+          break;
+        case "Home":
+          setActive(0, !multiselectable);
+          break;
+        case "End":
+          setActive(options.length - 1, !multiselectable);
+          break;
+        case " ":
+          setActive(index, true);
+          break;
+        default:
+          handled = false;
+      }
+      if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    });
+  });
+});
+</script>
+</head>
+<body>
+<h1>Listbox</h1>
+
+<h2 id="ss_elem">Transuranium elements</h2>
+<ul id="ss_elem_list" tabindex="0" role="listbox" aria-labelledby="ss_elem" aria-activedescendant="ss_elem_1">
+  <li role="group" aria-labelledby="cat1">
+    <ul role="group" aria-labelledby="cat1">
+      <li role="presentation" id="cat1">Actinides</li>
+      <li id="ss_elem_1" role="option" aria-selected="true">Neptunium</li>
+      <li id="ss_elem_2" role="option" aria-selected="false">Plutonium</li>
+      <li id="ss_elem_3" role="option" aria-selected="false">Americium</li>
+    </ul>
+  </li>
+  <li role="group" aria-labelledby="cat2">
+    <ul role="group" aria-labelledby="cat2">
+      <li role="presentation" id="cat2">Transactinides</li>
+      <li id="ss_elem_4" role="option" aria-selected="false">Rutherfordium</li>
+      <li id="ss_elem_5" role="option" aria-selected="false">Dubnium</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="ms_imp_l">Nearby amenities</h2>
+<ul id="ms_imp" tabindex="0" role="listbox" aria-multiselectable="true" aria-labelledby="ms_imp_l" aria-activedescendant="ms_opt1">
+  <li id="ms_opt1" role="option" aria-selected="false">A park</li>
+  <li id="ms_opt2" role="option" aria-selected="false">A school</li>
+  <li id="ms_opt3" role="option" aria-selected="false">Shops</li>
+</ul>
+</body>
+</html>
