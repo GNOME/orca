@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Menubar ready</title>
+<style>
+.menubar-navigation { margin: 0; padding: 2px; list-style: none; background-color: #eee; }
+.menubar-navigation li { margin: 0; padding: 0; list-style: none; }
+.menubar-navigation > li { display: inline-block; position: relative; }
+.menubar-navigation > li li { display: block; }
+.menubar-navigation > li > [role="menuitem"] { display: inline-block; padding: 4px; }
+.menubar-navigation [role="menu"] {
+  display: none;
+  position: absolute;
+  margin: 0;
+  padding: 7px 4px;
+  border: 2px solid #034575;
+  background-color: #eee;
+}
+.menubar-navigation [role="menu"] [role="menuitem"] { display: block; width: 12em; padding: 4px 4px 4px 8px; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const menubar = document.querySelector('[role="menubar"]');
+
+  function itemsOf(container) {
+    return Array.from(container.children)
+      .map(function (li) { return li.querySelector('[role="menuitem"]'); })
+      .filter(Boolean);
+  }
+
+  function popupOf(item) {
+    return item.parentElement.querySelector('[role="menu"]');
+  }
+
+  function containerOf(item) {
+    return item.closest('[role="menu"]') || menubar;
+  }
+
+  function openPopup(item) {
+    const popup = popupOf(item);
+    if (!popup) return null;
+    popup.style.display = "block";
+    item.setAttribute("aria-expanded", "true");
+    return popup;
+  }
+
+  function closePopup(item) {
+    const popup = popupOf(item);
+    if (!popup) return;
+    popup.style.display = "none";
+    item.setAttribute("aria-expanded", "false");
+  }
+
+  function focusItem(item) {
+    itemsOf(menubar).forEach(function (x) { x.tabIndex = -1; });
+    if (containerOf(item) === menubar) item.tabIndex = 0;
+    item.focus();
+  }
+
+  function parentItemOf(menu) {
+    return menu.parentElement.querySelector('[role="menuitem"]');
+  }
+
+  menubar.addEventListener("keydown", function (event) {
+    const item = event.target.closest('[role="menuitem"]');
+    if (!item) return;
+    const container = containerOf(item);
+    const siblings = itemsOf(container);
+    const index = siblings.indexOf(item);
+    const inMenubar = container === menubar;
+    let handled = true;
+
+    switch (event.key) {
+      case "ArrowRight":
+        if (inMenubar) {
+          focusItem(siblings[(index + 1) % siblings.length]);
+        } else if (popupOf(item)) {
+          focusItem(itemsOf(openPopup(item))[0]);
+        }
+        break;
+      case "ArrowLeft":
+        if (inMenubar) {
+          focusItem(siblings[(index - 1 + siblings.length) % siblings.length]);
+        } else {
+          const parent = parentItemOf(container);
+          closePopup(parent);
+          focusItem(parent);
+        }
+        break;
+      case "ArrowDown":
+        if (inMenubar) {
+          const popup = openPopup(item);
+          if (popup) focusItem(itemsOf(popup)[0]);
+        } else {
+          focusItem(siblings[(index + 1) % siblings.length]);
+        }
+        break;
+      case "ArrowUp":
+        if (inMenubar) {
+          const popup = openPopup(item);
+          if (popup) {
+            const opened = itemsOf(popup);
+            focusItem(opened[opened.length - 1]);
+          }
+        } else {
+          focusItem(siblings[(index - 1 + siblings.length) % siblings.length]);
+        }
+        break;
+      case "Home":
+        focusItem(siblings[0]);
+        break;
+      case "End":
+        focusItem(siblings[siblings.length - 1]);
+        break;
+      case "Escape":
+        if (!inMenubar) {
+          const parent = parentItemOf(container);
+          closePopup(parent);
+          focusItem(parent);
+        }
+        break;
+      default:
+        handled = false;
+    }
+
+    if (handled) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  });
+
+  itemsOf(menubar).forEach(function (item, i) { item.tabIndex = i === 0 ? 0 : -1; });
+});
+</script>
+</head>
+<body>
+<header role="banner">
+  <div class="title">Riverside Library</div>
+  <div class="tagline">Opening hours and services</div>
+</header>
+<nav aria-label="Riverside Library">
+  <ul class="menubar-navigation" role="menubar" aria-label="Riverside Library">
+    <li role="none">
+      <a role="menuitem" href="#home">Home</a>
+    </li>
+    <li role="none">
+      <a role="menuitem" aria-haspopup="true" aria-expanded="false" href="#catalog">Catalog</a>
+      <ul role="menu" aria-label="Catalog">
+        <li role="none">
+          <a role="menuitem" href="#books">Books</a>
+        </li>
+        <li role="none">
+          <a role="menuitem" href="#maps">Maps</a>
+        </li>
+        <li role="none">
+          <a role="menuitem" aria-haspopup="true" aria-expanded="false" href="#archives">Archives</a>
+          <ul role="menu" aria-label="Archives">
+            <li role="none">
+              <a role="menuitem" href="#letters">Letters</a>
+            </li>
+            <li role="none">
+              <a role="menuitem" href="#photographs">Photographs</a>
+            </li>
+            <li role="none">
+              <a role="menuitem" href="#ledgers">Ledgers</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li role="none">
+      <a role="menuitem" aria-haspopup="true" aria-expanded="false" href="#visit">Visit</a>
+      <ul role="menu" aria-label="Visit">
+        <li role="none">
+          <a role="menuitem" href="#directions">Directions</a>
+        </li>
+        <li role="none">
+          <a role="menuitem" href="#parking">Parking</a>
+        </li>
+      </ul>
+    </li>
+    <li role="none">
+      <a role="menuitem" href="#contact">Contact</a>
+    </li>
+  </ul>
+</nav>
+<main>
+  <h1>Menubar</h1>
+  <p>Content follows the menubar.</p>
+</main>
+</body>
+</html>

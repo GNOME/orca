@@ -561,8 +561,9 @@ class Script(script.Script):
     def _on_expanded_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:expanded accessibility events."""
 
+        presentable = AXUtilities.is_presentable_expanded_change(event)
         AXUtilities.clear_all_cache_now(event.source, "expanded-changed event.")
-        if not AXUtilities.is_presentable_expanded_change(event):
+        if not presentable:
             return True
 
         presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()

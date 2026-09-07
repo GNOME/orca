@@ -108,6 +108,8 @@ from .orca_fixtures import (  # noqa: F401
     _web_live_regions,
     _web_long_line,
     _web_math,
+    _web_menu_button,
+    _web_menubar,
     _web_missing_cells,
     _web_mixed_line_heights,
     _web_multi_line_content,

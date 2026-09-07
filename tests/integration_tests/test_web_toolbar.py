@@ -122,7 +122,7 @@ def test_arrow_navigation_through_toolbar_controls(web_toolbar: NativeAppSession
 
     keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
     spoken, brailled = capture(session)
-    assert spoken == ["Font: Sans-serif", "collapsed button", "opens menu", "collapsed"]
+    assert spoken == ["Font: Sans-serif", "collapsed button", "opens menu"]
     assert brailled[-1] == BrailleLine(
         1, "Font: Sans-serif collapsed button", "Font: Sans-serif collapsed butto", "\x00" * 33
     )

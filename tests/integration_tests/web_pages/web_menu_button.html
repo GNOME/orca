@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Menu Button ready</title>
+<style>
+.menu-button-actions { display: inline-block; position: relative; margin: 0 2em 0 0; }
+.menu-button-actions [role="menu"] {
+  display: none;
+  position: absolute;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  border: 2px solid #034575;
+  background-color: #eee;
+}
+.menu-button-actions [role="menu"] li { display: block; width: 10em; padding: 4px; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".menu-button-actions").forEach(function (widget) {
+    const button = widget.querySelector("button");
+    const menu = widget.querySelector('[role="menu"]');
+    const items = Array.from(menu.querySelectorAll('[role="menuitem"]'));
+    const output = document.getElementById(widget.dataset.output);
+    const usesActiveDescendant = menu.hasAttribute("tabindex");
+
+    function focusItem(item) {
+      if (usesActiveDescendant) {
+        items.forEach(function (x) { x.classList.remove("current"); });
+        item.classList.add("current");
+        menu.setAttribute("aria-activedescendant", item.id);
+        menu.focus();
+        return;
+      }
+      item.focus();
+    }
+
+    function openMenu(index) {
+      menu.style.display = "block";
+      button.setAttribute("aria-expanded", "true");
+      focusItem(items[index]);
+    }
+
+    function closeMenu() {
+      menu.style.display = "none";
+      button.setAttribute("aria-expanded", "false");
+      menu.removeAttribute("aria-activedescendant");
+      button.focus();
+    }
+
+    function currentIndex() {
+      if (usesActiveDescendant) {
+        return items.findIndex(function (x) { return x.id === menu.getAttribute("aria-activedescendant"); });
+      }
+      return items.indexOf(document.activeElement);
+    }
+
+    button.addEventListener("keydown", function (event) {
+      if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
+        openMenu(0);
+      } else if (event.key === "ArrowUp") {
+        openMenu(items.length - 1);
+      } else {
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+    });
+
+    button.addEventListener("click", function () {
+      if (button.getAttribute("aria-expanded") === "true") closeMenu();
+      else openMenu(0);
+    });
+
+    menu.addEventListener("keydown", function (event) {
+      const index = currentIndex();
+      let handled = true;
+      switch (event.key) {
+        case "ArrowDown":
+          focusItem(items[(index + 1) % items.length]);
+          break;
+        case "ArrowUp":
+          focusItem(items[(index - 1 + items.length) % items.length]);
+          break;
+        case "Home":
+          focusItem(items[0]);
+          break;
+        case "End":
+          focusItem(items[items.length - 1]);
+          break;
+        case "Enter":
+        case " ":
+          output.value = items[index].textContent.trim();
+          closeMenu();
+          break;
+        case "Escape":
+          closeMenu();
+          break;
+        default:
+          handled = false;
+      }
+      if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    });
+  });
+});
+</script>
+</head>
+<body>
+<h1>Menu Button</h1>
+
+<div class="menu-button-actions" data-output="action_output">
+  <button type="button" id="menubutton1" aria-haspopup="true" aria-expanded="false" aria-controls="menu1">
+    Tools
+  </button>
+  <ul id="menu1" role="menu" aria-labelledby="menubutton1">
+    <li role="menuitem" tabindex="-1">Rename</li>
+    <li role="menuitem" tabindex="-1">Duplicate</li>
+    <li role="menuitem" tabindex="-1">Archive</li>
+    <li role="menuitem" tabindex="-1">Delete</li>
+  </ul>
+</div>
+
+<div class="menu-button-actions" data-output="descendant_output">
+  <button type="button" id="menubutton2" aria-haspopup="true" aria-expanded="false" aria-controls="menu2">
+    Sort by
+  </button>
+  <ul id="menu2" role="menu" tabindex="-1" aria-labelledby="menubutton2">
+    <li id="choice1" role="menuitem">Name</li>
+    <li id="choice2" role="menuitem">Size</li>
+    <li id="choice3" role="menuitem">Date</li>
+  </ul>
+</div>
+
+<p>
+  <label>Last tool: <input class="action" id="action_output" type="text" value=""></label>
+</p>
+<p>
+  <label>Last sort: <input class="action" id="descendant_output" type="text" value=""></label>
+</p>
+</body>
+</html>

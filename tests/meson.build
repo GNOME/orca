@@ -159,6 +159,8 @@ orca_integration_tests = [
   'integration_tests/test_web_link_starts_line.py',
   'integration_tests/test_web_lists.py',
   'integration_tests/test_web_math.py',
+  'integration_tests/test_web_menu_button.py',
+  'integration_tests/test_web_menubar.py',
   'integration_tests/test_web_sister_projects.py',
   'integration_tests/test_web_sister_projects_2.py',
   'integration_tests/test_web_sliders.py',
