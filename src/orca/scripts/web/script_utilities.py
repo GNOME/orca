@@ -2120,7 +2120,7 @@ class Utilities(script_utilities.Utilities):
             elif self._is_labelling_contents(obj, contents):
                 reason = "labels other contents"
             elif AXUtilities.is_table_row(obj):
-                rv = AXUtilities.has_explicit_name(obj)
+                rv = AXUtilities.is_focused(obj) or AXUtilities.has_explicit_name(obj)
             else:
                 widget = self.is_inferred_label_for_contents(x, contents)
                 always_filter = [Atspi.Role.RADIO_BUTTON, Atspi.Role.CHECK_BOX]
@@ -2187,7 +2187,7 @@ class Utilities(script_utilities.Utilities):
         if not super().should_read_full_row(obj, previous_object):
             return False
 
-        if AXUtilities.is_grid_descendant(obj):
+        if AXUtilities.is_grid_descendant(obj) or AXUtilities.is_tree_or_tree_table_descendant(obj):
             return not document_presenter.get_presenter().in_focus_mode(self._script.app)
 
         if input_event_manager.get_manager().last_event_was_line_navigation():

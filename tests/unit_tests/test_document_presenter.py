@@ -1846,6 +1846,7 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_grid_descendant.return_value = False
         ax_utilities.AXUtilities.is_menu_descendant.return_value = False
         ax_utilities.AXUtilities.is_tool_bar_descendant.return_value = False
+        ax_utilities.AXUtilities.is_tree_or_tree_table_descendant.return_value = False
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.LINK
@@ -2138,6 +2139,7 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_grid_descendant.return_value = False
         ax_utilities.AXUtilities.is_menu_descendant.return_value = False
         ax_utilities.AXUtilities.is_tool_bar_descendant.return_value = False
+        ax_utilities.AXUtilities.is_tree_or_tree_table_descendant.return_value = False
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
@@ -2174,6 +2176,7 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_grid_descendant.return_value = False
         ax_utilities.AXUtilities.is_menu_descendant.return_value = False
         ax_utilities.AXUtilities.is_tool_bar_descendant.return_value = False
+        ax_utilities.AXUtilities.is_tree_or_tree_table_descendant.return_value = False
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
@@ -2210,6 +2213,7 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_grid_descendant.return_value = False
         ax_utilities.AXUtilities.is_menu_descendant.return_value = False
         ax_utilities.AXUtilities.is_tool_bar_descendant.return_value = False
+        ax_utilities.AXUtilities.is_tree_or_tree_table_descendant.return_value = False
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.TABLE_CELL

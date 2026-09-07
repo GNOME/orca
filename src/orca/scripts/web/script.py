@@ -58,6 +58,7 @@ from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
 from orca.ax_utilities_text import CaretSetReason, TextUnit
+from orca.generator import PresentationReason
 from orca.scripts import default
 from orca.structural_navigator import NavigationMode
 
@@ -67,8 +68,6 @@ from .speech_generator import SpeechGenerator
 
 if TYPE_CHECKING:
     from gi.repository import Atspi
-
-    from orca.generator import PresentationReason
 
 
 class Script(default.Script):
@@ -308,7 +307,12 @@ class Script(default.Script):
                 )
         presenter = presentation_manager.get_manager()
         if generate_braille:
-            presenter.display_contents(contents)
+            if reason == PresentationReason.STATE_CHANGE:
+                braille_presenter.get_presenter().present_generated_braille(
+                    self, obj, prior_obj=prior_obj, reason=reason
+                )
+            else:
+                presenter.display_contents(contents)
         if generate_speech:
             presenter.speak_contents(
                 contents,

@@ -135,6 +135,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_text_attributes,
     _web_toolbar,
     _web_tree,
+    _web_treegrid,
     _web_useless_images,
     _web_weird_headings,
     _web_window_splitter,

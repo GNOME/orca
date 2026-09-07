@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Treegrid ready</title>
+<style>
+table { border-collapse: collapse; }
+th, td { padding: 2px 6px; border: 1px solid #aaa; text-align: left; }
+tr.hidden { display: none; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const treegrid = document.getElementById("treegrid");
+  const allRows = Array.from(treegrid.querySelectorAll("tbody tr"));
+
+  function visibleRows() {
+    return allRows.filter(function (row) { return !row.classList.contains("hidden"); });
+  }
+
+  function childRowsOf(row) {
+    const level = Number(row.getAttribute("aria-level"));
+    const children = [];
+    for (let i = allRows.indexOf(row) + 1; i < allRows.length; i++) {
+      const candidate = allRows[i];
+      if (Number(candidate.getAttribute("aria-level")) <= level) break;
+      children.push(candidate);
+    }
+    return children;
+  }
+
+  function setExpanded(row, expanded) {
+    row.setAttribute("aria-expanded", expanded ? "true" : "false");
+    const level = Number(row.getAttribute("aria-level"));
+    childRowsOf(row).forEach(function (child) {
+      const childLevel = Number(child.getAttribute("aria-level"));
+      if (childLevel === level + 1) {
+        child.classList.toggle("hidden", !expanded);
+        if (!expanded && child.getAttribute("aria-expanded") === "true") setExpanded(child, false);
+      } else if (!expanded) {
+        child.classList.add("hidden");
+      }
+    });
+  }
+
+  function focusRow(row) {
+    allRows.forEach(function (candidate) { candidate.tabIndex = -1; });
+    row.tabIndex = 0;
+    row.focus();
+  }
+
+  treegrid.addEventListener("keydown", function (event) {
+    const row = event.target.closest("tr");
+    if (!row) return;
+    const rows = visibleRows();
+    const index = rows.indexOf(row);
+    let handled = true;
+    switch (event.key) {
+      case "ArrowDown":
+        if (index < rows.length - 1) focusRow(rows[index + 1]);
+        break;
+      case "ArrowUp":
+        if (index > 0) focusRow(rows[index - 1]);
+        break;
+      case "ArrowRight":
+        if (row.getAttribute("aria-expanded") === "false") setExpanded(row, true);
+        break;
+      case "ArrowLeft":
+        if (row.getAttribute("aria-expanded") === "true") setExpanded(row, false);
+        break;
+      default:
+        handled = false;
+    }
+    if (handled) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  });
+
+  allRows.forEach(function (row) { row.tabIndex = -1; });
+  allRows[0].tabIndex = 0;
+});
+</script>
+</head>
+<body>
+<h1>Treegrid</h1>
+
+<table id="treegrid" role="treegrid" aria-label="Messages">
+  <thead>
+    <tr>
+      <th scope="col">Subject</th>
+      <th scope="col">Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr role="row" aria-level="1" aria-posinset="1" aria-setsize="1" aria-expanded="true">
+      <td role="gridcell">Roof repair quote</td>
+      <td role="gridcell">Two tiles are cracked</td>
+    </tr>
+    <tr role="row" aria-level="2" aria-posinset="1" aria-setsize="2">
+      <td role="gridcell">re: Roof repair quote</td>
+      <td role="gridcell">The scaffolding is booked</td>
+    </tr>
+    <tr role="row" aria-level="2" aria-posinset="2" aria-setsize="2" aria-expanded="false">
+      <td role="gridcell">re: Roof repair quote</td>
+      <td role="gridcell">Can we start on Monday</td>
+    </tr>
+    <tr role="row" aria-level="3" aria-posinset="1" aria-setsize="1" class="hidden">
+      <td role="gridcell">re: Roof repair quote</td>
+      <td role="gridcell">Monday suits us</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

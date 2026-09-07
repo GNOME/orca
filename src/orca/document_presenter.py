@@ -489,6 +489,8 @@ class DocumentPresenter(Extension):
             return True, "it's a menu descendant"
         if AXUtilities.is_tool_bar_descendant(obj):
             return True, "it's a toolbar descendant"
+        if AXUtilities.is_tree_or_tree_table_descendant(obj):
+            return True, "it's a tree or tree table descendant"
         if script.utilities.is_content_editable_with_embedded_objects(obj):
             return True, "it's content editable"
 
