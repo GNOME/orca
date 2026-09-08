@@ -271,7 +271,7 @@ def _setup(children: list[subprocess.Popen]) -> dict[str, str] | None:
 
     # 2. at-spi-bus-launcher on our private session bus.
     launcher = subprocess.Popen(
-        [_BUS_LAUNCHER, "--launch-immediately", "--a11y=1", "--screen-reader=0"],
+        [_BUS_LAUNCHER, "--launch-immediately"],
         env=stack_env,
     )
     children.append(launcher)

@@ -65,7 +65,14 @@ class OrcaSession:
         argv = [self._resolve_orca_binary()]
         # Set ORCA_TEST_DEBUG_FILE to capture Orca's own debug log for a run (single test
         # at a time; multiple Orca processes would share the path).
-        if debug_file := os.environ.get("ORCA_TEST_DEBUG_FILE"):
+        debug_file = os.environ.get("ORCA_TEST_DEBUG_FILE")
+        if not debug_file and (debug_dir := os.environ.get("ORCA_TEST_DEBUG_DIR")):
+            os.makedirs(debug_dir, exist_ok=True)
+            test_name = os.path.basename(os.environ.get("PYTEST_CURRENT_TEST", "orca"))
+            test_name = test_name.split(" ", maxsplit=1)[0].replace(":", "_")
+            debug_file = os.path.join(debug_dir, f"{test_name}-{uuid.uuid4().hex}.log")
+            sys.stderr.write(f"[diagnostics] Orca debug log: {debug_file}\n")
+        if debug_file:
             argv = [*argv, f"--debug-file={debug_file}"]
         if os.environ.get("ORCA_TEST_COVERAGE"):
             argv = [sys.executable, "-m", "coverage", "run", "--parallel-mode", *argv]

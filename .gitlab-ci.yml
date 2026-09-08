@@ -77,6 +77,31 @@ unit-tests:
     - meson setup -D prefix=/usr -D mathcat=false "${MESON_BUILD_DIR}"
     - meson test -C "${MESON_BUILD_DIR}" --suite unit --print-errorlogs
 
+.integration-tests:
+  stage: test
+  extends:
+    - '.orca_opensuse_tumbleweed_x86_64'
+    - '.fdo.distribution-image@opensuse'
+  needs:
+    - job: opensuse-container@x86_64
+      artifacts: false
+  before_script:
+    - source ci/env.sh
+    - bash -x ci/install_atspi.sh
+    - bash -x ci/build_and_install.sh
+  allow_failure: true
+  artifacts:
+    when: always
+    reports:
+      junit: _build/meson-logs/testlog.junit.xml
+    expire_in: 1 day
+
+integration-tests-base:
+  extends: .integration-tests
+  allow_failure: false
+  script:
+    - meson test -C "${MESON_BUILD_DIR}" --suite core --suite gtk3 --suite gtk3-terminal --num-processes 1 --print-errorlogs
+
 # Linters: Ruff and Mypy
 #
 # The configurations are in pyproject.toml.

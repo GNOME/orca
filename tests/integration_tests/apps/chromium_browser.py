@@ -22,6 +22,7 @@
 
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -87,6 +88,13 @@ def main() -> int:
         print(f"No chromium binary found; tried {BINARY_NAMES!r}.", file=sys.stderr)
         return 2
     argv = build_argv(url, profile_dir, binary, extra_flags=tuple(sys.argv[4:]))
+    if os.environ.get("ORCA_TEST_DEBUG_DIR"):
+        print(f"[diagnostics] Chromium argv: {argv!r}", file=sys.stderr)
+        subprocess.run([binary, "--version"], check=False)
+        if shutil.which("fc-match"):
+            for family in ("serif", "sans-serif", "monospace"):
+                print(f"[diagnostics] Font match for {family}:", flush=True)
+                subprocess.run(["fc-match", family], check=False)
     os.execvp(argv[0], argv)  # noqa: S606
     return 0  # unreachable: execvp replaces the process
 

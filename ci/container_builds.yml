@@ -7,7 +7,7 @@ include:
 variables:
   # When branching change the suffix to avoid conflicts with images
   # from the main branch
-  BASE_TAG: "2026-08-31.0-main"
+  BASE_TAG: "2026-09-08.3-main"
   FDO_UPSTREAM_REPO: "gnome/orca"
 
 .orca_opensuse_tumbleweed_x86_64:
@@ -23,8 +23,11 @@ opensuse-container@x86_64:
   variables:
     FDO_DISTRIBUTION_PACKAGES: >-
       cargo
+      chromium
       dbus-1
       dbus-1-devel
+      dejavu-fonts
+      fuse
       gcc
       gettext
       gettext-tools
@@ -35,7 +38,9 @@ opensuse-container@x86_64:
       gstreamer-devel
       gtk3-devel
       itstool
+      less
       libei-devel
+      liblouis-devel
       libtool
       libXi-devel
       libXtst-devel
@@ -43,9 +48,13 @@ opensuse-container@x86_64:
       libxml2-devel
       libX11-devel
       meson
+      nano
       ninja
+      procps
       python3
+      python3-Babel
       python3-brlapi
+      python3-curses
       python3-dasbus
       python3-gobject-devel
       python3-louis
@@ -54,8 +63,11 @@ opensuse-container@x86_64:
       python3-psutil
       python3-simplejson
       python3-speechd
+      terminfo-base
+      typelib-1_0-Vte-2_91
+      vim
       xvfb-run
       yelp-devel
       yelp-tools
     FDO_DISTRIBUTION_EXEC: >-
-      bash ci/install-python-tools.sh
+      bash ci/install-python-tools.sh && bash ci/check-container.sh
