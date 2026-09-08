@@ -197,6 +197,7 @@ orca_integration_tests = [
   'integration_tests/test_web_braille_contractions.py',
   'integration_tests/test_web_braille_attribute_mask.py',
   'integration_tests/test_web_braille_selection.py',
+  'integration_tests/test_gui_announcement.py',
   'integration_tests/test_gui_braille_selection.py',
   'integration_tests/test_gui_entry_caret_navigation.py',
   'integration_tests/test_flat_review_textview.py',

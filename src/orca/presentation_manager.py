@@ -28,6 +28,7 @@ from __future__ import annotations
 import contextlib
 import enum
 import os
+import time
 from typing import TYPE_CHECKING
 
 from . import (
@@ -111,8 +112,8 @@ class PresentationManager:
         if self._should_interrupt_for_focus_change(old_focus, new_focus, event):
             self.interrupt_presentation()
 
-    @staticmethod
     def _should_interrupt_for_focus_change(
+        self,
         old_focus: Atspi.Accessible,
         new_focus: Atspi.Accessible,
         event: Atspi.Event | None = None,
@@ -120,6 +121,10 @@ class PresentationManager:
         """Returns True if speech should be interrupted to present the new focus."""
 
         msg = "PRESENTATION MANAGER: Not interrupting for locusOfFocus change: "
+        if time.monotonic() - self._last_announcement_time <= 1.0:
+            debug.print_message(debug.LEVEL_INFO, msg + "recent announcement", True)
+            return False
+
         if event is None:
             debug.print_message(debug.LEVEL_INFO, msg + "event is None", True)
             return False
@@ -187,6 +192,13 @@ class PresentationManager:
         return True
 
     _announced_command: _Command | None = None
+    _last_announcement_time: float = 0.0
+
+    def present_announcement(self, announcement: str) -> None:
+        """Presents an announcement made by the application."""
+
+        self._last_announcement_time = time.monotonic()
+        self.present_message(announcement)
 
     def present_command_announcement(self) -> None:
         """Presents undo/redo/paste announcement once per command."""

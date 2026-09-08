@@ -607,7 +607,7 @@ class Script(script.Script):
         """Callback for object:announcement events."""
 
         if isinstance(event.any_data, str):
-            presentation_manager.get_manager().present_message(event.any_data)
+            presentation_manager.get_manager().present_announcement(event.any_data)
 
         return True
 
