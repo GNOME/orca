@@ -73,6 +73,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_autocomplete,
     _web_basic,
     _web_block_context,
+    _web_blockquote_line_breaks,
     _web_caret_context,
     _web_code_block,
     _web_code_block_multiline,

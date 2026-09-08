@@ -610,6 +610,7 @@ def _make_plain_text_fixture(page: str) -> Callable[..., Iterator[NativeAppSessi
 
 _web_basic = _make_web_fixture("web_basic.html")
 _web_block_context = _make_web_fixture("web_block_context.html")
+_web_blockquote_line_breaks = _make_web_fixture("web_blockquote_line_breaks.html")
 _web_code_block = _make_web_fixture("web_code_block.html")
 _web_code_block_multiline = _make_web_fixture("web_code_block_multiline.html")
 _web_flex_header = _make_web_fixture("web_flex_header.html")

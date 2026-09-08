@@ -1704,11 +1704,13 @@ class Utilities(script_utilities.Utilities):
 
             x_obj, x_start, x_end, _x_string = x
 
-            # A lone newline at obj's end offset is obj's end-of-line; include it by text order.
+            # A lone newline at obj's end offset ends obj's line if obj is inline content.
+            # After a block element it starts a blank line instead.
             if (
                 _x_string == "\n"
                 and x_start == AXHypertext.get_link_end_offset(obj)
                 and AXUtilities.is_ancestor(obj, x_obj)
+                and AXUtilities.is_inline_element(obj)
             ):
                 return True
 

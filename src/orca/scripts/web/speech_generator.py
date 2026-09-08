@@ -767,7 +767,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result: list[Any] = []
         contents = self._script.utilities.filter_contents_for_presentation(contents, True)
-        contents = [content for content in contents if not content[3] or content[3].strip()]
+        # Preserve blank lines in content.
+        non_blank = [content for content in contents if not content[3] or content[3].strip()]
+        contents = non_blank or contents
         tokens = ["WEB: Generating speech contents (length:", len(contents), ")"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 

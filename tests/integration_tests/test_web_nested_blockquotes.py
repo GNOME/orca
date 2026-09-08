@@ -53,6 +53,8 @@ def test_say_all_reads_all_nested_blockquote_sentences(
         "block quote",
         "First nested sentence.",
         "Second nested sentence.",
+        "leaving blockquote.",
+        "block quote",
         "Final outer sentence.",
         "leaving blockquote.",
         "After replies.",

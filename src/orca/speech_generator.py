@@ -2835,13 +2835,12 @@ class SpeechGenerator(generator.Generator):
     def _generate_document(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for document-related roles."""
 
-        result = []
         prior_doc = None
         if prior_obj := self._get_prior_obj():
             prior_doc = AXUtilities.find_ancestor_inclusive(prior_obj, AXUtilities.is_document)
 
+        result = self._generate_default_prefix(obj)
         if prior_doc != obj:
-            result += self._generate_default_prefix(obj)
             result += self._generate_accessible_label_and_name(obj)
             result += self._generate_state_read_only(obj)
             result += self._generate_accessible_role(obj)
