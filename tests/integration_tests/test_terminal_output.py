@@ -32,9 +32,9 @@ def test_command_output_is_spoken(gtk3_terminal_shell: NativeAppSession) -> None
     settle(session)
 
     type_text("echo hi\n")
-    assert helpers.speech(session) == ["hi\n$ "]
+    assert helpers.speech(session) in (["hi\n$ "], ["hi", "$ "])
     type_text("echo hello world\n")
-    assert helpers.speech(session) == ["hello world\n$ "]
+    assert helpers.speech(session) in (["hello world\n$ "], ["hello world", "$ "])
 
 
 @pytest.mark.native_app

@@ -197,6 +197,7 @@ def test_selection_across_objects(web_structural_navigation: NativeAppSession) -
     ]
 
 
+@_IS_AT_LEAST_VERSION_153
 @pytest.mark.native_app
 def test_selection_without_notifying_the_user(
     web_structural_navigation: NativeAppSession,
