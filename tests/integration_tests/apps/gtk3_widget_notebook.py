@@ -40,6 +40,13 @@ def _build_menu_bar() -> Gtk.MenuBar:
     file_item.set_submenu(file_menu)
     for label in ("_New", "_Open", "_Quit"):
         file_menu.append(Gtk.MenuItem.new_with_mnemonic(label))
+
+    recent_item = Gtk.MenuItem.new_with_mnemonic("_Recent")
+    recent_menu = Gtk.Menu()
+    recent_item.set_submenu(recent_menu)
+    for label in ("_Report", "_Summary"):
+        recent_menu.append(Gtk.MenuItem.new_with_mnemonic(label))
+    file_menu.insert(recent_item, 2)
     menu_bar.append(file_item)
     return menu_bar
 

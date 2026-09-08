@@ -52,9 +52,8 @@ def test_arrow_navigation_through_the_menubar(web_menubar: NativeAppSession) -> 
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     spoken, brailled = capture(session)
-    assert spoken == ["Catalog", "menu", "Books", "expanded"]
-    # KNOWN ISSUE: Braille should end on the focused item rather than the menubar item.
-    assert brailled[-1] == BrailleLine(1, "Catalog expanded", "Catalog expanded", "\x00" * 16)
+    assert spoken == ["expanded", "Books"]
+    assert brailled[-1] == BrailleLine(1, "Books", "Books", "\x00" * 5)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     spoken, brailled = capture(session)
@@ -68,9 +67,8 @@ def test_arrow_navigation_through_the_menubar(web_menubar: NativeAppSession) -> 
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
     spoken, brailled = capture(session)
-    assert spoken == ["Archives", "menu", "Letters", "expanded"]
-    # KNOWN ISSUE: Braille should end on the focused item rather than the parent menu item.
-    assert brailled[-1] == BrailleLine(1, "Archives expanded", "Archives expanded", "\x00" * 17)
+    assert spoken == ["expanded", "Letters"]
+    assert brailled[-1] == BrailleLine(1, "Letters", "Letters", "\x00" * 7)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     spoken, brailled = capture(session)

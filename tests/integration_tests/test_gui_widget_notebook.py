@@ -149,6 +149,26 @@ def test_menu_bar_navigation(gtk3_widget_notebook: NativeAppSession) -> None:
         ["New", "N"],
         [helpers.BrailleLine(1, "New N", "New N", "\x00" * 5)],
     )
+    assert _press(session, keyboard.KEYSYM_DOWN) == (
+        ["Open", "O"],
+        [helpers.BrailleLine(1, "Open O", "Open O", "\x00" * 6)],
+    )
+    assert _press(session, keyboard.KEYSYM_DOWN) == (
+        ["Recent menu", "R"],
+        [helpers.BrailleLine(1, "Recent menu R", "Recent menu R", "\x00" * 13)],
+    )
+    assert _press(session, keyboard.KEYSYM_RIGHT) == (
+        ["Report", "R"],
+        [helpers.BrailleLine(1, "Report R", "Report R", "\x00" * 8)],
+    )
+    assert _press(session, keyboard.KEYSYM_DOWN) == (
+        ["Summary", "S"],
+        [helpers.BrailleLine(1, "Summary S", "Summary S", "\x00" * 9)],
+    )
+    assert _press(session, keyboard.KEYSYM_LEFT) == (
+        ["Recent menu", "R"],
+        [helpers.BrailleLine(1, "Recent menu R", "Recent menu R", "\x00" * 13)],
+    )
     assert _press(session, keyboard.KEYSYM_ESCAPE) == (
         ["Widgets page tab", "Save button"],
         [helpers.BrailleLine(1, "Save button", "Save button", "\x00" * 11)],

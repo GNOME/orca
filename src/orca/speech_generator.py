@@ -1169,12 +1169,25 @@ class SpeechGenerator(generator.Generator):
             and self._should_present_common_ancestor(obj, prior_obj, common_ancestor, present_once)
         )
 
+        expanded_menu_name = ""
+        if AXUtilities.is_expanded(prior_obj) and (
+            AXUtilities.is_menu(prior_obj) or AXUtilities.is_menu_item(prior_obj)
+        ):
+            expanded_menu_name = AXObject.get_name(prior_obj)
+
         ancestors: list[Atspi.Accessible] = []
         ancestor_roles: list[Atspi.Role] = []
         parent = AXObject.get_parent_checked(obj)
         while parent:
             parent_role = self._get_functional_role(parent)
             if parent_role in stop_at_roles:
+                break
+
+            if (
+                expanded_menu_name
+                and AXUtilities.is_menu(parent, parent_role)
+                and AXObject.get_name(parent) == expanded_menu_name
+            ):
                 break
 
             # TODO - JD: Create an alternative role for this.

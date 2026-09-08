@@ -147,9 +147,16 @@ class PresentationManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not AXUtilities.is_menu_related(new_focus) and (
-            AXUtilities.is_check_menu_item(old_focus) or AXUtilities.is_radio_menu_item(old_focus)
-        ):
+        if AXUtilities.is_menu_related(new_focus):
+            if (
+                AXUtilities.is_expanded(old_focus)
+                and (AXUtilities.is_menu(old_focus) or AXUtilities.is_menu_item(old_focus))
+                and AXObject.get_parent(old_focus) != AXObject.get_parent(new_focus)
+            ):
+                msg += "suspected newly-expanded menu"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
+        elif AXUtilities.is_check_menu_item(old_focus) or AXUtilities.is_radio_menu_item(old_focus):
             msg += "suspected menuitem state change"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False

@@ -296,36 +296,36 @@ class TestEventManager:
     @pytest.mark.parametrize(
         "case",
         [
-            {"id": "window_event", "event_type": "window:activate", "expected_priority": 2},
+            {"id": "window_event", "event_type": "window:activate", "expected_priority": "HIGHEST"},
             {
                 "id": "focus_changed",
                 "event_type": "object:state-changed:focused",
-                "expected_priority": 3,
+                "expected_priority": "HIGH",
             },
             {
                 "id": "active_descendant",
                 "event_type": "object:active-descendant-changed",
-                "expected_priority": 3,
+                "expected_priority": "HIGH",
             },
             {
                 "id": "announcement_normal",
                 "event_type": "object:announcement",
-                "expected_priority": 5,
+                "expected_priority": "NORMAL",
             },
             {
                 "id": "invalid_entry",
                 "event_type": "object:state-changed:invalid-entry",
-                "expected_priority": 6,
+                "expected_priority": "LOWER",
             },
             {
                 "id": "children_changed",
                 "event_type": "object:children-changed:add",
-                "expected_priority": 7,
+                "expected_priority": "LOW",
             },
             {
                 "id": "text_changed_event",
                 "event_type": "object:text-changed:insert",
-                "expected_priority": 4,
+                "expected_priority": "MEDIUM_HIGH",
             },
         ],
         ids=lambda case: case["id"],
@@ -334,7 +334,7 @@ class TestEventManager:
         """Test EventManager._get_priority."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.event_manager import EventManager
+        from orca.event_manager import EventManager, EventPriority
 
         manager = EventManager()
         mock_event = test_context.Mock(spec=Atspi.Event)
@@ -345,10 +345,10 @@ class TestEventManager:
         if case["event_type"] == "object:state-changed:active":
             ax_utilities.is_frame.return_value = True
         elif case["event_type"] == "object:announcement":
-            mock_event.detail1 = Atspi.Live.POLITE if case["expected_priority"] == 3 else 0
+            mock_event.detail1 = Atspi.Live.POLITE if case["expected_priority"] == "HIGH" else 0
         ax_utilities.AXUtilities.has_live_region_role.return_value = False
         priority = manager._get_priority(mock_event)
-        assert priority == case["expected_priority"]
+        assert priority == getattr(EventPriority, case["expected_priority"])
 
     def test_get_priority_announcement_levels(self, test_context: OrcaTestContext) -> None:
         """Test EventManager._get_priority for announcement event levels."""
@@ -363,7 +363,7 @@ class TestEventManager:
 
         mock_event.detail1 = Atspi.Live.ASSERTIVE
         priority = manager._get_priority(mock_event)
-        assert priority == EventPriority.IMPORTANT
+        assert priority == EventPriority.HIGHEST
 
         mock_event.detail1 = Atspi.Live.POLITE
         priority = manager._get_priority(mock_event)
@@ -388,7 +388,7 @@ class TestEventManager:
         ax_object = essential_modules["orca.ax_object"].AXObject
 
         ax_object.get_attribute.return_value = "assertive"
-        assert manager._get_priority(mock_event) == EventPriority.IMPORTANT
+        assert manager._get_priority(mock_event) == EventPriority.HIGHEST
 
         ax_object.get_attribute.return_value = "polite"
         assert manager._get_priority(mock_event) == EventPriority.HIGH
@@ -897,7 +897,7 @@ class TestEventManager:
                 "is_frame": False,
                 "is_dialog_or_alert": False,
                 "detail1": 0,
-                "expected_priority": 2,
+                "expected_priority": "HIGHEST",
             },
             {
                 "id": "active_frame",
@@ -905,7 +905,7 @@ class TestEventManager:
                 "is_frame": True,
                 "is_dialog_or_alert": False,
                 "detail1": 0,
-                "expected_priority": 2,
+                "expected_priority": "HIGHEST",
             },
             {
                 "id": "active_dialog",
@@ -913,7 +913,7 @@ class TestEventManager:
                 "is_frame": False,
                 "is_dialog_or_alert": True,
                 "detail1": 0,
-                "expected_priority": 2,
+                "expected_priority": "HIGHEST",
             },
             {
                 "id": "focused_event",
@@ -921,7 +921,7 @@ class TestEventManager:
                 "is_frame": False,
                 "is_dialog_or_alert": False,
                 "detail1": 0,
-                "expected_priority": 3,
+                "expected_priority": "HIGH",
             },
             {
                 "id": "active_descendant",
@@ -929,7 +929,7 @@ class TestEventManager:
                 "is_frame": False,
                 "is_dialog_or_alert": False,
                 "detail1": 0,
-                "expected_priority": 3,
+                "expected_priority": "HIGH",
             },
             {
                 "id": "assertive_announcement",
@@ -937,7 +937,7 @@ class TestEventManager:
                 "is_frame": False,
                 "is_dialog_or_alert": False,
                 "detail1": 2,
-                "expected_priority": 2,
+                "expected_priority": "HIGHEST",
             },
             {
                 "id": "polite_announcement",
@@ -945,7 +945,7 @@ class TestEventManager:
                 "is_frame": False,
                 "is_dialog_or_alert": False,
                 "detail1": 1,
-                "expected_priority": 3,
+                "expected_priority": "HIGH",
             },
             {
                 "id": "other_announcement",
@@ -953,7 +953,7 @@ class TestEventManager:
                 "is_frame": False,
                 "is_dialog_or_alert": False,
                 "detail1": 3,
-                "expected_priority": 5,
+                "expected_priority": "NORMAL",
             },
             {
                 "id": "invalid_entry",
@@ -961,7 +961,7 @@ class TestEventManager:
                 "is_frame": False,
                 "is_dialog_or_alert": False,
                 "detail1": 0,
-                "expected_priority": 6,
+                "expected_priority": "LOWER",
             },
             {
                 "id": "children_changed",
@@ -969,7 +969,7 @@ class TestEventManager:
                 "is_frame": False,
                 "is_dialog_or_alert": False,
                 "detail1": 0,
-                "expected_priority": 7,
+                "expected_priority": "LOW",
             },
             {
                 "id": "text_changed",
@@ -977,7 +977,7 @@ class TestEventManager:
                 "is_frame": False,
                 "is_dialog_or_alert": False,
                 "detail1": 0,
-                "expected_priority": 4,
+                "expected_priority": "MEDIUM_HIGH",
             },
         ],
         ids=lambda case: case["id"],
@@ -990,7 +990,7 @@ class TestEventManager:
         """Test EventManager._get_priority with various event types and conditions."""
 
         self._setup_dependencies(test_context)
-        from orca.event_manager import EventManager
+        from orca.event_manager import EventManager, EventPriority
 
         manager = EventManager()
         mock_event = test_context.Mock(spec=Atspi.Event)
@@ -1005,7 +1005,7 @@ class TestEventManager:
         )
 
         result = manager._get_priority(mock_event)
-        assert result == case["expected_priority"]
+        assert result == getattr(EventPriority, case["expected_priority"])
 
     @pytest.mark.parametrize(
         "case",

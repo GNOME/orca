@@ -61,7 +61,8 @@ class EventPriority(enum.IntEnum):
     """Priority levels for accessible object events."""
 
     IMMEDIATE = enum.auto()
-    IMPORTANT = enum.auto()
+    HIGHEST = enum.auto()
+    HIGHER = enum.auto()
     HIGH = enum.auto()
     MEDIUM_HIGH = enum.auto()
     NORMAL = enum.auto()
@@ -189,7 +190,7 @@ class EventManager:
 
         live = AXObject.get_attribute(event.source, "container-live")
         if live == "assertive":
-            return EventPriority.IMPORTANT
+            return EventPriority.HIGHEST
         if live == "polite":
             return EventPriority.HIGH
         return EventPriority.MEDIUM_HIGH
@@ -202,14 +203,21 @@ class EventManager:
             event_type == "object:state-changed:active"
             and (AXUtilities.is_frame(event.source) or AXUtilities.is_dialog_or_alert(event.source))
         ):
-            priority = EventPriority.IMPORTANT
+            priority = EventPriority.HIGHEST
+        elif (
+            event_type.startswith("object:state-changed:expanded")
+            and event.detail1
+            and event.source == focus_manager.get_manager().get_locus_of_focus()
+            and (AXUtilities.is_menu_item(event.source) or AXUtilities.is_menu(event.source))
+        ):
+            priority = EventPriority.HIGHER
         elif event_type.startswith(
             ("object:state-changed:focused", "object:active-descendant-changed"),
         ):
             priority = EventPriority.HIGH
         elif event_type.startswith("object:announcement"):
             if event.detail1 == Atspi.Live.ASSERTIVE:
-                priority = EventPriority.IMPORTANT
+                priority = EventPriority.HIGHEST
             elif event.detail1 == Atspi.Live.POLITE:
                 priority = EventPriority.HIGH
             else:
