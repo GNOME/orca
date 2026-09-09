@@ -280,22 +280,18 @@ class AXUtilitiesHypertext:
         if OBJECT_REPLACEMENT_CHARACTER not in text:
             return text
 
-        to_build = list(text)
-        for index, char in enumerate(to_build):
+        to_build = [(char, False) for char in text]
+        for index, (char, _separate) in enumerate(to_build):
             if char != OBJECT_REPLACEMENT_CHARACTER:
                 continue
             child = AXUtilitiesHypertext.find_child_at_offset(obj, index + start_offset)
             result = AXUtilitiesHypertext.expand_eocs(child) if child is not None else ""
-            if (
-                result
-                and not result[-1].isspace()
-                and child is not None
-                and AXUtilitiesHypertext._is_separate_text_element(child)
-            ):
-                result += " "
-            to_build[index] = result
+            to_build[index] = (
+                result,
+                child is not None and AXUtilitiesHypertext._is_separate_text_element(child),
+            )
 
-        result = "".join(to_build)
+        result = AXUtilitiesHypertext._join_expanded_parts(to_build)
         tokens = [
             "AXUtilitiesHypertext: Expanded EOCs for",
             obj,

@@ -688,6 +688,7 @@ _web_pain_slider_no_valuenow = _make_web_fixture("web_pain_slider_no_valuenow.ht
 _web_redundant_content = _make_web_fixture("web_redundant_content.html")
 _web_editing = _make_web_fixture("web_editing.html")
 _web_editable_embedded = _make_web_fixture("web_editable_embedded.html")
+_web_editable_embedded_selection = _make_web_fixture("web_editable_embedded_selection.html")
 _web_emoji_offset_skew = _make_web_fixture("web_emoji_offset_skew.html")
 _web_long_line = _make_web_fixture("web_long_line.html")
 _web_math = _make_web_fixture("web_math.html")

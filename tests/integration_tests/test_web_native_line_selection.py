@@ -115,6 +115,22 @@ def test_line_selection_and_unselection(web_native_text_selection: NativeAppSess
 
 
 @pytest.mark.native_app
+def test_selected_text_has_no_added_trailing_space(
+    web_native_text_selection: NativeAppSession,
+) -> None:
+    """Tests that joining selected blocks does not append an unselected separator."""
+
+    session = web_native_text_selection
+
+    with native_selection(session):
+        select_line(session, keyboard.KEYSYM_DOWN)
+        select_line(session, keyboard.KEYSYM_DOWN)
+        assert say_selection(session) == [
+            "Selected text is:  Structural navigation Intro paragraph."
+        ]
+
+
+@pytest.mark.native_app
 def test_selection_by_line_up_then_down(web_native_text_selection: NativeAppSession) -> None:
     """Tests selection by line up and then down."""
 
