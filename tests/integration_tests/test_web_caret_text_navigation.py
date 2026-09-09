@@ -196,6 +196,11 @@ def test_file_start_and_end(web_structural_navigation: NativeAppSession) -> None
     move_to_top(session)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-    assert speech(session) == ["prose rather than short fragments or individual controls."]
+    assert speech(session) == [
+        (
+            "targets substantial chunks of readable prose rather than short fragments or "
+            "individual controls."
+        ),
+    ]
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
     assert speech(session) == ["Structural navigation", "heading 1"]

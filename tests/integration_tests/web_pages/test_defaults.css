@@ -1,0 +1,22 @@
+:where(html) {
+  --test-font-serif: "DejaVu Serif", serif;
+  --test-font-sans: "DejaVu Sans", sans-serif;
+  --test-font-mono: "DejaVu Sans Mono", monospace;
+  font-family: var(--test-font-serif);
+  font-size: 16px;
+}
+
+:where(pre, code, kbd, samp, tt) {
+  font-family: var(--test-font-mono);
+  font-size: 13px;
+}
+
+:where(button, input, select) {
+  font-family: var(--test-font-sans);
+  font-size: 13px;
+}
+
+:where(textarea) {
+  font-family: var(--test-font-mono);
+  font-size: 13px;
+}

@@ -17,7 +17,7 @@ launch Orca need an installed build of the version being tested.
 * `pgrep` (from procps) and `fusermount` (for sandbox FUSE cleanup)
 * Python GObject introspection and Cairo bindings, with the AT-SPI, GTK3, and PangoCairo typelibs
 * `glib-compile-schemas` for the GSettings tests
-* The DejaVu Sans Mono font, which the text-view tests wrap against
+* The DejaVu Serif, DejaVu Sans, and DejaVu Sans Mono fonts for consistent line wrapping
 * VTE 2.91 (GTK3), including its typelib, Python curses, xterm terminfo, bash, less, nano, vim,
   and `seq` (from coreutils), for the terminal tests
 * liblouis's Python bindings and en-us-g1/en-us-g2 tables for the braille tests. Its pkg-config
@@ -34,7 +34,7 @@ launch Orca need an installed build of the version being tested.
 ## Running Tests
 
 These tests, especially the new integration tests, are currently intended for
-use by the maintainer. Documenting the expected dependencies and versions and
+use by the maintainer. Documenting all expected dependencies and versions and
 ensuring compatibility with multiple distros are still pending. For this reason,
 the integration tests are currently disabled by default.
 

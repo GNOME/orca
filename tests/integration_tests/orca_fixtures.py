@@ -26,6 +26,7 @@ import contextlib
 import curses
 import functools
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -547,7 +548,23 @@ def _run_browser_session(
 
     sandbox_dir = tmp_path_factory.mktemp("orca-browser")
     page_path = sandbox_dir / page
-    page_path.write_bytes(source_page.read_bytes())
+    if source_page.suffix.lower() in (".html", ".htm"):
+        for family in ("DejaVu Sans", "DejaVu Serif", "DejaVu Sans Mono"):
+            if not _font_is_installed(family):
+                pytest.skip(f"Font not installed: {family}")
+        stylesheet = (_WEB_PAGES_DIR / "test_defaults.css").read_text(encoding="utf-8")
+        page_html, count = re.subn(
+            r"(<head\b[^>]*>)",
+            lambda match: f"{match[0]}\n<style>\n{stylesheet}</style>\n",
+            source_page.read_text(encoding="utf-8"),
+            count=1,
+            flags=re.IGNORECASE,
+        )
+        if not count:
+            raise ValueError(f"Test page has no head element: {source_page}")
+        page_path.write_text(page_html, encoding="utf-8")
+    else:
+        page_path.write_bytes(source_page.read_bytes())
     profile_dir = sandbox_dir / "browser-profile"
     profile_dir.mkdir()
     argv = [

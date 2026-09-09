@@ -47,6 +47,7 @@ def build_argv(
         f"--user-data-dir={profile_dir}",
         f"--window-size={window_size[0]},{window_size[1]}",
         "--window-position=0,0",
+        "--force-device-scale-factor=1",
         # Fedora's chromium defaults to Wayland; the wrapper unsets WAYLAND_DISPLAY.
         "--ozone-platform=x11",
         "--no-first-run",
