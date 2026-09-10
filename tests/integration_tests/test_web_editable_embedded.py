@@ -27,29 +27,13 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_bottom, reset_web_state, say_selection, speech
+from .helpers import BrailleLine, capture, move_to_bottom, reset_web_state, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
 
 
 _LINK_LINE_MASK = "\x00" * 8 + "\xc0" * 8 + "\x00" * 10
-
-
-@pytest.mark.native_app
-def test_selected_text_separates_embedded_control(
-    web_editable_embedded_selection: NativeAppSession,
-) -> None:
-    """Tests that selected text separates an embedded control from its adjacent label."""
-
-    session = web_editable_embedded_selection
-    reset_web_state(session)
-    keyboard.tap_key(keyboard.KEYSYM_TAB)
-    speech(session)
-    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
-    speech(session)
-
-    assert say_selection(session) == ["Selected text is:  First link Fruit Apple Second paragraph."]
 
 
 @pytest.mark.native_app

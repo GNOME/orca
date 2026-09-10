@@ -229,6 +229,7 @@ orca_integration_tests = {
     'integration_tests/test_web_option_removal.py',
     'integration_tests/test_web_editing.py',
     'integration_tests/test_web_editable_embedded.py',
+    'integration_tests/test_web_editable_embedded_selection.py',
     'integration_tests/test_web_alert.py',
     'integration_tests/test_web_braille_panning.py',
     'integration_tests/test_web_braille_contractions.py',

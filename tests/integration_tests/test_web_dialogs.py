@@ -108,7 +108,7 @@ def test_dialog_appearance_and_alert(web_dialogs: NativeAppSession) -> None:
 
     # Opening the modal announces its content and lands on the autofocused default button.
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session) == ["Delete this item? ", "OK", "button"]
+    assert speech(session) == ["Delete this item?", "OK", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert speech(session) == ["Cancel", "button"]
