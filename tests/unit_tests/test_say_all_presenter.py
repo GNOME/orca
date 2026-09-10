@@ -800,6 +800,42 @@ class TestSayAllPresenter:
             fm.FOCUS_TRACKING,
         )
 
+    def test_progress_callback_non_keyboard_interrupt_stops_say_all(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test a non-keyboard interruption stops Say All without changing the caret."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca import input_event_manager, speechserver
+        from orca.say_all_presenter import SayAllPresenter
+
+        presenter = SayAllPresenter()
+        mock_script = test_context.Mock()
+        presenter._script = mock_script
+
+        mock_context = test_context.Mock(spec=speechserver.SayAllContext)
+        mock_context.obj = test_context.Mock()
+        mock_context.current_offset = 5
+        mock_context.current_end_offset = 10
+
+        focus_manager_mock = essential_modules["orca.focus_manager"]
+        focus_instance = test_context.Mock()
+        focus_manager_mock.get_manager.return_value = focus_instance
+
+        iem_instance = test_context.Mock()
+        iem_instance.last_event_was_keyboard.return_value = False
+        test_context.patch_object(input_event_manager, "get_manager", return_value=iem_instance)
+
+        presenter._progress_callback(mock_context, speechserver.SayAllContext.INTERRUPTED)
+
+        assert presenter._say_all_is_running is False
+        focus_instance.reset_active_mode.assert_called_once_with(
+            "SAY ALL PRESENTER: Stopped Say All.",
+        )
+        focus_instance.emit_region_changed.assert_not_called()
+        mock_script.utilities.set_caret_context.assert_not_called()
+
     @pytest.mark.parametrize(
         "caret_navigation, structural_navigation",
         [

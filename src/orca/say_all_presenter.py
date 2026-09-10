@@ -657,6 +657,9 @@ class SayAllPresenter(Extension):
                     context.obj, context.current_offset, CaretSetReason.SAY_ALL_COMMAND
                 )
                 self._say_all_is_running = False
+            else:
+                self.stop()
+                return
         else:
             tokens = ["SAY ALL PROGRESS CALLBACK: Completed", context]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
