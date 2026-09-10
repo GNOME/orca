@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Reading CSS one-word/char-per-line text whole rather than a word or character at a time."""
+"""Reading text which CSS has broken up or hidden from view."""
 
 from __future__ import annotations
 
@@ -55,5 +55,13 @@ def test_one_word_per_line_text_is_read_whole(web_cssed_brokenness: NativeAppSes
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert helpers.speech(session) == ["abcdef"]
 
-    keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert helpers.speech(session) == ["This is the final line."]
+    for expected in [
+        "nu xi omicron",
+        "pi rho sigma",
+        "tau upsilon phi",
+        "chi psi omega",
+        "stigma sampi koppa",
+        "This is the final line.",
+    ]:
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        assert helpers.speech(session) == [expected]

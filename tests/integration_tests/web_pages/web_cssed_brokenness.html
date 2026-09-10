@@ -9,6 +9,13 @@
             clip: rect(0 0 0 0); clip-path: inset(50%); }
   .narrow { width: 1px; word-break: break-word; }
   .narrowchars { width: 1px; word-break: break-all; }
+  .zeroheight { height: 0; overflow: hidden; }
+  .zerofont { font-size: 0; }
+  .pushedout { text-indent: -9999px; overflow: hidden; white-space: nowrap; }
+  .scaled { display: inline-block; transform: scale(0); }
+  .transparent { opacity: 0; }
+  .invisible { visibility: hidden; }
+  .undisplayed { display: none; }
 </style>
 </head>
 <body>
@@ -17,6 +24,13 @@
 <p class="sronly">epsilon zeta eta theta</p>
 <p class="narrow">iota kappa lambda mu</p>
 <p class="narrowchars">abcdef</p>
+<p class="zeroheight">nu xi omicron</p>
+<p class="zerofont">pi rho sigma</p>
+<p class="pushedout">tau upsilon phi</p>
+<p class="scaled">chi psi omega</p>
+<p class="transparent">stigma sampi koppa</p>
+<p class="invisible">digamma heta san</p>
+<p class="undisplayed">sho qoppa stigma</p>
 <p>This is the final line.</p>
 </body>
 </html>

@@ -1402,7 +1402,13 @@ class AXUtilities:
             return False
 
         text_rect = AXText.get_range_rect(obj, 0, n_chars)
-        return AXComponent.get_rect(obj).height < text_rect.height
+        rect = AXComponent.get_rect(obj)
+        if rect.height >= text_rect.height:
+            return False
+
+        tokens = ["AXUtilities: Rect of", obj, rect, "clips its text", text_rect]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return True
 
     @staticmethod
     def has_visible_caption(obj: Atspi.Accessible) -> bool:

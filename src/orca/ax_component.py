@@ -70,6 +70,8 @@ class AXComponent:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return Atspi.Rect()
 
+        tokens = ["AXComponent: Rect of", obj, "is", rect]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return rect
 
     @staticmethod
