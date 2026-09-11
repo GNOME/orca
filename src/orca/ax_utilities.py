@@ -1406,6 +1406,18 @@ class AXUtilities:
         if rect.height >= text_rect.height:
             return False
 
+        if abs(text_rect.y - rect.y) > text_rect.height:
+            tokens = [
+                "AXUtilities: Rect of",
+                obj,
+                rect,
+                "is too far from its text",
+                text_rect,
+                "to determine clipping.",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
         tokens = ["AXUtilities: Rect of", obj, rect, "clips its text", text_rect]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
