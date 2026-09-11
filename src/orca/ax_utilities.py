@@ -1394,6 +1394,18 @@ class AXUtilities:
         return bool(text) and text in " ".join(name.split())
 
     @staticmethod
+    def name_is_from_contents(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj's name was calculated and obj has no text of its own."""
+
+        if not AXObject.get_name(obj) or AXUtilities.has_explicit_name(obj):
+            return False
+
+        if not (text := AXText.get_all_text(obj)):
+            return False
+
+        return not text.replace("\ufffc", "").strip()
+
+    @staticmethod
     def clips_its_own_text(obj: Atspi.Accessible) -> bool:
         """Returns True if obj's box is too small to hold the text inside it."""
 
@@ -1671,7 +1683,14 @@ class AXUtilities:
 
             children = AXUtilities._get_on_screen_objects(child, bounding_box)
             objects.extend(children)
-            if root_name and children and root in objects and root_name == AXObject.get_name(child):
+            if (
+                root_name
+                and children
+                and root in objects
+                and (
+                    root_name == AXObject.get_name(child) or AXUtilities.name_is_from_contents(root)
+                )
+            ):
                 objects.remove(root)
 
         is_interactive = AXUtilitiesState.is_focusable(root) or AXUtilitiesAction.has_action(

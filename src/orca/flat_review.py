@@ -950,6 +950,8 @@ class Context:
             lines.append(line)
             for zone in zones_in_line:
                 zone.line = line
+                tokens = ["FLAT REVIEW: Line", line_index, "has", zone, "at", zone.get_rect()]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         tokens = ["FLAT REVIEW: Zones clustered into", len(lines), "lines"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

@@ -130,3 +130,31 @@ def test_spell_and_phonetic_word(web_flat_review: NativeAppSession) -> None:
         )
     finally:
         toggle_flat_review(session)
+
+
+@pytest.mark.native_app
+def test_review_lines_in_nested_tables(web_flat_review: NativeAppSession) -> None:
+    """Tests line-by-line flat review of content in nested tables."""
+
+    session = web_flat_review
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+    tracking = session.orca.get("FlatReviewPresenter", "FocusTracking")
+    session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
+    toggle_flat_review(session)
+
+    try:
+        assert _command(session, "PresentLine") == (
+            ["a one-two b."],
+            [_line("a one-two b. $l", 1)],
+        )
+        assert _command(session, "GoNextLine") == (["Hi there,"], [_line("Hi there, $l", 1)])
+        assert _command(session, "GoNextLine") == (["Thank you,"], [_line("Thank you, $l", 1)])
+    finally:
+        toggle_flat_review(session)
+        session.orca.set("FlatReviewPresenter", "FocusTracking", tracking)
