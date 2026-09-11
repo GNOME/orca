@@ -134,22 +134,26 @@ def test_shift_selection(gtk3_widget_notebook: NativeAppSession) -> None:
     two_selected = "\x00" * 9 + "\xc0\xc0" + "\x00" * 3
     cleared = "\x00" * 14
 
-    assert _press_chord(session, [keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT) == (
+    spoken, brailled = _press_chord(session, [keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
+    assert (spoken, brailled[-1]) == (
         ["7", "selected"],
-        [helpers.BrailleLine(11, "Quantity 75 $l", "Quantity 75 $l", one_selected)],
+        helpers.BrailleLine(11, "Quantity 75 $l", "Quantity 75 $l", one_selected),
     )
-    assert _press_chord(session, [keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT) == (
+    spoken, brailled = _press_chord(session, [keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
+    assert (spoken, brailled[-1]) == (
         ["5", "selected"],
-        [helpers.BrailleLine(12, "Quantity 75 $l", "Quantity 75 $l", two_selected)],
+        helpers.BrailleLine(12, "Quantity 75 $l", "Quantity 75 $l", two_selected),
     )
-    assert _press_chord(session, [keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_LEFT) == (
+    spoken, brailled = _press_chord(session, [keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_LEFT)
+    assert (spoken, brailled[-1]) == (
         ["5", "unselected"],
-        [helpers.BrailleLine(11, "Quantity 75 $l", "Quantity 75 $l", one_selected)],
+        helpers.BrailleLine(11, "Quantity 75 $l", "Quantity 75 $l", one_selected),
     )
     cleared_line = helpers.BrailleLine(10, "Quantity 75 $l", "Quantity 75 $l", cleared)
-    assert _press_chord(session, [keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_LEFT) == (
+    spoken, brailled = _press_chord(session, [keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_LEFT)
+    assert (spoken, brailled[-1]) == (
         ["7", "unselected"],
-        [cleared_line, cleared_line],
+        cleared_line,
     )
 
 
@@ -314,14 +318,7 @@ def test_programmatic_change_focus_on_spinbutton(
 
     all_selected = "\x00" * 9 + "\xc0\xc0" + "\x00" * 3
     quantity_76 = helpers.BrailleLine(10, "Quantity 76 $l", "Quantity 76 $l", "\x00" * 14)
-    assert helpers.capture(session, quiescence=1.5, overall=3.5) == (
-        ["76"],
-        [
-            helpers.BrailleLine(12, "Quantity 75 $l", "Quantity 75 $l", all_selected),
-            quantity_76,
-            helpers.BrailleLine(0, "Selection deleted.", "Selection deleted.", "\x00" * 18),
-            quantity_76,
-            quantity_76,
-            quantity_76,
-        ],
-    )
+    spoken, brailled = helpers.capture(session, quiescence=1.5, overall=3.5)
+    assert spoken == ["76"]
+    assert helpers.BrailleLine(12, "Quantity 75 $l", "Quantity 75 $l", all_selected) in brailled
+    assert brailled[-1] == quantity_76

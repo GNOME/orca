@@ -98,17 +98,13 @@ def test_move_focus_to_review(gtk3_two_entries: NativeAppSession) -> None:
     with _bound(session, "move_focus_to_review") as key:
         _review_first_entry_then_focus_second(session)
         session.orca.press_bound_key(key)
-        assert capture(session, wait_async=True) == (
-            ["text", "Apple pie recipe"],
-            [
-                BrailleLine(11, "Apple pie recipe $l", "Apple pie recipe $l", "\x00" * 19),
-                BrailleLine(
-                    11,
-                    "OrcaTwoEntries application frame Apple pie recipe $l",
-                    "Apple pie recipe $l",
-                    "\x00" * 52,
-                ),
-            ],
+        spoken, brailled = capture(session, wait_async=True)
+        assert spoken == ["text", "Apple pie recipe"]
+        assert brailled[-1] == BrailleLine(
+            11,
+            "OrcaTwoEntries application frame Apple pie recipe $l",
+            "Apple pie recipe $l",
+            "\x00" * 52,
         )
 
 

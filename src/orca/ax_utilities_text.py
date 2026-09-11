@@ -283,9 +283,15 @@ class AXUtilitiesText:
             if not find_start and not string.endswith("\ufffc"):
                 return root, max(start, end - 1)
 
-            endpoint_offset = start if find_start else end - 1
-            child = AXHypertext.get_child_at_offset(root, endpoint_offset)
-            if child is not None:
+            searched_children: set[Atspi.Accessible] = set()
+            offsets = range(start, end) if find_start else range(end - 1, start - 1, -1)
+            for offset in offsets:
+                if string[offset - start] != "\ufffc":
+                    return root, offset
+                child = AXHypertext.get_child_at_offset(root, offset)
+                if child is None or child in searched_children:
+                    continue
+                searched_children.add(child)
                 result = AXUtilitiesText._find_text_selection_endpoint(child, find_start)
                 if result is not None:
                     return result
@@ -296,8 +302,11 @@ class AXUtilitiesText:
         if not find_start:
             indices.reverse()
         for i in indices:
+            child = AXObject.get_child(root, i)
+            if ranges and child in searched_children:
+                continue
             result = AXUtilitiesText._find_text_selection_endpoint(
-                AXObject.get_child(root, i),
+                child,
                 find_start,
             )
             if result is not None:

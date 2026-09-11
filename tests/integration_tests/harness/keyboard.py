@@ -125,8 +125,7 @@ def press_chord(modifiers: list[int], keysym: int) -> None:
         for modifier in modifiers:
             press_key(modifier)
             pressed.append(modifier)
-        press_key(keysym)
-        release_key(keysym)
+        tap_key(keysym)
     finally:
         for modifier in reversed(pressed):
             release_key(modifier)

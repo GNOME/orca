@@ -45,14 +45,14 @@ def test_word_selection_and_unselection(web_native_text_selection: NativeAppSess
     session = web_native_text_selection
     expected_selected = [
         ["Structural", "selected"],
-        [" navigation", "selected"],
-        ["Intro "],
+        ["navigation", "selected"],
+        [],
         ["Intro", "selected"],
-        [" paragraph", "selected"],
+        ["paragraph", "selected"],
         [".", "selected"],
-        ["Quoted "],
+        [],
         ["Quoted", "selected"],
-        [" text", "selected"],
+        ["text", "selected"],
         [".", "selected"],
         [],
         ["selected"],
@@ -62,11 +62,11 @@ def test_word_selection_and_unselection(web_native_text_selection: NativeAppSess
         [],
     ]
     expected_unselected = [
-        ["Fruit"],
+        [],
         [],
         [],
         ["unselected"],
-        ["Text unselected."],
+        ["unselected"],
         [],
         [],
         [],
@@ -97,58 +97,58 @@ def test_word_selection_and_unselection_from_bottom(
     expected_selected = [[".", "selected"], ["controls", "selected"]]
     for word in reversed(words[:-1]):
         if word.endswith(","):
-            expected_selected.extend([[", ", "selected"], [word[:-1], "selected"]])
+            expected_selected.extend([[",", "selected"], [word[:-1], "selected"]])
         else:
-            expected_selected.append([f"{word} ", "selected"])
+            expected_selected.append([word, "selected"])
     expected_selected.extend(
         [
             [],
+            ["Red square", "image", "selected"],
+            ["region", "selected"],
+            ["Clickable", "selected"],
             [],
+            ["link", "selected"],
+            ["Second", "selected"],
             [],
-            ["Clickable ", "selected"],
-            ["link"],
             ["link", "selected"],
-            ["Second ", "selected"],
-            ["link"],
-            ["link", "selected"],
-            ["First ", "selected"],
-            ["36"],
+            ["First", "selected"],
+            [],
             ["36", "selected"],
-            ["Ada"],
+            [],
             ["Ada", "selected"],
-            ["Age"],
+            [],
             ["Age", "selected"],
-            ["Name"],
+            [],
             ["Name", "selected"],
         ]
     )
     expected_unselected = [
-        ["Text unselected.", "Name"],
+        ["Name", "unselected"],
         [],
-        ["Text unselected.", "Age"],
+        ["Age", "unselected"],
         [],
-        ["Text unselected.", "Ada"],
+        ["Ada", "unselected"],
         [],
-        ["Text unselected.", "36"],
+        ["36", "unselected"],
         [],
         ["First", "unselected"],
-        ["Text unselected.", "link"],
+        ["link", "unselected"],
         [],
         ["Second", "unselected"],
-        ["Text unselected.", "link"],
+        ["link", "unselected"],
         [],
         ["Clickable", "unselected"],
-        ["Text unselected.", "region"],
+        ["region", "unselected"],
         [],
         [],
-        [],
+        ["Red square", "image", "unselected"],
         ["This", "unselected"],
     ]
     for word in words[1:-1]:
         if word.endswith(","):
-            expected_unselected.extend([[f" {word[:-1]}", "unselected"], [",", "unselected"]])
+            expected_unselected.extend([[word[:-1], "unselected"], [",", "unselected"]])
         else:
-            expected_unselected.append([f" {word}", "unselected"])
+            expected_unselected.append([word, "unselected"])
 
     with native_selection(session):
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)

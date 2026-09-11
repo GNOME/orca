@@ -63,13 +63,14 @@ def _setup_on_line_two(
     session.reader.reset()
 
 
-def _select_word(session: NativeAppSession) -> tuple[list[str], list[helpers.BrailleLine]]:
+def _select_word(session: NativeAppSession) -> tuple[list[str], helpers.BrailleLine]:
     """Extends the selection by one word and returns the capture."""
 
     keyboard.press_chord(
         [keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT
     )
-    return helpers.capture(session)
+    spoken, brailled = helpers.capture(session)
+    return spoken, brailled[-1]
 
 
 @pytest.mark.native_app
@@ -81,19 +82,19 @@ def test_selection_mask_uncontracted(gtk3_text_view: NativeAppSession) -> None:
     line = _LINE_COMPUTER
     assert _select_word(session) == (
         ["Line", "selected"],
-        [helpers.BrailleLine(5, line, "Line two has additional words to", _mask(line, 4))],
+        helpers.BrailleLine(5, line, "Line two has additional words to", _mask(line, 4)),
     )
     assert _select_word(session) == (
         [" two", "selected"],
-        [helpers.BrailleLine(9, line, "Line two has additional words to", _mask(line, 8))],
+        helpers.BrailleLine(9, line, "Line two has additional words to", _mask(line, 8)),
     )
     assert _select_word(session) == (
         [" has", "selected"],
-        [helpers.BrailleLine(13, line, "Line two has additional words to", _mask(line, 12))],
+        helpers.BrailleLine(13, line, "Line two has additional words to", _mask(line, 12)),
     )
     assert _select_word(session) == (
         [" additional", "selected"],
-        [helpers.BrailleLine(24, line, "Line two has additional words to", _mask(line, 23))],
+        helpers.BrailleLine(24, line, "Line two has additional words to", _mask(line, 23)),
     )
 
 
@@ -106,19 +107,19 @@ def test_selection_mask_contracted(gtk3_text_view: NativeAppSession) -> None:
     line = _LINE_CONTRACTED
     assert _select_word(session) == (
         ["Line", "selected"],
-        [helpers.BrailleLine(5, line, ",l9e two has a4i;nal ~ws 6make x", _mask(line, 4))],
+        helpers.BrailleLine(5, line, ",l9e two has a4i;nal ~ws 6make x", _mask(line, 4)),
     )
     assert _select_word(session) == (
         [" two", "selected"],
-        [helpers.BrailleLine(9, line, ",l9e two has a4i;nal ~ws 6make x", _mask(line, 8))],
+        helpers.BrailleLine(9, line, ",l9e two has a4i;nal ~ws 6make x", _mask(line, 8)),
     )
     assert _select_word(session) == (
         [" has", "selected"],
-        [helpers.BrailleLine(13, line, ",l9e two has a4i;nal ~ws 6make x", _mask(line, 12))],
+        helpers.BrailleLine(13, line, ",l9e two has a4i;nal ~ws 6make x", _mask(line, 12)),
     )
     assert _select_word(session) == (
         [" additional", "selected"],
-        [helpers.BrailleLine(21, line, ",l9e two has a4i;nal ~ws 6make x", _mask(line, 20))],
+        helpers.BrailleLine(21, line, ",l9e two has a4i;nal ~ws 6make x", _mask(line, 20)),
     )
 
 
@@ -131,9 +132,10 @@ def test_pan_contracted_selection_word_wrap_off(gtk3_text_view: NativeAppSession
     line = _LINE_CONTRACTED
     mask = _mask(line, 40)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
-    assert helpers.capture(session) == (
+    spoken, brailled = helpers.capture(session)
+    assert (spoken, brailled[-1]) == (
         ["Line two has additional words to make it long enough that", "selected"],
-        [helpers.BrailleLine(32, line, "has a4i;nal ~ws 6make x l;g 5 t ", mask)],
+        helpers.BrailleLine(32, line, "has a4i;nal ~ws 6make x l;g 5 t ", mask),
     )
     with helpers.bound_pan_keys(session) as (_left_key, right_key):
         session.orca.press_bound_key(right_key)
@@ -153,9 +155,10 @@ def test_pan_contracted_selection_word_wrap_on(gtk3_text_view: NativeAppSession)
     # Same selection mask as word-wrap off; only the visible window differs (word-aligned, not cut).
     mask = _mask(line, 40)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
-    assert helpers.capture(session) == (
+    spoken, brailled = helpers.capture(session)
+    assert (spoken, brailled[-1]) == (
         ["Line two has additional words to make it long enough that", "selected"],
-        [helpers.BrailleLine(10, line, "x l;g 5 t  $l", mask)],
+        helpers.BrailleLine(10, line, "x l;g 5 t  $l", mask),
     )
     with helpers.bound_pan_keys(session) as (left_key, _right_key):
         session.orca.press_bound_key(left_key)

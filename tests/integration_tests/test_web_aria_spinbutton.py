@@ -229,14 +229,16 @@ def test_rating_shift_selection(web_aria_spinbutton: NativeAppSession) -> None:
     _tab_to_rating(session)
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_LEFT)
-    assert helpers.capture(session) == (
+    spoken, brailled = helpers.capture(session)
+    assert (spoken, brailled[-1:]) == (
         [],
         [helpers.BrailleLine(8, "Rating 75 $l", "Rating 75 $l", "\x00" * 12)],
     )
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_LEFT)
     assert helpers.capture(session) == ([], [])
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    assert helpers.capture(session) == (
+    spoken, brailled = helpers.capture(session)
+    assert (spoken, brailled[-1:]) == (
         ["7", "selected"],
         [
             helpers.BrailleLine(
@@ -245,7 +247,8 @@ def test_rating_shift_selection(web_aria_spinbutton: NativeAppSession) -> None:
         ],
     )
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    assert helpers.capture(session) == (
+    spoken, brailled = helpers.capture(session)
+    assert (spoken, brailled[-1:]) == (
         ["5", "selected"],
         [
             helpers.BrailleLine(

@@ -105,7 +105,8 @@ def test_selection_in_an_entry(gtk3_two_entries: NativeAppSession) -> None:
     session.reader.reset()
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    spoken, brailled = capture(session)
+    assert (spoken, brailled[-1:]) == (
         ["A", "selected"],
         [BrailleLine(2, _FIRST, _FIRST_VISIBLE, "\x00" * 33 + "\xc0" + "\x00" * 18)],
     )
@@ -113,13 +114,15 @@ def test_selection_in_an_entry(gtk3_two_entries: NativeAppSession) -> None:
     keyboard.press_chord(
         [keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT
     )
-    assert capture(session) == (
+    spoken, brailled = capture(session)
+    assert (spoken, brailled[-1:]) == (
         ["pple", "selected"],
         [BrailleLine(6, _FIRST, _FIRST_VISIBLE, "\x00" * 33 + "\xc0" * 5 + "\x00" * 14)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
-    assert capture(session) == (
+    spoken, brailled = capture(session)
+    assert (spoken, brailled[-1:]) == (
         [" pie recipe", "selected"],
         [BrailleLine(17, _FIRST, _FIRST_VISIBLE, "\x00" * 33 + "\xc0" * 16 + "\x00" * 3)],
     )

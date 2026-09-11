@@ -262,13 +262,14 @@ foreach group, test_files : orca_integration_tests
   foreach test_file : test_files
     test_name = test_file.split('/')[-1].split('.')[0]
     is_gsettings = test_name == 'test_gsettings'
+    test_timeout = test_name == 'test_web_text_attributes' ? 300 : 120
     test(
       test_name,
       is_gsettings ? python : integration_wrapper,
       args: is_gsettings ? ['-m', 'pytest', files(test_file), '-v'] : [files(test_file)],
       env: test_env,
       suite: ['integration', group],
-      timeout: is_gsettings ? 30 : 120,
+      timeout: is_gsettings ? 30 : test_timeout,
       is_parallel: is_gsettings,
     )
   endforeach

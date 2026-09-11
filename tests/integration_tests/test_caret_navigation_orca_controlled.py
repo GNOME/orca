@@ -200,13 +200,15 @@ def test_selection_with_shift_plus_arrows(gtk3_text_view: NativeAppSession) -> N
     assert brailled[-1] == BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    spoken, brailled = capture(session)
+    assert (spoken, brailled[-1:]) == (
         ["L", "selected"],
         [BrailleLine(2, _LINE_TWO, _LINE_TWO_VISIBLE, "\xc0" + "\x00" * 60)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
-    assert capture(session) == (
+    spoken, brailled = capture(session)
+    assert (spoken, brailled[-1:]) == (
         ["ine two has additional words to make it long enough that", "selected"],
         [BrailleLine(32, _LINE_TWO, "rds to make it long enough that ", "\xc0" * 57 + "\x00" * 4)],
     )

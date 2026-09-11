@@ -519,6 +519,7 @@ class Script(script.Script):
                 self,
                 event.source,
             )
+            self._update_braille_caret_position(event.source)
             return True
 
         text, _start, _end = AXUtilities.get_cached_selected_text(obj)
