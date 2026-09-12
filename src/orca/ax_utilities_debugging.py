@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import inspect
 import pprint
+import re
 import types
 from typing import Any
 
@@ -55,9 +56,9 @@ class AXUtilitiesDebugging:
         if original_length < 100:
             return string
 
-        words = string.split()
+        words = list(re.finditer(r"\S+", string))
         if len(words) > 10:
-            string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])}"
+            string = f"{string[: words[4].end()]} ... {string[words[-5].start() :]}"
         else:
             start = original_string[:40].replace("\n", "\\n").replace("\ufffc", "[OBJ]")
             end = original_string[-40:].replace("\n", "\\n").replace("\ufffc", "[OBJ]")

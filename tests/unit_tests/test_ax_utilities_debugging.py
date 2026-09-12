@@ -94,6 +94,12 @@ class TestAXUtilitiesDebugging:
                 "word1 word2 word3 word4 word5 ... word16 word17 word18 word19 word20 (130 chars.)",
                 id="over_100_chars_truncation",
             ),
+            pytest.param(
+                "  " + "  ".join(f"word{i}" for i in range(1, 21)) + "  ",
+                "  word1  word2  word3  word4  word5 ... "
+                "word16  word17  word18  word19  word20   (153 chars.)",
+                id="truncation_preserves_spaces",
+            ),
         ],
     )
     def test_format_string(  # pylint: disable=too-many-arguments,too-many-positional-arguments
