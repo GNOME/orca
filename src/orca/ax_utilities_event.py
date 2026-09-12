@@ -321,7 +321,7 @@ class AXUtilitiesEvent:
         AXUtilitiesEvent._LAST_TERMINAL_LINE_NAVIGATION_REPAINT_LINE = None
 
     @staticmethod
-    def _save_terminal_line_navigation_repaint_line(
+    def save_terminal_line_navigation_repaint_line(
         event: Atspi.Event, mgr: InputEventManager
     ) -> None:
         AXUtilitiesEvent._LAST_TERMINAL_LINE_NAVIGATION_REPAINT_LINE = (
@@ -897,7 +897,6 @@ class AXUtilitiesEvent:
                 and mgr.last_event_was_line_navigation()
             ):
                 if AXUtilitiesEvent._is_terminal_line_navigation_repaint(event):
-                    AXUtilitiesEvent._save_terminal_line_navigation_repaint_line(event, mgr)
                     return TextEventReason.TERMINAL_LINE_NAVIGATION_REPAINT
                 # VTE can draw the row scrolled into view as a separate insertion after the
                 # repaint. If the repaint handling already presented exactly that line, saying
@@ -910,7 +909,6 @@ class AXUtilitiesEvent:
                 if not AXUtilitiesEvent._insertion_is_within_caret_line(event):
                     if "\n" not in event.any_data:
                         return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
-                    AXUtilitiesEvent._save_terminal_line_navigation_repaint_line(event, mgr)
                     return TextEventReason.TERMINAL_LINE_NAVIGATION_REPAINT
             return TextEventReason.AUTO_INSERTION_PRESENTABLE
         if has_selected:

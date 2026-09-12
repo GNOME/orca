@@ -80,7 +80,7 @@ from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
-from orca.ax_utilities_event import TextEventReason
+from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
 from orca.ax_utilities_text import CaretSetReason, TextUnit
 from orca.generator import PresentationReason
 
@@ -859,6 +859,9 @@ class Script(script.Script):
             offset = AXText.get_caret_offset(event.source)
             self.update_braille(event.source)
             self.say_line(event.source, offset)
+            AXUtilitiesEvent.save_terminal_line_navigation_repaint_line(
+                event, input_event_manager.get_manager()
+            )
             focus_manager.get_manager().set_last_cursor_position(event.source, offset)
             self.utilities.set_caret_context(event.source, offset)
             return True
