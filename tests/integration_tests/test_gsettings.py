@@ -379,6 +379,98 @@ class TestProfileOperations:
 
 
 @pytest.mark.gsettings
+@pytest.mark.parametrize(
+    "property_name, key, acss_key, primary_value, system_value, set_value, step",
+    [
+        ("rate", "rate", "rate", 65, 59, 50, 5),
+        ("pitch", "pitch", "average-pitch", 6.0, 4.0, 5.0, 0.5),
+        ("pitch_range", "pitch-range", "pitch-range", 6.0, 4.0, 5.0, 0.5),
+        ("volume", "volume", "gain", 6.0, 4.0, 5.0, 0.5),
+    ],
+)
+@pytest.mark.parametrize("configured", [False, True])
+@pytest.mark.parametrize("system_voice", [False, True])
+def test_voice_adjustment_targets_active_voice_set(
+    gsettings_registry,
+    gsettings_handle,
+    gsettings_profile,
+    monkeypatch,
+    property_name,
+    key,
+    acss_key,
+    primary_value,
+    system_value,
+    set_value,
+    step,
+    configured,
+    system_voice,
+) -> None:
+    """Voice commands affect the selected set without changing primary voices or stored settings."""
+
+    from orca import speech_manager, speechserver
+    from orca.acss import ACSS
+
+    registry = gsettings_registry
+    handle = gsettings_handle("voice")
+    setter = "set_int" if key == "rate" else "set_double"
+    for voice_type, value in (("default", primary_value), ("system", system_value)):
+        gs = handle.get_for_profile("default", registry.voice_set_sub_path(voice_type))
+        gs.set_boolean("established", True)
+        getattr(gs, setter)(key, value)
+
+    selected = handle.get_for_profile("default", registry.voice_set_sub_path("default", "it"))
+    selected.set_boolean("established", True)
+    selected.set_string("family-lang", "it")
+    if configured:
+        getattr(selected, setter)(key, set_value)
+    if system_voice:
+        system = handle.get_for_profile("default", registry.voice_set_sub_path("system", "it"))
+        system.set_boolean("established", True)
+        getattr(system, setter)(key, system_value)
+
+    manager = speech_manager.get_manager()
+    monkeypatch.setattr(manager, "_active_voice_set", "primary")
+    monkeypatch.setattr(manager, "_server", speechserver.SpeechServer())
+    monkeypatch.setattr(manager, "get_voice_set_names", lambda: ["it"])
+    get_value = getattr(manager, f"get_{property_name}")
+    increase = getattr(manager, f"increase_{property_name}")
+    decrease = getattr(manager, f"decrease_{property_name}")
+    registry.clear_runtime_values()
+    try:
+        assert manager.set_active_voice_set("it")
+        initial_value = set_value if configured else primary_value
+        assert get_value() == initial_value
+        assert increase(notify_user=False)
+        assert get_value() == initial_value + step
+        registry.set_active_app("another-app")
+        voice = manager.apply_voice_set(ACSS({acss_key: primary_value}))
+        assert voice[acss_key] == initial_value + step
+        assert voice[ACSS.FAMILY]["lang"] == "it"
+        voice = ACSS({acss_key: system_value})
+        voice[ACSS.VOICE_TYPE] = "system"
+        voice = manager.apply_voice_set(voice)
+        assert voice[acss_key] == (initial_value + step if system_voice else system_value)
+
+        assert manager.set_active_voice_set("primary")
+        assert get_value() == primary_value
+        assert manager.get_voice_properties("system")[acss_key] == system_value
+        assert manager.set_active_voice_set("it")
+        assert get_value() == initial_value + step
+        assert decrease(notify_user=False)
+        assert get_value() == initial_value
+        voice = manager.apply_voice_set(ACSS({acss_key: primary_value}))
+        assert voice[acss_key] == initial_value
+        stored = selected.get_user_value(key)
+        assert (stored.unpack() if stored is not None else None) == (
+            set_value if configured else None
+        )
+        registry.clear_runtime_values()
+        assert get_value() == initial_value
+    finally:
+        registry.clear_runtime_values()
+
+
+@pytest.mark.gsettings
 class TestDictSchemas:
     """Tests pronunciation and keybinding schemas (dict serialization)."""
 

@@ -297,8 +297,19 @@ class SpeechManager(Extension):
 
         voice.pop(ACSS.VOICE_TYPE, None)
         config = self.get_voice_set_voice(voice_type, voice_set, fall_back_to_default)
-        if not config:
+        if not config.get(self.KEY_ESTABLISHED):
             return voice
+
+        registry = gsettings_registry.get_registry()
+        for key, acss_key in (
+            (self.KEY_RATE, ACSS.RATE),
+            (self.KEY_PITCH, ACSS.AVERAGE_PITCH),
+            (self.KEY_PITCH_RANGE, ACSS.PITCH_RANGE),
+            (self.KEY_VOLUME, ACSS.GAIN),
+        ):
+            found, value = registry.get_runtime_value(self._VOICE_SCHEMA, key, voice_set=voice_set)
+            if found:
+                config[acss_key] = value
 
         tokens = ["SPEECH MANAGER: Applying voice set", voice_set, "for", voice_type]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1044,12 +1055,36 @@ class SpeechManager(Extension):
     def get_rate(self) -> UInt32:
         """Returns the current speech rate."""
 
+        return self._get_active_voice_value(self.KEY_RATE, ACSS.RATE, 50)
+
+    def _get_active_voice_value(self, key: str, acss_key: str, default: Any) -> Any:
+        """Returns a voice property including overrides for the selected voice set."""
+
+        if self._active_voice_set != gsettings_registry.PRIMARY_VOICE_SET:
+            found, value = gsettings_registry.get_registry().get_runtime_value(
+                self._VOICE_SCHEMA, key, voice_set=self._active_voice_set
+            )
+            if found:
+                return value
+            voice = self.get_voice_set_voice(speechserver.VoiceType.DEFAULT, self._active_voice_set)
+            if acss_key in voice:
+                return voice[acss_key]
+
         return gsettings_registry.get_registry().layered_lookup(
             self._VOICE_SCHEMA,
-            self.KEY_RATE,
-            "i",
-            default=50,
+            key,
+            "i" if key == self.KEY_RATE else "d",
+            default=default,
         )
+
+    def _set_active_voice_value(self, key: str, value: Any) -> None:
+        """Sets a temporary voice property for the selected voice set."""
+
+        gsettings_registry.get_registry().set_runtime_value(
+            self._VOICE_SCHEMA, key, value, voice_set=self._active_voice_set
+        )
+        if self._active_voice_set == gsettings_registry.PRIMARY_VOICE_SET:
+            self._sync_runtime_value_to_all_voice_types(key, value)
 
     def _sync_runtime_value_to_all_voice_types(self, key: str, value: Any) -> None:
         """Sets a runtime value override for all voice types."""
@@ -1065,9 +1100,7 @@ class SpeechManager(Extension):
         if not isinstance(value, (int, float)):
             return False
 
-        registry = gsettings_registry.get_registry()
-        registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_RATE, value)
-        self._sync_runtime_value_to_all_voice_types(self.KEY_RATE, value)
+        self._set_active_voice_value(self.KEY_RATE, value)
 
         tokens = ["SPEECH MANAGER: Set rate to:", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1098,7 +1131,8 @@ class SpeechManager(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.decrease_speech_rate()
+        if self._active_voice_set == gsettings_registry.PRIMARY_VOICE_SET:
+            server.decrease_speech_rate()
         new_rate = max(0, self.get_rate() - 5)
         self.set_rate(new_rate)
         if notify_user and script is not None:
@@ -1132,7 +1166,8 @@ class SpeechManager(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.increase_speech_rate()
+        if self._active_voice_set == gsettings_registry.PRIMARY_VOICE_SET:
+            server.increase_speech_rate()
         new_rate = min(100, self.get_rate() + 5)
         self.set_rate(new_rate)
         if notify_user and script is not None:
@@ -1152,12 +1187,7 @@ class SpeechManager(Extension):
     def get_pitch(self) -> float:
         """Returns the current speech pitch."""
 
-        return gsettings_registry.get_registry().layered_lookup(
-            self._VOICE_SCHEMA,
-            self.KEY_PITCH,
-            "d",
-            default=5.0,
-        )
+        return self._get_active_voice_value(self.KEY_PITCH, ACSS.AVERAGE_PITCH, 5.0)
 
     @dbus_service.setter
     def set_pitch(self, value: float) -> bool:
@@ -1166,9 +1196,7 @@ class SpeechManager(Extension):
         if not isinstance(value, (int, float)):
             return False
 
-        registry = gsettings_registry.get_registry()
-        registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_PITCH, value)
-        self._sync_runtime_value_to_all_voice_types(self.KEY_PITCH, value)
+        self._set_active_voice_value(self.KEY_PITCH, value)
 
         tokens = ["SPEECH MANAGER: Set pitch to:", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1199,7 +1227,8 @@ class SpeechManager(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.decrease_speech_pitch()
+        if self._active_voice_set == gsettings_registry.PRIMARY_VOICE_SET:
+            server.decrease_speech_pitch()
         new_pitch = max(0.0, self.get_pitch() - 0.5)
         self.set_pitch(new_pitch)
         if notify_user and script is not None:
@@ -1233,7 +1262,8 @@ class SpeechManager(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.increase_speech_pitch()
+        if self._active_voice_set == gsettings_registry.PRIMARY_VOICE_SET:
+            server.increase_speech_pitch()
         new_pitch = min(10.0, self.get_pitch() + 0.5)
         self.set_pitch(new_pitch)
         if notify_user and script is not None:
@@ -1253,12 +1283,7 @@ class SpeechManager(Extension):
     def get_pitch_range(self) -> float:
         """Returns the current speech inflection (pitch range)."""
 
-        return gsettings_registry.get_registry().layered_lookup(
-            self._VOICE_SCHEMA,
-            self.KEY_PITCH_RANGE,
-            "d",
-            default=5.0,
-        )
+        return self._get_active_voice_value(self.KEY_PITCH_RANGE, ACSS.PITCH_RANGE, 5.0)
 
     @dbus_service.setter
     def set_pitch_range(self, value: float) -> bool:
@@ -1267,9 +1292,7 @@ class SpeechManager(Extension):
         if not isinstance(value, (int, float)):
             return False
 
-        registry = gsettings_registry.get_registry()
-        registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_PITCH_RANGE, value)
-        self._sync_runtime_value_to_all_voice_types(self.KEY_PITCH_RANGE, value)
+        self._set_active_voice_value(self.KEY_PITCH_RANGE, value)
 
         tokens = ["SPEECH MANAGER: Set pitch range to:", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1300,7 +1323,8 @@ class SpeechManager(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.decrease_speech_inflection()
+        if self._active_voice_set == gsettings_registry.PRIMARY_VOICE_SET:
+            server.decrease_speech_inflection()
         new_pitch_range = max(0.0, self.get_pitch_range() - 0.5)
         self.set_pitch_range(new_pitch_range)
         if notify_user and script is not None:
@@ -1334,7 +1358,8 @@ class SpeechManager(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.increase_speech_inflection()
+        if self._active_voice_set == gsettings_registry.PRIMARY_VOICE_SET:
+            server.increase_speech_inflection()
         new_pitch_range = min(10.0, self.get_pitch_range() + 0.5)
         self.set_pitch_range(new_pitch_range)
         if notify_user and script is not None:
@@ -1354,12 +1379,7 @@ class SpeechManager(Extension):
     def get_volume(self) -> float:
         """Returns the current speech volume."""
 
-        return gsettings_registry.get_registry().layered_lookup(
-            self._VOICE_SCHEMA,
-            self.KEY_VOLUME,
-            "d",
-            default=10.0,
-        )
+        return self._get_active_voice_value(self.KEY_VOLUME, ACSS.GAIN, 10.0)
 
     @dbus_service.setter
     def set_volume(self, value: float) -> bool:
@@ -1368,9 +1388,7 @@ class SpeechManager(Extension):
         if not isinstance(value, (int, float)):
             return False
 
-        registry = gsettings_registry.get_registry()
-        registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_VOLUME, value)
-        self._sync_runtime_value_to_all_voice_types(self.KEY_VOLUME, value)
+        self._set_active_voice_value(self.KEY_VOLUME, value)
 
         tokens = ["SPEECH MANAGER: Set volume to:", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1401,7 +1419,8 @@ class SpeechManager(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.decrease_speech_volume()
+        if self._active_voice_set == gsettings_registry.PRIMARY_VOICE_SET:
+            server.decrease_speech_volume()
         new_volume = max(0.0, self.get_volume() - 0.5)
         self.set_volume(new_volume)
         if notify_user and script is not None:
@@ -1435,7 +1454,8 @@ class SpeechManager(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.increase_speech_volume()
+        if self._active_voice_set == gsettings_registry.PRIMARY_VOICE_SET:
+            server.increase_speech_volume()
         new_volume = min(10.0, self.get_volume() + 0.5)
         self.set_volume(new_volume)
         if notify_user and script is not None:

@@ -205,7 +205,7 @@ class GSettingsRegistry:
         self._enums: dict[str, dict[str, int]] = {}
         self._schemas: dict[str, str] = {}
         self._handles: dict[str, GSettingsSchemaHandle] = {}
-        self._runtime_values: dict[tuple[str, str, str | None], Any] = {}
+        self._runtime_values: dict[tuple[str, str, str | None, str], Any] = {}
         self._ignore_runtime: bool = False
         self._cache = _GSettingsRegistryCache()
         self._profile_change_observers: list[Callable[[str], None]] = []
@@ -312,7 +312,7 @@ class GSettingsRegistry:
                     return val
 
         if not self._ignore_runtime:
-            runtime = self._runtime_values.get((schema, key, voice_type))
+            runtime = self._runtime_values.get((schema, key, voice_type, PRIMARY_VOICE_SET))
             if runtime is not None:
                 _log_registry(schema, key, "runtime override = ", runtime)
                 self._cache.set_value(cache_key, runtime)
@@ -404,10 +404,12 @@ class GSettingsRegistry:
         key: str,
         value: Any,
         voice_type: str | None = None,
+        *,
+        voice_set: str = PRIMARY_VOICE_SET,
     ) -> None:
         """Stores a runtime value override."""
 
-        self._runtime_values[(schema, key, voice_type)] = value
+        self._runtime_values[(schema, key, voice_type, voice_set)] = value
         self.clear_value_cache()
 
     def get_runtime_value(
@@ -415,18 +417,27 @@ class GSettingsRegistry:
         schema: str,
         key: str,
         voice_type: str | None = None,
+        *,
+        voice_set: str = PRIMARY_VOICE_SET,
     ) -> tuple[bool, Any]:
         """Returns (found, value) for a runtime override."""
 
-        rt_key = (schema, key, voice_type)
+        rt_key = (schema, key, voice_type, voice_set)
         if rt_key in self._runtime_values:
             return True, self._runtime_values[rt_key]
         return False, None
 
-    def remove_runtime_value(self, schema: str, key: str, voice_type: str | None = None) -> None:
+    def remove_runtime_value(
+        self,
+        schema: str,
+        key: str,
+        voice_type: str | None = None,
+        *,
+        voice_set: str = PRIMARY_VOICE_SET,
+    ) -> None:
         """Removes a single runtime value override."""
 
-        self._runtime_values.pop((schema, key, voice_type), None)
+        self._runtime_values.pop((schema, key, voice_type, voice_set), None)
         self.clear_value_cache()
 
     def clear_runtime_values(self) -> None:
