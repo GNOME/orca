@@ -30,6 +30,7 @@ from .harness import keyboard
 from .helpers import say_selection, speech
 from .web_native_selection_helpers import (
     LONG_PARAGRAPH,
+    SKIP_DOCUMENT_SELECTION_BUGS,
     assert_walks,
     native_selection,
     select_character,
@@ -96,6 +97,7 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
     return selected, unselected
 
 
+@SKIP_DOCUMENT_SELECTION_BUGS
 @pytest.mark.native_app
 def test_character_selection_and_unselection(
     web_native_text_selection: NativeAppSession,

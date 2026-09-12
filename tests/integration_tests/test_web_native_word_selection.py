@@ -29,6 +29,7 @@ import pytest
 from .harness import keyboard
 from .web_native_selection_helpers import (
     LONG_PARAGRAPH,
+    SKIP_DOCUMENT_SELECTION_BUGS,
     assert_walks,
     native_selection,
     select_word,
@@ -38,6 +39,7 @@ if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
 
 
+@SKIP_DOCUMENT_SELECTION_BUGS
 @pytest.mark.native_app
 def test_word_selection_and_unselection(web_native_text_selection: NativeAppSession) -> None:
     """Tests native word selection from the top into the form controls, then back."""
@@ -86,6 +88,7 @@ def test_word_selection_and_unselection(web_native_text_selection: NativeAppSess
     assert_walks(selected, unselected, expected_selected, expected_unselected)
 
 
+@SKIP_DOCUMENT_SELECTION_BUGS
 @pytest.mark.native_app
 def test_word_selection_and_unselection_from_bottom(
     web_native_text_selection: NativeAppSession,

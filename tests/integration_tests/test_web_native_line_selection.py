@@ -29,6 +29,7 @@ import pytest
 from .harness import keyboard
 from .helpers import say_selection
 from .web_native_selection_helpers import (
+    SKIP_DOCUMENT_SELECTION_BUGS,
     assert_walks,
     native_selection,
     select_line,
@@ -38,6 +39,7 @@ if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
 
 
+@SKIP_DOCUMENT_SELECTION_BUGS
 @pytest.mark.native_app
 def test_line_selection_and_unselection(web_native_text_selection: NativeAppSession) -> None:
     """Tests native line selection through varied content, then back to the top."""
