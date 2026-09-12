@@ -471,6 +471,50 @@ def test_voice_adjustment_targets_active_voice_set(
 
 
 @pytest.mark.gsettings
+@pytest.mark.parametrize(
+    "language, dialect, expected_navigation_dialect",
+    [("ro", None, ""), ("ro", "RO", "RO"), ("en", None, "GB"), ("en", "US", "US")],
+)
+def test_voice_set_dialect_overlay(
+    gsettings_registry,
+    gsettings_handle,
+    gsettings_profile,
+    monkeypatch,
+    language,
+    dialect,
+    expected_navigation_dialect,
+) -> None:
+    """A set inherits a dialect only from the same language and preserves explicit dialects."""
+
+    from orca import speech_manager, speechserver
+    from orca.acss import ACSS
+
+    registry = gsettings_registry
+    handle = gsettings_handle("voice")
+    selected = handle.get_for_profile("default", registry.voice_set_sub_path("default", "test"))
+    selected.set_boolean("established", True)
+    selected.set_string("family-lang", language)
+    selected.set_string("family-name", "Romanian+grandma")
+    selected.set_string("family-variant", "grandma")
+    if dialect is not None:
+        selected.set_string("family-dialect", dialect)
+    manager = speech_manager.get_manager()
+    monkeypatch.setattr(manager, "_active_voice_set", "test")
+    server = speechserver.SpeechServer()
+
+    navigation = manager.apply_voice_set(ACSS({"family": {"lang": "en", "dialect": "GB"}}))
+    say_all = manager.apply_voice_set(ACSS())
+    assert server.get_language_and_dialect(navigation[ACSS.FAMILY]) == (
+        language,
+        expected_navigation_dialect,
+    )
+    assert server.get_language_and_dialect(say_all[ACSS.FAMILY]) == (language, dialect or "")
+    for voice in (navigation, say_all):
+        assert voice[ACSS.FAMILY]["name"] == "Romanian+grandma"
+        assert voice[ACSS.FAMILY]["variant"] == "grandma"
+
+
+@pytest.mark.gsettings
 class TestDictSchemas:
     """Tests pronunciation and keybinding schemas (dict serialization)."""
 

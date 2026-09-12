@@ -258,7 +258,11 @@ class SpeechManager(Extension):
 
         if ACSS.FAMILY in override:
             family = dict(base.get(ACSS.FAMILY, {}))
-            family.update(override[ACSS.FAMILY])
+            overrides = override[ACSS.FAMILY]
+            language = overrides.get(speechserver.VoiceFamily.LANG)
+            if language and language != family.get(speechserver.VoiceFamily.LANG):
+                family.pop(speechserver.VoiceFamily.DIALECT, None)
+            family.update(overrides)
             base[ACSS.FAMILY] = family
         for prop in (ACSS.RATE, ACSS.AVERAGE_PITCH, ACSS.PITCH_RANGE, ACSS.GAIN):
             if prop in override:

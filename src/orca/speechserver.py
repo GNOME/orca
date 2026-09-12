@@ -506,7 +506,7 @@ class SpeechServer:
         if not language:
             language, dialect = language_utilities.get_current_language_and_dialect()
 
-        return str(language), str(dialect)
+        return str(language), str(dialect or "")
 
     def _normalized_language_and_dialect(self, language: str, dialect: str = "") -> tuple[str, str]:
         """Attempts to ensure consistency across inconsistent formats."""
