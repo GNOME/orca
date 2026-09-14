@@ -103,21 +103,18 @@ a "Key Bindings" tab that lists the keyboard binding for Orca.
 For more information, see the Orca documentation which is available
 within Orca as well as at <https://gnome.pages.gitlab.gnome.org/orca/help>.
 
-## Orca's Scripts and Features
+## Orca's Scripts, Features, and User Extensions
 
 Orca's scripts provide access to applications and toolkits by responding to
 accessible events. For instance, when focus changes in an application, that
 application will emit an accessible event, `object:state-changed:focused`,
 which is then handled by the script associated with the application or toolkit.
+To see examples of scripts, look in `src/orca/scripts` of the source tree.
 
-If you have an application or toolkit that is accessible, but poorly supported
-by Orca, writing a custom script for that application might be the correct
-solution. (The correct solution might instead be to fix a bug in Orca and/or the
-application.) To see examples of scripts, look in `src/orca/scripts` of the
-source tree.
-
-Scripts can also import features, but the features themselves do not live inside the script;
-they live in navigators, presenters, and other such modules.
+Scripts can import features, but the features themselves do not live inside
+the script; they live in navigators, presenters, and other such "extension"
+modules. Starting with version 51, Orca also supports user extensions.
+For more information, see [user-extensions.md](docs/user-extensions.md).
 
 ## Remote Controller (D-Bus Interface)
 
