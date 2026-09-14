@@ -1,3 +1,58 @@
+51.0 - 14 September 2026
+
+Web:
+
+* Fix combining lines incorrectly due to Gecko scaling bug.
+
+* Fix missing "leaving blockquote" announcement.
+
+* Fix several issues related to presentation of ARIA tree and treegrid.
+
+* Handle user agents failing to use the correct role for ARIA switch.
+
+* Treat focusable ARIA separators/splitters as focus-mode widgets.
+
+* Prevent Say All from interrupting page summary after load complete.
+
+* Fix presentation of link role for links whose contents is in
+  presentable descendants.
+
+General:
+
+* Fix on-the-fly changes related to the non-global voice set.
+
+* Fix not speaking a newly-shown terminal line after scrolling.
+
+* Fix presentation not working after interrupted Say All.
+
+* Fix several "chattiness" issues.
+
+* Don't interrupt speech for focus changes if an announcement was
+  just made (e.g. GTK toasts).
+
+* Fix app-specific dictionary entries not appearing in word list.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  bg              Bulgarian                 Alexander Alexandrov Shopov
+  da              Danish                    Alan Mortensen
+  de              German                    Christian Kirbach
+  en_GB           British English           Bruce Cowan
+  es              Spanish                   Daniel Mustieles
+  es              Spanish                   Daniel Mustieles García
+  fi              Finnish                   Jiri Grönroos
+  fr              French                    Jean-Marc TISSIERES
+  fr              French                    Kevin
+  hr              Croatian                  Zvonimir Stanečić
+  nb              Norwegian Bokmål          Kjartan Maraas
+  nn              Norwegian Nynorsk         Roy-Magne Mo
+  pt_BR           Brazilian Portuguese      Diego Luz
+  pt_BR           Brazilian Portuguese      Rafael Coelho Costa
+  sr              Serbian                   Марко Костић
+  tr              Turkish                   Emin Tufan Çetin
+
+=========
+
 51.rc - 1 September 2026
 
 MathCAT:
