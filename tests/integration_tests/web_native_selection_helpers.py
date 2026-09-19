@@ -25,14 +25,11 @@ from __future__ import annotations
 import contextlib
 from typing import TYPE_CHECKING
 
-import gi
 import pytest
-
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
 
 from .harness import keyboard
 from .helpers import reset_web_state, speech
+from .version_helpers import atspi_version, version_at_least
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -45,13 +42,16 @@ LONG_PARAGRAPH = (
     "readable prose rather than short fragments or individual controls."
 )
 
-_ATSPI_VERSION = Atspi.get_version()  # pylint: disable=no-value-for-parameter
+_ATSPI_VERSION = atspi_version()
 # Chromium's document-selection bugs are exposed with AT-SPI 2.61.2 and the
 # 2.60.7/2.58.9 backports, where Orca enables the document-selection API.
-SKIP_DOCUMENT_SELECTION_BUGS = pytest.mark.skipif(
-    _ATSPI_VERSION >= (2, 61, 2)
+USES_DOCUMENT_SELECTION = (
+    version_at_least(_ATSPI_VERSION, 2, 61, 2)
     or (_ATSPI_VERSION[:2] == (2, 60) and _ATSPI_VERSION[2] >= 7)
-    or (_ATSPI_VERSION[:2] == (2, 58) and _ATSPI_VERSION[2] >= 9),
+    or (_ATSPI_VERSION[:2] == (2, 58) and _ATSPI_VERSION[2] >= 9)
+)
+SKIP_DOCUMENT_SELECTION_BUGS = pytest.mark.skipif(
+    USES_DOCUMENT_SELECTION,
     reason="Unresolved native selection issues with Chromium and AT-SPI's document-selection API",
 )
 

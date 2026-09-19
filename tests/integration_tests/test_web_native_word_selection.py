@@ -27,9 +27,11 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
+from .version_helpers import chromium_version, requires_version
 from .web_native_selection_helpers import (
     LONG_PARAGRAPH,
     SKIP_DOCUMENT_SELECTION_BUGS,
+    USES_DOCUMENT_SELECTION,
     assert_walks,
     native_selection,
     select_word,
@@ -39,7 +41,7 @@ if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
 
 
-@SKIP_DOCUMENT_SELECTION_BUGS
+@requires_version("Chromium", chromium_version(), 156, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_word_selection_and_unselection(web_native_text_selection: NativeAppSession) -> None:
     """Tests native word selection from the top into the form controls, then back."""

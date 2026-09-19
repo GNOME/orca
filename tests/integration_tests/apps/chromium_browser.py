@@ -25,10 +25,30 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import warnings
 from pathlib import Path
 
 BINARY_NAMES = ("chromium", "chromium-browser")
 READY_SUFFIX = " ready"
+_BINARY_ENV_VAR = "ORCA_TEST_CHROMIUM_BINARY"
+_BETA_PATH = "/opt/google/chrome-beta/chrome"
+
+
+def resolve_binary() -> str | None:
+    """Returns the selected Chromium executable, preferring the beta used for expectations."""
+
+    if override := os.environ.get(_BINARY_ENV_VAR):
+        return override
+    if Path(_BETA_PATH).is_file():
+        return _BETA_PATH
+    binary = next((p for p in (shutil.which(name) for name in BINARY_NAMES) if p), None)
+    if binary is not None:
+        warnings.warn(
+            f"Web test expectations were captured against {_BETA_PATH}; using {binary}. "
+            f"Set {_BINARY_ENV_VAR} to choose a different build.",
+            stacklevel=2,
+        )
+    return binary
 
 
 def build_argv(
@@ -84,7 +104,7 @@ def main() -> int:
     if len(sys.argv) > 3:
         binary: str | None = sys.argv[3]
     else:
-        binary = next((p for p in (shutil.which(name) for name in BINARY_NAMES) if p), None)
+        binary = resolve_binary()
     if binary is None:
         print(f"No chromium binary found; tried {BINARY_NAMES!r}.", file=sys.stderr)
         return 2

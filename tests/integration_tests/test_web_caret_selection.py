@@ -40,7 +40,7 @@ from .caret_selection_helpers import (
 )
 from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state, say_selection
-from .orca_fixtures import chromium_is_at_least, chromium_major_version
+from .version_helpers import chromium_version, requires_version
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -49,13 +49,8 @@ _HEADING = "Structural navigation h1"
 _PARAGRAPH = "Intro paragraph."
 _QUOTE = "Quoted text. block quote"
 
-_IS_AT_LEAST_VERSION_153 = pytest.mark.skipif(
-    not chromium_is_at_least(153),
-    reason=f"needs Chromium 153 or later; this is {chromium_major_version()}",
-)
 
-
-@_IS_AT_LEAST_VERSION_153
+@requires_version("Chromium", chromium_version(), 153)
 @pytest.mark.native_app
 def test_selection_by_character(web_structural_navigation: NativeAppSession) -> None:
     """Tests selection by character."""
@@ -86,7 +81,7 @@ def test_selection_by_character(web_structural_navigation: NativeAppSession) -> 
     assert say_selection(session) == ["Selected text is:  S"]
 
 
-@_IS_AT_LEAST_VERSION_153
+@requires_version("Chromium", chromium_version(), 153)
 @pytest.mark.native_app
 def test_selection_by_word(web_structural_navigation: NativeAppSession) -> None:
     """Tests selection by word."""
@@ -109,7 +104,7 @@ def test_selection_by_word(web_structural_navigation: NativeAppSession) -> None:
     assert say_selection(session) == ["Selected text is:  Structural "]
 
 
-@_IS_AT_LEAST_VERSION_153
+@requires_version("Chromium", chromium_version(), 153)
 @pytest.mark.native_app
 def test_selection_to_the_line_boundaries(web_structural_navigation: NativeAppSession) -> None:
     """Tests selection to the end and to the start of the line."""
@@ -132,7 +127,7 @@ def test_selection_to_the_line_boundaries(web_structural_navigation: NativeAppSe
     assert say_selection(session) == ["No selected text."]
 
 
-@_IS_AT_LEAST_VERSION_153
+@requires_version("Chromium", chromium_version(), 153)
 @pytest.mark.native_app
 def test_selection_in_a_paragraph(web_structural_navigation: NativeAppSession) -> None:
     """Tests selection in a paragraph below the heading."""
@@ -160,7 +155,7 @@ def test_selection_in_a_paragraph(web_structural_navigation: NativeAppSession) -
     assert say_selection(session) == ["Selected text is:  Intro paragraph."]
 
 
-@_IS_AT_LEAST_VERSION_153
+@requires_version("Chromium", chromium_version(), 153)
 @pytest.mark.native_app
 def test_selection_across_objects(web_structural_navigation: NativeAppSession) -> None:
     """Tests selection which spans more than one text object."""
@@ -197,7 +192,7 @@ def test_selection_across_objects(web_structural_navigation: NativeAppSession) -
     ]
 
 
-@_IS_AT_LEAST_VERSION_153
+@requires_version("Chromium", chromium_version(), 153)
 @pytest.mark.native_app
 def test_selection_without_notifying_the_user(
     web_structural_navigation: NativeAppSession,
@@ -218,7 +213,7 @@ def test_selection_without_notifying_the_user(
     assert say_selection(session) == ["Selected text is:  Structural navigation"]
 
 
-@_IS_AT_LEAST_VERSION_153
+@requires_version("Chromium", chromium_version(), 153)
 @pytest.mark.native_app
 def test_selection_removed_by_caret_navigation(
     web_structural_navigation: NativeAppSession,

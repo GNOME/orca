@@ -24,14 +24,12 @@ from __future__ import annotations
 
 import contextlib
 import curses
-import functools
 import os
 import re
 import shutil
 import subprocess
 import sys
 import time
-import warnings
 from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -61,6 +59,7 @@ from .apps import (
 )
 from .harness import sandbox
 from .harness.orca_session import OrcaSession
+from .version_helpers import has_typelib
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
@@ -271,12 +270,6 @@ def _run_native_app(
     yield from _run_app_with_orca(sandbox_dir, argv=argv, ready_predicate=ready_predicate)
 
 
-def _vte_available() -> bool:
-    """Returns True if the VTE 2.91 (GTK3) typelib is installed."""
-
-    return "2.91" in gi.Repository.get_default().enumerate_versions("Vte")
-
-
 def _terminfo_is_available() -> bool:
     """Returns True if the terminal type the terminal app uses can be looked up."""
 
@@ -299,7 +292,7 @@ def _run_terminal_app(
 ) -> Iterator[NativeAppSession]:
     """Runs a program inside a VTE terminal under its own Orca subprocess."""
 
-    if not _vte_available():
+    if not has_typelib("Vte", "2.91"):
         pytest.skip("VTE 2.91 (GTK3) typelib is not available")
     if not _terminfo_is_available():
         pytest.skip(f"no terminfo entry for {gtk3_terminal.TERM!r}")
@@ -458,58 +451,6 @@ def _resolve_binary(names: tuple[str, ...]) -> str | None:
     return None
 
 
-_BROWSER_BINARY_ENV_VAR = "ORCA_TEST_CHROMIUM_BINARY"
-_BROWSER_BETA_PATH = "/opt/google/chrome-beta/chrome"
-
-
-def _resolve_browser_binary(names: tuple[str, ...]) -> str | None:
-    """Returns the browser to test against, preferring beta, which is what expectations target."""
-
-    if override := os.environ.get(_BROWSER_BINARY_ENV_VAR):
-        return override
-
-    if Path(_BROWSER_BETA_PATH).is_file():
-        return _BROWSER_BETA_PATH
-
-    binary = _resolve_binary(names)
-    if binary is not None:
-        warnings.warn(
-            f"Web test expectations were captured against {_BROWSER_BETA_PATH}; using {binary}. "
-            f"Set {_BROWSER_BINARY_ENV_VAR} to choose a different build.",
-            stacklevel=2,
-        )
-    return binary
-
-
-@functools.cache
-def chromium_major_version() -> int | None:
-    """Returns the major Chromium version under test, or None if it cannot be read."""
-
-    binary = _resolve_browser_binary(chromium_browser.BINARY_NAMES)
-    if binary is None:
-        return None
-
-    try:
-        result = subprocess.run(
-            [binary, "--version"], capture_output=True, text=True, timeout=30, check=True
-        )
-    except (OSError, subprocess.SubprocessError):
-        return None
-
-    for word in result.stdout.split():
-        first, _dot, _rest = word.partition(".")
-        if first.isdigit():
-            return int(first)
-    return None
-
-
-def chromium_is_at_least(major: int) -> bool:
-    """Returns True if Chromium is at least major; an unknown version is not."""
-
-    version = chromium_major_version()
-    return version is not None and version >= major
-
-
 def _document_loaded(accessible: Atspi.Accessible) -> bool:
     """Predicate: the app has a document-role descendant with content (no title to match)."""
 
@@ -538,7 +479,7 @@ def _run_browser_session(
 ) -> Iterator[NativeAppSession]:
     """Launches app loading web_pages/<page> under its own Orca subprocess."""
 
-    binary = _resolve_browser_binary(app.BINARY_NAMES)
+    binary = app.resolve_binary()
     if binary is None:
         pytest.skip(f"{app.__name__}: no binary found among {app.BINARY_NAMES!r}")
 
