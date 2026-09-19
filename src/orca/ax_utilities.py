@@ -1459,11 +1459,37 @@ class AXUtilities:
         return False
 
     @staticmethod
+    def get_label_covering_object(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns a non-focusable label whose bounds contain a focusable object's bounds."""
+
+        if not AXUtilitiesState.is_focusable(obj):
+            return None
+
+        bounds = AXComponent.get_rect(obj)
+        if bounds.width <= 0 or bounds.height <= 0:
+            return None
+
+        for label in AXUtilitiesRelation.get_is_labelled_by(obj):
+            if not AXUtilitiesRole.is_label(label) or AXUtilitiesState.is_focusable(label):
+                continue
+            if AXUtilitiesObject.is_ancestor(label, obj):
+                continue
+            overlap = AXUtilitiesComponent.get_rect_intersection(
+                bounds, AXComponent.get_rect(label)
+            )
+            if AXUtilitiesComponent.is_same_rect(bounds, overlap):
+                return label
+
+        return None
+
+    @staticmethod
     def get_displayed_label(obj: Atspi.Accessible) -> str:
         """Returns the displayed label of obj."""
 
         labels = AXUtilitiesRelation.get_is_labelled_by(obj)
-        strings = [AXObject.get_name(label) or AXText.get_all_text(label) for label in labels]
+        strings = [
+            AXObject.get_name(label) or AXUtilitiesHypertext.expand_eocs(label) for label in labels
+        ]
         result = " ".join(strings)
         return result
 

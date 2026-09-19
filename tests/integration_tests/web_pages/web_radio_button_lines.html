@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Orca Radio Button Lines ready</title>
+  <style>
+    .choices { display: flex; gap: 8px; }
+    .choices > div { flex: 1; }
+    input[type=radio] {
+      position: absolute;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      width: 1px;
+      height: 1px;
+    }
+    input + label {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 20px;
+      background: #f7f3ff;
+    }
+    .decorated label::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+      flex-shrink: 0;
+      background: #76569c;
+    }
+    .vertical { flex-direction: column; }
+  </style>
+</head>
+<body>
+  <p>Start.</p>
+  <!-- The click handlers keep the flex containers in Firefox's accessibility tree. -->
+  <fieldset>
+    <legend>First day</legend>
+    <div class="choices" onclick="void 0">
+      <div><input type="radio" id="yes1" name="day1"><label for="yes1">Yes</label></div>
+      <div><input type="radio" id="maybe1" name="day1"><label for="maybe1">If needed</label></div>
+      <div><input type="radio" id="no1" name="day1"><label for="no1">No</label></div>
+    </div>
+    <p>First results.</p>
+  </fieldset>
+  <fieldset>
+    <legend>Second day</legend>
+    <div class="choices decorated" onclick="void 0">
+      <div><input type="radio" id="yes2" name="day2"><label for="yes2">Yes</label></div>
+      <div><input type="radio" id="maybe2" name="day2"><label for="maybe2">If needed</label></div>
+      <div><input type="radio" id="no2" name="day2"><label for="no2">No</label></div>
+    </div>
+    <p>Second results.</p>
+  </fieldset>
+  <fieldset>
+    <legend>Vertical choices</legend>
+    <div class="choices vertical decorated" onclick="void 0">
+      <div><input type="radio" id="yes3" name="day3"><label for="yes3">Yes</label></div>
+      <div><input type="radio" id="maybe3" name="day3"><label for="maybe3">If needed</label></div>
+      <div><input type="radio" id="no3" name="day3"><label for="no3">No</label></div>
+    </div>
+    <p>Third results.</p>
+  </fieldset>
+  <p>End.</p>
+</body>
+</html>

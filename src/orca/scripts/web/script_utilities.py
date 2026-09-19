@@ -1684,6 +1684,10 @@ class Utilities(script_utilities.Utilities):
                 or document_presenter.get_presenter().in_focus_mode(self._script.app)
             )
 
+        # An overlaid label supplies the visual position of its associated control.
+        if layout_mode and (label := AXUtilities.get_label_covering_object(obj)) is not None:
+            obj, offset = label, 0
+
         objects: list[tuple[Atspi.Accessible, int, int, str]] = []
         if offset > 0 and (
             self.treat_as_end_of_line(obj, offset)
@@ -1703,6 +1707,12 @@ class Utilities(script_utilities.Utilities):
                 return False
 
             x_obj, x_start, x_end, _x_string = x
+
+            if (label := AXUtilities.get_label_covering_object(x_obj)) is not None:
+                return any(
+                    item in seen or _include(item)
+                    for item in self._get_contents_for_obj(label, 0, Atspi.TextGranularity.LINE)
+                )
 
             # A lone newline at obj's end offset ends obj's line if obj is inline content.
             # After a block element it starts a blank line instead.
