@@ -424,6 +424,10 @@ class ObjectNavigator:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        self._update()
+        if self._navigator_focus is None:
+            return True
+
         if AXEventSynthesizer.try_all_clickable_actions(self._navigator_focus):
             return True
 

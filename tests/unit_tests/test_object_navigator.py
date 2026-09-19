@@ -521,22 +521,65 @@ class TestObjectNavigator:
         navigator.toggle_simplify(mock_script)
         pres_manager.present_message.assert_called_once()
 
-    def test_perform_action_calls_synthesizer(self, test_context: OrcaTestContext) -> None:
-        """Test perform_action uses AXEventSynthesizer for action execution."""
+    @pytest.mark.parametrize("action_succeeds", [True, False])
+    def test_perform_action_calls_synthesizer(
+        self,
+        test_context: OrcaTestContext,
+        action_succeeds: bool,
+    ) -> None:
+        """Test activation preserves navigator focus when the locus has not changed."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
         mock_obj = test_context.Mock()
         ax_event_synthesizer = essential_modules["orca.ax_event_synthesizer"].AXEventSynthesizer
-        ax_event_synthesizer.try_all_clickable_actions = test_context.Mock(return_value=False)
+        ax_event_synthesizer.try_all_clickable_actions.return_value = action_succeeds
         ax_event_synthesizer.click_object = test_context.Mock(return_value=True)
+        focus_manager = essential_modules["orca.focus_manager"].get_manager.return_value
+        locus = test_context.Mock()
+        focus_manager.get_locus_of_focus.return_value = locus
         from orca.object_navigator import ObjectNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = ObjectNavigator()
+        navigator._last_locus_of_focus = locus
         navigator._navigator_focus = mock_obj
         result = navigator.perform_action(mock_script)
         assert result is True
-        ax_event_synthesizer.click_object.assert_called_once_with(mock_obj, 1)
+        ax_event_synthesizer.try_all_clickable_actions.assert_called_once_with(mock_obj)
+        if action_succeeds:
+            ax_event_synthesizer.click_object.assert_not_called()
+        else:
+            ax_event_synthesizer.click_object.assert_called_once_with(mock_obj, 1)
+
+    @pytest.mark.parametrize("has_previous_focus", [False, True])
+    @pytest.mark.parametrize("has_region", [False, True])
+    def test_perform_action_updates_focus(
+        self,
+        test_context: OrcaTestContext,
+        has_previous_focus: bool,
+        has_region: bool,
+    ) -> None:
+        """Test activation initializes or refreshes focus from the current object of interest."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        focus_manager = essential_modules["orca.focus_manager"].get_manager.return_value
+        locus = test_context.Mock()
+        region = test_context.Mock() if has_region else None
+        focus_manager.get_locus_of_focus.return_value = locus
+        focus_manager.get_active_mode_and_object_of_interest.return_value = ("default", region)
+        synthesizer = essential_modules["orca.ax_event_synthesizer"].AXEventSynthesizer
+        from orca.object_navigator import ObjectNavigator
+
+        navigator = ObjectNavigator()
+        if has_previous_focus:
+            previous_focus = test_context.Mock()
+            navigator._navigator_focus = previous_focus
+            navigator._last_locus_of_focus = previous_focus
+
+        assert navigator.perform_action(test_context.Mock()) is True
+        expected_focus = region if has_region else locus
+        synthesizer.try_all_clickable_actions.assert_called_once_with(expected_focus)
+        synthesizer.click_object.assert_called_once_with(expected_focus, 1)
 
     def test_children_with_null_object(self, test_context: OrcaTestContext) -> None:
         """Test _children handles None object gracefully."""
@@ -590,11 +633,11 @@ class TestObjectNavigator:
         result = navigator.move_to_first_child(mock_script)
         assert result is True
 
-    def test_perform_action_with_null_focus_logs_debug_info(
+    def test_perform_action_with_null_focus_skips_activation(
         self,
         test_context: OrcaTestContext,
     ) -> None:
-        """Test perform_action logs debug information with None navigator focus."""
+        """Test perform_action never attempts activation when no focus is available."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.object_navigator import ObjectNavigator  # pylint: disable=import-outside-toplevel
@@ -606,6 +649,9 @@ class TestObjectNavigator:
         result = navigator.perform_action(mock_script)
         assert result is True
         essential_modules["orca.debug"].print_tokens.assert_called()
+        synthesizer = essential_modules["orca.ax_event_synthesizer"].AXEventSynthesizer
+        synthesizer.try_all_clickable_actions.assert_not_called()
+        synthesizer.click_object.assert_not_called()
 
     def test_toggle_simplify_announces_on_state(self, test_context: OrcaTestContext) -> None:
         """Test toggle_simplify announces state change correctly."""
