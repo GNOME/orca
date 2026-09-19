@@ -1,4 +1,3 @@
-# Klarert til linje: 8186
 # Norwegian translation of orca.
 # Copyright (C) 2003-2008 Free Software Foundation, Inc.
 # Sigurd Gartmann <sigurdga@yahoo-inc.com>, 2003-2006.
@@ -2791,7 +2790,7 @@ msgstr "Høgreklikk på gjeldande element"
 #. and the cursor will be positioned at the point where the speech was interrupted.
 #: src/orca/cmdnames.py:48
 msgid "Speak entire document"
-msgstr "Snakk heile dokumentet"
+msgstr "Les opp heile dokumentet"
 
 #. Translators: the 'flat review' feature of Orca allows the user to explore the
 #. text in a window in a 2D fashion. That is, Orca treats all the text from all
@@ -2801,7 +2800,7 @@ msgstr "Snakk heile dokumentet"
 #. which causes Orca to speak the entire contents of the window using flat review.
 #: src/orca/cmdnames.py:56
 msgid "Speak entire window using flat review"
-msgstr "Høyr heile vindauget med flat gjennomgang"
+msgstr "Les opp heile vindauget med flat vurdering"
 
 #. Translators: the "Where Am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
@@ -2826,13 +2825,13 @@ msgstr "Utfør den detaljerte Kvar er eg-operasjonen"
 #. the selected/highlighted icons. Etc.
 #: src/orca/cmdnames.py:75
 msgid "Speak the current selection"
-msgstr "Sei den noverande markeringa"
+msgstr "Les opp det merkte"
 
 #. Translators: This is the description of a dedicated command to speak details
 #. about a link, such as the uri and type of link.
 #: src/orca/cmdnames.py:79
 msgid "Speak link details"
-msgstr "Snakk detaljar lenkja"
+msgstr "Les opp detaljar om lenkja"
 
 #. Translators: This command will cause the dialog's default button name to be
 #. spoken and displayed in braille. The "default" button in a dialog box is the
@@ -2900,7 +2899,8 @@ msgstr "Gå inn og ut av flat gjennomgangsmodus"
 #. This switch allows the user to restrict the flat review function to a specific object.
 #: src/orca/cmdnames.py:129
 msgid "Toggle restricting flat review to the current object"
-msgstr "Slå på avgrensing av flate omtalar til det gjeldande objektet"
+msgstr ""
+"Slå av eller på avgrensing av flat vurdering til det gjeldande objektet"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2956,7 +2956,7 @@ msgstr "Flytt flat vurdering til byrjinga av førre linje"
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:173
 msgid "Speak the current flat review line"
-msgstr "Les opp den gjeldande flate vurderingslinja"
+msgstr "Les opp den gjeldande linja i flat vurdering"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -3008,7 +3008,7 @@ msgstr "Flytt flat vurdering til førre element eller ord"
 #. This command will speak the current word or item.
 #: src/orca/cmdnames.py:215
 msgid "Speak the current flat review item or word"
-msgstr "Sei det gjeldande flate vurderingselementet eller ordet"
+msgstr "Les opp det gjeldande elementet eller ordet i flat vurdering"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -3067,7 +3067,7 @@ msgstr "Flytt flat vurdering til ordet over det noverande ordet"
 #. will speak the text associated with the object.
 #: src/orca/cmdnames.py:262
 msgid "Speak the current flat review object"
-msgstr "Tal det gjeldande flate vurderingsobjektet"
+msgstr "Les opp det gjeldande objektet i flat vurdering"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -3099,7 +3099,7 @@ msgstr "Flytt flat vurdering til føregåande teikn"
 #. This command will speak the current character
 #: src/orca/cmdnames.py:288
 msgid "Speak the current flat review character"
-msgstr "Tal opp den noverande flate vurderingskarakteren"
+msgstr "Les opp det gjeldande teiknet i flat vurdering"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -3121,7 +3121,7 @@ msgstr "Uttal den noverande flate vurderingskarakteren fonetisk"
 #. value.
 #: src/orca/cmdnames.py:306
 msgid "Speak unicode value of the current flat review character"
-msgstr "Tal unicode-verdien til det flate vurderingsteiknet for augneblinken"
+msgstr "Les opp unicode-verdien til det gjeldande teiknet i flat vurdering"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -3187,15 +3187,14 @@ msgstr "Legg innhaldet under flat vurdering til utklippstavla"
 #. and copy the text. This string describes that command.
 #: src/orca/cmdnames.py:360
 msgid "Show flat review contents"
-msgstr "Vis flate omtaler"
+msgstr "Vis innhaldet i flat vurdering"
 
 #. Translators: when users are navigating a table, they sometimes want the
 #. entire row of a table read; other times they just want the current cell
 #. to be presented to them.
 #: src/orca/cmdnames.py:366
 msgid "Toggle whether to read just the current table cell or the whole row"
-msgstr ""
-"Slå på om du berre skal lese den gjeldande tabellcella eller heile rada"
+msgstr "Veksle mellom å lese berre den gjeldande tabellcella og heile rada"
 
 #. Translators: This is a command description. The command presents formatting
 #. information for the current text character, such as font name, font size,
@@ -3328,7 +3327,7 @@ msgstr "Minke styrken på tonefallr"
 #. We call it 'silencing'.
 #: src/orca/cmdnames.py:462
 msgid "Toggle the silencing of speech"
-msgstr "Slå på og av lydlaus tale"
+msgstr "Slå lydlaus tale av eller på"
 
 #. Translators: The on-screen braille display is a graphical window that displays a
 #. visual representation of what would be shown on a connected braille display,
@@ -3337,7 +3336,7 @@ msgstr "Slå på og av lydlaus tale"
 #. display.
 #: src/orca/cmdnames.py:469
 msgid "Toggle the on-screen braille display on and off"
-msgstr "Slå punktskriftvisninga på skjermen av og på"
+msgstr "Slå punktskriftvisinga på skjermen av eller på"
 
 #. Translators: The on-screen speech display is a graphical window that displays a
 #. scrolling log of all text spoken by the screen reader. It is primarily used by
@@ -3345,7 +3344,7 @@ msgstr "Slå punktskriftvisninga på skjermen av og på"
 #. to the audio.
 #: src/orca/cmdnames.py:475
 msgid "Toggle the on-screen speech display on and off"
-msgstr "Slå på og av skjermvisning av tale"
+msgstr "Slå talevisinga på skjermen av eller på"
 
 #. Translators: Orca has a sleep mode which causes Orca to essentially behave as
 #. if it were not running for a given application. Some use cases include self-
@@ -3361,7 +3360,7 @@ msgstr "Slå på og av skjermvisning av tale"
 #. for the app being used at the time the command is given.
 #: src/orca/cmdnames.py:489
 msgid "Toggle sleep mode for the current application"
-msgstr "Slå på/av dvalemodus for det aktive programmet"
+msgstr "Slå kvilemodus av eller på for det gjeldande programmet"
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -3369,7 +3368,7 @@ msgstr "Slå på/av dvalemodus for det aktive programmet"
 #. This string describes that command.
 #: src/orca/cmdnames.py:495
 msgid "Toggle speech verbosity level"
-msgstr "Veksle mellom detaljnivå for tale"
+msgstr "Byt detaljnivå for tale"
 
 #. Translators: Orca supports two keyboard layouts: a "desktop" layout intended
 #. for use with a full-size keyboard with a numeric keypad, and a "laptop" layout
@@ -3377,7 +3376,7 @@ msgstr "Veksle mellom detaljnivå for tale"
 #. toggles between these two layouts at runtime.
 #: src/orca/cmdnames.py:501
 msgid "Toggle keyboard layout"
-msgstr "Veksle tastaturoppsett"
+msgstr "Byt tastaturoppsett"
 
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca when it was started like a regular application. It is not meant for
@@ -3402,7 +3401,7 @@ msgstr "Vis innstillingar for programmet"
 #. Translators: Orca allows the user to enable/disable spoken indentation.
 #: src/orca/cmdnames.py:518
 msgid "Toggle spoken indentation"
-msgstr "Slå på opplesing av innrykk"
+msgstr "Slå opplesing av innrykk av eller på"
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -3517,7 +3516,7 @@ msgstr "Tøm AT-SPI-mellomlageret for det noverande programmet"
 #. the feature without the need to get into a GUI.
 #: src/orca/cmdnames.py:604
 msgid "Toggle mouse review mode"
-msgstr "Slå på musevisingsmodus"
+msgstr "Slå musegjennomgang av eller på"
 
 #. Translators: Orca has a command to present the battery status (e.g. level, whether
 #. or not it is plugged in, etc.). This string is the name of that command.
@@ -3565,14 +3564,14 @@ msgstr "Presenter noverande storleik og plassering for objektet"
 #. expected in the editor.
 #: src/orca/cmdnames.py:638
 msgid "Toggle all Orca command keys"
-msgstr "Slå av og på alle Orca-kommando-tastar"
+msgstr "Slå alle Orca-kommandotastar av eller på"
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. This string to be translated is associated with the
 #. keyboard commands used to review those previous messages.
 #: src/orca/cmdnames.py:643
 msgid "Present previous chat room message"
-msgstr "Presenter førre chatrom-melding"
+msgstr "Presenter førre praterom-melding"
 
 #. Translators: Orca has a command to review chat room messages in
 #. speech and braille. This string to be translated is associated with the
@@ -3588,7 +3587,7 @@ msgstr "Presenter neste melding i chatten"
 #. is associated with the command to toggle typing status presentation on or off.
 #: src/orca/cmdnames.py:655
 msgid "Toggle typing announcements"
-msgstr "Slå av og på meldingar om skriving"
+msgstr "Slå kunngjeringar om skriving av eller på"
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. Some users prefer to have this message history combined
@@ -3599,7 +3598,7 @@ msgstr "Slå av og på meldingar om skriving"
 #. or off.
 #: src/orca/cmdnames.py:664
 msgid "Toggle chat room specific message histories"
-msgstr "Veksle chatromspesifikke meldingshistorier"
+msgstr "Slå av eller på eiga meldingshistorikk for kvart praterom"
 
 #. Translators: In chat applications, Orca automatically presents incoming
 #. messages in speech and braille. If a user is in multiple conversations or
@@ -3610,7 +3609,7 @@ msgstr "Veksle chatromspesifikke meldingshistorier"
 #. the command to toggle room name presentation on or off.
 #: src/orca/cmdnames.py:673
 msgid "Toggle room name presentation"
-msgstr "Veksle visning av romnamn"
+msgstr "Slå vising av romnamn av eller på"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
@@ -3691,7 +3690,7 @@ msgstr "Markørstyring"
 #. consoles, the act of copying text is erroneously called a "cut" operation.
 #: src/orca/cmdnames.py:732
 msgid "Cut Begin"
-msgstr "Cut Begin"
+msgstr "Start utklipp"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). This command
@@ -3700,7 +3699,7 @@ msgstr "Cut Begin"
 #. consoles, the act of copying text is erroneously called a "cut" operation.
 #: src/orca/cmdnames.py:739
 msgid "Cut Line"
-msgstr "Cut Line"
+msgstr "Klipp ut linje"
 
 #. Translators: this is a command which causes Orca to present the last received
 #. notification message.
@@ -3820,7 +3819,7 @@ msgstr "Avansert innstilling for høflegheit i live-region"
 #. to turn off live regions by default.
 #: src/orca/cmdnames.py:819
 msgid "Set default live region politeness level to off"
-msgstr "Set standard høfligheit nivå for live-region til av"
+msgstr "Set standardnivået for høflegheit i live-regionar til av"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
@@ -3901,7 +3900,7 @@ msgstr "Veksle til neste strukturelle navigasjonsmodus"
 #. which enables/disables this support.
 #: src/orca/cmdnames.py:880
 msgid "Toggle table navigation keys"
-msgstr "Veksle tabellnavigasjonstastar"
+msgstr "Slå tabellnavigasjonstastar av eller på"
 
 #. Translators: this is for navigating among annotations in a document.
 #. Annotations include content insertions, content deletions, suggestions, and highlights.
@@ -3919,7 +3918,7 @@ msgstr "Gå til neste merknad"
 #. Annotations include content insertions, content deletions, suggestions, and highlights.
 #: src/orca/cmdnames.py:892
 msgid "Display a list of annotations"
-msgstr "Vis ei liste over merknader"
+msgstr "Vis ei liste over merknadar"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:895
@@ -4041,7 +4040,7 @@ msgstr "Gå til neste skjemafelt"
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:968
 msgid "Display a list of form fields"
-msgstr "Viser ei liste over skjema-felt"
+msgstr "Vis ei liste over skjemafelt"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:971
@@ -4077,7 +4076,7 @@ msgstr "Gå til neste overskrift på nivå %d"
 #: src/orca/cmdnames.py:989
 #, python-format
 msgid "Display a list of headings at level %d"
-msgstr "Viser ei liste over overskrifter på nivå %d"
+msgstr "Vis ei liste over overskrifter på nivå %d"
 
 #. Translators: this is for navigating among iframes in a document.
 #: src/orca/cmdnames.py:992
@@ -4107,7 +4106,7 @@ msgstr "Gå til neste bilete"
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:1007
 msgid "Display a list of images"
-msgstr "Viser ei liste over bilete"
+msgstr "Vis ei liste over bilete"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
@@ -4128,7 +4127,7 @@ msgstr "Gå til neste landemerke"
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:1022
 msgid "Display a list of landmarks"
-msgstr "Viser ei liste over landemerke"
+msgstr "Vis ei liste over landemerke"
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
@@ -4149,7 +4148,7 @@ msgstr "Gå til neste store objekt"
 #. a table, etc.
 #: src/orca/cmdnames.py:1037
 msgid "Display a list of large objects"
-msgstr "Viser ei liste over store objekt"
+msgstr "Vis ei liste over store objekt"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:1040
@@ -4267,7 +4266,7 @@ msgstr "Klikk på objektet med navigatørfokus."
 #. toggled on and off.
 #: src/orca/cmdnames.py:1113
 msgid "Toggle simplified object navigation."
-msgstr "Slå av og på forenkla objektnavigering."
+msgstr "Slå forenkla objektnavigering av eller på."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:1116
@@ -4539,7 +4538,7 @@ msgstr "Mindre navigasjonsgranulæritet"
 #: src/orca/cmdnames.py:1280
 msgctxt "mathcat"
 msgid "Toggle speech mode"
-msgstr "Slå på tale-modus"
+msgstr "Byt talemodus"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command speaks the previous math
@@ -4675,7 +4674,7 @@ msgstr "Kopier til utklippstavle"
 #. command to manually toggle layout mode on/off.
 #: src/orca/cmdnames.py:1369
 msgid "Toggle layout mode"
-msgstr "Veksle layoutmodus"
+msgstr "Slå layoutmodus av eller på"
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -4706,7 +4705,7 @@ msgstr "Byt mellom nettlesingsmodus og fokusmodus"
 #. This string is associated with the Orca command to enable sticky focus mode.
 #: src/orca/cmdnames.py:1396
 msgid "Enable sticky focus mode"
-msgstr "Slå på limt-fokus-modus"
+msgstr "Slå på seig fokusmodus"
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -4719,7 +4718,7 @@ msgstr "Slå på limt-fokus-modus"
 #. This string is associated with the Orca command to enable sticky browse mode.
 #: src/orca/cmdnames.py:1407
 msgid "Enable sticky browse mode"
-msgstr "Slå på limt lesarmodus"
+msgstr "Slå på seig lesarmodus"
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: src/orca/cmdnames.py:1410
@@ -4749,7 +4748,7 @@ msgstr "Gå til neste vitja lenke"
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1425
 msgid "Display a list of visited links"
-msgstr "Viser ei liste over vitja lenkjer"
+msgstr "Vis ei liste over vitja lenkjer"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
@@ -5868,7 +5867,7 @@ msgstr ""
 #. messages.py.
 #: src/orca/guilabels.py:128
 msgid "Automatic sticky focus mode for web applications"
-msgstr "Automatisk klebrig fokusmodus for webapplikasjonar"
+msgstr "Automatisk seig fokusmodus for webprogram"
 
 #. Translators: This explains what the "Automatic sticky focus mode for web
 #. applications" setting does.
@@ -5877,8 +5876,8 @@ msgid ""
 "Automatic sticky focus mode causes Orca to detect web applications and "
 "Electron apps and stay in focus mode until toggled off by command."
 msgstr ""
-"Automatisk klistrefokus-modus gjer at Orca oppdagar webapplikasjonar og "
-"Electron-appar og blir i fokus-modus til det blir slått av med kommando."
+"Automatisk seig fokusmodus gjer at Orca oppdagar webprogram og Electron-"
+"appar og blir i fokus-modus til det vert slått av med kommando."
 
 #. Translators: A single braille cell on a refreshable braille display consists
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
@@ -5902,7 +5901,7 @@ msgstr "Punkt 8"
 #. "marking"/indicating that a given word is bold.
 #: src/orca/guilabels.py:153
 msgid "Dots 7 and 8"
-msgstr "Punk 7 og 8"
+msgstr "Punkt 7 og 8"
 
 #. Translators: This option refers to the dot or dots in braille which will be
 #. used to underline certain characters.
@@ -6059,7 +6058,7 @@ msgstr "Stav"
 #. your buddies is typing a message.
 #: src/orca/guilabels.py:257
 msgid "Announce when your _buddies are typing"
-msgstr "_Gje beskjed når venene dine skriv"
+msgstr "Kunngjer når _venene dine skriv"
 
 #. Translators: If this widget is enabled, then Orca will provide the user with
 #. chat room specific message histories rather than just a single history which
@@ -6076,7 +6075,7 @@ msgstr "_Gjev meldingshistorikk for den aktuelle chatten"
 #. the active channel only if the chat application has focus.
 #: src/orca/guilabels.py:270
 msgid "Speak messages from"
-msgstr "Les meldingar frå"
+msgstr "Les opp meldingar frå"
 
 #. Translators: This is the label of a widget in the preferences dialog. If it is
 #. selected, Orca will speak all new chat messages as they appear irrespective of
@@ -6084,7 +6083,7 @@ msgstr "Les meldingar frå"
 #. behavior.
 #: src/orca/guilabels.py:276
 msgid "All channels when using any application"
-msgstr "Alle kanalar når du brukar applikasjonar"
+msgstr "Alle kanalar når du brukar program"
 
 #. Translators: This is the label of a widget in the preferences dialog. If it is
 #. selected, Orca will only speak new chat messages for the currently active channel
@@ -6092,7 +6091,7 @@ msgstr "Alle kanalar når du brukar applikasjonar"
 #. application currently has focus.
 #: src/orca/guilabels.py:282
 msgid "The active channel when using any application"
-msgstr "Den aktive kanalen når du brukar ein applikasjon"
+msgstr "Den aktive kanalen når du brukar eit program"
 
 #. Translators: This is the label of a widget in the preferences dialog. If it is
 #. selected, Orca will speak all new chat messages as they appear if and only if the
@@ -6119,7 +6118,7 @@ msgstr "_Tal romnamn"
 #. When disabled, the room name is spoken before the message.
 #: src/orca/guilabels.py:301
 msgid "Speak room name last"
-msgstr "Tenarromnamn til slutt"
+msgstr "Les opp romnamnet til slutt"
 
 #. Translators: When presenting the content of a line on a web page, Orca by
 #. default presents the full line, including any links or form fields on that
@@ -6174,7 +6173,7 @@ msgid ""
 "Customize how words are spoken by adding words and replacement text to the "
 "pronunciation dictionary."
 msgstr ""
-"Tilpass korleis ord blir uttalte ved å leggje til ord og erstatningstekst i "
+"Tilpass korleis ord vert uttalte ved å leggje til ord og erstatningstekst i "
 "uttalingsordboka."
 
 #. Translators: This is a label for a column header in Orca's pronunciation
@@ -6313,21 +6312,21 @@ msgstr "Samsvarar med:"
 #. with the widget to make the search case-sensitive.
 #: src/orca/guilabels.py:449
 msgid "_Match case"
-msgstr "_Treff på små/store bokstavar"
+msgstr "_Skil mellom store og små bokstavar"
 
 #. Translators: Orca has a "find" feature which allows the user to search the
 #. active application for on screen text and widgets. This label is associated
 #. with the widget to only match if the full word consists of the search term.
 #: src/orca/guilabels.py:454
 msgid "Match _entire word only"
-msgstr "Treff berre på h_ele ord"
+msgstr "Treff berre på _heile ord"
 
 #. Translators: This is the label for a spinbutton. This option allows the user
 #. to specify the number of matched characters that must be present before Orca
 #. speaks the line that contains the results from an application's Find toolbar.
 #: src/orca/guilabels.py:459
 msgid "Minimum length of matched text:"
-msgstr "Minste lengde på tekst med treff:"
+msgstr "Minste lengd på tekst med treff:"
 
 #. Translators: This is the label of a panel containing options for what Orca
 #. presents when the user is in the Find toolbar of an application, e.g. Firefox.
@@ -6349,7 +6348,7 @@ msgstr "_Berre snakk om endra linjer under søk"
 #. Firefox.
 #: src/orca/guilabels.py:475
 msgid "Speak results during _find"
-msgstr "_Gjev resultat under søk"
+msgstr "Les opp resultat under _søk"
 
 #. Translators: Command is a table column header where the cells in the column
 #. are a sentence that briefly describes what action Orca will take if and when
@@ -6363,7 +6362,7 @@ msgstr "Kommando"
 #. commands.
 #: src/orca/guilabels.py:485
 msgid "Key Binding"
-msgstr "Tastaturbinding"
+msgstr "Tastebinding"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to managing the screen reader, such as opening preferences or
@@ -6431,7 +6430,7 @@ msgid ""
 "When enabled, Orca handles the arrow keys, Home, and End to move through "
 "content by character, word, or line."
 msgstr ""
-"Når det er aktivert, styrer Orca piltastane, Home og End for å flytte "
+"Når dette er slått på, styrer Orca piltastane, Home og End for å flytte "
 "gjennom innhaldet teikn for teikn, ord for ord eller linje for linje."
 
 #. Translators: This string is a label for the group of Orca commands which
@@ -6479,9 +6478,9 @@ msgid ""
 "running to add it to the sleep mode applications list."
 msgstr ""
 "Dvalemodus gjer at Orca oppfører seg som om det ikkje køyrer for ein gitt "
-"applikasjon. Standard tastatursnarvei for å slå dvalemodus av eller på er "
-"Shift+Alt+Ctrl+Q. Dette kan endrast i kommandoar. Ein applikasjon må vere i "
-"drift for å leggje han til i lista over applikasjonar i dvalemodus."
+"program. Standard tastatursnarvei for å slå dvalemodus av eller på er "
+"Shift+Alt+Ctrl+Q. Dette kan endrast i kommandoar. Ein program må vere i "
+"drift for å leggje han til i lista over program i dvalemodus."
 
 #. Translators: This label appears above a list of applications on the Sleep Mode
 #. preferences page. The user can select which applications should automatically
@@ -6561,8 +6560,9 @@ msgid ""
 "Large object length defines the minimum number of characters an element must "
 "have to be included when using the large object navigation shortcuts."
 msgstr ""
-"Lengda på store objekt definerer det minste talet på teikn eit element må ha "
-"for å bli teke med når du bruker snarvegane for navigering i store objekt."
+"Lengda på store objekt definerer det minste talet på teikn eit element må ha"
+" for å verte teke med når du brukar snarvegane for navigering i store "
+"objekt."
 
 #. Translators: This is a label for a switch that controls whether images
 #. without accessible names or descriptions are skipped during image
@@ -6596,7 +6596,7 @@ msgstr "Objektdetaljar"
 #. Those commands are all listed under this group label.
 #: src/orca/guilabels.py:645
 msgid "Flat review"
-msgstr "Flat oversikt "
+msgstr "Flat oversikt"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to Orca's speech and verbosity settings. This group of commands
@@ -6662,7 +6662,7 @@ msgstr "Aldri"
 #. speak the content at the flat review location when that content changes.
 #: src/orca/guilabels.py:692
 msgid "Speak changes at review location"
-msgstr "Endring av tale ved vurderingsplassering"
+msgstr "Les opp endringar ved vurderingsplasseringa"
 
 #. Translators: This is a label for the setting which determines if Orca will
 #. refresh the braille display with the content at the flat review location
@@ -6697,7 +6697,7 @@ msgstr "Skrivebord"
 #. laptop layout is intended for use with a laptop-style keyboard.
 #: src/orca/guilabels.py:717
 msgid "Laptop"
-msgstr "Bærbar datamaskin"
+msgstr "Berbar datamaskin"
 
 #. Translators: Orca has a feature to list all of the notification messages
 #. received, similar to the functionality gnome-shell provides when you press
@@ -6751,7 +6751,7 @@ msgstr "Kategoriar"
 #. "underlining" with braille dots 7-8 a word that is bold.
 #: src/orca/guilabels.py:756
 msgid "Mark in braille"
-msgstr "Marker i blindeskrift"
+msgstr "Merk i punktskrift"
 
 #. Translators: This is a table column header. The "Speak" column consists of a
 #. single widget. If the widget is enabled, Orca will speak the associated
@@ -6760,13 +6760,13 @@ msgstr "Marker i blindeskrift"
 #. the current text).
 #: src/orca/guilabels.py:763
 msgid "Speak"
-msgstr "Snakk"
+msgstr "Les opp"
 
 #. Translators: This is an option in a combo box for how a text attribute should
 #. be presented. If selected, the attribute will be both spoken and marked in braille.
 #: src/orca/guilabels.py:767
 msgid "Speak and mark"
-msgstr "Snakk og merk"
+msgstr "Les opp og merk"
 
 #. Translators: This is the title of a window which displays formatting
 #. information associated with the current text character.
@@ -7217,7 +7217,7 @@ msgstr "Verdi"
 #: src/orca/guilabels.py:1078
 msgctxt "structural navigation"
 msgid "Annotations"
-msgstr "Merknader"
+msgstr "Merknadar"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7528,7 +7528,7 @@ msgstr "_Vis kontekst for feil"
 #. the row and column position within the spreadsheet (i.e. A1, B1, C2 ...)
 #: src/orca/guilabels.py:1291
 msgid "Speak spreadsheet cell coordinates"
-msgstr "Tal opp koordinatane i reknearket"
+msgstr "Les opp cellekoordinatar i rekneark"
 
 #. Translators: This is a label for an option which controls what Orca speaks when
 #. presenting selection changes in a spreadsheet. By default, Orca will speak just
@@ -7545,7 +7545,7 @@ msgstr "Alltid snakk vald område i rekneark"
 #. header of a table cell in document content.
 #: src/orca/guilabels.py:1304
 msgid "Speak cell header"
-msgstr "Snakk celleoverskrift"
+msgstr "Les opp celleoverskrift"
 
 #. Translators: This is a label for a group of settings in the Tables tab of the
 #. Orca Preferences dialog. These settings control whether Orca speaks the entire
@@ -7565,20 +7565,20 @@ msgstr "Celle-navigering"
 #. blank cells when navigating tables in document content.
 #: src/orca/guilabels.py:1318
 msgid "Skip _blank cells"
-msgstr "Hopp over tome ce_ller"
+msgstr "Hopp over tomme ce_ller"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
 #: src/orca/guilabels.py:1322
 msgid "Speak _cell coordinates"
-msgstr "Tal _cellekoordinater"
+msgstr "Les opp _cellekoordinatar"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
 #: src/orca/guilabels.py:1327
 msgid "Speak _multiple cell spans"
-msgstr "_Tale fleire cellerom"
+msgstr "Les opp _samanslåtte celler"
 
 #. Translators: This string is associated with a combo box which allows the user
 #. to select the set of symbols to be used when Orca presents print strings on a
@@ -7711,7 +7711,7 @@ msgstr "_Meldingane er detaljerte"
 #. by making flash messages persistent by checking this widget.
 #: src/orca/guilabels.py:1429
 msgid "Messages are _persistent"
-msgstr "_Meldingar er varar"
+msgstr "Meldingar vert _verande"
 
 #. Translators: This is the title of a section in the braille settings where the user
 #. can configure how Orca presents flash messages on a refreshable braille display.
@@ -7862,7 +7862,7 @@ msgid ""
 "The following extension will be permanently deleted from your user "
 "extensions folder: %s. Do you want to continue?"
 msgstr ""
-"Følgjande utviding vil bli sletta for alltid frå brukaren si mappe for "
+"Følgjande utviding vil verte sletta for alltid frå brukaren si mappe for "
 "utvidingar: %s. Vil du halde fram?"
 
 #. Translators: This message is presented when Orca fails to delete a user
@@ -7872,7 +7872,7 @@ msgstr ""
 #, python-format
 msgctxt "user extensions"
 msgid "Could not delete: %s."
-msgstr "Kunne ikkje slette: %s."
+msgstr "Klarte ikkje slette: %s."
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button opens a dialog with metadata about the selected extension,
@@ -8183,7 +8183,7 @@ msgstr "_Aktiv profil:"
 #. announce that the form is being exited.
 #: src/orca/guilabels.py:1746
 msgid "Announce _forms in Say All"
-msgstr "_Kunngjer skjema i Sei alle"
+msgstr "_Kunngjer skjema i Les alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document.
 #. Some users want to hear additional information about what is being spoken. If
@@ -8193,7 +8193,7 @@ msgstr "_Kunngjer skjema i Sei alle"
 #. objects, such as a group of related form fields.
 #: src/orca/guilabels.py:1754
 msgid "Announce _panels in Say All"
-msgstr "_Kunngjer panel i Sei alle"
+msgstr "_Kunngjer panel i Les alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document.
 #. Some users want to hear additional information about what is being spoken. If
@@ -8202,7 +8202,7 @@ msgstr "_Kunngjer panel i Sei alle"
 #. end of the table content, Orca will announce that the table is being exited.
 #: src/orca/guilabels.py:1761
 msgid "Announce _tables in Say All"
-msgstr "_Kunngjer tabellar i Sei alt"
+msgstr "_Kunngjer tabellar i Les alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document.
 #. Some users want to hear additional information about what is being spoken. If
@@ -8211,7 +8211,7 @@ msgstr "_Kunngjer tabellar i Sei alt"
 #. that the blockquote is being exited.
 #: src/orca/guilabels.py:1768
 msgid "Announce block_quotes in Say All"
-msgstr "_Kunngjer blokkutdrag i Sei alt"
+msgstr "_Kunngjer blokkutdrag i Les alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document.
 #. Some users want to hear additional information about what is being spoken. If
@@ -8221,7 +8221,7 @@ msgstr "_Kunngjer blokkutdrag i Sei alt"
 #. search, etc.
 #: src/orca/guilabels.py:1776
 msgid "Announce land_marks in Say All"
-msgstr "_Kunngjer landemerke i Sei alt"
+msgstr "_Kunngjer landemerke i Les alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document.
 #. Some users want to hear additional information about what is being spoken. If
@@ -8230,7 +8230,7 @@ msgstr "_Kunngjer landemerke i Sei alt"
 #. content, Orca will announce that the list is being exited.
 #: src/orca/guilabels.py:1783
 msgid "Announce li_sts in Say All"
-msgstr "_Kunngjer lister i Sei alle"
+msgstr "_Kunngjer lister i Les alt"
 
 #. Translators: Orca has a setting which determines which progress bar updates
 #. should be announced. The options are all progress bars, only progress bars in
@@ -8302,11 +8302,11 @@ msgid ""
 "settings on the other pages. To rename or delete the selected profile, use "
 "the Tab key to navigate to its associated buttons."
 msgstr ""
-"Profilane er samlingar av innstillingar. Profilen «%s» blir lasta ved "
-"oppstart. For å redigere ein eksisterande profil, vel han nedanfor og juster "
-"innstillingane på dei andre sidene. For å gje eit nytt namn til eller slette "
-"den valde profilen, bruk Tab-tasten for å navigere til dei tilhøyrande "
-"knappane."
+"Profilane er samlingar av innstillingar. Profilen «%s» vert lasta ved "
+"oppstart. For å redigere ein eksisterande profil, vel han nedanfor og juster"
+" innstillingane på dei andre sidene. For å gje eit nytt namn til eller "
+"slette den valde profilen, bruk Tab-tasten for å navigere til dei "
+"tilhøyrande knappane."
 
 #. Translators: This is a label in the Preferences dialog box. It applies to
 #. several options related to which progress bars Orca should speak and how
@@ -8319,7 +8319,7 @@ msgstr "Framgangslinjer"
 #. This is the label for the group of settings related to Say All.
 #: src/orca/guilabels.py:1848
 msgid "Say All"
-msgstr "Sei alt"
+msgstr "Les alt"
 
 #. Translators: Say all by refers to the way that Orca will say (speak) an
 #. amount of text -- in particular, where Orca where insert pauses. There are
@@ -8330,7 +8330,7 @@ msgstr "Sei alt"
 #. commands, doing a say all by line would work better.
 #: src/orca/guilabels.py:1857
 msgid "Say All By"
-msgstr "Sei All By"
+msgstr "Les alt etter"
 
 #. Translators: This is an informational message on the Say All preferences page
 #. explaining what Say All does. Please translate this message consistent with the
@@ -8340,8 +8340,8 @@ msgid ""
 "Say All reads from the current location to the end of the document, pausing "
 "after each sentence or line based on the \"Say All By\" value."
 msgstr ""
-"Sei alt frå noverande plassering til slutten av dokumentet, med pause etter "
-"kvar setning eller linje basert på verdien for «Sei alt ved»."
+"Les alt frå noverande plassering til slutten av dokumentet, med pause etter "
+"kvar setning eller linje basert på verdien for «Les alt etter»."
 
 #. Translators: This is an informational message on the Say All preferences page
 #. explaining the options found under the section with the following label:
@@ -8353,7 +8353,7 @@ msgid ""
 "If enabled, you can use the arrow keys and/or structural navigation commands "
 "to move within the document while Say All is active."
 msgstr ""
-"Når det er aktivert, kan du bruke pilknappane og/eller strukturelle "
+"Når dette er slått på, kan du bruke pilknappane og/eller strukturelle "
 "navigasjonskommandoar til å flytte deg inne i dokumentet medan Say All er "
 "aktiv."
 
@@ -8367,12 +8367,12 @@ msgid ""
 "the document."
 msgstr ""
 "Kunngjeringane avgjer kva dokumentendringar, tekstformateringar og "
-"behaldaravgrensingar som blir kunngjorde når Say All flyttar seg gjennom "
+"behaldaravgrensingar som vert kunngjorde når Say All flyttar seg gjennom "
 "dokumentet."
 
 #: src/orca/guilabels.py:1886
 msgid "Speak object under mo_use"
-msgstr "_Snakk objekt under musa"
+msgstr "Les opp objektet under m_usa"
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -8394,7 +8394,7 @@ msgstr "_Oppdateringar for punktskrift"
 #. This button will load the selected settings profile in the application.
 #: src/orca/guilabels.py:1903
 msgid "_Load"
-msgstr "_Laste"
+msgstr "_Last inn"
 
 #: src/orca/guilabels.py:1905
 msgid "_Present tooltips"
@@ -8410,7 +8410,7 @@ msgstr "_Fjern"
 #. periodically speak the current percentage.
 #: src/orca/guilabels.py:1913
 msgid "_Speak updates"
-msgstr "_Speak-oppdateringar"
+msgstr "_Les opp oppdateringar"
 
 #. Translators: Here this is a label for a spin button through which a user can
 #. customize the frequency in seconds an announcement should be made regarding
@@ -8489,7 +8489,7 @@ msgstr "_Kunngjer panel under navigering"
 #. table has been exited prior to speaking the new location.
 #: src/orca/guilabels.py:1971
 msgid "Announce _tables during navigation"
-msgstr "_Gjev melding om tabellar under navigering"
+msgstr "_Kunngjer tabellar under navigering"
 
 #. Translators: Orca can optionally speak additional details as the user
 #. navigates (e.g. via the arrow keys) within document content.  If this
@@ -8511,7 +8511,7 @@ msgstr "_Kunngjer blokkutdrag under navigering"
 #. banners, main context, search, etc.
 #: src/orca/guilabels.py:1989
 msgid "Announce land_marks during navigation"
-msgstr "_Gje kunngjeringar om landemerke under navigering"
+msgstr "Kunngjer lande_merke under navigering"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is
 #. actually displayed on the screen. It will NOT speak things like the role of
@@ -8529,7 +8529,7 @@ msgstr "Berre snakk vist tekst"
 #. (e.g. light blue).
 #: src/orca/guilabels.py:2003
 msgid "S_peak colors as names"
-msgstr "_Tal fargar som namn"
+msgstr "Les opp fargar som _namn"
 
 #. Translators: This is a label for a widget associated with whether Orca will
 #. present the mnemonic (underlined character) of an object, such as a button or
@@ -8616,7 +8616,7 @@ msgstr "Plassering i sett"
 #. row; if it is disabled, Orca will only speak the cell with focus.
 #: src/orca/guilabels.py:2063
 msgid "Speak full row in _GUI tables"
-msgstr "_Snakk full rad i GUI-tabellar"
+msgstr "Les opp heile rada i _GUI-tabellar"
 
 #. Translators: This widget is associated with the setting that determines
 #. what happens if a user presses Up or Down arrow to move row by row in a
@@ -8627,7 +8627,7 @@ msgstr "_Snakk full rad i GUI-tabellar"
 #. with focus.
 #: src/orca/guilabels.py:2072
 msgid "Speak full row in _document tables"
-msgstr "_Tale full rad i dokumenttabellar"
+msgstr "Les opp heile rada i _dokumenttabellar"
 
 #. Translators: This widget is associated with the setting that determines
 #. what happens if a user presses Up or Down arrow to move row by row in a
@@ -8635,7 +8635,7 @@ msgstr "_Tale full rad i dokumenttabellar"
 #. it is disabled, Orca will only speak the cell with focus.
 #: src/orca/guilabels.py:2078
 msgid "Speak full row in sp_readsheets"
-msgstr "_Snakk full rad i rekneark"
+msgstr "Les opp heile rada i _rekneark"
 
 #. Translators: This is a label for a widget associated with whether Orca speaks
 #. tutorial messages / "help text".
@@ -8711,7 +8711,7 @@ msgstr "Tale på skjerm"
 #. braille and speech monitor windows.
 #: src/orca/guilabels.py:2134
 msgid "On-Screen Display"
-msgstr "Skjermvisning"
+msgstr "Skjermvising"
 
 #. Translators: This is the label of a spin button that controls the number of braille
 #. cells displayed in the on-screen braille monitor.
@@ -8807,7 +8807,7 @@ msgstr "Endre kunngjeringar"
 #. [container type]" where the container types are listed below this heading.
 #: src/orca/guilabels.py:2209
 msgid "Announce when entering"
-msgstr "Gje melding ved inngang"
+msgstr "Kunngjer når du går inn i"
 
 #. Translators: This is the label of the Echo page in the Orca Preferences dialog.
 #. On that page there are a variety of settings related to what Orca will echo
@@ -8839,7 +8839,7 @@ msgstr "Generelt"
 #. associated with them. The user can customize the keystrokes for any command.
 #: src/orca/guilabels.py:2232
 msgid "Key Bindings"
-msgstr "Tastaturbindingar"
+msgstr "Tastebindingar"
 
 #. Translators: This is the label of the Commands page in the Orca Preferences
 #. dialog. On that page there is a list of all Orca commands and the keystrokes
@@ -9033,7 +9033,7 @@ msgstr "Tale"
 #. dialog.
 #: src/orca/guilabels.py:2374
 msgid "Text Attributes"
-msgstr "Tekstattributter"
+msgstr "Tekstattributt"
 
 #. Translators: This text appears at the top of the Text Attributes preferences
 #. page. It explains that users can configure which text formatting attributes
@@ -9252,7 +9252,7 @@ msgstr "Globale stemmeinnstillingar"
 #. spoken as one hundred and twenty three.
 #: src/orca/guilabels.py:2540
 msgid "Speak _numbers as digits"
-msgstr "_Tal som tal"
+msgstr "Les opp _tal som siffer"
 
 #. Translators: Having multiple voice types in Orca makes it possible for the
 #. user to more quickly identify properties of text non-visually, such as the
@@ -9686,7 +9686,7 @@ msgstr "Batteristatus ukjend"
 #: src/orca/messages.py:38
 #, python-format
 msgid "Battery: %d%%"
-msgstr "Batteri: %d%%"
+msgstr "Batteri: %d %%"
 
 #. Translators: Orca has a command to report the battery status. This message
 #. presents the plugged-in status to the user.
@@ -10080,7 +10080,7 @@ msgstr "Utviding ikkje godkjend: %s"
 #, python-format
 msgid "Warning: %s is currently disabled and will not load until enabled."
 msgstr ""
-"Advarsel: %s er for tida deaktivert og vil ikkje lastast før det er aktivert."
+"Åtvaring: %s er slått av for tida og blir ikkje lasta før det blir slått på."
 
 #. Translators: This is the description of command line option '-s, --setup'
 #. that will place the user in Orca's GUI preferences window.
@@ -10165,7 +10165,7 @@ msgstr "limt inn"
 #. is presented when the value of the setting is toggled.
 #: src/orca/messages.py:379
 msgid "Do not announce when your buddies are typing."
-msgstr "Ikkje annonser når venene dine skriv."
+msgstr "Ikkje kunngjer når venene dine skriv."
 
 #. Translators: In chat applications, it is often possible to see that a "buddy"
 #. is typing currently (e.g. via a keyboard icon or status text). Some users like
@@ -10174,7 +10174,7 @@ msgstr "Ikkje annonser når venene dine skriv."
 #. is presented when the value of the setting is toggled.
 #: src/orca/messages.py:386
 msgid "announce when your buddies are typing."
-msgstr "gjev beskjed når venene dine skriv."
+msgstr "kunngjer når venene dine skriv."
 
 #. Translators: In chat applications, Orca automatically presents incoming
 #. messages in speech and braille. If a user is in multiple conversations or
@@ -10226,7 +10226,7 @@ msgstr "Les opp samtaleromnamn."
 #. translated is presented when the value of the setting is toggled.
 #: src/orca/messages.py:426
 msgid "Do not provide chat room specific message histories."
-msgstr "Ikkje gjev chatrom-spesifikke meldingshistorier."
+msgstr "Ikkje gjev praterom-spesifikke meldingshistorier."
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. Some users prefer to have this message history combined
@@ -10236,7 +10236,7 @@ msgstr "Ikkje gjev chatrom-spesifikke meldingshistorier."
 #. translated is presented when the value of the setting is toggled.
 #: src/orca/messages.py:434
 msgid "Provide chat room specific message histories."
-msgstr "Gjev chatrom-spesifikke meldingshistorier."
+msgstr "Gjev praterom-spesifikke meldingshistorier."
 
 #. Translators: This is presented when the user has navigated to the top of the
 #. chat message history.
@@ -10403,7 +10403,7 @@ msgstr "CPU- og minnebruk ukjend"
 #: src/orca/messages.py:542
 #, python-format
 msgid "CPU: %d%%. Memory: %d%%"
-msgstr "CPU: %d%%. Minne: %d%%"
+msgstr "CPU: %d %%. Minne: %d %%"
 
 #. Translators: Orca has a command for advanced users and developers to clear
 #. the AT-SPI cache in case there is stale information due to an application
@@ -10418,7 +10418,7 @@ msgstr "Tømming av mellomlager mislukkast."
 #. bug. This message is presented when the user performs the command.
 #: src/orca/messages.py:553
 msgid "Clearing cache."
-msgstr "Tømer mellomlager."
+msgstr "Tømmer mellomlageret."
 
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box. The string
@@ -10514,13 +10514,13 @@ msgstr "tom"
 #: src/orca/messages.py:620
 #, python-format
 msgid "%.2f kilobytes"
-msgstr "%.2f kilobytes"
+msgstr "%.2f kilobyte"
 
 #. Translators: This is the size of a file in megabytes
 #: src/orca/messages.py:623
 #, python-format
 msgid "%.2f megabytes"
-msgstr "%.2f megabytes"
+msgstr "%.2f megabyte"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -10966,7 +10966,7 @@ msgstr "forlèt artikkel."
 #. blockquote and then navigates out of it.
 #: src/orca/messages.py:966
 msgid "leaving blockquote."
-msgstr "forlet blokkuthemt."
+msgstr "forlèt blokkuthemt."
 
 #. Translators: This message is presented when a user is navigating within
 #. a code block and then navigates out of it.
@@ -10993,7 +10993,7 @@ msgstr "forlèt detaljar."
 #. and then navigates out of it into the surrounding page.
 #: src/orca/messages.py:986
 msgid "leaving document."
-msgstr "forlet dokumentet."
+msgstr "forlèt dokumentet."
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
@@ -11130,7 +11130,7 @@ msgstr "forlèt abstrakt."
 #: src/orca/messages.py:1078
 msgctxt "role"
 msgid "leaving acknowledgments."
-msgstr "forlet takk."
+msgstr "forlèt takk."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -11229,7 +11229,7 @@ msgstr "forlèt sluttnoter."
 #: src/orca/messages.py:1144
 msgctxt "role"
 msgid "leaving epigraph."
-msgstr "forlet epigraf."
+msgstr "forlèt epigraf."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -11265,7 +11265,7 @@ msgstr "forlèt døme."
 #: src/orca/messages.py:1168
 msgctxt "role"
 msgid "leaving foreword."
-msgstr "forordet forlet."
+msgstr "forordet forlèt."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -11662,7 +11662,7 @@ msgstr "Fokusmodus"
 #. This string is the message presented when Orca switches to sticky focus mode.
 #: src/orca/messages.py:1458
 msgid "Focus mode is sticky."
-msgstr "Fokusmodus er vedvarande."
+msgstr "Fokusmodus er seig."
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -11675,7 +11675,7 @@ msgstr "Fokusmodus er vedvarande."
 #. This string is the message presented when Orca switches to sticky browse mode.
 #: src/orca/messages.py:1469
 msgid "Browse mode is sticky."
-msgstr "Lesemodus er vedvarande."
+msgstr "Lesarmodus er seig."
 
 #. Translators: Orca has two modes for reading web pages and similar content:
 #. focus mode and browse mode. Focus mode passes key presses to the application
@@ -11727,7 +11727,7 @@ msgstr "Skrivebordsoppsett."
 #. is presented when the user switches to the laptop keyboard layout.
 #: src/orca/messages.py:1511
 msgid "Laptop layout."
-msgstr "Oppsett for bærbar datamaskin."
+msgstr "Oppsett for berbar datamaskin."
 
 #. Translators: This message is presented to the user when the command to move
 #. the mouse pointer to a particular object is believed to have succeeded.
@@ -11740,14 +11740,14 @@ msgstr "Pekaren flytta til objektet."
 #. the message which Orca will present when mouse review is toggled off via command.
 #: src/orca/messages.py:1520
 msgid "Mouse review disabled."
-msgstr "Musen er deaktivert."
+msgstr "Musegjennomgang er slått av."
 
 #. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled on via command.
 #: src/orca/messages.py:1525
 msgid "Mouse review enabled."
-msgstr "Mus-gjennomgang påslått."
+msgstr "Musegjennomgang er slått på."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
@@ -11807,7 +11807,7 @@ msgstr "Ingen handlingar funne på: %s"
 #. the user if no more annotations can be found.
 #: src/orca/messages.py:1568
 msgid "No more annotations."
-msgstr "Ingen fleire merknader."
+msgstr "Ingen fleire merknadar."
 
 #. Translators: This is for navigating document content by moving from blockquote
 #. to blockquote. This is a detailed message which will be presented to the user
@@ -12052,7 +12052,7 @@ msgstr "siffer"
 #. the user has enabled speaking numbers as digits.
 #: src/orca/messages.py:1743
 msgid "Speak numbers as digits."
-msgstr "Tal som tal."
+msgstr "Les opp tal som siffer."
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -12071,7 +12071,7 @@ msgstr "ord"
 #. the user has enabled speaking numbers as words.
 #: src/orca/messages.py:1757
 msgid "Speak numbers as words."
-msgstr "Sei tal som ord."
+msgstr "Les opp tal som ord."
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
@@ -12176,7 +12176,7 @@ msgstr "Alle"
 #. spoken, or Some will be spoken.
 #: src/orca/messages.py:1829
 msgid "Punctuation level set to all."
-msgstr "Teiknsetjing på høgste nivå."
+msgstr "Teiknsetjing på høgaste nivå."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -12535,14 +12535,14 @@ msgstr "Rad %(row)d, kolonne %(column)d."
 #. This string is a message presented to the user when this setting is toggled.
 #: src/orca/messages.py:2086
 msgid "Speak cell"
-msgstr "Uttal celle"
+msgstr "Les opp celle"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
 #: src/orca/messages.py:2091
 msgid "Speak row"
-msgstr "Snakk rad"
+msgstr "Les opp rad"
 
 #. Translators: a uniform table is one in which each table cell occupies one row
 #. and one column (i.e. a perfect grid). In contrast, a non-uniform table is one
