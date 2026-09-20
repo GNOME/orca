@@ -108,6 +108,7 @@ class AXUtilitiesHypertext:
         end: tuple[Atspi.Accessible, int] | None,
         include_start: bool,
         include_end: bool,
+        unexpanded_objects: list[Atspi.Accessible] | None = None,
     ) -> str:
         """Expands a subtree, trimming it at optional text boundaries."""
 
@@ -125,6 +126,14 @@ class AXUtilitiesHypertext:
         )
 
         if not AXObject.supports_text(root):
+            if not AXObject.get_child_count(root):
+                if (
+                    unexpanded_objects is not None
+                    and (start is None or (start[1] == 0 and include_start))
+                    and (end is None or end[1] > 0 or include_end)
+                ):
+                    unexpanded_objects.append(root)
+                return ""
             first = AXObject.get_index_in_parent(start_child) if start_child is not None else 0
             last = (
                 AXObject.get_index_in_parent(end_child)
@@ -140,6 +149,7 @@ class AXUtilitiesHypertext:
                             end if child == end_child else None,
                             include_start if child == start_child else True,
                             include_end if child == end_child else True,
+                            unexpanded_objects,
                         ),
                         True,
                     )
@@ -168,7 +178,14 @@ class AXUtilitiesHypertext:
             if not lower <= offset < upper:
                 continue
             if cursor < offset:
-                parts.append((AXUtilitiesHypertext.expand_eocs(root, cursor, offset), False))
+                parts.append(
+                    (
+                        AXUtilitiesHypertext.expand_eocs(
+                            root, cursor, offset, unexpanded_objects=unexpanded_objects
+                        ),
+                        False,
+                    )
+                )
             parts.append(
                 (
                     AXUtilitiesHypertext._expand_eocs_in_subtree(
@@ -177,13 +194,21 @@ class AXUtilitiesHypertext:
                         end if child == end_child else None,
                         include_start if child == start_child else True,
                         include_end if child == end_child else True,
+                        unexpanded_objects,
                     ),
                     AXUtilitiesHypertext._is_separate_text_element(child),
                 )
             )
             cursor = offset + 1
         if cursor < upper:
-            parts.append((AXUtilitiesHypertext.expand_eocs(root, cursor, upper), False))
+            parts.append(
+                (
+                    AXUtilitiesHypertext.expand_eocs(
+                        root, cursor, upper, unexpanded_objects=unexpanded_objects
+                    ),
+                    False,
+                )
+            )
         return AXUtilitiesHypertext._join_expanded_parts(parts)
 
     @staticmethod
@@ -195,8 +220,9 @@ class AXUtilitiesHypertext:
         *,
         include_start: bool = True,
         include_end: bool = True,
+        unexpanded_objects: list[Atspi.Accessible] | None = None,
     ) -> str:
-        """Expands embedded objects between two accessible text positions."""
+        """Expands a text range, optionally collecting objects without expanded text."""
 
         end_obj = end_obj or start_obj
         if end_offset < 0:
@@ -233,6 +259,7 @@ class AXUtilitiesHypertext:
             (end_obj, end_offset),
             include_start,
             include_end,
+            unexpanded_objects,
         )
         tokens = [
             "AXUtilitiesHypertext: Expanded EOCs between",
@@ -257,6 +284,8 @@ class AXUtilitiesHypertext:
         obj: Atspi.Accessible,
         start_offset: int = 0,
         end_offset: int = -1,
+        *,
+        unexpanded_objects: list[Atspi.Accessible] | None = None,
     ) -> str:
         """Replaces embedded object characters in a text range with their text."""
 
@@ -269,11 +298,15 @@ class AXUtilitiesHypertext:
             return math_presenter.get_presenter().expand_embedded_math(obj)
 
         if AXUtilitiesRole.is_grid(obj):
+            if unexpanded_objects is not None:
+                unexpanded_objects.append(obj)
             tokens = ["AXUtilitiesHypertext: Not expanding EOCs in grid", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
         if not AXUtilitiesHypertext.can_expand_embedded_object_as_text(obj):
+            if unexpanded_objects is not None:
+                unexpanded_objects.append(obj)
             return ""
 
         text = AXText.get_substring(obj, start_offset, end_offset)
@@ -285,7 +318,11 @@ class AXUtilitiesHypertext:
             if char != OBJECT_REPLACEMENT_CHARACTER:
                 continue
             child = AXUtilitiesHypertext.find_child_at_offset(obj, index + start_offset)
-            result = AXUtilitiesHypertext.expand_eocs(child) if child is not None else ""
+            result = (
+                AXUtilitiesHypertext.expand_eocs(child, unexpanded_objects=unexpanded_objects)
+                if child is not None
+                else ""
+            )
             to_build[index] = (
                 result,
                 child is not None and AXUtilitiesHypertext._is_separate_text_element(child),

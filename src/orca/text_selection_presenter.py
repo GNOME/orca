@@ -400,6 +400,7 @@ class TextSelectionPresenter:
 
         start_obj, start_offset = range_start
         end_obj, end_offset = range_end
+        unexpanded_objects: list[Atspi.Accessible] = []
         string = AXUtilities.expand_eocs_in_range(
             start_obj,
             start_offset,
@@ -407,6 +408,7 @@ class TextSelectionPresenter:
             end_offset,
             include_start=include_start,
             include_end=include_end,
+            unexpanded_objects=unexpanded_objects,
         )
         tokens: list[Any] = [
             "TEXT SELECTION PRESENTER: Expanded changed document text range",
@@ -427,30 +429,28 @@ class TextSelectionPresenter:
         speak_message = (
             speak_message and not speech_presenter.get_presenter().get_only_speak_displayed_text()
         )
-        image = None
         if not string:
-            image = next(
-                (
-                    obj
-                    for obj, _offset in (range_start, range_end)
-                    if AXUtilities.is_image_or_canvas(obj)
-                ),
-                None,
-            )
-            if image is None:
+            if any(not AXUtilities.is_image_or_canvas(obj) for obj in unexpanded_objects):
                 return False
-
-        self._present_pending_page_change(selection_obj)
-        if image is not None:
-            presentation_manager.get_manager().present_object(
-                script,
-                image,
-                generate_braille=False,
-            )
-            if speak_message:
-                presentation_manager.get_manager().speak_message(message)
+            if any(
+                AXText.get_character_count(obj)
+                and not AXUtilities.can_expand_embedded_object_as_text(obj)
+                for obj in (start_obj, end_obj)
+            ):
+                return False
+            self._present_pending_page_change(selection_obj)
+            for image in unexpanded_objects:
+                presentation_manager.get_manager().present_object(
+                    script,
+                    image,
+                    generate_braille=False,
+                )
+                if speak_message:
+                    presentation_manager.get_manager().speak_message(message)
+            # An empty boundary is handled, even when there is nothing to announce.
             return True
 
+        self._present_pending_page_change(selection_obj)
         spoken_string = string.strip() or string
         if len(string) > 5000 and speak_message:
             if message == messages.TEXT_SELECTED:

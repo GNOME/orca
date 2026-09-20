@@ -296,12 +296,15 @@ class AXUtilities:
         *,
         include_start: bool = True,
         include_end: bool = True,
+        unexpanded_objects: list[Atspi.Accessible] | None = None,
     ) -> str: ...
     @staticmethod
     def expand_eocs(
         obj: Atspi.Accessible,
         start_offset: int = 0,
         end_offset: int = -1,
+        *,
+        unexpanded_objects: list[Atspi.Accessible] | None = None,
     ) -> str: ...
     @staticmethod
     def can_expand_embedded_object_as_text(obj: Atspi.Accessible | None) -> bool: ...

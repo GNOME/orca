@@ -30,7 +30,6 @@ from .harness import keyboard
 from .version_helpers import chromium_version, requires_version
 from .web_native_selection_helpers import (
     LONG_PARAGRAPH,
-    SKIP_DOCUMENT_SELECTION_BUGS,
     USES_DOCUMENT_SELECTION,
     assert_walks,
     native_selection,
@@ -90,7 +89,8 @@ def test_word_selection_and_unselection(web_native_text_selection: NativeAppSess
     assert_walks(selected, unselected, expected_selected, expected_unselected)
 
 
-@SKIP_DOCUMENT_SELECTION_BUGS
+# Provisional minimum: the build used to verify the collapsed-whitespace selection fix.
+@requires_version("Chromium", chromium_version(), 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_word_selection_and_unselection_from_bottom(
     web_native_text_selection: NativeAppSession,
@@ -149,6 +149,12 @@ def test_word_selection_and_unselection_from_bottom(
         ["Red square", "image", "unselected"],
         ["This", "unselected"],
     ]
+    if USES_DOCUMENT_SELECTION:
+        unselected_image = expected_unselected.index(["Red square", "image", "unselected"])
+        expected_unselected[unselected_image - 1 : unselected_image + 1] = [
+            ["Red square", "image", "unselected"],
+            [],
+        ]
     for word in words[1:-1]:
         if word.endswith(","):
             expected_unselected.extend([[word[:-1], "unselected"], [",", "unselected"]])

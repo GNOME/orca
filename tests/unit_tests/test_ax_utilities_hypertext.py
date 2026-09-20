@@ -346,7 +346,7 @@ class TestAXUtilitiesHypertext:
         test_context.patch_object(
             AXUtilitiesHypertext,
             "expand_eocs",
-            side_effect=lambda obj, start, end: expansions[obj, start, end],
+            side_effect=lambda obj, start, end, **_kwargs: expansions[obj, start, end],
         )
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_heading.side_effect = (
             lambda obj: obj == heading

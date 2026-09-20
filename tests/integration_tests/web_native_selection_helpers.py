@@ -50,10 +50,6 @@ USES_DOCUMENT_SELECTION = (
     or (_ATSPI_VERSION[:2] == (2, 60) and _ATSPI_VERSION[2] >= 7)
     or (_ATSPI_VERSION[:2] == (2, 58) and _ATSPI_VERSION[2] >= 9)
 )
-SKIP_DOCUMENT_SELECTION_BUGS = pytest.mark.skipif(
-    USES_DOCUMENT_SELECTION,
-    reason="Unresolved native selection issues with Chromium and AT-SPI's document-selection API",
-)
 
 
 @contextlib.contextmanager

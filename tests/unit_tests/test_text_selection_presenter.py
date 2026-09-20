@@ -350,6 +350,7 @@ class TestTextSelectionPresenter:
             1,
             include_start=True,
             include_end=False,
+            unexpanded_objects=[],
         )
         speech_presenter.get_presenter.return_value.speak_phrase.assert_called_once_with(
             script,
@@ -670,6 +671,7 @@ class TestTextSelectionPresenter:
 
         dependencies = self._setup_dependencies(test_context)
         from orca.text_selection_presenter import (
+            AXText,
             AXUtilities,
             TextSelectionPresenter,
             messages,
@@ -695,7 +697,13 @@ class TestTextSelectionPresenter:
             "_get_document_text_change",
             return_value=(old_end, end, True, False, messages.TEXT_SELECTED),
         )
-        test_context.patch_object(AXUtilities, "expand_eocs_in_range", return_value="")
+
+        def expand_image(*_args, unexpanded_objects, **_kwargs):
+            unexpanded_objects.append(image)
+            return ""
+
+        test_context.patch_object(AXUtilities, "expand_eocs_in_range", side_effect=expand_image)
+        test_context.patch_object(AXText, "get_character_count", return_value=0)
         test_context.patch_object(
             AXUtilities,
             "is_image_or_canvas",

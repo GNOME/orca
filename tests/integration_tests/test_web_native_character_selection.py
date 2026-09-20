@@ -28,9 +28,10 @@ import pytest
 
 from .harness import keyboard
 from .helpers import say_selection, speech
+from .version_helpers import chromium_version, requires_version
 from .web_native_selection_helpers import (
     LONG_PARAGRAPH,
-    SKIP_DOCUMENT_SELECTION_BUGS,
+    USES_DOCUMENT_SELECTION,
     assert_walks,
     native_selection,
     select_character,
@@ -90,14 +91,16 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
             unselected.append([])
 
     count = len(selected)
-    unselected[count - 1 - combo_index] = []
-    unselected[count - combo_index] = ["Apple Pear", "unselected"]
+    if not USES_DOCUMENT_SELECTION:
+        unselected[count - 1 - combo_index] = []
+        unselected[count - combo_index] = ["Apple Pear", "unselected"]
     unselected[count - 1 - second_state_only_index] = []
 
     return selected, unselected
 
 
-@SKIP_DOCUMENT_SELECTION_BUGS
+# Provisional minimum: the build used to verify the collapsed-whitespace selection fix.
+@requires_version("Chromium", chromium_version(), 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_character_selection_and_unselection(
     web_native_text_selection: NativeAppSession,
