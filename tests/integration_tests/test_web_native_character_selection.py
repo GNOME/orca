@@ -153,6 +153,20 @@ def test_selection_to_the_right_after_structural_navigation(
 
 
 @pytest.mark.native_app
+def test_selection_after_image_navigation(web_native_text_selection: NativeAppSession) -> None:
+    """Tests image navigation positions the native caret before the embedded image."""
+
+    session = web_native_text_selection
+
+    with native_selection(session):
+        keyboard.tap_key(keyboard.KEYSYM_G)
+        assert speech(session) == ["g", "Red square", "image"]
+
+        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["Red square", "selected"]
+        assert select_character(session, keyboard.KEYSYM_LEFT) == ["Red square", "unselected"]
+
+
+@pytest.mark.native_app
 def test_caret_navigation_after_native_selection(
     web_native_text_selection: NativeAppSession,
 ) -> None:

@@ -537,7 +537,7 @@ class Utilities(script_utilities.Utilities):
         if grab_focus:
             AXObject.grab_focus(obj)
 
-        AXUtilities.set_caret_offset_with_reason(obj, offset, reason)
+        super().set_caret_offset(obj, offset, reason=reason)
 
         # If we return earlier than here, braille cursor routing fails in sticky focus mode.
         presenter = document_presenter.get_presenter()

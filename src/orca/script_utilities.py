@@ -535,8 +535,12 @@ class Utilities:
     ) -> None:
         """Sets the caret offset via AtspiText."""
 
-        # TODO - JD. Remove this function if the web override can be adjusted
-        AXUtilities.set_caret_offset_with_reason(obj, offset, reason)
+        if not AXObject.supports_text(obj):
+            obj, offset = AXUtilities.get_text_selection_endpoint_for_caret_context(
+                obj, offset, after_embedded_object=False
+            )
+        if obj is not None:
+            AXUtilities.set_caret_offset_with_reason(obj, offset, reason)
 
     def split_substring_by_language(
         self,
