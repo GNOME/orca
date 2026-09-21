@@ -246,6 +246,7 @@ def test_word_navigation_through_whole_object(
 
 
 @pytest.mark.native_app
+@pytest.mark.parametrize("navigation", ["structural", "character", "word"])
 @pytest.mark.parametrize("only_displayed_text", [False, True])
 @pytest.mark.parametrize(
     "button_number, name, role",
@@ -254,6 +255,7 @@ def test_word_navigation_through_whole_object(
 )
 def test_role_respects_displayed_text_preference(
     web_structural_navigation: NativeAppSession,
+    navigation: str,
     only_displayed_text: bool,
     button_number: int,
     name: str,
@@ -273,6 +275,21 @@ def test_role_respects_displayed_text_preference(
     if not only_displayed_text:
         expected.append(role)
     assert spoken == expected
+
+    if navigation == "structural":
+        return
+
+    forward, backward = (_word_right, _word_left) if navigation == "word" else (_right, _left)
+    backward(session)
+    if navigation == "word":
+        forward(session)
+    expected_navigation = " ".join(expected[1:])
+    assert " ".join(forward(session)).strip() == expected_navigation
+
+    forward(session)
+    if navigation == "word":
+        backward(session)
+    assert " ".join(backward(session)).strip() == expected_navigation
 
 
 @pytest.mark.native_app

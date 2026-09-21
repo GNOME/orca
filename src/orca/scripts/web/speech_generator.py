@@ -549,14 +549,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             role_subject = self._context.role_subject
             next_obj = self._context.next_content_subject
 
-        if roledescription := AXObject.get_role_description(obj):
-            if obj == self._get_prior_obj() == role_subject and not self._is_where_am_i():
-                return []
-
-            result: list[Any] = [roledescription]
-            result.extend(self.voice(speech_generator.SYSTEM, obj=obj))
-            return result
-
         mgr = input_event_manager.get_manager()
         navigating_by_character_or_word = (
             mgr.last_event_was_character_navigation() or mgr.last_event_was_word_navigation()
@@ -567,6 +559,19 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             and not self._script.utilities.treat_as_text_object(obj)
             and not self._is_ancestor()
         )
+
+        if roledescription := AXObject.get_role_description(obj):
+            if (
+                obj == self._get_prior_obj() == role_subject
+                and not self._is_where_am_i()
+                and not speak_whole_object_role
+            ):
+                return []
+
+            result: list[Any] = [roledescription]
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj))
+            return result
+
         if not self._should_speak_role(obj) and not speak_whole_object_role:
             if self._is_ancestor() or navigating_by_character_or_word:
                 return []
