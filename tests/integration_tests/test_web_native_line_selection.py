@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import say_selection
+from .helpers import say_selection, speech
 from .version_helpers import chromium_version, requires_version
 from .web_native_selection_helpers import (
     USES_DOCUMENT_SELECTION,
@@ -50,7 +50,7 @@ def test_line_selection_and_unselection(web_native_text_selection: NativeAppSess
         ["Structural navigation", "selected"],
         ["Intro paragraph.", "selected"],
         ["Quoted text.", "selected"],
-        ["selected"],
+        ["Save", "selected"] if USES_DOCUMENT_SELECTION else ["selected"],
         [],
         ["Fruit Apple Pear", "selected"],
         ["City", "selected"],
@@ -65,13 +65,13 @@ def test_line_selection_and_unselection(web_native_text_selection: NativeAppSess
         ["Clickable region", "selected"],
         ["Red square", "image", "selected"],
         ["before", "selected"],
-        ["selected"],
+        ["Save all changes", "selected"] if USES_DOCUMENT_SELECTION else ["selected"],
         ["after", "selected"],
         ["left", "selected"],
         ["Red square", "image", "selected"],
         ["right", "selected"],
         ["spaced  apart", "selected"],
-        ["selected"],
+        ["Next slide", "selected"] if USES_DOCUMENT_SELECTION else ["selected"],
         [
             (
                 "This is a sufficiently long paragraph of body text so that it qualifies as a "
@@ -97,13 +97,13 @@ def test_line_selection_and_unselection(web_native_text_selection: NativeAppSess
             ),
             "unselected",
         ],
-        ["unselected"],
+        ["Next slide", "unselected"] if USES_DOCUMENT_SELECTION else ["unselected"],
         ["spaced  apart", "unselected"],
         ["right", "unselected"],
         ["Red square", "image", "unselected"],
         ["left", "unselected"],
         ["after", "unselected"],
-        ["unselected"],
+        ["Save all changes", "unselected"] if USES_DOCUMENT_SELECTION else ["unselected"],
         ["before", "unselected"],
         ["Red square", "image", "unselected"],
         ["Clickable region", "unselected"],
@@ -118,7 +118,7 @@ def test_line_selection_and_unselection(web_native_text_selection: NativeAppSess
         ["City", "unselected"],
         ["Fruit Apple Pear", "unselected"],
         [],
-        ["unselected"],
+        ["Save", "unselected"] if USES_DOCUMENT_SELECTION else ["unselected"],
         ["Quoted text.", "unselected"],
         ["Intro paragraph.", "unselected"],
         ["Structural navigation", "unselected"],
@@ -175,5 +175,8 @@ def test_selection_by_line_up_then_down(web_native_text_selection: NativeAppSess
         assert select_line(session, keyboard.KEYSYM_DOWN) == ["paragraph.", "unselected"]
         assert say_selection(session) == ["No selected text."]
 
-        assert select_line(session, keyboard.KEYSYM_DOWN) == ["Quoted text.", "selected"]
-        assert say_selection(session) == ["Selected text is:  Quoted text."]
+        # Keep this check between text blocks; button selection has version-gated coverage.
+        keyboard.tap_key(keyboard.KEYSYM_UP)
+        speech(session)
+        assert select_line(session, keyboard.KEYSYM_DOWN) == ["Intro paragraph.", "selected"]
+        assert say_selection(session) == ["Selected text is:  Intro paragraph."]

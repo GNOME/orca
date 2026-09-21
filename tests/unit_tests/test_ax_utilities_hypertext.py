@@ -169,7 +169,7 @@ class TestAXUtilitiesHypertext:
         )
         test_context.patch_object(AXHypertext, "get_character_offset_in_parent", return_value=11)
 
-        strings = {(child, 0, 9): "Wikipedia"}
+        strings = {(parent, 11, 12): "\ufffc", (child, 0, 9): "Wikipedia"}
         test_context.patch_object(
             AXText,
             "get_substring",
@@ -219,6 +219,7 @@ class TestAXUtilitiesHypertext:
         )
         strings = {
             (heading, 10, 12): " Wikipedia",
+            (section, 0, 2): "\ufffc,",
             (section, 1, 2): ",",
         }
         test_context.patch_object(
@@ -347,6 +348,11 @@ class TestAXUtilitiesHypertext:
             AXUtilitiesHypertext,
             "expand_eocs",
             side_effect=lambda obj, start, end, **_kwargs: expansions[obj, start, end],
+        )
+        test_context.patch_object(
+            AXText,
+            "get_substring",
+            side_effect=lambda obj, start, end: expansions[obj, start, end],
         )
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_heading.side_effect = (
             lambda obj: obj == heading

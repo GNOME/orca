@@ -168,6 +168,12 @@ class AXUtilitiesHypertext:
         lower = max(0, min(lower, count))
         upper = max(0, min(upper, count))
 
+        # Explicit text offsets can select inside an object we normally treat as a whole.
+        if root in (start_obj, end_obj):
+            text = AXText.get_substring(root, lower, upper)
+            if OBJECT_REPLACEMENT_CHARACTER not in text:
+                return text
+
         boundaries = [child for child in (start_child, end_child) if child is not None]
         if len(boundaries) == 2 and boundaries[0] == boundaries[1]:
             boundaries.pop()
@@ -240,14 +246,6 @@ class AXUtilitiesHypertext:
             start_obj, end_obj = end_obj, start_obj
             start_offset, end_offset = end_offset, start_offset
             include_start, include_end = include_end, include_start
-
-        # Explicit text offsets can select inside an object we normally treat as a whole.
-        if start_obj == end_obj and AXObject.supports_text(start_obj):
-            text = AXText.get_substring(
-                start_obj, start_offset + int(not include_start), end_offset + int(include_end)
-            )
-            if OBJECT_REPLACEMENT_CHARACTER not in text:
-                return text
 
         root = AXUtilitiesObject.get_common_ancestor(start_obj, end_obj)
         if root is None:

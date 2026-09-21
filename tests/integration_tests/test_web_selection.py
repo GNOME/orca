@@ -27,7 +27,14 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, reset_web_state
+from .helpers import BrailleLine, capture, reset_web_state, say_selection, speech
+from .version_helpers import chromium_version, requires_version
+from .web_native_selection_helpers import (
+    USES_DOCUMENT_SELECTION,
+    native_selection,
+    select_character,
+    select_word,
+)
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -71,3 +78,51 @@ def test_selecting_a_tree_item(web_selection: NativeAppSession) -> None:
     spoken, brailled = capture(session)
     assert spoken == ["selected"]
     assert brailled[-1] == BrailleLine(0, "selected", "selected", "\x00" * 8)
+
+
+@requires_version("Chromium", chromium_version(), 156)
+@pytest.mark.skipif(
+    not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
+)
+@pytest.mark.native_app
+def test_character_selection_across_inline_button(
+    web_selection: NativeAppSession,
+) -> None:
+    """Tests selection and unselection across both boundaries of an inline button."""
+
+    session = web_selection
+
+    with native_selection(session):
+        keyboard.tap_key(keyboard.KEYSYM_B)
+        speech(session, wait_async=True)
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
+        speech(session)
+
+        text = "startNext slidefinish"
+        for character in text:
+            assert select_character(session, keyboard.KEYSYM_RIGHT) == [character, "selected"]
+        for character in reversed(text):
+            assert select_character(session, keyboard.KEYSYM_LEFT) == [character, "unselected"]
+        assert say_selection(session) == ["No selected text."]
+
+
+@requires_version("Chromium", chromium_version(), 156)
+@pytest.mark.skipif(
+    not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
+)
+@pytest.mark.native_app
+def test_word_selection_across_inline_button(
+    web_selection: NativeAppSession,
+) -> None:
+    """Tests a selected word spanning button text and the following parent text."""
+
+    session = web_selection
+
+    with native_selection(session):
+        keyboard.tap_key(keyboard.KEYSYM_B)
+        speech(session, wait_async=True)
+        keyboard.tap_key(keyboard.KEYSYM_END)
+        speech(session)
+
+        assert select_word(session, keyboard.KEYSYM_LEFT) == ["slidefinish", "selected"]
+        assert select_word(session, keyboard.KEYSYM_LEFT) == ["Next", "selected"]

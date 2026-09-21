@@ -651,7 +651,7 @@ _web_attribute_mask = _make_web_fixture("web_attribute_mask.html", caret_browsin
 _web_region_headings = _make_web_fixture("web_region_headings.html")
 _web_data_grid = _make_web_fixture("web_data_grid.html")
 _web_feed = _make_web_fixture("web_feed.html")
-_web_selection = _make_web_fixture("web_selection.html")
+_web_selection = _make_web_fixture("web_selection.html", caret_browsing=True)
 _web_switch = _make_web_fixture("web_switch.html")
 _web_accordion = _make_web_fixture("web_accordion.html")
 _web_disclosure = _make_web_fixture("web_disclosure.html")
