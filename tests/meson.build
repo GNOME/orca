@@ -294,7 +294,7 @@ test(
   args: [files('integration_tests/test_web_native_character_selection.py')],
   env: test_env,
   suite: ['integration', 'chromium'],
-  timeout: 300,
+  timeout: 360,
   is_parallel: false,
 )
 

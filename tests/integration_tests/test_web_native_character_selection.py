@@ -54,8 +54,13 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
     add_text("Intro paragraph.")
     selected.append([])
     add_text("Quoted text.")
-    selected.extend([[], []])
-    selected.extend([["selected"]] * 4)
+    if USES_DOCUMENT_SELECTION:
+        selected.append([])
+        add_text("Save")
+        selected.append(["selected"])
+    else:
+        selected.extend([[], []])
+        selected.extend([["selected"]] * 4)
     second_state_only_index = len(selected)
     selected.append([])
     selected.extend([[]] * 6)
@@ -81,6 +86,30 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
     selected.append([])
     add_text("Clickable region")
     selected.extend([[], ["Red square", "image", "selected"], []])
+    add_text("before")
+    selected.append([])
+    if USES_DOCUMENT_SELECTION:
+        add_text("Save all changes")
+        selected.append(["selected"])
+    else:
+        selected.append([])
+        selected.extend([["selected"]] * len("Save all changes"))
+    add_text("after")
+    selected.append([])
+    add_text("left")
+    selected.extend([[], ["Red square", "image", "selected"], []])
+    add_text("right")
+    selected.append([])
+    add_text("spaced ")
+    selected.append(["Green square", "image", "selected"])
+    add_text(" apart")
+    selected.append([])
+    if USES_DOCUMENT_SELECTION:
+        add_text("Next slide")
+        selected.append(["selected"])
+    else:
+        selected.append([])
+        selected.extend([["selected"]] * len("Next slide"))
     add_text(LONG_PARAGRAPH)
 
     unselected = []
@@ -164,6 +193,34 @@ def test_selection_after_image_navigation(web_native_text_selection: NativeAppSe
 
         assert select_character(session, keyboard.KEYSYM_RIGHT) == ["Red square", "selected"]
         assert select_character(session, keyboard.KEYSYM_LEFT) == ["Red square", "unselected"]
+
+
+@requires_version("Chromium", chromium_version(), 156)
+@pytest.mark.skipif(
+    not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
+)
+@pytest.mark.native_app
+@pytest.mark.parametrize("button_number", [1, 2], ids=["single-word", "multi-word"])
+def test_selection_within_button(
+    web_native_text_selection: NativeAppSession,
+    button_number: int,
+) -> None:
+    """Tests native selection within buttons is announced in both directions."""
+
+    session = web_native_text_selection
+
+    with native_selection(session):
+        for _ in range(button_number):
+            keyboard.tap_key(keyboard.KEYSYM_B)
+            speech(session, wait_async=True)
+
+        for character in "Save":
+            assert select_character(session, keyboard.KEYSYM_RIGHT) == [character, "selected"]
+        assert say_selection(session) == ["Selected text is:  Save"]
+
+        for character in reversed("Save"):
+            assert select_character(session, keyboard.KEYSYM_LEFT) == [character, "unselected"]
+        assert say_selection(session) == ["No selected text."]
 
 
 @pytest.mark.native_app

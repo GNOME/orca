@@ -948,6 +948,12 @@ class Script(default.Script):
         if not self.utilities.treat_as_text_object(event.source) and not AXUtilities.is_editable(
             event.source,
         ):
+            if reason in selection_reasons:
+                text_selection_presenter.get_presenter().present_text_selection_change(
+                    self, event.source
+                )
+                self.update_braille(event.source)
+                return True
             msg = "WEB: Event ignored: Was for non-editable object we're treating as textless"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1751,16 +1757,6 @@ class Script(default.Script):
 
         if self.utilities.event_is_spinner_noise_deprecated(event):
             msg = "WEB: Ignoring: Event believed to be spinner noise"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if self.utilities.event_is_for_non_navigable_text_object(event):
-            msg = "WEB: Ignoring event for non-navigable text object"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if not self.utilities.treat_as_text_object(event.source):
-            msg = "WEB: Ignoring: Event source is not a text object"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 

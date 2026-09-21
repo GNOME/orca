@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
+from .helpers import speech
 from .version_helpers import chromium_version, requires_version
 from .web_native_selection_helpers import (
     LONG_PARAGRAPH,
@@ -38,6 +39,36 @@ from .web_native_selection_helpers import (
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
+
+
+@requires_version("Chromium", chromium_version(), 156)
+@pytest.mark.skipif(
+    not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
+)
+@pytest.mark.native_app
+@pytest.mark.parametrize(
+    "button_number, words",
+    [(1, ["Save"]), (2, ["Save", "all", "changes"])],
+    ids=["single-word", "multi-word"],
+)
+def test_word_selection_within_button(
+    web_native_text_selection: NativeAppSession,
+    button_number: int,
+    words: list[str],
+) -> None:
+    """Tests native word selection within buttons is announced in both directions."""
+
+    session = web_native_text_selection
+
+    with native_selection(session):
+        for _ in range(button_number):
+            keyboard.tap_key(keyboard.KEYSYM_B)
+            speech(session, wait_async=True)
+
+        for word in words:
+            assert select_word(session, keyboard.KEYSYM_RIGHT) == [word, "selected"]
+        for word in reversed(words):
+            assert select_word(session, keyboard.KEYSYM_LEFT) == [word, "unselected"]
 
 
 @requires_version("Chromium", chromium_version(), 156, when=USES_DOCUMENT_SELECTION)
@@ -58,7 +89,7 @@ def test_word_selection_and_unselection(web_native_text_selection: NativeAppSess
         ["text", "selected"],
         [".", "selected"],
         [],
-        ["selected"],
+        ["Save", "selected"] if USES_DOCUMENT_SELECTION else ["selected"],
         ["selected"],
         [],
         [],
@@ -69,7 +100,7 @@ def test_word_selection_and_unselection(web_native_text_selection: NativeAppSess
         [],
         [],
         ["unselected"],
-        ["unselected"],
+        ["Save", "unselected"] if USES_DOCUMENT_SELECTION else ["unselected"],
         [],
         [],
         [],
@@ -95,7 +126,7 @@ def test_word_selection_and_unselection(web_native_text_selection: NativeAppSess
 def test_word_selection_and_unselection_from_bottom(
     web_native_text_selection: NativeAppSession,
 ) -> None:
-    """Tests native word selection from the bottom toward the form controls, then back."""
+    """Tests native word selection through the final paragraph and preceding button, then back."""
 
     session = web_native_text_selection
     words = LONG_PARAGRAPH.split()
@@ -105,28 +136,53 @@ def test_word_selection_and_unselection_from_bottom(
             expected_selected.extend([[",", "selected"], [word[:-1], "selected"]])
         else:
             expected_selected.append([word, "selected"])
-    expected_selected.extend(
-        [
-            [],
-            ["Red square", "image", "selected"],
-            ["region", "selected"],
-            ["Clickable", "selected"],
-            [],
-            ["link", "selected"],
-            ["Second", "selected"],
-            [],
-            ["link", "selected"],
-            ["First", "selected"],
-            [],
-            ["36", "selected"],
-            [],
-            ["Ada", "selected"],
-            [],
-            ["Age", "selected"],
-            [],
-            ["Name", "selected"],
-        ]
-    )
+    if USES_DOCUMENT_SELECTION:
+        # Chromium's native Ctrl+Shift+Left gets stuck at the start of "Next slide".
+        # This also happens when Orca is not running.
+        # Selection and unselection of content before the button are covered by
+        # test_word_selection_and_unselection_from_image.
+        expected_selected.extend([["selected"], ["slide", "selected"], ["Next", "selected"]])
+    expected_unselected = [[*output[:-1], "unselected"] for output in reversed(expected_selected)]
+
+    with native_selection(session):
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
+        session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+        session.reader.reset()
+        selected = [select_word(session, keyboard.KEYSYM_LEFT) for _ in expected_selected]
+        unselected = [select_word(session, keyboard.KEYSYM_RIGHT) for _ in expected_unselected]
+
+    assert_walks(selected, unselected, expected_selected, expected_unselected)
+
+
+@requires_version("Chromium", chromium_version(), 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
+@pytest.mark.native_app
+def test_word_selection_and_unselection_from_image(
+    web_native_text_selection: NativeAppSession,
+) -> None:
+    """Tests native word selection through the image, links, and table, then back."""
+
+    session = web_native_text_selection
+    expected_selected = [
+        ["before", "selected"],
+        [],
+        ["Red square", "image", "selected"],
+        ["region", "selected"],
+        ["Clickable", "selected"],
+        [],
+        ["link", "selected"],
+        ["Second", "selected"],
+        [],
+        ["link", "selected"],
+        ["First", "selected"],
+        [],
+        ["36", "selected"],
+        [],
+        ["Ada", "selected"],
+        [],
+        ["Age", "selected"],
+        [],
+        ["Name", "selected"],
+    ]
     expected_unselected = [
         ["Name", "unselected"],
         [],
@@ -145,26 +201,20 @@ def test_word_selection_and_unselection_from_bottom(
         ["Clickable", "unselected"],
         ["region", "unselected"],
         [],
-        [],
         ["Red square", "image", "unselected"],
-        ["This", "unselected"],
+        [],
+        ["before", "unselected"],
     ]
-    if USES_DOCUMENT_SELECTION:
-        unselected_image = expected_unselected.index(["Red square", "image", "unselected"])
-        expected_unselected[unselected_image - 1 : unselected_image + 1] = [
-            ["Red square", "image", "unselected"],
-            [],
-        ]
-    for word in words[1:-1]:
-        if word.endswith(","):
-            expected_unselected.extend([[word[:-1], "unselected"], [",", "unselected"]])
-        else:
-            expected_unselected.append([word, "unselected"])
+    if not USES_DOCUMENT_SELECTION:
+        expected_unselected[-3:-1] = [[], ["Red square", "image", "unselected"]]
 
     with native_selection(session):
-        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-        session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
-        session.reader.reset()
+        keyboard.tap_key(keyboard.KEYSYM_G)
+        speech(session)
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        speech(session)
+        keyboard.tap_key(keyboard.KEYSYM_END)
+        speech(session)
         selected = [select_word(session, keyboard.KEYSYM_LEFT) for _ in expected_selected]
         unselected = [select_word(session, keyboard.KEYSYM_RIGHT) for _ in expected_unselected]
 
