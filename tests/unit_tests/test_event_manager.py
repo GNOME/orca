@@ -1660,6 +1660,43 @@ class TestEventManager:
         result = manager._get_script_for_event(mock_event, active_script)
         assert result == active_script
 
+    @pytest.mark.parametrize("invalid_source", [True, False], ids=["source", "focus"])
+    def test_get_script_for_event_uninitialized_accessible(
+        self, test_context: OrcaTestContext, invalid_source: bool
+    ) -> None:
+        """Test invalid accessibles are not compared when routing an event."""
+
+        modules = self._setup_dependencies(test_context)
+        from orca.event_manager import EventManager
+
+        manager = EventManager()
+        source = test_context.mocker.MagicMock(spec=Atspi.Accessible)
+        source.__eq__.side_effect = RuntimeError("Accessible is not initialized")
+        focus = test_context.Mock(spec=Atspi.Accessible)
+        event = test_context.Mock(spec=Atspi.Event)
+        event.source = source
+        event.type = "object:text-changed:insert"
+        modules["orca.focus_manager"].get_manager().get_locus_of_focus.return_value = focus
+        invalid_object = source if invalid_source else focus
+        test_context.patch(
+            "orca.event_manager.AXObject.is_valid",
+            side_effect=lambda obj: obj is not invalid_object,
+        )
+        app = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch("orca.event_manager.AXUtilities.get_application", return_value=app)
+        test_context.patch("orca.event_manager.AXUtilities.is_defunct", return_value=False)
+        script_mgr = modules["orca.script_manager"].get_manager()
+
+        result = manager._get_script_for_event(event)
+
+        source.__eq__.assert_not_called()
+        if invalid_source:
+            assert result is None
+            script_mgr.get_script.assert_not_called()
+        else:
+            assert result == script_mgr.get_script.return_value
+            script_mgr.get_script.assert_called_once_with(app, source)
+
     def test_get_script_for_event_mouse(self, test_context: OrcaTestContext) -> None:
         """Test EventManager._get_script_for_event for mouse events."""
 

@@ -888,7 +888,14 @@ class EventManager:
     ) -> default.Script | None:
         """Returns the script associated with event."""
 
-        if event.source == focus_manager.get_manager().get_locus_of_focus():
+        source = event.source
+        if not AXObject.is_valid(source):
+            msg = "EVENT MANAGER: Cannot get script for event with invalid source."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return None
+
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if AXObject.is_valid(focus) and source == focus:
             script = active_script or script_manager.get_manager().get_active_script()
             tokens = ["EVENT MANAGER: Script for event from locus of focus is", script]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -902,16 +909,16 @@ class EventManager:
             return script
 
         script = None
-        app = AXUtilities.get_application(event.source)
+        app = AXUtilities.get_application(source)
         if AXUtilities.is_defunct(app):
             tokens = ["EVENT MANAGER:", app, "is defunct. Cannot get script for event."]
             debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
-        tokens = ["EVENT MANAGER: Getting script for event for", app, event.source]
+        tokens = ["EVENT MANAGER: Getting script for event for", app, source]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        script = script_manager.get_manager().get_script(app, event.source)
+        script = script_manager.get_manager().get_script(app, source)
         tokens = ["EVENT MANAGER: Script for event is", script]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return script
