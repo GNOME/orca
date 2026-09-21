@@ -76,7 +76,7 @@ def test_heading_navigation_across_weird_headings(web_weird_headings: NativeAppS
 
 @pytest.mark.native_app
 def test_empty_aria_heading_is_a_single_caret_stop(web_weird_headings: NativeAppSession) -> None:
-    """Tests that a text-less aria-labeled heading is one caret stop that speaks its name."""
+    """Tests that a text-less aria-labeled heading is one caret stop with its name and role."""
 
     session = web_weird_headings
     reset_web_state(session)
@@ -88,4 +88,4 @@ def test_empty_aria_heading_is_a_single_caret_stop(web_weird_headings: NativeApp
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
     assert speech(session) == ["O"]
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert speech(session) == ["You can't see me!"]
+    assert speech(session) == ["You can't see me!", "heading 2"]

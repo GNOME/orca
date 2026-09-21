@@ -146,13 +146,16 @@ def test_word_navigation_backward(web_structural_navigation: NativeAppSession) -
 def test_character_navigation_onto_embedded_button(
     web_structural_navigation: NativeAppSession,
 ) -> None:
-    """Tests that Right-arrow onto an embedded button speaks the button."""
+    """Tests character navigation treats controls as whole objects and speaks their roles."""
 
     session = web_structural_navigation
     reset_web_state(session)
     for _ in range(6):
         _word_right(session)
-    assert _right(session) == ["Save"]
+    assert _right(session) == ["Save", "button"]
+    assert _right(session) == ["Agree", "check box not checked"]
+    assert _left(session) == ["Save", "button"]
+    assert _left(session) == ["."]
 
 
 @pytest.mark.native_app
@@ -165,7 +168,7 @@ def test_character_navigation_onto_embedded_image(
     reset_web_state(session)
     for _ in range(24):
         _word_right(session)
-    assert _right(session) == ["Red square"]
+    assert _right(session) == ["Red square", "image"]
 
 
 @pytest.mark.native_app
@@ -204,3 +207,94 @@ def test_file_start_and_end(web_structural_navigation: NativeAppSession) -> None
     ]
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
     assert speech(session) == ["Structural navigation", "heading 1"]
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize(
+    "skip, before, object_speech, after",
+    [
+        (0, "before", "Save all changes button", "after"),
+        (3, "left", "Red square image", "right"),
+        (6, "spaced", "Green square image", "apart"),
+    ],
+    ids=["multi-word-button", "image-between-paragraphs", "image-with-spaces"],
+)
+def test_word_navigation_through_whole_object(
+    web_structural_navigation: NativeAppSession,
+    skip: int,
+    before: str,
+    object_speech: str,
+    after: str,
+) -> None:
+    """Tests each object is one word-navigation unit, with its role, in both directions."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+    for _ in range(2):
+        keyboard.tap_key(keyboard.KEYSYM_B)
+        speech(session)
+    assert " ".join(_word_left(session)).strip() == "before"
+    for _ in range(skip):
+        _word_right(session)
+
+    assert " ".join(_word_right(session)).strip() == before
+    assert " ".join(_word_right(session)).strip() == object_speech
+    assert " ".join(_word_right(session)).strip() == after
+    assert " ".join(_word_left(session)).strip() == after
+    assert " ".join(_word_left(session)).strip() == object_speech
+    assert " ".join(_word_left(session)).strip() == before
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("only_displayed_text", [False, True])
+@pytest.mark.parametrize(
+    "button_number, name, role",
+    [(2, "Save all changes", "button"), (3, "Next slide", "slide control")],
+    ids=["native-role", "custom-role"],
+)
+def test_role_respects_displayed_text_preference(
+    web_structural_navigation: NativeAppSession,
+    only_displayed_text: bool,
+    button_number: int,
+    name: str,
+    role: str,
+) -> None:
+    """Tests native and custom role names both respect the displayed-text-only preference."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+    session.orca.set("SpeechPresenter", "OnlySpeakDisplayedText", only_displayed_text)
+
+    for _ in range(button_number):
+        keyboard.tap_key(keyboard.KEYSYM_B)
+        spoken = speech(session)
+
+    expected = ["b", name]
+    if not only_displayed_text:
+        expected.append(role)
+    assert spoken == expected
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("by_word", [True, False], ids=["word", "line"])
+def test_navigation_with_only_displayed_text(
+    web_structural_navigation: NativeAppSession,
+    by_word: bool,
+) -> None:
+    """Tests navigation uses the current displayed-text-only preference."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+    for _ in range(2):
+        keyboard.tap_key(keyboard.KEYSYM_B)
+        speech(session)
+    assert " ".join(_word_left(session)).strip() == "before"
+    assert " ".join(_word_right(session)).strip() == "before"
+    session.orca.set("SpeechPresenter", "OnlySpeakDisplayedText", True)
+
+    if by_word:
+        spoken = " ".join(_word_right(session)).strip()
+    else:
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        spoken = " ".join(speech(session)).strip()
+    assert spoken == "Save all changes"

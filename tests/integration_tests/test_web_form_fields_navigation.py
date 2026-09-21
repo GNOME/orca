@@ -414,29 +414,34 @@ def test_character_navigation_left_to_right(web_form_fields: NativeAppSession) -
     text = "orm fieldsNameJane DoeBioFirst line of bio. Second sentence here.foo bar bazFruit"
     expected = (
         [[c] for c in text]
-        + [["Fruit Apple"]]
+        + [["Fruit", "combo box", "Apple"]]
         + [[c] for c in "Preferred contact"]
         + [
-            ["Preferred contact Email"],
-            ["Subscribe", "not checked"],
-            ["All topics", "partially checked"],
-            ["News", "checked"],
-            ["Events", "not checked"],
+            ["Preferred contact", "combo box", "Email"],
+            ["Subscribe", "check box not checked"],
+            ["All topics", "check box partially checked"],
+            ["News", "check box checked"],
+            ["Events", "check box not checked"],
         ]
         + [[c] for c in "Pick a color"]
         + [
-            ["Red color", "not selected"],
-            ["Green color", "not selected"],
-            ["Blue color", "not selected"],
+            ["Red color", "not selected radio button"],
+            ["Green color", "not selected radio button"],
+            ["Blue color", "not selected radio button"],
         ]
         + [[c] for c in "Seat"]
         + [
-            ["Aisle", "not selected"],
-            ["Middle", "not selected"],
-            ["Window", "not selected"],
+            ["Aisle", "not selected radio button"],
+            ["Middle", "not selected radio button"],
+            ["Window", "not selected radio button"],
         ]
         + [[c] for c in "Quantity"]
-        + [["3"], ["Submit"], ["Mute", "not pressed"], ["Wi-Fi", "off"]]
+        + [
+            ["3"],
+            ["Submit", "button"],
+            ["Mute", "toggle button not pressed"],
+            ["Wi-Fi", "off switch"],
+        ]
     )
     result = []
     for _ in expected:
@@ -456,29 +461,29 @@ def test_character_navigation_right_to_left(web_form_fields: NativeAppSession) -
 
     forward = "Form fieldsNameJane DoeBioFirst line of bio. Second sentence here.foo bar bazFruit"
     expected = (
-        [["Mute", "not pressed"], ["Submit"], ["3"]]
+        [["Mute", "toggle button not pressed"], ["Submit", "button"], ["3"]]
         + [[c] for c in "Quantity"[::-1]]
         + [
-            ["Window", "not selected"],
-            ["Middle", "not selected"],
-            ["Aisle", "not selected"],
+            ["Window", "not selected radio button"],
+            ["Middle", "not selected radio button"],
+            ["Aisle", "not selected radio button"],
         ]
         + [[c] for c in "Seat"[::-1]]
         + [
-            ["Blue color", "not selected"],
-            ["Green color", "not selected"],
-            ["Red color", "not selected"],
+            ["Blue color", "not selected radio button"],
+            ["Green color", "not selected radio button"],
+            ["Red color", "not selected radio button"],
         ]
         + [[c] for c in "Pick a color"[::-1]]
         + [
-            ["Events", "not checked"],
-            ["News", "checked"],
-            ["All topics", "partially checked"],
-            ["Subscribe", "not checked"],
-            ["Preferred contact Email"],
+            ["Events", "check box not checked"],
+            ["News", "check box checked"],
+            ["All topics", "check box partially checked"],
+            ["Subscribe", "check box not checked"],
+            ["Preferred contact", "combo box", "Email"],
         ]
         + [[c] for c in "Preferred contact"[::-1]]
-        + [["Fruit Apple"]]
+        + [["Fruit", "combo box", "Apple"]]
         + [[c] for c in forward[::-1]]
     )
     result = []
@@ -513,28 +518,28 @@ def test_word_navigation_left_to_right(web_form_fields: NativeAppSession) -> Non
         ["bar "],
         ["baz"],
         ["Fruit"],
-        ["Fruit Apple"],
+        ["Fruit", "combo box", "Apple"],
         ["Preferred "],
         ["contact"],
-        ["Preferred contact Email"],
-        ["Subscribe", "not checked"],
-        ["All topics", "partially checked"],
-        ["News", "checked"],
-        ["Events", "not checked"],
+        ["Preferred contact", "combo box", "Email"],
+        ["Subscribe", "check box not checked"],
+        ["All topics", "check box partially checked"],
+        ["News", "check box checked"],
+        ["Events", "check box not checked"],
         ["Pick "],
         ["a "],
         ["color"],
-        ["Red color", "not selected"],
-        ["Green color", "not selected"],
-        ["Blue color", "not selected"],
+        ["Red color", "not selected radio button"],
+        ["Green color", "not selected radio button"],
+        ["Blue color", "not selected radio button"],
         ["Seat"],
-        ["Aisle", "not selected"],
-        ["Middle", "not selected"],
-        ["Window", "not selected"],
+        ["Aisle", "not selected radio button"],
+        ["Middle", "not selected radio button"],
+        ["Window", "not selected radio button"],
         ["3"],
-        ["Submit"],
-        ["Mute", "not pressed"],
-        ["Wi-Fi", "off"],
+        ["Submit", "button"],
+        ["Mute", "toggle button not pressed"],
+        ["Wi-Fi", "off switch"],
     ]
     result = []
     for _ in expected:
@@ -553,29 +558,29 @@ def test_word_navigation_right_to_left(web_form_fields: NativeAppSession) -> Non
     helpers.move_to_bottom(session)
 
     expected = [
-        ["Mute", "not pressed"],
-        ["Submit"],
+        ["Mute", "toggle button not pressed"],
+        ["Submit", "button"],
         ["3"],
         # Caret at the label start auto-focuses the spin button in Chromium.
         ["Quantity", "spin button", "3"],
-        ["Window", "not selected"],
-        ["Middle", "not selected"],
-        ["Aisle", "not selected"],
+        ["Window", "not selected radio button"],
+        ["Middle", "not selected radio button"],
+        ["Aisle", "not selected radio button"],
         ["Seat"],
-        ["Blue color", "not selected"],
-        ["Green color", "not selected"],
-        ["Red color", "not selected"],
+        ["Blue color", "not selected radio button"],
+        ["Green color", "not selected radio button"],
+        ["Red color", "not selected radio button"],
         ["color"],
         ["a "],
         ["Pick "],
-        ["Events", "not checked"],
-        ["News", "checked"],
-        ["All topics", "partially checked"],
-        ["Subscribe", "not checked"],
-        ["Preferred contact Email"],
+        ["Events", "check box not checked"],
+        ["News", "check box checked"],
+        ["All topics", "check box partially checked"],
+        ["Subscribe", "check box not checked"],
+        ["Preferred contact", "combo box", "Email"],
         ["contact"],
         ["Preferred "],
-        ["Fruit Apple"],
+        ["Fruit", "combo box", "Apple"],
         ["Fruit"],
         ["baz"],
         ["bar "],

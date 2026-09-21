@@ -103,13 +103,15 @@ def test_absence_message(web_structural_navigation: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 def test_wrapping(web_structural_navigation: NativeAppSession) -> None:
-    """Tests wrap announcements navigating past the only instance of a role, both directions."""
+    """Tests wrap announcements navigating past the last instance of a role, both directions."""
 
     session = web_structural_navigation
 
     move_to_top(session)
     assert _next(session, keyboard.KEYSYM_B) == ["b", "Save", "button"]
-    assert _next(session, keyboard.KEYSYM_B) == ["b", "Wrapping to top.", "Save"]
+    assert _next(session, keyboard.KEYSYM_B) == ["b", "Save all changes", "button"]
+    assert _next(session, keyboard.KEYSYM_B) == ["b", "Next slide", "slide control"]
+    assert _next(session, keyboard.KEYSYM_B) == ["b", "Wrapping to top.", "Save", "button"]
 
     move_to_top(session)
     assert _previous(session, keyboard.KEYSYM_P) == ["P", "Wrapping to bottom.", _LARGE_OBJECT_TEXT]
@@ -149,6 +151,8 @@ def test_no_wrapping_when_disabled(web_structural_navigation: NativeAppSession) 
     try:
         move_to_top(session)
         assert _next(session, keyboard.KEYSYM_B) == ["b", "Save", "button"]
+        assert _next(session, keyboard.KEYSYM_B) == ["b", "Save all changes", "button"]
+        assert _next(session, keyboard.KEYSYM_B) == ["b", "Next slide", "slide control"]
         assert _next(session, keyboard.KEYSYM_B) == ["b", "No more buttons."]
 
         move_to_top(session)
