@@ -222,6 +222,7 @@ orca_integration_tests = {
     'integration_tests/test_web_line_breaks.py',
     'integration_tests/test_web_page_up_down.py',
     'integration_tests/test_web_same_page_links.py',
+    'integration_tests/test_web_image_descendants.py',
     'integration_tests/test_web_image_link.py',
     'integration_tests/test_web_useless_images.py',
     'integration_tests/test_web_redundant_content.py',

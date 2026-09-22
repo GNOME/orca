@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Image Descendants ready</title>
+<style>
+h2 { margin: 12px 0 4px; }
+p { margin: 4px 0; }
+svg { display: block; }
+svg a { fill: blue; text-decoration: underline; }
+svg [role="button"] { cursor: pointer; }
+svg :focus { outline: 2px solid blue; }
+</style>
+</head>
+<body>
+<h1>Image descendants</h1>
+<h2>Image map</h2>
+<p>Before map.</p>
+<img alt="Places" usemap="#places" width="200" height="50"
+     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='50'%3E%3Crect width='100' height='50' fill='lightblue'/%3E%3Crect x='100' width='100' height='50' fill='lightgreen'/%3E%3Ctext x='20' y='30'%3ENorth%3C/text%3E%3Ctext x='120' y='30'%3ESouth%3C/text%3E%3C/svg%3E">
+<map name="places">
+  <area shape="rect" coords="0,0,100,50" href="#north" alt="North">
+  <area shape="rect" coords="100,0,200,50" href="#south" alt="South">
+</map>
+<p>After map.</p>
+<h2>Interactive SVG</h2>
+<p>Before controls.</p>
+<svg xmlns="http://www.w3.org/2000/svg" aria-label="Actions" width="240" height="50">
+  <a href="#open"><text x="10" y="30">Open</text></a>
+  <g role="button" tabindex="0" aria-label="Close"
+     onclick="document.getElementById('status').textContent = 'Closed';"
+     onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); this.dispatchEvent(new MouseEvent('click', {bubbles: true})); }">
+    <rect x="100" y="5" width="90" height="40" rx="4" fill="lightgray"></rect>
+    <text x="120" y="30">Close</text>
+  </g>
+</svg>
+<p>After controls.</p>
+<h2>SVG text</h2>
+<p>Before text.</p>
+<svg xmlns="http://www.w3.org/2000/svg" aria-label="Message" width="240" height="50">
+  <text x="10" y="30">Quiet river</text>
+</svg>
+<p>After text.</p>
+<p id="status" role="status"></p>
+</body>
+</html>

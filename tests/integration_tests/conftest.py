@@ -99,6 +99,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_grid_named_cells,
     _web_headings,
     _web_iframes,
+    _web_image_descendants,
     _web_image_link,
     _web_inline_landmarks,
     _web_inline_list,
