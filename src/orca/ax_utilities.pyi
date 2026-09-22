@@ -305,9 +305,12 @@ class AXUtilities:
         end_offset: int = -1,
         *,
         unexpanded_objects: list[Atspi.Accessible] | None = None,
+        include_whole_objects: bool = False,
     ) -> str: ...
     @staticmethod
-    def can_expand_embedded_object_as_text(obj: Atspi.Accessible | None) -> bool: ...
+    def can_expand_embedded_object_as_text(
+        obj: Atspi.Accessible | None, *, include_whole_objects: bool = False
+    ) -> bool: ...
     @staticmethod
     def compare_text_positions(
         obj1: Atspi.Accessible,

@@ -1247,10 +1247,19 @@ class Script(script.Script):
 
         AXUtilities.set_last_text_unit_spoken(TextUnit.LINE)
 
-    def say_phrase(self, obj: Atspi.Accessible, start_offset: int, end_offset: int) -> None:
+    def say_phrase(
+        self,
+        obj: Atspi.Accessible,
+        start_offset: int,
+        end_offset: int,
+        *,
+        include_whole_objects: bool = False,
+    ) -> None:
         """Speaks the substring between start and end offset."""
 
-        phrase = AXUtilities.expand_eocs(obj, start_offset, end_offset)
+        phrase = AXUtilities.expand_eocs(
+            obj, start_offset, end_offset, include_whole_objects=include_whole_objects
+        )
         if not phrase:
             return
 

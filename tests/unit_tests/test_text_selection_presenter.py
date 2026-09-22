@@ -193,7 +193,7 @@ class TestTextSelectionPresenter:
         assert presenter.present_text_selection_change(script, obj)
         update_cache.assert_called_once_with(obj)
         present_page_change.assert_called_once_with(obj)
-        script.say_phrase.assert_called_once_with(obj, 1, 2)
+        script.say_phrase.assert_called_once_with(obj, 1, 2, include_whole_objects=True)
         presentation_manager.get_manager.return_value.speak_message.assert_called_once_with(
             messages.TEXT_SELECTED
         )

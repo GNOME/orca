@@ -204,7 +204,7 @@ class TextSelectionPresenter:
                     )
                 message_presented = True
             else:
-                script.say_phrase(obj, start, effective_end)
+                script.say_phrase(obj, start, effective_end, include_whole_objects=True)
                 if speak_message and (not ends_with_child or child_processed):
                     presentation_manager.get_manager().speak_message(message)
                     message_presented = True

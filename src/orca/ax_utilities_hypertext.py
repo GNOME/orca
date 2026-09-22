@@ -187,7 +187,11 @@ class AXUtilitiesHypertext:
                 parts.append(
                     (
                         AXUtilitiesHypertext.expand_eocs(
-                            root, cursor, offset, unexpanded_objects=unexpanded_objects
+                            root,
+                            cursor,
+                            offset,
+                            unexpanded_objects=unexpanded_objects,
+                            include_whole_objects=True,
                         ),
                         False,
                     )
@@ -210,7 +214,11 @@ class AXUtilitiesHypertext:
             parts.append(
                 (
                     AXUtilitiesHypertext.expand_eocs(
-                        root, cursor, upper, unexpanded_objects=unexpanded_objects
+                        root,
+                        cursor,
+                        upper,
+                        unexpanded_objects=unexpanded_objects,
+                        include_whole_objects=True,
                     ),
                     False,
                 )
@@ -292,6 +300,7 @@ class AXUtilitiesHypertext:
         end_offset: int = -1,
         *,
         unexpanded_objects: list[Atspi.Accessible] | None = None,
+        include_whole_objects: bool = False,
     ) -> str:
         """Replaces embedded object characters in a text range with their text."""
 
@@ -310,7 +319,9 @@ class AXUtilitiesHypertext:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
-        if not AXUtilitiesHypertext.can_expand_embedded_object_as_text(obj):
+        if not AXUtilitiesHypertext.can_expand_embedded_object_as_text(
+            obj, include_whole_objects=include_whole_objects
+        ):
             if unexpanded_objects is not None:
                 unexpanded_objects.append(obj)
             return ""
@@ -325,7 +336,11 @@ class AXUtilitiesHypertext:
                 continue
             child = AXUtilitiesHypertext.find_child_at_offset(obj, index + start_offset)
             result = (
-                AXUtilitiesHypertext.expand_eocs(child, unexpanded_objects=unexpanded_objects)
+                AXUtilitiesHypertext.expand_eocs(
+                    child,
+                    unexpanded_objects=unexpanded_objects,
+                    include_whole_objects=include_whole_objects,
+                )
                 if child is not None
                 else ""
             )
@@ -354,12 +369,14 @@ class AXUtilitiesHypertext:
         return result
 
     @staticmethod
-    def can_expand_embedded_object_as_text(obj: Atspi.Accessible | None) -> bool:
+    def can_expand_embedded_object_as_text(
+        obj: Atspi.Accessible | None, *, include_whole_objects: bool = False
+    ) -> bool:
         """Returns True if an embedded object can contribute text to its parent."""
 
         if not AXObject.supports_text(obj) or not AXText.get_character_count(obj):
             return False
-        return not any(
+        return include_whole_objects or not any(
             predicate(obj)
             for predicate in (
                 AXUtilitiesRole.is_button,

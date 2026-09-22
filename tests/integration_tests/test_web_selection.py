@@ -85,22 +85,26 @@ def test_selecting_a_tree_item(web_selection: NativeAppSession) -> None:
     not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
 )
 @pytest.mark.native_app
+@pytest.mark.parametrize("spaced", [False, True], ids=["unspaced", "spaced"])
 def test_character_selection_across_inline_button(
     web_selection: NativeAppSession,
+    spaced: bool,
 ) -> None:
     """Tests selection and unselection across both boundaries of an inline button."""
 
     session = web_selection
 
     with native_selection(session):
-        keyboard.tap_key(keyboard.KEYSYM_B)
-        speech(session, wait_async=True)
+        for _ in range(2 if spaced else 1):
+            keyboard.tap_key(keyboard.KEYSYM_B)
+            speech(session, wait_async=True)
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
         speech(session)
 
-        text = "startNext slidefinish"
+        text = "start Next slide finish" if spaced else "startNext slidefinish"
         for character in text:
             assert select_character(session, keyboard.KEYSYM_RIGHT) == [character, "selected"]
+        assert say_selection(session) == [f"Selected text is:  {text}"]
         for character in reversed(text):
             assert select_character(session, keyboard.KEYSYM_LEFT) == [character, "unselected"]
         assert say_selection(session) == ["No selected text."]
@@ -111,18 +115,60 @@ def test_character_selection_across_inline_button(
     not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
 )
 @pytest.mark.native_app
-def test_word_selection_across_inline_button(
+@pytest.mark.parametrize("forward", [True, False], ids=["forward", "backward"])
+@pytest.mark.parametrize("spaced", [False, True], ids=["unspaced", "spaced"])
+def test_selection_containing_whole_inline_button(
     web_selection: NativeAppSession,
+    forward: bool,
+    spaced: bool,
 ) -> None:
-    """Tests a selected word spanning button text and the following parent text."""
+    """Tests selection includes button text when both endpoints are outside the button."""
 
     session = web_selection
 
     with native_selection(session):
-        keyboard.tap_key(keyboard.KEYSYM_B)
-        speech(session, wait_async=True)
+        for _ in range(2 if spaced else 1):
+            keyboard.tap_key(keyboard.KEYSYM_B)
+            speech(session, wait_async=True)
+        start, end = (
+            (keyboard.KEYSYM_HOME, keyboard.KEYSYM_END)
+            if forward
+            else (keyboard.KEYSYM_END, keyboard.KEYSYM_HOME)
+        )
+        keyboard.tap_key(start)
+        speech(session)
+
+        text = "start Next slide finish" if spaced else "startNext slidefinish"
+        keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], end)
+        assert speech(session) == [text, "selected"]
+        assert say_selection(session) == [f"Selected text is:  {text}"]
+
+        keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], start)
+        assert speech(session) == [text, "unselected"]
+        assert say_selection(session) == ["No selected text."]
+
+
+@requires_version("Chromium", chromium_version(), 156)
+@pytest.mark.skipif(
+    not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
+)
+@pytest.mark.native_app
+@pytest.mark.parametrize("spaced", [False, True], ids=["unspaced", "spaced"])
+def test_word_selection_across_inline_button(
+    web_selection: NativeAppSession,
+    spaced: bool,
+) -> None:
+    """Tests word selection across button text and the following parent text."""
+
+    session = web_selection
+
+    with native_selection(session):
+        for _ in range(2 if spaced else 1):
+            keyboard.tap_key(keyboard.KEYSYM_B)
+            speech(session, wait_async=True)
         keyboard.tap_key(keyboard.KEYSYM_END)
         speech(session)
 
-        assert select_word(session, keyboard.KEYSYM_LEFT) == ["slidefinish", "selected"]
-        assert select_word(session, keyboard.KEYSYM_LEFT) == ["Next", "selected"]
+        words = ["finish", "slide", "Next"] if spaced else ["slidefinish", "Next"]
+        for word in words:
+            assert select_word(session, keyboard.KEYSYM_LEFT) == [word, "selected"]
