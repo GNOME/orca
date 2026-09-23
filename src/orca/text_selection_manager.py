@@ -297,7 +297,7 @@ class TextSelectionManager:
         )
         if document is not None:
             success, strings = AXUtilities.get_document_selected_texts(document)
-            if success:
+            if success and strings:
                 return " ".join(strings)
 
             start, end = AXUtilities.get_document_text_selection_endpoints(None, document)

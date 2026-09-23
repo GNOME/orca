@@ -106,11 +106,13 @@ class TestTextSelectionManager:
         script.utilities.find_previous_object.assert_not_called()
         script.utilities.find_next_object.assert_not_called()
 
+    @pytest.mark.parametrize("document_success", [False, True])
     def test_get_all_selected_text_uses_adjacent_text_objects_as_fallback(
         self,
         test_context: OrcaTestContext,
+        document_success: bool,
     ) -> None:
-        """Test failed document retrieval falls back to adjacent selected text objects."""
+        """Test unavailable or empty document selection falls back to selected text objects."""
 
         self._setup_dependencies(test_context)
         from orca.text_selection_manager import AXUtilities, TextSelectionManager
@@ -127,7 +129,7 @@ class TestTextSelectionManager:
         test_context.patch_object(
             AXUtilities,
             "get_document_selected_texts",
-            return_value=(False, []),
+            return_value=(document_success, []),
         )
         test_context.patch_object(
             AXUtilities,
@@ -159,9 +161,11 @@ class TestTextSelectionManager:
             "previous text current text next text"
         )
 
+    @pytest.mark.parametrize("document_success", [False, True])
     def test_get_all_selected_text_fallback_spans_non_text_widget(
         self,
         test_context: OrcaTestContext,
+        document_success: bool,
     ) -> None:
         """Test fallback expands the document range across an intervening non-text widget."""
 
@@ -182,7 +186,7 @@ class TestTextSelectionManager:
         test_context.patch_object(
             AXUtilities,
             "get_document_selected_texts",
-            return_value=(False, []),
+            return_value=(document_success, []),
         )
         get_endpoints = test_context.patch_object(
             AXUtilities,
