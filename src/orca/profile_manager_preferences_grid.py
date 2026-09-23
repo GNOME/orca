@@ -241,6 +241,16 @@ class ProfilePreferencesGrid(  # pylint: disable=too-many-instance-attributes
 
         GLib.idle_add(do_load_profile)
 
+    def update_for_active_profile(self) -> None:
+        """Updates the preferences window after the active profile was changed elsewhere."""
+
+        internal_name = self._manager.get_active_profile()
+        for profile in self._get_available_profiles():
+            if profile[1] == internal_name:
+                self.refresh()
+                self._profile_loaded_callback(profile)
+                return
+
     def _get_profile_actions(self, internal_name: str) -> list[tuple[str, str, Callable[[], None]]]:
         """Get the list of actions (label, icon_name, callback) for a profile."""
 
@@ -348,7 +358,7 @@ class ProfilePreferencesGrid(  # pylint: disable=too-many-instance-attributes
 
         active_profile_name = self._manager.get_active_profile()
         if active_profile_name == internal_name:
-            self._manager.set_active_profile(self._default_profile[1])
+            self._manager.activate_profile(self._default_profile[1])
             self._profile_loaded_callback(self._default_profile)
 
         self._rebuild_ui()
@@ -525,7 +535,7 @@ class ProfilePreferencesGrid(  # pylint: disable=too-many-instance-attributes
             self._manager.rename_profile(old_internal_name, new_profile)
 
             if active_profile_name == old_internal_name:
-                self._manager.set_active_profile(new_internal_name)
+                self._manager.activate_profile(new_internal_name)
                 active_profile_name = new_internal_name
 
         self._pending_renames.clear()

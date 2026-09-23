@@ -113,8 +113,22 @@ class TestProfileManager:
 
         assert gsettings_registry.get_registry().get_active_profile() == "spanish"
 
+    def test_set_active_profile_rejects_unknown_profile(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test set_active_profile leaves the active profile alone for an unknown name."""
+
+        self._setup_dependencies(test_context)
+        from orca import gsettings_registry
+        from orca.profile_manager import ProfileManager
+
+        manager = ProfileManager()
+
+        assert manager.set_active_profile("bogus") is False
+        assert gsettings_registry.get_registry().get_active_profile() == "default"
+
     def test_load_profile(self, test_context: OrcaTestContext) -> None:
-        """Test loading a profile calls set_active_profile and load_user_settings."""
+        """Test loading a profile calls activate_profile and load_user_settings."""
 
         essential_modules = self._setup_dependencies(test_context)
         from orca import gsettings_registry
@@ -309,6 +323,7 @@ class TestProfilePreferencesGridUI:
         additional_modules = [
             "orca.braille",
             "orca.orca",
+            "orca.orca_modifier_manager",
             "orca.speech_manager",
             "orca.braille_presenter",
             "orca.presentation_manager",
@@ -365,6 +380,52 @@ class TestProfilePreferencesGridUI:
         grid = ProfilePreferencesGrid(manager, callback)
 
         assert isinstance(grid, Gtk.Grid)
+
+    def test_cycle_settings_profile_updates_grid(self, test_context: OrcaTestContext) -> None:
+        """Test cycle_settings_profile selects the new profile in the preferences window."""
+
+        self._setup_dependencies(test_context)
+        from orca.profile_manager import ProfileManager
+
+        manager = ProfileManager()
+        loaded_profiles: list[list[str]] = []
+        grid = manager.create_preferences_grid(loaded_profiles.append)
+
+        manager.cycle_settings_profile(notify_user=False)
+
+        assert loaded_profiles == [["Spanish", "spanish"]]
+        auto_grid = grid._auto_grid
+        assert auto_grid is not None
+        selected = auto_grid._get_selection_value(auto_grid._controls[0], auto_grid._widgets[0])
+        assert selected == "spanish"
+
+    def test_set_active_profile_updates_grid(self, test_context: OrcaTestContext) -> None:
+        """Test set_active_profile selects the new profile in the preferences window."""
+
+        self._setup_dependencies(test_context)
+        from orca.profile_manager import ProfileManager
+
+        manager = ProfileManager()
+        loaded_profiles: list[list[str]] = []
+        manager.create_preferences_grid(loaded_profiles.append)
+
+        manager.set_active_profile("spanish")
+
+        assert loaded_profiles == [["Spanish", "spanish"]]
+
+    def test_activate_profile_does_not_update_grid(self, test_context: OrcaTestContext) -> None:
+        """Test activate_profile leaves the preferences window alone."""
+
+        self._setup_dependencies(test_context)
+        from orca.profile_manager import ProfileManager
+
+        manager = ProfileManager()
+        loaded_profiles: list[list[str]] = []
+        manager.create_preferences_grid(loaded_profiles.append)
+
+        manager.activate_profile("spanish")
+
+        assert not loaded_profiles
 
     def test_grid_has_auto_grid(self, test_context: OrcaTestContext) -> None:
         """Test ProfilePreferencesGrid has auto_grid with controls."""

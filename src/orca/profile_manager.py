@@ -62,6 +62,10 @@ class ProfileManager(Extension):
 
     GROUP_LABEL = guilabels.GENERAL_PROFILES
 
+    def __init__(self) -> None:
+        super().__init__()
+        self._preferences_grid: ProfilePreferencesGrid | None = None
+
     @gsettings_registry.get_registry().gsetting(
         key="display-name",
         schema="metadata",
@@ -155,10 +159,28 @@ class ProfileManager(Extension):
     def set_active_profile(self, internal_name: str) -> bool:
         """Sets the active profile by internal name."""
 
+        if internal_name not in [profile[1] for profile in self.get_available_profiles()]:
+            tokens = ["PROFILE MANAGER: Cannot set unknown profile '", internal_name, "'."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        self.activate_profile(internal_name)
+
+        orca_modifier_manager.get_manager().unset_orca_modifiers("Profile changing.")
+        command_manager.get_manager().load_keyboard_layout()
+        orca_modifier_manager.get_manager().refresh_orca_modifiers("Profile changed.")
+        presentation_manager.get_manager().refresh_presenters()
+
+        if self._preferences_grid is not None:
+            self._preferences_grid.update_for_active_profile()
+        return True
+
+    def activate_profile(self, internal_name: str) -> None:
+        """Sets the active profile without refreshing Orca or the preferences window."""
+
         registry = gsettings_registry.get_registry()
         registry.clear_runtime_values()
         registry.set_active_profile(internal_name)
-        return True
 
     def load_profile(self, internal_name: str) -> None:
         """Loads a profile by setting it active and reloading user settings."""
@@ -166,7 +188,7 @@ class ProfileManager(Extension):
         tokens = ["PROFILE MANAGER: Loading profile '", internal_name, "'."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        self.set_active_profile(internal_name)
+        self.activate_profile(internal_name)
         orca.load_user_settings(skip_reload_message=True)
 
     def create_profile(self, new_profile: list[str]) -> bool:
@@ -289,11 +311,6 @@ class ProfileManager(Extension):
 
         self.set_active_profile(profile_id)
 
-        orca_modifier_manager.get_manager().unset_orca_modifiers("Profile changing.")
-        command_manager.get_manager().load_keyboard_layout()
-        orca_modifier_manager.get_manager().refresh_orca_modifiers("Profile changed.")
-        presentation_manager.get_manager().refresh_presenters()
-
         if script is not None:
             script.set_up_commands()
             if notify_user:
@@ -352,13 +369,22 @@ class ProfileManager(Extension):
         # pylint: disable-next=import-outside-toplevel
         from .profile_manager_preferences_grid import ProfilePreferencesGrid
 
-        return ProfilePreferencesGrid(
+        grid = ProfilePreferencesGrid(
             self,
             profile_loaded_callback,
             is_app_specific,
             labels_update_callback,
             unsaved_changes_checker,
         )
+        grid.connect("destroy", self._on_preferences_grid_destroyed)
+        self._preferences_grid = grid
+        return grid
+
+    def _on_preferences_grid_destroyed(self, grid: ProfilePreferencesGrid) -> None:
+        """Forgets the profile preferences grid when its window goes away."""
+
+        if grid is self._preferences_grid:
+            self._preferences_grid = None
 
 
 _manager = ProfileManager()
