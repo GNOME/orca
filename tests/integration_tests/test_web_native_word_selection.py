@@ -219,3 +219,28 @@ def test_word_selection_and_unselection_from_image(
         unselected = [select_word(session, keyboard.KEYSYM_RIGHT) for _ in expected_unselected]
 
     assert_walks(selected, unselected, expected_selected, expected_unselected)
+
+
+@pytest.mark.native_app
+def test_selection_after_modifier_release(web_native_text_selection: NativeAppSession) -> None:
+    """A caret event after modifier release does not cancel selection speech."""
+
+    session = web_native_text_selection
+    with native_selection(session):
+        for key in (keyboard.KEYSYM_G, keyboard.KEYSYM_RIGHT, keyboard.KEYSYM_END):
+            keyboard.tap_key(key)
+            speech(session)
+        # Extend the selection backward across "before" and the image.
+        for _ in range(3):
+            select_word(session, keyboard.KEYSYM_LEFT)
+
+        keyboard.press_key(keyboard.KEYSYM_CONTROL_L)
+        keyboard.press_key(keyboard.KEYSYM_SHIFT_L)
+        try:
+            # Release promptly so caret events can arrive after Shift is up.
+            keyboard.press_key(keyboard.KEYSYM_LEFT)
+        finally:
+            keyboard.release_key(keyboard.KEYSYM_LEFT)
+            keyboard.release_key(keyboard.KEYSYM_SHIFT_L)
+            keyboard.release_key(keyboard.KEYSYM_CONTROL_L)
+        assert speech(session, wait_async=True) == ["region", "selected"]

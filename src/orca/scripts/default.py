@@ -486,7 +486,9 @@ class Script(script.Script):
                 return True
             msg = "DEFAULT: Position matches but proceeding due to navigation reason"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            presentation_manager.get_manager().interrupt_presentation()
+            # Don't interrupt selection speech when handling the accompanying caret event.
+            if not AXUtilities.has_selected_text(event.source):
+                presentation_manager.get_manager().interrupt_presentation()
 
         offset = AXText.get_caret_offset(event.source)
 
