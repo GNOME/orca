@@ -1128,6 +1128,9 @@ class SpeechGenerator(generator.Generator):
         stop_at_roles: list | None = None,
         stop_after_roles: list | None = None,
     ) -> list[Any]:
+        if self._context.active_mode == focus_manager.FLAT_REVIEW:
+            return []
+
         leaving = self._is_leaving()
         if leaving and self._get_prior_obj():
             prior_obj = obj

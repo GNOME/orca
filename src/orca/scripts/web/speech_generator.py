@@ -105,7 +105,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         stop_at_roles: list | None = None,
         stop_after_roles: list | None = None,
     ) -> list[Any]:
-        if not self._script.utilities.in_document_content(obj):
+        if (
+            self._context.active_mode == focus_manager.FLAT_REVIEW
+            or not self._script.utilities.in_document_content(obj)
+        ):
             return super()._generate_ancestors(
                 obj,
                 include_only=include_only,

@@ -148,7 +148,7 @@ def test_flat_review_by_line_and_character(web_landmarks: NativeAppSession) -> N
     """Tests flat review by line and character over the rendered web page."""
 
     session = web_landmarks
-    helpers.move_to_top(session)
+    helpers.reset_web_state(session)
     helpers.toggle_flat_review(session)
     try:
         keyboard.tap_key(keyboard.KEYSYM_KP_UP)
@@ -198,6 +198,43 @@ def test_flat_review_by_line_and_character(web_landmarks: NativeAppSession) -> N
             ["Primary Home"],
             [BrailleLine(1, "Primary Home $l", "Primary Home $l", "\x00" * 15)],
         )
+    finally:
+        helpers.toggle_flat_review(session)
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("layout", [True, False])
+def test_flat_review_omits_document_navigation_context(
+    web_landmarks: NativeAppSession, layout: bool
+) -> None:
+    """Flat review omits ancestor transitions while preserving the reviewed object's role."""
+
+    session = web_landmarks
+    helpers.reset_web_state(session)
+    session.orca.set("CaretNavigator", "LayoutMode", layout)
+    helpers.toggle_flat_review(session)
+    try:
+        for _ in range(3):
+            keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
+            helpers.capture(session)
+
+        for text in ("Main content", "Body paragraph."):
+            keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
+            spoken, brailled = helpers.capture(session)
+            expected_speech = "Main content heading 1" if text == "Main content" else text
+            assert " ".join(spoken) == expected_speech
+            assert brailled[-1] == BrailleLine(
+                1, text + " $l", text + " $l", "\x00" * (len(text) + 3)
+            )
+
+        for _ in range(4):
+            keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
+            helpers.capture(session)
+
+        keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
+        spoken, brailled = helpers.capture(session)
+        assert " ".join(spoken) == "Footer text."
+        assert brailled[-1] == BrailleLine(1, "Footer text. $l", "Footer text. $l", "\x00" * 15)
     finally:
         helpers.toggle_flat_review(session)
 
