@@ -371,6 +371,35 @@ class TestGeneratorCache:
 class TestGeneratorContentSubjectBinding:
     """Tests per-object content accessors return the slice only for its subject object."""
 
+    @pytest.mark.parametrize("is_content_subject", [True, False])
+    def test_presented_control_keeps_name_shared_with_focused_label(
+        self, test_context: OrcaTestContext, is_content_subject: bool
+    ) -> None:
+        """A filtered-out focused label must not silence the presented control's name."""
+
+        modules = test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
+        from orca.generator import Generator, GeneratorMode
+        from orca.speech_generator import SpeechGeneratorContext
+
+        label = test_context.Mock()
+        control = test_context.Mock()
+        modules["orca.ax_object"].AXObject.get_name.return_value = "Name"
+        modules["orca.ax_object"].AXObject.get_role.side_effect = lambda obj: (
+            "label" if obj is label else "entry"
+        )
+        modules["orca.ax_utilities"].AXUtilities.is_ancestor.return_value = False
+        modules["orca.ax_utilities"].AXUtilities.is_dialog_or_window.return_value = False
+        values = {field.name: None for field in fields(SpeechGeneratorContext)}
+        values["focus"] = label
+        values["content_subject"] = control if is_content_subject else None
+        generator = Generator(test_context.Mock(), GeneratorMode.SPEECH)
+        generator._context = SpeechGeneratorContext(**values)
+        generator._generate_accessible_label = test_context.Mock(return_value=[])
+
+        assert generator._generate_accessible_label_and_name(control) == (
+            ["Name"] if is_content_subject else []
+        )
+
     def test_content_accessors_bound_to_subject(self, test_context: OrcaTestContext) -> None:
         """The slice's string/offset/position are returned for its subject and no other object."""
 

@@ -694,7 +694,7 @@ class Generator:
 
         if (
             focus
-            and obj != focus
+            and obj not in (focus, self._context.content_subject)
             and not AXUtilities.is_dialog_or_window(obj)
             and AXObject.get_role(obj) != AXObject.get_role(focus)
             and (self._is_ancestor() or not contains_focus)

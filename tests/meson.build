@@ -159,6 +159,7 @@ orca_integration_tests = {
     'integration_tests/test_web_table_block_cells.py',
     'integration_tests/test_web_sortable_table.py',
     'integration_tests/test_web_form_fields.py',
+    'integration_tests/test_web_form_label.py',
     'integration_tests/test_web_form_fields_navigation.py',
     'integration_tests/test_web_custom_wrappers.py',
     'integration_tests/test_web_emoji_links.py',
