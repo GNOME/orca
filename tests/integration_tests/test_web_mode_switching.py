@@ -95,3 +95,22 @@ def test_structural_navigation_stays_in_browse_mode(
 
     assert _next(session, keyboard.KEYSYM_E) == ["e", "City", "entry"]
     assert _toggle_mode(session) == ["Focus mode"]
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("click_count", [1, 2], ids=["basic", "detailed"])
+@pytest.mark.parametrize("key", [keyboard.KEYSYM_C, keyboard.KEYSYM_E], ids=["combo", "entry"])
+def test_where_am_i_preserves_browse_mode(
+    web_structural_navigation: NativeAppSession, key: int, click_count: int
+) -> None:
+    """Tests that querying a control does not switch from browse mode to focus mode."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+    _next(session, key)
+    assert not session.orca.get("DocumentPresenter", "InFocusMode")
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER, click_count=click_count)
+    spoken = speech(session)
+    assert not session.orca.get("DocumentPresenter", "InFocusMode")
+    assert "Focus mode" not in spoken

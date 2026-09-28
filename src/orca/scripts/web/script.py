@@ -220,8 +220,13 @@ class Script(default.Script):
             )
             return
 
+        is_where_am_i = reason in (
+            PresentationReason.WHERE_AM_I_BASIC,
+            PresentationReason.WHERE_AM_I_DETAILED,
+        )
+
         if AXUtilities.is_status_bar(obj) or AXUtilities.is_alert(obj):
-            if not document_presenter.get_presenter().in_focus_mode(self.app):
+            if not is_where_am_i and not document_presenter.get_presenter().in_focus_mode(self.app):
                 self.utilities.set_caret_position(obj, 0, reason=CaretSetReason.OBJECT_PRESENTATION)
             super().present_object(
                 obj,
@@ -270,7 +275,7 @@ class Script(default.Script):
 
         # Editors like VSCode use the entry role for the code editor.
         if AXUtilities.is_entry(obj):
-            if not document_presenter.get_presenter().in_focus_mode(self.app):
+            if not is_where_am_i and not document_presenter.get_presenter().in_focus_mode(self.app):
                 self.utilities.set_caret_position(obj, 0, reason=CaretSetReason.OBJECT_PRESENTATION)
             super().present_object(
                 obj,
@@ -293,7 +298,8 @@ class Script(default.Script):
             obj, effective_offset, use_cache=False
         )
         if (
-            contents
+            not is_where_am_i
+            and contents
             and contents[0]
             and not document_presenter.get_presenter().in_focus_mode(self.app)
         ):

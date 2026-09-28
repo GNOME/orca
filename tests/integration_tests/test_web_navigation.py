@@ -572,3 +572,24 @@ def test_no_wrapping_when_disabled(web_basic: NativeAppSession) -> None:
         assert _boundary(session, keyboard.KEYSYM_F, 3) == ["f", "No more form fields."]
     finally:
         session.orca.set("StructuralNavigator", "NavigationWraps", True)
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("click_count", [1, 2], ids=["basic", "detailed"])
+def test_where_am_i_preserves_caret_position(web_basic: NativeAppSession, click_count: int) -> None:
+    """Tests that querying a heading does not move the caret back to its start."""
+
+    session = web_basic
+    move_to_top(session)
+    for _ in range(2):
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        capture(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER, click_count=click_count)
+    spoken, brailled = capture(session)
+    assert "Welcome" in spoken
+    assert brailled[-1] == BrailleLine(3, "Welcome h1", "Welcome h1", "\x00" * 10)
+
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    spoken, _brailled = capture(session)
+    assert spoken == ["c"]

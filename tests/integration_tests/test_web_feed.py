@@ -93,7 +93,7 @@ def test_paging_through_feed_articles(web_feed: NativeAppSession) -> None:
     spoken, brailled = capture(session)
     assert spoken == ["Quarry Loop", "heading 3", "Waymarked as far as the gate."]
     assert brailled[-1] == BrailleLine(
-        1,
+        0,
         "Quarry Loop h3 Waymarked as far as the gate.",
         "Quarry Loop h3 Waymarked as far ",
         "\x00" * 44,
