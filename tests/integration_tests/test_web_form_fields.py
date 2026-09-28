@@ -801,3 +801,27 @@ def test_position_in_set_when_arrowing_a_combo_box(web_form_fields: NativeAppSes
     )
 
     session.orca.set("SpeechPresenter", "SpeakPositionInSet", False)
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("click_count", [1, 2], ids=["basic", "detailed"])
+def test_where_am_i_on_noneditable_combo_box(
+    web_form_fields: NativeAppSession, click_count: int
+) -> None:
+    """Tests that a noneditable combobox presents its value separately from its label."""
+
+    session = web_form_fields
+    helpers.reset_web_state(session)
+    for _ in range(3):
+        keyboard.tap_key(keyboard.KEYSYM_C)
+        helpers.capture(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER, click_count=click_count)
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["Preferred contact", "combo box", "Email"]
+    assert brailled[-1] == helpers.BrailleLine(
+        19,
+        "Preferred contact Email combo box",
+        "Preferred contact Email combo bo",
+        "\x00" * 33,
+    )

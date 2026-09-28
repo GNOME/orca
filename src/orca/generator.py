@@ -1687,6 +1687,9 @@ class Generator:
             return attrs.get("valuetext")
 
         if not AXObject.get_child_count(obj):
+            if not AXUtilities.is_editable(obj):
+                text = AXText.get_all_text(obj)
+                return text if text and "\ufffc" not in text else AXObject.get_name(obj)
             return AXObject.get_name(obj) or AXText.get_all_text(obj)
 
         children = list(AXObject.iter_children(obj, AXUtilities.is_text_input))
