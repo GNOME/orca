@@ -57,6 +57,7 @@ _TEXT_ATTRIBUTE_ALIASES: dict[str, str] = {
     "font-size": "size",
     "font-family": "family-name",
     "text-decoration-line": "text-decoration",
+    "text-underline-style": "underline",
 }
 
 
