@@ -3789,13 +3789,17 @@ class SpeechGenerator(generator.Generator):
     def _generate_spin_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the spin-button role."""
 
+        value = []
+        if self._get_content_string(obj) == "" and not AXUtilities.is_editable(obj):
+            value = self._generate_value(obj)
+
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_text_content(obj) or self._generate_value(obj)
+            return value or self._generate_text_content(obj) or self._generate_value(obj)
 
         result = self._generate_default_prefix(obj)
         result += self._generate_accessible_label_and_name(obj)
         result += self._generate_accessible_role(obj)
-        result += self._generate_text_content(obj) or self._generate_value(obj)
+        result += value or self._generate_text_content(obj) or self._generate_value(obj)
         result += self._generate_state_required(obj)
         result += self._generate_pause(obj)
         result += self._generate_state_invalid(obj)

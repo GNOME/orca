@@ -134,6 +134,13 @@ def test_arrow_navigation_through_toolbar_controls(web_toolbar: NativeAppSession
         1, "Font size in points 14pt spin button", "Font size in points 14pt spin bu", "\x00" * 36
     )
 
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
+    spoken, brailled = capture(session)
+    assert " ".join(spoken) == "Font size in points spin button 14pt"
+    assert brailled[-1] == BrailleLine(
+        1, "Font size in points 14pt spin button", "Font size in points 14pt spin bu", "\x00" * 36
+    )
+
     keyboard.tap_key(keyboard.KEYSYM_UP)
     spoken, brailled = capture(session)
     assert spoken == ["15pt"]
@@ -141,9 +148,23 @@ def test_arrow_navigation_through_toolbar_controls(web_toolbar: NativeAppSession
         1, "Font size in points 15pt spin button", "Font size in points 15pt spin bu", "\x00" * 36
     )
 
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
+    spoken, brailled = capture(session)
+    assert " ".join(spoken) == "Font size in points spin button 15pt"
+    assert brailled[-1] == BrailleLine(
+        1, "Font size in points 15pt spin button", "Font size in points 15pt spin bu", "\x00" * 36
+    )
+
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     spoken, brailled = capture(session)
     assert spoken == ["14pt"]
+    assert brailled[-1] == BrailleLine(
+        1, "Font size in points 14pt spin button", "Font size in points 14pt spin bu", "\x00" * 36
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
+    spoken, brailled = capture(session)
+    assert " ".join(spoken) == "Font size in points spin button 14pt"
     assert brailled[-1] == BrailleLine(
         1, "Font size in points 14pt spin button", "Font size in points 14pt spin bu", "\x00" * 36
     )
