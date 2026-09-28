@@ -123,3 +123,25 @@ def test_treegrid_navigation(web_treegrid: NativeAppSession) -> None:
         "re: Roof repair quote Can we sta",
         "\x00" * 64,
     )
+
+    session.orca.set("SpeechPresenter", "SpeakPositionInSet", True)
+
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    spoken, brailled = capture(session)
+    assert spoken == ["re: Roof repair quote The scaffolding is booked", "1 of 2"]
+    assert brailled[-1] == BrailleLine(
+        1,
+        "re: Roof repair quote The scaffolding is booked table row",
+        "re: Roof repair quote The scaffo",
+        "\x00" * 57,
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    spoken, brailled = capture(session)
+    assert spoken == ["re: Roof repair quote Can we start on Monday", "collapsed", "2 of 2"]
+    assert brailled[-1] == BrailleLine(
+        1,
+        "re: Roof repair quote Can we start on Monday table row collapsed",
+        "re: Roof repair quote Can we sta",
+        "\x00" * 64,
+    )

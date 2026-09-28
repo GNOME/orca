@@ -1555,7 +1555,7 @@ class Generator:
         self._reading_row = prior_reading_row
         self._context = original_context
 
-        if reading_row:
+        if reading_row and not row:
             result.extend(self._generate_position_in_list(obj))
         return result
 

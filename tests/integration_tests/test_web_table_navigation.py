@@ -58,29 +58,35 @@ def _enter_fourth_table(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_table(web_tables: NativeAppSession) -> None:
+@pytest.mark.parametrize("speak_position", [False, True])
+def test_structural_navigation_by_table(web_tables: NativeAppSession, speak_position: bool) -> None:
     """Tests structural navigation by table."""
 
     session = web_tables
     move_to_top(session)
+    session.orca.set("SpeechPresenter", "SpeakRowInDocumentTable", True)
+    session.orca.set("SpeechPresenter", "SpeakPositionInSet", speak_position)
 
-    keyboard.tap_key(keyboard.KEYSYM_T)
-    assert capture(session) == (
-        ["t", "table with 3 rows 3 columns", "Role", "Office"],
-        [BrailleLine(1, "", "", None)],
-    )
+    try:
+        keyboard.tap_key(keyboard.KEYSYM_T)
+        assert capture(session) == (
+            ["t", "table with 3 rows 3 columns", "Role", "Office"],
+            [BrailleLine(1, "", "", None)],
+        )
 
-    keyboard.tap_key(keyboard.KEYSYM_T)
-    assert capture(session) == (
-        ["t", "leaving table.", "table with 6 rows 3 columns", "P", "column header"],
-        [BrailleLine(1, "P", "P", "\x00")],
-    )
+        keyboard.tap_key(keyboard.KEYSYM_T)
+        assert capture(session) == (
+            ["t", "leaving table.", "table with 6 rows 3 columns", "P", "column header"],
+            [BrailleLine(1, "P", "P", "\x00")],
+        )
 
-    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_T)
-    assert capture(session) == (
-        ["T", "leaving table.", "table with 3 rows 3 columns"],
-        [BrailleLine(1, "", "", None)],
-    )
+        keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_T)
+        assert capture(session) == (
+            ["T", "leaving table.", "table with 3 rows 3 columns"],
+            [BrailleLine(1, "", "", None)],
+        )
+    finally:
+        session.orca.set("SpeechPresenter", "SpeakPositionInSet", False)
 
 
 @pytest.mark.native_app
@@ -350,7 +356,7 @@ def test_table_cell_detailed_where_am_i(web_tables: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER, click_count=2)
     assert capture(session) == (
-        ["Grace", "Admiral", "Boston", "1 of 2", "column 2 of 3 row 3 of 3"],
+        ["Grace", "Admiral", "Boston", "column 2 of 3 row 3 of 3"],
         [
             BrailleLine(1, "Admiral", "Admiral", "\x00" * 7),
             BrailleLine(1, "Admiral", "Admiral", "\x00" * 7),
