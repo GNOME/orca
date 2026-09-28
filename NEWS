@@ -1,3 +1,23 @@
+50.3 - 28 September 2026
+
+General:
+
+* Fix traceback when using object navigator to click on an object.
+
+* Fix two issues related to running unit tests downstream.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  be              Belarusian                Vasil Pupkin
+  cs              Czech                     Daniel Rusek
+  de              German                    Christian Kirbach
+  nl              Dutch                     Nathan Follens
+  nn              Norwegian Nynorsk         Roy-Magne Mo
+  pl              Polish                    Victoria Niedzielska
+  ru              Russian                   Danil
+
+=========
+
 50.2 - 26 May 2026
 
 Web:
