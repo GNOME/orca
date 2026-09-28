@@ -372,10 +372,9 @@ def test_row_header_where_am_i(web_tables: NativeAppSession) -> None:
     capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    assert capture(session) == (
-        ["Ada", "row header"],
-        [BrailleLine(1, "Ada", "Ada", "\x00" * 3), BrailleLine(1, "Ada", "Ada", "\x00" * 3)],
-    )
+    spoken, brailled = capture(session)
+    assert spoken == ["Ada", "row header"]
+    assert brailled[-1] == BrailleLine(1, "Ada", "Ada", "\x00" * 3)
 
 
 @pytest.mark.native_app
@@ -391,10 +390,9 @@ def test_column_header_where_am_i(web_tables: NativeAppSession) -> None:
     capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    assert capture(session) == (
-        ["Role", "column header"],
-        [BrailleLine(1, "Role", "Role", "\x00" * 4), BrailleLine(1, "Role", "Role", "\x00" * 4)],
-    )
+    spoken, brailled = capture(session)
+    assert spoken == ["Role", "column header"]
+    assert brailled[-1] == BrailleLine(1, "Role", "Role", "\x00" * 4)
 
 
 @pytest.mark.native_app

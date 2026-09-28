@@ -730,7 +730,7 @@ class BrailleGenerator(generator.Generator):
         if self._generate_text_substring(obj):
             line = self._generate_text_line(obj)
         else:
-            line = self._generate_accessible_label_and_name(obj)
+            line = self._generate_accessible_label_and_name(obj) or self._generate_text_line(obj)
 
         result = [
             braille.Component(
@@ -1510,7 +1510,7 @@ class BrailleGenerator(generator.Generator):
         if self._generate_text_substring(obj):
             line = self._generate_text_line(obj)
         else:
-            line = self._generate_accessible_label_and_name(obj)
+            line = self._generate_accessible_label_and_name(obj) or self._generate_text_line(obj)
 
         result = [
             braille.Component(
