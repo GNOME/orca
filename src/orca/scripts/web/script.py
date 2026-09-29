@@ -829,6 +829,12 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        parent = AXObject.get_parent(event.source)
+        if AXUtilities.is_entry(parent) and AXObject.get_index_in_parent(event.source) < 0:
+            msg = "WEB: Ignoring caret event from excluded entry child"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         selection_reasons = {
             TextEventReason.SELECTION_BY_CHARACTER,
             TextEventReason.SELECTION_BY_LINE,

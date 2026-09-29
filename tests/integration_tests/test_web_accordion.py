@@ -94,16 +94,23 @@ def test_arrow_navigation_between_accordion_headers(web_accordion: NativeAppSess
     assert spoken == ["Payment", "region", "Street:", "entry"]
     assert brailled[-1] == BrailleLine(9, "Street:  $l", "Street:  $l", None)
 
-    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
     spoken, brailled = capture(session)
-    assert spoken == ["leaving region.", "Contact details", "expanded button heading 3"]
+    assert spoken == ["leaving region.", "Payment", "expanded button heading 3"]
+    assert brailled[-1] == BrailleLine(
+        1, "Payment expanded button", "Payment expanded button", "\x00" * 23
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_HOME)
+    spoken, brailled = capture(session)
+    assert spoken == ["Contact details", "expanded button heading 3"]
     assert brailled[-1] == BrailleLine(
         1, "Contact details expanded button", "Contact details expanded button", "\x00" * 31
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     spoken, brailled = capture(session)
-    assert spoken == ["leaving region.", "Delivery address", "collapsed button heading 3"]
+    assert spoken == ["Delivery address", "collapsed button heading 3"]
     assert brailled[-1] == BrailleLine(
         1, "Delivery address collapsed button", "Delivery address collapsed butto", "\x00" * 33
     )
