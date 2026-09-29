@@ -25,7 +25,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca help master\n"
-"POT-Creation-Date: 2026-06-23 15:27+0000\n"
+"POT-Creation-Date: 2026-09-29 17:31+0000\n"
 "PO-Revision-Date: 2026-06-23 22:42+0200\n"
 "Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -237,17 +237,13 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:30
-#, fuzzy
-#| msgid "Present the previous notification message: (Unbound)"
 msgid "Present previous chat room message: (Unbound)"
-msgstr "Die vorhergehende Benachrichtigung anzeigen: (Nicht zugewiesen)"
+msgstr "Die vorherige Chatraum-Nachricht vorlesen: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:35
-#, fuzzy
-#| msgid "Present the next notification message: (Unbound)"
 msgid "Present next chat room message: (Unbound)"
-msgstr "Die nächste Benachrichtigung anzeigen: (Nicht zugewiesen)"
+msgstr "Die nächste Chatraum-Nachricht vorlesen: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:40
@@ -258,10 +254,8 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:45
-#, fuzzy
-#| msgid "Provide chat room specific message histories"
 msgid "Toggle chat room specific message histories: (unbound)"
-msgstr "Nachrichtenverläufe je Chatraum bereitstellen"
+msgstr "Nachrichtenverläufe je Chatraum ein/ausschalten: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:50
@@ -271,11 +265,8 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:53
-#, fuzzy
-#| msgid "Cycle to the next spoken punctuation level: (Unbound)"
 msgid "Toggle room name presentation: (Unbound)"
-msgstr ""
-"Zur nächsten Stufe der Sonderzeichenansage wechseln: (Nicht zugewiesen)"
+msgstr "Ansage des Raumnamens ein/ausschalten: (Nicht zugewiesen)"
 
 #. (itstool) path: info/title
 #: C/commands_controlling_orca.page:5
@@ -318,15 +309,12 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:29
-#, fuzzy
-#| msgid ""
-#| "To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
-#| "key><key>Alt</key><key>S</key></keyseq>."
 msgid ""
 "Toggle <app>Orca</app> on and off in supported desktop environments: "
 "<keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 msgstr ""
-"Um <app>Orca</app> in GNOME ein- und auszuschalten, drücken Sie "
+"Um <app>Orca</app> in unterstützten Arbeitsumgebungen ein- und "
+"auszuschalten, drücken Sie "
 "<keyseq><key>Super-Taste</key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: note/p
@@ -366,20 +354,17 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:56
-#, fuzzy
-#| msgid ""
-#| "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgid ""
 "Toggle all Orca command keys: <keyseq><key>Alt&gt;</key><key>BackSpace</"
 "key></keyseq>"
 msgstr ""
-"Zelle darüber: <keyseq><key>Alt</key><key>Umschalt</key><key>Hoch</key></"
-"keyseq>"
+"Alle Orca-Befehlstasten ein/ausschalten: "
+"<keyseq><key>Alt&gt;</key><key>Rücktaste</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:62
 msgid "Toggle keyboard layout: (Unbound)"
-msgstr ""
+msgstr "Tastaturlayout umschalten: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:65 C/commands_speech_settings.page:57
@@ -388,10 +373,8 @@ msgstr "Zur nächsten Stufe des Tastaturechos wechseln: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:68
-#, fuzzy
-#| msgid "Speak the selected text: (Unbound)"
 msgid "Quit the screen reader: (Unbound)"
-msgstr "Den ausgewählten Text vorlesen: (Nicht zugewiesen)"
+msgstr "Den Bildschirmleser beenden: (Nicht zugewiesen)"
 
 #. (itstool) path: section/p
 #: C/commands_controlling_orca.page:74
@@ -399,25 +382,23 @@ msgid ""
 "The following commands can be used to control and customize Orca's braille "
 "output."
 msgstr ""
+"Mit den folgenden Befehlen können Sie die Braille-Ausgabe von Orca "
+"steuern und anpassen."
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:77
-#, fuzzy
-#| msgid "Pan braille display to the left: Line Left"
 msgid "Pan the braille display to the left: (Unbound)"
-msgstr "Braillezeille nach links schwenken: Zeile links"
+msgstr "Braillezeile nach links schwenken: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:80
-#, fuzzy
-#| msgid "Pan braille display to the right: Line Right"
 msgid "Pan the braille display to the right: (Unbound)"
-msgstr "Braillezeile nach rechts schwenken: Zeile rechts"
+msgstr "Braillezeile nach rechts schwenken: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:83
 msgid "Turn contracted braille on and off: (Unbound)"
-msgstr ""
+msgstr "Braille-Kurzschrift ein/ausschalten: (Nicht zugewiesen)"
 
 #. (itstool) path: section/title
 #: C/commands_controlling_orca.page:88
@@ -490,7 +471,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_debugging.page:26
 msgid "Capture snapshot for debugging: (Unbound)"
-msgstr ""
+msgstr "Momentaufnahme zur Fehlerdiagnose erstellen: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_debugging.page:29
@@ -500,10 +481,10 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_debugging.page:32
-#, fuzzy
-#| msgid "Cycle to the next capitalization style: (Unbound)"
 msgid "Clear the AT-SPI cache for the current application: (Unbound)"
-msgstr "Zum nächsten Großschreibungsstil wechseln: (Nicht zugewiesen)"
+msgstr ""
+"Den AT-SPI-Zwischenspeicher der aktuellen Anwendung leeren: (Nicht "
+"zugewiesen)"
 
 #. (itstool) path: info/title
 #: C/commands_find.page:6
@@ -1076,28 +1057,20 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:197
-#, fuzzy
-#| msgid "Copy the contents under flat review to the clipboard: (Unbound)"
 msgid "Move flat review to the bottom left: (Unbound)"
-msgstr ""
-"Die Inhalte in der Übersicht in die Zwischenablage kopieren: (Nicht "
-"zugewiesen)"
+msgstr "Übersicht nach unten links bewegen: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:198
-#, fuzzy
-#| msgid "Speak the selected text: (Unbound)"
 msgid "Show flat review contents: (Unbound)"
-msgstr "Den ausgewählten Text vorlesen: (Nicht zugewiesen)"
+msgstr "Inhalt der Übersicht anzeigen: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:199
-#, fuzzy
-#| msgid "Copy the contents under flat review to the clipboard: (Unbound)"
 msgid "Toggle restricting flat review to the current object: (Unbound)"
 msgstr ""
-"Die Inhalte in der Übersicht in die Zwischenablage kopieren: (Nicht "
-"zugewiesen)"
+"Beschränkung der Übersicht auf das aktuelle Objekt ein/ausschalten: "
+"(Nicht zugewiesen)"
 
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
@@ -1133,51 +1106,41 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:27
-#, fuzzy
-#| msgid ""
-#| "Monitor live regions: <keyseq><key>Orca Modifier</key><key>Shift</"
-#| "key><key>Backslash</key></keyseq>"
 msgid ""
 "Monitor live regions: <keyseq><key>Orca Modifier</key><key>Backslash</key></"
 "keyseq>"
 msgstr ""
-"Dynamische Bereiche überwachen: <keyseq><key>Orca-Zusatztaste</"
-"key><key>Umschalt</key><key>Rückwärtsschrägstrich</key></keyseq>"
+"Dynamische Bereiche überwachen: "
+"<keyseq><key>Orca-Zusatztaste</key><key>Rückwärtsschrägstrich</key></keyseq>"
 
-# CHECK: Bedeutung von »Advance« in diesem Kontext ist mir nicht ganz klar.
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:33
-#, fuzzy
-#| msgid "Advance live region politeness setting: <key>Backslash</key>"
 msgid "Advance live region politeness setting: (Unbound)"
 msgstr ""
-"Höflichkeitsstufe des dynamischen Bereiches erhöhen: "
-"<key>Rückwärtsschrägstrich</key>"
+"Zur nächsten Höflichkeitsstufe für dynamische Bereiche wechseln: (Nicht "
+"zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:36
 msgid "Set default politeness level to off: (Unbound)"
-msgstr ""
+msgstr "Standard-Höflichkeitsstufe auf »Aus« setzen: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:39
-#, fuzzy
-#| msgid ""
-#| "Go to next/previous live region: <keyseq><key>D</key></keyseq>/"
-#| "<keyseq><key>Shift</key><key>D</key></keyseq>"
 msgid ""
 "Go to next/previous live region in the document's reading order: "
 "<keyseq><key>D</key></keyseq>/<keyseq><key>Shift</key><key>D</key></keyseq>"
 msgstr ""
-"Zum nächsten/vorherigen dynamischen Bereich springen: <keyseq><key>D</key></"
-"keyseq>/<keyseq><key>Umschalt</key><key>D</key></keyseq>"
+"Zum nächsten/vorherigen dynamischen Bereich in der Lesereihenfolge des "
+"Dokuments springen: "
+"<keyseq><key>D</key></keyseq>/<keyseq><key>Umschalt</key><key>D</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:45
-#, fuzzy
-#| msgid "Present the previous notification message: (Unbound)"
 msgid "Review the next/previous saved live region message: (Unbound)"
-msgstr "Die vorhergehende Benachrichtigung anzeigen: (Nicht zugewiesen)"
+msgstr ""
+"Die nächste/vorherige gespeicherte Nachricht eines dynamischen Bereichs "
+"vorlesen: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:48
@@ -8501,3 +8464,4 @@ msgstr "Vorgabewert: 4"
 
 #~ msgid "Restrict to"
 #~ msgstr "Beschränken auf"
+
