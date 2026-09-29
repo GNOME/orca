@@ -28,7 +28,7 @@ import pytest
 
 from .harness import keyboard
 from .helpers import say_selection, speech
-from .version_helpers import chromium_version, requires_version
+from .version_helpers import requires_browser_version
 from .web_native_selection_helpers import (
     USES_DOCUMENT_SELECTION,
     assert_walks,
@@ -40,7 +40,7 @@ if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
 
 
-@requires_version("Chromium", chromium_version(), 156, when=USES_DOCUMENT_SELECTION)
+@requires_browser_version("chromium", 156, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_line_selection_and_unselection(web_native_text_selection: NativeAppSession) -> None:
     """Tests native line selection through varied content, then back to the top."""

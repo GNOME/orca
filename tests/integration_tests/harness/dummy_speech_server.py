@@ -24,6 +24,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from gi.repository import GLib
+
 from orca import speechserver
 
 if TYPE_CHECKING:
@@ -44,13 +46,35 @@ class SpeechServer(speechserver.SpeechServer):
     def __init__(self, server_id: str = speechserver.SpeechServer.DEFAULT_SERVER_ID) -> None:
         super().__init__(server_id)
         speechserver.SpeechServer._active_servers[server_id] = self
+        self._say_all_source = 0
 
     def say_all(
         self,
         utterance_iterator: Iterator[tuple[speechserver.SayAllContext, ACSS]],
         progress_callback: Callable[[speechserver.SayAllContext, int], None],
     ) -> None:
-        """Drains the iterator synchronously so every intended utterance is recorded."""
+        """Yields between utterances so browser events arrive while Say All is active."""
 
-        for _context, _voice in utterance_iterator:
-            pass
+        self.stop()
+
+        def advance() -> bool:
+            try:
+                next(utterance_iterator)
+            except StopIteration:
+                self._say_all_source = 0
+                return GLib.SOURCE_REMOVE
+            return GLib.SOURCE_CONTINUE
+
+        self._say_all_source = GLib.idle_add(advance)
+
+    def stop(self) -> None:
+        """Cancels pending test speech when presentation is interrupted."""
+
+        if self._say_all_source:
+            GLib.source_remove(self._say_all_source)
+            self._say_all_source = 0
+
+    def shutdown(self) -> None:
+        """Cancels speech when the test switches profiles or closes Orca."""
+
+        self.stop()

@@ -49,6 +49,7 @@ unit_tests = [
   'unit_tests/test_dbus_service.py',
   'unit_tests/test_debugging_tools_manager.py',
   'unit_tests/test_document_presenter.py',
+  'unit_tests/test_dummy_speech_server.py',
   'unit_tests/test_event_manager.py',
   'unit_tests/test_extension.py',
   'unit_tests/test_extension_loader.py',
@@ -149,7 +150,7 @@ orca_integration_tests = {
     'integration_tests/test_terminal_output.py',
     'integration_tests/test_terminal_typing.py',
   ],
-  'chromium': [
+  'web': [
     'integration_tests/test_web_caret_selection.py',
     'integration_tests/test_web_mixed_line_heights.py',
     'integration_tests/test_web_navigation.py',
@@ -284,7 +285,7 @@ test(
   integration_wrapper,
   args: [files('integration_tests/test_web_emoji_offset_skew.py')],
   env: test_env,
-  suite: ['integration', 'chromium'],
+  suite: ['integration', 'web'],
   timeout: 300,
   is_parallel: false,
 )
@@ -295,7 +296,7 @@ test(
   integration_wrapper,
   args: [files('integration_tests/test_web_native_character_selection.py')],
   env: test_env,
-  suite: ['integration', 'chromium'],
+  suite: ['integration', 'web'],
   timeout: 360,
   is_parallel: false,
 )

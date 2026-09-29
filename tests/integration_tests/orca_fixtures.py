@@ -44,7 +44,7 @@ from gi.repository import Atspi, GLib, PangoCairo
 from orca.output_reader import OutputReader
 
 from .apps import (
-    chromium_browser,
+    browser,
     gtk3_announcement,
     gtk3_multi_select_list,
     gtk3_redundant_names,
@@ -77,6 +77,13 @@ class NativeAppSession:
 
     orca: OrcaSession
     reader: OutputReader
+
+
+@dataclass
+class BrowserSession(NativeAppSession):
+    """A web session with the browser identity used to select expectations."""
+
+    browser: str
 
 
 @pytest.fixture(scope="session", name="orca")
@@ -427,15 +434,15 @@ def _name_equals(target: str) -> Callable[[Atspi.Accessible], bool]:
     return predicate
 
 
-def _name_suffix(suffix: str) -> Callable[[Atspi.Accessible], bool]:
-    """Predicate: app accessible or any direct child has a name ending with suffix."""
+def _name_matches(matches: Callable[[str], bool]) -> Callable[[Atspi.Accessible], bool]:
+    """Predicate: app accessible or any direct child has a matching name."""
 
     def predicate(accessible: Atspi.Accessible) -> bool:
-        if (name := Atspi.Accessible.get_name(accessible)) and name.endswith(suffix):
+        if (name := Atspi.Accessible.get_name(accessible)) and matches(name):
             return True
         for index in range(accessible.get_child_count()):
             child_name = Atspi.Accessible.get_name(accessible.get_child_at_index(index))
-            if child_name and child_name.endswith(suffix):
+            if child_name and matches(child_name):
                 return True
         return False
 
@@ -472,14 +479,15 @@ def _document_loaded(accessible: Atspi.Accessible) -> bool:
 def _run_browser_session(
     tmp_path_factory: pytest.TempPathFactory,
     *,
-    app: ModuleType,
+    browser_name: str,
     page: str,
     caret_browsing: bool = False,
     ready_predicate: Callable[[Atspi.Accessible], bool] | None = None,
-) -> Iterator[NativeAppSession]:
-    """Launches app loading web_pages/<page> under its own Orca subprocess."""
+) -> Iterator[BrowserSession]:
+    """Launches the selected browser on web_pages/<page> with its own Orca."""
 
-    binary = app.resolve_binary()
+    app = browser.BROWSERS[browser_name]
+    binary = browser.resolve_binary(browser_name)
     if binary is None:
         pytest.skip(f"{app.__name__}: no binary found among {app.BINARY_NAMES!r}")
 
@@ -511,21 +519,19 @@ def _run_browser_session(
     argv = [
         sys.executable,
         "-m",
-        app.__name__,
+        browser.__name__,
         f"file://{page_path}",
         str(profile_dir),
         binary,
     ]
     if caret_browsing:
-        argv.append("--enable-caret-browsing")
-    yield from _run_app_with_orca(
+        argv.append("--caret-browsing")
+    for session in _run_app_with_orca(
         sandbox_dir,
         argv=argv,
-        ready_predicate=ready_predicate or _name_suffix(app.READY_SUFFIX),
-    )
-
-
-_BROWSER_APPS: dict[str, ModuleType] = {"chromium": chromium_browser}
+        ready_predicate=ready_predicate or _name_matches(app.is_ready_title),
+    ):
+        yield BrowserSession(orca=session.orca, reader=session.reader, browser=browser_name)
 
 
 def _make_web_fixture(
@@ -534,15 +540,15 @@ def _make_web_fixture(
     caret_browsing: bool = False,
     name: str | None = None,
     scope: Literal["function", "class", "module", "package", "session"] = "session",
-) -> Callable[..., Iterator[NativeAppSession]]:
-    @pytest.fixture(scope=scope, name=name or Path(page).stem, params=["chromium"])
+) -> Callable[..., Iterator[BrowserSession]]:
+    @pytest.fixture(scope=scope, name=name or Path(page).stem, params=[browser.selected_browser()])
     def fixture(
         request: pytest.FixtureRequest,
         tmp_path_factory: pytest.TempPathFactory,
-    ) -> Iterator[NativeAppSession]:
+    ) -> Iterator[BrowserSession]:
         yield from _run_browser_session(
             tmp_path_factory,
-            app=_BROWSER_APPS[request.param],
+            browser_name=request.param,
             page=page,
             caret_browsing=caret_browsing,
         )
@@ -550,15 +556,15 @@ def _make_web_fixture(
     return fixture
 
 
-def _make_plain_text_fixture(page: str) -> Callable[..., Iterator[NativeAppSession]]:
-    @pytest.fixture(scope="session", name=Path(page).stem, params=["chromium"])
+def _make_plain_text_fixture(page: str) -> Callable[..., Iterator[BrowserSession]]:
+    @pytest.fixture(scope="session", name=Path(page).stem, params=[browser.selected_browser()])
     def fixture(
         request: pytest.FixtureRequest,
         tmp_path_factory: pytest.TempPathFactory,
-    ) -> Iterator[NativeAppSession]:
+    ) -> Iterator[BrowserSession]:
         yield from _run_browser_session(
             tmp_path_factory,
-            app=_BROWSER_APPS[request.param],
+            browser_name=request.param,
             page=page,
             ready_predicate=_document_loaded,
         )

@@ -28,7 +28,7 @@ import pytest
 
 from .harness import keyboard
 from .helpers import speech
-from .version_helpers import chromium_version, requires_version
+from .version_helpers import requires_browser_version
 from .web_native_selection_helpers import (
     LONG_PARAGRAPH,
     USES_DOCUMENT_SELECTION,
@@ -41,7 +41,7 @@ if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
 
 
-@requires_version("Chromium", chromium_version(), 156)
+@requires_browser_version("chromium", 156)
 @pytest.mark.skipif(
     not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
 )
@@ -71,7 +71,7 @@ def test_word_selection_within_button(
             assert select_word(session, keyboard.KEYSYM_LEFT) == [word, "unselected"]
 
 
-@requires_version("Chromium", chromium_version(), 156, when=USES_DOCUMENT_SELECTION)
+@requires_browser_version("chromium", 156, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_word_selection_and_unselection(web_native_text_selection: NativeAppSession) -> None:
     """Tests native word selection from the top into the form controls, then back."""
@@ -121,7 +121,7 @@ def test_word_selection_and_unselection(web_native_text_selection: NativeAppSess
 
 
 # Provisional minimum: the build used to verify the collapsed-whitespace selection fix.
-@requires_version("Chromium", chromium_version(), 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
+@requires_browser_version("chromium", 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_word_selection_and_unselection_from_bottom(
     web_native_text_selection: NativeAppSession,
@@ -154,7 +154,7 @@ def test_word_selection_and_unselection_from_bottom(
     assert_walks(selected, unselected, expected_selected, expected_unselected)
 
 
-@requires_version("Chromium", chromium_version(), 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
+@requires_browser_version("chromium", 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_word_selection_and_unselection_from_image(
     web_native_text_selection: NativeAppSession,

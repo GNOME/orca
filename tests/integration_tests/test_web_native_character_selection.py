@@ -28,7 +28,7 @@ import pytest
 
 from .harness import keyboard
 from .helpers import say_selection, speech
-from .version_helpers import chromium_version, requires_version
+from .version_helpers import requires_browser_version
 from .web_native_selection_helpers import (
     LONG_PARAGRAPH,
     USES_DOCUMENT_SELECTION,
@@ -129,7 +129,7 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
 
 
 # Provisional minimum: the build used to verify the collapsed-whitespace selection fix.
-@requires_version("Chromium", chromium_version(), 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
+@requires_browser_version("chromium", 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_character_selection_and_unselection(
     web_native_text_selection: NativeAppSession,
@@ -195,7 +195,7 @@ def test_selection_after_image_navigation(web_native_text_selection: NativeAppSe
         assert select_character(session, keyboard.KEYSYM_LEFT) == ["Red square", "unselected"]
 
 
-@requires_version("Chromium", chromium_version(), 156)
+@requires_browser_version("chromium", 156)
 @pytest.mark.skipif(
     not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
 )

@@ -32,7 +32,7 @@ import pytest
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from .apps import chromium_browser
+from .apps import browser
 
 Version = tuple[int, ...]
 
@@ -49,11 +49,15 @@ def command_version(command: tuple[str, ...]) -> Version | None:
     return tuple(int(part) for part in match[0].split(".")) if match else None
 
 
-def chromium_version() -> Version | None:
-    """Returns the version of the Chromium executable selected for the tests."""
+def requires_browser_version(name: str, *minimum: int, when: bool = True) -> pytest.MarkDecorator:
+    """Applies a version requirement only to the named browser, when selected."""
 
-    binary = chromium_browser.resolve_binary()
-    return command_version((binary, "--version")) if binary is not None else None
+    if name not in browser.BROWSERS:
+        raise ValueError(f"Unknown browser version requirement: {name!r}")
+    applies = when and browser.selected_browser() == name
+    binary = browser.resolve_binary(name) if applies else None
+    actual = command_version((binary, "--version")) if binary is not None else None
+    return requires_version(name, actual, *minimum, when=applies)
 
 
 def atspi_version() -> Version:

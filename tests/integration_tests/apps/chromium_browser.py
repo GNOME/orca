@@ -20,32 +20,27 @@
 
 """Chromium launched in --app mode for integration tests."""
 
-import os
 import shutil
-import subprocess
 import sys
-import tempfile
 import warnings
 from pathlib import Path
 
 BINARY_NAMES = ("chromium", "chromium-browser")
+ENVIRONMENT = {"ACCESSIBILITY_ENABLED": "1"}
 READY_SUFFIX = " ready"
-_BINARY_ENV_VAR = "ORCA_TEST_CHROMIUM_BINARY"
 _BETA_PATH = "/opt/google/chrome-beta/chrome"
 
 
 def resolve_binary() -> str | None:
     """Returns the selected Chromium executable, preferring the beta used for expectations."""
 
-    if override := os.environ.get(_BINARY_ENV_VAR):
-        return override
     if Path(_BETA_PATH).is_file():
         return _BETA_PATH
     binary = next((p for p in (shutil.which(name) for name in BINARY_NAMES) if p), None)
     if binary is not None:
         warnings.warn(
             f"Web test expectations were captured against {_BETA_PATH}; using {binary}. "
-            f"Set {_BINARY_ENV_VAR} to choose a different build.",
+            "Set ORCA_TEST_BROWSER_BINARY to choose a different build.",
             stacklevel=2,
         )
     return binary
@@ -85,40 +80,19 @@ def build_argv(
     ]
 
 
-def main() -> int:
-    """Standalone entry: takes URL [profile_dir] [binary] and execs chromium."""
+def prepare_launch(profile_dir: Path, *, caret_browsing: bool = False) -> tuple[str, ...]:
+    """Prepares browser-specific settings and returns additional launch flags."""
 
-    if len(sys.argv) < 2:
-        print(
-            "Usage: python -m tests.integration_tests.apps.chromium_browser "
-            "<url> [profile_dir] [binary] [extra chromium flags...]",
-            file=sys.stderr,
-        )
-        return 2
-    url = sys.argv[1]
-    if len(sys.argv) > 2:
-        profile_dir = Path(sys.argv[2])
-    else:
-        profile_dir = Path(tempfile.mkdtemp(prefix="orca-chromium-debug-"))
-    profile_dir.mkdir(parents=True, exist_ok=True)
-    if len(sys.argv) > 3:
-        binary: str | None = sys.argv[3]
-    else:
-        binary = resolve_binary()
-    if binary is None:
-        print(f"No chromium binary found; tried {BINARY_NAMES!r}.", file=sys.stderr)
-        return 2
-    argv = build_argv(url, profile_dir, binary, extra_flags=tuple(sys.argv[4:]))
-    if os.environ.get("ORCA_TEST_DEBUG_DIR"):
-        print(f"[diagnostics] Chromium argv: {argv!r}", file=sys.stderr)
-        subprocess.run([binary, "--version"], check=False)
-        if shutil.which("fc-match"):
-            for family in ("serif", "sans-serif", "monospace"):
-                print(f"[diagnostics] Font match for {family}:", flush=True)
-                subprocess.run(["fc-match", family], check=False)
-    os.execvp(argv[0], argv)  # noqa: S606
-    return 0  # unreachable: execvp replaces the process
+    return ("--enable-caret-browsing",) if caret_browsing else ()
+
+
+def is_ready_title(title: str) -> bool:
+    """Returns whether a top-level accessible has the test page's ready title."""
+
+    return title.endswith(READY_SUFFIX)
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    from .browser import main
+
+    sys.exit(main(browser_name="chromium"))

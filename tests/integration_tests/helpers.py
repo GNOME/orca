@@ -23,16 +23,31 @@
 from __future__ import annotations
 
 import contextlib
-from typing import TYPE_CHECKING, NamedTuple
+from typing import TYPE_CHECKING, NamedTuple, TypeVar
 
 from orca.output_reader import BrailleRecord, SpeechRecord
 
+from .apps.browser import BROWSERS
 from .harness import keyboard
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession, NativeAppSession
+
+_Expected = TypeVar("_Expected")
+
+
+def expected_for_browser(
+    session: BrowserSession, common: _Expected, **overrides: _Expected
+) -> _Expected:
+    """Selects one expectation, defaulting to the common value for other browsers."""
+
+    for name in overrides:
+        if name not in BROWSERS:
+            raise ValueError(f"Unknown browser expectation override: {name!r}")
+    return overrides.get(session.browser, common)
+
 
 PAN_LEFT_COMMAND = "panBrailleLeftHandler"
 PAN_RIGHT_COMMAND = "panBrailleRightHandler"

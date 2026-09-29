@@ -28,7 +28,7 @@ import pytest
 
 from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state, say_selection, speech
-from .version_helpers import chromium_version, requires_version
+from .version_helpers import requires_browser_version
 from .web_native_selection_helpers import (
     USES_DOCUMENT_SELECTION,
     native_selection,
@@ -80,7 +80,7 @@ def test_selecting_a_tree_item(web_selection: NativeAppSession) -> None:
     assert brailled[-1] == BrailleLine(0, "selected", "selected", "\x00" * 8)
 
 
-@requires_version("Chromium", chromium_version(), 156)
+@requires_browser_version("chromium", 156)
 @pytest.mark.skipif(
     not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
 )
@@ -110,7 +110,7 @@ def test_character_selection_across_inline_button(
         assert say_selection(session) == ["No selected text."]
 
 
-@requires_version("Chromium", chromium_version(), 156)
+@requires_browser_version("chromium", 156)
 @pytest.mark.skipif(
     not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
 )
@@ -148,7 +148,7 @@ def test_selection_containing_whole_inline_button(
         assert say_selection(session) == ["No selected text."]
 
 
-@requires_version("Chromium", chromium_version(), 156)
+@requires_browser_version("chromium", 156)
 @pytest.mark.skipif(
     not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
 )

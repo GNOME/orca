@@ -66,7 +66,7 @@ Orca's tests are grouped into the following named suites:
 * core (infrastructure such as GSettings and D-Bus support)
 * gtk3 (non-terminal GTK3 UI tests)
 * gtk3-terminal (for terminal applications using VTE for GTK3)
-* chromium (for web content using Chrome or Chromium)
+* web (for web content using Chrome or Chromium)
 
 ```bash
 meson test -C _build
