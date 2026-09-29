@@ -1719,13 +1719,14 @@ class Utilities(script_utilities.Utilities):
                     for item in self._get_contents_for_obj(label, 0, Atspi.TextGranularity.LINE)
                 )
 
-            # A lone newline at obj's end offset ends obj's line if obj is inline content.
+            # A lone newline after the last inline object ends the assembled line.
             # After a block element it starts a blank line instead.
             if (
                 _x_string == "\n"
-                and x_start == AXHypertext.get_link_end_offset(obj)
-                and AXUtilities.is_ancestor(obj, x_obj)
-                and AXUtilities.is_inline_element(obj)
+                and objects
+                and x_start == AXHypertext.get_link_end_offset(objects[-1][0])
+                and AXUtilities.is_ancestor(objects[-1][0], x_obj)
+                and AXUtilities.is_inline_element(objects[-1][0])
             ):
                 return True
 

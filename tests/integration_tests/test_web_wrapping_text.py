@@ -191,10 +191,6 @@ def test_eol_indicator_on_code_blocks_not_inline(web_wrapping_text: NativeAppSes
     # line, never mid-line after one of its fragments.
     assert _down_to_line(session, 4) == (
         ["code start", "see ", "the docs", "link"],
-        [BrailleLine(1, "see the docs", "see the docs", "\x00" * 4 + "\xc0" * 8)],
-    )
-    assert _down_to_line(session, 1) == (
-        ["code start", "see ", "the docs", "link"],
         [
             BrailleLine(
                 1,
@@ -215,10 +211,6 @@ def test_eol_indicator_on_code_blocks_not_inline(web_wrapping_text: NativeAppSes
         [BrailleLine(1, "mix tail $l", "mix tail $l", "\x00" * 11)],
     )
     assert _down_to_line(session, 1) == (
-        ["code start", "mix ", "tail"],
-        [BrailleLine(1, "mix tail $l", "mix tail $l", "\x00" * 11)],
-    )
-    assert _down_to_line(session, 1) == (
         ["plain end", "code end"],
         [BrailleLine(1, "plain end $l", "plain end $l", "\x00" * 12)],
     )
@@ -235,7 +227,7 @@ def test_fill_in_the_blank_line_assembly(web_wrapping_text: NativeAppSession) ->
     # The entry's $l marks the end of its (empty) text; the first paragraph wraps
     # after ' to ', so 'continue.' is its own visual line. The second paragraph fits
     # on a single visual line.
-    assert _down_to_line(session, 31) == (
+    assert _down_to_line(session, 30) == (
         ["Fill in ", "answer", "entry", " to "],
         [BrailleLine(1, "Fill in answer  $l to ", "Fill in answer  $l to ", "\x00" * 12)],
     )
