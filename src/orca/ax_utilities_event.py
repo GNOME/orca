@@ -1178,12 +1178,22 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if AXUtilitiesRole.is_table_row(event.source) or AXUtilitiesRole.is_list_box(event.source):
+        role = AXObject.get_role(event.source)
+        if AXUtilitiesRole.is_table_row(event.source, role) or AXUtilitiesRole.is_list_box(
+            event.source, role
+        ):
             msg = "AXUtilitiesEvent: Event is presentable based on role."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if AXUtilitiesRole.is_combo_box(event.source) or AXUtilitiesRole.is_button(event.source):
+        if AXUtilitiesRole.is_button(event.source, role) and AXUtilitiesRole.is_menu_related(focus):
+            msg = "AXUtilitiesEvent: Ignoring button expansion after focus moved into a menu."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if AXUtilitiesRole.is_combo_box(event.source, role) or AXUtilitiesRole.is_button(
+            event.source, role
+        ):
             if not AXUtilitiesState.is_focused(event.source):
                 msg = "AXUtilitiesEvent: Only presentable for this role if focused."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
