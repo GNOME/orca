@@ -438,6 +438,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return []
 
     @log_generator_output
+    def _generate_text_substring(self, obj: Atspi.Accessible) -> list[Any]:
+        if not self._script.utilities.treat_as_text_object(obj):
+            return []
+
+        return super()._generate_text_substring(obj)
+
+    @log_generator_output
     def _generate_text_content(self, obj: Atspi.Accessible) -> list[Any]:
         targets = AXUtilities.get_is_label_for(obj)
         labelled_ancestor = (

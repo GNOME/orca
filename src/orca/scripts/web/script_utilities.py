@@ -96,6 +96,7 @@ class _WebUtilitiesCache:
     SHOULD_FILTER = "WebUtilities.should-filter"
     SHOULD_INFER_LABEL_FOR = "WebUtilities.should-infer-label-for"
     TREAT_AS_TEXT_OBJECT = "WebUtilities.treat-as-text-object"
+    TREAT_NAMED_OBJECT_AS_WHOLE = "WebUtilities.treat-named-object-as-whole"
     TREAT_AS_DIV = "WebUtilities.treat-as-div"
     OBJECT_CONTENTS = "WebUtilities.object-contents"
     SENTENCE_CONTENTS = "WebUtilities.sentence-contents"
@@ -129,6 +130,7 @@ class _WebUtilitiesCache:
         SHOULD_FILTER,
         SHOULD_INFER_LABEL_FOR,
         TREAT_AS_TEXT_OBJECT,
+        TREAT_NAMED_OBJECT_AS_WHOLE,
         TREAT_AS_DIV,
     )
 
@@ -996,19 +998,22 @@ class Utilities(script_utilities.Utilities):
         if AXUtilities.is_custom_image(obj):
             return True
 
-        # Example: Some StackExchange instances have a focusable "note"/comment role
-        # with a name (e.g. "Accepted"), and a single child div which is empty.
-        if (
-            AXUtilities.is_text_block(obj, role)
-            and AXUtilities.is_focusable(obj)
-            and AXUtilities.has_explicit_name(obj)
-        ):
-            for child in AXObject.iter_children(obj):
-                if not self._is_useless_empty_element(child):
-                    return False
-            return True
+        if not AXUtilities.has_explicit_name(obj) or not AXObject.get_name(obj):
+            return False
 
-        return False
+        namespace = self._cache.TREAT_NAMED_OBJECT_AS_WHOLE
+        cached = self._cache.get_for_object(namespace, obj)
+        if cached is not ax_cache_manager.MISSING:
+            return cached
+
+        rv = False
+        if (
+            AXUtilities.is_text_block(obj, role) and AXUtilities.is_focusable(obj)
+        ) or not AXText.get_all_text(obj).strip("\ufffc"):
+            rv = all(self._is_useless_empty_element(child) for child in AXObject.iter_children(obj))
+
+        self._cache.set_for_object(namespace, obj, rv)
+        return rv
 
     def _get_text_at_offset(
         self,

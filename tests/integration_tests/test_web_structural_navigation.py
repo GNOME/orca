@@ -79,7 +79,7 @@ def test_forward_navigation_by_role(web_structural_navigation: NativeAppSession)
     assert _next(session, keyboard.KEYSYM_C) == ["c", "Fruit", "combo box", "Apple", "opens menu"]
     assert _next(session, keyboard.KEYSYM_E) == ["e", "City", "entry"]
     assert _next(session, keyboard.KEYSYM_R) == ["r", "Option A", "not selected radio button"]
-    assert _next(session, keyboard.KEYSYM_S) == ["s", "separator", "blank"]
+    assert _next(session, keyboard.KEYSYM_S) == ["s", "separator"]
     assert _next(session, keyboard.KEYSYM_T) == [
         "t",
         "table with 2 rows 2 columns",

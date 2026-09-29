@@ -45,5 +45,13 @@ Alpha ten<h2 class="inlineblock" aria-label="Image only heading"><img src="data:
 <h2>This<br><a href="https://example.com">is<br>why</a><br>we<br><button>can't</button><br>have<br>nice<br>things<br>!<br>!<br></h2>
 <!-- 12: heading whose only content is a link (must keep the link role) -->
 Alpha twelve<h2 class="inlineblock"><a href="https://example.com">Home</a></h2>Omega twelve
+Alpha thirteen<h2 class="inlineblock" aria-label="Two empty paragraphs"><p></p><p></p></h2>Omega thirteen
+<h2 aria-label="Author-provided heading name">Readable heading</h2>
+<a href="#end" aria-label="Named empty link"><p></p></a>
+<table>
+  <tr><th scope="col" aria-label="Named column"><p></p></th><th scope="col">Other column</th></tr>
+  <tr><th scope="row" aria-label="Named row"><p></p></th><td>Value</td></tr>
+</table>
+<p id="end">End.</p>
 </body>
 </html>
