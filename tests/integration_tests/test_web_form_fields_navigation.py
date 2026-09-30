@@ -30,10 +30,10 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _exit_focus_mode(session: NativeAppSession) -> None:
+def _exit_focus_mode(session: BrowserSession) -> None:
     """Toggles from focus mode back to browse mode so the next test starts clean."""
 
     session.orca.press_orca_key(keyboard.KEYSYM_A)
@@ -42,7 +42,7 @@ def _exit_focus_mode(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_word_navigation_in_editable_combo_box(web_form_fields: NativeAppSession) -> None:
+def test_word_navigation_in_editable_combo_box(web_form_fields: BrowserSession) -> None:
     """Tests native word navigation in an editable combo box speaks the word, not the combo name."""
 
     session = web_form_fields
@@ -95,7 +95,7 @@ def test_word_navigation_in_editable_combo_box(web_form_fields: NativeAppSession
 
 
 @pytest.mark.native_app
-def test_character_navigation_in_editable_combo_box(web_form_fields: NativeAppSession) -> None:
+def test_character_navigation_in_editable_combo_box(web_form_fields: BrowserSession) -> None:
     """Tests that native character navigation in an editable combo box speaks the character."""
 
     session = web_form_fields
@@ -136,7 +136,7 @@ def test_character_navigation_in_editable_combo_box(web_form_fields: NativeAppSe
 
 
 @pytest.mark.native_app
-def test_caret_navigation_in_text_entry(web_form_fields: NativeAppSession) -> None:
+def test_caret_navigation_in_text_entry(web_form_fields: BrowserSession) -> None:
     """Tests native word and character navigation in a single-line text entry."""
 
     session = web_form_fields
@@ -178,7 +178,7 @@ def test_caret_navigation_in_text_entry(web_form_fields: NativeAppSession) -> No
 
 
 @pytest.mark.native_app
-def test_browse_mode_line_navigation(web_form_fields: NativeAppSession) -> None:
+def test_browse_mode_line_navigation(web_form_fields: BrowserSession) -> None:
     """Tests Down-arrow line navigation in browse mode across every field type."""
 
     session = web_form_fields
@@ -384,7 +384,7 @@ def test_browse_mode_line_navigation(web_form_fields: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_word_navigation_stays_within_text_input(web_form_fields: NativeAppSession) -> None:
+def test_word_navigation_stays_within_text_input(web_form_fields: BrowserSession) -> None:
     """Tests that Ctrl+Right word navigation stays within a text input at its boundary."""
 
     session = web_form_fields
@@ -404,7 +404,7 @@ def test_word_navigation_stays_within_text_input(web_form_fields: NativeAppSessi
 
 
 @pytest.mark.native_app
-def test_character_navigation_left_to_right(web_form_fields: NativeAppSession) -> None:
+def test_character_navigation_left_to_right(web_form_fields: BrowserSession) -> None:
     """Tests Right-arrow character navigation across form controls with focus mode off."""
 
     session = web_form_fields
@@ -451,7 +451,7 @@ def test_character_navigation_left_to_right(web_form_fields: NativeAppSession) -
 
 
 @pytest.mark.native_app
-def test_character_navigation_right_to_left(web_form_fields: NativeAppSession) -> None:
+def test_character_navigation_right_to_left(web_form_fields: BrowserSession) -> None:
     """Tests Left-arrow character navigation back across form controls with focus mode off."""
 
     session = web_form_fields
@@ -494,7 +494,7 @@ def test_character_navigation_right_to_left(web_form_fields: NativeAppSession) -
 
 
 @pytest.mark.native_app
-def test_word_navigation_left_to_right(web_form_fields: NativeAppSession) -> None:
+def test_word_navigation_left_to_right(web_form_fields: BrowserSession) -> None:
     """Tests Ctrl+Right word navigation across the form fields."""
 
     session = web_form_fields
@@ -549,7 +549,7 @@ def test_word_navigation_left_to_right(web_form_fields: NativeAppSession) -> Non
 
 
 @pytest.mark.native_app
-def test_word_navigation_right_to_left(web_form_fields: NativeAppSession) -> None:
+def test_word_navigation_right_to_left(web_form_fields: BrowserSession) -> None:
     """Tests Ctrl+Left word navigation back across the form fields."""
 
     session = web_form_fields

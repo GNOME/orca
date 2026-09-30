@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import move_to_bottom, move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_inline_list_items_share_a_line(web_inline_list: NativeAppSession) -> None:
+def test_inline_list_items_share_a_line(web_inline_list: BrowserSession) -> None:
     """Tests that inline list items group onto one line while block items do not."""
 
     session = web_inline_list
@@ -55,7 +55,7 @@ def test_inline_list_items_share_a_line(web_inline_list: NativeAppSession) -> No
 
 
 @pytest.mark.native_app
-def test_character_navigation_left_to_right(web_inline_list: NativeAppSession) -> None:
+def test_character_navigation_left_to_right(web_inline_list: BrowserSession) -> None:
     """Tests Right-arrow character navigation across inline list items and a block list."""
 
     session = web_inline_list
@@ -67,7 +67,7 @@ def test_character_navigation_left_to_right(web_inline_list: NativeAppSession) -
 
 
 @pytest.mark.native_app
-def test_character_navigation_right_to_left(web_inline_list: NativeAppSession) -> None:
+def test_character_navigation_right_to_left(web_inline_list: BrowserSession) -> None:
     """Tests Left-arrow character navigation back across inline list items and a block list."""
 
     session = web_inline_list
@@ -82,7 +82,7 @@ def test_character_navigation_right_to_left(web_inline_list: NativeAppSession) -
 
 
 @pytest.mark.native_app
-def test_end_of_file_then_caret_left(web_inline_list: NativeAppSession) -> None:
+def test_end_of_file_then_caret_left(web_inline_list: BrowserSession) -> None:
     """Tests Ctrl+End at the document end, then Left walking back through the last line."""
 
     session = web_inline_list
@@ -97,7 +97,7 @@ def test_end_of_file_then_caret_left(web_inline_list: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_word_navigation_left_to_right(web_inline_list: NativeAppSession) -> None:
+def test_word_navigation_left_to_right(web_inline_list: BrowserSession) -> None:
     """Tests Ctrl+Right word navigation across inline list items and a block list."""
 
     session = web_inline_list
@@ -124,7 +124,7 @@ def test_word_navigation_left_to_right(web_inline_list: NativeAppSession) -> Non
 
 
 @pytest.mark.native_app
-def test_word_navigation_right_to_left(web_inline_list: NativeAppSession) -> None:
+def test_word_navigation_right_to_left(web_inline_list: BrowserSession) -> None:
     """Tests Ctrl+Left word navigation back across inline list items and a block list."""
 
     session = web_inline_list

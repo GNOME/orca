@@ -31,7 +31,7 @@ from .harness import keyboard
 from .helpers import BrailleLine
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 # Layout mode groups each landmark's label and empty entry onto one visual line.
@@ -65,7 +65,7 @@ _TOP_TO_BOTTOM_LAYOUT_OFF = (
 
 
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom(web_landmarks: NativeAppSession) -> None:
+def test_caret_navigation_top_to_bottom(web_landmarks: BrowserSession) -> None:
     """Tests Down-arrow caret navigation top to bottom (layout mode on)."""
 
     session = web_landmarks
@@ -77,7 +77,7 @@ def test_caret_navigation_top_to_bottom(web_landmarks: NativeAppSession) -> None
 
 
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom_layout_off(web_landmarks: NativeAppSession) -> None:
+def test_caret_navigation_top_to_bottom_layout_off(web_landmarks: BrowserSession) -> None:
     """Tests the same Down-arrow navigation with layout mode disabled."""
 
     session = web_landmarks
@@ -118,7 +118,7 @@ _BOTTOM_TO_TOP_LAYOUT_OFF = (
 
 
 @pytest.mark.native_app
-def test_caret_navigation_bottom_to_top(web_landmarks: NativeAppSession) -> None:
+def test_caret_navigation_bottom_to_top(web_landmarks: BrowserSession) -> None:
     """Tests Up-arrow caret navigation from the bottom (layout mode on)."""
 
     session = web_landmarks
@@ -131,7 +131,7 @@ def test_caret_navigation_bottom_to_top(web_landmarks: NativeAppSession) -> None
 
 
 @pytest.mark.native_app
-def test_caret_navigation_bottom_to_top_layout_off(web_landmarks: NativeAppSession) -> None:
+def test_caret_navigation_bottom_to_top_layout_off(web_landmarks: BrowserSession) -> None:
     """Tests the same Up-arrow navigation with layout mode disabled."""
 
     session = web_landmarks
@@ -144,7 +144,7 @@ def test_caret_navigation_bottom_to_top_layout_off(web_landmarks: NativeAppSessi
 
 
 @pytest.mark.native_app
-def test_flat_review_by_line_and_character(web_landmarks: NativeAppSession) -> None:
+def test_flat_review_by_line_and_character(web_landmarks: BrowserSession) -> None:
     """Tests flat review by line and character over the rendered web page."""
 
     session = web_landmarks
@@ -205,7 +205,7 @@ def test_flat_review_by_line_and_character(web_landmarks: NativeAppSession) -> N
 @pytest.mark.native_app
 @pytest.mark.parametrize("layout", [True, False])
 def test_flat_review_omits_document_navigation_context(
-    web_landmarks: NativeAppSession, layout: bool
+    web_landmarks: BrowserSession, layout: bool
 ) -> None:
     """Flat review omits ancestor transitions while preserving the reviewed object's role."""
 
@@ -240,7 +240,7 @@ def test_flat_review_omits_document_navigation_context(
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_landmark_forward(web_landmarks: NativeAppSession) -> None:
+def test_structural_navigation_by_landmark_forward(web_landmarks: BrowserSession) -> None:
     """Tests forward structural navigation across every landmark type, with wrap."""
 
     session = web_landmarks
@@ -317,7 +317,7 @@ def test_structural_navigation_by_landmark_forward(web_landmarks: NativeAppSessi
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_landmark_backward(web_landmarks: NativeAppSession) -> None:
+def test_structural_navigation_by_landmark_backward(web_landmarks: BrowserSession) -> None:
     """Tests backward structural navigation across every landmark type, with wrap."""
 
     session = web_landmarks
@@ -397,7 +397,7 @@ def test_structural_navigation_by_landmark_backward(web_landmarks: NativeAppSess
 
 
 @pytest.mark.native_app
-def test_no_wrapping_when_disabled(web_landmarks: NativeAppSession) -> None:
+def test_no_wrapping_when_disabled(web_landmarks: BrowserSession) -> None:
     """Tests that a boundary message replaces the wrap when navigation wrapping is off."""
 
     session = web_landmarks
@@ -417,13 +417,13 @@ def test_no_wrapping_when_disabled(web_landmarks: NativeAppSession) -> None:
         session.orca.set("StructuralNavigator", "NavigationWraps", True)
 
 
-def _where_am_i(session: NativeAppSession) -> tuple[list[str], list[tuple[int, str, str | None]]]:
+def _where_am_i(session: BrowserSession) -> tuple[list[str], list[tuple[int, str, str | None]]]:
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
     return helpers.capture(session)
 
 
 @pytest.mark.native_app
-def test_say_all_landmarks(web_landmarks: NativeAppSession) -> None:
+def test_say_all_landmarks(web_landmarks: BrowserSession) -> None:
     """Tests the utterances Say All speaks for a page of landmarks, from the top."""
 
     session = web_landmarks
@@ -464,7 +464,7 @@ def test_say_all_landmarks(web_landmarks: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_where_am_i_on_link(web_landmarks: NativeAppSession) -> None:
+def test_where_am_i_on_link(web_landmarks: BrowserSession) -> None:
     """Tests Where Am I on a link."""
 
     session = web_landmarks

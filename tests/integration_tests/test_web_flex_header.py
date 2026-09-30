@@ -30,7 +30,7 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 # A flex item is transparent for line grouping, but the visual same-line check still governs: the
@@ -53,8 +53,10 @@ _DOWN_LINES = [
             "All Categories",
             "opens menu",
         ],
-        "Home image Shop by category button Search for anything  $l Camera button "
-        "Category All Categories combo box",
+        (
+            "Home image Shop by category button Search for anything  $l Camera button "
+            "Category All Categories combo box"
+        ),
     ),
     (["leaving banner.", "banner", "Stacked one", "button"], "Stacked one button"),
     (["Stacked two", "button"], "Stacked two button"),
@@ -65,7 +67,7 @@ _DOWN_LINES = [
 
 @pytest.mark.native_app
 def test_line_down_groups_flex_row_but_reflows_stacked_flex(
-    web_flex_header: NativeAppSession,
+    web_flex_header: BrowserSession,
 ) -> None:
     """Tests the horizontal flex header is one line and the stacked flex is one item per line."""
 

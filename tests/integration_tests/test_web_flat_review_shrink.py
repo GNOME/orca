@@ -31,7 +31,7 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, toggle_flat_review
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 _LONG_FULL = "alpha bravo charlie delta echo foxtrot golf $l"
 _LONG_VISIBLE = "alpha bravo charlie delta echo f"
@@ -46,13 +46,13 @@ def _short(cursor_cell: int) -> BrailleLine:
     return BrailleLine(cursor_cell, _SHORT_FULL, _SHORT_FULL, "\x00" * len(_SHORT_FULL))
 
 
-def _command(session: NativeAppSession, name: str) -> tuple[list[str], list[BrailleLine]]:
+def _command(session: BrowserSession, name: str) -> tuple[list[str], list[BrailleLine]]:
     session.orca.call("FlatReviewPresenter", name, True)
     return capture(session)
 
 
 @pytest.mark.native_app
-def test_review_line_whose_text_shrinks(web_flat_review_shrink: NativeAppSession) -> None:
+def test_review_line_whose_text_shrinks(web_flat_review_shrink: BrowserSession) -> None:
     """Tests reviewing a line word by word while its text shrinks underneath."""
 
     session = web_flat_review_shrink

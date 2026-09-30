@@ -30,30 +30,30 @@ from .harness import keyboard
 from .helpers import move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _right(session: NativeAppSession) -> list[str]:
+def _right(session: BrowserSession) -> list[str]:
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
     return speech(session)
 
 
-def _word_right(session: NativeAppSession) -> list[str]:
+def _word_right(session: BrowserSession) -> list[str]:
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
     return speech(session)
 
 
-def _left(session: NativeAppSession) -> list[str]:
+def _left(session: BrowserSession) -> list[str]:
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
     return speech(session)
 
 
-def _word_left(session: NativeAppSession) -> list[str]:
+def _word_left(session: BrowserSession) -> list[str]:
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
     return speech(session)
 
 
-def _into_heading(session: NativeAppSession, count: int) -> None:
+def _into_heading(session: BrowserSession, count: int) -> None:
     for _ in range(count):
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
@@ -61,7 +61,7 @@ def _into_heading(session: NativeAppSession, count: int) -> None:
 
 
 @pytest.mark.native_app
-def test_character_navigation(web_structural_navigation: NativeAppSession) -> None:
+def test_character_navigation(web_structural_navigation: BrowserSession) -> None:
     """Tests Right-arrow announcing each character it moves onto across the first heading."""
 
     session = web_structural_navigation
@@ -82,7 +82,7 @@ def test_character_navigation(web_structural_navigation: NativeAppSession) -> No
 
 
 @pytest.mark.native_app
-def test_word_navigation(web_structural_navigation: NativeAppSession) -> None:
+def test_word_navigation(web_structural_navigation: BrowserSession) -> None:
     """Tests Control+Right announcing each word, crossing from the heading into paragraphs."""
 
     session = web_structural_navigation
@@ -99,7 +99,7 @@ def test_word_navigation(web_structural_navigation: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_character_navigation_backward(web_structural_navigation: NativeAppSession) -> None:
+def test_character_navigation_backward(web_structural_navigation: BrowserSession) -> None:
     """Tests Left-arrow announcing each character, reaching the leading "S" forward skipped."""
 
     session = web_structural_navigation
@@ -120,7 +120,7 @@ def test_character_navigation_backward(web_structural_navigation: NativeAppSessi
 
 
 @pytest.mark.native_app
-def test_word_navigation_backward(web_structural_navigation: NativeAppSession) -> None:
+def test_word_navigation_backward(web_structural_navigation: BrowserSession) -> None:
     """Tests Control+Left announcing each word back across the paragraphs and heading."""
 
     session = web_structural_navigation
@@ -144,7 +144,7 @@ def test_word_navigation_backward(web_structural_navigation: NativeAppSession) -
 
 @pytest.mark.native_app
 def test_character_navigation_onto_embedded_button(
-    web_structural_navigation: NativeAppSession,
+    web_structural_navigation: BrowserSession,
 ) -> None:
     """Tests character navigation treats controls as whole objects and speaks their roles."""
 
@@ -160,7 +160,7 @@ def test_character_navigation_onto_embedded_button(
 
 @pytest.mark.native_app
 def test_character_navigation_onto_embedded_image(
-    web_structural_navigation: NativeAppSession,
+    web_structural_navigation: BrowserSession,
 ) -> None:
     """Tests that Right-arrow onto an embedded image speaks the image."""
 
@@ -172,7 +172,7 @@ def test_character_navigation_onto_embedded_image(
 
 
 @pytest.mark.native_app
-def test_line_start_and_end(web_structural_navigation: NativeAppSession) -> None:
+def test_line_start_and_end(web_structural_navigation: BrowserSession) -> None:
     """Tests Home and End moving the caret to the start and end of the current line."""
 
     session = web_structural_navigation
@@ -191,7 +191,7 @@ def test_line_start_and_end(web_structural_navigation: NativeAppSession) -> None
 
 
 @pytest.mark.native_app
-def test_file_start_and_end(web_structural_navigation: NativeAppSession) -> None:
+def test_file_start_and_end(web_structural_navigation: BrowserSession) -> None:
     """Tests Ctrl+End and Ctrl+Home moving the caret to the end and start of the document."""
 
     session = web_structural_navigation
@@ -220,7 +220,7 @@ def test_file_start_and_end(web_structural_navigation: NativeAppSession) -> None
     ids=["multi-word-button", "image-between-paragraphs", "image-with-spaces"],
 )
 def test_word_navigation_through_whole_object(
-    web_structural_navigation: NativeAppSession,
+    web_structural_navigation: BrowserSession,
     skip: int,
     before: str,
     object_speech: str,
@@ -254,7 +254,7 @@ def test_word_navigation_through_whole_object(
     ids=["native-role", "custom-role"],
 )
 def test_role_respects_displayed_text_preference(
-    web_structural_navigation: NativeAppSession,
+    web_structural_navigation: BrowserSession,
     navigation: str,
     only_displayed_text: bool,
     button_number: int,
@@ -295,7 +295,7 @@ def test_role_respects_displayed_text_preference(
 @pytest.mark.native_app
 @pytest.mark.parametrize("by_word", [True, False], ids=["word", "line"])
 def test_navigation_with_only_displayed_text(
-    web_structural_navigation: NativeAppSession,
+    web_structural_navigation: BrowserSession,
     by_word: bool,
 ) -> None:
     """Tests navigation uses the current displayed-text-only preference."""

@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_bottom, move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_say_all_omits_redundant_content(web_redundant_content: NativeAppSession) -> None:
+def test_say_all_omits_redundant_content(web_redundant_content: BrowserSession) -> None:
     """Tests that Say All omits all the redundant content."""
 
     session = web_redundant_content
@@ -80,7 +80,7 @@ def test_say_all_omits_redundant_content(web_redundant_content: NativeAppSession
 
 @pytest.mark.native_app
 def test_line_navigation_drops_error_message_from_content(
-    web_redundant_content: NativeAppSession,
+    web_redundant_content: BrowserSession,
 ) -> None:
     """Tests that the inline error message is dropped from the line's speech and braille."""
 
@@ -102,7 +102,7 @@ def test_line_navigation_drops_error_message_from_content(
 
 @pytest.mark.native_app
 def test_line_navigation_drops_useless_image_in_editable(
-    web_redundant_content: NativeAppSession,
+    web_redundant_content: BrowserSession,
 ) -> None:
     """Tests that the useless image between the meaningful images is dropped in speech/braille."""
 

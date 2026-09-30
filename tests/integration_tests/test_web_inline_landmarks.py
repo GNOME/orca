@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_line_assembly_inline_landmarks_and_links(web_inline_landmarks: NativeAppSession) -> None:
+def test_line_assembly_inline_landmarks_and_links(web_inline_landmarks: BrowserSession) -> None:
     """Tests that landmarks and banner/skip links sharing a row stay on separate lines."""
 
     session = web_inline_landmarks
@@ -67,7 +67,7 @@ def test_line_assembly_inline_landmarks_and_links(web_inline_landmarks: NativeAp
 
 
 @pytest.mark.native_app
-def test_banner_link_is_its_own_line(web_inline_landmarks: NativeAppSession) -> None:
+def test_banner_link_is_its_own_line(web_inline_landmarks: BrowserSession) -> None:
     """Tests that the banner link forms its own line above its non-banner neighbor."""
 
     session = web_inline_landmarks
@@ -80,7 +80,7 @@ def test_banner_link_is_its_own_line(web_inline_landmarks: NativeAppSession) -> 
 
 
 @pytest.mark.native_app
-def test_where_am_i_stops_at_landmark_boundary(web_inline_landmarks: NativeAppSession) -> None:
+def test_where_am_i_stops_at_landmark_boundary(web_inline_landmarks: BrowserSession) -> None:
     """Tests that Where Am I on a nav landmark omits the adjacent landmark's contents."""
 
     session = web_inline_landmarks

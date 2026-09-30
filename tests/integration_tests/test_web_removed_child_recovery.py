@@ -30,12 +30,12 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
 def test_navigation_continues_after_focused_line_removed(
-    web_removed_child_recovery: NativeAppSession,
+    web_removed_child_recovery: BrowserSession,
 ) -> None:
     """Tests that navigation stays correct after the line under the caret is removed."""
 

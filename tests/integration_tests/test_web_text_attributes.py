@@ -37,18 +37,18 @@ from .helpers import (
 )
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 def _line_down(
-    session: NativeAppSession,
+    session: BrowserSession,
 ) -> tuple[list[str], list[tuple[int, str, str | None]]]:
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     return capture(session)
 
 
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom(web_text_attributes: NativeAppSession) -> None:
+def test_caret_navigation_top_to_bottom(web_text_attributes: BrowserSession) -> None:
     """Tests Down-arrow caret nav with layout mode on: inline markup groups onto its line."""
 
     session = web_text_attributes
@@ -69,7 +69,7 @@ def test_caret_navigation_top_to_bottom(web_text_attributes: NativeAppSession) -
 
 
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom_layout_off(web_text_attributes: NativeAppSession) -> None:
+def test_caret_navigation_top_to_bottom_layout_off(web_text_attributes: BrowserSession) -> None:
     """Tests Down-arrow caret nav with layout mode off: inline markup isolates per line."""
 
     session = web_text_attributes
@@ -102,7 +102,7 @@ def test_caret_navigation_top_to_bottom_layout_off(web_text_attributes: NativeAp
 
 
 @pytest.mark.native_app
-def test_caret_navigation_bottom_to_top(web_text_attributes: NativeAppSession) -> None:
+def test_caret_navigation_bottom_to_top(web_text_attributes: BrowserSession) -> None:
     """Tests Up-arrow caret nav with layout mode on: inline markup groups onto its line."""
 
     session = web_text_attributes
@@ -124,7 +124,7 @@ def test_caret_navigation_bottom_to_top(web_text_attributes: NativeAppSession) -
 
 
 @pytest.mark.native_app
-def test_caret_navigation_bottom_to_top_layout_off(web_text_attributes: NativeAppSession) -> None:
+def test_caret_navigation_bottom_to_top_layout_off(web_text_attributes: BrowserSession) -> None:
     """Tests Up-arrow caret nav with layout mode off: inline markup isolates per line."""
 
     session = web_text_attributes
@@ -158,7 +158,7 @@ def test_caret_navigation_bottom_to_top_layout_off(web_text_attributes: NativeAp
 
 
 @pytest.mark.native_app
-def test_inline_markup_presentation(web_text_attributes: NativeAppSession) -> None:
+def test_inline_markup_presentation(web_text_attributes: BrowserSession) -> None:
     """Tests deletion, insertion, highlight, subscript, superscript, and link markup."""
 
     session = web_text_attributes
@@ -211,7 +211,7 @@ def test_inline_markup_presentation(web_text_attributes: NativeAppSession) -> No
 
 
 @pytest.mark.native_app
-def test_formatting_change_announcements(web_text_attributes: NativeAppSession) -> None:
+def test_formatting_change_announcements(web_text_attributes: BrowserSession) -> None:
     """Tests bold/italic/underline/highlight announced once the setting is enabled."""
 
     session = web_text_attributes
@@ -256,7 +256,7 @@ def test_formatting_change_announcements(web_text_attributes: NativeAppSession) 
 
 
 @pytest.mark.native_app
-def test_flat_review_markup_lines(web_text_attributes: NativeAppSession) -> None:
+def test_flat_review_markup_lines(web_text_attributes: BrowserSession) -> None:
     """Tests flat review reads each inline-markup line once (guards the doubling fix)."""
 
     session = web_text_attributes
@@ -311,7 +311,7 @@ def test_flat_review_markup_lines(web_text_attributes: NativeAppSession) -> None
 
 @pytest.mark.native_app
 def test_caret_navigation_announces_formatting_changes(
-    web_text_attributes: NativeAppSession,
+    web_text_attributes: BrowserSession,
 ) -> None:
     """Tests that character navigation announces entering and leaving a bold run when enabled."""
 
@@ -342,7 +342,7 @@ def test_caret_navigation_announces_formatting_changes(
 
 
 @pytest.mark.native_app
-def test_character_navigation_left_to_right(web_text_attributes: NativeAppSession) -> None:
+def test_character_navigation_left_to_right(web_text_attributes: BrowserSession) -> None:
     """Tests Right-arrow character navigation across the whole document, inline and block."""
 
     session = web_text_attributes
@@ -359,7 +359,7 @@ def test_character_navigation_left_to_right(web_text_attributes: NativeAppSessio
 
 
 @pytest.mark.native_app
-def test_character_navigation_right_to_left(web_text_attributes: NativeAppSession) -> None:
+def test_character_navigation_right_to_left(web_text_attributes: BrowserSession) -> None:
     """Tests Left-arrow character navigation back across the whole document from the end."""
 
     session = web_text_attributes
@@ -377,7 +377,7 @@ def test_character_navigation_right_to_left(web_text_attributes: NativeAppSessio
 
 
 @pytest.mark.native_app
-def test_end_of_file_then_caret_left(web_text_attributes: NativeAppSession) -> None:
+def test_end_of_file_then_caret_left(web_text_attributes: BrowserSession) -> None:
     """Tests Ctrl+End at the end of a line with inline markup, then Left walking back."""
 
     session = web_text_attributes
@@ -392,7 +392,7 @@ def test_end_of_file_then_caret_left(web_text_attributes: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
-def test_word_navigation_left_to_right(web_text_attributes: NativeAppSession) -> None:
+def test_word_navigation_left_to_right(web_text_attributes: BrowserSession) -> None:
     """Tests Ctrl+Right word navigation across the whole document, words spanning inline markup."""
 
     session = web_text_attributes
@@ -437,7 +437,7 @@ def test_word_navigation_left_to_right(web_text_attributes: NativeAppSession) ->
 
 
 @pytest.mark.native_app
-def test_word_navigation_right_to_left(web_text_attributes: NativeAppSession) -> None:
+def test_word_navigation_right_to_left(web_text_attributes: BrowserSession) -> None:
     """Tests Ctrl+Left word navigation back across the whole document from the end."""
 
     session = web_text_attributes

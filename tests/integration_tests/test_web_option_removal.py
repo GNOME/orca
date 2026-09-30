@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_focused_option_removed(web_option_removal: NativeAppSession) -> None:
+def test_focused_option_removed(web_option_removal: BrowserSession) -> None:
     """Tests that removing the active-descendant option announces the new option."""
 
     session = web_option_removal

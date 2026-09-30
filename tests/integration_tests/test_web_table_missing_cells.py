@@ -30,7 +30,7 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 def _table_nav(key: int) -> None:
@@ -38,7 +38,7 @@ def _table_nav(key: int) -> None:
 
 
 @pytest.mark.native_app
-def test_navigation_around_a_missing_cell(web_missing_cells: NativeAppSession) -> None:
+def test_navigation_around_a_missing_cell(web_missing_cells: BrowserSession) -> None:
     """Tests cell navigation across a missing cell from each side."""
 
     session = web_missing_cells

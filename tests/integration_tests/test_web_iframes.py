@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_heading_navigation_enters_and_leaves_the_iframe(web_iframes: NativeAppSession) -> None:
+def test_heading_navigation_enters_and_leaves_the_iframe(web_iframes: BrowserSession) -> None:
     """Tests that next-heading treats the heading in the iframe as part of the document."""
 
     session = web_iframes
@@ -52,7 +52,7 @@ def test_heading_navigation_enters_and_leaves_the_iframe(web_iframes: NativeAppS
 
 @pytest.mark.native_app
 def test_backward_heading_navigation_enters_and_leaves_the_iframe(
-    web_iframes: NativeAppSession,
+    web_iframes: BrowserSession,
 ) -> None:
     """Tests that previous-heading treats the heading in the iframe as part of the document."""
 
@@ -70,7 +70,7 @@ def test_backward_heading_navigation_enters_and_leaves_the_iframe(
 
 
 @pytest.mark.native_app
-def test_caret_navigation_enters_and_leaves_the_iframe(web_iframes: NativeAppSession) -> None:
+def test_caret_navigation_enters_and_leaves_the_iframe(web_iframes: BrowserSession) -> None:
     """Tests that line navigation reads the content of the iframe in document order."""
 
     session = web_iframes
@@ -111,7 +111,7 @@ def test_caret_navigation_enters_and_leaves_the_iframe(web_iframes: NativeAppSes
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_widget(web_iframes: NativeAppSession) -> None:
+def test_structural_navigation_by_widget(web_iframes: BrowserSession) -> None:
     """Tests that next-button and next-entry reach the widgets inside the iframe."""
 
     session = web_iframes
@@ -126,7 +126,7 @@ def test_structural_navigation_by_widget(web_iframes: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 def test_structural_navigation_focus_mode_setting_uses_the_role(
-    web_iframes: NativeAppSession,
+    web_iframes: BrowserSession,
 ) -> None:
     """Tests that the role of the widget in the iframe decides the mode when the setting is on."""
 

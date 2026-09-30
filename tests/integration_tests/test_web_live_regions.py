@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import capture, move_to_bottom, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom(web_live_regions: NativeAppSession) -> None:
+def test_caret_navigation_top_to_bottom(web_live_regions: BrowserSession) -> None:
     """Tests Down-arrow caret navigation through the page's buttons (layout mode on)."""
 
     session = web_live_regions
@@ -46,7 +46,7 @@ def test_caret_navigation_top_to_bottom(web_live_regions: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom_layout_off(web_live_regions: NativeAppSession) -> None:
+def test_caret_navigation_top_to_bottom_layout_off(web_live_regions: BrowserSession) -> None:
     """Tests the same Down-arrow navigation with layout mode disabled."""
 
     session = web_live_regions
@@ -87,7 +87,7 @@ _BOTTOM_TO_TOP = (
 
 
 @pytest.mark.native_app
-def test_caret_navigation_bottom_to_top(web_live_regions: NativeAppSession) -> None:
+def test_caret_navigation_bottom_to_top(web_live_regions: BrowserSession) -> None:
     """Tests Up-arrow caret navigation from the bottom of the page (layout mode on)."""
 
     session = web_live_regions
@@ -100,7 +100,7 @@ def test_caret_navigation_bottom_to_top(web_live_regions: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
-def test_caret_navigation_bottom_to_top_layout_off(web_live_regions: NativeAppSession) -> None:
+def test_caret_navigation_bottom_to_top_layout_off(web_live_regions: BrowserSession) -> None:
     """Tests the same Up-arrow navigation with layout mode disabled."""
 
     session = web_live_regions
@@ -113,7 +113,7 @@ def test_caret_navigation_bottom_to_top_layout_off(web_live_regions: NativeAppSe
 
 
 @pytest.mark.native_app
-def test_live_region_politeness(web_live_regions: NativeAppSession) -> None:
+def test_live_region_politeness(web_live_regions: BrowserSession) -> None:
     """Tests that polite and assertive updates are announced while aria-live=off is silent."""
 
     session = web_live_regions
@@ -136,7 +136,7 @@ def test_live_region_politeness(web_live_regions: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_status_role_live_region_is_announced(web_live_regions: NativeAppSession) -> None:
+def test_status_role_live_region_is_announced(web_live_regions: BrowserSession) -> None:
     """Tests that an update to a polite role=status live region is announced."""
 
     session = web_live_regions
@@ -152,7 +152,7 @@ def test_status_role_live_region_is_announced(web_live_regions: NativeAppSession
 
 @pytest.mark.native_app
 def test_live_region_with_icon_content_is_announced_by_name(
-    web_live_regions: NativeAppSession,
+    web_live_regions: BrowserSession,
 ) -> None:
     """Tests that an atomic live region whose only content is an icon is announced by its name."""
 
@@ -168,7 +168,7 @@ def test_live_region_with_icon_content_is_announced_by_name(
 
 
 @pytest.mark.native_app
-def test_live_region_child_removal_is_silent(web_live_regions: NativeAppSession) -> None:
+def test_live_region_child_removal_is_silent(web_live_regions: BrowserSession) -> None:
     """Tests that removing a child of a polite live region away from focus is not announced."""
 
     session = web_live_regions
@@ -183,7 +183,7 @@ def test_live_region_child_removal_is_silent(web_live_regions: NativeAppSession)
 
 
 @pytest.mark.native_app
-def test_busy_live_region_rewritten_in_place(web_live_regions: NativeAppSession) -> None:
+def test_busy_live_region_rewritten_in_place(web_live_regions: BrowserSession) -> None:
     """Tests that a region rewritten while aria-busy is announced once it is no longer busy."""
 
     session = web_live_regions
@@ -198,7 +198,7 @@ def test_busy_live_region_rewritten_in_place(web_live_regions: NativeAppSession)
 
 
 @pytest.mark.native_app
-def test_busy_live_region_finalized_with_its_content(web_live_regions: NativeAppSession) -> None:
+def test_busy_live_region_finalized_with_its_content(web_live_regions: BrowserSession) -> None:
     """Tests that clearing aria-busy along with a final rewrite yields one announcement."""
 
     session = web_live_regions
@@ -213,7 +213,7 @@ def test_busy_live_region_finalized_with_its_content(web_live_regions: NativeApp
 
 
 @pytest.mark.native_app
-def test_live_region_inserted_empty_and_then_filled(web_live_regions: NativeAppSession) -> None:
+def test_live_region_inserted_empty_and_then_filled(web_live_regions: BrowserSession) -> None:
     """Tests adding an empty live region to the page and then putting text in it."""
 
     session = web_live_regions

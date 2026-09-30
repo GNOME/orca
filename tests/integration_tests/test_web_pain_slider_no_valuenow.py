@@ -30,12 +30,12 @@ from .harness import keyboard
 from .helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
 def test_slider_announces_valuetext_without_valuenow(
-    web_pain_slider_no_valuenow: NativeAppSession,
+    web_pain_slider_no_valuenow: BrowserSession,
 ) -> None:
     """Tests that each new aria-valuetext is announced even when aria-valuenow is absent."""
 

@@ -30,7 +30,7 @@ from .harness import keyboard
 from .helpers import capture, move_to_bottom, move_to_top, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 def _radio_line(group: str, *labels: str) -> tuple[str, str]:
@@ -135,7 +135,7 @@ _UP_LINES_LAYOUT_OFF = [
 @pytest.mark.parametrize("direction", ["down", "up"])
 @pytest.mark.parametrize("layout_mode", [True, False], ids=["layout-on", "layout-off"])
 def test_radio_button_line_navigation(
-    web_radio_button_lines: NativeAppSession,
+    web_radio_button_lines: BrowserSession,
     direction: str,
     layout_mode: bool,
 ) -> None:

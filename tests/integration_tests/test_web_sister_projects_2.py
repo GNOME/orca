@@ -30,7 +30,7 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 # The fixture models Wikipedia's sister-projects box faithfully: inline-block cells (so the icon
@@ -66,7 +66,7 @@ _DOWN_LINES = [
 
 @pytest.mark.native_app
 def test_line_down_keeps_icon_and_name_but_not_the_description(
-    web_sister_projects_2: NativeAppSession,
+    web_sister_projects_2: BrowserSession,
 ) -> None:
     """Tests each card reads as icon and name on one line, then the description on the next."""
 

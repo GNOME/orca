@@ -30,17 +30,17 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_bottom, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _down(session: NativeAppSession) -> tuple[list[str], list[BrailleLine]]:
+def _down(session: BrowserSession) -> tuple[list[str], list[BrailleLine]]:
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     return capture(session)
 
 
 @pytest.mark.native_app
 def test_caret_navigation_skips_empty_and_hidden_content(
-    web_caret_context: NativeAppSession,
+    web_caret_context: BrowserSession,
 ) -> None:
     """Tests that caret navigation presents real paragraphs and skips empty/hidden ones."""
 
@@ -69,7 +69,7 @@ def test_caret_navigation_skips_empty_and_hidden_content(
 
 
 @pytest.mark.native_app
-def test_hidden_content_never_reaches_speech(web_caret_context: NativeAppSession) -> None:
+def test_hidden_content_never_reaches_speech(web_caret_context: BrowserSession) -> None:
     """Tests that the hidden paragraph and span are never spoken during caret navigation."""
 
     reset_web_state(web_caret_context)
@@ -94,7 +94,7 @@ def test_hidden_content_never_reaches_speech(web_caret_context: NativeAppSession
 
 @pytest.mark.native_app
 def test_offscreen_label_is_skipped_during_caret_navigation(
-    web_caret_context: NativeAppSession,
+    web_caret_context: BrowserSession,
 ) -> None:
     """Tests that an off-screen label naming a control is skipped during caret navigation."""
 
@@ -112,7 +112,7 @@ def test_offscreen_label_is_skipped_during_caret_navigation(
 
 
 @pytest.mark.native_app
-def test_say_all_skips_empty_and_hidden_content(web_caret_context: NativeAppSession) -> None:
+def test_say_all_skips_empty_and_hidden_content(web_caret_context: BrowserSession) -> None:
     """Tests that Say All reads the real paragraphs and skips the empty and hidden content."""
 
     reset_web_state(web_caret_context)
@@ -126,7 +126,7 @@ def test_say_all_skips_empty_and_hidden_content(web_caret_context: NativeAppSess
 
 
 @pytest.mark.native_app
-def test_character_navigation_left_to_right(web_caret_context: NativeAppSession) -> None:
+def test_character_navigation_left_to_right(web_caret_context: BrowserSession) -> None:
     """Tests Right-arrow character navigation across paragraphs, skipping aria-hidden content."""
 
     session = web_caret_context
@@ -140,7 +140,7 @@ def test_character_navigation_left_to_right(web_caret_context: NativeAppSession)
 
 
 @pytest.mark.native_app
-def test_character_navigation_right_to_left(web_caret_context: NativeAppSession) -> None:
+def test_character_navigation_right_to_left(web_caret_context: BrowserSession) -> None:
     """Tests Left-arrow character navigation back across paragraphs from the end."""
 
     session = web_caret_context
@@ -155,7 +155,7 @@ def test_character_navigation_right_to_left(web_caret_context: NativeAppSession)
 
 
 @pytest.mark.native_app
-def test_word_navigation_left_to_right(web_caret_context: NativeAppSession) -> None:
+def test_word_navigation_left_to_right(web_caret_context: BrowserSession) -> None:
     """Tests Ctrl+Right word navigation across paragraphs, skipping aria-hidden content."""
 
     session = web_caret_context
@@ -179,7 +179,7 @@ def test_word_navigation_left_to_right(web_caret_context: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
-def test_word_navigation_right_to_left(web_caret_context: NativeAppSession) -> None:
+def test_word_navigation_right_to_left(web_caret_context: BrowserSession) -> None:
     """Tests Ctrl+Left word navigation back across paragraphs from the end."""
 
     session = web_caret_context
@@ -210,7 +210,7 @@ def test_word_navigation_right_to_left(web_caret_context: NativeAppSession) -> N
 # does not fully clear, which would break a later top-of-document test.
 @pytest.mark.native_app
 def test_focusable_aria_hidden_span_is_exposed_on_focus(
-    web_caret_context: NativeAppSession,
+    web_caret_context: BrowserSession,
 ) -> None:
     """Tests that focusing the aria-hidden span makes Chromium expose it, so Orca presents it."""
 

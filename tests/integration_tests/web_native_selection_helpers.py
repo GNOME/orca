@@ -34,7 +34,7 @@ from .version_helpers import atspi_version, version_at_least
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 LONG_PARAGRAPH = (
     "This is a sufficiently long paragraph of body text so that it qualifies as a "
@@ -53,7 +53,7 @@ USES_DOCUMENT_SELECTION = (
 
 
 @contextlib.contextmanager
-def native_selection(session: NativeAppSession) -> Iterator[None]:
+def native_selection(session: BrowserSession) -> Iterator[None]:
     """Runs the block in browse mode, where Chromium's own caret performs the selection."""
 
     reset_web_state(session)
@@ -61,21 +61,21 @@ def native_selection(session: NativeAppSession) -> Iterator[None]:
     yield
 
 
-def select_character(session: NativeAppSession, key: str) -> list[str]:
+def select_character(session: BrowserSession, key: str) -> list[str]:
     """Extends or retracts Chromium's native selection by one character."""
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], key)
     return speech(session)
 
 
-def select_word(session: NativeAppSession, key: str) -> list[str]:
+def select_word(session: BrowserSession, key: str) -> list[str]:
     """Extends or retracts Chromium's native selection by one word."""
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], key)
     return speech(session)
 
 
-def select_line(session: NativeAppSession, key: str) -> list[str]:
+def select_line(session: BrowserSession, key: str) -> list[str]:
     """Extends or retracts Chromium's native selection by one line."""
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], key)

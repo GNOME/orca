@@ -31,7 +31,7 @@ from .harness import keyboard
 from .helpers import BrailleLine
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 _TOP_TO_BOTTOM = (
@@ -49,7 +49,7 @@ _TOP_TO_BOTTOM = (
 
 
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom(web_lists: NativeAppSession) -> None:
+def test_caret_navigation_top_to_bottom(web_lists: BrowserSession) -> None:
     """Tests Down-arrow caret navigation through the whole page (layout mode on)."""
 
     session = web_lists
@@ -61,7 +61,7 @@ def test_caret_navigation_top_to_bottom(web_lists: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom_layout_off(web_lists: NativeAppSession) -> None:
+def test_caret_navigation_top_to_bottom_layout_off(web_lists: BrowserSession) -> None:
     """Tests the same Down-arrow navigation with layout mode disabled."""
 
     session = web_lists
@@ -87,7 +87,7 @@ _BOTTOM_TO_TOP = (
 
 
 @pytest.mark.native_app
-def test_caret_navigation_bottom_to_top(web_lists: NativeAppSession) -> None:
+def test_caret_navigation_bottom_to_top(web_lists: BrowserSession) -> None:
     """Tests Up-arrow caret navigation through the whole page (layout mode on)."""
 
     session = web_lists
@@ -100,7 +100,7 @@ def test_caret_navigation_bottom_to_top(web_lists: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_caret_navigation_bottom_to_top_layout_off(web_lists: NativeAppSession) -> None:
+def test_caret_navigation_bottom_to_top_layout_off(web_lists: BrowserSession) -> None:
     """Tests the same Up-arrow navigation with layout mode disabled."""
 
     session = web_lists
@@ -113,7 +113,7 @@ def test_caret_navigation_bottom_to_top_layout_off(web_lists: NativeAppSession) 
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_list(web_lists: NativeAppSession) -> None:
+def test_structural_navigation_by_list(web_lists: BrowserSession) -> None:
     """Tests structural navigation across unordered, ordered, and nested lists."""
 
     session = web_lists
@@ -187,7 +187,7 @@ def test_structural_navigation_by_list(web_lists: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_list_item(web_lists: NativeAppSession) -> None:
+def test_structural_navigation_by_list_item(web_lists: BrowserSession) -> None:
     """Tests structural navigation item-by-item, including into and out of a nested list."""
 
     session = web_lists
@@ -299,7 +299,7 @@ def test_structural_navigation_by_list_item(web_lists: NativeAppSession) -> None
 
 
 @pytest.mark.native_app
-def test_say_all_lists(web_lists: NativeAppSession) -> None:
+def test_say_all_lists(web_lists: BrowserSession) -> None:
     """Tests the utterances Say All speaks for a page of lists, from the top."""
 
     session = web_lists

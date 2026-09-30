@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_button_navigation(web_dynamic_content: NativeAppSession) -> None:
+def test_button_navigation(web_dynamic_content: BrowserSession) -> None:
     """Tests Tab navigation through the page's four action buttons."""
 
     session = web_dynamic_content
@@ -51,7 +51,7 @@ def test_button_navigation(web_dynamic_content: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_adding_list_items_is_silent(web_dynamic_content: NativeAppSession) -> None:
+def test_adding_list_items_is_silent(web_dynamic_content: BrowserSession) -> None:
     """Tests that appending list items while focus is on the button is not announced."""
 
     session = web_dynamic_content
@@ -68,7 +68,7 @@ def test_adding_list_items_is_silent(web_dynamic_content: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
-def test_removing_list_items_is_silent(web_dynamic_content: NativeAppSession) -> None:
+def test_removing_list_items_is_silent(web_dynamic_content: BrowserSession) -> None:
     """Tests that removing list items while focus is on the button is not announced."""
 
     session = web_dynamic_content
@@ -86,7 +86,7 @@ def test_removing_list_items_is_silent(web_dynamic_content: NativeAppSession) ->
 
 
 @pytest.mark.native_app
-def test_toggling_panel_is_silent(web_dynamic_content: NativeAppSession) -> None:
+def test_toggling_panel_is_silent(web_dynamic_content: BrowserSession) -> None:
     """Tests that showing and hiding a display:none panel is not announced."""
 
     session = web_dynamic_content
@@ -105,7 +105,7 @@ def test_toggling_panel_is_silent(web_dynamic_content: NativeAppSession) -> None
 
 
 @pytest.mark.native_app
-def test_reload_rereads_page(web_dynamic_content: NativeAppSession) -> None:
+def test_reload_rereads_page(web_dynamic_content: BrowserSession) -> None:
     """Tests that reloading the page presents its contents anew (busy + load-complete)."""
 
     session = web_dynamic_content
@@ -137,7 +137,7 @@ def test_reload_rereads_page(web_dynamic_content: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_reload_presents_page_summary(web_dynamic_content: NativeAppSession) -> None:
+def test_reload_presents_page_summary(web_dynamic_content: BrowserSession) -> None:
     """Tests that the page-summary-on-load setting presents a structural summary on reload."""
 
     session = web_dynamic_content

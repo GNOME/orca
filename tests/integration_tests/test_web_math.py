@@ -33,7 +33,7 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 def _mathcat_available() -> bool:
@@ -53,7 +53,7 @@ _FRACTION = "the fraction with numerator; x plus 1; and denominator y minus 2"
 
 
 @pytest.mark.native_app
-def test_line_navigation_over_inline_and_standalone_math(web_math: NativeAppSession) -> None:
+def test_line_navigation_over_inline_and_standalone_math(web_math: BrowserSession) -> None:
     """Tests inline and standalone math are presented correctly."""
 
     session = web_math
@@ -87,7 +87,7 @@ def test_line_navigation_over_inline_and_standalone_math(web_math: NativeAppSess
 
 @pytest.mark.native_app
 def test_standalone_math_voiced_by_character_and_word_navigation(
-    web_math: NativeAppSession,
+    web_math: BrowserSession,
 ) -> None:
     """Tests character and word navigation onto standalone math are not silent."""
 
@@ -112,7 +112,7 @@ def test_standalone_math_voiced_by_character_and_word_navigation(
 
 
 @pytest.mark.native_app
-def test_math_navigation_activation_and_restart(web_math: NativeAppSession) -> None:
+def test_math_navigation_activation_and_restart(web_math: BrowserSession) -> None:
     """Tests Orca+Alt+M enters math navigation and, pressed again, restarts at the top."""
 
     session = web_math

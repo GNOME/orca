@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_row_reorder_announced(web_sortable_table: NativeAppSession) -> None:
+def test_row_reorder_announced(web_sortable_table: BrowserSession) -> None:
     """Tests that activating the sort button announces the row reorder and sort order."""
 
     session = web_sortable_table
@@ -81,7 +81,7 @@ def test_row_reorder_announced(web_sortable_table: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_column_reorder_announced(web_sortable_table: NativeAppSession) -> None:
+def test_column_reorder_announced(web_sortable_table: BrowserSession) -> None:
     """Tests that toggling a row header's sort order announces the column reorder."""
 
     session = web_sortable_table

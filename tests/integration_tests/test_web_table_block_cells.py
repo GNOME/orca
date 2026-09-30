@@ -30,7 +30,7 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 _FTSE_ROW = "FTSE 100 10,908.41 +37.39"
 _FTSE_MASK = "\xc0" * 8 + "\x00" * 17
@@ -44,7 +44,7 @@ _SENSEX_ROW = "Sensex 81,254.00 +64.20"
 _RISING_ROW = "Rising +1.90"
 
 
-def _drain_down(session: NativeAppSession, count: int) -> None:
+def _drain_down(session: BrowserSession, count: int) -> None:
     for _ in range(count):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         capture(session)
@@ -52,7 +52,7 @@ def _drain_down(session: NativeAppSession, count: int) -> None:
 
 @pytest.mark.native_app
 def test_paragraph_wrapped_cells_are_read_as_a_full_row(
-    web_table_block_cells: NativeAppSession,
+    web_table_block_cells: BrowserSession,
 ) -> None:
     """Tests full-row reading when each cell wraps its content in a paragraph."""
 
@@ -102,7 +102,7 @@ def test_paragraph_wrapped_cells_are_read_as_a_full_row(
 
 @pytest.mark.native_app
 def test_upward_navigation_keeps_paragraph_wrapped_rows_intact(
-    web_table_block_cells: NativeAppSession,
+    web_table_block_cells: BrowserSession,
 ) -> None:
     """Tests full-row reading when arrowing up into paragraph-wrapped cells."""
 
@@ -147,7 +147,7 @@ def test_upward_navigation_keeps_paragraph_wrapped_rows_intact(
 
 @pytest.mark.native_app
 def test_stacked_paragraphs_in_cells_are_not_combined(
-    web_table_block_cells: NativeAppSession,
+    web_table_block_cells: BrowserSession,
 ) -> None:
     """Tests that cells holding two paragraphs each yield one paragraph per line."""
 
@@ -165,7 +165,7 @@ def test_stacked_paragraphs_in_cells_are_not_combined(
 
 @pytest.mark.native_app
 def test_clipped_header_labels_join_the_visible_ones(
-    web_table_block_cells: NativeAppSession,
+    web_table_block_cells: BrowserSession,
 ) -> None:
     """Tests the row assembly of marketwatch.com's header, two of whose labels are clipped."""
 
@@ -194,7 +194,7 @@ def test_clipped_header_labels_join_the_visible_ones(
 
 
 @pytest.mark.native_app
-def test_line_breaks_in_cells_are_not_combined(web_table_block_cells: NativeAppSession) -> None:
+def test_line_breaks_in_cells_are_not_combined(web_table_block_cells: BrowserSession) -> None:
     """Tests that a break inside a cell's paragraph, and inside the cell, splits the line."""
 
     session = web_table_block_cells
@@ -211,7 +211,7 @@ def test_line_breaks_in_cells_are_not_combined(web_table_block_cells: NativeAppS
 
 
 @pytest.mark.native_app
-def test_header_text_directly_in_the_cells(web_table_block_cells: NativeAppSession) -> None:
+def test_header_text_directly_in_the_cells(web_table_block_cells: BrowserSession) -> None:
     """Tests a header row and its data row when the text is not wrapped in a block."""
 
     session = web_table_block_cells
@@ -247,7 +247,7 @@ def test_header_text_directly_in_the_cells(web_table_block_cells: NativeAppSessi
 
 
 @pytest.mark.native_app
-def test_both_lines_of_a_header_with_a_line_break(web_table_block_cells: NativeAppSession) -> None:
+def test_both_lines_of_a_header_with_a_line_break(web_table_block_cells: BrowserSession) -> None:
     """Tests that each line of a header holding a break is presented, in both directions."""
 
     session = web_table_block_cells
@@ -289,7 +289,7 @@ def test_both_lines_of_a_header_with_a_line_break(web_table_block_cells: NativeA
 
 
 @pytest.mark.native_app
-def test_header_text_wrapped_in_a_paragraph(web_table_block_cells: NativeAppSession) -> None:
+def test_header_text_wrapped_in_a_paragraph(web_table_block_cells: BrowserSession) -> None:
     """Tests the counterpart of test_header_text_directly_in_the_cells."""
 
     session = web_table_block_cells
@@ -322,7 +322,7 @@ def test_header_text_wrapped_in_a_paragraph(web_table_block_cells: NativeAppSess
 
 
 @pytest.mark.native_app
-def test_both_lines_of_a_paragraph_wrapped_header(web_table_block_cells: NativeAppSession) -> None:
+def test_both_lines_of_a_paragraph_wrapped_header(web_table_block_cells: BrowserSession) -> None:
     """Tests the counterpart of test_both_lines_of_a_header_with_a_line_break."""
 
     session = web_table_block_cells

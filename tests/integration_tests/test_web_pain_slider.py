@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_slider_announces_valuetext_on_value_change(web_pain_slider: NativeAppSession) -> None:
+def test_slider_announces_valuetext_on_value_change(web_pain_slider: BrowserSession) -> None:
     """Tests that arrowing a slider announces each new aria-valuetext, forward and backward."""
 
     session = web_pain_slider

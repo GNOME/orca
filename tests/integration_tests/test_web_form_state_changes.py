@@ -30,11 +30,11 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_tab_navigation_and_state_changes(web_form_fields: NativeAppSession) -> None:
+def test_tab_navigation_and_state_changes(web_form_fields: BrowserSession) -> None:
     """Tests Tab landings (incl. focus-mode entry/exit) and state changes per form control."""
 
     session = web_form_fields
@@ -274,7 +274,7 @@ def test_tab_navigation_and_state_changes(web_form_fields: NativeAppSession) -> 
 
 @pytest.mark.native_app
 def test_arrowing_a_native_radio_group_in_browse_mode(
-    web_form_fields: NativeAppSession,
+    web_form_fields: BrowserSession,
 ) -> None:
     """Tests arrowing through a native radio group in browse mode."""
 
@@ -314,7 +314,7 @@ def test_arrowing_a_native_radio_group_in_browse_mode(
 
 @pytest.mark.native_app
 def test_arrowing_an_aria_radio_group_in_focus_mode(
-    web_form_fields: NativeAppSession,
+    web_form_fields: BrowserSession,
 ) -> None:
     """Tests arrowing through an ARIA radio group in focus mode."""
 

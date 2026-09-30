@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_listbox_navigation(web_listbox: NativeAppSession) -> None:
+def test_listbox_navigation(web_listbox: BrowserSession) -> None:
     """Tests listbox navigation."""
 
     session = web_listbox

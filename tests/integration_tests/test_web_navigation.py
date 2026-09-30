@@ -30,10 +30,10 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _boundary(session: NativeAppSession, keysym: int, steps: int) -> list[str]:
+def _boundary(session: BrowserSession, keysym: int, steps: int) -> list[str]:
     """Navigates past the last matching element with wrapping off and returns the message."""
 
     for _ in range(steps):
@@ -44,7 +44,7 @@ def _boundary(session: NativeAppSession, keysym: int, steps: int) -> list[str]:
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_heading(web_basic: NativeAppSession) -> None:
+def test_structural_navigation_by_heading(web_basic: BrowserSession) -> None:
     """Tests structural navigation by heading."""
 
     session = web_basic
@@ -118,7 +118,7 @@ def test_structural_navigation_by_heading(web_basic: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_heading_where_am_i(web_basic: NativeAppSession) -> None:
+def test_heading_where_am_i(web_basic: BrowserSession) -> None:
     """Tests basic Where Am I on a heading."""
 
     session = web_basic
@@ -132,7 +132,7 @@ def test_heading_where_am_i(web_basic: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_link(web_basic: NativeAppSession) -> None:
+def test_structural_navigation_by_link(web_basic: BrowserSession) -> None:
     """Tests structural navigation by link."""
 
     session = web_basic
@@ -185,7 +185,7 @@ def test_structural_navigation_by_link(web_basic: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_list(web_basic: NativeAppSession) -> None:
+def test_structural_navigation_by_list(web_basic: BrowserSession) -> None:
     """Tests structural navigation by list."""
 
     session = web_basic
@@ -238,7 +238,7 @@ def test_structural_navigation_by_list(web_basic: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_form_field(web_basic: NativeAppSession) -> None:
+def test_structural_navigation_by_form_field(web_basic: BrowserSession) -> None:
     """Tests structural navigation by form field."""
 
     session = web_basic
@@ -353,7 +353,7 @@ def test_structural_navigation_by_form_field(web_basic: NativeAppSession) -> Non
 
 
 @pytest.mark.native_app
-def test_caret_navigation(web_basic: NativeAppSession) -> None:
+def test_caret_navigation(web_basic: BrowserSession) -> None:
     """Tests caret navigation."""
 
     session = web_basic
@@ -447,7 +447,7 @@ def test_caret_navigation(web_basic: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_word_navigation_across_blank_line(web_basic: NativeAppSession) -> None:
+def test_word_navigation_across_blank_line(web_basic: BrowserSession) -> None:
     """Tests that forward word navigation does not skip the word before a blank line."""
 
     session = web_basic
@@ -496,7 +496,7 @@ def test_word_navigation_across_blank_line(web_basic: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_radio_group_in_focus_mode(web_basic: NativeAppSession) -> None:
+def test_radio_group_in_focus_mode(web_basic: BrowserSession) -> None:
     """Tests presentation in a radio button group in focus mode."""
 
     session = web_basic
@@ -555,7 +555,7 @@ def test_radio_group_in_focus_mode(web_basic: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_no_wrapping_when_disabled(web_basic: NativeAppSession) -> None:
+def test_no_wrapping_when_disabled(web_basic: BrowserSession) -> None:
     """Tests that each navigator reports a boundary instead of wrapping when wrapping is off."""
 
     session = web_basic
@@ -576,7 +576,7 @@ def test_no_wrapping_when_disabled(web_basic: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("click_count", [1, 2], ids=["basic", "detailed"])
-def test_where_am_i_preserves_caret_position(web_basic: NativeAppSession, click_count: int) -> None:
+def test_where_am_i_preserves_caret_position(web_basic: BrowserSession, click_count: int) -> None:
     """Tests that querying a heading does not move the caret back to its start."""
 
     session = web_basic

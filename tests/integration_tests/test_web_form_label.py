@@ -30,11 +30,11 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_say_all_from_label_keeps_control_name(web_form_label: NativeAppSession) -> None:
+def test_say_all_from_label_keeps_control_name(web_form_label: BrowserSession) -> None:
     """A label filtered out of Say All must not also suppress its control's name."""
 
     session = web_form_label

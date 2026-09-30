@@ -30,7 +30,7 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 def _quantity_line(value: int) -> helpers.BrailleLine:
@@ -39,7 +39,7 @@ def _quantity_line(value: int) -> helpers.BrailleLine:
 
 
 @pytest.mark.native_app
-def test_quantity_focus_and_arrow(web_aria_spinbutton: NativeAppSession) -> None:
+def test_quantity_focus_and_arrow(web_aria_spinbutton: BrowserSession) -> None:
     """Tests Tab focus and Up/Down on the non-editable ARIA spinbutton."""
 
     session = web_aria_spinbutton
@@ -66,7 +66,7 @@ def test_quantity_focus_and_arrow(web_aria_spinbutton: NativeAppSession) -> None
 
 
 @pytest.mark.native_app
-def test_quantity_page_home_end_and_boundaries(web_aria_spinbutton: NativeAppSession) -> None:
+def test_quantity_page_home_end_and_boundaries(web_aria_spinbutton: BrowserSession) -> None:
     """Tests PageUp/Down, Home/End, and clamping at min/max on the non-editable spinbutton."""
 
     session = web_aria_spinbutton
@@ -91,7 +91,7 @@ def test_quantity_page_home_end_and_boundaries(web_aria_spinbutton: NativeAppSes
 
 
 @pytest.mark.native_app
-def test_rating_focus_and_arrow(web_aria_spinbutton: NativeAppSession) -> None:
+def test_rating_focus_and_arrow(web_aria_spinbutton: BrowserSession) -> None:
     """Tests Tab focus and Up/Down on the editable ARIA spinbutton (Rating)."""
 
     session = web_aria_spinbutton
@@ -133,13 +133,13 @@ def test_rating_focus_and_arrow(web_aria_spinbutton: NativeAppSession) -> None:
     )
 
 
-def _tab_to_rating(session: NativeAppSession) -> None:
+def _tab_to_rating(session: BrowserSession) -> None:
     helpers.tab_and_swallow_presentation(session)  # Quantity
     helpers.tab_and_swallow_presentation(session)  # Bump Quantity button
     helpers.tab_and_swallow_presentation(session)  # Rating
 
 
-def _reload(session: NativeAppSession) -> None:
+def _reload(session: BrowserSession) -> None:
     """Reloads the page so spinbutton values return to the defaults from the HTML."""
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_R)
@@ -148,7 +148,7 @@ def _reload(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_rating_page_home_end_and_boundaries(web_aria_spinbutton: NativeAppSession) -> None:
+def test_rating_page_home_end_and_boundaries(web_aria_spinbutton: BrowserSession) -> None:
     """Tests PageUp/Down, Home/End, and clamping at min/max on the editable spinbutton."""
 
     session = web_aria_spinbutton
@@ -192,7 +192,7 @@ def test_rating_page_home_end_and_boundaries(web_aria_spinbutton: NativeAppSessi
 
 
 @pytest.mark.native_app
-def test_rating_caret_navigation(web_aria_spinbutton: NativeAppSession) -> None:
+def test_rating_caret_navigation(web_aria_spinbutton: BrowserSession) -> None:
     """Tests Left/Right caret navigation within the editable spinbutton's text."""
 
     session = web_aria_spinbutton
@@ -220,7 +220,7 @@ def test_rating_caret_navigation(web_aria_spinbutton: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_rating_shift_selection(web_aria_spinbutton: NativeAppSession) -> None:
+def test_rating_shift_selection(web_aria_spinbutton: BrowserSession) -> None:
     """Tests Shift+Left/Right selection on the editable spinbutton's "75" text."""
 
     session = web_aria_spinbutton
@@ -259,7 +259,7 @@ def test_rating_shift_selection(web_aria_spinbutton: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_rating_backspace_delete(web_aria_spinbutton: NativeAppSession) -> None:
+def test_rating_backspace_delete(web_aria_spinbutton: BrowserSession) -> None:
     """Tests Backspace and Delete in the editable spinbutton."""
 
     session = web_aria_spinbutton
@@ -301,7 +301,7 @@ def test_rating_backspace_delete(web_aria_spinbutton: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_rating_typing(web_aria_spinbutton: NativeAppSession) -> None:
+def test_rating_typing(web_aria_spinbutton: BrowserSession) -> None:
     """Tests typing digits at the caret position in the editable spinbutton."""
 
     session = web_aria_spinbutton
@@ -331,7 +331,7 @@ def test_rating_typing(web_aria_spinbutton: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_volume_readonly_input_spinbutton(web_aria_spinbutton: NativeAppSession) -> None:
+def test_volume_readonly_input_spinbutton(web_aria_spinbutton: BrowserSession) -> None:
     """Tests a readonly <input role='spinbutton'>: text-object path with text exposed."""
 
     session = web_aria_spinbutton
@@ -363,7 +363,7 @@ def test_volume_readonly_input_spinbutton(web_aria_spinbutton: NativeAppSession)
     assert helpers.capture(session) == (["5"], [])
 
 
-def _tab_to_bump_button(session: NativeAppSession, *, target_quantity: bool) -> None:
+def _tab_to_bump_button(session: BrowserSession, *, target_quantity: bool) -> None:
     """Tabs to the Quantity or Rating bump button."""
 
     tab_count = 2 if target_quantity else 4
@@ -373,7 +373,7 @@ def _tab_to_bump_button(session: NativeAppSession, *, target_quantity: bool) -> 
 
 @pytest.mark.native_app
 def test_quantity_programmatic_change_focus_on_bump_button(
-    web_aria_spinbutton: NativeAppSession,
+    web_aria_spinbutton: BrowserSession,
 ) -> None:
     """Tests that an off-focus ARIA value bump is speech-silent for Quantity."""
 
@@ -392,7 +392,7 @@ def test_quantity_programmatic_change_focus_on_bump_button(
 
 @pytest.mark.native_app
 def test_quantity_programmatic_change_focus_on_spinbutton(
-    web_aria_spinbutton: NativeAppSession,
+    web_aria_spinbutton: BrowserSession,
 ) -> None:
     """Tests an in-focus ARIA value bump on Quantity: new value announced."""
 
@@ -418,7 +418,7 @@ def test_quantity_programmatic_change_focus_on_spinbutton(
 
 @pytest.mark.native_app
 def test_rating_programmatic_change_focus_on_bump_button(
-    web_aria_spinbutton: NativeAppSession,
+    web_aria_spinbutton: BrowserSession,
 ) -> None:
     """Tests an off-focus ARIA value bump on the editable Rating."""
 
@@ -440,7 +440,7 @@ def test_rating_programmatic_change_focus_on_bump_button(
 
 @pytest.mark.native_app
 def test_rating_programmatic_change_focus_on_spinbutton(
-    web_aria_spinbutton: NativeAppSession,
+    web_aria_spinbutton: BrowserSession,
 ) -> None:
     """Tests an in-focus ARIA value bump on the editable Rating: new value announced."""
 

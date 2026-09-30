@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_tabs_navigation(web_tabs: NativeAppSession) -> None:
+def test_tabs_navigation(web_tabs: BrowserSession) -> None:
     """Tests tabs navigation."""
 
     session = web_tabs

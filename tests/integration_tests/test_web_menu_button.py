@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_opening_and_closing_menu_button_menus(web_menu_button: NativeAppSession) -> None:
+def test_opening_and_closing_menu_button_menus(web_menu_button: BrowserSession) -> None:
     """Tests opening a menu button's menu, arrowing through it, and closing it."""
 
     session = web_menu_button

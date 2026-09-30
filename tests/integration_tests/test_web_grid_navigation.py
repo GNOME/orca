@@ -30,7 +30,7 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 _TITLE = "quarterly-report.pdf"
 _URL = "From https://example.com"
@@ -42,7 +42,7 @@ def _table_nav(key: int) -> None:
 
 
 @pytest.mark.native_app
-def test_table_navigation_across_grid_cells(web_grid_named_cells: NativeAppSession) -> None:
+def test_table_navigation_across_grid_cells(web_grid_named_cells: BrowserSession) -> None:
     """Tests cell-by-cell navigation in focus mode, where the cells are presented as a whole."""
 
     session = web_grid_named_cells
@@ -54,8 +54,10 @@ def test_table_navigation_across_grid_cells(web_grid_named_cells: NativeAppSessi
         [
             "t",
             "table with 2 rows 3 columns",
-            "Yesterday quarterly-report.pdf From https://example.com Copy download link "
-            "Show in folder Delete from history",
+            (
+                "Yesterday quarterly-report.pdf From https://example.com Copy download link "
+                "Show in folder Delete from history"
+            ),
         ],
         [BrailleLine(1, _TITLE, _TITLE, "\x00" * 20)],
     )

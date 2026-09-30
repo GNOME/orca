@@ -30,14 +30,14 @@ from .harness import keyboard
 from .helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _in_focus_mode(session: NativeAppSession) -> bool:
+def _in_focus_mode(session: BrowserSession) -> bool:
     return bool(session.orca.get("DocumentPresenter", "InFocusMode"))
 
 
-def _reload(session: NativeAppSession) -> None:
+def _reload(session: BrowserSession) -> None:
     """Reloads the page to give each test the same starting state."""
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_R)
@@ -48,7 +48,7 @@ def _reload(session: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 def test_heading_navigation_is_confined_to_the_nested_document(
-    web_aria_application: NativeAppSession,
+    web_aria_application: BrowserSession,
 ) -> None:
     """Tests that heading navigation is confined once it enters the nested document."""
 
@@ -75,7 +75,7 @@ def test_heading_navigation_is_confined_to_the_nested_document(
 
 @pytest.mark.native_app
 def test_caret_navigation_skips_over_the_applications(
-    web_aria_application: NativeAppSession,
+    web_aria_application: BrowserSession,
 ) -> None:
     """Tests that line navigation presents each application as a single embedded object."""
 
@@ -103,7 +103,7 @@ def test_caret_navigation_skips_over_the_applications(
 
 @pytest.mark.native_app
 def test_caret_navigation_inside_the_application(
-    web_aria_application: NativeAppSession,
+    web_aria_application: BrowserSession,
 ) -> None:
     """Tests line navigation from a heading structural navigation landed on in the application."""
 
@@ -142,7 +142,7 @@ def test_caret_navigation_inside_the_application(
 
 @pytest.mark.native_app
 def test_tab_to_widget_in_application_switches_to_focus_mode(
-    web_aria_application: NativeAppSession,
+    web_aria_application: BrowserSession,
 ) -> None:
     """Tests the presentation mode as focus moves to the widgets inside the application."""
 
@@ -165,7 +165,7 @@ def test_tab_to_widget_in_application_switches_to_focus_mode(
 
 @pytest.mark.native_app
 def test_tab_to_focusable_application_switches_to_focus_mode(
-    web_aria_application: NativeAppSession,
+    web_aria_application: BrowserSession,
 ) -> None:
     """Tests that the focusable application itself is treated as a focus mode widget."""
 
@@ -186,7 +186,7 @@ def test_tab_to_focusable_application_switches_to_focus_mode(
 
 @pytest.mark.native_app
 def test_tab_to_widget_in_application_from_the_application_switches_to_focus_mode(
-    web_aria_application: NativeAppSession,
+    web_aria_application: BrowserSession,
 ) -> None:
     """Tests the presentation mode when Tab follows line navigation onto the application."""
 
@@ -206,7 +206,7 @@ def test_tab_to_widget_in_application_from_the_application_switches_to_focus_mod
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_widget(web_aria_application: NativeAppSession) -> None:
+def test_structural_navigation_by_widget(web_aria_application: BrowserSession) -> None:
     """Tests that next-button and next-entry reach the widgets inside the application."""
 
     session = web_aria_application
@@ -223,7 +223,7 @@ def test_structural_navigation_by_widget(web_aria_application: NativeAppSession)
 
 @pytest.mark.native_app
 def test_structural_navigation_to_widget_can_trigger_focus_mode(
-    web_aria_application: NativeAppSession,
+    web_aria_application: BrowserSession,
 ) -> None:
     """Tests next-button to a widget in the application when the setting enables focus mode."""
 
@@ -238,7 +238,7 @@ def test_structural_navigation_to_widget_can_trigger_focus_mode(
 
 @pytest.mark.native_app
 def test_tab_from_inside_the_application_switches_to_focus_mode(
-    web_aria_application: NativeAppSession,
+    web_aria_application: BrowserSession,
 ) -> None:
     """Tests that Tab from content in the application switches to focus mode."""
 
@@ -256,7 +256,7 @@ def test_tab_from_inside_the_application_switches_to_focus_mode(
 
 @pytest.mark.native_app
 def test_browse_mode_the_user_turned_on_in_the_application_is_preserved(
-    web_aria_application: NativeAppSession,
+    web_aria_application: BrowserSession,
 ) -> None:
     """Tests that moving focus in the application does not undo the mode the user chose."""
 

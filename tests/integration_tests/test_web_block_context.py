@@ -30,7 +30,7 @@ from .harness import keyboard
 from .helpers import capture, move_to_top, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 _LINES = [
@@ -62,8 +62,10 @@ _LINES = [
             "Expand: Collectibles",
             "button",
         ],
-        "Motors Expand: Motors button Electronics Expand: Electronics button "
-        "Collectibles Expand: Collectibles button",
+        (
+            "Motors Expand: Motors button Electronics Expand: Electronics button "
+            "Collectibles Expand: Collectibles button"
+        ),
     ),
     (["leaving list.", "leaving navigation.", "The end."], "The end."),
 ]
@@ -71,7 +73,7 @@ _LINES = [
 
 @pytest.mark.native_app
 def test_block_context_boundaries_stay_on_separate_lines(
-    web_block_context: NativeAppSession,
+    web_block_context: BrowserSession,
 ) -> None:
     """Tests block content stays separate while flex rows of an image link and toggles group."""
 

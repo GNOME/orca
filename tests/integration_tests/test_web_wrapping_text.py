@@ -36,10 +36,10 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _walk(session: NativeAppSession, count: int) -> list[list[str]]:
+def _walk(session: BrowserSession, count: int) -> list[list[str]]:
     lines = []
     for _ in range(count):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -48,7 +48,7 @@ def _walk(session: NativeAppSession, count: int) -> list[list[str]]:
 
 
 @pytest.mark.native_app
-def test_line_assembly_layout_mode_on(web_wrapping_text: NativeAppSession) -> None:
+def test_line_assembly_layout_mode_on(web_wrapping_text: BrowserSession) -> None:
     """Tests visual-line assembly in layout mode (the default): inline runs group per line."""
 
     session = web_wrapping_text
@@ -87,7 +87,7 @@ def test_line_assembly_layout_mode_on(web_wrapping_text: NativeAppSession) -> No
 
 
 @pytest.mark.native_app
-def test_line_assembly_layout_mode_off(web_wrapping_text: NativeAppSession) -> None:
+def test_line_assembly_layout_mode_off(web_wrapping_text: BrowserSession) -> None:
     """Tests that with layout mode off each object is its own line; inline runs do not group."""
 
     session = web_wrapping_text
@@ -121,7 +121,7 @@ def test_line_assembly_layout_mode_off(web_wrapping_text: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
-def test_line_assembly_walking_up(web_wrapping_text: NativeAppSession) -> None:
+def test_line_assembly_walking_up(web_wrapping_text: BrowserSession) -> None:
     """Tests that Up-arrow presents each wrapped visual line once, not in backward fragments."""
 
     session = web_wrapping_text
@@ -151,7 +151,7 @@ def test_line_assembly_walking_up(web_wrapping_text: NativeAppSession) -> None:
     ]
 
 
-def _down_to_line(session: NativeAppSession, count: int) -> tuple[list[str], list[BrailleLine]]:
+def _down_to_line(session: BrowserSession, count: int) -> tuple[list[str], list[BrailleLine]]:
     result = None
     for _ in range(count):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -161,7 +161,7 @@ def _down_to_line(session: NativeAppSession, count: int) -> tuple[list[str], lis
 
 
 @pytest.mark.native_app
-def test_eol_indicator_on_code_blocks_not_inline(web_wrapping_text: NativeAppSession) -> None:
+def test_eol_indicator_on_code_blocks_not_inline(web_wrapping_text: BrowserSession) -> None:
     """Tests that the braille EOL indicator marks preformatted code lines but not inline code."""
 
     session = web_wrapping_text
@@ -217,7 +217,7 @@ def test_eol_indicator_on_code_blocks_not_inline(web_wrapping_text: NativeAppSes
 
 
 @pytest.mark.native_app
-def test_fill_in_the_blank_line_assembly(web_wrapping_text: NativeAppSession) -> None:
+def test_fill_in_the_blank_line_assembly(web_wrapping_text: BrowserSession) -> None:
     """Tests that an empty inline entry with text on both sides presents as one line."""
 
     session = web_wrapping_text

@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_inserted_alertdialog_is_presented(web_alert: NativeAppSession) -> None:
+def test_inserted_alertdialog_is_presented(web_alert: BrowserSession) -> None:
     """Tests that appending a role=alertdialog element into a plain container presents it."""
 
     session = web_alert

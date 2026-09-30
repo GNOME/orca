@@ -37,11 +37,11 @@ from .web_native_selection_helpers import (
 )
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_selecting_and_unselecting_an_option(web_selection: NativeAppSession) -> None:
+def test_selecting_and_unselecting_an_option(web_selection: BrowserSession) -> None:
     """Tests selecting and unselecting an option."""
 
     session = web_selection
@@ -64,7 +64,7 @@ def test_selecting_and_unselecting_an_option(web_selection: NativeAppSession) ->
 
 
 @pytest.mark.native_app
-def test_selecting_a_tree_item(web_selection: NativeAppSession) -> None:
+def test_selecting_a_tree_item(web_selection: BrowserSession) -> None:
     """Tests selecting a tree item."""
 
     session = web_selection
@@ -87,7 +87,7 @@ def test_selecting_a_tree_item(web_selection: NativeAppSession) -> None:
 @pytest.mark.native_app
 @pytest.mark.parametrize("spaced", [False, True], ids=["unspaced", "spaced"])
 def test_character_selection_across_inline_button(
-    web_selection: NativeAppSession,
+    web_selection: BrowserSession,
     spaced: bool,
 ) -> None:
     """Tests selection and unselection across both boundaries of an inline button."""
@@ -118,7 +118,7 @@ def test_character_selection_across_inline_button(
 @pytest.mark.parametrize("forward", [True, False], ids=["forward", "backward"])
 @pytest.mark.parametrize("spaced", [False, True], ids=["unspaced", "spaced"])
 def test_selection_containing_whole_inline_button(
-    web_selection: NativeAppSession,
+    web_selection: BrowserSession,
     forward: bool,
     spaced: bool,
 ) -> None:
@@ -155,7 +155,7 @@ def test_selection_containing_whole_inline_button(
 @pytest.mark.native_app
 @pytest.mark.parametrize("spaced", [False, True], ids=["unspaced", "spaced"])
 def test_word_selection_across_inline_button(
-    web_selection: NativeAppSession,
+    web_selection: BrowserSession,
     spaced: bool,
 ) -> None:
     """Tests word selection across button text and the following parent text."""

@@ -30,10 +30,10 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _reload(session: NativeAppSession) -> None:
+def _reload(session: BrowserSession) -> None:
     """Reloads the page so that each test starts with the same expanded and collapsed state."""
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_R)
@@ -43,7 +43,7 @@ def _reload(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_expanding_and_collapsing_disclosure_buttons(web_disclosure: NativeAppSession) -> None:
+def test_expanding_and_collapsing_disclosure_buttons(web_disclosure: BrowserSession) -> None:
     """Tests expanding and collapsing disclosure buttons."""
 
     session = web_disclosure
@@ -91,7 +91,7 @@ def test_expanding_and_collapsing_disclosure_buttons(web_disclosure: NativeAppSe
 
 
 @pytest.mark.native_app
-def test_reading_disclosed_content(web_disclosure: NativeAppSession) -> None:
+def test_reading_disclosed_content(web_disclosure: BrowserSession) -> None:
     """Tests reading the content a disclosure button reveals."""
 
     session = web_disclosure
@@ -126,7 +126,7 @@ def test_reading_disclosed_content(web_disclosure: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_button(web_disclosure: NativeAppSession) -> None:
+def test_structural_navigation_by_button(web_disclosure: BrowserSession) -> None:
     """Tests structural navigation by button across the disclosure buttons."""
 
     session = web_disclosure

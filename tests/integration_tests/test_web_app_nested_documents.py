@@ -30,14 +30,14 @@ from .harness import keyboard
 from .helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _in_focus_mode(session: NativeAppSession) -> bool:
+def _in_focus_mode(session: BrowserSession) -> bool:
     return bool(session.orca.get("DocumentPresenter", "InFocusMode"))
 
 
-def _reload(session: NativeAppSession) -> None:
+def _reload(session: BrowserSession) -> None:
     """Reloads the page so that each test starts with the same focus and caret location."""
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_R)
@@ -48,7 +48,7 @@ def _reload(session: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 def test_tab_to_widget_in_application_switches_to_focus_mode(
-    web_app_nested_documents: NativeAppSession,
+    web_app_nested_documents: BrowserSession,
 ) -> None:
     """Tests that Tab to the widget inside the application switches to focus mode."""
 
@@ -63,7 +63,7 @@ def test_tab_to_widget_in_application_switches_to_focus_mode(
 
 @pytest.mark.native_app
 def test_tab_to_frame_document_in_application_switches_to_browse_mode(
-    web_app_nested_documents: NativeAppSession,
+    web_app_nested_documents: BrowserSession,
 ) -> None:
     """Tests that the document of a frame inside the application is treated as content."""
 
@@ -81,7 +81,7 @@ def test_tab_to_frame_document_in_application_switches_to_browse_mode(
 
 @pytest.mark.native_app
 def test_tab_to_aria_document_in_application_switches_to_browse_mode(
-    web_app_nested_documents: NativeAppSession,
+    web_app_nested_documents: BrowserSession,
 ) -> None:
     """Tests that a focusable ARIA document inside the application is treated as content."""
 
@@ -101,7 +101,7 @@ def test_tab_to_aria_document_in_application_switches_to_browse_mode(
 
 @pytest.mark.native_app
 def test_tab_to_widgets_in_the_aria_document_uses_the_role_to_decide(
-    web_app_nested_documents: NativeAppSession,
+    web_app_nested_documents: BrowserSession,
 ) -> None:
     """Tests that the widgets inside the ARIA document are treated as document content."""
 
@@ -123,7 +123,7 @@ def test_tab_to_widgets_in_the_aria_document_uses_the_role_to_decide(
 
 @pytest.mark.native_app
 def test_caret_navigation_skips_over_the_application(
-    web_app_nested_documents: NativeAppSession,
+    web_app_nested_documents: BrowserSession,
 ) -> None:
     """Tests that line navigation presents the application as a single embedded object."""
 
@@ -144,7 +144,7 @@ def test_caret_navigation_skips_over_the_application(
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_widget(web_app_nested_documents: NativeAppSession) -> None:
+def test_structural_navigation_by_widget(web_app_nested_documents: BrowserSession) -> None:
     """Tests that next-button and next-entry reach the widgets and preserve browse mode."""
 
     session = web_app_nested_documents
@@ -171,7 +171,7 @@ def test_structural_navigation_by_widget(web_app_nested_documents: NativeAppSess
 
 @pytest.mark.native_app
 def test_structural_navigation_to_application_widget_can_trigger_focus_mode(
-    web_app_nested_documents: NativeAppSession,
+    web_app_nested_documents: BrowserSession,
 ) -> None:
     """Tests next-button to a widget in the application when the setting enables focus mode."""
 
@@ -186,7 +186,7 @@ def test_structural_navigation_to_application_widget_can_trigger_focus_mode(
 
 @pytest.mark.native_app
 def test_structural_navigation_in_the_document_uses_the_role_to_decide(
-    web_app_nested_documents: NativeAppSession,
+    web_app_nested_documents: BrowserSession,
 ) -> None:
     """Tests that the widgets in the nested document decide the mode by role, not by the app."""
 
@@ -217,7 +217,7 @@ def test_structural_navigation_in_the_document_uses_the_role_to_decide(
 
 @pytest.mark.native_app
 def test_caret_navigation_to_the_application_can_trigger_focus_mode(
-    web_app_nested_documents: NativeAppSession,
+    web_app_nested_documents: BrowserSession,
 ) -> None:
     """Tests line navigation onto the application when the setting enables focus mode."""
 
@@ -236,7 +236,7 @@ def test_caret_navigation_to_the_application_can_trigger_focus_mode(
 
 @pytest.mark.native_app
 def test_structural_navigation_is_confined_to_the_nested_document(
-    web_app_nested_documents: NativeAppSession,
+    web_app_nested_documents: BrowserSession,
 ) -> None:
     """Tests that structural navigation inside the nested document stays within it."""
 
@@ -288,7 +288,7 @@ def test_structural_navigation_is_confined_to_the_nested_document(
 
 @pytest.mark.native_app
 def test_caret_navigation_reads_out_of_the_nested_document(
-    web_app_nested_documents: NativeAppSession,
+    web_app_nested_documents: BrowserSession,
 ) -> None:
     """Tests that caret navigation, unlike structural navigation, can leave the nested document."""
 
@@ -328,7 +328,7 @@ def test_caret_navigation_reads_out_of_the_nested_document(
 
 @pytest.mark.native_app
 def test_file_boundary_navigation_is_confined_to_the_nested_document(
-    web_app_nested_documents: NativeAppSession,
+    web_app_nested_documents: BrowserSession,
 ) -> None:
     """Tests that Ctrl+Home and Ctrl+End stay within the nested document."""
 
@@ -354,7 +354,7 @@ def test_file_boundary_navigation_is_confined_to_the_nested_document(
 
 @pytest.mark.native_app
 def test_file_boundary_navigation_reaches_the_page_boundaries(
-    web_app_nested_documents: NativeAppSession,
+    web_app_nested_documents: BrowserSession,
 ) -> None:
     """Tests that Ctrl+Home and Ctrl+End reach the page when not inside a nested document."""
 
@@ -370,7 +370,7 @@ def test_file_boundary_navigation_reaches_the_page_boundaries(
 
 @pytest.mark.native_app
 def test_embedded_document_announcements_can_be_disabled(
-    web_app_nested_documents: NativeAppSession,
+    web_app_nested_documents: BrowserSession,
 ) -> None:
     """Tests that disabling the setting silences the enter and leave announcements."""
 
@@ -395,7 +395,7 @@ def test_embedded_document_announcements_can_be_disabled(
 
 @pytest.mark.native_app
 def test_say_all_is_confined_to_the_nested_document(
-    web_app_nested_documents: NativeAppSession,
+    web_app_nested_documents: BrowserSession,
 ) -> None:
     """Tests that Say All started inside the nested document stops at its boundary."""
 

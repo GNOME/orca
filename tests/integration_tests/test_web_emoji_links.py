@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_line_reading_emoji_text_and_inline_links(web_emoji_links: NativeAppSession) -> None:
+def test_line_reading_emoji_text_and_inline_links(web_emoji_links: BrowserSession) -> None:
     """Tests that emoji-led text lines are read, not dropped as blank, amid inline links."""
 
     session = web_emoji_links

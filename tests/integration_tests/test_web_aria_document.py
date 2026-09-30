@@ -30,12 +30,12 @@ from .harness import keyboard
 from .helpers import move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
 def test_heading_navigation_enters_and_leaves_the_document(
-    web_aria_document: NativeAppSession,
+    web_aria_document: BrowserSession,
 ) -> None:
     """Tests that next-heading treats the heading in the ARIA document as part of the page."""
 
@@ -54,7 +54,7 @@ def test_heading_navigation_enters_and_leaves_the_document(
 
 @pytest.mark.native_app
 def test_backward_heading_navigation_enters_and_leaves_the_document(
-    web_aria_document: NativeAppSession,
+    web_aria_document: BrowserSession,
 ) -> None:
     """Tests that previous-heading treats the heading in the ARIA document as part of the page."""
 
@@ -73,7 +73,7 @@ def test_backward_heading_navigation_enters_and_leaves_the_document(
 
 @pytest.mark.native_app
 def test_caret_navigation_enters_and_leaves_the_document(
-    web_aria_document: NativeAppSession,
+    web_aria_document: BrowserSession,
 ) -> None:
     """Tests that line navigation reads the content of the ARIA document in page order."""
 
@@ -115,7 +115,7 @@ def test_caret_navigation_enters_and_leaves_the_document(
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_widget(web_aria_document: NativeAppSession) -> None:
+def test_structural_navigation_by_widget(web_aria_document: BrowserSession) -> None:
     """Tests that next-button and next-entry reach the widgets inside the ARIA document."""
 
     session = web_aria_document
@@ -130,7 +130,7 @@ def test_structural_navigation_by_widget(web_aria_document: NativeAppSession) ->
 
 @pytest.mark.native_app
 def test_structural_navigation_focus_mode_setting_uses_the_role(
-    web_aria_document: NativeAppSession,
+    web_aria_document: BrowserSession,
 ) -> None:
     """Tests that the role of the widget in the document decides the mode when the setting is on."""
 

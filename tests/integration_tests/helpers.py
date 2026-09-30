@@ -175,7 +175,7 @@ def bound_pan_keys(session: NativeAppSession) -> Iterator[tuple[str, str]]:
         session.orca.refresh_keybindings()
 
 
-def reset_web_state(session: NativeAppSession, *, web_app: bool = False) -> None:
+def reset_web_state(session: BrowserSession, *, web_app: bool = False) -> None:
     """Resets settings, focus mode, and caret position to give a web test a known baseline."""
 
     # Setting the active profile clears all runtime overrides back to their defaults.

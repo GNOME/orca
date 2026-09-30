@@ -30,11 +30,11 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_line_navigation_across_wrapped_link(web_wrapped_link: NativeAppSession) -> None:
+def test_line_navigation_across_wrapped_link(web_wrapped_link: BrowserSession) -> None:
     """Tests line down then up across a two-word link split over a visual line boundary."""
 
     session = web_wrapped_link

@@ -38,7 +38,7 @@ from .web_native_selection_helpers import (
 )
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @requires_browser_version("chromium", 156)
@@ -52,7 +52,7 @@ if TYPE_CHECKING:
     ids=["single-word", "multi-word"],
 )
 def test_word_selection_within_button(
-    web_native_text_selection: NativeAppSession,
+    web_native_text_selection: BrowserSession,
     button_number: int,
     words: list[str],
 ) -> None:
@@ -73,7 +73,7 @@ def test_word_selection_within_button(
 
 @requires_browser_version("chromium", 156, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
-def test_word_selection_and_unselection(web_native_text_selection: NativeAppSession) -> None:
+def test_word_selection_and_unselection(web_native_text_selection: BrowserSession) -> None:
     """Tests native word selection from the top into the form controls, then back."""
 
     session = web_native_text_selection
@@ -124,7 +124,7 @@ def test_word_selection_and_unselection(web_native_text_selection: NativeAppSess
 @requires_browser_version("chromium", 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_word_selection_and_unselection_from_bottom(
-    web_native_text_selection: NativeAppSession,
+    web_native_text_selection: BrowserSession,
 ) -> None:
     """Tests native word selection through the final paragraph and preceding button, then back."""
 
@@ -157,7 +157,7 @@ def test_word_selection_and_unselection_from_bottom(
 @requires_browser_version("chromium", 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_word_selection_and_unselection_from_image(
-    web_native_text_selection: NativeAppSession,
+    web_native_text_selection: BrowserSession,
 ) -> None:
     """Tests native word selection through the image, links, and table, then back."""
 
@@ -222,7 +222,7 @@ def test_word_selection_and_unselection_from_image(
 
 
 @pytest.mark.native_app
-def test_selection_after_modifier_release(web_native_text_selection: NativeAppSession) -> None:
+def test_selection_after_modifier_release(web_native_text_selection: BrowserSession) -> None:
     """A caret event after modifier release does not cancel selection speech."""
 
     session = web_native_text_selection

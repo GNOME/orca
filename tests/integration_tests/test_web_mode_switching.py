@@ -30,22 +30,22 @@ from .harness import keyboard
 from .helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _toggle_mode(session: NativeAppSession) -> list[str]:
+def _toggle_mode(session: BrowserSession) -> list[str]:
     session.orca.press_orca_key(keyboard.KEYSYM_A)
     return speech(session)
 
 
-def _next(session: NativeAppSession, keysym: int) -> list[str]:
+def _next(session: BrowserSession, keysym: int) -> list[str]:
     keyboard.tap_key(keysym)
     return speech(session)
 
 
 @pytest.mark.native_app
 def test_manual_toggle_between_browse_and_focus_mode(
-    web_structural_navigation: NativeAppSession,
+    web_structural_navigation: BrowserSession,
 ) -> None:
     """Tests that Orca+A toggles between focus mode and browse mode."""
 
@@ -60,7 +60,7 @@ def test_manual_toggle_between_browse_and_focus_mode(
 
 @pytest.mark.native_app
 def test_native_navigation_switches_mode_automatically(
-    web_structural_navigation: NativeAppSession,
+    web_structural_navigation: BrowserSession,
 ) -> None:
     """Tests that tabbing to a combo box enters focus mode and tabbing on leaves it."""
 
@@ -86,7 +86,7 @@ def test_native_navigation_switches_mode_automatically(
 
 @pytest.mark.native_app
 def test_structural_navigation_stays_in_browse_mode(
-    web_structural_navigation: NativeAppSession,
+    web_structural_navigation: BrowserSession,
 ) -> None:
     """Tests that quick-navigating to an entry does not auto-switch to focus mode."""
 
@@ -101,7 +101,7 @@ def test_structural_navigation_stays_in_browse_mode(
 @pytest.mark.parametrize("click_count", [1, 2], ids=["basic", "detailed"])
 @pytest.mark.parametrize("key", [keyboard.KEYSYM_C, keyboard.KEYSYM_E], ids=["combo", "entry"])
 def test_where_am_i_preserves_browse_mode(
-    web_structural_navigation: NativeAppSession, key: int, click_count: int
+    web_structural_navigation: BrowserSession, key: int, click_count: int
 ) -> None:
     """Tests that querying a control does not switch from browse mode to focus mode."""
 

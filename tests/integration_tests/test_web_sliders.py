@@ -31,11 +31,11 @@ from .harness import keyboard
 from .helpers import BrailleLine
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom(web_sliders: NativeAppSession) -> None:
+def test_caret_navigation_top_to_bottom(web_sliders: BrowserSession) -> None:
     """Tests Down-arrow caret navigation through the whole page (layout mode on)."""
 
     session = web_sliders
@@ -54,7 +54,7 @@ def test_caret_navigation_top_to_bottom(web_sliders: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom_layout_off(web_sliders: NativeAppSession) -> None:
+def test_caret_navigation_top_to_bottom_layout_off(web_sliders: BrowserSession) -> None:
     """Tests the same navigation with layout mode disabled: the label is its own line."""
 
     session = web_sliders
@@ -74,7 +74,7 @@ def test_caret_navigation_top_to_bottom_layout_off(web_sliders: NativeAppSession
 
 
 @pytest.mark.native_app
-def test_caret_navigation_bottom_to_top(web_sliders: NativeAppSession) -> None:
+def test_caret_navigation_bottom_to_top(web_sliders: BrowserSession) -> None:
     """Tests Up-arrow caret navigation from the bottom of the page (layout mode on)."""
 
     session = web_sliders
@@ -93,7 +93,7 @@ def test_caret_navigation_bottom_to_top(web_sliders: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_caret_navigation_bottom_to_top_layout_off(web_sliders: NativeAppSession) -> None:
+def test_caret_navigation_bottom_to_top_layout_off(web_sliders: BrowserSession) -> None:
     """Tests the same navigation with layout mode disabled: the label is its own line."""
 
     session = web_sliders
@@ -114,7 +114,7 @@ def test_caret_navigation_bottom_to_top_layout_off(web_sliders: NativeAppSession
 
 
 @pytest.mark.native_app
-def test_slider_value_changes_and_progress_bar(web_sliders: NativeAppSession) -> None:
+def test_slider_value_changes_and_progress_bar(web_sliders: BrowserSession) -> None:
     """Tests slider value changes within min/max bounds and a progress bar's value."""
 
     session = web_sliders
@@ -167,13 +167,13 @@ def test_slider_value_changes_and_progress_bar(web_sliders: NativeAppSession) ->
     assert helpers.speech(session) == ["30 percent."]
 
 
-def _where_am_i(session: NativeAppSession) -> tuple[list[str], list[tuple[int, str, str | None]]]:
+def _where_am_i(session: BrowserSession) -> tuple[list[str], list[tuple[int, str, str | None]]]:
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
     return helpers.capture(session)
 
 
 @pytest.mark.native_app
-def test_where_am_i_on_slider(web_sliders: NativeAppSession) -> None:
+def test_where_am_i_on_slider(web_sliders: BrowserSession) -> None:
     """Tests Where Am I on a horizontal slider (at its current value of 0)."""
 
     session = web_sliders

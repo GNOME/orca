@@ -30,11 +30,11 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 def _set_echo(
-    session: NativeAppSession, *, key: bool, word: bool, sentence: bool, character: bool
+    session: BrowserSession, *, key: bool, word: bool, sentence: bool, character: bool
 ) -> None:
     session.orca.set("TypingEchoPresenter", "KeyEchoEnabled", key)
     session.orca.set("TypingEchoPresenter", "WordEchoEnabled", word)
@@ -54,12 +54,12 @@ def _type(text: str) -> None:
             keyboard.tap_key(ord(ch))
 
 
-def _quiet(session: NativeAppSession) -> None:
+def _quiet(session: BrowserSession) -> None:
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
 
 
-def _focus_field(session: NativeAppSession, tab_count: int) -> None:
+def _focus_field(session: BrowserSession, tab_count: int) -> None:
     """Resets state, tabs into a field, clears it, and quiets the output."""
 
     helpers.reset_web_state(session)
@@ -72,7 +72,7 @@ def _focus_field(session: NativeAppSession, tab_count: int) -> None:
 
 
 @pytest.mark.native_app
-def test_key_echo_insertion_in_textarea(web_editing: NativeAppSession) -> None:
+def test_key_echo_insertion_in_textarea(web_editing: BrowserSession) -> None:
     """Tests that key echo speaks each character inserted into a textarea."""
 
     session = web_editing
@@ -88,7 +88,7 @@ def test_key_echo_insertion_in_textarea(web_editing: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_word_echo_insertion_in_textarea(web_editing: NativeAppSession) -> None:
+def test_word_echo_insertion_in_textarea(web_editing: BrowserSession) -> None:
     """Tests that word echo speaks each word as a space completes it in a textarea."""
 
     session = web_editing
@@ -102,7 +102,7 @@ def test_word_echo_insertion_in_textarea(web_editing: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_backspace_and_delete_in_textarea(web_editing: NativeAppSession) -> None:
+def test_backspace_and_delete_in_textarea(web_editing: BrowserSession) -> None:
     """Tests that Backspace and Delete in a textarea announce the affected character."""
 
     session = web_editing
@@ -127,7 +127,7 @@ def test_backspace_and_delete_in_textarea(web_editing: NativeAppSession) -> None
 
 
 @pytest.mark.native_app
-def test_selection_change_in_textarea(web_editing: NativeAppSession) -> None:
+def test_selection_change_in_textarea(web_editing: BrowserSession) -> None:
     """Tests that selecting and unselecting characters in a textarea is announced."""
 
     session = web_editing
@@ -149,7 +149,7 @@ def test_selection_change_in_textarea(web_editing: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_line_navigation_in_textarea(web_editing: NativeAppSession) -> None:
+def test_line_navigation_in_textarea(web_editing: BrowserSession) -> None:
     """Tests that Up/Down arrow line navigation in a textarea speaks each line."""
 
     session = web_editing
@@ -170,7 +170,7 @@ def test_line_navigation_in_textarea(web_editing: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_key_echo_insertion_in_contenteditable(web_editing: NativeAppSession) -> None:
+def test_key_echo_insertion_in_contenteditable(web_editing: BrowserSession) -> None:
     """Tests that key echo speaks characters inserted into a contenteditable div."""
 
     session = web_editing
@@ -185,7 +185,7 @@ def test_key_echo_insertion_in_contenteditable(web_editing: NativeAppSession) ->
     assert helpers.speech(session) == ["y"]
 
 
-def _park_before_blank_middle_line(session: NativeAppSession) -> None:
+def _park_before_blank_middle_line(session: BrowserSession) -> None:
     """Types two non-empty lines around a blank one and parks the caret before the blank line."""
 
     _type("first")
@@ -203,7 +203,7 @@ def _park_before_blank_middle_line(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_say_character_blank_line_speaks_blank_when_enabled(web_editing: NativeAppSession) -> None:
+def test_say_character_blank_line_speaks_blank_when_enabled(web_editing: BrowserSession) -> None:
     """Tests that moving onto a blank line speaks 'blank' when SpeakBlankLines is enabled."""
 
     session = web_editing
@@ -222,7 +222,7 @@ def test_say_character_blank_line_speaks_blank_when_enabled(web_editing: NativeA
 
 @pytest.mark.native_app
 def test_say_character_blank_line_speaks_newline_when_disabled(
-    web_editing: NativeAppSession,
+    web_editing: BrowserSession,
 ) -> None:
     """Tests that moving onto a blank line speaks the newline when SpeakBlankLines is disabled."""
 
@@ -241,7 +241,7 @@ def test_say_character_blank_line_speaks_newline_when_disabled(
 
 
 @pytest.mark.web
-def test_ctrl_backspace_in_textarea(web_editing: NativeAppSession) -> None:
+def test_ctrl_backspace_in_textarea(web_editing: BrowserSession) -> None:
     """Tests Ctrl+BackSpace over a word, and at the start of a line, in a textarea."""
 
     session = web_editing

@@ -31,7 +31,7 @@ from .harness import keyboard
 from .helpers import move_to_bottom, move_to_top, reset_web_state, say_selection, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 # Heading navigation lands on each h2 in turn. Headings with presentable text speak it;
@@ -66,7 +66,7 @@ _HEADINGS = [
 
 
 @pytest.mark.native_app
-def test_heading_navigation_across_weird_headings(web_weird_headings: NativeAppSession) -> None:
+def test_heading_navigation_across_weird_headings(web_weird_headings: BrowserSession) -> None:
     """Tests heading navigation presents each heading by its text or, if none, its name."""
 
     session = web_weird_headings
@@ -91,7 +91,7 @@ def test_heading_navigation_across_weird_headings(web_weird_headings: NativeAppS
 )
 @pytest.mark.native_app
 def test_empty_aria_heading_is_a_single_caret_stop(
-    web_weird_headings: NativeAppSession,
+    web_weird_headings: BrowserSession,
     heading_number: int,
     name: str,
     preceding_character: str,
@@ -117,7 +117,7 @@ def test_empty_aria_heading_is_a_single_caret_stop(
 
 @pytest.mark.native_app
 def test_names_with_empty_children_in_links_and_headers(
-    web_weird_headings: NativeAppSession,
+    web_weird_headings: BrowserSession,
 ) -> None:
     """Tests names survive empty children in links and both kinds of table header."""
 
@@ -147,7 +147,7 @@ def test_names_with_empty_children_in_links_and_headers(
 
 @pytest.mark.native_app
 def test_named_heading_with_text_remains_caret_navigable(
-    web_weird_headings: NativeAppSession,
+    web_weird_headings: BrowserSession,
 ) -> None:
     """Tests an author-provided name does not replace a heading's navigable text."""
 
@@ -168,7 +168,7 @@ def test_named_heading_with_text_remains_caret_navigable(
 )
 @pytest.mark.native_app
 def test_heading_selection_uses_text_not_the_accessible_name(
-    web_weird_headings: NativeAppSession, heading_number: int, selected_text: str
+    web_weird_headings: BrowserSession, heading_number: int, selected_text: str
 ) -> None:
     """Tests character selection uses exposed text rather than an author's label."""
 

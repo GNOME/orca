@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_paging_through_feed_articles(web_feed: NativeAppSession) -> None:
+def test_paging_through_feed_articles(web_feed: BrowserSession) -> None:
     """Tests caret navigation into the feed and paging through its articles."""
 
     session = web_feed
@@ -111,7 +111,7 @@ def test_paging_through_feed_articles(web_feed: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_moving_out_of_the_feed_in_browse_mode(web_feed: NativeAppSession) -> None:
+def test_moving_out_of_the_feed_in_browse_mode(web_feed: BrowserSession) -> None:
     """Tests the feed pattern's move-out keys while in browse mode."""
 
     session = web_feed
@@ -152,7 +152,7 @@ def test_moving_out_of_the_feed_in_browse_mode(web_feed: NativeAppSession) -> No
 
 
 @pytest.mark.native_app
-def test_moving_after_the_feed_in_focus_mode(web_feed: NativeAppSession) -> None:
+def test_moving_after_the_feed_in_focus_mode(web_feed: BrowserSession) -> None:
     """Tests the key the feed pattern defines for moving past the feed."""
 
     session = web_feed
@@ -191,7 +191,7 @@ def test_moving_after_the_feed_in_focus_mode(web_feed: NativeAppSession) -> None
 
 
 @pytest.mark.native_app
-def test_moving_before_the_feed_in_focus_mode(web_feed: NativeAppSession) -> None:
+def test_moving_before_the_feed_in_focus_mode(web_feed: BrowserSession) -> None:
     """Tests the key the feed pattern defines for moving ahead of the feed."""
 
     session = web_feed

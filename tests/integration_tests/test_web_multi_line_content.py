@@ -30,7 +30,7 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_bottom, move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import WebSession
+    from .orca_fixtures import BrowserSession
 
 _PLAIN = "\x00"
 _LINK = "\xc0"
@@ -38,7 +38,7 @@ _LINK = "\xc0"
 
 @pytest.mark.web
 def test_line_navigation_through_a_multi_line_heading(
-    web_multi_line_content: WebSession,
+    web_multi_line_content: BrowserSession,
 ) -> None:
     """Tests line navigation through a multi-line heading."""
 
@@ -66,7 +66,7 @@ def test_line_navigation_through_a_multi_line_heading(
 
 @pytest.mark.web
 def test_line_navigation_through_a_multi_line_link(
-    web_multi_line_content: WebSession,
+    web_multi_line_content: BrowserSession,
 ) -> None:
     """Tests line navigation through a multi-line link."""
 
@@ -97,7 +97,7 @@ def test_line_navigation_through_a_multi_line_link(
 
 @pytest.mark.web
 def test_say_all_over_a_multi_line_heading_and_link(
-    web_multi_line_content: WebSession,
+    web_multi_line_content: BrowserSession,
 ) -> None:
     """Tests Say All over a multi-line heading and link."""
 
@@ -126,7 +126,7 @@ def test_say_all_over_a_multi_line_heading_and_link(
 
 @pytest.mark.web
 def test_upward_line_navigation_through_a_multi_line_link(
-    web_multi_line_content: WebSession,
+    web_multi_line_content: BrowserSession,
 ) -> None:
     """Tests upward line navigation through a multi-line link."""
 
@@ -157,7 +157,7 @@ def test_upward_line_navigation_through_a_multi_line_link(
 
 @pytest.mark.web
 def test_upward_line_navigation_through_a_multi_line_heading(
-    web_multi_line_content: WebSession,
+    web_multi_line_content: BrowserSession,
 ) -> None:
     """Tests upward line navigation through a multi-line heading."""
 
@@ -188,7 +188,7 @@ def test_upward_line_navigation_through_a_multi_line_heading(
 
 @pytest.mark.web
 def test_line_navigation_through_a_multi_line_link_in_a_heading(
-    web_multi_line_content: WebSession,
+    web_multi_line_content: BrowserSession,
 ) -> None:
     """Tests line navigation through a multi-line link in a heading."""
 
@@ -219,7 +219,7 @@ def test_line_navigation_through_a_multi_line_link_in_a_heading(
 
 @pytest.mark.web
 def test_line_navigation_through_a_multi_line_heading_in_a_link(
-    web_multi_line_content: WebSession,
+    web_multi_line_content: BrowserSession,
 ) -> None:
     """Tests line navigation through a multi-line heading in a link."""
 
@@ -250,7 +250,7 @@ def test_line_navigation_through_a_multi_line_heading_in_a_link(
 
 @pytest.mark.web
 def test_upward_line_navigation_through_a_multi_line_link_in_a_heading(
-    web_multi_line_content: WebSession,
+    web_multi_line_content: BrowserSession,
 ) -> None:
     """Tests upward line navigation through a multi-line link in a heading."""
 
@@ -281,7 +281,7 @@ def test_upward_line_navigation_through_a_multi_line_link_in_a_heading(
 
 @pytest.mark.web
 def test_upward_line_navigation_through_a_multi_line_heading_in_a_link(
-    web_multi_line_content: WebSession,
+    web_multi_line_content: BrowserSession,
 ) -> None:
     """Tests upward line navigation through a multi-line heading in a link."""
 

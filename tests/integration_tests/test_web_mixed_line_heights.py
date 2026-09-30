@@ -30,7 +30,7 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 # A taller-than-text inline child (an image, a larger-font link/button) and a shorter-than-text
@@ -68,7 +68,7 @@ def _assert_each_is_one_line(session, key, lines) -> None:
 
 @pytest.mark.native_app
 def test_line_down_keeps_mixed_height_elements_on_one_line(
-    web_mixed_line_heights: NativeAppSession,
+    web_mixed_line_heights: BrowserSession,
 ) -> None:
     """Tests that arrowing down by line presents each mixed-height paragraph as a single line."""
 
@@ -80,7 +80,7 @@ def test_line_down_keeps_mixed_height_elements_on_one_line(
 
 @pytest.mark.native_app
 def test_line_up_keeps_mixed_height_elements_on_one_line(
-    web_mixed_line_heights: NativeAppSession,
+    web_mixed_line_heights: BrowserSession,
 ) -> None:
     """Tests that arrowing up by line presents each mixed-height paragraph as a single line."""
 

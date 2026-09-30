@@ -30,21 +30,21 @@ from .harness import keyboard
 from .helpers import move_to_top, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _next(session: NativeAppSession, keysym: int) -> list[str]:
+def _next(session: BrowserSession, keysym: int) -> list[str]:
     keyboard.tap_key(keysym)
     return speech(session)
 
 
-def _previous(session: NativeAppSession, keysym: int) -> list[str]:
+def _previous(session: BrowserSession, keysym: int) -> list[str]:
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keysym)
     return speech(session)
 
 
 @pytest.mark.native_app
-def test_heading_navigation_announces_level(web_headings: NativeAppSession) -> None:
+def test_heading_navigation_announces_level(web_headings: BrowserSession) -> None:
     """Tests that h moves through every heading in order, announcing each level, with wrap."""
 
     session = web_headings
@@ -64,7 +64,7 @@ def test_heading_navigation_announces_level(web_headings: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
-def test_navigation_by_heading_level(web_headings: NativeAppSession) -> None:
+def test_navigation_by_heading_level(web_headings: BrowserSession) -> None:
     """Tests that the number keys navigate only among headings of that level, with wrap."""
 
     session = web_headings
@@ -88,7 +88,7 @@ def test_navigation_by_heading_level(web_headings: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_no_more_headings_at_absent_level(web_headings: NativeAppSession) -> None:
+def test_no_more_headings_at_absent_level(web_headings: BrowserSession) -> None:
     """Tests the absence message when navigating to a heading level the page lacks."""
 
     session = web_headings
@@ -98,7 +98,7 @@ def test_no_more_headings_at_absent_level(web_headings: NativeAppSession) -> Non
 
 
 @pytest.mark.native_app
-def test_heading_level_backward_wraps(web_headings: NativeAppSession) -> None:
+def test_heading_level_backward_wraps(web_headings: BrowserSession) -> None:
     """Tests that Shift plus a level number navigates backward, wrapping to the bottom."""
 
     session = web_headings
@@ -113,7 +113,7 @@ def test_heading_level_backward_wraps(web_headings: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_no_wrapping_when_disabled(web_headings: NativeAppSession) -> None:
+def test_no_wrapping_when_disabled(web_headings: BrowserSession) -> None:
     """Tests that a boundary message replaces the wrap when navigation wrapping is off."""
 
     session = web_headings
@@ -142,7 +142,7 @@ def test_no_wrapping_when_disabled(web_headings: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 def test_heading_navigation_after_unrelated_page_change(
-    web_headings: NativeAppSession,
+    web_headings: BrowserSession,
 ) -> None:
     """Tests heading navigation right after content elsewhere on the page changes."""
 

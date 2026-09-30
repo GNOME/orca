@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top
 
 if TYPE_CHECKING:
-    from .orca_fixtures import WebSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.web
-def test_line_down_through_link_at_start_of_line(web_link_starts_line: WebSession) -> None:
+def test_line_down_through_link_at_start_of_line(web_link_starts_line: BrowserSession) -> None:
     """Tests that the line whose first item is a link does not include the preceding line."""
 
     session = web_link_starts_line

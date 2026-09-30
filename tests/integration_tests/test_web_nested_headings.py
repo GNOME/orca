@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import move_to_top, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_backward_navigation_escapes_nested_heading(web_nested_headings: NativeAppSession) -> None:
+def test_backward_navigation_escapes_nested_heading(web_nested_headings: BrowserSession) -> None:
     """Tests that previous-heading from an inner heading does not get stuck on the outer one."""
 
     session = web_nested_headings

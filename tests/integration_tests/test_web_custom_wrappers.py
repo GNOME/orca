@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_line_assembly_custom_element_wrappers(web_custom_wrappers: NativeAppSession) -> None:
+def test_line_assembly_custom_element_wrappers(web_custom_wrappers: BrowserSession) -> None:
     """Tests that widgets nested in custom-element wrappers on one row share one line."""
 
     session = web_custom_wrappers

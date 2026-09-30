@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_changing_the_value_of_each_slider(web_multithumb_slider: NativeAppSession) -> None:
+def test_changing_the_value_of_each_slider(web_multithumb_slider: BrowserSession) -> None:
     """Tests tabbing to each slider thumb and changing its value."""
 
     session = web_multithumb_slider

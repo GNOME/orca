@@ -30,7 +30,7 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 # The last item of this inline "Recently featured" list wraps across two visual lines.
@@ -64,7 +64,7 @@ _DOWN_LINES = [
 
 
 @pytest.mark.native_app
-def test_line_down_past_wrapped_inline_list(web_inline_list_wrap: NativeAppSession) -> None:
+def test_line_down_past_wrapped_inline_list(web_inline_list_wrap: BrowserSession) -> None:
     """Tests that arrowing down past a wrapped inline list does not re-read the list line."""
 
     session = web_inline_list_wrap

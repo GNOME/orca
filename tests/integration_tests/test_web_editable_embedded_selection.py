@@ -30,12 +30,12 @@ from .harness import keyboard
 from .helpers import reset_web_state, say_selection, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
 def test_selected_text_separates_embedded_control(
-    web_editable_embedded_selection: NativeAppSession,
+    web_editable_embedded_selection: BrowserSession,
 ) -> None:
     """Tests that selected text separates an embedded control from its adjacent label."""
 

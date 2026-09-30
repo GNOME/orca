@@ -30,7 +30,7 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 _LONG_LINE = (
@@ -41,14 +41,14 @@ _LONG_VISIBLE = "The quick brown fox jumps over t"
 _SECOND_LINE = "Second paragraph line."
 
 
-def _reset_to_top(session: NativeAppSession) -> None:
+def _reset_to_top(session: BrowserSession) -> None:
     """Resets web state and moves to the top of the document."""
 
     helpers.reset_web_state(session)
     helpers.move_to_top(session)
 
 
-def _next_link(session: NativeAppSession) -> None:
+def _next_link(session: BrowserSession) -> None:
     """Moves to the next link with structural navigation and discards the output."""
 
     keyboard.tap_key(keyboard.KEYSYM_K)
@@ -57,7 +57,7 @@ def _next_link(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_activate_same_page_link_to_paragraph(web_long_line: NativeAppSession) -> None:
+def test_activate_same_page_link_to_paragraph(web_long_line: BrowserSession) -> None:
     """Tests activating a same-page link whose target id is a paragraph."""
 
     session = web_long_line
@@ -72,7 +72,7 @@ def test_activate_same_page_link_to_paragraph(web_long_line: NativeAppSession) -
 
 
 @pytest.mark.native_app
-def test_activate_same_page_link_to_second_paragraph(web_long_line: NativeAppSession) -> None:
+def test_activate_same_page_link_to_second_paragraph(web_long_line: BrowserSession) -> None:
     """Tests activating a same-page link whose target id is a different paragraph."""
 
     session = web_long_line

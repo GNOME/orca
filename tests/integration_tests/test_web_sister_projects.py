@@ -30,7 +30,7 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 _DOWN_LINES = [
@@ -97,7 +97,7 @@ def _assert_each_line(session, key, lines) -> None:
 
 
 @pytest.mark.native_app
-def test_line_down_keeps_list_rows_separate(web_sister_projects: NativeAppSession) -> None:
+def test_line_down_keeps_list_rows_separate(web_sister_projects: BrowserSession) -> None:
     """Tests that arrowing down the multi-column list keeps each row on its own line."""
 
     session = web_sister_projects
@@ -107,7 +107,7 @@ def test_line_down_keeps_list_rows_separate(web_sister_projects: NativeAppSessio
 
 
 @pytest.mark.native_app
-def test_line_up_keeps_list_rows_separate(web_sister_projects: NativeAppSession) -> None:
+def test_line_up_keeps_list_rows_separate(web_sister_projects: BrowserSession) -> None:
     """Tests that arrowing up the multi-column list keeps each row on its own line."""
 
     session = web_sister_projects

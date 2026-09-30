@@ -30,12 +30,12 @@ from .harness import keyboard
 from .helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
 def test_say_all_reads_all_nested_blockquote_sentences(
-    web_nested_blockquotes: NativeAppSession,
+    web_nested_blockquotes: BrowserSession,
 ) -> None:
     """Tests that Say All does not skip text inside nested blockquotes."""
 

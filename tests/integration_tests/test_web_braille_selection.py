@@ -30,7 +30,7 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 _FULL_COMPUTER = "knowledge good people child about character educated everywhere indeed. $l"
 _VISIBLE_COMPUTER = "knowledge good people child abou"
@@ -53,7 +53,7 @@ def _mask_cells(full: str, start: int, end: int) -> str:
 
 
 def _assert_selection(
-    session: NativeAppSession, *, speech: list[str], line: helpers.BrailleLine
+    session: BrowserSession, *, speech: list[str], line: helpers.BrailleLine
 ) -> None:
     """Asserts the speech and the settled (last) braille frame after a selection change."""
 
@@ -61,7 +61,7 @@ def _assert_selection(
     assert (spoken, brailled[-1]) == (speech, line)
 
 
-def _configure_and_focus_editable(session: NativeAppSession, *, table: str | None) -> None:
+def _configure_and_focus_editable(session: BrowserSession, *, table: str | None) -> None:
     """Resets state, configures braille, and tabs into the editable div (caret at its start)."""
 
     helpers.reset_web_state(session)
@@ -85,7 +85,7 @@ def _configure_and_focus_editable(session: NativeAppSession, *, table: str | Non
     session.reader.reset()
 
 
-def _configure_noneditable_contracted(session: NativeAppSession) -> None:
+def _configure_noneditable_contracted(session: BrowserSession) -> None:
     """Resets state and configures contracted braille without focusing the editable field."""
 
     helpers.reset_web_state(session)
@@ -98,7 +98,7 @@ def _configure_noneditable_contracted(session: NativeAppSession) -> None:
 
 # Keep ahead of the tests which select: a leftover selection silences this one's speech.
 @pytest.mark.native_app
-def test_noneditable_selection_contracted(web_contracted_braille: NativeAppSession) -> None:
+def test_noneditable_selection_contracted(web_contracted_braille: BrowserSession) -> None:
     """Tests that selecting non-editable page text underlines the contracted cells."""
 
     session = web_contracted_braille
@@ -119,7 +119,7 @@ def test_noneditable_selection_contracted(web_contracted_braille: NativeAppSessi
 
 
 @pytest.mark.native_app
-def test_editable_selection_uncontracted(web_contracted_braille: NativeAppSession) -> None:
+def test_editable_selection_uncontracted(web_contracted_braille: BrowserSession) -> None:
     """Tests that the selection underline spans the verbatim cells of each selected word."""
 
     session = web_contracted_braille
@@ -147,7 +147,7 @@ def test_editable_selection_uncontracted(web_contracted_braille: NativeAppSessio
 
 
 @pytest.mark.native_app
-def test_editable_selection_contracted(web_contracted_braille: NativeAppSession) -> None:
+def test_editable_selection_contracted(web_contracted_braille: BrowserSession) -> None:
     """Tests that the selection underline collapses to the contracted cells."""
 
     session = web_contracted_braille
@@ -176,7 +176,7 @@ def test_editable_selection_contracted(web_contracted_braille: NativeAppSession)
 
 @pytest.mark.native_app
 def test_editable_selection_midstring_extend_and_unselect(
-    web_contracted_braille: NativeAppSession,
+    web_contracted_braille: BrowserSession,
 ) -> None:
     """Tests a selection that starts mid-line, extends to the end, then is collapsed."""
 

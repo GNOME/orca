@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_combobox_listbox_navigation(web_autocomplete: NativeAppSession) -> None:
+def test_combobox_listbox_navigation(web_autocomplete: BrowserSession) -> None:
     """Tests opening the listbox and moving selection through the option list."""
 
     session = web_autocomplete
@@ -60,7 +60,7 @@ def test_combobox_listbox_navigation(web_autocomplete: NativeAppSession) -> None
 
 
 @pytest.mark.native_app
-def test_alert_region_announced(web_autocomplete: NativeAppSession) -> None:
+def test_alert_region_announced(web_autocomplete: BrowserSession) -> None:
     """Tests that populating a role=alert region after activating Submit is announced."""
 
     session = web_autocomplete

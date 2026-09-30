@@ -30,16 +30,16 @@ from .harness import keyboard
 from .helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _focus_next(session: NativeAppSession) -> list[str]:
+def _focus_next(session: BrowserSession) -> list[str]:
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     return speech(session)
 
 
 @pytest.mark.native_app
-def test_label_inference_on_tab(web_label_inference: NativeAppSession) -> None:
+def test_label_inference_on_tab(web_label_inference: BrowserSession) -> None:
     """Tests that an unlabeled control's name is inferred from nearby text on focus."""
 
     session = web_label_inference

@@ -32,7 +32,7 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_bottom, move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import WebSession
+    from .orca_fixtures import BrowserSession
 
 _PLAIN = "\x00"
 _LINK = "\xc0"
@@ -43,7 +43,7 @@ def _line(full: str, mask: str) -> BrailleLine:
 
 
 @pytest.mark.web
-def test_line_navigation_over_nested_link_text(web_nested_link_text: WebSession) -> None:
+def test_line_navigation_over_nested_link_text(web_nested_link_text: BrowserSession) -> None:
     """Tests line navigation over nested link text."""
 
     session = web_nested_link_text
@@ -191,7 +191,7 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: WebSession)
 
 
 @pytest.mark.web
-def test_word_navigation_over_nested_link_text(web_nested_link_text: WebSession) -> None:
+def test_word_navigation_over_nested_link_text(web_nested_link_text: BrowserSession) -> None:
     """Tests word navigation over nested link text."""
 
     session = web_nested_link_text
@@ -221,7 +221,7 @@ def test_word_navigation_over_nested_link_text(web_nested_link_text: WebSession)
 
 
 @pytest.mark.web
-def test_tab_navigation_over_nested_link_text(web_nested_link_text: WebSession) -> None:
+def test_tab_navigation_over_nested_link_text(web_nested_link_text: BrowserSession) -> None:
     """Tests tab navigation over nested link text."""
 
     session = web_nested_link_text
@@ -249,7 +249,7 @@ def test_tab_navigation_over_nested_link_text(web_nested_link_text: WebSession) 
 
 
 @pytest.mark.web
-def test_say_all_over_nested_link_text(web_nested_link_text: WebSession) -> None:
+def test_say_all_over_nested_link_text(web_nested_link_text: BrowserSession) -> None:
     """Tests Say All over nested link text."""
 
     session = web_nested_link_text
@@ -331,7 +331,7 @@ def test_say_all_over_nested_link_text(web_nested_link_text: WebSession) -> None
 
 
 @pytest.mark.web
-def test_nested_link_text_uses_the_hyperlink_voice(web_nested_link_text: WebSession) -> None:
+def test_nested_link_text_uses_the_hyperlink_voice(web_nested_link_text: BrowserSession) -> None:
     """Tests that nested link text uses the hyperlink voice."""
 
     session = web_nested_link_text
@@ -354,7 +354,7 @@ def test_nested_link_text_uses_the_hyperlink_voice(web_nested_link_text: WebSess
 
 
 @pytest.mark.web
-def test_say_all_uses_the_hyperlink_voice(web_nested_link_text: WebSession) -> None:
+def test_say_all_uses_the_hyperlink_voice(web_nested_link_text: BrowserSession) -> None:
     """Tests that Say All uses the hyperlink voice for nested link text."""
 
     session = web_nested_link_text

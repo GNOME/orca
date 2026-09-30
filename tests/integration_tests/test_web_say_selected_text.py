@@ -35,11 +35,11 @@ from .web_native_selection_helpers import (
 )
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_say_selected_text(web_native_text_selection: NativeAppSession) -> None:
+def test_say_selected_text(web_native_text_selection: BrowserSession) -> None:
     """Tests say selected text for a selection which spans several elements."""
 
     session = web_native_text_selection

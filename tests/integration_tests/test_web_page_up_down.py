@@ -31,11 +31,11 @@ from .harness import keyboard
 from .helpers import BrailleLine
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_page_down_then_up(web_page_up_down: NativeAppSession) -> None:
+def test_page_down_then_up(web_page_up_down: BrowserSession) -> None:
     """Tests that Page Down moves the caret a page down and Page Up returns toward the top."""
 
     session = web_page_up_down
@@ -68,7 +68,7 @@ def test_page_down_then_up(web_page_up_down: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_end_of_file_then_caret_left(web_page_up_down: NativeAppSession) -> None:
+def test_end_of_file_then_caret_left(web_page_up_down: BrowserSession) -> None:
     """Tests Ctrl+End landing at the true end of the last line, then Left walking back."""
 
     session = web_page_up_down

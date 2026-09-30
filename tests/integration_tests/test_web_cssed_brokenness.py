@@ -30,11 +30,11 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_one_word_per_line_text_is_read_whole(web_cssed_brokenness: NativeAppSession) -> None:
+def test_one_word_per_line_text_is_read_whole(web_cssed_brokenness: BrowserSession) -> None:
     """Tests that text CSSed into one word or character per visual line is collapsed to one line."""
 
     session = web_cssed_brokenness

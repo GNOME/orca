@@ -30,10 +30,10 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _assert_lines_two_through_five(session: NativeAppSession) -> None:
+def _assert_lines_two_through_five(session: BrowserSession) -> None:
     """Arrows Down through the remaining four lines, checking Orca speaks each separately."""
 
     for expected in ["Two", "three four", "five", "This is a test of orca."]:
@@ -42,7 +42,7 @@ def _assert_lines_two_through_five(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_browse_mode_line_navigation(web_line_breaks: NativeAppSession) -> None:
+def test_browse_mode_line_navigation(web_line_breaks: BrowserSession) -> None:
     """Tests that Orca speaks each br-delimited line separately during caret navigation."""
 
     session = web_line_breaks
@@ -54,7 +54,7 @@ def test_browse_mode_line_navigation(web_line_breaks: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_focus_mode_line_navigation(web_line_breaks: NativeAppSession) -> None:
+def test_focus_mode_line_navigation(web_line_breaks: BrowserSession) -> None:
     """Tests that Orca speaks each br-delimited line when focus mode is forced on a document."""
 
     session = web_line_breaks
@@ -66,7 +66,7 @@ def test_focus_mode_line_navigation(web_line_breaks: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_app_controlled_line_navigation(web_line_breaks: NativeAppSession) -> None:
+def test_app_controlled_line_navigation(web_line_breaks: BrowserSession) -> None:
     """Tests that Orca speaks each br-delimited line when the application controls the caret."""
 
     session = web_line_breaks

@@ -30,10 +30,10 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state, say_selection, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _move_before_image(session: NativeAppSession, section: int) -> None:
+def _move_before_image(session: BrowserSession, section: int) -> None:
     reset_web_state(session)
     for _ in range(section):
         keyboard.tap_key(keyboard.KEYSYM_H)
@@ -45,7 +45,7 @@ def _move_before_image(session: NativeAppSession, section: int) -> None:
 
 
 @pytest.mark.native_app
-def test_tab_navigation_reaches_image_descendants(web_image_descendants: NativeAppSession) -> None:
+def test_tab_navigation_reaches_image_descendants(web_image_descendants: BrowserSession) -> None:
     """Tests Tab and Shift+Tab reach image-map links and SVG controls."""
 
     session = web_image_descendants
@@ -80,7 +80,7 @@ def test_tab_navigation_reaches_image_descendants(web_image_descendants: NativeA
     ids=["image-map", "interactive-svg", "svg-text"],
 )
 def test_caret_navigation_through_image_descendants(
-    web_image_descendants: NativeAppSession,
+    web_image_descendants: BrowserSession,
     by_word: bool,
     section: int,
     characters: list[str],
@@ -111,7 +111,7 @@ def test_caret_navigation_through_image_descendants(
 
 
 @pytest.mark.native_app
-def test_native_selection_within_svg_text(web_image_descendants: NativeAppSession) -> None:
+def test_native_selection_within_svg_text(web_image_descendants: BrowserSession) -> None:
     """Tests SVG text can be selected, reported, and unselected by character."""
 
     session = web_image_descendants

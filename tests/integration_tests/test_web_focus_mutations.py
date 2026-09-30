@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_focus_replaces_element(web_focus_mutations: NativeAppSession) -> None:
+def test_focus_replaces_element(web_focus_mutations: BrowserSession) -> None:
     """Tests that focusing a self-replacing button announces the recreated element."""
 
     session = web_focus_mutations
@@ -51,7 +51,7 @@ def test_focus_replaces_element(web_focus_mutations: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_similar_relabel_is_suppressed(web_focus_mutations: NativeAppSession) -> None:
+def test_similar_relabel_is_suppressed(web_focus_mutations: BrowserSession) -> None:
     """Tests that relabeling the focused button to a near-identical name is not announced."""
 
     session = web_focus_mutations
@@ -72,7 +72,7 @@ def test_similar_relabel_is_suppressed(web_focus_mutations: NativeAppSession) ->
 
 
 @pytest.mark.native_app
-def test_distinct_relabel_is_announced(web_focus_mutations: NativeAppSession) -> None:
+def test_distinct_relabel_is_announced(web_focus_mutations: BrowserSession) -> None:
     """Tests that relabeling the focused button to a distinct name re-announces it."""
 
     session = web_focus_mutations

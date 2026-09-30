@@ -30,14 +30,14 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_bottom, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 _LINK_LINE_MASK = "\x00" * 8 + "\xc0" * 8 + "\x00" * 10
 
 
 @pytest.mark.native_app
-def test_line_navigation_down_and_up(web_editable_embedded: NativeAppSession) -> None:
+def test_line_navigation_down_and_up(web_editable_embedded: BrowserSession) -> None:
     """Tests reading a contenteditable's lines (one with an embedded link) down then back up."""
 
     session = web_editable_embedded
@@ -87,7 +87,7 @@ def test_line_navigation_down_and_up(web_editable_embedded: NativeAppSession) ->
 
 
 @pytest.mark.native_app
-def test_word_navigation_onto_embedded_link(web_editable_embedded: NativeAppSession) -> None:
+def test_word_navigation_onto_embedded_link(web_editable_embedded: BrowserSession) -> None:
     """Tests that word-navigating onto an embedded link in a contenteditable announces it."""
 
     session = web_editable_embedded
@@ -116,7 +116,7 @@ def test_word_navigation_onto_embedded_link(web_editable_embedded: NativeAppSess
 
 
 @pytest.mark.native_app
-def test_character_navigation_into_embedded_link(web_editable_embedded: NativeAppSession) -> None:
+def test_character_navigation_into_embedded_link(web_editable_embedded: BrowserSession) -> None:
     """Tests that character-navigating into an embedded link switches braille to the link."""
 
     session = web_editable_embedded
@@ -147,7 +147,7 @@ def test_character_navigation_into_embedded_link(web_editable_embedded: NativeAp
 
 
 @pytest.mark.native_app
-def test_character_deletion_and_insertion(web_editable_embedded: NativeAppSession) -> None:
+def test_character_deletion_and_insertion(web_editable_embedded: BrowserSession) -> None:
     """Tests presentation of character deletion and insertion in a contenteditable."""
 
     session = web_editable_embedded
@@ -173,7 +173,7 @@ def test_character_deletion_and_insertion(web_editable_embedded: NativeAppSessio
 
 
 @pytest.mark.native_app
-def test_navigation_after_edit_reads_fresh_content(web_editable_embedded: NativeAppSession) -> None:
+def test_navigation_after_edit_reads_fresh_content(web_editable_embedded: BrowserSession) -> None:
     """Tests that arrowing to an edited line reads its current text rather than a stale cache."""
 
     session = web_editable_embedded
@@ -199,7 +199,7 @@ def test_navigation_after_edit_reads_fresh_content(web_editable_embedded: Native
 
 
 @pytest.mark.native_app
-def test_character_navigation_left_to_right(web_editable_embedded: NativeAppSession) -> None:
+def test_character_navigation_left_to_right(web_editable_embedded: BrowserSession) -> None:
     """Tests Right-arrow character navigation across the editable region, including its link."""
 
     session = web_editable_embedded
@@ -215,7 +215,7 @@ def test_character_navigation_left_to_right(web_editable_embedded: NativeAppSess
 
 
 @pytest.mark.native_app
-def test_character_navigation_right_to_left(web_editable_embedded: NativeAppSession) -> None:
+def test_character_navigation_right_to_left(web_editable_embedded: BrowserSession) -> None:
     """Tests Left-arrow character navigation back across the editable region, including its link."""
 
     session = web_editable_embedded
@@ -229,7 +229,7 @@ def test_character_navigation_right_to_left(web_editable_embedded: NativeAppSess
 
 
 @pytest.mark.native_app
-def test_word_navigation_left_to_right(web_editable_embedded: NativeAppSession) -> None:
+def test_word_navigation_left_to_right(web_editable_embedded: BrowserSession) -> None:
     """Tests Ctrl+Right word navigation across the editable region, including its link."""
 
     session = web_editable_embedded
@@ -260,7 +260,7 @@ def test_word_navigation_left_to_right(web_editable_embedded: NativeAppSession) 
 
 
 @pytest.mark.native_app
-def test_word_navigation_right_to_left(web_editable_embedded: NativeAppSession) -> None:
+def test_word_navigation_right_to_left(web_editable_embedded: BrowserSession) -> None:
     """Tests Ctrl+Left word navigation back across the editable region, including its link."""
 
     session = web_editable_embedded

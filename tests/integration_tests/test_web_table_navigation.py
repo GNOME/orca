@@ -30,27 +30,27 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 def _table_nav(key: int) -> None:
     keyboard.press_chord([keyboard.KEYSYM_ALT_L, keyboard.KEYSYM_SHIFT_L], key)
 
 
-def _orca_table_nav(session: NativeAppSession, key: int) -> None:
+def _orca_table_nav(session: BrowserSession, key: int) -> None:
     session.orca.press_orca_key(
         key, extra_modifiers=[keyboard.KEYSYM_ALT_L, keyboard.KEYSYM_SHIFT_L]
     )
 
 
-def _enter_third_table(session: NativeAppSession) -> None:
+def _enter_third_table(session: BrowserSession) -> None:
     for _ in range(2):
         keyboard.tap_key(keyboard.KEYSYM_T)
         capture(session)
     keyboard.tap_key(keyboard.KEYSYM_T)
 
 
-def _enter_fourth_table(session: NativeAppSession) -> None:
+def _enter_fourth_table(session: BrowserSession) -> None:
     for _ in range(3):
         keyboard.tap_key(keyboard.KEYSYM_T)
         capture(session)
@@ -59,7 +59,7 @@ def _enter_fourth_table(session: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("speak_position", [False, True])
-def test_structural_navigation_by_table(web_tables: NativeAppSession, speak_position: bool) -> None:
+def test_structural_navigation_by_table(web_tables: BrowserSession, speak_position: bool) -> None:
     """Tests structural navigation by table."""
 
     session = web_tables
@@ -90,7 +90,7 @@ def test_structural_navigation_by_table(web_tables: NativeAppSession, speak_posi
 
 
 @pytest.mark.native_app
-def test_table_navigation_by_column(web_tables: NativeAppSession) -> None:
+def test_table_navigation_by_column(web_tables: BrowserSession) -> None:
     """Tests cell-by-cell table navigation across columns."""
 
     session = web_tables
@@ -143,7 +143,7 @@ def test_table_navigation_by_column(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_table_navigation_by_row(web_tables: NativeAppSession) -> None:
+def test_table_navigation_by_row(web_tables: BrowserSession) -> None:
     """Tests cell-by-cell table navigation across rows."""
 
     session = web_tables
@@ -196,7 +196,7 @@ def test_table_navigation_by_row(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_table_navigation_across_spanned_cells(web_tables: NativeAppSession) -> None:
+def test_table_navigation_across_spanned_cells(web_tables: BrowserSession) -> None:
     """Tests table navigation onto cells that span rows and/or columns."""
 
     session = web_tables
@@ -250,7 +250,7 @@ def test_table_navigation_across_spanned_cells(web_tables: NativeAppSession) -> 
 
 
 @pytest.mark.native_app
-def test_caret_navigation_in_a_table(web_tables: NativeAppSession) -> None:
+def test_caret_navigation_in_a_table(web_tables: BrowserSession) -> None:
     """Tests caret navigation into, through, and out of a table."""
 
     session = web_tables
@@ -313,7 +313,7 @@ def test_caret_navigation_in_a_table(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_table_cell_where_am_i(web_tables: NativeAppSession) -> None:
+def test_table_cell_where_am_i(web_tables: BrowserSession) -> None:
     """Tests basic Where Am I in a table cell."""
 
     session = web_tables
@@ -339,7 +339,7 @@ def test_table_cell_where_am_i(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_table_cell_detailed_where_am_i(web_tables: NativeAppSession) -> None:
+def test_table_cell_detailed_where_am_i(web_tables: BrowserSession) -> None:
     """Tests detailed Where Am I in a table cell."""
 
     session = web_tables
@@ -366,7 +366,7 @@ def test_table_cell_detailed_where_am_i(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_row_header_where_am_i(web_tables: NativeAppSession) -> None:
+def test_row_header_where_am_i(web_tables: BrowserSession) -> None:
     """Tests basic Where Am I on a row header."""
 
     session = web_tables
@@ -384,7 +384,7 @@ def test_row_header_where_am_i(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_column_header_where_am_i(web_tables: NativeAppSession) -> None:
+def test_column_header_where_am_i(web_tables: BrowserSession) -> None:
     """Tests basic Where Am I on a column header."""
 
     session = web_tables
@@ -402,7 +402,7 @@ def test_column_header_where_am_i(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_heading_where_am_i(web_tables: NativeAppSession) -> None:
+def test_heading_where_am_i(web_tables: BrowserSession) -> None:
     """Tests basic Where Am I on a heading."""
 
     session = web_tables
@@ -419,7 +419,7 @@ def test_heading_where_am_i(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_word_navigation_stays_within_table_cell(web_tables: NativeAppSession) -> None:
+def test_word_navigation_stays_within_table_cell(web_tables: BrowserSession) -> None:
     """Tests that Ctrl+Right word navigation does not cross into an adjacent table cell."""
 
     session = web_tables
@@ -446,7 +446,7 @@ def test_word_navigation_stays_within_table_cell(web_tables: NativeAppSession) -
 
 
 @pytest.mark.native_app
-def test_say_all_over_tables(web_tables: NativeAppSession) -> None:
+def test_say_all_over_tables(web_tables: BrowserSession) -> None:
     """Tests the utterances Say All speaks for a page of tables, from the top."""
 
     session = web_tables
@@ -545,7 +545,7 @@ def test_say_all_over_tables(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_first_and_last_cell(web_tables: NativeAppSession) -> None:
+def test_first_and_last_cell(web_tables: BrowserSession) -> None:
     """Tests jumping to the first and last cell of a table."""
 
     session = web_tables
@@ -580,7 +580,7 @@ def test_first_and_last_cell(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_row_and_column_extremes(web_tables: NativeAppSession) -> None:
+def test_row_and_column_extremes(web_tables: BrowserSession) -> None:
     """Tests jumping to the beginning/end of a row and top/bottom of a column."""
 
     session = web_tables
@@ -671,7 +671,7 @@ def test_row_and_column_extremes(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_navigation_boundary_messages(web_tables: NativeAppSession) -> None:
+def test_navigation_boundary_messages(web_tables: BrowserSession) -> None:
     """Tests the boundary messages reached by plain cell-by-cell navigation."""
 
     session = web_tables
@@ -730,7 +730,7 @@ def test_navigation_boundary_messages(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_toggle_table_navigation(web_tables: NativeAppSession) -> None:
+def test_toggle_table_navigation(web_tables: BrowserSession) -> None:
     """Tests disabling and re-enabling table navigation from inside a table."""
 
     session = web_tables
@@ -776,7 +776,7 @@ def test_toggle_table_navigation(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_nested_header_corner_boundaries(web_tables: NativeAppSession) -> None:
+def test_nested_header_corner_boundaries(web_tables: BrowserSession) -> None:
     """Tests the boundary messages at the empty corner of the nested-header table."""
 
     session = web_tables
@@ -823,7 +823,7 @@ def test_nested_header_corner_boundaries(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_nested_column_headers_into_body(web_tables: NativeAppSession) -> None:
+def test_nested_column_headers_into_body(web_tables: BrowserSession) -> None:
     """Tests that Down from a multi-level column header enters the table body."""
 
     session = web_tables
@@ -879,7 +879,7 @@ def test_nested_column_headers_into_body(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_nested_header_corner_through_row_headers(web_tables: NativeAppSession) -> None:
+def test_nested_header_corner_through_row_headers(web_tables: BrowserSession) -> None:
     """Tests that Down from the corner moves down the row-header column into the body."""
 
     session = web_tables
@@ -924,7 +924,7 @@ def test_nested_header_corner_through_row_headers(web_tables: NativeAppSession) 
 
 
 @pytest.mark.native_app
-def test_multi_level_header_order(web_tables: NativeAppSession) -> None:
+def test_multi_level_header_order(web_tables: BrowserSession) -> None:
     """Tests that a body cell's two column headers are announced group-then-subheader."""
 
     session = web_tables
@@ -952,7 +952,7 @@ def test_multi_level_header_order(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_dynamic_column_headers(web_tables: NativeAppSession) -> None:
+def test_dynamic_column_headers(web_tables: BrowserSession) -> None:
     """Tests setting and clearing the row used as dynamic column headers."""
 
     session = web_tables
@@ -1034,7 +1034,7 @@ def test_dynamic_column_headers(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_dynamic_row_headers(web_tables: NativeAppSession) -> None:
+def test_dynamic_row_headers(web_tables: BrowserSession) -> None:
     """Tests setting and clearing the column used as dynamic row headers."""
 
     session = web_tables
@@ -1098,7 +1098,7 @@ def test_dynamic_row_headers(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_skip_blank_cells(web_tables: NativeAppSession) -> None:
+def test_skip_blank_cells(web_tables: BrowserSession) -> None:
     """Tests that skip-blank-cells skips an empty mid-column cell when enabled."""
 
     session = web_tables
@@ -1140,7 +1140,7 @@ def test_skip_blank_cells(web_tables: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_character_navigation_crosses_table_cells(web_tables: NativeAppSession) -> None:
+def test_character_navigation_crosses_table_cells(web_tables: BrowserSession) -> None:
     """Tests Right-arrow character navigation across cell boundaries within a table."""
 
     session = web_tables
@@ -1154,7 +1154,7 @@ def test_character_navigation_crosses_table_cells(web_tables: NativeAppSession) 
 
 
 @pytest.mark.native_app
-def test_character_navigation_crosses_table_cells_backward(web_tables: NativeAppSession) -> None:
+def test_character_navigation_crosses_table_cells_backward(web_tables: BrowserSession) -> None:
     """Tests Left-arrow character navigation back across cell boundaries within a table."""
 
     session = web_tables
@@ -1173,7 +1173,7 @@ def test_character_navigation_crosses_table_cells_backward(web_tables: NativeApp
 
 
 @pytest.mark.native_app
-def test_word_navigation_across_table_cells(web_tables: NativeAppSession) -> None:
+def test_word_navigation_across_table_cells(web_tables: BrowserSession) -> None:
     """Tests Ctrl+Right word navigation visiting each cell, including headers and links."""
 
     session = web_tables
@@ -1201,7 +1201,7 @@ def test_word_navigation_across_table_cells(web_tables: NativeAppSession) -> Non
 
 
 @pytest.mark.native_app
-def test_word_navigation_across_table_cells_backward(web_tables: NativeAppSession) -> None:
+def test_word_navigation_across_table_cells_backward(web_tables: BrowserSession) -> None:
     """Tests Ctrl+Left word navigation visiting each cell, including headers and links."""
 
     session = web_tables
@@ -1228,7 +1228,7 @@ def test_word_navigation_across_table_cells_backward(web_tables: NativeAppSessio
 
 
 @pytest.mark.native_app
-def test_word_navigation_across_spanned_cells(web_tables: NativeAppSession) -> None:
+def test_word_navigation_across_spanned_cells(web_tables: BrowserSession) -> None:
     """Tests Ctrl+Right word navigation visiting each cell of a table with spanned cells."""
 
     session = web_tables
@@ -1260,7 +1260,7 @@ def test_word_navigation_across_spanned_cells(web_tables: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
-def test_word_navigation_across_spanned_cells_backward(web_tables: NativeAppSession) -> None:
+def test_word_navigation_across_spanned_cells_backward(web_tables: BrowserSession) -> None:
     """Tests Ctrl+Left word navigation visiting each cell of a table with spanned cells."""
 
     session = web_tables

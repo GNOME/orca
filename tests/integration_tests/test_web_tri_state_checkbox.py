@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_tri_state_checkbox_cycling(web_tri_state_checkbox: NativeAppSession) -> None:
+def test_tri_state_checkbox_cycling(web_tri_state_checkbox: BrowserSession) -> None:
     """Tests tri-state check box cycling."""
 
     session = web_tri_state_checkbox

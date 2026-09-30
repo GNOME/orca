@@ -30,10 +30,10 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_bottom, move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _say_all(session: NativeAppSession, style: str) -> list[str]:
+def _say_all(session: BrowserSession, style: str) -> list[str]:
     """Warms the line caches, sets the Say All style, and returns the Say All speech."""
 
     reset_web_state(session)
@@ -47,7 +47,7 @@ def _say_all(session: NativeAppSession, style: str) -> list[str]:
 
 
 @pytest.mark.native_app
-def test_line_navigation_over_offscreen_labels(web_offscreen_labels: NativeAppSession) -> None:
+def test_line_navigation_over_offscreen_labels(web_offscreen_labels: BrowserSession) -> None:
     """Tests line navigation past fields with off-screen and clip-hidden labels."""
 
     session = web_offscreen_labels
@@ -72,7 +72,7 @@ def test_line_navigation_over_offscreen_labels(web_offscreen_labels: NativeAppSe
 
 @pytest.mark.native_app
 def test_say_all_by_sentence_omits_offscreen_labels(
-    web_offscreen_labels: NativeAppSession,
+    web_offscreen_labels: BrowserSession,
 ) -> None:
     """Tests that Say All by sentence does not read the off-screen labels as content."""
 
@@ -81,7 +81,7 @@ def test_say_all_by_sentence_omits_offscreen_labels(
 
 
 @pytest.mark.native_app
-def test_say_all_by_line_omits_offscreen_labels(web_offscreen_labels: NativeAppSession) -> None:
+def test_say_all_by_line_omits_offscreen_labels(web_offscreen_labels: BrowserSession) -> None:
     """Tests that Say All by line does not read the off-screen labels as content."""
 
     assert _say_all(web_offscreen_labels, "line") == ["Start.", "End."]

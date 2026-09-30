@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_toggling_switches(web_switch: NativeAppSession) -> None:
+def test_toggling_switches(web_switch: BrowserSession) -> None:
     """Tests tabbing to each switch and toggling it with space."""
 
     session = web_switch

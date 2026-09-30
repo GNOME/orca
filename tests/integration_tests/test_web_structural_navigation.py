@@ -36,7 +36,7 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 _LARGE_OBJECT_TEXT = (
     "This is a sufficiently long paragraph of body text so that it qualifies as a "
@@ -45,28 +45,28 @@ _LARGE_OBJECT_TEXT = (
 )
 
 
-def _next(session: NativeAppSession, keysym: int) -> list[str]:
+def _next(session: BrowserSession, keysym: int) -> list[str]:
     keyboard.tap_key(keysym)
     return speech(session)
 
 
-def _previous(session: NativeAppSession, keysym: int) -> list[str]:
+def _previous(session: BrowserSession, keysym: int) -> list[str]:
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keysym)
     return speech(session)
 
 
-def _container_start(session: NativeAppSession) -> tuple[list[str], list[BrailleLine]]:
+def _container_start(session: BrowserSession) -> tuple[list[str], list[BrailleLine]]:
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_COMMA)
     return capture(session)
 
 
-def _container_end(session: NativeAppSession) -> tuple[list[str], list[BrailleLine]]:
+def _container_end(session: BrowserSession) -> tuple[list[str], list[BrailleLine]]:
     keyboard.tap_key(keyboard.KEYSYM_COMMA)
     return capture(session)
 
 
 @pytest.mark.native_app
-def test_forward_navigation_by_role(web_structural_navigation: NativeAppSession) -> None:
+def test_forward_navigation_by_role(web_structural_navigation: BrowserSession) -> None:
     """Tests forward single-key navigation landing on each role in document order."""
 
     session = web_structural_navigation
@@ -93,7 +93,7 @@ def test_forward_navigation_by_role(web_structural_navigation: NativeAppSession)
 
 
 @pytest.mark.native_app
-def test_absence_message(web_structural_navigation: NativeAppSession) -> None:
+def test_absence_message(web_structural_navigation: BrowserSession) -> None:
     """Tests the absence message for a role the page lacks."""
 
     session = web_structural_navigation
@@ -102,7 +102,7 @@ def test_absence_message(web_structural_navigation: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_wrapping(web_structural_navigation: NativeAppSession) -> None:
+def test_wrapping(web_structural_navigation: BrowserSession) -> None:
     """Tests wrap announcements navigating past the last instance of a role, both directions."""
 
     session = web_structural_navigation
@@ -126,7 +126,7 @@ def test_wrapping(web_structural_navigation: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_cycle_navigation_mode(web_structural_navigation: NativeAppSession) -> None:
+def test_cycle_navigation_mode(web_structural_navigation: BrowserSession) -> None:
     """Tests Orca+z cycling from document mode through GUI and off and back to document."""
 
     session = web_structural_navigation
@@ -143,7 +143,7 @@ def test_cycle_navigation_mode(web_structural_navigation: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
-def test_no_wrapping_when_disabled(web_structural_navigation: NativeAppSession) -> None:
+def test_no_wrapping_when_disabled(web_structural_navigation: BrowserSession) -> None:
     """Tests boundary messages replace wrapping when navigation wrapping is off."""
 
     session = web_structural_navigation
@@ -162,7 +162,7 @@ def test_no_wrapping_when_disabled(web_structural_navigation: NativeAppSession) 
 
 
 @pytest.mark.native_app
-def test_table_container_start_and_end(web_structural_navigation: NativeAppSession) -> None:
+def test_table_container_start_and_end(web_structural_navigation: BrowserSession) -> None:
     """Tests container start/end from inside the table."""
 
     session = web_structural_navigation
@@ -199,7 +199,7 @@ def test_table_container_start_and_end(web_structural_navigation: NativeAppSessi
 
 
 @pytest.mark.native_app
-def test_blockquote_container_start_and_end(web_structural_navigation: NativeAppSession) -> None:
+def test_blockquote_container_start_and_end(web_structural_navigation: BrowserSession) -> None:
     """Tests container start/end from inside the blockquote."""
 
     session = web_structural_navigation
@@ -224,7 +224,7 @@ def test_blockquote_container_start_and_end(web_structural_navigation: NativeApp
 
 
 @pytest.mark.native_app
-def test_container_start_not_in_a_container(web_structural_navigation: NativeAppSession) -> None:
+def test_container_start_not_in_a_container(web_structural_navigation: BrowserSession) -> None:
     """Tests the absence message when the caret is on the heading, not in a large container."""
 
     session = web_structural_navigation

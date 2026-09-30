@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_moving_the_splitters(web_window_splitter: NativeAppSession) -> None:
+def test_moving_the_splitters(web_window_splitter: BrowserSession) -> None:
     """Tests tabbing to a vertical and a horizontal splitter and moving each one."""
 
     session = web_window_splitter

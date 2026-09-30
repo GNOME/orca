@@ -30,10 +30,10 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _reload(session: NativeAppSession) -> None:
+def _reload(session: BrowserSession) -> None:
     """Reloads the page so that each test starts with the same expanded and collapsed state."""
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_R)
@@ -43,7 +43,7 @@ def _reload(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_arrow_navigation_between_accordion_headers(web_accordion: NativeAppSession) -> None:
+def test_arrow_navigation_between_accordion_headers(web_accordion: BrowserSession) -> None:
     """Tests arrowing between accordion headers and expanding and collapsing panels."""
 
     session = web_accordion
@@ -138,7 +138,7 @@ def test_arrow_navigation_between_accordion_headers(web_accordion: NativeAppSess
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_heading(web_accordion: NativeAppSession) -> None:
+def test_structural_navigation_by_heading(web_accordion: BrowserSession) -> None:
     """Tests structural navigation by heading across the accordion headers."""
 
     session = web_accordion

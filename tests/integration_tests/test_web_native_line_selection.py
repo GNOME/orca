@@ -37,12 +37,12 @@ from .web_native_selection_helpers import (
 )
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @requires_browser_version("chromium", 156, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
-def test_line_selection_and_unselection(web_native_text_selection: NativeAppSession) -> None:
+def test_line_selection_and_unselection(web_native_text_selection: BrowserSession) -> None:
     """Tests native line selection through varied content, then back to the top."""
 
     session = web_native_text_selection
@@ -135,7 +135,7 @@ def test_line_selection_and_unselection(web_native_text_selection: NativeAppSess
 
 @pytest.mark.native_app
 def test_selected_text_has_no_added_trailing_space(
-    web_native_text_selection: NativeAppSession,
+    web_native_text_selection: BrowserSession,
 ) -> None:
     """Tests that joining selected blocks does not append an unselected separator."""
 
@@ -150,7 +150,7 @@ def test_selected_text_has_no_added_trailing_space(
 
 
 @pytest.mark.native_app
-def test_selection_by_line_up_then_down(web_native_text_selection: NativeAppSession) -> None:
+def test_selection_by_line_up_then_down(web_native_text_selection: BrowserSession) -> None:
     """Tests selection by line up and then down."""
 
     session = web_native_text_selection

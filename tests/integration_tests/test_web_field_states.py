@@ -30,16 +30,16 @@ from .harness import keyboard
 from .helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _tab(session: NativeAppSession) -> list[str]:
+def _tab(session: BrowserSession) -> list[str]:
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     return speech(session)
 
 
 @pytest.mark.native_app
-def test_field_state_announcements_on_focus(web_field_states: NativeAppSession) -> None:
+def test_field_state_announcements_on_focus(web_field_states: BrowserSession) -> None:
     """Tests that required, invalid, and described states are announced as fields gain focus."""
 
     session = web_field_states
@@ -53,7 +53,7 @@ def test_field_state_announcements_on_focus(web_field_states: NativeAppSession) 
 
 
 @pytest.mark.native_app
-def test_disclosure_expand_and_collapse(web_field_states: NativeAppSession) -> None:
+def test_disclosure_expand_and_collapse(web_field_states: BrowserSession) -> None:
     """Tests that activating a disclosure widget announces the expanded and collapsed states."""
 
     session = web_field_states

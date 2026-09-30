@@ -30,7 +30,7 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 # Chromium names the alt-less image with a version-dependent "missing image
 # descriptions" annotation, so these tests pin Orca's stable role labels and the
@@ -38,7 +38,7 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.native_app
-def test_tab_presents_image_only_link_as_a_link(web_image_link: NativeAppSession) -> None:
+def test_tab_presents_image_only_link_as_a_link(web_image_link: BrowserSession) -> None:
     """Tests that Tab reaches the image-only link and presents it as a link."""
 
     session = web_image_link
@@ -57,7 +57,7 @@ def test_tab_presents_image_only_link_as_a_link(web_image_link: NativeAppSession
 
 
 @pytest.mark.native_app
-def test_next_image_reaches_the_alt_less_image(web_image_link: NativeAppSession) -> None:
+def test_next_image_reaches_the_alt_less_image(web_image_link: BrowserSession) -> None:
     """Tests that G (next image) reaches the alt-less image, so it is not filtered as useless."""
 
     session = web_image_link
@@ -71,7 +71,7 @@ def test_next_image_reaches_the_alt_less_image(web_image_link: NativeAppSession)
 
 @pytest.mark.native_app
 def test_small_standalone_image_is_filtered_from_content(
-    web_image_link: NativeAppSession,
+    web_image_link: BrowserSession,
 ) -> None:
     """Tests that a tiny unlabeled image is dropped from content but a larger one is presented."""
 
@@ -112,7 +112,7 @@ def test_small_standalone_image_is_filtered_from_content(
 
 
 @pytest.mark.native_app
-def test_named_icon_link_speaks_its_name(web_image_link: NativeAppSession) -> None:
+def test_named_icon_link_speaks_its_name(web_image_link: BrowserSession) -> None:
     """Tests a link wrapping a named icon section speaks its name in browse mode, not bare."""
 
     session = web_image_link
@@ -136,7 +136,7 @@ def test_named_icon_link_speaks_its_name(web_image_link: NativeAppSession) -> No
 
 
 @pytest.mark.native_app
-def test_say_all_skips_the_useless_image(web_image_link: NativeAppSession) -> None:
+def test_say_all_skips_the_useless_image(web_image_link: BrowserSession) -> None:
     """Tests that Say All reads the navigable images but skips the useless small one."""
 
     move_to_top(web_image_link)

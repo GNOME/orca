@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_arrow_navigation_through_toolbar_controls(web_toolbar: NativeAppSession) -> None:
+def test_arrow_navigation_through_toolbar_controls(web_toolbar: BrowserSession) -> None:
     """Tests arrowing through the toolbar's buttons, radio group, menu, spin button, and link."""
 
     session = web_toolbar

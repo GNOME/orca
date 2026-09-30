@@ -38,7 +38,7 @@ from .web_native_selection_helpers import (
 )
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
@@ -132,7 +132,7 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
 @requires_browser_version("chromium", 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_character_selection_and_unselection(
-    web_native_text_selection: NativeAppSession,
+    web_native_text_selection: BrowserSession,
 ) -> None:
     """Tests native character selection from the top to bottom, then back to the top."""
 
@@ -148,7 +148,7 @@ def test_character_selection_and_unselection(
 
 @pytest.mark.native_app
 def test_selection_to_the_right_after_line_navigation(
-    web_native_text_selection: NativeAppSession,
+    web_native_text_selection: BrowserSession,
 ) -> None:
     """Tests selection to the right after line navigation."""
 
@@ -166,7 +166,7 @@ def test_selection_to_the_right_after_line_navigation(
 
 @pytest.mark.native_app
 def test_selection_to_the_right_after_structural_navigation(
-    web_native_text_selection: NativeAppSession,
+    web_native_text_selection: BrowserSession,
 ) -> None:
     """Tests selection to the right after structural navigation."""
 
@@ -182,7 +182,7 @@ def test_selection_to_the_right_after_structural_navigation(
 
 
 @pytest.mark.native_app
-def test_selection_after_image_navigation(web_native_text_selection: NativeAppSession) -> None:
+def test_selection_after_image_navigation(web_native_text_selection: BrowserSession) -> None:
     """Tests image navigation positions the native caret before the embedded image."""
 
     session = web_native_text_selection
@@ -202,7 +202,7 @@ def test_selection_after_image_navigation(web_native_text_selection: NativeAppSe
 @pytest.mark.native_app
 @pytest.mark.parametrize("button_number", [1, 2], ids=["single-word", "multi-word"])
 def test_selection_within_button(
-    web_native_text_selection: NativeAppSession,
+    web_native_text_selection: BrowserSession,
     button_number: int,
 ) -> None:
     """Tests native selection within buttons is announced in both directions."""
@@ -225,7 +225,7 @@ def test_selection_within_button(
 
 @pytest.mark.native_app
 def test_caret_navigation_after_native_selection(
-    web_native_text_selection: NativeAppSession,
+    web_native_text_selection: BrowserSession,
 ) -> None:
     """Tests caret navigation starts from the appropriate native-selection boundary."""
 

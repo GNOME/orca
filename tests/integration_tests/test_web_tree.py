@@ -30,7 +30,7 @@ from .harness import keyboard
 from .helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 # Only one caret walk here: walking the ARIA tree leaves its roving-tabindex/DOM focus
@@ -38,7 +38,7 @@ if TYPE_CHECKING:
 # (layout-off, or bottom-to-top) stalls after the first item. The layout-off and
 # bottom-to-top paths are covered on the other pages.
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom(web_tree: NativeAppSession) -> None:
+def test_caret_navigation_top_to_bottom(web_tree: BrowserSession) -> None:
     """Tests Down-arrow caret navigation through the whole page (layout mode on)."""
 
     session = web_tree
@@ -56,7 +56,7 @@ def test_caret_navigation_top_to_bottom(web_tree: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_tree_navigation_level_and_expansion(web_tree: NativeAppSession) -> None:
+def test_tree_navigation_level_and_expansion(web_tree: BrowserSession) -> None:
     """Tests tree item level, expand/collapse, and arrow navigation including a revealed child."""
 
     session = web_tree

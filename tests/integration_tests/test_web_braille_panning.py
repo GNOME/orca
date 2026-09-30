@@ -30,7 +30,7 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 _FULL_LONG = (
@@ -51,7 +51,7 @@ _PAN_LINE_CONTRACTED = (
 )
 
 
-def _reset(session: NativeAppSession) -> None:
+def _reset(session: BrowserSession) -> None:
     """Resets state and moves to the top of the document."""
 
     helpers.reset_web_state(session)
@@ -60,7 +60,7 @@ def _reset(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_navigate_by_character_snaps_braille_back(web_long_line: NativeAppSession) -> None:
+def test_navigate_by_character_snaps_braille_back(web_long_line: BrowserSession) -> None:
     """Tests that navigating by character pulls a panned-away window back onto the caret."""
 
     session = web_long_line
@@ -90,7 +90,7 @@ def test_navigate_by_character_snaps_braille_back(web_long_line: NativeAppSessio
 
 
 @pytest.mark.native_app
-def test_navigate_by_word_snaps_braille_back(web_long_line: NativeAppSession) -> None:
+def test_navigate_by_word_snaps_braille_back(web_long_line: BrowserSession) -> None:
     """Tests that navigating by word pulls a panned-away window back onto the caret."""
 
     session = web_long_line
@@ -120,7 +120,7 @@ def test_navigate_by_word_snaps_braille_back(web_long_line: NativeAppSession) ->
 
 
 @pytest.mark.native_app
-def test_navigate_by_line_snaps_braille_back(web_long_line: NativeAppSession) -> None:
+def test_navigate_by_line_snaps_braille_back(web_long_line: BrowserSession) -> None:
     """Tests that navigating by line pulls a panned-away window back onto the caret."""
 
     session = web_long_line
@@ -154,7 +154,7 @@ def test_navigate_by_line_snaps_braille_back(web_long_line: NativeAppSession) ->
 
 
 @pytest.mark.native_app
-def test_pan_braille_right_then_left(web_long_line: NativeAppSession) -> None:
+def test_pan_braille_right_then_left(web_long_line: BrowserSession) -> None:
     """Tests that pan-right/pan-left slide the 32-cell window along the wide line."""
 
     session = web_long_line
@@ -194,7 +194,7 @@ def test_pan_braille_right_then_left(web_long_line: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 def test_pan_left_with_word_wrap_returns_to_intermediate_range(
-    web_long_line: NativeAppSession,
+    web_long_line: BrowserSession,
 ) -> None:
     """Tests that with word wrap on, pan-left reveals the previously panned-over range."""
 
@@ -241,7 +241,7 @@ def test_pan_left_with_word_wrap_returns_to_intermediate_range(
 
 @pytest.mark.native_app
 def test_pan_left_after_crossing_forward_returns_to_previous_line(
-    web_long_line: NativeAppSession,
+    web_long_line: BrowserSession,
 ) -> None:
     """Tests that pan-left after a forward line cross returns to the previous line's tail."""
 
@@ -273,7 +273,7 @@ def test_pan_left_after_crossing_forward_returns_to_previous_line(
 
 
 @pytest.mark.native_app
-def test_pan_left_at_line_start_moves_to_previous_line(web_long_line: NativeAppSession) -> None:
+def test_pan_left_at_line_start_moves_to_previous_line(web_long_line: BrowserSession) -> None:
     """Tests the web override: pan-left at the line start walks to the previous line."""
 
     session = web_long_line
@@ -288,7 +288,7 @@ def test_pan_left_at_line_start_moves_to_previous_line(web_long_line: NativeAppS
 
 
 @pytest.mark.native_app
-def test_pan_requires_grab_refresh(web_long_line: NativeAppSession) -> None:
+def test_pan_requires_grab_refresh(web_long_line: BrowserSession) -> None:
     """Tests that a bound pan key does nothing until the grabs are refreshed."""
 
     session = web_long_line
@@ -320,7 +320,7 @@ def test_pan_requires_grab_refresh(web_long_line: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_pan_braille_over_assembled_link_line(web_long_line: NativeAppSession) -> None:
+def test_pan_braille_over_assembled_link_line(web_long_line: BrowserSession) -> None:
     """Tests panning a layout-mode line assembled from text + an inline link + styled spans."""
 
     session = web_long_line
@@ -364,7 +364,7 @@ def test_pan_braille_over_assembled_link_line(web_long_line: NativeAppSession) -
 
 
 @pytest.mark.native_app
-def test_pan_contracted_line_walks_to_next_visual_line(web_long_line: NativeAppSession) -> None:
+def test_pan_contracted_line_walks_to_next_visual_line(web_long_line: BrowserSession) -> None:
     """Pans a contracted line to its end, then onto the next visual line."""
 
     session = web_long_line
@@ -378,8 +378,10 @@ def test_pan_contracted_line_walks_to_next_visual_line(web_long_line: NativeAppS
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert helpers.capture(session) == (
             [
-                "The quick brown fox jumps over the lazy dog and then keeps running "
-                "across the wide open field for a very "
+                (
+                    "The quick brown fox jumps over the lazy dog and then keeps running "
+                    "across the wide open field for a very "
+                )
             ],
             [
                 helpers.BrailleLine(
@@ -419,7 +421,7 @@ def test_pan_contracted_line_walks_to_next_visual_line(web_long_line: NativeAppS
 
 @pytest.mark.native_app
 def test_edge_pan_into_a_line_with_a_link_renders_the_link(
-    web_long_line: NativeAppSession,
+    web_long_line: BrowserSession,
 ) -> None:
     """Tests that edge-panning into a line containing a link renders the link, not blank cells."""
 

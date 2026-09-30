@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import move_to_bottom, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom(web_dialogs: NativeAppSession) -> None:
+def test_caret_navigation_top_to_bottom(web_dialogs: BrowserSession) -> None:
     """Tests Down-arrow caret navigation through the page's buttons (layout mode on)."""
 
     session = web_dialogs
@@ -49,7 +49,7 @@ def test_caret_navigation_top_to_bottom(web_dialogs: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom_layout_off(web_dialogs: NativeAppSession) -> None:
+def test_caret_navigation_top_to_bottom_layout_off(web_dialogs: BrowserSession) -> None:
     """Tests the same Down-arrow navigation with layout mode disabled."""
 
     session = web_dialogs
@@ -71,7 +71,7 @@ _BOTTOM_TO_TOP = (
 
 
 @pytest.mark.native_app
-def test_caret_navigation_bottom_to_top(web_dialogs: NativeAppSession) -> None:
+def test_caret_navigation_bottom_to_top(web_dialogs: BrowserSession) -> None:
     """Tests Up-arrow caret navigation from the bottom of the page (layout mode on)."""
 
     session = web_dialogs
@@ -84,7 +84,7 @@ def test_caret_navigation_bottom_to_top(web_dialogs: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_caret_navigation_bottom_to_top_layout_off(web_dialogs: NativeAppSession) -> None:
+def test_caret_navigation_bottom_to_top_layout_off(web_dialogs: BrowserSession) -> None:
     """Tests the same Up-arrow navigation with layout mode disabled."""
 
     session = web_dialogs
@@ -97,7 +97,7 @@ def test_caret_navigation_bottom_to_top_layout_off(web_dialogs: NativeAppSession
 
 
 @pytest.mark.native_app
-def test_dialog_appearance_and_alert(web_dialogs: NativeAppSession) -> None:
+def test_dialog_appearance_and_alert(web_dialogs: BrowserSession) -> None:
     """Tests that opening a modal dialog announces it and its default button, plus an alert."""
 
     session = web_dialogs

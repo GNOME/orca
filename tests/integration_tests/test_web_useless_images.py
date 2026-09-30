@@ -30,7 +30,7 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 _EXPECTED_SAY_ALL_SENTENCE = [
@@ -58,7 +58,7 @@ _EXPECTED_SAY_ALL_LINE = [
 
 
 @pytest.mark.native_app
-def test_say_all_by_sentence_omits_useless_images(web_useless_images: NativeAppSession) -> None:
+def test_say_all_by_sentence_omits_useless_images(web_useless_images: BrowserSession) -> None:
     """Tests that Say All by sentence omits useless images in every position."""
 
     session = web_useless_images
@@ -70,7 +70,7 @@ def test_say_all_by_sentence_omits_useless_images(web_useless_images: NativeAppS
 
 
 @pytest.mark.native_app
-def test_say_all_by_line_omits_useless_images(web_useless_images: NativeAppSession) -> None:
+def test_say_all_by_line_omits_useless_images(web_useless_images: BrowserSession) -> None:
     """Tests that Say All by line omits useless images in every position."""
 
     session = web_useless_images
@@ -82,7 +82,7 @@ def test_say_all_by_line_omits_useless_images(web_useless_images: NativeAppSessi
 
 
 @pytest.mark.native_app
-def test_line_navigation_omits_useless_images(web_useless_images: NativeAppSession) -> None:
+def test_line_navigation_omits_useless_images(web_useless_images: BrowserSession) -> None:
     """Tests that browsing by line presents each line, and each container, without its image."""
 
     move_to_top(web_useless_images)
@@ -124,7 +124,7 @@ def test_line_navigation_omits_useless_images(web_useless_images: NativeAppSessi
 
 @pytest.mark.native_app
 def test_tab_navigation_omits_useless_images_in_containers(
-    web_useless_images: NativeAppSession,
+    web_useless_images: BrowserSession,
 ) -> None:
     """Tests that tabbing to the link and button presents neither container's useless image."""
 

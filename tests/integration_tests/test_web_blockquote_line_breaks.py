@@ -30,7 +30,7 @@ from .harness import keyboard
 from .helpers import capture, move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 _LINES_DOWN = [
@@ -89,7 +89,7 @@ _LINES_UP = [
 
 
 @pytest.mark.native_app
-def test_line_navigation_down(web_blockquote_line_breaks: NativeAppSession) -> None:
+def test_line_navigation_down(web_blockquote_line_breaks: BrowserSession) -> None:
     """Tests line navigation down."""
 
     session = web_blockquote_line_breaks
@@ -104,7 +104,7 @@ def test_line_navigation_down(web_blockquote_line_breaks: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
-def test_line_navigation_up(web_blockquote_line_breaks: NativeAppSession) -> None:
+def test_line_navigation_up(web_blockquote_line_breaks: BrowserSession) -> None:
     """Tests line navigation up."""
 
     session = web_blockquote_line_breaks

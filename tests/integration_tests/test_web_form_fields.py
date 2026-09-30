@@ -30,10 +30,10 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
-def _where_am_i(session: NativeAppSession) -> tuple[list[str], list[tuple[int, str, str | None]]]:
+def _where_am_i(session: BrowserSession) -> tuple[list[str], list[tuple[int, str, str | None]]]:
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
     return helpers.capture(session)
 
@@ -41,7 +41,7 @@ def _where_am_i(session: NativeAppSession) -> tuple[list[str], list[tuple[int, s
 # Keep first: after the later form-field tests, Say All starts mid-document instead of
 # at the top (root cause not yet pinned down).
 @pytest.mark.native_app
-def test_say_all_over_form_fields(web_form_fields: NativeAppSession) -> None:
+def test_say_all_over_form_fields(web_form_fields: BrowserSession) -> None:
     """Tests the utterances Say All speaks for a page of form controls, from the top."""
 
     session = web_form_fields
@@ -116,7 +116,7 @@ def test_say_all_over_form_fields(web_form_fields: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_form_field(web_form_fields: NativeAppSession) -> None:
+def test_structural_navigation_by_form_field(web_form_fields: BrowserSession) -> None:
     """Tests structural navigation by form field across every field type."""
 
     session = web_form_fields
@@ -310,7 +310,7 @@ def test_structural_navigation_by_form_field(web_form_fields: NativeAppSession) 
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_entry(web_form_fields: NativeAppSession) -> None:
+def test_structural_navigation_by_entry(web_form_fields: BrowserSession) -> None:
     """Tests structural navigation by entry, which includes the spin button."""
 
     session = web_form_fields
@@ -370,7 +370,7 @@ def test_structural_navigation_by_entry(web_form_fields: NativeAppSession) -> No
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_checkbox(web_form_fields: NativeAppSession) -> None:
+def test_structural_navigation_by_checkbox(web_form_fields: BrowserSession) -> None:
     """Tests structural navigation by checkbox, including the wrap announcement."""
 
     session = web_form_fields
@@ -426,7 +426,7 @@ def test_structural_navigation_by_checkbox(web_form_fields: NativeAppSession) ->
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_radio_button(web_form_fields: NativeAppSession) -> None:
+def test_structural_navigation_by_radio_button(web_form_fields: BrowserSession) -> None:
     """Tests structural navigation by radio button, including the wrap announcement."""
 
     session = web_form_fields
@@ -577,7 +577,7 @@ def test_structural_navigation_by_radio_button(web_form_fields: NativeAppSession
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_button(web_form_fields: NativeAppSession) -> None:
+def test_structural_navigation_by_button(web_form_fields: BrowserSession) -> None:
     """Tests structural navigation by button, including toggle button and switch."""
 
     session = web_form_fields
@@ -627,7 +627,7 @@ def test_structural_navigation_by_button(web_form_fields: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
-def test_structural_navigation_by_combo_box(web_form_fields: NativeAppSession) -> None:
+def test_structural_navigation_by_combo_box(web_form_fields: BrowserSession) -> None:
     """Tests structural navigation by combo box across the editable and select variants."""
 
     session = web_form_fields
@@ -695,7 +695,7 @@ def test_structural_navigation_by_combo_box(web_form_fields: NativeAppSession) -
 
 
 @pytest.mark.native_app
-def test_fieldset_legend_role_only_on_entry(web_form_fields: NativeAppSession) -> None:
+def test_fieldset_legend_role_only_on_entry(web_form_fields: BrowserSession) -> None:
     """The group's role is announced when entering via the legend, but not when revisited."""
 
     session = web_form_fields
@@ -713,7 +713,7 @@ def test_fieldset_legend_role_only_on_entry(web_form_fields: NativeAppSession) -
 
 
 @pytest.mark.native_app
-def test_where_am_i_on_form_controls(web_form_fields: NativeAppSession) -> None:
+def test_where_am_i_on_form_controls(web_form_fields: BrowserSession) -> None:
     """Tests Where Am I on entry, combo box, checkbox, radio button, and button."""
 
     session = web_form_fields
@@ -779,7 +779,7 @@ def test_where_am_i_on_form_controls(web_form_fields: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_position_in_set_when_arrowing_a_combo_box(web_form_fields: NativeAppSession) -> None:
+def test_position_in_set_when_arrowing_a_combo_box(web_form_fields: BrowserSession) -> None:
     """Tests position in set when arrowing a combo box."""
 
     session = web_form_fields
@@ -806,7 +806,7 @@ def test_position_in_set_when_arrowing_a_combo_box(web_form_fields: NativeAppSes
 @pytest.mark.native_app
 @pytest.mark.parametrize("click_count", [1, 2], ids=["basic", "detailed"])
 def test_where_am_i_on_noneditable_combo_box(
-    web_form_fields: NativeAppSession, click_count: int
+    web_form_fields: BrowserSession, click_count: int
 ) -> None:
     """Tests that a noneditable combobox presents its value separately from its label."""
 

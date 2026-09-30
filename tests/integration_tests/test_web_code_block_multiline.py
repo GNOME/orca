@@ -30,11 +30,11 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_line_navigation_to_the_last_line(web_code_block_multiline: NativeAppSession) -> None:
+def test_line_navigation_to_the_last_line(web_code_block_multiline: BrowserSession) -> None:
     """Tests line navigation to the last line."""
 
     session = web_code_block_multiline

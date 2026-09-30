@@ -31,20 +31,20 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, toggle_flat_review
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 def _line(full: str, cursor_cell: int) -> BrailleLine:
     return BrailleLine(cursor_cell, full, full, "\x00" * len(full))
 
 
-def _command(session: NativeAppSession, name: str) -> tuple[list[str], list[BrailleLine]]:
+def _command(session: BrowserSession, name: str) -> tuple[list[str], list[BrailleLine]]:
     session.orca.call("FlatReviewPresenter", name, True)
     return capture(session)
 
 
 @pytest.mark.native_app
-def test_review_heading_word_by_word(web_flat_review: NativeAppSession) -> None:
+def test_review_heading_word_by_word(web_flat_review: BrowserSession) -> None:
     """Tests word-by-word flat review of a web heading."""
 
     session = web_flat_review
@@ -65,7 +65,7 @@ def test_review_heading_word_by_word(web_flat_review: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_review_uppercase_and_repeated_word(web_flat_review: NativeAppSession) -> None:
+def test_review_uppercase_and_repeated_word(web_flat_review: BrowserSession) -> None:
     """Tests flat review of a word that is an acronym and one with repeated letters."""
 
     session = web_flat_review
@@ -87,7 +87,7 @@ def test_review_uppercase_and_repeated_word(web_flat_review: NativeAppSession) -
 
 
 @pytest.mark.native_app
-def test_review_hyphenated_word(web_flat_review: NativeAppSession) -> None:
+def test_review_hyphenated_word(web_flat_review: BrowserSession) -> None:
     """Tests that a hyphenated word is reviewed as a single word."""
 
     session = web_flat_review
@@ -110,7 +110,7 @@ def test_review_hyphenated_word(web_flat_review: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_spell_and_phonetic_word(web_flat_review: NativeAppSession) -> None:
+def test_spell_and_phonetic_word(web_flat_review: BrowserSession) -> None:
     """Tests spelling and phonetically spelling a reviewed web word."""
 
     session = web_flat_review
@@ -133,7 +133,7 @@ def test_spell_and_phonetic_word(web_flat_review: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_review_lines_in_nested_tables(web_flat_review: NativeAppSession) -> None:
+def test_review_lines_in_nested_tables(web_flat_review: BrowserSession) -> None:
     """Tests line-by-line flat review of content in nested tables."""
 
     session = web_flat_review

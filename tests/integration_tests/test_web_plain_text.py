@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_line_navigation_in_plain_text_document(web_plain_text: NativeAppSession) -> None:
+def test_line_navigation_in_plain_text_document(web_plain_text: BrowserSession) -> None:
     """Tests that browsing a plain-text document presents each line."""
 
     move_to_top(web_plain_text)

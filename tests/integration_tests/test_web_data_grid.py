@@ -30,11 +30,11 @@ from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-def test_arrow_navigation_through_grid_cells(web_data_grid: NativeAppSession) -> None:
+def test_arrow_navigation_through_grid_cells(web_data_grid: BrowserSession) -> None:
     """Tests arrowing through the grid's cells and jumping to the last and first one."""
 
     session = web_data_grid

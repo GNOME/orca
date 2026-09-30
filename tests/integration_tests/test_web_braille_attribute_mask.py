@@ -30,7 +30,7 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 # Links and text attributes use distinct indicators (dot 7 vs dot 8) so the mask shows which is
 # which: "\x40" marks a link cell, "\x80" marks a cell with a brailled text attribute.
@@ -51,7 +51,7 @@ _FORMAT_CONTRACTED = 'a k & p "h'
 _FORMAT_CONTRACTED_MASK = "\x00" * 2 + _ATTR + "\x00" * 3 + _ATTR + "\x00" * 3
 
 
-def _setup(session: NativeAppSession, *, table: str | None, text_attrs: bool = False) -> None:
+def _setup(session: BrowserSession, *, table: str | None, text_attrs: bool = False) -> None:
     """Resets state and configures braille (the given table plus distinct link/text-attr dots)."""
 
     helpers.reset_web_state(session)
@@ -69,7 +69,7 @@ def _setup(session: NativeAppSession, *, table: str | None, text_attrs: bool = F
     session.reader.reset()
 
 
-def _down(session: NativeAppSession, count: int) -> None:
+def _down(session: BrowserSession, count: int) -> None:
     """Navigates down count lines, discarding the output of all but the last move."""
 
     for _ in range(count - 1):
@@ -80,7 +80,7 @@ def _down(session: NativeAppSession, count: int) -> None:
 
 
 @pytest.mark.native_app
-def test_multiple_links_uncontracted(web_attribute_mask: NativeAppSession) -> None:
+def test_multiple_links_uncontracted(web_attribute_mask: BrowserSession) -> None:
     """Tests that each link in a line is underlined at its own cells (start, middle, end)."""
 
     session = web_attribute_mask
@@ -93,7 +93,7 @@ def test_multiple_links_uncontracted(web_attribute_mask: NativeAppSession) -> No
 
 
 @pytest.mark.native_app
-def test_multiple_links_contracted(web_attribute_mask: NativeAppSession) -> None:
+def test_multiple_links_contracted(web_attribute_mask: BrowserSession) -> None:
     """Tests that the per-link underlines collapse onto each link's contracted cells."""
 
     session = web_attribute_mask
@@ -106,7 +106,7 @@ def test_multiple_links_contracted(web_attribute_mask: NativeAppSession) -> None
 
 
 @pytest.mark.native_app
-def test_text_attributes_uncontracted(web_attribute_mask: NativeAppSession) -> None:
+def test_text_attributes_uncontracted(web_attribute_mask: BrowserSession) -> None:
     """Tests that bold and italic words are marked in the mask when brailling those attributes."""
 
     session = web_attribute_mask
@@ -119,7 +119,7 @@ def test_text_attributes_uncontracted(web_attribute_mask: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
-def test_text_attributes_contracted(web_attribute_mask: NativeAppSession) -> None:
+def test_text_attributes_contracted(web_attribute_mask: BrowserSession) -> None:
     """Tests that the bold and italic marks collapse onto the contracted cells."""
 
     session = web_attribute_mask

@@ -30,7 +30,7 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 # The heading and its edit link share a visual row but have different block
@@ -49,7 +49,7 @@ _TOP_TO_BOTTOM = (
 
 @pytest.mark.native_app
 def test_caret_navigation_through_heading_labelled_regions(
-    web_region_headings: NativeAppSession,
+    web_region_headings: BrowserSession,
 ) -> None:
     """Tests Down-arrow caret navigation through regions labelled by their own heading."""
 
@@ -63,7 +63,7 @@ def test_caret_navigation_through_heading_labelled_regions(
 
 @pytest.mark.native_app
 def test_structural_navigation_by_heading_skips_region_chatter(
-    web_region_headings: NativeAppSession,
+    web_region_headings: BrowserSession,
 ) -> None:
     """Tests forward structural navigation by heading across the page, with wrap."""
 
@@ -91,7 +91,7 @@ def test_structural_navigation_by_heading_skips_region_chatter(
 
 
 @pytest.mark.native_app
-def test_inline_link_heading_announces_level_once(web_region_headings: NativeAppSession) -> None:
+def test_inline_link_heading_announces_level_once(web_region_headings: BrowserSession) -> None:
     """Tests that a heading split into fragments by a mid-text link announces its level once."""
 
     session = web_region_headings
@@ -110,7 +110,7 @@ def test_inline_link_heading_announces_level_once(web_region_headings: NativeApp
 
 
 @pytest.mark.native_app
-def test_say_all_heading_labelled_regions(web_region_headings: NativeAppSession) -> None:
+def test_say_all_heading_labelled_regions(web_region_headings: BrowserSession) -> None:
     """Tests the utterances Say All speaks for a page of headings that label their own region."""
 
     session = web_region_headings

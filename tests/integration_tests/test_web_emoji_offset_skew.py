@@ -30,7 +30,7 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 _LINK_NOTES_MASK = "\x00" * 49 + "\xc0" * 10 + "\x00"
 _SERVICE_ONE_MASK = "\x00" * 15 + "\xc0" * 11 + "\x00"
@@ -1379,14 +1379,14 @@ _WORD_LEFT_SPEECH: list[list[str]] = [
 ]
 
 
-def _assert_line(session: NativeAppSession, key: int, speech: list[str], braille: list) -> None:
+def _assert_line(session: BrowserSession, key: int, speech: list[str], braille: list) -> None:
     """Presses key once and asserts both speech and braille."""
 
     keyboard.tap_key(key)
     assert helpers.capture(session) == (speech, braille)
 
 
-def _collect_speech(session: NativeAppSession, key: int, count: int) -> list[list[str]]:
+def _collect_speech(session: BrowserSession, key: int, count: int) -> list[list[str]]:
     """Presses key count times and collects each speech result."""
 
     results = []
@@ -1396,7 +1396,7 @@ def _collect_speech(session: NativeAppSession, key: int, count: int) -> list[lis
     return results
 
 
-def _collect_word_speech(session: NativeAppSession, direction: int, count: int) -> list[list[str]]:
+def _collect_word_speech(session: BrowserSession, direction: int, count: int) -> list[list[str]]:
     """Presses Ctrl+direction count times and collects each speech result."""
 
     results = []
@@ -1407,7 +1407,7 @@ def _collect_word_speech(session: NativeAppSession, direction: int, count: int) 
 
 
 @pytest.mark.native_app
-def test_line_down(web_emoji_offset_skew: NativeAppSession) -> None:
+def test_line_down(web_emoji_offset_skew: BrowserSession) -> None:
     """Tests Down-arrow through the emoji-links page: all profile links read correctly."""
 
     session = web_emoji_offset_skew
@@ -1418,7 +1418,7 @@ def test_line_down(web_emoji_offset_skew: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_line_up(web_emoji_offset_skew: NativeAppSession) -> None:
+def test_line_up(web_emoji_offset_skew: BrowserSession) -> None:
     """Tests Up-arrow back through the emoji-links page to confirm symmetric presentation."""
 
     session = web_emoji_offset_skew
@@ -1430,7 +1430,7 @@ def test_line_up(web_emoji_offset_skew: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_char_right(web_emoji_offset_skew: NativeAppSession) -> None:
+def test_char_right(web_emoji_offset_skew: BrowserSession) -> None:
     """Tests Right-arrow char-by-char top to bottom through a page where emoji precede links."""
 
     session = web_emoji_offset_skew
@@ -1442,7 +1442,7 @@ def test_char_right(web_emoji_offset_skew: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_char_left(web_emoji_offset_skew: NativeAppSession) -> None:
+def test_char_left(web_emoji_offset_skew: BrowserSession) -> None:
     """Tests Left-arrow char-by-char bottom to top through a page where emoji precede links."""
 
     session = web_emoji_offset_skew
@@ -1455,7 +1455,7 @@ def test_char_left(web_emoji_offset_skew: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_word_right(web_emoji_offset_skew: NativeAppSession) -> None:
+def test_word_right(web_emoji_offset_skew: BrowserSession) -> None:
     """Tests Ctrl+Right word-by-word through the full page."""
 
     session = web_emoji_offset_skew
@@ -1468,7 +1468,7 @@ def test_word_right(web_emoji_offset_skew: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_word_left(web_emoji_offset_skew: NativeAppSession) -> None:
+def test_word_left(web_emoji_offset_skew: BrowserSession) -> None:
     """Tests Ctrl+Left word-by-word back through the full page."""
 
     session = web_emoji_offset_skew

@@ -29,7 +29,7 @@ import pytest
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 
 _ITEMS: tuple[tuple[str, str], ...] = (
@@ -45,7 +45,7 @@ _ITEMS: tuple[tuple[str, str], ...] = (
 
 
 @pytest.mark.native_app
-def test_arrowing_switches_voice_language_per_item(web_languages: NativeAppSession) -> None:
+def test_arrowing_switches_voice_language_per_item(web_languages: BrowserSession) -> None:
     """Each list item is spoken with a voice whose language matches its lang attribute."""
 
     session = web_languages
@@ -64,7 +64,7 @@ def test_arrowing_switches_voice_language_per_item(web_languages: NativeAppSessi
 
 
 @pytest.mark.native_app
-def test_arrowing_does_not_switch_voice_when_disabled(web_languages: NativeAppSession) -> None:
+def test_arrowing_does_not_switch_voice_when_disabled(web_languages: BrowserSession) -> None:
     """With auto-language-switching off, every item is spoken with the same voice language."""
 
     session = web_languages
@@ -84,7 +84,7 @@ def test_arrowing_does_not_switch_voice_when_disabled(web_languages: NativeAppSe
     assert len(languages) == 1, f"Expected one voice language across items, saw: {seen}"
 
 
-def _down_to_italiano(session: NativeAppSession) -> None:
+def _down_to_italiano(session: BrowserSession) -> None:
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     for _ in range(5):  # English, Español, Français, Deutsch, Italiano
@@ -93,7 +93,7 @@ def _down_to_italiano(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_character_navigation_switches_voice_language(web_languages: NativeAppSession) -> None:
+def test_character_navigation_switches_voice_language(web_languages: BrowserSession) -> None:
     """Right-arrowing through a foreign-language item speaks each character in that language."""
 
     session = web_languages
@@ -112,7 +112,7 @@ def test_character_navigation_switches_voice_language(web_languages: NativeAppSe
 
 
 @pytest.mark.native_app
-def test_word_navigation_switches_voice_language(web_languages: NativeAppSession) -> None:
+def test_word_navigation_switches_voice_language(web_languages: BrowserSession) -> None:
     """Control+Right word navigation speaks each word in its item's language."""
 
     session = web_languages

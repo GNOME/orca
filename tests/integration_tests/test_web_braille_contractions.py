@@ -30,7 +30,7 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
-    from .orca_fixtures import NativeAppSession
+    from .orca_fixtures import BrowserSession
 
 _PLAIN_SPEECH = ["knowledge good people child about character educated everywhere indeed."]
 _LINK_SPEECH = ["A little ", "knowledge", "link", " about good people and a character."]
@@ -48,7 +48,7 @@ _LINK_CONTRACTED = ',a ll k ab gd p &a "*4'
 _LINK_CONTRACTED_MASK = "\x00" * 6 + "\xc0" + "\x00" * (len(_LINK_CONTRACTED) - 7)
 
 
-def _configure(session: NativeAppSession, *, table: str | None) -> None:
+def _configure(session: BrowserSession, *, table: str | None) -> None:
     """Resets state and configures braille for the given table (None for computer braille)."""
 
     helpers.reset_web_state(session)
@@ -62,7 +62,7 @@ def _configure(session: NativeAppSession, *, table: str | None) -> None:
     session.reader.reset()
 
 
-def _move_to_link_line(session: NativeAppSession) -> None:
+def _move_to_link_line(session: BrowserSession) -> None:
     """Moves onto the link paragraph and discards the captured navigation output."""
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -71,7 +71,7 @@ def _move_to_link_line(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_uncontracted_link_and_plain_lines(web_contracted_braille: NativeAppSession) -> None:
+def test_uncontracted_link_and_plain_lines(web_contracted_braille: BrowserSession) -> None:
     """Tests that the link underline covers the link's nine cells in uncontracted braille."""
 
     session = web_contracted_braille
@@ -102,7 +102,7 @@ def test_uncontracted_link_and_plain_lines(web_contracted_braille: NativeAppSess
 
 
 @pytest.mark.native_app
-def test_literary_braille_remaps_link_underline(web_contracted_braille: NativeAppSession) -> None:
+def test_literary_braille_remaps_link_underline(web_contracted_braille: BrowserSession) -> None:
     """Tests that the link underline still covers the link when the braille line is longer."""
 
     session = web_contracted_braille
@@ -134,7 +134,7 @@ def test_literary_braille_remaps_link_underline(web_contracted_braille: NativeAp
 
 @pytest.mark.native_app
 def test_contracted_braille_collapses_link_underline(
-    web_contracted_braille: NativeAppSession,
+    web_contracted_braille: BrowserSession,
 ) -> None:
     """Tests that the link underline collapses onto the link's cell in contracted braille."""
 
