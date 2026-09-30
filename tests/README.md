@@ -72,7 +72,8 @@ At the present time Fedora and openSUSE are officially supported.
 
 In addition, the Chromium web tests have unresolved browser-version and
 cross-distribution rendering compatibility issues. They are not yet ready for
-non-maintainer use and are not yet run in CI.
+non-maintainer use. Maintainers can run them in CI using the optional manual
+`integration-tests-chromium` job.
 
 The integration tests cannot run while Orca is already active on the user's
 session because each test launches and drives its own Orca. It was decided

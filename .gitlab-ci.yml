@@ -102,6 +102,17 @@ integration-tests-base:
   script:
     - meson test -C "${MESON_BUILD_DIR}" --suite core --suite gtk3 --suite gtk3-terminal --num-processes 1 --print-errorlogs
 
+integration-tests-chromium:
+  extends: .integration-tests
+  when: manual
+  allow_failure: true
+  timeout: 2h
+  variables:
+    ORCA_TEST_BROWSER: chromium
+  script:
+    - chromium --version
+    - meson test -C "${MESON_BUILD_DIR}" --suite web --num-processes 1 --print-errorlogs
+
 # Linters: Ruff and Mypy
 #
 # The configurations are in pyproject.toml.
