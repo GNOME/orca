@@ -24,30 +24,9 @@ launch Orca need an installed build of the version being tested.
   metadata must be available when building Orca so it can locate the tables (in Fedora and
   openSUSE, install `liblouis-devel`).
 * MathCAT enabled in the installed Orca build for the math tests.
-* Chrome (beta preferred) or Chromium for the web tests, with accessibility enabled in the
-  environment before running the tests:
-
-  ```bash
-  export ACCESSIBILITY_ENABLED=1
-  ```
+* Chrome (beta preferred) or Chromium for the web tests.
 
 ## Running Tests
-
-These tests, especially the new integration tests, are currently intended for
-use by the maintainer. Documenting all expected dependencies and versions and
-ensuring compatibility with multiple distros are still pending. For this reason,
-the integration tests are currently disabled by default.
-
-In addition, the Chromium web tests have unresolved browser-version and
-cross-distribution rendering compatibility issues. They are not yet ready for
-non-maintainer use and are not run in CI.
-
-The integration tests cannot run while Orca is already active on the user's
-session because each test launches and drives its own Orca. It was decided
-that the test harness should not first kill any running instance of Orca
-because doing so might be unexpected. If you rely on Orca in your active
-session, you can still run the tests by signing in as a second local user
-(via `su` or `ssh`) and running them from there.
 
 ### Using Pytest
 
@@ -61,17 +40,46 @@ python3 -m pytest tests/unit_tests/test_ax_text.py -v # Specific file
 
 Orca's tests are grouped into the following named suites:
 
-* unit (the only suite run by default)
-* integration (all integration tests)
-* core (infrastructure such as GSettings and D-Bus support)
-* gtk3 (non-terminal GTK3 UI tests)
-* gtk3-terminal (for terminal applications using VTE for GTK3)
-* web (for web content using Chrome or Chromium)
+* "unit": the only suite run by default with `meson test`
+* "integration": the superset of the following:
+    * "core": infrastructure such as GSettings, D-Bus support, and browser smoke tests
+    * "gtk3": non-terminal GTK3 UI tests
+    * "gtk3-terminal": for terminal applications using VTE for GTK3
+    * "web": for web content using Chrome (beta preferred) or Chromium
 
 ```bash
 meson test -C _build
 meson test -C _build --suite <suite name>
 ```
+
+Downstream distributions may wish to run the small `core` suite to check basic
+environment readiness. Failures in this suite can identify a dependency or
+accessibility configuration problem that may need to be addressed downstream.
+Such issues should be investigated before concluding the failure is a bug in Orca
+or in its test harness.
+
+For example, browser accessibility may require `ACCESSIBILITY_ENABLED=1` (Chromium)
+or `GNOME_ACCESSIBILITY=1` (Firefox) for the browser to show up in the AT-SPI
+application registry. If AT-SPI doesn't know an application exists, Orca cannot
+provide access to it. For this reason, the `core` suite's browser smoke tests
+include coverage for the browser being launched without the variables set in
+the environment to help identify this need.
+
+The other integration-test suites are mainly intended for maintainer use for the
+purpose of preventing regressions in Orca. Documenting all expected dependencies
+and versions and ensuring compatibility with additional distros are still pending.
+At the present time Fedora and openSUSE are officially supported.
+
+In addition, the Chromium web tests have unresolved browser-version and
+cross-distribution rendering compatibility issues. They are not yet ready for
+non-maintainer use and are not yet run in CI.
+
+The integration tests cannot run while Orca is already active on the user's
+session because each test launches and drives its own Orca. It was decided
+that the test harness should not first kill any running instance of Orca
+because doing so might be unexpected. If you rely on Orca in your active
+session, you can still run the tests by signing in as a second local user
+(via `su` or `ssh`) and running them from there.
 
 ## Adding New Unit Tests
 
@@ -88,6 +96,7 @@ import pytest
 if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
 
 @pytest.mark.unit
 class TestMyModule:
@@ -186,10 +195,7 @@ mock_module = test_context.Mock()
 test_context.patch_module("orca.special_module", mock_module)
 
 # Multiple modules at once
-test_context.patch_modules({
-    "orca.module1": mock_module1,
-    "orca.module2": mock_module2
-})
+test_context.patch_modules({"orca.module1": mock_module1, "orca.module2": mock_module2})
 ```
 
 #### `test_context.patch_env()`
@@ -199,8 +205,7 @@ test_context.patch_modules({
 
 ```python
 test_context.patch_env(
-    {"XDG_SESSION_TYPE": "wayland", "HOME": "/tmp/test"},
-    remove_vars=["DISPLAY"]
+    {"XDG_SESSION_TYPE": "wayland", "HOME": "/tmp/test"}, remove_vars=["DISPLAY"]
 )
 ```
 
@@ -257,10 +262,7 @@ For tests with complex configurations:
         },
         {
             "id": "group_with_explicit_name",
-            "mocks_config": {
-                "ax_utilities_role.is_group": True,
-                "has_explicit_name": True
-            },
+            "mocks_config": {"ax_utilities_role.is_group": True, "has_explicit_name": True},
             "expected": False,
         },
         {
@@ -301,6 +303,7 @@ def test_is_layout_only_scenarios(self, test_context: OrcaTestContext, case: dic
             )
 
     from orca.ax_utilities import AXUtilities
+
     mock_obj = test_context.Mock(spec=Atspi.Accessible)
     result = AXUtilities.is_layout_only(mock_obj)
     assert result is expected

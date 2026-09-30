@@ -108,6 +108,7 @@ endforeach
 
 orca_integration_tests = {
   'core': [
+    'integration_tests/test_browser_accessibility.py',
     'integration_tests/test_dbus_with_orca.py',
     'integration_tests/test_gsettings.py',
   ],

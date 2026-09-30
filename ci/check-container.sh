@@ -5,7 +5,7 @@ set -euxo pipefail
 source ci/env.sh
 
 echo "Container dependency versions"
-for binary in Xvfb chromium bash less nano vim seq gdbus dbus-run-session \
+for binary in Xvfb chromium firefox bash less nano vim seq gdbus dbus-run-session \
     dbus-update-activation-environment pgrep flock fusermount glib-compile-schemas; do
     printf '%s: ' "$binary"
     rpm -qf --queryformat '%{NAME} %{VERSION}-%{RELEASE}\n' "$(command -v "$binary")"
@@ -13,6 +13,7 @@ done
 rpm -q --queryformat '%{NAME} %{VERSION}-%{RELEASE}\n' dejavu-fonts liblouis-data terminfo-base \
     typelib-1_0-Gtk-3_0 typelib-1_0-Pango-1_0 typelib-1_0-Vte-2_91
 chromium --version
+firefox --version
 python3 --version
 python3 -m pip show pytest pytest-mock
 pkg-config --modversion liblouis

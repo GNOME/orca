@@ -29,9 +29,9 @@ import sys
 import tempfile
 from pathlib import Path
 
-from . import chromium_browser
+from . import chromium_browser, firefox_browser
 
-BROWSERS = {"chromium": chromium_browser}
+BROWSERS = {"chromium": chromium_browser, "firefox": firefox_browser}
 
 
 def selected_browser() -> str:

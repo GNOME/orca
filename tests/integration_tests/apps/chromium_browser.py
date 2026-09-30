@@ -53,6 +53,7 @@ def build_argv(
     *,
     window_size: tuple[int, int] = (1024, 768),
     extra_flags: tuple[str, ...] = (),
+    force_accessibility: bool = True,
 ) -> list[str]:
     """Returns argv for launching Chromium deterministically against url."""
 
@@ -68,7 +69,7 @@ def build_argv(
         "--no-first-run",
         "--no-default-browser-check",
         "--disable-extensions",
-        "--force-renderer-accessibility",
+        *(["--force-renderer-accessibility"] if force_accessibility else []),
         "--disable-background-timer-throttling",
         "--disable-renderer-backgrounding",
         "--disable-backgrounding-occluded-windows",
