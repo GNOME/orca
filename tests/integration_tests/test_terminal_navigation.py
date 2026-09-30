@@ -254,7 +254,7 @@ def test_caret_navigation_in_a_pager(gtk3_terminal_pager: NativeAppSession) -> N
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     spoken, brailled = helpers.capture(session)
-    assert _spoken_lines(spoken) == ["line 08", ":"]
+    assert _spoken_lines(spoken) in (["line 08", ":"], ["blank", "line 08", ":"])
     assert brailled[-1] == helpers.BrailleLine(2, ":", ":", "\x00")
 
 

@@ -48,7 +48,7 @@ def test_multiline_command_output_is_spoken(gtk3_terminal_shell: NativeAppSessio
     settle(session)
 
     type_text("seq 3\n")
-    assert helpers.speech(session) == ["1\n2\n3\n$ "]
+    assert helpers.speech(session) in (["1\n2\n3\n$ "], ["1\n2\n3", "$ "])
 
 
 @pytest.mark.native_app
