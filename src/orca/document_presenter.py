@@ -747,11 +747,25 @@ class DocumentPresenter(Extension):
         script: default.Script,
         old_focus: Atspi.Accessible | None,
         new_focus: Atspi.Accessible | None,
+        *,
+        event: Atspi.Event | None = None,
     ) -> bool:
         """Updates focus/browse mode based on a focus change. Returns True if handled."""
 
         old_doc = script.utilities.get_top_level_document_for_object(old_focus)
         new_doc = script.utilities.get_top_level_document_for_object(new_focus)
+
+        if (
+            old_doc is None
+            and new_doc is not None
+            and old_focus is not None
+            and event is not None
+            and event.type.startswith("object:children-changed:remove")
+            and event.any_data == old_focus
+        ):
+            parent_doc = script.utilities.get_top_level_document_for_object(event.source)
+            if parent_doc == new_doc:
+                old_doc = parent_doc
 
         tokens = [
             "DOCUMENT PRESENTER: Updating mode for focus change.",

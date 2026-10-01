@@ -600,7 +600,9 @@ class Script(default.Script):
                 prior_obj=old_focus,
             )
 
-        document_presenter.get_presenter().update_mode_if_needed(self, old_focus, new_focus)
+        document_presenter.get_presenter().update_mode_if_needed(
+            self, old_focus, new_focus, event=event
+        )
         return True
 
     def _on_active_changed(self, event: Atspi.Event) -> bool:

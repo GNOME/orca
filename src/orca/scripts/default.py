@@ -243,7 +243,9 @@ class Script(script.Script):
         if learn_mode_presenter.get_presenter().is_active():
             learn_mode_presenter.get_presenter().quit()
 
-        document_presenter.get_presenter().update_mode_if_needed(self, old_focus, new_focus)
+        document_presenter.get_presenter().update_mode_if_needed(
+            self, old_focus, new_focus, event=event
+        )
 
         active_window = self.utilities.top_level_object(new_focus)
         focus_manager.get_manager().set_active_window(active_window)
