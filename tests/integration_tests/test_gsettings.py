@@ -377,6 +377,36 @@ class TestProfileOperations:
         assert gs_dest.get_string("synthesizer") == "espeak-ng"
         assert gs_src.get_user_value("enable") is not None
 
+    @pytest.mark.parametrize("default_in_dconf", [False, True])
+    def test_new_profile_does_not_hide_default_without_metadata(
+        self, gsettings_registry, gsettings_profile, monkeypatch, default_in_dconf
+    ) -> None:
+        """Creating a profile should not remove a metadata-less Default from the list."""
+
+        import subprocess
+
+        from orca import profile_manager
+
+        listing = "default/\nnew-profile/\n" if default_in_dconf else "new-profile/\n"
+
+        def fake_run(args, **_kwargs):
+            assert args[:2] == ["dconf", "list"]
+            return subprocess.CompletedProcess(args, 0, stdout=listing, stderr="")
+
+        monkeypatch.setattr(profile_manager.subprocess, "run", fake_run)
+
+        default_metadata = gsettings_registry.get_settings("metadata", "default")
+        assert default_metadata.get_user_value("internal-name") is None
+
+        manager = profile_manager.get_manager()
+        try:
+            manager.create_profile(["New Profile", "new-profile"])
+            profiles = manager.get_available_profiles()
+        finally:
+            gsettings_registry.reset_profile("new-profile")
+
+        assert [profile[1] for profile in profiles] == ["default", "new-profile"]
+
 
 @pytest.mark.gsettings
 @pytest.mark.parametrize(

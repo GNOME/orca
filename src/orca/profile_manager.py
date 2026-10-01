@@ -143,10 +143,7 @@ class ProfileManager(Extension):
             else:
                 profiles.append(profile)
 
-        if default_profile is not None:
-            profiles.insert(0, default_profile)
-        elif not profiles:
-            profiles.append(["Default", "default"])
+        profiles.insert(0, default_profile or ["Default", "default"])
         return profiles
 
     @dbus_service.getter
