@@ -142,6 +142,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         stop_at_roles = [
             Atspi.Role.DOCUMENT_WEB,
             Atspi.Role.EMBEDDED,
+            Atspi.Role.FRAME,
             Atspi.Role.INTERNAL_FRAME,
             Atspi.Role.MATH,
             Atspi.Role.MENU_BAR,

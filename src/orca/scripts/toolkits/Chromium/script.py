@@ -67,6 +67,10 @@ class Script(web.ToolkitBridge):
     def _on_children_removed(self, event: Atspi.Event) -> bool:
         """Callback for object:children-changed:removed accessibility events."""
 
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if focus is not None and event.any_data == focus:
+            return super()._on_children_removed(event)
+
         if AXUtilities.is_web_element(event.source) and not AXUtilities.is_web_element(
             event.any_data,
         ):
