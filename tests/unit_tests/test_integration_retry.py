@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
+import tarfile
 from pathlib import Path
 
 import pytest
@@ -18,6 +19,8 @@ def _run(tmp_path: Path, source: str, *, retry: bool = True) -> subprocess.Compl
     env = os.environ.copy()
     env.pop("PYTEST_ADDOPTS", None)
     env.pop("ORCA_TEST_RETRY_DIR", None)
+    env.pop("ORCA_TEST_DEBUG_FILE", None)
+    env.pop("ORCA_TEST_DEBUG_DIR", None)
     env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "1"
     if retry:
         env["ORCA_TEST_RETRY_DIR"] = str(tmp_path / "logs")
@@ -152,3 +155,39 @@ def test_local_failure_is_not_retried(tmp_path: Path) -> None:
     assert result.returncode == 1
     assert "1 failed" in result.stdout
     assert not (tmp_path / "logs").exists()
+
+
+@pytest.mark.parametrize("second", ["pass", "assert False", "raise RuntimeError('retry error')"])
+def test_debug_logs_are_kept_only_for_failed_retries(tmp_path: Path, second: str) -> None:
+    """Only retries receive a debug directory, archived on failure and cleaned on success."""
+
+    result = _run(
+        tmp_path,
+        f"""
+import os
+from pathlib import Path
+root = Path(__file__).parent
+def test_example():
+    marker = root / "attempt"
+    if not marker.exists():
+        assert "ORCA_TEST_DEBUG_DIR" not in os.environ
+        marker.touch()
+        assert False
+    debug_dir = Path(os.environ["ORCA_TEST_DEBUG_DIR"])
+    debug_dir.mkdir()
+    (debug_dir / "orca.log").write_text("retry diagnostics")
+    (root / "debug-path").write_text(str(debug_dir))
+    {second}
+""",
+    )
+    assert result.returncode == (0 if second == "pass" else 1), result.stdout + result.stderr
+    assert not Path((tmp_path / "debug-path").read_text()).exists()
+    archive = tmp_path / "logs/test_example.orca-debug.tar.gz"
+    if second == "pass":
+        assert not archive.exists()
+    else:
+        with tarfile.open(archive) as logs:
+            log = logs.extractfile("./orca.log")
+            assert log is not None
+            assert log.read() == b"retry diagnostics"
+        assert str(archive) in (tmp_path / "logs/test_example.summary").read_text()

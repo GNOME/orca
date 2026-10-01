@@ -67,7 +67,12 @@ class AttemptReport:
 
 
 def _attempt(
-    selectors: list[str], report: Path, log: Path, cwd: str | None = None
+    selectors: list[str],
+    report: Path,
+    log: Path,
+    cwd: str | None = None,
+    *,
+    env: dict[str, str] | None = None,
 ) -> tuple[int, dict]:
     """Runs pytest in a fresh process and retains its output."""
 
@@ -77,6 +82,7 @@ def _attempt(
             stdout=output,
             stderr=subprocess.STDOUT,
             cwd=cwd,
+            env=env,
             check=False,
         )
     with log.open(encoding="utf-8") as output:
@@ -94,8 +100,10 @@ def _run(test_file: str, directory: Path) -> int:
     first_log = directory / f"{name}.first.log"
     retry_log = directory / f"{name}.retry.log"
     summary = directory / f"{name}.summary"
+    debug_archive = directory / f"{name}.orca-debug.tar.gz"
     summary.unlink(missing_ok=True)
     retry_log.unlink(missing_ok=True)
+    debug_archive.unlink(missing_ok=True)
     with tempfile.TemporaryDirectory(prefix="orca-retry-") as temporary:
         code, first = _attempt([test_file], Path(temporary) / "first.json", first_log)
         if code == 0 and first:
@@ -105,7 +113,13 @@ def _run(test_file: str, directory: Path) -> int:
             return code or 1
         failed = first["failed"]
         print(f"Retrying {len(failed)} failed test(s) once with fresh fixtures.", flush=True)
-        code, second = _attempt(failed, Path(temporary) / "retry.json", retry_log, first["root"])
+        debug_dir = Path(temporary) / "orca-debug"
+        retry_env = os.environ.copy()
+        retry_env.pop("ORCA_TEST_DEBUG_FILE", None)
+        retry_env["ORCA_TEST_DEBUG_DIR"] = str(debug_dir)
+        code, second = _attempt(
+            failed, Path(temporary) / "retry.json", retry_log, first["root"], env=retry_env
+        )
         passed = (
             set(second.get("passed", [])) if code in (0, 1) and not second.get("blocked") else set()
         )
@@ -115,10 +129,14 @@ def _run(test_file: str, directory: Path) -> int:
         ]
         if second.get("blocked") or code not in (0, 1):
             lines.append("Retry encountered an error; the test file remains failed.")
+        recovered = code == 0 and set(failed) <= passed
+        if not recovered and debug_dir.is_dir():
+            shutil.make_archive(str(directory / f"{name}.orca-debug"), "gztar", debug_dir)
+            lines.append(f"Orca retry debug logs: {debug_archive}")
         text = "\n".join(lines) + "\n"
         summary.write_text(text, encoding="utf-8")
         print(text, end="", flush=True)
-        return 0 if code == 0 and set(failed) <= passed else 1
+        return 0 if recovered else 1
 
 
 def main() -> int:
