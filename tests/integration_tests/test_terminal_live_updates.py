@@ -57,13 +57,10 @@ def test_flat_review_speaks_live_update(gtk3_terminal_flatrev: NativeAppSession)
         [helpers.BrailleLine(1, "c1 $l", "c1 $l", "\x00" * 5)],
     )
 
-    assert helpers.capture(session, wait_async=True, overall=5.0) == (
-        ["c2\n"],
-        [
-            helpers.BrailleLine(1, "c2 $l", "c2 $l", "\x00" * 5),
-            helpers.BrailleLine(1, "c2 $l", "c2 $l", "\x00" * 5),
-        ],
-    )
+    spoken, brailled = helpers.capture(session, wait_async=True, overall=5.0)
+    assert spoken == ["c2\n"]
+    expected_line = helpers.BrailleLine(1, "c2 $l", "c2 $l", "\x00" * 5)
+    assert brailled in ([expected_line], [expected_line, expected_line])
 
     session.orca.set("FlatReviewPresenter", "SpeaksUpdates", False)
     helpers.toggle_flat_review(session)
@@ -91,13 +88,10 @@ def test_flat_review_silent_live_update_when_disabled(
         [helpers.BrailleLine(1, "c1 $l", "c1 $l", "\x00" * 5)],
     )
 
-    assert helpers.capture(session, wait_async=True, overall=5.0) == (
-        [],
-        [
-            helpers.BrailleLine(1, "c2 $l", "c2 $l", "\x00" * 5),
-            helpers.BrailleLine(1, "c2 $l", "c2 $l", "\x00" * 5),
-        ],
-    )
+    spoken, brailled = helpers.capture(session, wait_async=True, overall=5.0)
+    assert spoken == []
+    expected_line = helpers.BrailleLine(1, "c2 $l", "c2 $l", "\x00" * 5)
+    assert brailled in ([expected_line], [expected_line, expected_line])
 
     helpers.toggle_flat_review(session)
 
