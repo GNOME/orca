@@ -878,7 +878,7 @@ class TestTextSelectionManager:
         """Test extending or retracting a selection within one text object."""
 
         self._setup_dependencies(test_context)
-        from orca.text_selection_manager import AXUtilities, TextSelectionManager
+        from orca.text_selection_manager import AXText, AXUtilities, TextSelectionManager
 
         manager = TextSelectionManager()
         obj = test_context.Mock(spec=Atspi.Accessible)
@@ -896,6 +896,7 @@ class TestTextSelectionManager:
             AXUtilities,
             "clear_all_selected_text",
         )
+        test_context.patch_object(AXText, "set_caret_offset", return_value=True)
         snapshot = manager._take_snapshot(None, obj, source_offset)
 
         assert manager._apply_selection(
@@ -1465,7 +1466,7 @@ class TestTextSelectionManager:
 
         assert affected == [other_page]
         clear_selected_text.assert_called_once_with(other_page)
-        update_cached_selected_text.assert_called_once_with(other_page)
+        update_cached_selected_text.assert_called_once_with(other_page, selection=("", 0, 0))
         get_text_descendants.assert_not_called()
 
     def test_clear_selection_for_navigation_finds_preexisting_selection(
@@ -1515,7 +1516,7 @@ class TestTextSelectionManager:
 
         assert manager.clear_selection_for_navigation(root, destination) == [selected_obj]
         clear_selected_text.assert_called_once_with(selected_obj)
-        update_cached_selected_text.assert_called_once_with(selected_obj)
+        update_cached_selected_text.assert_called_once_with(selected_obj, selection=("", 0, 0))
 
     def test_clear_selection_for_navigation_skips_search_without_known_selection(
         self,

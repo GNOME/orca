@@ -545,9 +545,7 @@ class TestTextSelectionPresenter:
             no_selection,
             no_selection,
         )
-        dependencies[
-            "orca.input_event_manager"
-        ].get_manager.return_value.last_event_was_caret_selection.return_value = True
+        selection_manager.is_selection_change_from_selection_command.return_value = True
         test_context.patch_object(
             AXUtilities,
             "get_text_selection_elements",

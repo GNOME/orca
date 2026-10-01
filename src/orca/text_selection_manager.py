@@ -936,6 +936,8 @@ class TextSelectionManager:
         else:
             AXUtilities.clear_all_selected_text(text_object)
             succeeded = True
+            if snapshot.anchor.accessible_object == text_object:
+                AXText.set_caret_offset(text_object, new_focus.offset)
 
         return _TextSelectionResult(
             succeeded,
@@ -1075,7 +1077,7 @@ class TextSelectionManager:
                 continue
             cleared_selection_objs.append(obj)
             AXUtilities.clear_all_selected_text(obj)
-            AXUtilities.update_cached_selected_text(obj)
+            AXUtilities.update_cached_selected_text(obj, selection=("", 0, 0))
         return cleared_selection_objs
 
     def _record_selection_command(

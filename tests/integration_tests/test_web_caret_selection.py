@@ -80,6 +80,11 @@ def test_selection_by_character(web_structural_navigation: BrowserSession) -> No
     assert brailled == BrailleLine(2, _HEADING, _HEADING, "\xc0" + "\x00" * 23)
     assert say_selection(session) == ["Selected text is:  S"]
 
+    spoken, brailled = select(session, PREVIOUS_CHARACTER)
+    assert spoken == ["S", "unselected"]
+    assert brailled == BrailleLine(1, _HEADING, _HEADING, "\x00" * 24)
+    assert say_selection(session) == ["No selected text."]
+
 
 @requires_browser_version("chromium", 153)
 @pytest.mark.native_app

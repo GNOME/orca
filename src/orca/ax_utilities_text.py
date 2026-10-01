@@ -1162,11 +1162,13 @@ class AXUtilitiesText:
     def set_caret_offset_with_reason(
         obj: Atspi.Accessible, offset: int, reason: CaretSetReason
     ) -> bool:
-        """Sets the caret offset, recording the time and reason for later use."""
+        """Records the requested caret offset, deferring selection commands to their setter."""
 
-        result = AXText.set_caret_offset(obj, offset)
+        # Selection commands move the caret by setting the selection. Setting it here
+        # would first collapse the existing selection.
+        result = reason.is_text_selection() or AXText.set_caret_offset(obj, offset)
         AXUtilitiesText.LAST_CARET_SET = LastCaretSet(obj, offset, time.monotonic(), reason)
-        tokens = ["AXUtilitiesText: Set caret offset to", offset, "in", obj, "reason:", reason]
+        tokens = ["AXUtilitiesText: Caret target", offset, "in", obj, "reason:", reason]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
@@ -1252,10 +1254,14 @@ class AXUtilitiesText:
         return string, start, end
 
     @staticmethod
-    def update_cached_selected_text(obj: Atspi.Accessible) -> None:
-        """Updates the last known selected string, start, and end for obj."""
+    def update_cached_selected_text(
+        obj: Atspi.Accessible, *, selection: tuple[str, int, int] | None = None
+    ) -> None:
+        """Caches the supplied selection, querying obj when none is supplied."""
 
-        AXUtilitiesText._CACHE.set_selected_text(obj, AXUtilitiesText.get_selected_text(obj))
+        if selection is None:
+            selection = AXUtilitiesText.get_selected_text(obj)
+        AXUtilitiesText._CACHE.set_selected_text(obj, selection)
 
     @staticmethod
     def get_selected_text(obj: Atspi.Accessible) -> tuple[str, int, int]:
