@@ -79,6 +79,26 @@ unit-tests:
 
 .integration-tests:
   stage: test
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_DRAFT == "true"'
+      when: manual
+      allow_failure: true
+    # Explicit runs and tags do not depend on a push diff. Chromium stays manual.
+    - if: '$ORCA_TEST_FORCE_INTEGRATION == "1" || $CI_COMMIT_TAG || ($CI_PIPELINE_SOURCE != "push" && $CI_PIPELINE_SOURCE != "merge_request_event")'
+    # Match anything except documentation and translation content, including unknown files.
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        regexp: &integration_changes '\A(?!(?:[^/]+\.md|AUTHORS|ChangeLog[^/]*|COPYING|HACKING|MAINTAINERS|NEWS|QUICKSTART|RELEASE-HOWTO|TODO|docs/.*\.(?:md|1)|tests/README\.md|po/.*\.po|help/.*\.(?:po|page|png|svg)|(?:po|help)/LINGUAS)\z)'
+    # A new branch has no previous commit to compare against.
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BEFORE_SHA == "0000000000000000000000000000000000000000" && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH'
+      changes:
+        compare_to: 'refs/heads/$CI_DEFAULT_BRANCH'
+        regexp: *integration_changes
+    - if: '$CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BEFORE_SHA != "0000000000000000000000000000000000000000" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH)'
+      changes:
+        regexp: *integration_changes
+    - when: manual
+      allow_failure: true
   variables:
     ORCA_TEST_RETRY_DIR: "${CI_PROJECT_DIR}/${MESON_BUILD_DIR}/integration-retries"
   extends:
