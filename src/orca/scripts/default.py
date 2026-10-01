@@ -685,12 +685,14 @@ class Script(script.Script):
     def _on_selection_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:selection-changed accessibility events."""
 
+        debug.trace_focus("default-selection", source=event.source)
         if not AXUtilities.is_presentable_selection_change(event):
             return True
 
         presentation_manager.get_manager().present_command_announcement()
 
         if self.utilities.handle_container_selection_change(event.source):
+            debug.trace_focus("selection-handled-container", source=event.source)
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
@@ -700,8 +702,11 @@ class Script(script.Script):
             focus,
             lambda c: c == mouse_item or AXUtilities.is_layout_only(c),
         )
+        debug.trace_focus("selection-child", source=event.source, focus=focus, child=child)
         if AXUtilities.is_combo_box(event.source) and event.source == focus:
+            debug.trace_focus("selection-combo-present", source=event.source)
             self.present_object(event.source, reason=PresentationReason.STATE_CHANGE)
+            debug.trace_focus("selection-combo-returned", source=event.source)
             return True
 
         if child is not None:
@@ -715,6 +720,8 @@ class Script(script.Script):
     def _on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""
 
+        debug.trace_focus("default-focus", source=event.source, gained=event.detail1)
+
         if not event.detail1:
             return True
 
@@ -724,12 +731,14 @@ class Script(script.Script):
             AXObject.clear_cache(event.source, reason="Event detail1 does not match state.")
             if not AXUtilities.is_focused(event.source):
                 msg = "DEFAULT: Clearing cache did not update state."
+                debug.trace_focus("default-focus-decision", reason=msg)
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
         obj = event.source
         window, dialog = self.utilities.frame_and_dialog(obj)
         if window and not AXUtilities.can_be_active_window(window) and not dialog:
+            debug.trace_focus("default-focus-rejected-window", window=window)
             return True
 
         if AXObject.get_child_count(obj) and not AXUtilities.is_combo_box(obj):

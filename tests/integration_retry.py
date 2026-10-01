@@ -115,8 +115,9 @@ def _run(test_file: str, directory: Path) -> int:
         print(f"Retrying {len(failed)} failed test(s) once with fresh fixtures.", flush=True)
         debug_dir = Path(temporary) / "orca-debug"
         retry_env = os.environ.copy()
-        retry_env.pop("ORCA_TEST_DEBUG_FILE", None)
-        retry_env["ORCA_TEST_DEBUG_DIR"] = str(debug_dir)
+        if os.environ.get("ORCA_TEST_RETRY_DEBUG", "1") != "0":
+            retry_env.pop("ORCA_TEST_DEBUG_FILE", None)
+            retry_env["ORCA_TEST_DEBUG_DIR"] = str(debug_dir)
         code, second = _attempt(
             failed, Path(temporary) / "retry.json", retry_log, first["root"], env=retry_env
         )

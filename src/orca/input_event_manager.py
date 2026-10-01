@@ -36,7 +36,8 @@ import gi
 import orca
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
+gi.require_version("Gdk", "3.0")
+from gi.repository import Atspi, Gdk
 
 from . import ax_device_manager, debug, focus_manager, input_event, script_manager
 from .ax_utilities import AXUtilities
@@ -137,6 +138,19 @@ class InputEventManager:
     ) -> bool:
         """Processes this Atspi keyboard event."""
 
+        if debug.FOCUS_TRACE_ENABLED and keysym in (
+            Gdk.KEY_Up,
+            Gdk.KEY_Down,
+            Gdk.KEY_Tab,
+            Gdk.KEY_Delete,
+        ):
+            debug.trace_focus(
+                "key-received",
+                keysym=keysym,
+                pressed=pressed,
+                modifiers=modifiers,
+                paused=self._paused,
+            )
         if self._paused:
             msg = "INPUT EVENT MANAGER: Keyboard event processing is paused."
             debug.print_message(debug.LEVEL_INFO, msg, True)

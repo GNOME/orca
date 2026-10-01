@@ -31,7 +31,9 @@
 
 from __future__ import annotations
 
+import os
 import re
+import sys
 import time
 import urllib
 from contextlib import contextmanager
@@ -59,6 +61,8 @@ from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_debugging import AXUtilitiesDebugging
 from orca.ax_utilities_hypertext import CaretPolicy
+
+_TRACE_CARET = os.environ.get("ORCA_TEST_CARET_TRACE") == "1"
 
 if TYPE_CHECKING:
     from collections.abc import Hashable, Iterator
@@ -375,6 +379,24 @@ class Utilities(script_utilities.Utilities):
             Atspi.Role.LIST: [Atspi.Role.LIST_ITEM],
         }
 
+    @staticmethod
+    def trace_caret(step: str, **values: Atspi.Accessible | str | int | bool | None) -> None:
+        """Writes opt-in CI diagnostics without querying accessible properties."""
+
+        if not _TRACE_CARET:
+            return
+        details = " ".join(
+            f"{key}=obj:{hash(value):x}"
+            if isinstance(value, Atspi.Accessible)
+            else f"{key}={value!r}"
+            for key, value in values.items()
+        )
+        print(  # noqa: T201
+            f"[caret-trace] {time.monotonic():.6f} {step} {details}",
+            file=sys.stderr,
+            flush=True,
+        )
+
     def _cleanup_contexts(self) -> None:
         contexts = self._cache.get_caret_contexts()
         contexts = {
@@ -396,6 +418,13 @@ class Utilities(script_utilities.Utilities):
         context = self._cache.get_context_for_parent(
             self._cache.CARET_CONTEXTS,
             document_parent,
+        )
+        self.trace_caret(
+            "dump-cache",
+            document=document,
+            preserve=preserve_context,
+            obj=context[0] if context else None,
+            offset=context[1] if context else -1,
         )
         tokens = [
             "WEB: Clearing all cached info for",
@@ -527,9 +556,11 @@ class Utilities(script_utilities.Utilities):
         *,
         reason: CaretSetReason,
     ) -> None:
+        self.trace_caret("set-position", obj=obj, offset=offset, document=document)
         grab_focus = self.grab_focus_when_setting_caret(obj)
 
         obj, offset = self.first_context(obj, offset)
+        self.trace_caret("resolved-position", obj=obj, offset=offset, grab_focus=grab_focus)
         self.set_caret_context(obj, offset, document)
 
         old_focus = focus_manager.get_manager().get_locus_of_focus()
@@ -540,6 +571,7 @@ class Utilities(script_utilities.Utilities):
             AXObject.grab_focus(obj)
 
         super().set_caret_offset(obj, offset, reason=reason)
+        self.trace_caret("set-position-returned", obj=obj, offset=offset)
 
         # If we return earlier than here, braille cursor routing fails in sticky focus mode.
         presenter = document_presenter.get_presenter()
@@ -3172,9 +3204,11 @@ class Utilities(script_utilities.Utilities):
         self.clear_content_cache()
         document = document or self.active_document()
         if not document:
+            self.trace_caret("clear-context-no-document")
             return
 
         parent = AXObject.get_parent(document)
+        self.trace_caret("clear-context", document=document, parent=parent)
         self._cache.discard_context_for_parent(self._cache.CARET_CONTEXTS, parent)
         self._cache.discard_context_for_parent(self._cache.PRIOR_CONTEXTS, parent)
 
@@ -3182,18 +3216,29 @@ class Utilities(script_utilities.Utilities):
         """Attempts to recover when the current object has been removed from the document."""
 
         focus = focus_manager.get_manager().get_locus_of_focus()
+        self.trace_caret(
+            "recover-start",
+            source=event.source,
+            removed=event.any_data,
+            index=event.detail1,
+            focus=focus,
+        )
         if event.any_data == focus:
+            self.trace_caret("removed-is-focus")
             msg = "WEB: Removed child is locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
         elif AXUtilities.find_ancestor(focus, lambda x: x == event.any_data):
+            self.trace_caret("removed-is-ancestor")
             msg = "WEB: Removed child is ancestor of locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
         else:
+            self.trace_caret("recover-rejected-unrelated-focus")
             msg = "WEB: Removed child is not locus of focus nor ancestor of locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if event.detail1 == -1:
+            self.trace_caret("recover-rejected-missing-index")
             msg = "WEB: Event detail1 is useless."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -3202,6 +3247,7 @@ class Utilities(script_utilities.Utilities):
         notify = True
         child_count = AXObject.get_child_count(event.source)
         if input_event_manager.get_manager().last_event_was_up():
+            self.trace_caret("recover-up", child_count=child_count)
             if event.detail1 >= child_count:
                 msg = "WEB: Last child removed. Getting new location from end of parent."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -3222,6 +3268,7 @@ class Utilities(script_utilities.Utilities):
                 obj, offset = self.previous_context(prev_obj, -1)
 
         elif input_event_manager.get_manager().last_event_was_down():
+            self.trace_caret("recover-down", child_count=child_count)
             if event.detail1 == 0:
                 msg = "WEB: First child removed. Getting new location from start of parent."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -3248,6 +3295,7 @@ class Utilities(script_utilities.Utilities):
 
         else:
             notify = False
+            self.trace_caret("recover-search", child_count=child_count)
             # TODO - JD: Can we remove this? Even if it is needed, we now also clear the
             # cache in _handleEventForRemovedSelectableChild. Also, if it is needed, should
             # it be recursive?
@@ -3255,17 +3303,21 @@ class Utilities(script_utilities.Utilities):
             obj, offset = AXUtilities.search_for_caret_context(
                 event.source, self.caret_policy, self.is_document
             )
+            self.trace_caret("recover-search-result", obj=obj, offset=offset)
             if obj is None:
                 obj = AXUtilities.get_focused_object(event.source)
+                self.trace_caret("recover-focused-result", obj=obj)
 
             # If what we found in the removed child's place has focus, focus really moved.
             if obj is not None and AXUtilities.is_focused(obj):
                 notify = True
 
+        self.trace_caret("recover-result", obj=obj, offset=offset, notify=notify)
         if obj:
             msg = f"WEB: Setting locusOfFocus and context to: {obj}, {offset}"
             focus_manager.get_manager().set_locus_of_focus(event, obj, notify)
             self.set_caret_context(obj, offset)
+            self.trace_caret("recover-complete", obj=obj, offset=offset)
             return True
 
         tokens = ["WEB: Unable to find context for child removed from", event.source]
@@ -3301,13 +3353,25 @@ class Utilities(script_utilities.Utilities):
 
         document = document or self.active_document()
         if not document:
+            self.trace_caret("set-context-no-document", obj=obj, offset=offset)
             return
 
         parent = AXObject.get_parent(document)
-        old_obj, old_offset = self._cache.get_context_for_parent(
+        context = self._cache.get_context_for_parent(
             self._cache.CARET_CONTEXTS,
             parent,
-        ) or (obj, offset)
+        )
+        old_obj, old_offset = context or (obj, offset)
+        if _TRACE_CARET and (context is None or context != (obj, offset)):
+            self.trace_caret(
+                "set-context",
+                document=document,
+                parent=parent,
+                old_obj=old_obj,
+                old_offset=old_offset,
+                obj=obj,
+                offset=offset,
+            )
         self._cache.set_context_for_parent(
             self._cache.PRIOR_CONTEXTS,
             parent,

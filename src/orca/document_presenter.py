@@ -325,6 +325,16 @@ class DocumentPresenter(Extension):
 
         has_state = self.has_state_for_app(script.app)
         in_focus_mode = self.in_focus_mode(script.app)
+        debug.trace_focus(
+            "mode-request",
+            app=script.app,
+            obj=obj,
+            document=document,
+            has_state=has_state,
+            old=in_focus_mode,
+            new=use_focus_mode,
+            notify=notify_user,
+        )
         if has_state and in_focus_mode == use_focus_mode:
             msg = "DOCUMENT PRESENTER: Presentation mode already set."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -353,6 +363,7 @@ class DocumentPresenter(Extension):
 
         state = self._get_state_for_app(script.app)
         state.in_focus_mode = use_focus_mode
+        debug.trace_focus("mode-changed", app=script.app, focus_mode=use_focus_mode)
         state.focus_mode_is_sticky = False
         state.browse_mode_is_sticky = False
 
@@ -366,6 +377,9 @@ class DocumentPresenter(Extension):
     def suspend_navigators(self, script: default.Script, suspended: bool, reason: str) -> bool:
         """Suspends or unsuspends navigation commands. Returns True if state changed."""
 
+        debug.trace_focus(
+            "mode-suspend-navigators", app=script.app, suspended=suspended, reason=reason
+        )
         if not suspended and math_navigator.get_navigator().is_active():
             msg = "DOCUMENT PRESENTER: Not unsuspending navigators: math navigation is active."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -683,6 +697,7 @@ class DocumentPresenter(Extension):
             return
         app_hash = hash(app)
         if app_hash in self._app_states:
+            debug.trace_focus("mode-clear-state", app=app)
             del self._app_states[app_hash]
             tokens = ["DOCUMENT PRESENTER: Cleared state for", app]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -732,6 +747,14 @@ class DocumentPresenter(Extension):
             self._enable_document_navigators(script, reason)
 
         state = self._get_state_for_app(script.app)
+        debug.trace_focus(
+            "mode-enter-document",
+            app=script.app,
+            old=state.in_focus_mode,
+            new=use_focus,
+            obj=new_focus,
+            old_focus=old_focus,
+        )
         state.in_focus_mode = use_focus
         self.suspend_navigators(script, use_focus, reason)
 
@@ -754,6 +777,14 @@ class DocumentPresenter(Extension):
 
         old_doc = script.utilities.get_top_level_document_for_object(old_focus)
         new_doc = script.utilities.get_top_level_document_for_object(new_focus)
+        debug.trace_focus(
+            "mode-focus-context",
+            app=script.app,
+            old=old_focus,
+            new=new_focus,
+            old_doc=old_doc,
+            new_doc=new_doc,
+        )
 
         if (
             old_doc is None
@@ -797,6 +828,7 @@ class DocumentPresenter(Extension):
             return True
 
         if old_doc is None and not focus_manager.get_manager().old_focus_was_dead():
+            debug.trace_focus("mode-enter-document-branch", old=old_focus, new=new_focus)
             return self._handle_entering_document(script, new_focus, old_focus)
 
         # Focus change within document

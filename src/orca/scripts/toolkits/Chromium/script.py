@@ -67,6 +67,9 @@ class Script(web.ToolkitBridge):
     def _on_children_removed(self, event: Atspi.Event) -> bool:
         """Callback for object:children-changed:removed accessibility events."""
 
+        self.utilities.trace_caret(
+            "chromium-removal", source=event.source, removed=event.any_data, index=event.detail1
+        )
         focus = focus_manager.get_manager().get_locus_of_focus()
         if focus is not None and event.any_data == focus:
             return super()._on_children_removed(event)
@@ -74,17 +77,22 @@ class Script(web.ToolkitBridge):
         if AXUtilities.is_web_element(event.source) and not AXUtilities.is_web_element(
             event.any_data,
         ):
+            self.utilities.trace_caret("chromium-removal-rejected-no-element")
             msg = "CHROMIUM: Ignoring because child is not an element"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        self.utilities.trace_caret("chromium-removal-forwarded")
         return super()._on_children_removed(event)
 
     def _on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""
 
+        debug.trace_focus("chromium-focus", source=event.source, gained=event.detail1)
+
         if self.utilities.is_document(event.source) and not AXUtilities.get_uri(event.source):
             msg = "CHROMIUM: Ignoring event from document with no URI."
+            debug.trace_focus("chromium-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 

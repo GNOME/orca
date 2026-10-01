@@ -695,6 +695,21 @@ class KeyboardEvent(InputEvent):
 
         start_time = time.time()
         should_obscure = self.should_obscure()
+        trace_key = debug.FOCUS_TRACE_ENABLED and self.keyval_name in (
+            "Up",
+            "Down",
+            "Tab",
+            "Delete",
+        )
+        if trace_key:
+            debug.trace_focus(
+                "key-process",
+                key=self.keyval_name,
+                pressed=self.is_pressed_key(),
+                modifiers=self.modifiers,
+                obj=self._obj,
+                window=self._window,
+            )
         if not should_obscure:
             data = f"'{self.keyval_name}' ({self.hw_code})"
         else:
@@ -740,6 +755,14 @@ class KeyboardEvent(InputEvent):
 
             if not modal_handler_claimed_event and command is not None and command.is_enabled():
                 self._handler = lambda: command.execute(script, self)
+            if trace_key:
+                debug.trace_focus(
+                    "key-command",
+                    key=self.keyval_name,
+                    command=command.get_name() if command else None,
+                    handler=bool(self._handler),
+                    modal=modal_handler_claimed_event,
+                )
 
         if self.is_orca_modifier():
             if self._click_count == 2:
@@ -752,6 +775,10 @@ class KeyboardEvent(InputEvent):
 
         self._present()
 
+        if trace_key:
+            debug.trace_focus(
+                "key-process-finished", key=self.keyval_name, handler=bool(self._handler)
+            )
         if self.is_pressed_key() and self._handler:
             GLib.timeout_add(1, self._handle)
 
@@ -769,9 +796,19 @@ class KeyboardEvent(InputEvent):
         tokens = ["\nvvvvv HANDLE", self.type.value_name.upper(), ":", data, "vvvvv"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
+        trace_key = debug.FOCUS_TRACE_ENABLED and self.keyval_name in (
+            "Up",
+            "Down",
+            "Tab",
+            "Delete",
+        )
         if self._handler:
             try:
+                if trace_key:
+                    debug.trace_focus("key-handler-start", key=self.keyval_name, obj=self._obj)
                 self._handler()
+                if trace_key:
+                    debug.trace_focus("key-handler-returned", key=self.keyval_name, obj=self._obj)
             except GLib.GError as error:
                 tokens = ["KEYBOARD EVENT: Exception calling handler:", error]
                 debug.print_tokens(debug.LEVEL_WARNING, tokens, True)

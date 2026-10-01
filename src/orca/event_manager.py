@@ -28,7 +28,9 @@ from __future__ import annotations
 
 import enum
 import itertools
+import os
 import queue
+import sys
 import threading
 import time
 from typing import TYPE_CHECKING, Any
@@ -55,6 +57,44 @@ from .ax_utilities_debugging import AXUtilitiesDebugging
 
 if TYPE_CHECKING:
     from .scripts import default
+
+_TRACE_CARET = os.environ.get("ORCA_TEST_CARET_TRACE") == "1"
+
+
+def _trace_object_event(event: Atspi.Event, step: str, **values: str | int | bool) -> None:
+    """Traces selected event delivery without querying accessible properties."""
+
+    if debug.FOCUS_TRACE_ENABLED and event.type.startswith(
+        (
+            "object:state-changed:focused",
+            "object:selection-changed",
+            "object:state-changed:selected",
+            "object:active-descendant-changed",
+            "object:children-changed:remove",
+        )
+    ):
+        debug.trace_focus(
+            "event-" + step.removeprefix("removal-"),
+            source=event.source,
+            event_type=event.type,
+            detail1=event.detail1,
+            detail2=event.detail2,
+            **values,
+        )
+
+    if not _TRACE_CARET or not event.type.startswith("object:children-changed:remove"):
+        return
+    source = hash(event.source) if event.source is not None else None
+    child = hash(event.any_data) if isinstance(event.any_data, Atspi.Accessible) else None
+    details = " ".join(f"{key}={value!r}" for key, value in values.items())
+    print(  # noqa: T201
+        f"[caret-trace] {time.monotonic():.6f} {step} "
+        f"source={f'obj:{source:x}' if source is not None else None} "
+        f"removed={f'obj:{child:x}' if child is not None else None} "
+        f"index={event.detail1} {details}",
+        file=sys.stderr,
+        flush=True,
+    )
 
 
 class EventPriority(enum.IntEnum):
@@ -247,6 +287,7 @@ class EventManager:
             key = (event.type, hash(event.source))
             latest = self._latest_event.get(key, -1)
             if latest > counter >= 0:
+                _trace_object_event(event, "removal-obsoleted", counter=counter, latest=latest)
                 tokens = [
                     "EVENT MANAGER:",
                     event,
@@ -307,10 +348,12 @@ class EventManager:
             if e == event:
                 return None
             if is_same(e):
+                _trace_object_event(event, "removal-obsoleted-duplicate", newer=_counter)
                 tokens = ["EVENT MANAGER:", event, "obsoleted by", e, "more recent duplicate"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return e
             if obsoletes_if_same_type_in_sibling(e):
+                _trace_object_event(event, "removal-obsoleted-sibling", newer=_counter)
                 tokens = [
                     "EVENT MANAGER:",
                     event,
@@ -471,10 +514,12 @@ class EventManager:
 
         child = event.any_data
         if child is None or AXObject.is_dead(child):
+            _trace_object_event(event, "removal-child-null-or-dead")
             tokens = ["EVENT_MANAGER: Ignoring", event_type, "due to null/dead event.any_data"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
         if AXUtilities.is_menu_related(child) or AXUtilities.is_image(child):
+            _trace_object_event(event, "removal-child-role-ignored")
             tokens = ["EVENT_MANAGER: Ignoring", event_type, "due to role of event.any_data"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -484,6 +529,7 @@ class EventManager:
             reason = (
                 "there is no active script" if script is None else "event is not from active app"
             )
+            _trace_object_event(event, "removal-app-ignored", reason=reason)
             tokens = ["EVENT MANAGER: Ignoring", event_type, "because", reason]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -661,24 +707,42 @@ class EventManager:
             return False
 
         if not self._active or self._paused:
+            _trace_object_event(
+                event, "removal-manager-inactive", active=self._active, paused=self._paused
+            )
             msg = "EVENT MANAGER: Ignoring because manager is not active or queueing is paused"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         role = AXObject.get_role(event.source)
-        for check in (
-            lambda: self._ignore_by_role(event, role),
-            lambda: self._ignore_by_focus_state(event, focus, role),
-            lambda: self._ignore_property_change(event, role),
-            lambda: self._ignore_by_spam_filter(event),
-            lambda: self._ignore_active_descendant_or_selection(event),
-            lambda: self._ignore_children_changed(event, focus),
-            lambda: self._ignore_state_changed(event, role),
-            lambda: self._ignore_text_events(event, focus, role),
+        _trace_object_event(event, "removal-role", role=int(role))
+        for index, check in enumerate(
+            (
+                lambda: self._ignore_by_role(event, role),
+                lambda: self._ignore_by_focus_state(event, focus, role),
+                lambda: self._ignore_property_change(event, role),
+                lambda: self._ignore_by_spam_filter(event),
+                lambda: self._ignore_active_descendant_or_selection(event),
+                lambda: self._ignore_children_changed(event, focus),
+                lambda: self._ignore_state_changed(event, role),
+                lambda: self._ignore_text_events(event, focus, role),
+            )
         ):
             result = check()
             if result is not None:
+                if _TRACE_CARET or debug.FOCUS_TRACE_ENABLED:
+                    name = (
+                        "role",
+                        "focus-state",
+                        "property-change",
+                        "spam-filter",
+                        "active-descendant-or-selection",
+                        "children-changed",
+                        "state-changed",
+                        "text-events",
+                    )[index]
+                    _trace_object_event(event, "removal-filter", check=name, ignored=result)
                 return result
 
         return False
@@ -710,12 +774,14 @@ class EventManager:
     def _enqueue_object_event(self, e: Atspi.Event) -> None:
         """Callback for Atspi object events."""
 
+        _trace_object_event(e, "removal-received")
         # If we are enqueuing events, we're not dead and should not be killed
         # and restarted by systemd.
         if self._event_queue.qsize() > 75 and systemd.get_manager().is_systemd_managed():
             systemd.get_manager().notify_alive("Event queue size > 75")
 
         if self._ignore(e):
+            _trace_object_event(e, "removal-ignored")
             return
 
         self._queue_println(e)
@@ -724,6 +790,7 @@ class EventManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if AXObject.check_hung(e.source, app):
+            _trace_object_event(e, "removal-hung")
             tokens = ["EVENT MANAGER: Dropping", e, "from hung source or app"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
@@ -735,6 +802,7 @@ class EventManager:
         with self._gidle_lock:
             counter = next(self._counter)
             self._event_queue.put((priority, counter, e))
+            _trace_object_event(e, "removal-queued", counter=counter)
             if e.type.startswith(EventManager._SKIPPABLE_SAME_TYPE_PREFIXES):
                 self._latest_event[(e.type, hash(e.source))] = counter
             if not self._gidle_id:
@@ -1040,6 +1108,7 @@ class EventManager:
             event_type.startswith("object:children-changed:remove")
             and event.source == AXUtilities.get_desktop()
         ):
+            _trace_object_event(event, "removal-desktop")
             script_mgr.reclaim_scripts()
             return True
 
@@ -1057,6 +1126,7 @@ class EventManager:
                     return False
 
             tokens = ["EVENT MANAGER: Ignoring defunct object:", event.source]
+            _trace_object_event(event, "removal-source-dead-or-defunct")
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             if event_type.startswith("window:de") and focus_mgr.get_active_window() == event.source:
@@ -1068,6 +1138,7 @@ class EventManager:
             script_mgr.reclaim_scripts()
 
         if AXUtilities.is_iconified(event.source):
+            _trace_object_event(event, "removal-source-iconified")
             tokens = ["EVENT MANAGER: Ignoring iconified object:", event.source]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -1092,6 +1163,7 @@ class EventManager:
     def _process_object_event(self, event: Atspi.Event, counter: int = -1) -> None:
         """Handles all object events destined for scripts."""
 
+        _trace_object_event(event, "removal-dequeued", counter=counter)
         if self._is_obsoleted_by(event, counter) or self._handle_early_event_processing(event):
             return
 
@@ -1105,6 +1177,7 @@ class EventManager:
         active_script = script_mgr.get_active_script()
         script = self._get_script_for_event(event, active_script)
         if not script:
+            _trace_object_event(event, "removal-no-script")
             msg = "ERROR: Could not get script for event"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
@@ -1125,15 +1198,20 @@ class EventManager:
                 active_script = script
 
         if not self._should_process_event(event, script, active_script):
+            _trace_object_event(event, "removal-script-inactive")
             return
 
         listener = self._find_listener(script, event.type)
         if listener is None:
+            _trace_object_event(event, "removal-no-listener")
             tokens = ["EVENT MANAGER: No listener for event type", event.type]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
+        if _TRACE_CARET or debug.FOCUS_TRACE_ENABLED:
+            _trace_object_event(event, "removal-dispatch", listener=listener.__qualname__)
         listener(event)
+        _trace_object_event(event, "removal-dispatch-returned")
 
 
 _manager: EventManager = EventManager()

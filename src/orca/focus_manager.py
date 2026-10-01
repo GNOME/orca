@@ -316,6 +316,15 @@ class FocusManager:
     ) -> None:
         """Sets the locus of focus (i.e., the object with visual focus)."""
 
+        debug.trace_focus(
+            "set-focus-request",
+            old=self._focus,
+            obj=obj,
+            notify=notify_script,
+            force=force,
+            event_type=event.type if event is not None else None,
+            source=event.source if event is not None else None,
+        )
         tokens = ["FOCUS MANAGER: Request to set locus of focus to", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
 
@@ -325,6 +334,7 @@ class FocusManager:
         recursive = AXUtilities.is_table_cell(obj)
         AXObject.clear_cache(obj, recursive, "Setting locus of focus.")
         if not force and obj == self._focus:
+            debug.trace_focus("set-focus-unchanged", obj=obj)
             msg = "FOCUS MANAGER: Setting locus of focus to existing locus of focus"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
@@ -342,18 +352,21 @@ class FocusManager:
             old_focus = None
 
         if obj is None:
+            debug.trace_focus("set-focus-cleared")
             msg = "FOCUS MANAGER: New locus of focus is null (being cleared)"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._focus = None
             return
 
         if AXObject.is_dead(obj):
+            debug.trace_focus("set-focus-rejected-dead", obj=obj)
             tokens = ["FOCUS MANAGER: New locus of focus (", obj, ") is dead. Not updating."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         if script is not None:
             if not AXObject.is_valid(obj):
+                debug.trace_focus("set-focus-rejected-invalid", obj=obj)
                 tokens = ["FOCUS MANAGER: New locus of focus (", obj, ") is invalid. Not updating."]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return
@@ -368,10 +381,13 @@ class FocusManager:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._focus = obj
+        debug.trace_focus("set-focus-changed", old=old_focus, obj=obj, notify=notify_script)
 
         if notify_script and script is not None:
             self.emit_region_changed(self._focus, mode=FOCUS_TRACKING)
+            debug.trace_focus("focus-notify-start", obj=self._focus)
             script.locus_of_focus_changed(event, old_focus, self._focus)
+            debug.trace_focus("focus-notify-returned", obj=self._focus)
 
         self._save_object_details(self._focus)
 

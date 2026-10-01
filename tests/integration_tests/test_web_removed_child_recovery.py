@@ -44,25 +44,32 @@ def test_navigation_continues_after_focused_line_removed(
 
     # Arrow right into the doomed paragraph, which the page then deletes. The output as it
     # goes away is not asserted; the assertions below check where navigation ends up.
+    setup_output = []
     for _ in range(4):
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-        capture(session, wait_async=True)
-    capture(session, wait_async=True)
+        setup_output.append(capture(session, wait_async=True))
+    setup_output.append(capture(session, wait_async=True))
 
-    keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session, wait_async=True) == (
-        ["Last paragraph here."],
-        [BrailleLine(1, "Last paragraph here.", "Last paragraph here.", "\x00" * 20)],
-    )
+    try:
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        assert capture(session, wait_async=True) == (
+            ["Last paragraph here."],
+            [BrailleLine(1, "Last paragraph here.", "Last paragraph here.", "\x00" * 20)],
+        )
 
-    keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session, wait_async=True) == (
-        ["After the doomed one."],
-        [BrailleLine(1, "After the doomed one.", "After the doomed one.", "\x00" * 21)],
-    )
+        keyboard.tap_key(keyboard.KEYSYM_UP)
+        assert capture(session, wait_async=True) == (
+            ["After the doomed one."],
+            [BrailleLine(1, "After the doomed one.", "After the doomed one.", "\x00" * 21)],
+        )
 
-    keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session, wait_async=True) == (
-        ["Go.", "heading 1"],
-        [BrailleLine(1, "Go. h1", "Go. h1", "\x00" * 6)],
-    )
+        keyboard.tap_key(keyboard.KEYSYM_UP)
+        assert capture(session, wait_async=True) == (
+            ["Go.", "heading 1"],
+            [BrailleLine(1, "Go. h1", "Go. h1", "\x00" * 6)],
+        )
+    except AssertionError:
+        for index, (spoken, brailled) in enumerate(setup_output):
+            step = f"After Right {index + 1}" if index < 4 else "Final setup capture"
+            print(f"[setup-output] {step}: speech={spoken!r}; braille={brailled!r}")
+        raise

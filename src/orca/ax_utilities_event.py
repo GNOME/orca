@@ -1463,18 +1463,21 @@ class AXUtilitiesEvent:
 
         if input_event_manager.get_manager().last_event_was_space():
             msg = "AXUtilitiesEvent: Selection toggled via space; handled elsewhere."
+            debug.trace_focus("selection-presentable-decision", source=event.source, reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         source_states = AXObject.get_state_set(event.source)
         if AXUtilitiesState.manages_descendants(event.source, source_states):
             msg = "AXUtilitiesEvent: Source manages descendants; handled elsewhere."
+            debug.trace_focus("selection-presentable-decision", source=event.source, reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if AXUtilitiesRole.is_menu(event.source):
             if AXUtilitiesState.is_showing_and_visible(event.source, source_states):
                 msg = "AXUtilitiesEvent: Event is presentable: Source is a menu."
+                debug.trace_focus("selection-presentable-decision", source=event.source, reason=msg)
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
@@ -1487,9 +1490,13 @@ class AXUtilitiesEvent:
                     child,
                     "is showing and visible",
                 ]
+                debug.trace_focus(
+                    "selection-presentable-menu-child", source=event.source, child=child
+                )
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
 
+            debug.trace_focus("selection-rejected-hidden-menu", source=event.source)
             tokens = ["AXUtilitiesEvent: Menu lacks showing + visible:", event.source]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
@@ -1502,6 +1509,7 @@ class AXUtilitiesEvent:
             )
             if text_input is not None and AXUtilitiesState.is_focused(text_input):
                 msg = "AXUtilitiesEvent: Combo box text input is focused; not a user selection."
+                debug.trace_focus("selection-presentable-decision", source=event.source, reason=msg)
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
@@ -1515,6 +1523,7 @@ class AXUtilitiesEvent:
         ):
             if AXUtilitiesRelation.object_is_controlled_by(event.source, focus):
                 msg = "AXUtilitiesEvent: Source is autocomplete for focused widget; not presenting."
+                debug.trace_focus("selection-presentable-decision", source=event.source, reason=msg)
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
         if event.source != focus and not AXUtilitiesState.is_showing_and_visible(
@@ -1522,17 +1531,24 @@ class AXUtilitiesEvent:
         ):
             combobox = AXUtilitiesObject.find_ancestor(event.source, AXUtilitiesRole.is_combo_box)
             if combobox != focus and event.source != AXObject.get_parent(focus):
+                debug.trace_focus(
+                    "selection-rejected-hidden", source=event.source, focus=focus, combo=combobox
+                )
                 tokens = ["AXUtilitiesEvent: Source lacks showing + visible:", event.source]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return False
 
         active_window = focus_manager.get_manager().get_active_window()
         if active_window and not AXUtilitiesObject.is_ancestor(event.source, active_window):
+            debug.trace_focus(
+                "selection-rejected-window", source=event.source, window=active_window
+            )
             tokens = ["AXUtilitiesEvent:", event.source, "is not inside", active_window]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         msg = "AXUtilitiesEvent: Event is presentable: Not ruled out by any checks."
+        debug.trace_focus("selection-presentable-decision", source=event.source, reason=msg)
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 

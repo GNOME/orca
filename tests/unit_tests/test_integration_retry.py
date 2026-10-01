@@ -13,7 +13,9 @@ import pytest
 _RUNNER = Path(__file__).parents[1] / "integration_retry.py"
 
 
-def _run(tmp_path: Path, source: str, *, retry: bool = True) -> subprocess.CompletedProcess:
+def _run(
+    tmp_path: Path, source: str, *, retry: bool = True, debug: bool = True
+) -> subprocess.CompletedProcess:
     test_file = tmp_path / "test_example.py"
     test_file.write_text(source, encoding="utf-8")
     env = os.environ.copy()
@@ -21,6 +23,9 @@ def _run(tmp_path: Path, source: str, *, retry: bool = True) -> subprocess.Compl
     env.pop("ORCA_TEST_RETRY_DIR", None)
     env.pop("ORCA_TEST_DEBUG_FILE", None)
     env.pop("ORCA_TEST_DEBUG_DIR", None)
+    env.pop("ORCA_TEST_RETRY_DEBUG", None)
+    if not debug:
+        env["ORCA_TEST_RETRY_DEBUG"] = "0"
     env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "1"
     if retry:
         env["ORCA_TEST_RETRY_DIR"] = str(tmp_path / "logs")
@@ -158,8 +163,11 @@ def test_local_failure_is_not_retried(tmp_path: Path) -> None:
 
 
 @pytest.mark.parametrize("second", ["pass", "assert False", "raise RuntimeError('retry error')"])
-def test_debug_logs_are_kept_only_for_failed_retries(tmp_path: Path, second: str) -> None:
-    """Only retries receive a debug directory, archived on failure and cleaned on success."""
+@pytest.mark.parametrize("debug", [True, False])
+def test_debug_logs_are_kept_only_for_failed_retries(
+    tmp_path: Path, second: str, debug: bool
+) -> None:
+    """Automatic retry logging can be disabled, otherwise only failed retries retain it."""
 
     result = _run(
         tmp_path,
@@ -169,21 +177,29 @@ from pathlib import Path
 root = Path(__file__).parent
 def test_example():
     marker = root / "attempt"
+    debug_path = os.environ.get("ORCA_TEST_DEBUG_DIR")
+    debug_file = os.environ.get("ORCA_TEST_DEBUG_FILE")
     if not marker.exists():
-        assert "ORCA_TEST_DEBUG_DIR" not in os.environ
+        assert debug_path is None
         marker.touch()
         assert False
-    debug_dir = Path(os.environ["ORCA_TEST_DEBUG_DIR"])
-    debug_dir.mkdir()
-    (debug_dir / "orca.log").write_text("retry diagnostics")
-    (root / "debug-path").write_text(str(debug_dir))
+    if {debug}:
+        debug_dir = Path(debug_path)
+        debug_dir.mkdir()
+        (debug_dir / "orca.log").write_text("retry diagnostics")
+        (root / "debug-path").write_text(str(debug_dir))
+    else:
+        assert debug_path is None
+        assert debug_file is None
     {second}
 """,
+        debug=debug,
     )
     assert result.returncode == (0 if second == "pass" else 1), result.stdout + result.stderr
-    assert not Path((tmp_path / "debug-path").read_text()).exists()
+    if debug:
+        assert not Path((tmp_path / "debug-path").read_text()).exists()
     archive = tmp_path / "logs/test_example.orca-debug.tar.gz"
-    if second == "pass":
+    if second == "pass" or not debug:
         assert not archive.exists()
     else:
         with tarfile.open(archive) as logs:

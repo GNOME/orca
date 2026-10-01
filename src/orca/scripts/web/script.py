@@ -438,13 +438,16 @@ class Script(default.Script):
     ) -> bool:
         """Handles changes of focus of interest. Returns True if this script did all needed work."""
 
+        debug.trace_focus("web-presentation-start", old=old_focus, obj=new_focus)
         tokens = ["WEB: Focus changing from", old_focus, "to", new_focus]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if new_focus and not AXObject.is_valid(new_focus):
+            debug.trace_focus("web-presentation-invalid", obj=new_focus)
             return True
 
         if new_focus and AXObject.is_dead(new_focus):
+            debug.trace_focus("web-presentation-dead", obj=new_focus)
             return True
 
         document = self.utilities.get_top_level_document_for_object(new_focus)
@@ -498,6 +501,7 @@ class Script(default.Script):
 
         self.utilities.set_caret_context(new_focus, caret_offset, document)
         self.update_braille(new_focus)
+        debug.trace_focus("web-braille-returned", obj=new_focus)
 
         contents = None
         last_command_was_caret_nav = (
@@ -579,6 +583,7 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if new_focus and AXObject.is_dead(new_focus):
+            debug.trace_focus("web-presentation-dead", obj=new_focus)
             msg = "WEB: New focus has since died"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             if self._get_queued_event("object:state-changed:focused", True):
@@ -590,6 +595,7 @@ class Script(default.Script):
             old_focus, new_focus, event
         )
 
+        debug.trace_focus("web-speech-start", obj=new_focus, has_contents=bool(contents))
         if contents:
             presentation_manager.get_manager().speak_contents(contents, prior_obj=old_focus)
         else:
@@ -600,6 +606,7 @@ class Script(default.Script):
                 prior_obj=old_focus,
             )
 
+        debug.trace_focus("web-speech-returned", obj=new_focus)
         document_presenter.get_presenter().update_mode_if_needed(
             self, old_focus, new_focus, event=event
         )
@@ -1105,19 +1112,25 @@ class Script(default.Script):
     def _on_children_removed(self, event: Atspi.Event) -> bool:
         """Callback for object:children-changed:removed accessibility events."""
 
+        self.utilities.trace_caret(
+            "removal-event", source=event.source, removed=event.any_data, index=event.detail1
+        )
         AXUtilities.clear_all_cache_now(event.source, "children-changed event.")
 
         if not self.utilities.in_document_content(event.source):
+            self.utilities.trace_caret("removal-outside-document")
             msg = "WEB: Event source is not in document content."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if self._loading_content:
+            self.utilities.trace_caret("removal-during-load")
             msg = "WEB: Ignoring because document content is being loaded."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if AXUtilities.is_live_region(event.source):
+            self.utilities.trace_caret("removal-live-region")
             if self.utilities.handle_event_for_removed_child(event):
                 msg = "WEB: Event handled for removed live-region child."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1130,18 +1143,22 @@ class Script(default.Script):
         if document:
             focus = focus_manager.get_manager().get_locus_of_focus()
             if event.source == focus:
+                self.utilities.trace_caret("removal-source-is-focus", focus=focus)
                 msg = "WEB: Dumping cache: source is focus"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.dump_cache(document, preserve_context=True)
             elif focus_manager.get_manager().focus_is_dead():
+                self.utilities.trace_caret("removal-focus-dead", focus=focus)
                 msg = "WEB: Dumping cache: dead focus"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.dump_cache(document, preserve_context=True)
             elif AXUtilities.find_ancestor(focus, lambda x: x == event.source):
+                self.utilities.trace_caret("removal-source-is-ancestor", focus=focus)
                 msg = "WEB: Dumping cache: source is ancestor of focus"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.dump_cache(document, preserve_context=True)
             else:
+                self.utilities.trace_caret("removal-clear-objects", focus=focus)
                 msg = "WEB: Not dumping full cache"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.clear_cached_objects()
@@ -1263,19 +1280,24 @@ class Script(default.Script):
     def _on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""
 
+        debug.trace_focus("web-focus", source=event.source, gained=event.detail1)
+
         if not event.detail1:
             msg = "WEB: Ignoring because event source lost focus"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         document = self.utilities.get_top_level_document_for_object(event.source)
         if not document:
             msg = "WEB: Could not get document for event source"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if focus_manager.get_manager().in_say_all():
             msg = "WEB: Ignoring focus change during say all"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -1286,26 +1308,31 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         elif document == event.source:
             msg = "WEB: Ignoring focus change to document ancestor of focus"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if AXUtilities.is_link(event.source) and AXUtilities.is_ancestor(focus, event.source):
             msg = "WEB: Ignoring focus change on link ancestor of focus"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if caret_navigator.get_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was caret nav"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if structural_navigator.get_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was struct nav"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if table_navigator.get_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was table nav"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -1314,6 +1341,7 @@ class Script(default.Script):
             and not input_event_manager.get_manager().last_event_was_tab_navigation()
         ):
             msg = "WEB: Element claimed focus, but browse mode is sticky"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -1322,10 +1350,12 @@ class Script(default.Script):
                 focus, event.source
             ):
                 msg = "WEB: Event believed to be side effect of tooltip navigation."
+                debug.trace_focus("web-focus-decision", reason=msg)
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
             msg = "WEB: Event handled: Setting locusOfFocus to embedded descendant"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             presentation_manager.get_manager().interrupt_if_needed_for_focus_change(
                 focus, event.source, event
@@ -1336,15 +1366,18 @@ class Script(default.Script):
 
         if AXUtilities.is_editable(event.source):
             msg = "WEB: Event source is editable"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if AXUtilities.is_dialog_or_alert(event.source):
             if AXUtilities.is_ancestor(focus, event.source, True):
                 msg = "WEB: Ignoring event from ancestor of focus"
+                debug.trace_focus("web-focus-decision", reason=msg)
                 debug.print_message(debug.LEVEL_INFO, msg, True)
             else:
                 msg = "WEB: Event handled: Setting locusOfFocus to event source"
+                debug.trace_focus("web-focus-decision", reason=msg)
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return True
@@ -1368,25 +1401,30 @@ class Script(default.Script):
                 self.utilities.set_caret_context(obj, offset)
             else:
                 msg = "WEB: Search for caret context failed"
+                debug.trace_focus("web-focus-decision", reason=msg)
                 debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if not (AXUtilities.is_focusable(event.source) and AXUtilities.is_focused(event.source)):
             msg = "WEB: Event ignored: Source is not focusable or focused"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not AXUtilities.is_document(event.source):
             msg = "WEB: Deferring to other scripts for handling non-document source"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if not obj:
             msg = "WEB: Unable to get valid context object"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if input_event_manager.get_manager().last_event_was_page_navigation():
             msg = "WEB: Event handled: Focus changed due to scrolling"
+            debug.trace_focus("web-focus-decision", reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             focus_manager.get_manager().set_locus_of_focus(event, obj)
             self.utilities.set_caret_context(obj, offset)
@@ -1479,28 +1517,34 @@ class Script(default.Script):
     def _on_selection_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:selection-changed accessibility events."""
 
+        debug.trace_focus("web-selection", source=event.source)
         if self.utilities.event_is_browser_ui_autocomplete_noise_deprecated(event):
             msg = "WEB: Ignoring event believed to be browser UI autocomplete noise"
+            debug.trace_focus("web-selection-decision", source=event.source, reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.event_is_browser_ui_page_switch(event):
             msg = "WEB: Ignoring event believed to be browser UI page switch"
+            debug.trace_focus("web-selection-decision", source=event.source, reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.in_document_content(event.source):
             msg = "WEB: Event source is not in document content"
+            debug.trace_focus("web-selection-decision", source=event.source, reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if not self.utilities.in_document_content(focus_manager.get_manager().get_locus_of_focus()):
             msg = "WEB: Event ignored: locusOfFocus is not in document content"
+            debug.trace_focus("web-selection-decision", source=event.source, reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.event_is_from_locus_of_focus_document(event):
             msg = "WEB: Event ignored: Not from locus of focus document"
+            debug.trace_focus("web-selection-decision", source=event.source, reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -1514,15 +1558,18 @@ class Script(default.Script):
                     "Workaround for missing events on descendants.",
                 )
                 msg = "WEB: Event source is embedded descendant and we're in focus mode"
+                debug.trace_focus("web-selection-decision", source=event.source, reason=msg)
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
             msg = "WEB: Event source is embedded descendant and we're in browse mode"
+            debug.trace_focus("web-selection-decision", source=event.source, reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.event_is_irrelevant_selection_changed_event(event):
             msg = "WEB: Event ignored: Irrelevant"
+            debug.trace_focus("web-selection-decision", source=event.source, reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -1530,6 +1577,7 @@ class Script(default.Script):
         ancestor = AXUtilities.get_common_ancestor(obj, event.source)
         if ancestor and self.utilities.is_text_block_element(ancestor):
             msg = "WEB: Ignoring: Common ancestor of context and event source is text block"
+            debug.trace_focus("web-selection-decision", source=event.source, reason=msg)
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 

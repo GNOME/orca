@@ -140,6 +140,25 @@ integration-tests-chromium:
     - chromium --version
     - meson test -C "${MESON_BUILD_DIR}" --suite web --num-processes 1 --timeout-multiplier 2 --print-errorlogs
 
+integration-tests-chromium-retry-comparison:
+  extends: .integration-tests
+  when: manual
+  allow_failure: true
+  timeout: 30m
+  script:
+    - chromium --version
+    - python3 --version
+    - python3 -m pip show pytest pytest-mock platformdirs
+    - git rev-parse HEAD
+    - git -C at-spi2-core rev-parse HEAD
+    - python3 ci/compare_integration_retries.py
+  after_script: []
+  artifacts:
+    paths:
+      - _build/retry-comparison/
+    reports: null
+    expire_in: 1 day
+
 # Linters: Ruff and Mypy
 #
 # The configurations are in pyproject.toml.

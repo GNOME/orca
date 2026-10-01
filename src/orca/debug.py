@@ -25,6 +25,7 @@ import os
 import re
 import sys
 import threading
+import time
 import traceback
 from datetime import datetime, timezone
 from typing import Any, TextIO
@@ -42,6 +43,25 @@ debugFile: TextIO | None = None
 # pylint: enable=invalid-name
 
 _printing = threading.local()
+FOCUS_TRACE_ENABLED = os.environ.get("ORCA_TEST_FOCUS_TRACE") == "1"
+
+
+def trace_focus(step: str, **values: Any) -> None:
+    """Writes opt-in focus diagnostics using scalars and local object identities."""
+
+    if not FOCUS_TRACE_ENABLED:
+        return
+    details = " ".join(
+        f"{key}={value!r}"
+        if value is None or isinstance(value, (str, int, float, bool))
+        else f"{key}=obj:{hash(value):x}"
+        for key, value in values.items()
+    )
+    print(  # noqa: T201
+        f"[focus-trace] {time.monotonic():.6f} {step} {details}",
+        file=sys.stderr,
+        flush=True,
+    )
 
 
 def print_exception(level: int) -> None:
