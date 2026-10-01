@@ -11,4 +11,5 @@ mypy
 pylint
 pytest
 pytest-mock
+python-xlib
 types-psutil

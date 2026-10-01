@@ -15,7 +15,7 @@ rpm -q --queryformat '%{NAME} %{VERSION}-%{RELEASE}\n' dejavu-fonts liblouis-dat
 chromium --version
 firefox --version
 python3 --version
-python3 -m pip show pytest pytest-mock
+python3 -m pip show pytest pytest-mock python-xlib
 pkg-config --modversion liblouis
 louis_tables_dir=$(pkg-config --variable=tablesdir liblouis)
 test -n "$louis_tables_dir"
@@ -33,7 +33,7 @@ import louis
 
 gi.require_foreign("cairo")
 
-for module in ("pytest", "pytest_mock", "dasbus", "psutil", "cairo", "babel"):
+for module in ("pytest", "pytest_mock", "dasbus", "psutil", "cairo", "babel", "Xlib.display"):
     importlib.import_module(module)
 
 for namespace, version in (("Gtk", "3.0"), ("Gdk", "3.0"), ("GLib", "2.0"),

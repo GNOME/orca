@@ -324,6 +324,7 @@ def _run_app_with_orca(
     *,
     argv: list[str],
     ready_predicate: Callable[[Atspi.Accessible], bool] | None = None,
+    prepare_window: Callable[[int], None] | None = None,
 ) -> Iterator[NativeAppSession]:
     """Runs argv with Orca attached, yielding a NativeAppSession until teardown."""
 
@@ -336,6 +337,8 @@ def _run_app_with_orca(
     with _launch_subprocess(argv, env) as (_process, app_accessible):
         if ready_predicate is not None:
             _wait_until_ready(app_accessible, ready_predicate)
+        if prepare_window is not None:
+            prepare_window(_process.pid)
         orca = OrcaSession(env)
         orca.launch()
         try:
@@ -530,6 +533,7 @@ def _run_browser_session(
         sandbox_dir,
         argv=argv,
         ready_predicate=ready_predicate or _name_matches(app.is_ready_title),
+        prepare_window=getattr(app, "prepare_window", None),
     ):
         yield BrowserSession(orca=session.orca, reader=session.reader, browser=browser_name)
 

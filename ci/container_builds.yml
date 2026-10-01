@@ -6,7 +6,7 @@ include:
 
 variables:
   # Bump the tag when changing image contents or dependency checks.
-  BASE_TAG: "2026-09-30.1-main"
+  BASE_TAG: "2026-10-01.1-main"
   FDO_UPSTREAM_REPO: "gnome/orca"
 
 .orca_opensuse_tumbleweed_x86_64:

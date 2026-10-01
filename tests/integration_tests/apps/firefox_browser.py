@@ -78,3 +78,32 @@ def is_ready_title(title: str) -> bool:
     """Accepts the page title with or without Firefox's window-branding suffix."""
 
     return title.rsplit(" — ", 1)[0].endswith(" ready")
+
+
+def prepare_window(pid: int) -> None:
+    """Sizes and focuses our kiosk window on Xvfb, which has no window manager."""
+
+    from Xlib import X, display  # type: ignore[import-untyped]
+
+    connection = display.Display()
+    try:
+        pid_atom = connection.intern_atom("_NET_WM_PID")
+        screen = connection.screen()
+        for window in screen.root.query_tree().children:
+            owner = window.get_full_property(pid_atom, X.AnyPropertyType)
+            if owner is None or owner.value[0] != pid:
+                continue
+            attributes = window.get_attributes()
+            if attributes.map_state != X.IsViewable or attributes.win_class != X.InputOutput:
+                continue
+            # On the wrapper's 1024x768 Xvfb screen, Chromium's --app window has
+            # a 1023x767 content area. Match that existing expectation baseline.
+            window.configure(
+                x=0, y=0, width=screen.width_in_pixels - 1, height=screen.height_in_pixels - 1
+            )
+            window.set_input_focus(X.RevertToParent, X.CurrentTime)
+            connection.sync()
+            return
+        raise RuntimeError(f"No mapped browser window found for pid {pid}")
+    finally:
+        connection.close()

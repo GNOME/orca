@@ -25,6 +25,7 @@ launch Orca need an installed build of the version being tested.
   openSUSE, install `liblouis-devel`).
 * MathCAT enabled in the installed Orca build for the math tests.
 * Chrome (beta preferred) or Chromium for the web tests.
+* `python-xlib` for window setup when running web tests with Firefox.
 
 ## Running Tests
 
