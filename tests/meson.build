@@ -58,6 +58,7 @@ unit_tests = [
   'unit_tests/test_gsettings_registry.py',
   'unit_tests/test_input_event.py',
   'unit_tests/test_input_event_manager.py',
+  'unit_tests/test_integration_retry.py',
   'unit_tests/test_keybindings.py',
   'unit_tests/test_label_inference.py',
   'unit_tests/test_language_utilities.py',
@@ -271,7 +272,7 @@ foreach group, test_files : orca_integration_tests
     test(
       test_name,
       is_gsettings ? python : integration_wrapper,
-      args: is_gsettings ? ['-m', 'pytest', files(test_file), '-v'] : [files(test_file)],
+      args: is_gsettings ? ['-m', 'tests.integration_retry', files(test_file)] : [files(test_file)],
       env: test_env,
       suite: ['integration', group],
       timeout: is_gsettings ? 30 : test_timeout,

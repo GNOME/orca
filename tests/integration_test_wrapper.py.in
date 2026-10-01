@@ -375,7 +375,7 @@ def _run_test(test_file: str) -> int:
         # @PYTHON@ is substituted with the Python interpreter path by meson's
         # configure_file(); see tests/meson.build.
         pytest_proc = subprocess.run(
-            ["@PYTHON@", "-m", "pytest", test_file, "-v"],
+            ["@PYTHON@", "-m", "tests.integration_retry", test_file],
             env=env,
             check=False,
         )

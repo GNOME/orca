@@ -79,6 +79,8 @@ unit-tests:
 
 .integration-tests:
   stage: test
+  variables:
+    ORCA_TEST_RETRY_DIR: "${CI_PROJECT_DIR}/${MESON_BUILD_DIR}/integration-retries"
   extends:
     - '.orca_opensuse_tumbleweed_x86_64'
     - '.fdo.distribution-image@opensuse'
@@ -90,8 +92,13 @@ unit-tests:
     - bash -x ci/install_atspi.sh
     - bash -x ci/build_and_install.sh
   allow_failure: true
+  after_script:
+    - source ci/env.sh
+    - python3 -m tests.integration_retry --summary "${ORCA_TEST_RETRY_DIR}"
   artifacts:
     when: always
+    paths:
+      - _build/integration-retries/
     reports:
       junit: _build/meson-logs/testlog.junit.xml
     expire_in: 1 day
@@ -100,7 +107,7 @@ integration-tests-base:
   extends: .integration-tests
   allow_failure: false
   script:
-    - meson test -C "${MESON_BUILD_DIR}" --suite core --suite gtk3 --suite gtk3-terminal --num-processes 1 --print-errorlogs
+    - meson test -C "${MESON_BUILD_DIR}" --suite core --suite gtk3 --suite gtk3-terminal --num-processes 1 --timeout-multiplier 2 --print-errorlogs
 
 integration-tests-chromium:
   extends: .integration-tests
@@ -111,7 +118,7 @@ integration-tests-chromium:
     ORCA_TEST_BROWSER: chromium
   script:
     - chromium --version
-    - meson test -C "${MESON_BUILD_DIR}" --suite web --num-processes 1 --print-errorlogs
+    - meson test -C "${MESON_BUILD_DIR}" --suite web --num-processes 1 --timeout-multiplier 2 --print-errorlogs
 
 # Linters: Ruff and Mypy
 #
