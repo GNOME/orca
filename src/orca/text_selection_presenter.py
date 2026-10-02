@@ -432,12 +432,6 @@ class TextSelectionPresenter:
         if not string:
             if any(not AXUtilities.is_image_or_canvas(obj) for obj in unexpanded_objects):
                 return False
-            if any(
-                AXText.get_character_count(obj)
-                and not AXUtilities.can_expand_embedded_object_as_text(obj)
-                for obj in (start_obj, end_obj)
-            ):
-                return False
             self._present_pending_page_change(selection_obj)
             for image in unexpanded_objects:
                 presentation_manager.get_manager().present_object(

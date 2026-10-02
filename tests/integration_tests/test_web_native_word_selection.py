@@ -91,7 +91,7 @@ def test_word_selection_and_unselection(web_native_text_selection: BrowserSessio
         [".", "selected"],
         [],
         ["Save", "selected"] if USES_DOCUMENT_SELECTION else ["selected"],
-        ["selected"],
+        [] if USES_DOCUMENT_SELECTION else ["selected"],
         [],
         [],
         [],
@@ -100,7 +100,7 @@ def test_word_selection_and_unselection(web_native_text_selection: BrowserSessio
         [],
         [],
         [],
-        ["unselected"],
+        [] if USES_DOCUMENT_SELECTION else ["unselected"],
         ["Save", "unselected"] if USES_DOCUMENT_SELECTION else ["unselected"],
         [],
         [],
@@ -141,8 +141,10 @@ def test_word_selection_and_unselection_from_bottom(
         # This also happens when Orca is not running.
         # Selection and unselection of content before the button are covered by
         # test_word_selection_and_unselection_from_image.
-        expected_selected.extend([["selected"], ["slide", "selected"], ["Next", "selected"]])
-    expected_unselected = [[*output[:-1], "unselected"] for output in reversed(expected_selected)]
+        expected_selected.extend([[], ["slide", "selected"], ["Next", "selected"]])
+    expected_unselected = [
+        [*output[:-1], "unselected"] if output else [] for output in reversed(expected_selected)
+    ]
 
     with native_selection(session):
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)

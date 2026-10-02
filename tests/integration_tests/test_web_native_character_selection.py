@@ -57,7 +57,7 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
     if USES_DOCUMENT_SELECTION:
         selected.append([])
         add_text("Save")
-        selected.append(["selected"])
+        selected.append([])
     else:
         selected.extend([[], []])
         selected.extend([["selected"]] * 4)
@@ -90,7 +90,7 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
     selected.append([])
     if USES_DOCUMENT_SELECTION:
         add_text("Save all changes")
-        selected.append(["selected"])
+        selected.append([])
     else:
         selected.append([])
         selected.extend([["selected"]] * len("Save all changes"))
@@ -106,7 +106,7 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
     selected.append([])
     if USES_DOCUMENT_SELECTION:
         add_text("Next slide")
-        selected.append(["selected"])
+        selected.append([])
     else:
         selected.append([])
         selected.extend([["selected"]] * len("Next slide"))
