@@ -3500,10 +3500,8 @@ msgstr "Μετάβαση στο επόμενο επίπεδο ηχούς πλή�
 #. announce formatting changes such as bold, italic, etc. This command cycles
 #. through the available modes: off, editable text only, and always.
 #: src/orca/cmdnames.py:588
-#, fuzzy
-#| msgid "Cycle to the next settings profile"
 msgid "Cycle to the next text attribute change mode"
-msgstr "Μετάβαση στο επόμενο προφίλ ρυθμίσεων"
+msgstr "Κυκλική μετάβαση στην επόμενη λειτουργία αλλαγής γνωρισμάτων κειμένου"
 
 #. Translators: this is a debug message that Orca users will not normally see. It
 #. describes a debug routine that allows the user to adjust the level of debug
@@ -3554,10 +3552,8 @@ msgstr "Παρουσίαση τρέχουσας ημερομηνίας"
 #. Translators: Orca has a command to present the state of modifier keys such as
 #. Caps Lock and Num Lock (e.g. "caps lock on. num lock off.").
 #: src/orca/cmdnames.py:624
-#, fuzzy
-#| msgid "Present the status bar"
 msgid "Present the state of modifier keys"
-msgstr "Παρουσίαση γραμμής κατάστασης"
+msgstr "Παρουσίαση της κατάστασης των πλήκτρων τροποποίησης"
 
 #. Translators: Orca has a command to present the pixel size and location of
 #. the current object. This string is how this command is described in the list
@@ -3917,26 +3913,20 @@ msgstr "Εναλλαγή πλήκτρων πλοήγησης πίνακα"
 #. Translators: this is for navigating among annotations in a document.
 #. Annotations include content insertions, content deletions, suggestions, and highlights.
 #: src/orca/cmdnames.py:884
-#, fuzzy
-#| msgid "Go to previous button"
 msgid "Go to previous annotation"
-msgstr "Μετάβαση στο προηγούμενο κουμπί"
+msgstr "Μετάβαση στην προηγούμενη επισήμανση"
 
 #. Translators: this is for navigating among annotations in a document.
 #. Annotations include content insertions, content deletions, suggestions, and highlights.
 #: src/orca/cmdnames.py:888
-#, fuzzy
-#| msgid "Go to next button"
 msgid "Go to next annotation"
-msgstr "Μετάβαση στο επόμενο κουμπί"
+msgstr "Μετάβαση στην επόμενη επισήμανση"
 
 #. Translators: this is for navigating among annotations in a document.
 #. Annotations include content insertions, content deletions, suggestions, and highlights.
 #: src/orca/cmdnames.py:892
-#, fuzzy
-#| msgid "Display a list of buttons"
 msgid "Display a list of annotations"
-msgstr "Εμφάνιση λίστας κουμπιών"
+msgstr "Εμφάνιση λίστας επισημάνσεων"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:895
@@ -4236,24 +4226,18 @@ msgstr "Μετάβαση στην τελευταία ζωντανή περιοχ
 
 #. Translators: this is for navigating among math expressions in a document.
 #: src/orca/cmdnames.py:1082
-#, fuzzy
-#| msgid "Go to previous live region"
 msgid "Go to previous math expression"
-msgstr "Μετάβαση στην προηγούμενη ζωντανή περιοχή"
+msgstr "Μετάβαση στην προηγούμενη μαθηματική έκφραση"
 
 #. Translators: this is for navigating among math expressions in a document.
 #: src/orca/cmdnames.py:1085
-#, fuzzy
-#| msgid "Go to next live region"
 msgid "Go to next math expression"
-msgstr "Μετάβαση στην επόμενη ζωντανή περιοχή"
+msgstr "Μετάβαση στην επόμενη μαθηματική έκφραση"
 
 #. Translators: this is for navigating among math expressions in a document.
 #: src/orca/cmdnames.py:1088
-#, fuzzy
-#| msgid "Display a list of headings"
 msgid "Display a list of math expressions"
-msgstr "Εμφάνιση λίστας επικεφαλίδων"
+msgstr "Εμφάνιση λίστας μαθηματικών εκφράσεων"
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
@@ -4403,40 +4387,32 @@ msgstr "Μετάβαση στο κάτω μέρος της στήλης"
 #. (https://daisy.github.io/MathCAT). This command enters that mode when
 #. the user is on a math element.
 #: src/orca/cmdnames.py:1183
-#, fuzzy
-#| msgid "Control caret navigation"
 msgctxt "mathcat"
 msgid "Enter math navigation mode"
-msgstr "Περιήγηση δρομέα ελέγχου"
+msgstr "Είσοδος στη λειτουργία περιήγησης μαθηματικών"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command exits that mode.
 #: src/orca/cmdnames.py:1187
-#, fuzzy
-#| msgid "Caret navigation"
 msgctxt "mathcat"
 msgid "Exit math navigation mode"
-msgstr "Πλοήγηση με δρομέα"
+msgstr "Έξοδος από τη λειτουργία περιήγησης μαθηματικών"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the next sibling
 #. at the current level of the math expression tree.
 #: src/orca/cmdnames.py:1192
-#, fuzzy
-#| msgid "Go to next list item"
 msgctxt "mathcat"
 msgid "Move to next item"
-msgstr "Μετάβαση στο επόμενο στοιχείο λίστας"
+msgstr "Μετακίνηση στο επόμενο στοιχείο"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the previous
 #. sibling at the current level of the math expression tree.
 #: src/orca/cmdnames.py:1197
-#, fuzzy
-#| msgid "Go to previous list item"
 msgctxt "mathcat"
 msgid "Move to previous item"
-msgstr "Μετάβαση στο προηγούμενο στοιχείο λίστας"
+msgstr "Μετακίνηση στο προηγούμενο στοιχείο"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves from an item down
@@ -4444,7 +4420,7 @@ msgstr "Μετάβαση στο προηγούμενο στοιχείο λίστ
 #: src/orca/cmdnames.py:1202
 msgctxt "mathcat"
 msgid "Zoom in"
-msgstr ""
+msgstr "Εστίαση προς τα μέσα"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves from an item back
@@ -4452,7 +4428,7 @@ msgstr ""
 #: src/orca/cmdnames.py:1207
 msgctxt "mathcat"
 msgid "Zoom out"
-msgstr ""
+msgstr "Εστίαση προς τα έξω"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command descends as deep as
@@ -4460,7 +4436,7 @@ msgstr ""
 #: src/orca/cmdnames.py:1212
 msgctxt "mathcat"
 msgid "Zoom in completely"
-msgstr ""
+msgstr "Πλήρης εστίαση προς τα μέσα"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command goes all the way back
@@ -4468,105 +4444,85 @@ msgstr ""
 #: src/orca/cmdnames.py:1217
 msgctxt "mathcat"
 msgid "Zoom out completely"
-msgstr ""
+msgstr "Πλήρης εστίαση προς τα έξω"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the first item.
 #: src/orca/cmdnames.py:1221
-#, fuzzy
-#| msgid "Move to top"
 msgctxt "mathcat"
 msgid "Move to start"
-msgstr "Μετακίνηση στην κορυφή"
+msgstr "Μετακίνηση στην αρχή"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the last item.
 #: src/orca/cmdnames.py:1225
-#, fuzzy
-#| msgid "Move to cell"
 msgctxt "mathcat"
 msgid "Move to end"
-msgstr "Μετακίνηση σε κελί"
+msgstr "Μετακίνηση στο τέλος"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the start of
 #. the current line in a multi-line math expression.
 #: src/orca/cmdnames.py:1230
-#, fuzzy
-#| msgid "Go to next separator"
 msgctxt "mathcat"
 msgid "Move to line start"
-msgstr "Μετάβαση στον επόμενο διαχωριστή"
+msgstr "Μετακίνηση στην αρχή της γραμμής"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the end of
 #. the current line in a multi-line math expression.
 #: src/orca/cmdnames.py:1235
-#, fuzzy
-#| msgid "Move to cell"
 msgctxt "mathcat"
 msgid "Move to line end"
-msgstr "Μετακίνηση σε κελί"
+msgstr "Μετακίνηση στο τέλος της γραμμής"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the top of the
 #. current column in a math table (matrix, determinant, etc.).
 #: src/orca/cmdnames.py:1240
-#, fuzzy
-#| msgid "Move to bottom"
 msgctxt "mathcat"
 msgid "Move to column start"
-msgstr "Μετακίνηση στο τέλος"
+msgstr "Μετακίνηση στην αρχή της στήλης"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the bottom of
 #. the current column in a math table (matrix, determinant, etc.).
 #: src/orca/cmdnames.py:1245
-#, fuzzy
-#| msgid "Move to cell"
 msgctxt "mathcat"
 msgid "Move to column end"
-msgstr "Μετακίνηση σε κελί"
+msgstr "Μετακίνηση στο τέλος της στήλης"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the previous
 #. cell in a math table or columnar arithmetic expression.
 #: src/orca/cmdnames.py:1250
-#, fuzzy
-#| msgid "Go to previous clickable"
 msgctxt "mathcat"
 msgid "Move to previous cell"
-msgstr "Μετάβαση στο προηγούμενο στοιχείο με δυνατότητα κλικ"
+msgstr "Μετακίνηση στο προηγούμενο κελί"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the next cell
 #. in a math table or columnar arithmetic expression.
 #: src/orca/cmdnames.py:1255
-#, fuzzy
-#| msgid "Move to cell"
 msgctxt "mathcat"
 msgid "Move to next cell"
-msgstr "Μετακίνηση σε κελί"
+msgstr "Μετακίνηση στο επόμενο κελί"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves up one cell in
 #. a math table or columnar arithmetic expression.
 #: src/orca/cmdnames.py:1260
-#, fuzzy
-#| msgid "Go up one cell"
 msgctxt "mathcat"
 msgid "Move up one cell"
-msgstr "Μετάβαση ένα κελί πάνω"
+msgstr "Μετακίνηση ένα κελί πάνω"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves down one cell in
 #. a math table or columnar arithmetic expression.
 #: src/orca/cmdnames.py:1265
-#, fuzzy
-#| msgid "Go down one cell"
 msgctxt "mathcat"
 msgid "Move down one cell"
-msgstr "Μετάβαση ένα κελί κάτω"
+msgstr "Μετακίνηση ένα κελί κάτω"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command cycles the navigation
@@ -4574,7 +4530,7 @@ msgstr "Μετάβαση ένα κελί κάτω"
 #: src/orca/cmdnames.py:1270
 msgctxt "mathcat"
 msgid "Increase navigation granularity"
-msgstr ""
+msgstr "Αύξηση της κλίμακας περιήγησης"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command cycles the navigation
@@ -4582,47 +4538,39 @@ msgstr ""
 #: src/orca/cmdnames.py:1275
 msgctxt "mathcat"
 msgid "Decrease navigation granularity"
-msgstr ""
+msgstr "Μείωση της κλίμακας περιήγησης"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command toggles whether navigation
 #. reads the math content or describes its structure.
 #: src/orca/cmdnames.py:1280
-#, fuzzy
-#| msgid "Toggle mouse review mode"
 msgctxt "mathcat"
 msgid "Toggle speech mode"
-msgstr "Εναλλαγή λειτουργίας προεπισκόπησης ποντικιού"
+msgstr "Εναλλαγή λειτουργίας εκφώνησης"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command speaks the previous math
 #. item as you would say it aloud.
 #: src/orca/cmdnames.py:1285
-#, fuzzy
-#| msgid "Go to previous list item"
 msgctxt "mathcat"
 msgid "Read previous item"
-msgstr "Μετάβαση στο προηγούμενο στοιχείο λίστας"
+msgstr "Ανάγνωση προηγούμενου στοιχείου"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command speaks the next math
 #. item as you would say it aloud.
 #: src/orca/cmdnames.py:1290
-#, fuzzy
-#| msgid "Current item"
 msgctxt "mathcat"
 msgid "Read next item"
-msgstr "Τρέχον στοιχείο"
+msgstr "Ανάγνωση επόμενου στοιχείου"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command speaks the current math
 #. item as you would say it aloud.
 #: src/orca/cmdnames.py:1295
-#, fuzzy
-#| msgid "Current item"
 msgctxt "mathcat"
 msgid "Read current item"
-msgstr "Τρέχον στοιχείο"
+msgstr "Ανάγνωση τρέχοντος στοιχείου"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command speaks the content of
@@ -4630,37 +4578,31 @@ msgstr "Τρέχον στοιχείο"
 #: src/orca/cmdnames.py:1300
 msgctxt "mathcat"
 msgid "Read current cell"
-msgstr ""
+msgstr "Ανάγνωση τρέχοντος κελιού"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command gives a structural
 #. summary of the previous math item rather than reading its content.
 #: src/orca/cmdnames.py:1305
-#, fuzzy
-#| msgid "Go to previous list item"
 msgctxt "mathcat"
 msgid "Describe previous item"
-msgstr "Μετάβαση στο προηγούμενο στοιχείο λίστας"
+msgstr "Περιγραφή προηγούμενου στοιχείου"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command gives a structural
 #. summary of the next math item rather than reading its content.
 #: src/orca/cmdnames.py:1310
-#, fuzzy
-#| msgid "Current item"
 msgctxt "mathcat"
 msgid "Describe next item"
-msgstr "Τρέχον στοιχείο"
+msgstr "Περιγραφή επόμενου στοιχείου"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command gives a structural
 #. summary of the current math item rather than reading its content.
 #: src/orca/cmdnames.py:1315
-#, fuzzy
-#| msgid "Present current time"
 msgctxt "mathcat"
 msgid "Describe current item"
-msgstr "Παρουσίαση τρέχουσας ώρας"
+msgstr "Περιγραφή τρέχοντος στοιχείου"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command announces the user's
@@ -4668,17 +4610,15 @@ msgstr "Παρουσίαση τρέχουσας ώρας"
 #: src/orca/cmdnames.py:1320
 msgctxt "mathcat"
 msgid "Where am I"
-msgstr ""
+msgstr "Πού βρίσκομαι"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command announces the user's
 #. full context within the math expression.
 #: src/orca/cmdnames.py:1325
-#, fuzzy
-#| msgid "Messages are _detailed"
 msgctxt "mathcat"
 msgid "Where am I (detailed)"
-msgstr "Τα μηνύματα είναι λ_επτομερή"
+msgstr "Πού βρίσκομαι (αναλυτικά)"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command returns to the position
@@ -4686,37 +4626,31 @@ msgstr "Τα μηνύματα είναι λ_επτομερή"
 #: src/orca/cmdnames.py:1330
 msgctxt "mathcat"
 msgid "Return to last position"
-msgstr ""
+msgstr "Επιστροφή στην τελευταία θέση"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). Place markers are bookmarks within
 #. a math expression, identified by a digit 0-9. This command jumps to one.
 #: src/orca/cmdnames.py:1335
-#, fuzzy
-#| msgid "Go to next landmark"
 msgctxt "mathcat"
 msgid "Go to place marker"
-msgstr "Μετάβαση στο επόμενο ορόσημο"
+msgstr "Μετάβαση στον σελιδοδείκτη θέσης"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). Place markers are bookmarks within
 #. a math expression, identified by a digit 0-9. This command sets one.
 #: src/orca/cmdnames.py:1340
-#, fuzzy
-#| msgid "Speak and mark"
 msgctxt "mathcat"
 msgid "Set place marker"
-msgstr "Εκφώνηση και σημείωση"
+msgstr "Ορισμός σελιδοδείκτη θέσης"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). Place markers are bookmarks within
 #. a math expression, identified by a digit 0-9. This command reads one.
 #: src/orca/cmdnames.py:1345
-#, fuzzy
-#| msgid "heavy check mark"
 msgctxt "mathcat"
 msgid "Read place marker"
-msgstr "έντονο σύμβολο τσεκαρίσματος"
+msgstr "Ανάγνωση σελιδοδείκτη θέσης"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). Place markers are bookmarks within
@@ -4724,18 +4658,16 @@ msgstr "έντονο σύμβολο τσεκαρίσματος"
 #: src/orca/cmdnames.py:1350
 msgctxt "mathcat"
 msgid "Describe place marker"
-msgstr ""
+msgstr "Περιγραφή σελιδοδείκτη θέσης"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command copies the current
 #. navigation node to the clipboard in the user's preferred format
 #. (MathML, LaTeX, ASCIIMath, or Speech).
 #: src/orca/cmdnames.py:1356
-#, fuzzy
-#| msgid "Copied contents to clipboard."
 msgctxt "mathcat"
 msgid "Copy to clipboard"
-msgstr "Αντιγράφηκαν τα περιεχόμενα στο πρόχειρο."
+msgstr "Αντιγραφή στο πρόχειρο"
 
 #. Translators: When presenting the content of a line on a web page, Orca by
 #. default presents the full line, including any links or form fields on that
@@ -5815,11 +5747,9 @@ msgstr "Ε_νεργοποίηση"
 #. that an article has been entered before speaking the contents. At the end of
 #. the article, Orca will announce that the article is being exited.
 #: src/orca/guilabels.py:41
-#, fuzzy
-#| msgid "vertical"
 msgctxt "Context"
 msgid "Articles"
-msgstr "κατακόρυφα"
+msgstr "Άρθρα"
 
 #. Translators: Some users want to hear additional information when entering
 #. different types of content. If this checkbox is checked, Orca will announce
@@ -5837,7 +5767,7 @@ msgstr "Παραθέσεις"
 #: src/orca/guilabels.py:53
 msgctxt "Context"
 msgid "Code blocks"
-msgstr ""
+msgstr "Μπλοκ κώδικα"
 
 #. Translators: Some users want to hear additional information when entering
 #. different types of content. When enabled, Orca will announce when a document
@@ -5846,7 +5776,7 @@ msgstr ""
 #: src/orca/guilabels.py:59
 msgctxt "Context"
 msgid "Embedded documents"
-msgstr ""
+msgstr "Ενσωματωμένα έγγραφα"
 
 #. Translators: Some users want to hear additional information when entering
 #. different types of content. If this checkbox is checked, Orca will announce
@@ -5903,11 +5833,9 @@ msgstr "Πίνακες"
 #. tracked changes (insertions, deletions, highlights, suggestions) when navigating
 #. through document content containing revision markup.
 #: src/orca/guilabels.py:100
-#, fuzzy
-#| msgid "Save Changes?"
 msgctxt "Context"
 msgid "Tracked changes"
-msgstr "Αποθήκευση αλλαγών;"
+msgstr "Παρακολουθούμενες αλλαγές"
 
 #. Translators: This is a shorter version of "Automatic focus mode during caret/structural
 #. navigation" used on sub-pages where the navigation type context is already clear.
@@ -6119,11 +6047,9 @@ msgstr "Εικονίδιο"
 #. This string describes the do-nothing-at-all case where only the voice will
 #. be applied when presenting capital letters.
 #: src/orca/guilabels.py:245
-#, fuzzy
-#| msgid "Voice"
 msgctxt "capitalization style"
 msgid "Voice only"
-msgstr "Ομιλία"
+msgstr "Μόνο φωνή"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -6251,15 +6177,12 @@ msgstr "Λεξικό προφοράς"
 #. Translators: This is an informational message on the Pronunciation Dictionary
 #. preferences page explaining what the dictionary does.
 #: src/orca/guilabels.py:342
-#, fuzzy
-#| msgid ""
-#| "Customize how words are spoken. Add a word and its replacement below."
 msgid ""
 "Customize how words are spoken by adding words and replacement text to the "
 "pronunciation dictionary."
 msgstr ""
-"Προσαρμόστε την εκφώνηση των λέξεων. Προσθέστε μια λέξη και την "
-"αντικατάστασή της παρακάτω."
+"Προσαρμόστε τον τρόπο εκφώνησης των λέξεων προσθέτοντας λέξεις και κείμενο "
+"αντικατάστασης στο λεξικό προφοράς."
 
 #. Translators: This is a label for a column header in Orca's pronunciation
 #. dictionary. The pronunciation dictionary allows the user to correct words
@@ -6453,19 +6376,15 @@ msgstr "Συνδυασμός πλήκτρων"
 #. are related to managing the screen reader, such as opening preferences or
 #. quitting Orca.
 #: src/orca/guilabels.py:490
-#, fuzzy
-#| msgid "Screen Reader"
 msgid "Screen Reader Management"
-msgstr "Αναγνώστης οθόνης"
+msgstr "Διαχείριση αναγνώστη οθόνης"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to bypass mode. Bypass mode causes Orca to pass subsequent
 #. command keys to the current application instead of handling them itself.
 #: src/orca/guilabels.py:495
-#, fuzzy
-#| msgid "Bypass mode enabled."
 msgid "Bypass mode"
-msgstr "Η λειτουργία παράκαμψης ενεργοποιήθηκε."
+msgstr "Λειτουργία παράκαμψης"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to debugging.
@@ -6516,10 +6435,8 @@ msgstr "Πλοήγηση με δρομέα"
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to math navigation via MathCAT.
 #: src/orca/guilabels.py:524
-#, fuzzy
-#| msgid "Caret navigation"
 msgid "Math navigation"
-msgstr "Πλοήγηση με δρομέα"
+msgstr "Περιήγηση μαθηματικών"
 
 #. Translators: This is an informational message on the Caret Navigation
 #. preferences page explaining what caret navigation does.
@@ -6580,10 +6497,8 @@ msgstr ""
 #. preferences page. The user can select which applications should automatically
 #. have sleep mode enabled.
 #: src/orca/guilabels.py:572
-#, fuzzy
-#| msgid "Toggle sleep mode for the current application"
 msgid "Always use sleep mode with these applications"
-msgstr "Εναλλαγή λειτουργίας ύπνου για την τρέχουσα εφαρμογή"
+msgstr "Να χρησιμοποιείται πάντα η λειτουργία ύπνου με αυτές τις εφαρμογές"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to mouse interaction, such as routing the pointer, clicking
@@ -6721,19 +6636,15 @@ msgstr "Περιεχόμενα επίπεδης επισκόπησης"
 #. review" feature, which lets the user explore the contents of a window in a
 #. spatial fashion, line by line and word by word.
 #: src/orca/guilabels.py:668
-#, fuzzy
-#| msgid "Flat review"
 msgid "Flat Review"
-msgstr "Επίπεδη επισκόπηση"
+msgstr "Επίπεδη προεπισκόπηση"
 
 #. Translators: This is a label for the setting which determines when flat
 #. review should move to follow the location of the keyboard focus and text
 #. caret as the user navigates the application normally.
 #: src/orca/guilabels.py:673
-#, fuzzy
-#| msgid "Could not find current location."
 msgid "Follow the focus and caret location"
-msgstr "Δε βρέθηκε η τρέχουσα τοποθεσία."
+msgstr "Ακολούθηση της θέσης εστίασης και δρομέα"
 
 #. Translators: This is one of the choices for when flat review should follow
 #. the focus and caret location. "Always" means flat review moves whenever the
@@ -6741,7 +6652,7 @@ msgstr "Δε βρέθηκε η τρέχουσα τοποθεσία."
 #: src/orca/guilabels.py:678
 msgctxt "flat review focus tracking"
 msgid "Always"
-msgstr ""
+msgstr "Πάντα"
 
 #. Translators: This is one of the choices for when flat review should follow
 #. the focus and caret location. "Automatically" means flat review decides on
@@ -6749,7 +6660,7 @@ msgstr ""
 #: src/orca/guilabels.py:683
 msgctxt "flat review focus tracking"
 msgid "Automatically"
-msgstr ""
+msgstr "Αυτόματα"
 
 #. Translators: This is one of the choices for when flat review should follow
 #. the focus and caret location. "Never" means flat review stays where the user
@@ -6757,30 +6668,26 @@ msgstr ""
 #: src/orca/guilabels.py:688
 msgctxt "flat review focus tracking"
 msgid "Never"
-msgstr ""
+msgstr "Ποτέ"
 
 #. Translators: This is a label for the setting which determines if Orca will
 #. speak the content at the flat review location when that content changes.
 #: src/orca/guilabels.py:692
-#, fuzzy
-#| msgid "Speak the current flat review line"
 msgid "Speak changes at review location"
-msgstr "Εκφώνηση τρέχουσας γραμμής επίπεδης προεπισκόπησης"
+msgstr "Εκφώνηση αλλαγών στη θέση προεπισκόπησης"
 
 #. Translators: This is a label for the setting which determines if Orca will
 #. refresh the braille display with the content at the flat review location
 #. when that content changes.
 #: src/orca/guilabels.py:697
 msgid "Display changes at review location"
-msgstr ""
+msgstr "Εμφάνιση αλλαγών στη θέση προεπισκόπησης"
 
 #. Translators: This is a label for the setting which determines if Orca will
 #. restrict flat review to the current object rather than the whole window.
 #: src/orca/guilabels.py:701
-#, fuzzy
-#| msgid "Toggle restricting flat review to the current object"
 msgid "Restrict flat review to the current object"
-msgstr "Εναλλαγή περιορισμού επίπεδης προεπισκόπησης στο τρέχον αντικείμενο"
+msgstr "Περιορισμός επίπεδης προεπισκόπησης στο τρέχον αντικείμενο"
 
 #. Translators: This is a label for the setting which determines if Orca will
 #. use the "desktop" or "laptop" keyboard layout. The desktop layout is
@@ -6876,11 +6783,8 @@ msgstr "Εκφώνηση και σημείωση"
 #. Translators: This is the title of a window which displays formatting
 #. information associated with the current text character.
 #: src/orca/guilabels.py:771
-#, fuzzy
-#| msgctxt "Typing echo"
-#| msgid "Character"
 msgid "Character Formatting"
-msgstr "Χαρακτήρας"
+msgstr "Μορφοποίηση χαρακτήρα"
 
 #. Translators: This is the title of a window which displays formatting
 #. information associated with the current text character. The string is the
@@ -6888,7 +6792,7 @@ msgstr "Χαρακτήρας"
 #: src/orca/guilabels.py:776
 #, python-format
 msgid "Character Formatting for: '%s'"
-msgstr ""
+msgstr "Μορφοποίηση χαρακτήρα για: '%s'"
 
 #. Translators: This is an option in a combo box for how a text attribute should
 #. be presented. If selected, the attribute will not be presented.
@@ -7093,12 +6997,9 @@ msgstr "Πάνω και κάτω βέλος"
 #. content deletions, suggestions, and highlights. This is the title for a column
 #. which contains the text of an annotation.
 #: src/orca/guilabels.py:923
-#, fuzzy
-#| msgctxt "role"
-#| msgid "information"
 msgctxt "structural navigation"
 msgid "Annotation"
-msgstr "πληροφορίες"
+msgstr "Επισήμανση"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7321,23 +7222,21 @@ msgctxt "structural navigation"
 msgid "Value"
 msgstr "Τιμή"
 
-# #-#-#-#-#  libgnomeui.HEAD.el.po (el)  #-#-#-#-#
-# #-#-#-#-#  gnome-libs-el.po (gnome-libs 1.2.12)  #-#-#-#-#
+# #-#-#-#-#  libgnomeui.HEAD.el.po (el)  #-#-#-#-#
+# #-#-#-#-#  gnome-libs-el.po (gnome-libs 1.2.12)  #-#-#-#-#
 #
-# #-#-#-#-#  libgda-el.po (gnome-db 0.0.91)  #-#-#-#-#
+# #-#-#-#-#  libgda-el.po (gnome-db 0.0.91)  #-#-#-#-#
 #
-# #-#-#-#-#  toutdoux-el.po (toutdoux 1.0)  #-#-#-#-#
+# #-#-#-#-#  toutdoux-el.po (toutdoux 1.0)  #-#-#-#-#
 #
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. Annotations include content insertions,
 #. content deletions, suggestions, and highlights. This is the title of such a dialog box.
 #: src/orca/guilabels.py:1078
-#, fuzzy
-#| msgid "Actions"
 msgctxt "structural navigation"
 msgid "Annotations"
-msgstr "Ενέργειες"
+msgstr "Επισημάνσεις"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7478,11 +7377,9 @@ msgstr "Στοιχεία λίστας"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: src/orca/guilabels.py:1169
-#, fuzzy
-#| msgid "Match options:"
 msgctxt "structural navigation"
 msgid "Math Expressions"
-msgstr "Επιλογές αντιστοίχισης:"
+msgstr "Μαθηματικές εκφράσεις"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7912,7 +7809,7 @@ msgstr "Βοήθεια"
 #. are Python code written by end users, not built-in Orca features.
 #: src/orca/guilabels.py:1482
 msgid "User Extensions"
-msgstr ""
+msgstr "Επεκτάσεις χρήστη"
 
 #. Translators: This is an informational message on the User Extensions
 #. preferences page. User extensions are Python code files or Python package
@@ -7923,15 +7820,15 @@ msgid ""
 "User extensions are Python files or packages in ~/.local/share/orca/"
 "extensions. Only approve extensions that you trust."
 msgstr ""
+"Οι επεκτάσεις χρήστη είναι αρχεία ή πακέτα Python στο ~/.local/share/orca/"
+"extensions. Να εγκρίνετε μόνο επεκτάσεις που εμπιστεύεστε."
 
 #. Translators: This message is shown in the User Extensions preferences page
 #. when Orca does not find any user extension files or packages in
 #. ~/.local/share/orca/extensions.
 #: src/orca/guilabels.py:1496
-#, fuzzy
-#| msgid "Mouse over object not found."
 msgid "No user extensions found."
-msgstr "Δε βρέθηκε το αναδυόμενο αντικείμενο."
+msgstr "Δε βρέθηκαν επεκτάσεις χρήστη."
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button approves the selected user extension so Orca can load and
@@ -7939,7 +7836,7 @@ msgstr "Δε βρέθηκε το αναδυόμενο αντικείμενο."
 #: src/orca/guilabels.py:1501
 msgctxt "user extensions"
 msgid "Approve"
-msgstr ""
+msgstr "Έγκριση"
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. It is shown when a previously-approved extension has changed on disk and must
@@ -7947,14 +7844,14 @@ msgstr ""
 #: src/orca/guilabels.py:1506
 msgctxt "user extensions"
 msgid "Re-approve"
-msgstr ""
+msgstr "Επανέγκριση"
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button removes Orca's approval for the selected user extension.
 #: src/orca/guilabels.py:1510
 msgctxt "user extensions"
 msgid "Revoke"
-msgstr ""
+msgstr "Ανάκληση"
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button asks the user to confirm deleting the selected extension
@@ -7963,8 +7860,6 @@ msgstr ""
 #. user extension. The button removes one item from a list setting exposed by the
 #. extension, for instance a list of application names.
 #: src/orca/guilabels.py:1515 src/orca/guilabels.py:1558
-#, fuzzy
-#| msgid "Delete"
 msgctxt "user extensions"
 msgid "Delete"
 msgstr "Διαγραφή"
@@ -7974,7 +7869,7 @@ msgstr "Διαγραφή"
 #: src/orca/guilabels.py:1519
 msgctxt "user extensions"
 msgid "Delete user extension?"
-msgstr ""
+msgstr "Διαγραφή επέκτασης χρήστη;"
 
 #. Translators: This is the message in a confirmation dialog shown before deleting
 #. a user extension file or package directory from ~/.local/share/orca/extensions.
@@ -7986,16 +7881,17 @@ msgid ""
 "The following extension will be permanently deleted from your user "
 "extensions folder: %s. Do you want to continue?"
 msgstr ""
+"Η ακόλουθη επέκταση θα διαγραφεί οριστικά από τον φάκελο επεκτάσεων χρήστη: "
+"%s. Θέλετε να συνεχίσετε;"
 
 #. Translators: This message is presented when Orca fails to delete a user
 #. extension file or package directory from ~/.local/share/orca/extensions. The
 #. string substitution is the display name of the extension.
 #: src/orca/guilabels.py:1533
-#, fuzzy, python-format
-#| msgid "Profile could not be loaded: %s"
+#, python-format
 msgctxt "user extensions"
 msgid "Could not delete: %s."
-msgstr "Αδυναμία φόρτωσης του προφίλ: %s"
+msgstr "Αδυναμία διαγραφής: %s."
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button opens a dialog with metadata about the selected extension,
@@ -8003,60 +7899,47 @@ msgstr "Αδυναμία φόρτωσης του προφίλ: %s"
 #: src/orca/guilabels.py:1538
 msgctxt "user extensions"
 msgid "Info"
-msgstr ""
+msgstr "Πληροφορίες"
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button opens a dialog with settings provided by the selected
 #. user extension.
 #: src/orca/guilabels.py:1543
-#, fuzzy
-#| msgctxt "VoiceType"
-#| msgid "%s Settings"
 msgctxt "user extensions"
 msgid "Settings"
-msgstr "Ρυθμίσεις %s"
+msgstr "Ρυθμίσεις"
 
 #. Translators: This is a button label in the generated settings dialog for a
 #. user extension. The button adds one item to a list setting exposed by the
 #. extension, for instance a list of application names.
 #: src/orca/guilabels.py:1548
-#, fuzzy
-#| msgid "0 items"
 msgctxt "user extensions"
 msgid "New item"
-msgstr "0 αντικείμενα"
+msgstr "Νέο αντικείμενο"
 
 #. Translators: This is a button label in the generated settings dialog for a
 #. user extension. The button opens a file chooser so the user can choose a file
 #. or folder path for a setting exposed by the extension.
 #: src/orca/guilabels.py:1553
-#, fuzzy
-#| msgid "Browse mode"
 msgctxt "user extensions"
 msgid "Browse..."
-msgstr "Λειτουργία περιήγησης"
+msgstr "Περιήγηση..."
 
 #. Translators: This error message appears in the generated settings dialog for a
 #. user extension when the user enters an invalid item in a list setting. The
 #. exact list setting depends on the extension.
 #: src/orca/guilabels.py:1563
-#, fuzzy
-#| msgctxt "error"
-#| msgid "invalid entry"
 msgctxt "user extensions"
 msgid "Invalid item."
-msgstr "μη έγκυρη καταχώρηση"
+msgstr "Μη έγκυρο αντικείμενο."
 
 #. Translators: This error message appears in the generated settings dialog for a
 #. user extension when the user enters an item that is already present in the same
 #. list setting.
 #: src/orca/guilabels.py:1568
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "there exists"
 msgctxt "user extensions"
 msgid "Item already exists."
-msgstr "υπάρχει τουλάχιστον ένα"
+msgstr "Το αντικείμενο υπάρχει ήδη."
 
 #. Translators: This is a fallback label in the generated settings dialog for a
 #. user extension. It is used for the first field in a dictionary entry editor
@@ -8066,15 +7949,12 @@ msgstr "υπάρχει τουλάχιστον ένα"
 #: src/orca/guilabels.py:1573 src/orca/guilabels.py:1609
 msgctxt "user extensions"
 msgid "Name"
-msgstr ""
+msgstr "Όνομα"
 
 #. Translators: This is a fallback label in the generated settings dialog for a
 #. user extension. It is used for the second field in a dictionary entry editor
 #. when the extension does not provide a more specific label.
 #: src/orca/guilabels.py:1578
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Value"
 msgctxt "user extensions"
 msgid "Value"
 msgstr "Τιμή"
@@ -8083,47 +7963,36 @@ msgstr "Τιμή"
 #. user extension when the user enters an invalid value in a dictionary setting.
 #. The exact dictionary setting depends on the extension.
 #: src/orca/guilabels.py:1583
-#, fuzzy
-#| msgid "%d value"
-#| msgid_plural "%d values"
 msgctxt "user extensions"
 msgid "Invalid value."
-msgstr "%d τιμή"
+msgstr "Μη έγκυρη τιμή."
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by the name of the person or people who wrote the extension.
 #: src/orca/guilabels.py:1587
-#, fuzzy
-#| msgid "thorn"
 msgctxt "user extensions"
 msgid "Author"
-msgstr "θορν"
+msgstr "Δημιουργός"
 
 #. Translators: This is a label in the user extension information dialog. It
 #. refers to the company, project, or similar entity associated with the
 #. extension.
 #: src/orca/guilabels.py:1592
-#, fuzzy
-#| msgid "Pronunciation"
 msgctxt "user extensions"
 msgid "Organization"
-msgstr "Προφορά"
+msgstr "Οργανισμός"
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by a copyright holder or copyright notice supplied by the extension
 #. author.
 #: src/orca/guilabels.py:1597
-#, fuzzy
-#| msgid "copyright"
 msgctxt "user extensions"
 msgid "Copyright"
-msgstr "πνευματικά δικαιώματα"
+msgstr "Πνευματικά δικαιώματα"
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by a short explanation of what the extension does.
 #: src/orca/guilabels.py:1601
-#, fuzzy
-#| msgid "Description"
 msgctxt "user extensions"
 msgid "Description"
 msgstr "Περιγραφή"
@@ -8131,11 +8000,9 @@ msgstr "Περιγραφή"
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by the filesystem path to the extension file or package directory.
 #: src/orca/guilabels.py:1605
-#, fuzzy
-#| msgid "Notification"
 msgctxt "user extensions"
 msgid "Location"
-msgstr "Ειδοποίηση"
+msgstr "Τοποθεσία"
 
 #. Translators: This note is shown for an enabled user extension when one or more
 #. of its commands could not use their requested keyboard shortcuts because those
@@ -8143,15 +8010,12 @@ msgstr "Ειδοποίηση"
 #: src/orca/guilabels.py:1616
 msgctxt "user extensions"
 msgid "Some commands were unbound due to conflicts."
-msgstr ""
+msgstr "Ορισμένες εντολές αποσυνδέθηκαν λόγω συγκρούσεων συντομεύσεων."
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by whether the extension is approved, not approved, disabled, invalid,
 #. or needs to be approved again.
 #: src/orca/guilabels.py:1622
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "State"
 msgctxt "user extensions"
 msgid "Status"
 msgstr "Κατάσταση"
@@ -8161,27 +8025,22 @@ msgstr "Κατάσταση"
 #: src/orca/guilabels.py:1626
 msgctxt "user extensions"
 msgid "Version"
-msgstr ""
+msgstr "Έκδοση"
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by a URL for the extension or its author.
 #: src/orca/guilabels.py:1630
-#, fuzzy
-#| msgid "same site"
 msgctxt "user extensions"
 msgid "Website"
-msgstr "ίδια ιστοσελίδα"
+msgstr "Ιστότοπος"
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means Orca found a Python file or
 #. package, but it does not contain a valid Orca extension.
 #: src/orca/guilabels.py:1635
-#, fuzzy
-#| msgctxt "error"
-#| msgid "invalid"
 msgctxt "user extensions"
 msgid "Invalid"
-msgstr "μη έγκυρο"
+msgstr "Μη έγκυρο"
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the user has approved this
@@ -8189,29 +8048,23 @@ msgstr "μη έγκυρο"
 #: src/orca/guilabels.py:1640
 msgctxt "user extensions"
 msgid "Approved"
-msgstr ""
+msgstr "Εγκεκριμένο"
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the extension has been
 #. approved, but the user has currently turned it off.
 #: src/orca/guilabels.py:1645
-#, fuzzy
-#| msgctxt "indentation and justification"
-#| msgid "Disabled"
 msgctxt "user extensions"
 msgid "Disabled"
-msgstr "Απενεργοποιημένη"
+msgstr "Απενεργοποιημένο"
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the user has not yet
 #. approved this extension, so Orca will not load or run it.
 #: src/orca/guilabels.py:1650
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Not supported"
 msgctxt "user extensions"
 msgid "Not approved"
-msgstr "Δεν υποστηρίζεται"
+msgstr "Μη εγκεκριμένο"
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the extension was approved
@@ -8220,7 +8073,7 @@ msgstr "Δεν υποστηρίζεται"
 #: src/orca/guilabels.py:1656
 msgctxt "user extensions"
 msgid "Modified; re-approval required"
-msgstr ""
+msgstr "Τροποποιήθηκε, απαιτείται επανέγκριση"
 
 #. Translators: This is the label for a widget in the preferences dialog.
 #: src/orca/guilabels.py:1659
