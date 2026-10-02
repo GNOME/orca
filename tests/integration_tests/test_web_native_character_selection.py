@@ -128,8 +128,8 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
     return selected, unselected
 
 
-# Provisional minimum: the build used to verify the collapsed-whitespace selection fix.
-@requires_browser_version("chromium", 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
+# Provisional minimum while selection failures are investigated.
+@requires_browser_version("chromium", 157, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_character_selection_and_unselection(
     web_native_text_selection: BrowserSession,

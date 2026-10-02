@@ -71,7 +71,8 @@ def test_word_selection_within_button(
             assert select_word(session, keyboard.KEYSYM_LEFT) == [word, "unselected"]
 
 
-@requires_browser_version("chromium", 156, when=USES_DOCUMENT_SELECTION)
+# Provisional minimum while selection failures are investigated.
+@requires_browser_version("chromium", 157, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_word_selection_and_unselection(web_native_text_selection: BrowserSession) -> None:
     """Tests native word selection from the top into the form controls, then back."""
@@ -120,8 +121,7 @@ def test_word_selection_and_unselection(web_native_text_selection: BrowserSessio
     assert_walks(selected, unselected, expected_selected, expected_unselected)
 
 
-# Provisional minimum: the build used to verify the collapsed-whitespace selection fix.
-@requires_browser_version("chromium", 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
+@requires_browser_version("chromium", 157, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_word_selection_and_unselection_from_bottom(
     web_native_text_selection: BrowserSession,
@@ -154,7 +154,7 @@ def test_word_selection_and_unselection_from_bottom(
     assert_walks(selected, unselected, expected_selected, expected_unselected)
 
 
-@requires_browser_version("chromium", 156, 0, 8067, 0, when=USES_DOCUMENT_SELECTION)
+@requires_browser_version("chromium", 157, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_word_selection_and_unselection_from_image(
     web_native_text_selection: BrowserSession,

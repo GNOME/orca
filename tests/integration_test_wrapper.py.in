@@ -34,10 +34,6 @@ def _raise_terminated(signum: int, _frame: object) -> NoReturn:
 
     raise _Terminated(signum)
 
-# The only services our bus may start. Anything else the host has installed, including the
-# portals and the shortcuts window they open, stays unreachable from the sandbox.
-_ACTIVATABLE_SERVICES = ("org.gnome.GPaste",)
-
 # Mirror orca_bin.py.in so the pytest imports can find Orca's GSettings schemas when Orca is
 # installed under a non-system prefix.
 _share_dir = os.path.join("@prefix@", "share")
@@ -206,20 +202,12 @@ def _start_xvfb(
 
 
 def _write_bus_config(sandbox: str) -> str:
-    """Writes a session bus config whose only activatable services are _ACTIVATABLE_SERVICES."""
+    """Writes a session bus config with no activatable services."""
 
+    # Keep host services, including clipboard managers and portals, out of the sandbox.
+    # Orca uses Gtk.Clipboard when no clipboard manager is available.
     services = os.path.join(sandbox, "services")
     os.makedirs(services, exist_ok=True)
-    for name in _ACTIVATABLE_SERVICES:
-        source = os.path.join("/usr/share/dbus-1/services", f"{name}.service")
-        if not os.path.exists(source):
-            continue
-        with open(source, encoding="utf-8") as handle:
-            lines = handle.readlines()
-        with open(os.path.join(services, f"{name}.service"), "w", encoding="utf-8") as handle:
-            handle.writelines(
-                line for line in lines if not line.startswith("SystemdService=")
-            )
 
     config = os.path.join(sandbox, "session.conf")
     with open(config, "w", encoding="utf-8") as handle:
@@ -259,15 +247,6 @@ def _setup(children: list[subprocess.Popen]) -> dict[str, str] | None:
     # 1. Nested X server for isolation from the caller's desktop.
     display_num = _start_xvfb(children, stack_env)
     stack_env["DISPLAY"] = f":{display_num}"
-
-    # Services the bus activates (GPaste, the portals, and the shortcuts provider they spawn)
-    # get the bus environment, not stack_env. Give them our Xvfb; otherwise their windows
-    # open on the caller's desktop.
-    subprocess.run(
-        ["dbus-update-activation-environment", f"DISPLAY=:{display_num}"],
-        env=stack_env,
-        check=False,
-    )
 
     # 2. at-spi-bus-launcher on our private session bus.
     launcher = subprocess.Popen(
@@ -416,8 +395,7 @@ def main() -> int:
     # Run ourselves as a child of dbus-run-session so every subsequent process
     # we spawn (Xvfb, at-spi-bus-launcher, registryd, pytest, Orca) inherits
     # that private session bus. We also pre-populate XDG_RUNTIME_DIR with a
-    # sandbox path so dbus-daemon (and anything it may auto-activate, e.g.
-    # org.a11y.Bus) writes its sockets into our sandbox rather than into the
+    # sandbox path so dbus-daemon writes its sockets into our sandbox rather than into the
     # caller's real /run/user/$UID. The child invocation signals "sandbox is
     # ready, skip this block" by passing --sandbox-ready in argv.
     if not sandbox_ready:
@@ -428,8 +406,7 @@ def main() -> int:
         os.makedirs(tmp_dir, mode=0o700, exist_ok=True)
         child_env = os.environ.copy()
         child_env["XDG_RUNTIME_DIR"] = runtime_dir
-        # The bus hands this environment to the services it activates, and our Xvfb does not
-        # exist yet, so remove the caller's display rather than let them inherit it.
+        # Our Xvfb does not exist yet. Do not inherit the caller's display.
         child_env.pop("DISPLAY", None)
         child_env.pop("WAYLAND_DISPLAY", None)
         child_env["GSETTINGS_BACKEND"] = "memory"
@@ -440,10 +417,8 @@ def main() -> int:
         # org.chromium.Chromium.* dirs in TMPDIR, which teardown SIGKILLs it before it can
         # clean up; in /tmp those orphan, in the sandbox they go with the rmtree.
         child_env["TMPDIR"] = tmp_dir
-        # Put dbus-run-session in its own process group. Auto-activated D-Bus
-        # services (portals, GPaste, speech providers) get orphaned when the
-        # inner wrapper exits but still hold our stderr fd, which keeps meson's
-        # pipe reader blocked. Killing the group breaks that chain.
+        # Put dbus-run-session in its own process group so leftover children cannot
+        # hold our stderr fd open and block meson's pipe reader after the wrapper exits.
         proc = subprocess.Popen(
             ["dbus-run-session", f"--config-file={_write_bus_config(sandbox)}", "--",
              sys.executable, sys.argv[0], _SANDBOX_READY_FLAG, test_file],
