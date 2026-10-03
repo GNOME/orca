@@ -8395,18 +8395,14 @@ msgstr ""
 #. It explains that the settings under Change Announcements and Container
 #. Announcements control which additional details are spoken during Say All.
 #: src/orca/guilabels.py:1881
-#, fuzzy
-#| msgid ""
-#| "The \"Container Announcements\" settings determine what additional "
-#| "details will be announced as Say All moves through the document."
 msgid ""
 "The announcement settings determine which document changes, text formatting "
 "changes, and container boundaries will be announced as Say All moves through "
 "the document."
 msgstr ""
-"Οι ρυθμίσεις «Ανακοινώσεις περιεκτών» καθορίζουν ποιες πρόσθετες "
-"λεπτομέρειες θα ανακοινώνονται καθώς η Εκφώνηση όλων κινείται μέσα στο "
-"έγγραφο."
+"Οι ρυθμίσεις ανακοινώσεων καθορίζουν ποιες αλλαγές εγγράφου, αλλαγές "
+"μορφοποίησης κειμένου και όρια περιεκτών θα ανακοινώνονται καθώς η Εκφώνηση "
+"όλων κινείται μέσα στο έγγραφο."
 
 #: src/orca/guilabels.py:1886
 msgid "Speak object under mo_use"
@@ -8463,38 +8459,30 @@ msgstr "Συχνότητα (δευτ.):"
 #. Caps Lock for the "laptop" keyboard layout. This string is a label for choosing
 #. which key(s) should be used as the Orca modifier.
 #: src/orca/guilabels.py:1924
-#, fuzzy
-#| msgid "Screen Reader _Modifier Key(s):"
 msgid "Screen Reader Modifier Keys"
-msgstr "Πλήκτρα _τροποποιητή αναγνώστη οθόνης:"
+msgstr "Πλήκτρα τροποποιητή αναγνώστη οθόνης"
 
 #. Translators: This refers to the Insert key being used as the Orca modifier.
 #: src/orca/guilabels.py:1927
 msgid "Insert"
-msgstr "Πλήκτρο εισαγωγής"
+msgstr "Insert"
 
 #. Translators: This refers to the keypad Insert key being used as the Orca modifier.
 #. It is important that the translation be different from the one for "Insert" so
 #. that users can distinguish between the two keys.
 #: src/orca/guilabels.py:1932
-#, fuzzy
-#| msgid "Insert"
 msgid "Keypad Insert"
-msgstr "Πλήκτρο εισαγωγής"
+msgstr "Insert αριθμητικού πληκτρολογίου"
 
 #. Translators: This refers to the Caps Lock key being used as the Orca modifier.
 #: src/orca/guilabels.py:1935
-#, fuzzy
-#| msgid "Caps_Lock"
 msgid "Caps Lock"
-msgstr "Caps_Lock"
+msgstr "Caps Lock"
 
 #. Translators: This refers to the Shift Lock key being used as the Orca modifier.
 #: src/orca/guilabels.py:1938
-#, fuzzy
-#| msgid "shift lock"
 msgid "Shift Lock"
-msgstr "shift lock"
+msgstr "Shift Lock"
 
 #. Translators: Orca can optionally speak additional details as the user
 #. navigates (e.g. via the arrow keys) within document content. If this widget
@@ -8597,11 +8585,8 @@ msgstr "Περιγραφή"
 #. Translators: This is a label for a widget associated with whether Orca will
 #. speak indentation information for text content.
 #: src/orca/guilabels.py:2020
-#, fuzzy
-#| msgctxt "role"
-#| msgid "dedication"
 msgid "Indentation"
-msgstr "αφιέρωση"
+msgstr "Εσοχή"
 
 #. Translators: This is the label for a widget on the Speech preferences page.
 #. When checked, indentation will only be announced when it has changed from
@@ -8622,34 +8607,28 @@ msgstr "Ένδειξη ανορθόγραφης λέξης"
 #. Translators: This is a label for a widget associated with when Orca will
 #. announce text formatting changes (e.g. bold, italic) when navigating.
 #: src/orca/guilabels.py:2036
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attribute changes"
-msgstr "Ιδιότητες κειμένου"
+msgstr "Αλλαγές γνωρισμάτων κειμένου"
 
 #. Translators: This is an option for the text attribute changes setting.
 #: src/orca/guilabels.py:2039
-#, fuzzy
-#| msgid "off"
 msgctxt "text attribute changes"
 msgid "Off"
-msgstr "απενεργοποιημένο"
+msgstr "Ανενεργό"
 
 #. Translators: This is an option for the text attribute changes setting.
 #. When selected, formatting changes are only announced in editable content.
 #: src/orca/guilabels.py:2043
-#, fuzzy
-#| msgid "editable content"
 msgctxt "text attribute changes"
 msgid "Editable text only"
-msgstr "επεξεργάσιμο περιεχόμενο"
+msgstr "Μόνο σε επεξεργάσιμο κείμενο"
 
 #. Translators: This is an option for the text attribute changes setting.
 #. When selected, formatting changes are always announced.
 #: src/orca/guilabels.py:2047
 msgctxt "text attribute changes"
 msgid "Always"
-msgstr ""
+msgstr "Πάντα"
 
 #. Translators: This is a label for a widget associated with whether Orca will
 #. speak blank lines when navigating in document content.
@@ -8853,10 +8832,8 @@ msgstr "Ανακοινώσεις περιεκτών"
 #. Translators: This is the label for a group of settings which control
 #. announcements of document revision markup and text formatting changes.
 #: src/orca/guilabels.py:2203
-#, fuzzy
-#| msgid "Container Announcements"
 msgid "Change Announcements"
-msgstr "Ανακοινώσεις περιεκτών"
+msgstr "Ανακοινώσεις αλλαγών"
 
 #. Translators: This is a heading for a group of toggleable widgets. Each one controls
 #. whether Orca announces entering a type of container (e.g. blockquotes, forms,
@@ -8926,64 +8903,52 @@ msgstr "Προφορά"
 #. to mathematical expressions such as equations, fractions, and formulas encountered
 #. in documents and web pages. Presentation refers to how they are spoken and brailled.
 #: src/orca/guilabels.py:2260
-#, fuzzy
-#| msgid "Match options:"
 msgid "Math presentation"
-msgstr "Επιλογές αντιστοίχισης:"
+msgstr "Παρουσίαση μαθηματικών"
 
 #. Translators: This refers to a human language such as English, Spanish, or German.
 #: src/orca/guilabels.py:2263
-#, fuzzy
-#| msgid "_Language:"
 msgid "Language:"
-msgstr "_Γλώσσα:"
+msgstr "Γλώσσα:"
 
 #. Translators: This is the style used when speaking mathematical expressions.
 #. "ClearSpeak" produces natural-sounding speech (e.g. "x squared") while
 #. "SimpleSpeak" is more literal and structured (e.g. "x superscript 2 end superscript").
 #: src/orca/guilabels.py:2268
-#, fuzzy
-#| msgid "Speech _system:"
 msgid "Speech style:"
-msgstr "_Σύστημα εκφώνησης:"
+msgstr "Στυλ εκφώνησης:"
 
 #. Translators: This is a verbosity level for speaking mathematical expressions.
 #. "Terse" provides minimal information, for example "square root x" instead of
 #. "the square root of x".
 #: src/orca/guilabels.py:2273
 msgid "Terse"
-msgstr ""
+msgstr "Λιτό"
 
 #. Translators: This is a verbosity level for speaking mathematical expressions.
 #. "Medium" is the default and provides a moderate amount of detail.
 #: src/orca/guilabels.py:2277
 msgid "Medium"
-msgstr ""
+msgstr "Μέτριο"
 
 #. Translators: This is a verbosity level for speaking mathematical expressions.
 #. "Verbose" provides the most detail, for example "the square root of x" instead
 #. of "square root x".
 #: src/orca/guilabels.py:2282
-#, fuzzy
-#| msgid "Ver_bose"
 msgid "Verbose"
-msgstr "_Περιφραστικό"
+msgstr "Αναλυτικό"
 
 #. Translators: This is the braille code used to represent mathematical expressions.
 #. Examples include "Nemeth" (common in the US) and "UEB" (Unified English Braille).
 #: src/orca/guilabels.py:2286
-#, fuzzy
-#| msgid "Braille"
 msgid "Braille code:"
-msgstr "Μπράιγ"
+msgstr "Κώδικας Μπράιγ:"
 
 #. Translators: This is the format used when copying math content to the clipboard.
 #. Options include MathML, LaTeX, ASCIIMath, and Speech.
 #: src/orca/guilabels.py:2290
-#, fuzzy
-#| msgid "Dat_e format:"
 msgid "Copy format:"
-msgstr "Μορφή η_μερομηνίας:"
+msgstr "Μορφή αντιγραφής:"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. the label for a setting that controls navigation granularity. In Enhanced
@@ -8991,10 +8956,8 @@ msgstr "Μορφή η_μερομηνίας:"
 #. Simple mode, each element is visited individually. In Character mode,
 #. individual symbols are visited one at a time.
 #: src/orca/guilabels.py:2297
-#, fuzzy
-#| msgid "Navigation keys"
 msgid "Navigation mode:"
-msgstr "Πλήκτρα πλοήγησης"
+msgstr "Λειτουργία περιήγησης:"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. the label for a setting that controls how the current position is indicated
@@ -9002,10 +8965,8 @@ msgstr "Πλήκτρα πλοήγησης"
 #. the position. The options control which cells get those dots: none, only the
 #. first character, the first and last characters, or all characters.
 #: src/orca/guilabels.py:2304
-#, fuzzy
-#| msgid "Table navigation"
 msgid "Braille navigation highlight:"
-msgstr "Πλοήγηση πίνακα"
+msgstr "Επισήμανση περιήγησης Μπράιγ:"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. When this
 #. setting is enabled, navigating past the edge of a 2D structure like a matrix
@@ -9013,32 +8974,26 @@ msgstr "Πλοήγηση πίνακα"
 #. staying inside the structure.
 #: src/orca/guilabels.py:2310
 msgid "Automatically exit 2D math structures"
-msgstr ""
+msgstr "Αυτόματη έξοδος από δισδιάστατες μαθηματικές δομές"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the navigation granularity options. In Enhanced mode, MathCAT groups
 #. related items together for faster navigation.
 #: src/orca/guilabels.py:2315
 msgid "Enhanced"
-msgstr ""
+msgstr "Βελτιωμένο"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the navigation granularity options. In Simple mode, each math
 #. element is visited individually.
 #: src/orca/guilabels.py:2320
-#, fuzzy
-#| msgctxt "role"
-#| msgid "example"
 msgid "Simple"
-msgstr "παράδειγμα"
+msgstr "Απλό"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the navigation granularity options. In Character mode, individual
 #. symbols are visited one at a time.
 #: src/orca/guilabels.py:2325
-#, fuzzy
-#| msgctxt "Typing echo"
-#| msgid "Character"
 msgid "Character"
 msgstr "Χαρακτήρας"
 
@@ -9046,38 +9001,30 @@ msgstr "Χαρακτήρας"
 #. one of the braille highlight options. When set to None, the current position
 #. during math navigation is not highlighted on the braille display.
 #: src/orca/guilabels.py:2330
-#, fuzzy
-#| msgctxt "braille dots"
-#| msgid "None"
 msgctxt "braille nav highlight"
 msgid "None"
-msgstr "Καμία"
+msgstr "Κανένα"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the braille highlight options. When set to First character, only the
 #. first cell of the current math item is highlighted with dots 7 and 8.
 #: src/orca/guilabels.py:2335
-#, fuzzy
-#| msgid "%d characters"
-#| msgid_plural "%d characters"
 msgid "First character"
-msgstr "%d χαρακτήρας"
+msgstr "Πρώτος χαρακτήρας"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the braille highlight options. When set to End points, the first and
 #. last cells of the current math item are highlighted with dots 7 and 8.
 #: src/orca/guilabels.py:2340
 msgid "End points"
-msgstr ""
+msgstr "Ακραία σημεία"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the braille highlight options. When set to All cells, every cell of
 #. the current math item is highlighted with dots 7 and 8.
 #: src/orca/guilabels.py:2345
-#, fuzzy
-#| msgid "All channels"
 msgid "All cells"
-msgstr "Όλα τα κανάλια"
+msgstr "Όλα τα κελιά"
 
 # #-#-#-#-#  gnome-icon-theme.HEAD.el.po (el)  #-#-#-#-#
 # 48x48/emblems/emblem-sound.icon.in.h:1
@@ -9147,26 +9094,22 @@ msgstr "Ομιλία"
 #. Translators: This is the label for a section in the Voice Sets preferences
 #. page where users can select and manage voice sets for different languages.
 #: src/orca/guilabels.py:2391
-#, fuzzy
-#| msgid "Voice Type Settings"
 msgid "Voice Sets"
-msgstr "Ρυθμίσεις τύπου ομιλίας"
+msgstr "Σύνολα φωνών"
 
 #. Translators: This is a label for a combo box that selects which voice set
 #. to configure. A voice set is a named collection of voice settings, such as
 #. the primary set or a language-specific set (e.g. Italian).
 #: src/orca/guilabels.py:2396
-#, fuzzy
-#| msgid "_Voice type:"
 msgid "Voice set:"
-msgstr "Τύπος _ομιλίας:"
+msgstr "Σύνολο φωνών:"
 
 #. Translators: This is the title of a confirmation dialog shown when the user
 #. is about to delete a voice set. The %s is replaced with the voice set name.
 #: src/orca/guilabels.py:2400
 #, python-format
 msgid "Delete voice set '%s'?"
-msgstr ""
+msgstr "Διαγραφή του συνόλου φωνών '%s';"
 
 #. Translators: This is the label for the global (default) voice set in the
 #. voice set selector combo box. It represents the main voice configuration
@@ -9174,13 +9117,13 @@ msgstr ""
 #: src/orca/guilabels.py:2405
 msgctxt "VoiceSet"
 msgid "Global"
-msgstr ""
+msgstr "Καθολικό"
 
 #. Translators: This is the accessible name for a button that creates a new
 #. voice set for a specific language.
 #: src/orca/guilabels.py:2409
 msgid "New Voice Set"
-msgstr ""
+msgstr "Νέο σύνολο φωνών"
 
 #. Translators: This is an informational message shown at the top of the Voice
 #. Sets page explaining what voice sets are. The "%s" is replaced with the
@@ -9194,15 +9137,17 @@ msgid ""
 "the current profile. Additional voice sets can be created for specific "
 "languages."
 msgstr ""
+"Τα σύνολα φωνών είναι συλλογές τύπων φωνής (όπως προεπιλεγμένη, κεφαλαία, "
+"υπερσύνδεσμος και συστήματος). Το σύνολο φωνών \"%s\" περιέχει τους τύπους "
+"φωνής για το τρέχον προφίλ. Μπορούν να δημιουργηθούν πρόσθετα σύνολα φωνών "
+"για συγκεκριμένες γλώσσες."
 
 #. Translators: This is the label of the Voice Types page in the Orca
 #. Preferences dialog, where users configure voices for different contexts
 #. (e.g. default, uppercase, hyperlink, system).
 #: src/orca/guilabels.py:2435
-#, fuzzy
-#| msgid "_Voice type:"
 msgid "Voice Types"
-msgstr "Τύπος _ομιλίας:"
+msgstr "Τύποι φωνής"
 
 #. Translators: This is the label for a group of settings on the Voice preferences
 #. page. It contains widgets that control whether speech is enabled and how
@@ -9225,31 +9170,24 @@ msgstr "Ρυθμίσεις %s"
 #. Translators: This is the heading for a group of language switching settings
 #. in the Voice preferences dialog.
 #: src/orca/guilabels.py:2451
-#, fuzzy
-#| msgid "Automatic language switching"
 msgid "Language Switching"
-msgstr "Αυτόματη εναλλαγή γλώσσας"
+msgstr "Εναλλαγή γλώσσας"
 
 #. Translators: This is a label for a setting that controls whether Orca will
 #. automatically switch the speech synthesizer's language based on the language
 #. of document content being spoken (e.g. text in a web page or word processor).
 #. It appears under a "Language Switching" group heading.
 #: src/orca/guilabels.py:2457
-#, fuzzy
-#| msgid "Document mode"
 msgid "Document content"
-msgstr "Λειτουργία εγγράφου"
+msgstr "Περιεχόμενο εγγράφου"
 
 #. Translators: This is a label for a setting that controls whether Orca will
 #. automatically switch the speech synthesizer's language based on the language
 #. of UI elements being spoken (e.g. buttons, labels, and menus).
 #. It appears under a "Language Switching" group heading.
 #: src/orca/guilabels.py:2463
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "element of"
 msgid "UI elements"
-msgstr "ανήκει στο"
+msgstr "Στοιχεία διεπαφής χρήστη"
 
 #. Translators: This is a label for a setting that controls whether Orca will
 #. only switch to languages that the user has explicitly configured a voice for.
@@ -9257,7 +9195,7 @@ msgstr "ανήκει στο"
 #. a voice change. It appears under a "Language Switching" group heading.
 #: src/orca/guilabels.py:2469
 msgid "Limit switching to configured voices"
-msgstr ""
+msgstr "Περιορισμός εναλλαγής στις ρυθμισμένες φωνές"
 
 #. Translators: This label is for a group of buttons on the Text Attributes
 #. pane of the Orca Preferences dialog. On that pane there is a long list of
@@ -9426,11 +9364,8 @@ msgstr "Έ_νταση:"
 #. inflection (pitch range) of the current voice. More inflection means the voice
 #. varies its pitch more when speaking; less inflection means it sounds more monotone.
 #: src/orca/guilabels.py:2595
-#, fuzzy
-#| msgctxt "Braille indicator"
-#| msgid "Selection:"
 msgid "_Inflection:"
-msgstr "Επιλογή:"
+msgstr "_Διαμόρφωση:"
 
 #. Translators: Having multiple voice types in Orca makes it possible for the
 #. user to more quickly identify properties of text non-visually, such as the
@@ -9819,32 +9754,26 @@ msgstr "έντονα"
 #: src/orca/messages.py:57
 #, python-format
 msgid "%s off"
-msgstr ""
+msgstr "%s ανενεργό"
 
 #. Translators: This is presented when the user cycles the text attribute change
 #. announcement mode. In this mode, formatting changes are not announced.
 #: src/orca/messages.py:61
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attributes: off."
-msgstr "Ιδιότητες κειμένου"
+msgstr "Γνωρίσματα κειμένου: ανενεργά."
 
 #. Translators: This is presented when the user cycles the text attribute change
 #. announcement mode. In this mode, formatting changes are only announced in
 #. editable content.
 #: src/orca/messages.py:66
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attributes: editable text."
-msgstr "Ιδιότητες κειμένου"
+msgstr "Γνωρίσματα κειμένου: επεξεργάσιμο κείμενο."
 
 #. Translators: This is presented when the user cycles the text attribute change
 #. announcement mode. In this mode, formatting changes are always announced.
 #: src/orca/messages.py:70
-#, fuzzy
-#| msgid "Text attributes"
 msgid "Text attributes: on."
-msgstr "Ιδιότητες κειμένου"
+msgstr "Γνωρίσματα κειμένου: ενεργά."
 
 #. Translators: Orca has a command which toggles all (other) Orca commands so that
 #. the associated keystroke can by consumed by the native application. For example,
@@ -10143,65 +10072,60 @@ msgstr "ΑΡΧΕΙΟ"
 #. which allows the user to approve a user extension for loading.
 #: src/orca/messages.py:288
 msgid "Approve a user extension for loading"
-msgstr ""
+msgstr "Έγκριση επέκτασης χρήστη για φόρτωση"
 
 #. Translators: This is the description of command line option '--revoke-extension'
 #. which allows the user to revoke approval for a user extension.
 #: src/orca/messages.py:292
 msgid "Revoke approval for a user extension"
-msgstr ""
+msgstr "Ανάκληση έγκρισης για μια επέκταση χρήστη"
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '--approve-extension' or '--revoke-extension' command line options.
 #: src/orca/messages.py:296
-#, fuzzy
-#| msgid "NAME"
 msgid "FILENAME"
-msgstr "ΟΝΟΜΑ"
+msgstr "ΟΝΟΜΑ_ΑΡΧΕΙΟΥ"
 
 #. Translators: This message is presented when the user tries to approve an
 #. extension file that does not exist. The string substitution is the file path.
 #: src/orca/messages.py:300
-#, fuzzy, python-format
-#| msgid "string not found"
+#, python-format
 msgid "Extension not found: %s"
-msgstr "η συμβολοσειρά δεν βρέθηκε"
+msgstr "Η επέκταση δεν βρέθηκε: %s"
 
 #. Translators: This message is presented when a user extension has been approved
 #. for loading. The string substitution is the extension filename.
 #: src/orca/messages.py:304
 #, python-format
 msgid "Approved extension: %s"
-msgstr ""
+msgstr "Εγκεκριμένη επέκταση: %s"
 
 #. Translators: This message is presented when approval for a user extension has
 #. been revoked. The string substitution is the extension filename.
 #: src/orca/messages.py:308
 #, python-format
 msgid "Revoked approval for: %s"
-msgstr ""
+msgstr "Ανακλήθηκε η έγκριση για: %s"
 
 #. Translators: This message is presented when the user tries to revoke an
 #. extension that was not approved. The string substitution is the filename.
 #: src/orca/messages.py:312
 #, python-format
 msgid "Extension not approved: %s"
-msgstr ""
+msgstr "Μη εγκεκριμένη επέκταση: %s"
 
 #. Translators: This warning is presented after approving an extension that is
 #. currently disabled. The string substitution is the extension's class name.
 #: src/orca/messages.py:317
 #, python-format
 msgid "Warning: %s is currently disabled and will not load until enabled."
-msgstr ""
+msgstr "Προειδοποίηση: Το %s είναι προς το παρόν απενεργοποιημένο και δεν θα φορτωθεί μέχρι να ενεργοποιηθεί."
 
 #. Translators: This is the description of command line option '-s, --setup'
 #. that will place the user in Orca's GUI preferences window.
 #: src/orca/messages.py:322
-#, fuzzy
-#| msgid "Set up user preferences"
 msgid "Show the preferences window"
-msgstr "Προτιμήσεις ρυθμίσεων χρήστη"
+msgstr "Εμφάνιση του παραθύρου προτιμήσεων"
 
 #. Translators: This text is the description displayed when Orca is launched
 #. from the command line and the help text is displayed.
@@ -10378,21 +10302,17 @@ msgstr "Χωρίς μηνύματα συνομιλίας"
 #. be said is code or preformatted text, such as content inside an HTML 'pre'
 #. or 'code' element.
 #: src/orca/messages.py:451
-#, fuzzy
-#| msgid "root start"
 msgctxt "content"
 msgid "code start"
-msgstr "αρχή ρίζας"
+msgstr "αρχή κώδικα"
 
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of code or preformatted text, such as content inside an HTML 'pre'
 #. or 'code' element.
 #: src/orca/messages.py:456
-#, fuzzy
-#| msgid "root end"
 msgctxt "content"
 msgid "code end"
-msgstr "τέλος ρίζας"
+msgstr "τέλος κώδικα"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is content marked for deletion in a document, such as content which
@@ -11016,9 +10936,6 @@ msgstr "Η ηχώ ορίστηκε σε λέξη και πρόταση."
 #. Translators: This brief message indicates that indentation will not be
 #. spoken.
 #: src/orca/messages.py:918
-#, fuzzy
-#| msgctxt "indentation and justification"
-#| msgid "Disabled"
 msgctxt "indentation"
 msgid "Disabled"
 msgstr "Απενεργοποιημένη"
@@ -11026,16 +10943,11 @@ msgstr "Απενεργοποιημένη"
 #. Translators: This detailed message indicates that indentation will not be
 #. spoken.
 #: src/orca/messages.py:922
-#, fuzzy
-#| msgid "Simplified navigation disabled."
 msgid "Spoken indentation disabled."
-msgstr "Η απλοποιημένη πλοήγηση απενεργοποιήθηκε."
+msgstr "Η εκφώνηση εσοχής απενεργοποιήθηκε."
 
 #. Translators: This brief message indicates that indentation will be spoken.
 #: src/orca/messages.py:925
-#, fuzzy
-#| msgctxt "indentation and justification"
-#| msgid "Enabled"
 msgctxt "indentation"
 msgid "Enabled"
 msgstr "Ενεργοποιημένη"
@@ -11043,10 +10955,8 @@ msgstr "Ενεργοποιημένη"
 #. Translators: This detailed message indicates that indentation will be
 #. spoken.
 #: src/orca/messages.py:929
-#, fuzzy
-#| msgid "Simplified navigation enabled."
 msgid "Spoken indentation enabled."
-msgstr "Η απλοποιημένη πλοήγηση ενεργοποιήθηκε."
+msgstr "Η εκφώνηση εσοχής ενεργοποιήθηκε."
 
 #. Translators: Orca announces when a widget has an associated error, such as
 #. disallowed characters in an input, or a must-check box that is not checked
@@ -11090,12 +11000,9 @@ msgstr ""
 #. Translators: This message is presented when a user is navigating within
 #. an article and then navigates out of it.
 #: src/orca/messages.py:962
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving part."
 msgctxt "role"
 msgid "leaving article."
-msgstr "έξοδος από το μέρος."
+msgstr "έξοδος από το άρθρο."
 
 #. Translators: This message is presented when a user is navigating within a
 #. blockquote and then navigates out of it.
@@ -11106,12 +11013,9 @@ msgstr "έξοδος από την παράθεση."
 #. Translators: This message is presented when a user is navigating within
 #. a code block and then navigates out of it.
 #: src/orca/messages.py:970
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving index."
 msgctxt "role"
 msgid "leaving code."
-msgstr "έξοδος από το ευρετήριο."
+msgstr "έξοδος από τον κώδικα."
 
 #. Translators: In web content, authors can identify an element which contains
 #. detailed information about another element. For instance, for a password
@@ -11130,11 +11034,8 @@ msgstr "έξοδος από τις λεπτομέρειες."
 #. document (e.g. an embedded PDF viewer or the rendered preview of a document)
 #. and then navigates out of it into the surrounding page.
 #: src/orca/messages.py:986
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving credit."
 msgid "leaving document."
-msgstr "έξοδος από την αναγνώριση."
+msgstr "έξοδος από το έγγραφο."
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
@@ -11697,10 +11598,8 @@ msgstr "Δε βρέθηκε η τρέχουσα τοποθεσία."
 #. message is presented when the current character does not expose any formatting
 #. information to Orca.
 #: src/orca/messages.py:1377
-#, fuzzy
-#| msgid "Battery status unknown"
 msgid "Character format unknown."
-msgstr "Άγνωστη κατάσταση μπαταρίας"
+msgstr "Άγνωστη μορφή χαρακτήρα."
 
 #. Translators: Orca has a command which presents formatting information for the
 #. current text character. Examples of this information include font family, font
@@ -11710,7 +11609,7 @@ msgstr "Άγνωστη κατάσταση μπαταρίας"
 #. values.
 #: src/orca/messages.py:1385
 msgid "Default character format."
-msgstr ""
+msgstr "Προεπιλεγμένη μορφή χαρακτήρα."
 
 #. Translators: This string is used to present the state of a locking key, such
 #. as Caps Lock. If Caps Lock is "off", then letters typed will appear in
@@ -11949,10 +11848,8 @@ msgstr "Δεν βρέθηκαν ενέργειες στο: %s"
 #. suggestions, and highlights. This is a detailed message which will be presented to
 #. the user if no more annotations can be found.
 #: src/orca/messages.py:1568
-#, fuzzy
-#| msgid "No more buttons."
 msgid "No more annotations."
-msgstr "Δεν υπάρχουν άλλα κουμπιά."
+msgstr "Δεν υπάρχουν άλλες επισημάνσεις."
 
 #. Translators: This is for navigating document content by moving from blockquote
 #. to blockquote. This is a detailed message which will be presented to the user
@@ -12047,10 +11944,8 @@ msgstr "Δεν υπάρχουν άλλες εικόνες."
 #. search, etc. This is a detailed message which will be presented to the user if
 #. no more landmarks can be found.
 #: src/orca/messages.py:1637
-#, fuzzy
-#| msgid "No more links."
 msgid "No more landmarks."
-msgstr "Δεν υπάρχουν άλλοι σύνδεσμοι."
+msgstr "Δεν υπάρχουν άλλα ορόσημα."
 
 #. Translators: This is for navigating document content by moving from link to
 #. link (regardless of visited state). This is a detailed message which will be
@@ -12086,10 +11981,8 @@ msgstr "Δεν υπάρχουν άλλες ζωντανές περιοχές."
 #. expression to math expression. This is a detailed message which will be
 #. presented to the user if no more math expressions can be found.
 #: src/orca/messages.py:1664
-#, fuzzy
-#| msgid "No more live regions."
 msgid "No more math expressions."
-msgstr "Δεν υπάρχουν άλλες ζωντανές περιοχές."
+msgstr "Δεν υπάρχουν άλλες μαθηματικές εκφράσεις."
 
 #. Translators: This is for navigating document content by moving from paragraph
 #. to paragraph. This is a detailed message which will be presented to the user
@@ -12550,23 +12443,17 @@ msgstr "πιο απαλά."
 
 #. Translators: This string announces speech inflection (pitch range) change.
 #: src/orca/messages.py:1991
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "square intersection"
 msgid "more inflection."
-msgstr "τετραγωνική τομή"
+msgstr "περισσότερη διαμόρφωση."
 
-# #-#-#-#-#  libgnomeui.HEAD.el.po (el)  #-#-#-#-#
-# #-#-#-#-#  gnome-libs-el.po (gnome-libs 1.2.12)  #-#-#-#-#
-# #-#-#-#-#  libgda-el.po (gnome-db 0.0.91)  #-#-#-#-##
-# #-#-#-#-#  toutdoux-el.po (toutdoux 1.0)  #-#-#-#-##
+# #-#-#-#-#  libgnomeui.HEAD.el.po (el)  #-#-#-#-#
+# #-#-#-#-#  gnome-libs-el.po (gnome-libs 1.2.12)  #-#-#-#-#
+# #-#-#-#-#  libgda-el.po (gnome-db 0.0.91)  #-#-#-#-##
+# #-#-#-#-#  toutdoux-el.po (toutdoux 1.0)  #-#-#-#-##
 #. Translators: This string announces speech inflection (pitch range) change.
 #: src/orca/messages.py:1994
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "double intersection"
 msgid "less inflection."
-msgstr "διπλή τομή"
+msgstr "λιγότερη διαμόρφωση."
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -12735,31 +12622,27 @@ msgstr "Η πλοήγηση πίνακα ενεργοποιήθηκε."
 #. expressions via MathCAT. This string is presented when entering that mode.
 #: src/orca/messages.py:2115
 msgid "MathCAT on."
-msgstr ""
+msgstr "MathCAT ενεργό."
 
 #. Translators: Orca has a modal math navigation mode for exploring math
 #. expressions via MathCAT. This string is presented when leaving that mode.
 #: src/orca/messages.py:2119
 msgid "MathCAT off."
-msgstr ""
+msgstr "MathCAT ανενεργό."
 
 #. Translators: Orca has a modal math navigation mode for exploring math
 #. expressions via MathCAT. This is presented when the user tries to enter
 #. math navigation but is not on a math element.
 #: src/orca/messages.py:2124
-#, fuzzy
-#| msgid "Not in a table."
 msgid "Not in math."
-msgstr "Όχι σε πίνακα."
+msgstr "Όχι σε μαθηματικά."
 
 #. Translators: Orca has a modal math navigation mode for exploring math
 #. expressions via MathCAT. This hint is presented when the user reaches the
 #. edge of the expression and cannot move further in the current direction.
 #: src/orca/messages.py:2129
-#, fuzzy
-#| msgid "Learn mode.  Press escape to exit."
 msgid "Press Escape to exit."
-msgstr "Λειτουργία εκμάθησης. Πατήστε escape για έξοδο."
+msgstr "Πατήστε Escape για έξοδο."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
@@ -13197,13 +13080,11 @@ msgstr[1] "Λίστα με %d αντικείμενα"
 #. also contains unavailable items. Available items are those which the user can
 #. navigate to and interact with; unavailable items are insensitive.
 #: src/orca/messages.py:2474
-#, fuzzy, python-format
-#| msgid "List with %d item"
-#| msgid_plural "List with %d items"
+#, python-format
 msgid "List with %d available item"
 msgid_plural "List with %d available items"
-msgstr[0] "Λίστα με %d αντικείμενο"
-msgstr[1] "Λίστα με %d αντικείμενα"
+msgstr[0] "Λίστα με %d διαθέσιμο αντικείμενο"
+msgstr[1] "Λίστα με %d διαθέσιμα αντικείμενα"
 
 #. Translators: This message describes the number of items of a bulleted or numbered list
 #. that is inside of another list.
@@ -13346,13 +13227,11 @@ msgstr[0] "%(index)d από %(total)d αντικείμενο επιλέχθηκ�
 msgstr[1] "%(index)d από %(total)d αντικείμενα επιλέχθηκαν"
 
 #: src/orca/messages.py:2624
-#, fuzzy, python-format
-#| msgid "%d Screen reader shortcut found."
-#| msgid_plural "%d Screen reader shortcuts found."
+#, python-format
 msgid "%d Screen reader command found."
 msgid_plural "%d Screen reader commands found."
-msgstr[0] "Βρέθηκε %d συντόμευση αναγνώστη οθόνης."
-msgstr[1] "Βρέθηκαν %d συντομεύσεις αναγνώστη οθόνης."
+msgstr[0] "Βρέθηκε %d εντολή αναγνώστη οθόνης."
+msgstr[1] "Βρέθηκαν %d εντολές αναγνώστη οθόνης."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
@@ -16677,10 +16556,8 @@ msgstr "ορθογραφία"
 #~ msgid "Use alternate directory for user preferences"
 #~ msgstr "Χρήση εναλλακτικού καταλόγου για τις προτιμήσεις του χρήστη"
 
-#, fuzzy
-#~| msgid "Bookmark where am I with respect to current position."
 #~ msgid "Bookmark where am I with respect to current position"
-#~ msgstr "Σελιδοδείκτης πού βρίσκομαι σε σχέση με τρέχουσα θέση"
+#~ msgstr "Σελιδοδείκτης πού βρίσκομαι σε σχέση με την τρέχουσα θέση"
 
 #~ msgid "Go to previous bookmark location"
 #~ msgstr "Μετάβαση στην προηγούμενη τοποθεσία σελιδοδείκτη"
@@ -16697,41 +16574,27 @@ msgstr "ορθογραφία"
 #~ msgid "Save bookmarks"
 #~ msgstr "Αποθήκευση σελιδοδεικτών"
 
-#, fuzzy
-#~| msgid "Speak and braille a previous chat room message."
 #~ msgid "Speak and braille a previous chat room message"
-#~ msgstr "Εκφώνηση και braille προηγούμενου μηνύματος συνομιλίας"
+#~ msgstr "Εκφώνηση και προβολή σε Μπράιγ προηγούμενου μηνύματος δωματίου συνομιλίας"
 
-#, fuzzy
-#~| msgid "Toggle whether we announce when our buddies are typing."
 #~ msgid "Toggle whether we announce when our buddies are typing"
-#~ msgstr "Εναλλαγή ανακοίνωσης πληκτρολόγησης φίλων"
+#~ msgstr "Εναλλαγή ανακοίνωσης όταν πληκτρολογούν οι φίλοι"
 
-#, fuzzy
-#~| msgid "Toggle whether we provide chat room specific message histories."
 #~ msgid "Toggle whether we provide chat room specific message histories"
-#~ msgstr "Εναλλαγή ιστορικού μηνυμάτων ανά δωμάτιο συνομιλίας"
+#~ msgstr "Εναλλαγή παροχής ιστορικού μηνυμάτων ανά δωμάτιο συνομιλίας"
 
-#, fuzzy
-#~| msgid ""
-#~| "Toggle whether we prefix chat room messages with the name of the chat "
-#~| "room."
 #~ msgid ""
 #~ "Toggle whether we prefix chat room messages with the name of the chat room"
-#~ msgstr "Εναλλαγή προθέματος μηνυμάτων με όνομα δωματίου συνομιλίας"
+#~ msgstr "Εναλλαγή προσθήκης προθέματος στα μηνύματα με το όνομα του δωματίου συνομιλίας"
 
-#, fuzzy
-#~| msgid "Presents the contents of the input line."
 #~ msgid "Present the contents of the input line"
-#~ msgstr "Παρουσίαση περιεχομένων γραμμής εισαγωγής"
+#~ msgstr "Παρουσίαση των περιεχομένων της γραμμής εισαγωγής"
 
 #~ msgid "Automatic focus mode during structural navigation"
-#~ msgstr "Αυτόματη λειτουργία εστίασης κατά τη δομική πλοήγηση"
+#~ msgstr "Αυτόματη λειτουργία εστίασης κατά τη δομική περιήγηση"
 
-#, fuzzy
-#~| msgid "Automatic focus mode during caret navigation"
 #~ msgid "Automatic focus mode during native navigation"
-#~ msgstr "Αυτόματη λειτουργία εστίασης κατά την εγγενή πλοήγηση"
+#~ msgstr "Αυτόματη λειτουργία εστίασης κατά την εγγενή περιήγηση"
 
 #~ msgid "Enable layout mode for content"
 #~ msgstr "Ενεργοποίηση λειτουργίας διάταξης για το περιεχόμενο"
@@ -17005,22 +16868,14 @@ msgstr "ορθογραφία"
 #~ msgid "Enable echo by _sentence"
 #~ msgstr "Ενεργοποίηση αντίχου ανά π_ρόταση"
 
-#, fuzzy
-#~| msgid "Passes the next command on to the current application."
 #~ msgid "Pass the next command on to the current application"
-#~ msgstr "Στέλνει την επόμενη εντολή στην τρέχουσα εφαρμογή."
+#~ msgstr "Προώθηση της επόμενης εντολής στην τρέχουσα εφαρμογή"
 
-#, fuzzy
-#~| msgid "Moves focus into and away from the current mouse over."
 #~ msgid "Move focus into and away from the current mouse over"
-#~ msgstr ""
-#~ "Εστίαση στο αναδυόμενο αντικείμενο ή επιστροφή εστίασης στο αρχικό "
-#~ "αντικείμενο."
+#~ msgstr "Μετακίνηση της εστίασης εντός και εκτός του τρέχοντος αιωρούμενου στοιχείου"
 
-#, fuzzy
-#~| msgid "Toggles structural navigation keys."
 #~ msgid "Toggle structural navigation keys"
-#~ msgstr "Κάνει εναλλαγή στα πλήκτρα δομικής πλοήγησης."
+#~ msgstr "Εναλλαγή πλήκτρων δομικής περιήγησης"
 
 # #-#-#-#-#  gnome-icon-theme.HEAD.el.po (el)  #-#-#-#-#
 # 48x48/emblems/emblem-sound.icon.in.h:1
@@ -17783,32 +17638,24 @@ msgstr "ορθογραφία"
 #~ "Ενεργοποίηση της ηχούς των πλήκτρων;  Εισάγετε ν ή y για ναι και ο ή n "
 #~ "για όχι: "
 
-#, fuzzy
-#~| msgid "Enable action keys?  Enter y or n: "
 #~ msgid "Enable alphabetic keys?  Enter y or n: "
 #~ msgstr ""
-#~ "Ενεργοποίηση των πλήκτρων ενέργειας;  Εισάγετε ν ή y για ναι και ο ή n "
+#~ "Ενεργοποίηση των αλφαβητικών πλήκτρων;  Εισάγετε ν ή y για ναι και ο ή n "
 #~ "για όχι: "
 
-#, fuzzy
-#~| msgid "Enable modifier keys?  Enter y or n: "
 #~ msgid "Enable numeric keys?  Enter y or n: "
 #~ msgstr ""
-#~ "Ενεργοποίηση των πλήκτρων τροποποίησης;  Εισάγετε ν ή y για ναι και ο ή n "
+#~ "Ενεργοποίηση των αριθμητικών πλήκτρων;  Εισάγετε ν ή y για ναι και ο ή n "
 #~ "για όχι: "
 
-#, fuzzy
-#~| msgid "Enable function keys?  Enter y or n: "
 #~ msgid "Enable punctuation keys?  Enter y or n: "
 #~ msgstr ""
-#~ "Ενεργοποίηση των πλήκτρων συναρτήσεων;  Εισάγετε ν ή y για ναι και ο ή n "
+#~ "Ενεργοποίηση των πλήκτρων στίξης;  Εισάγετε ν ή y για ναι και ο ή n "
 #~ "για όχι: "
 
-#, fuzzy
-#~| msgid "Enable Braille?  Enter y or n: "
 #~ msgid "Enable space?  Enter y or n: "
 #~ msgstr ""
-#~ "Ενεργοποίηση του Μπράιγ;  Εισάγετε ν ή y για ναι και ο ή n για όχι: "
+#~ "Ενεργοποίηση του διαστήματος;  Εισάγετε ν ή y για ναι και ο ή n για όχι: "
 
 #~ msgid "Enable modifier keys?  Enter y or n: "
 #~ msgstr ""
