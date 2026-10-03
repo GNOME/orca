@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-09-04 06:54+0000\n"
-"PO-Revision-Date: 2026-02-20 20:29+0200\n"
+"PO-Revision-Date: 2026-10-03 15:00+0300\n"
 "Last-Translator: Efstathios Iosifidis <eiosifidis@gmail.com>\n"
 "Language-Team: Greek, Modern (1453-) <team@gnome.gr>\n"
 "Language: el\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.9\n"
 "X-Project-Style: gnome\n"
 
 #: orca-autostart.desktop.in:3
@@ -5931,7 +5931,7 @@ msgstr "_Κλείσιμο"
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:166
 msgid "_Clear"
-msgstr ""
+msgstr "_Εκκαθάριση"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:169
@@ -6492,6 +6492,12 @@ msgid ""
 "Shift+Alt+Ctrl+Q. This can be changed in Commands. An application must be "
 "running to add it to the sleep mode applications list."
 msgstr ""
+"Η λειτουργία αναστολής λειτουργίας κάνει το Orca να συμπεριφέρεται σαν να "
+"μην εκτελείται για μια συγκεκριμένη εφαρμογή. Ο προεπιλεγμένος συνδυασμός "
+"πλήκτρων για την ενεργοποίηση ή απενεργοποίηση της λειτουργίας αναστολής "
+"λειτουργίας είναι Shift+Alt+Ctrl+Q. Αυτό μπορεί να αλλάξει στην ενότητα "
+"«Εντολές». Μια εφαρμογή πρέπει να εκτελείται για να προστεθεί στη λίστα "
+"εφαρμογών της λειτουργίας αναστολής λειτουργίας."
 
 #. Translators: This label appears above a list of applications on the Sleep Mode
 #. preferences page. The user can select which applications should automatically
@@ -6581,7 +6587,7 @@ msgstr ""
 #. navigation (e.g. pressing G to jump to next image).
 #: src/orca/guilabels.py:624
 msgid "Skip unlabeled images"
-msgstr ""
+msgstr "Παράλειψη εικόνων χωρίς ετικέτα"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to table navigation, such as moving to the next cell in a
@@ -7155,7 +7161,7 @@ msgstr "Στοιχείο λίστας"
 #: src/orca/guilabels.py:1028
 msgctxt "structural navigation"
 msgid "Math Expression"
-msgstr ""
+msgstr "Μαθηματική έκφραση"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -10119,7 +10125,9 @@ msgstr "Μη εγκεκριμένη επέκταση: %s"
 #: src/orca/messages.py:317
 #, python-format
 msgid "Warning: %s is currently disabled and will not load until enabled."
-msgstr "Προειδοποίηση: Το %s είναι προς το παρόν απενεργοποιημένο και δεν θα φορτωθεί μέχρι να ενεργοποιηθεί."
+msgstr ""
+"Προειδοποίηση: Το %s είναι προς το παρόν απενεργοποιημένο και δεν θα "
+"φορτωθεί μέχρι να ενεργοποιηθεί."
 
 #. Translators: This is the description of command line option '-s, --setup'
 #. that will place the user in Orca's GUI preferences window.
@@ -10628,7 +10636,7 @@ msgstr "Η επίπεδη επισκόπηση περιορίστηκε στο �
 #. focus nor the caret could be moved there.
 #: src/orca/messages.py:677
 msgid "Location unchanged"
-msgstr ""
+msgstr "Η τοποθεσία παραμένει η ίδια"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -11635,7 +11643,7 @@ msgstr "ενεργοποιημένο"
 #. is presented if the modifier key state cannot be obtained from the system.
 #: src/orca/messages.py:1403
 msgid "Modifier key state is not available."
-msgstr ""
+msgstr "Η κατάσταση του πλήκτρου τροποποίησης δεν είναι διαθέσιμη."
 
 #. Translators: This is to inform the user of the presence of the red squiggly
 #. line which indicates that a given word is not spelled correctly.
@@ -13458,7 +13466,7 @@ msgstr "έχει λεπτομέρειες στο %s"
 #: src/orca/object_properties.py:103
 msgctxt "role"
 msgid "code"
-msgstr ""
+msgstr "κώδικας"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -16575,7 +16583,8 @@ msgstr "ορθογραφία"
 #~ msgstr "Αποθήκευση σελιδοδεικτών"
 
 #~ msgid "Speak and braille a previous chat room message"
-#~ msgstr "Εκφώνηση και προβολή σε Μπράιγ προηγούμενου μηνύματος δωματίου συνομιλίας"
+#~ msgstr ""
+#~ "Εκφώνηση και προβολή σε Μπράιγ προηγούμενου μηνύματος δωματίου συνομιλίας"
 
 #~ msgid "Toggle whether we announce when our buddies are typing"
 #~ msgstr "Εναλλαγή ανακοίνωσης όταν πληκτρολογούν οι φίλοι"
@@ -16585,7 +16594,9 @@ msgstr "ορθογραφία"
 
 #~ msgid ""
 #~ "Toggle whether we prefix chat room messages with the name of the chat room"
-#~ msgstr "Εναλλαγή προσθήκης προθέματος στα μηνύματα με το όνομα του δωματίου συνομιλίας"
+#~ msgstr ""
+#~ "Εναλλαγή προσθήκης προθέματος στα μηνύματα με το όνομα του δωματίου "
+#~ "συνομιλίας"
 
 #~ msgid "Present the contents of the input line"
 #~ msgstr "Παρουσίαση των περιεχομένων της γραμμής εισαγωγής"
@@ -16872,7 +16883,9 @@ msgstr "ορθογραφία"
 #~ msgstr "Προώθηση της επόμενης εντολής στην τρέχουσα εφαρμογή"
 
 #~ msgid "Move focus into and away from the current mouse over"
-#~ msgstr "Μετακίνηση της εστίασης εντός και εκτός του τρέχοντος αιωρούμενου στοιχείου"
+#~ msgstr ""
+#~ "Μετακίνηση της εστίασης εντός και εκτός του τρέχοντος αιωρούμενου "
+#~ "στοιχείου"
 
 #~ msgid "Toggle structural navigation keys"
 #~ msgstr "Εναλλαγή πλήκτρων δομικής περιήγησης"
@@ -17650,8 +17663,8 @@ msgstr "ορθογραφία"
 
 #~ msgid "Enable punctuation keys?  Enter y or n: "
 #~ msgstr ""
-#~ "Ενεργοποίηση των πλήκτρων στίξης;  Εισάγετε ν ή y για ναι και ο ή n "
-#~ "για όχι: "
+#~ "Ενεργοποίηση των πλήκτρων στίξης;  Εισάγετε ν ή y για ναι και ο ή n για "
+#~ "όχι: "
 
 #~ msgid "Enable space?  Enter y or n: "
 #~ msgstr ""
