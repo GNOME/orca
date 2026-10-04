@@ -1206,10 +1206,17 @@ class _AccessibleTextRegion(Region):
     _label: str = ""
     _eol: str = ""
     _indicate_links: bool = True
+    _has_selection_indicator: bool = False
+
+    def has_selection_indicator(self) -> bool:
+        """Returns whether the last rendered mask includes a selection indicator."""
+
+        return self._has_selection_indicator
 
     def get_attribute_mask(self) -> str:
         """Return the attrOr mask for links, attributes, and selections."""
 
+        self._has_selection_indicator = False
         if AXUtilities.is_whitespace_or_empty(self.accessible):
             return ""
 
@@ -1297,6 +1304,8 @@ class _AccessibleTextRegion(Region):
             for start_offset, end_offset in selections:
                 mask_start = max(start_offset - self.line_offset - self._start_offset, 0)
                 mask_end = min(end_offset - self.line_offset - self._start_offset, string_length)
+                if mask_start < mask_end:
+                    self._has_selection_indicator = True
                 for i in range(mask_start, mask_end):
                     region_mask[i] |= selection_indicator
 
@@ -1784,6 +1793,8 @@ def try_reposition_cursor(accessible: Any) -> bool:
     for region in line.get_regions():
         if isinstance(region, Text) and region.accessible == accessible:
             if region.reposition_cursor():
+                if region.has_selection_indicator():
+                    line.invalidate_cache_internal()
                 refresh(True)
                 return True
             break

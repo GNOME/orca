@@ -136,45 +136,54 @@ def test_character_navigation_in_editable_combo_box(web_form_fields: BrowserSess
 
 
 @pytest.mark.native_app
-def test_caret_navigation_in_text_entry(web_form_fields: BrowserSession) -> None:
+@pytest.mark.parametrize("flash_messages", [True, False], ids=["flash", "no-flash"])
+def test_caret_navigation_in_text_entry(
+    web_form_fields: BrowserSession, flash_messages: bool
+) -> None:
     """Tests native word and character navigation in a single-line text entry."""
 
     session = web_form_fields
-    helpers.move_to_top(session)
+    previous = session.orca.get("BraillePresenter", "FlashMessagesAreEnabled")
+    session.orca.set("BraillePresenter", "FlashMessagesAreEnabled", flash_messages)
+    try:
+        helpers.move_to_top(session)
 
-    keyboard.tap_key(keyboard.KEYSYM_TAB)
-    helpers.capture(session)
-    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    helpers.capture(session)
+        keyboard.tap_key(keyboard.KEYSYM_TAB)
+        helpers.capture(session)
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
+        helpers.capture(session)
 
-    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert helpers.capture(session) == (
-        ["Jane "],
-        [helpers.BrailleLine(10, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
-    )
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+        assert helpers.capture(session) == (
+            ["Jane "],
+            [helpers.BrailleLine(10, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
+        )
 
-    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert helpers.capture(session) == (
-        ["Doe"],
-        [helpers.BrailleLine(14, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
-    )
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+        assert helpers.capture(session) == (
+            ["Doe"],
+            [helpers.BrailleLine(14, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
+        )
 
-    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    helpers.capture(session)
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
+        helpers.capture(session)
 
-    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert helpers.capture(session) == (
-        ["a"],
-        [helpers.BrailleLine(7, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
-    )
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        assert helpers.capture(session) == (
+            ["a"],
+            [helpers.BrailleLine(7, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
+        )
 
-    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert helpers.capture(session) == (
-        ["n"],
-        [helpers.BrailleLine(8, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
-    )
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        assert helpers.capture(session) == (
+            ["n"],
+            [helpers.BrailleLine(8, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
+        )
 
-    _exit_focus_mode(session)
+        _exit_focus_mode(session)
+
+    finally:
+        session.orca.set("BraillePresenter", "FlashMessagesAreEnabled", previous)
 
 
 @pytest.mark.native_app
