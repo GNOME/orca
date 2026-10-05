@@ -561,10 +561,7 @@ class ClipboardPresenter(Extension):
             return
 
         if manager.last_event_was_paste():
-            presentation_manager.get_manager().present_message(
-                messages.CLIPBOARD_PASTED_FULL,
-                messages.CLIPBOARD_PASTED_BRIEF,
-            )
+            presentation_manager.get_manager().present_command_announcement()
             return
 
         msg = "CLIPBOARD PRESENTER: Not presenting change: is not cut, copy, or paste"
