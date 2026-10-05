@@ -162,6 +162,7 @@ class _ClipboardManagerGPaste(_ClipboardManager):
     """Class for interacting with the clipboard via GPaste."""
 
     _DBUS_TIMEOUT_MS = 1000
+    _DBUS_INTERFACE = ""
 
     def __init__(self, change_callback: Callable[[str], None]) -> None:
         super().__init__("GPASTE", change_callback)
@@ -170,6 +171,11 @@ class _ClipboardManagerGPaste(_ClipboardManager):
         self._props_proxy: InterfaceProxy | None = None
         self._signal_subscription: Any | None = None
         self._original_active_state: bool | None = None
+
+    def _set_active(self, active: bool) -> None:
+        """Enables or disables clipboard tracking."""
+
+        raise NotImplementedError
 
     def connect(self) -> None:
         """Connects to the clipboard manager."""
@@ -185,7 +191,7 @@ class _ClipboardManagerGPaste(_ClipboardManager):
                 "org.freedesktop.DBus.Properties",
             )
             self._original_active_state = self._props_proxy.Get(
-                "org.gnome.GPaste2",
+                self._DBUS_INTERFACE,
                 "Active",
                 timeout=self._DBUS_TIMEOUT_MS,
             )
@@ -201,9 +207,9 @@ class _ClipboardManagerGPaste(_ClipboardManager):
             if not self._original_active_state:
                 msg = "CLIPBOARD PRESENTER: GPaste is not active. Enabling Tracking."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
-                self._gpaste_proxy.Track(True, timeout=self._DBUS_TIMEOUT_MS)
+                self._set_active(True)
                 new_state = self._props_proxy.Get(
-                    "org.gnome.GPaste2",
+                    self._DBUS_INTERFACE,
                     "Active",
                     timeout=self._DBUS_TIMEOUT_MS,
                 )
@@ -235,9 +241,9 @@ class _ClipboardManagerGPaste(_ClipboardManager):
             msg = "CLIPBOARD PRESENTER: Restoring inactive state by disabling tracking."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             try:
-                self._gpaste_proxy.Track(False, timeout=self._DBUS_TIMEOUT_MS)
+                self._set_active(False)
                 new_state = self._props_proxy.Get(
-                    "org.gnome.GPaste2",
+                    self._DBUS_INTERFACE,
                     "Active",
                     timeout=self._DBUS_TIMEOUT_MS,
                 )
@@ -252,6 +258,16 @@ class _ClipboardManagerGPaste(_ClipboardManager):
         self._bus = None
         self._is_active = False
 
+
+class _ClipboardManagerGPaste2(_ClipboardManagerGPaste):
+    """Class for interacting with the clipboard via GPaste2."""
+
+    _DBUS_INTERFACE = "org.gnome.GPaste2"
+
+    def _set_active(self, active: bool) -> None:
+        assert self._gpaste_proxy is not None
+        self._gpaste_proxy.Track(active, timeout=self._DBUS_TIMEOUT_MS)
+
     def _get_contents(self) -> str:
         """Obtains and returns the contents of the clipboard."""
 
@@ -259,17 +275,14 @@ class _ClipboardManagerGPaste(_ClipboardManager):
             return ""
 
         try:
-            result = self._gpaste_proxy.GetElementAtIndex(
-                0,
-                timeout=self._DBUS_TIMEOUT_MS,
-            )[1]
+            result = self._gpaste_proxy.GetElementAtIndex(0, timeout=self._DBUS_TIMEOUT_MS)[1]
         except (DBusError, TimeoutError) as error:
-            tokens = ["GPASTE: Could not get clipboard contents:", error]
+            tokens = ["GPASTE2: Could not get clipboard contents:", error]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
         debug_string = result.replace("\n", "\\n")
-        tokens = ["GPASTE: Clipboard contents:", debug_string]
+        tokens = ["GPASTE2: Clipboard contents:", debug_string]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
@@ -282,7 +295,47 @@ class _ClipboardManagerGPaste(_ClipboardManager):
         try:
             self._gpaste_proxy.Add(text, timeout=self._DBUS_TIMEOUT_MS)
         except (DBusError, TimeoutError) as error:
-            tokens = ["GPASTE: Could not set clipboard contents:", error]
+            tokens = ["GPASTE2: Could not set clipboard contents:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+
+class _ClipboardManagerGPaste3(_ClipboardManagerGPaste):
+    """Class for interacting with the clipboard via GPaste3."""
+
+    _DBUS_INTERFACE = "org.gnome.GPaste3"
+
+    def _set_active(self, active: bool) -> None:
+        assert self._gpaste_proxy is not None
+        self._gpaste_proxy.SetActive(active, timeout=self._DBUS_TIMEOUT_MS)
+
+    def _get_contents(self) -> str:
+        """Obtains and returns the contents of the clipboard."""
+
+        if self._gpaste_proxy is None:
+            return ""
+
+        try:
+            result = self._gpaste_proxy.GetItemAtIndex(0, timeout=self._DBUS_TIMEOUT_MS)[1]
+        except (DBusError, TimeoutError) as error:
+            tokens = ["GPASTE3: Could not get clipboard contents:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return ""
+
+        debug_string = result.replace("\n", "\\n")
+        tokens = ["GPASTE3: Clipboard contents:", debug_string]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return result
+
+    def set_contents(self, text: str) -> None:
+        """Sets the contents of the clipboard to text."""
+
+        if self._gpaste_proxy is None:
+            return
+
+        try:
+            self._gpaste_proxy.AddText(text, timeout=self._DBUS_TIMEOUT_MS)
+        except (DBusError, TimeoutError) as error:
+            tokens = ["GPASTE3: Could not set clipboard contents:", error]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
 
@@ -421,11 +474,19 @@ class ClipboardPresenter(Extension):
             return
 
         # See comment above. Check for GPaste last.
-        manager = _ClipboardManagerGPaste(self._present_clipboard_contents_change)
+        manager = _ClipboardManagerGPaste3(self._present_clipboard_contents_change)
         manager.connect()
         if manager.is_active():
             self._manager = manager
-            msg = "CLIPBOARD PRESENTER: Using GPaste."
+            msg = "CLIPBOARD PRESENTER: Using GPaste3."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        manager = _ClipboardManagerGPaste2(self._present_clipboard_contents_change)
+        manager.connect()
+        if manager.is_active():
+            self._manager = manager
+            msg = "CLIPBOARD PRESENTER: Using GPaste2."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
