@@ -168,7 +168,9 @@ class _GeneratorCache:
             )
         }
 
-    def get_value(self, namespace: str, key: Hashable, default: Any = None) -> Any:
+    def get_value(
+        self, namespace: str, key: Hashable, default: Any = None, *, subkey: Hashable | None = None
+    ) -> Any:
         """Returns a cached value for key."""
 
         cache = self._caches.get(namespace)
@@ -177,14 +179,20 @@ class _GeneratorCache:
 
         scope = ax_cache_manager.active_stable_tree_scope()
         if scope is not None:
-            value = cache.get_scoped(scope, key, default)
+            value = cache.get_scoped(scope, key, ax_cache_manager.MISSING)
         else:
-            value = cache.get(key, default)
+            value = cache.get(key, ax_cache_manager.MISSING)
+        if value is ax_cache_manager.MISSING:
+            return default
+        if subkey is not None:
+            value = value.get(subkey, default)
         if isinstance(value, list):
             return list(value)
         return value
 
-    def set_value(self, namespace: str, key: Hashable, value: Any) -> None:
+    def set_value(
+        self, namespace: str, key: Hashable, value: Any, *, subkey: Hashable | None = None
+    ) -> None:
         """Stores a cached value for key."""
 
         cache = self._caches.get(namespace)
@@ -194,16 +202,47 @@ class _GeneratorCache:
         if isinstance(value, list):
             value = list(value)
         scope = ax_cache_manager.active_stable_tree_scope()
+        if subkey is not None:
+            values = cache.get_scoped(scope, key) if scope is not None else cache.get(key)
+            if values is ax_cache_manager.MISSING:
+                values = {}
+            values[subkey] = value
+            value = values
         if scope is not None:
             cache.put_scoped(scope, key, value)
             return
         cache.put(key, value)
+
+    def clear_text(self, obj: Atspi.Accessible) -> None:
+        """Discards the object's text and ranges without searching other objects' entries."""
+
+        key = ax_cache_manager.get_object_key(obj)
+        scope = ax_cache_manager.active_stable_tree_scope()
+        for namespace in (
+            self.STATIC_TEXT,
+            self.TEXT_SUBSTRING,
+            self.TEXT_LINE,
+            self.TEXT,
+            self.TEXT_EXPANDING_EOCS,
+            self.IS_DESCRIPTION_USED_FOR_STATIC_TEXT,
+        ):
+            cache = self._caches[namespace]
+            if cache is not None:
+                cache.discard(key)
+                if scope is not None:
+                    cache.discard_scoped(scope, key)
 
 
 class Generator:
     """Superclass of classes used to generate presentations for objects."""
 
     _CACHE = _GeneratorCache()
+
+    @staticmethod
+    def clear_cached_text(obj: Atspi.Accessible) -> None:
+        """Invalidates generated text for an object whose text has changed."""
+
+        Generator._CACHE.clear_text(obj)
 
     def __init__(self, script: Script, mode: GeneratorMode) -> None:
         self._mode: GeneratorMode = mode
@@ -1250,16 +1289,18 @@ class Generator:
     def _generate_text_substring(self, obj: Atspi.Accessible) -> list[Any]:
         start = self._get_start_offset(obj)
         end = self._get_end_offset(obj)
-        key = (ax_cache_manager.get_object_key(obj), start, end)
+        key = ax_cache_manager.get_object_key(obj)
         cached = Generator._CACHE.get_value(
-            Generator._CACHE.TEXT_SUBSTRING, key, ax_cache_manager.MISSING
+            Generator._CACHE.TEXT_SUBSTRING, key, ax_cache_manager.MISSING, subkey=(start, end)
         )
         if cached is not ax_cache_manager.MISSING:
             return cached
 
         if start is None or end is None:
             if not AXUtilities.is_editable(obj):
-                Generator._CACHE.set_value(Generator._CACHE.TEXT_SUBSTRING, key, [])
+                Generator._CACHE.set_value(
+                    Generator._CACHE.TEXT_SUBSTRING, key, [], subkey=(start, end)
+                )
             return []
 
         substring = self._get_content_string(obj)
@@ -1267,20 +1308,24 @@ class Generator:
             substring = AXText.get_substring(obj, start, end)
         if "\ufffc" not in substring:
             if not AXUtilities.is_editable(obj):
-                Generator._CACHE.set_value(Generator._CACHE.TEXT_SUBSTRING, key, [substring])
+                Generator._CACHE.set_value(
+                    Generator._CACHE.TEXT_SUBSTRING, key, [substring], subkey=(start, end)
+                )
             return [substring]
 
         if not AXUtilities.is_editable(obj):
-            Generator._CACHE.set_value(Generator._CACHE.TEXT_SUBSTRING, key, [])
+            Generator._CACHE.set_value(
+                Generator._CACHE.TEXT_SUBSTRING, key, [], subkey=(start, end)
+            )
         return []
 
     @log_generator_output
     def _generate_text_line(self, obj: Atspi.Accessible) -> list[Any]:
         start = self._get_start_offset(obj)
         end = self._get_end_offset(obj)
-        key = (ax_cache_manager.get_object_key(obj), start, end)
+        key = ax_cache_manager.get_object_key(obj)
         cached = Generator._CACHE.get_value(
-            Generator._CACHE.TEXT_LINE, key, ax_cache_manager.MISSING
+            Generator._CACHE.TEXT_LINE, key, ax_cache_manager.MISSING, subkey=(start, end)
         )
         if cached is not ax_cache_manager.MISSING:
             return cached
@@ -1288,17 +1333,21 @@ class Generator:
         result = Generator._generate_text_substring(self, obj)
         if result and result[0]:
             if not AXUtilities.is_editable(obj):
-                Generator._CACHE.set_value(Generator._CACHE.TEXT_LINE, key, result)
+                Generator._CACHE.set_value(
+                    Generator._CACHE.TEXT_LINE, key, result, subkey=(start, end)
+                )
             return result
 
         text = AXText.get_line_at_offset(obj)[0]
         if text and "\ufffc" not in text:
             if not AXUtilities.is_editable(obj):
-                Generator._CACHE.set_value(Generator._CACHE.TEXT_LINE, key, [text])
+                Generator._CACHE.set_value(
+                    Generator._CACHE.TEXT_LINE, key, [text], subkey=(start, end)
+                )
             return [text]
 
         if not AXUtilities.is_editable(obj):
-            Generator._CACHE.set_value(Generator._CACHE.TEXT_LINE, key, [])
+            Generator._CACHE.set_value(Generator._CACHE.TEXT_LINE, key, [], subkey=(start, end))
         return []
 
     @log_generator_output
@@ -1338,9 +1387,9 @@ class Generator:
     def _generate_text_expanding_embedded_objects(self, obj: Atspi.Accessible) -> list[Any]:
         start = self._get_start_offset(obj)
         end = self._get_end_offset(obj)
-        key = (ax_cache_manager.get_object_key(obj), start, end)
+        key = ax_cache_manager.get_object_key(obj)
         cached = Generator._CACHE.get_value(
-            Generator._CACHE.TEXT_EXPANDING_EOCS, key, ax_cache_manager.MISSING
+            Generator._CACHE.TEXT_EXPANDING_EOCS, key, ax_cache_manager.MISSING, subkey=(start, end)
         )
         if cached is not ax_cache_manager.MISSING:
             return cached
@@ -1357,11 +1406,15 @@ class Generator:
             and not self._strings_are_redundant(AXObject.get_name(obj), text)
         ):
             if not AXUtilities.is_editable(obj):
-                Generator._CACHE.set_value(Generator._CACHE.TEXT_EXPANDING_EOCS, key, [text])
+                Generator._CACHE.set_value(
+                    Generator._CACHE.TEXT_EXPANDING_EOCS, key, [text], subkey=(start, end)
+                )
             return [text]
 
         if not AXUtilities.is_editable(obj):
-            Generator._CACHE.set_value(Generator._CACHE.TEXT_EXPANDING_EOCS, key, [])
+            Generator._CACHE.set_value(
+                Generator._CACHE.TEXT_EXPANDING_EOCS, key, [], subkey=(start, end)
+            )
         return []
 
     ################################## POSITION #####################################

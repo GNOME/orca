@@ -26,6 +26,7 @@
 
 from __future__ import annotations
 
+from contextlib import nullcontext
 from dataclasses import fields
 from typing import TYPE_CHECKING, Any
 
@@ -285,20 +286,60 @@ class TestGeneratorCache:
         )
         assert cached == ["description"]
 
-    def test_cached_lists_are_isolated_from_callers(self, test_context: OrcaTestContext) -> None:
+    @pytest.mark.parametrize("subkey", [None, (0, 4)])
+    def test_cached_lists_are_isolated_from_callers(
+        self, test_context: OrcaTestContext, subkey: tuple[int, int] | None
+    ) -> None:
         """Mutating a stored or returned list must not corrupt the cached value."""
 
         test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
         from orca.generator import Generator
 
         stored = ["text"]
-        Generator._CACHE.set_value(Generator._CACHE.TEXT_SUBSTRING, 456, stored)
+        Generator._CACHE.set_value(Generator._CACHE.TEXT_SUBSTRING, 456, stored, subkey=subkey)
         stored.append("mutated after set")
-        first = Generator._CACHE.get_value(Generator._CACHE.TEXT_SUBSTRING, 456)
+        first = Generator._CACHE.get_value(Generator._CACHE.TEXT_SUBSTRING, 456, subkey=subkey)
         assert first == ["text"]
 
         first.append("voice appended by caller")
-        assert Generator._CACHE.get_value(Generator._CACHE.TEXT_SUBSTRING, 456) == ["text"]
+        assert Generator._CACHE.get_value(Generator._CACHE.TEXT_SUBSTRING, 456, subkey=subkey) == [
+            "text"
+        ]
+
+    @pytest.mark.parametrize("scoped", [False, True])
+    def test_text_invalidation_preserves_other_objects(
+        self, test_context: OrcaTestContext, scoped: bool
+    ) -> None:
+        """Clearing changed text removes every range, preserving unrelated cached values."""
+
+        test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
+        from gi.repository import Atspi
+
+        from orca import ax_cache_manager
+        from orca.generator import Generator
+
+        changed, unchanged = Atspi.Accessible(), Atspi.Accessible()
+        cache = Generator._CACHE
+        with ax_cache_manager.stable_tree_scope() if scoped else nullcontext():
+            for obj in (changed, unchanged):
+                key = ax_cache_manager.get_object_key(obj)
+                cache.set_value(cache.TEXT, key, ["whole text"])
+                cache.set_value(cache.DESCRIPTION, key, ["description"])
+                for offsets in ((0, 4), (4, 8)):
+                    cache.set_value(cache.TEXT_SUBSTRING, key, ["range"], subkey=offsets)
+
+            Generator.clear_cached_text(changed)
+
+            for obj in (changed, unchanged):
+                key = ax_cache_manager.get_object_key(obj)
+                assert cache.get_value(cache.DESCRIPTION, key) == ["description"]
+                assert cache.get_value(cache.TEXT, key) == (
+                    None if obj is changed else ["whole text"]
+                )
+                for offsets in ((0, 4), (4, 8)):
+                    assert cache.get_value(cache.TEXT_SUBSTRING, key, subkey=offsets) == (
+                        None if obj is changed else ["range"]
+                    )
 
     def test_stable_tree_scope_keeps_values_bounded(self, test_context: OrcaTestContext) -> None:
         """Stable-tree-scoped values do not leak into the two-second fallback cache."""

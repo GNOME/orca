@@ -43,6 +43,7 @@ from . import (
     dbus_service,
     debug,
     focus_manager,
+    generator,
     input_event,
     input_event_manager,
     orca_modifier_manager,
@@ -709,6 +710,9 @@ class EventManager:
 
     def _enqueue_object_event(self, e: Atspi.Event) -> None:
         """Callback for Atspi object events."""
+
+        if e.type.startswith(("object:text-changed:insert", "object:text-changed:delete")):
+            generator.Generator.clear_cached_text(e.source)
 
         # If we are enqueuing events, we're not dead and should not be killed
         # and restarted by systemd.
