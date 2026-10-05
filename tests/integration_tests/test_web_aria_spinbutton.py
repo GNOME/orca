@@ -420,7 +420,7 @@ def test_quantity_programmatic_change_focus_on_spinbutton(
 def test_rating_programmatic_change_focus_on_bump_button(
     web_aria_spinbutton: BrowserSession,
 ) -> None:
-    """Tests an off-focus ARIA value bump on the editable Rating."""
+    """Tests that an off-focus Rating update preserves focus and subsequent navigation."""
 
     session = web_aria_spinbutton
     _reload(session)
@@ -429,13 +429,20 @@ def test_rating_programmatic_change_focus_on_bump_button(
 
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     bump_label = "Bump Rating in 1000 ms button"
-    assert helpers.capture(session, quiescence=1.5, overall=3.5, wait_async=True) == (
-        ["76"],
-        [
-            helpers.BrailleLine(1, bump_label, bump_label, "\x00" * len(bump_label)),
-            helpers.BrailleLine(8, "Rating 76 $l", "Rating 76 $l", "\x00" * 12),
-        ],
-    )
+    spoken, brailled = helpers.capture(session, quiescence=1.5, overall=3.5, wait_async=True)
+    assert spoken == []
+    assert brailled[-1] == helpers.BrailleLine(1, bump_label, bump_label, "\x00" * len(bump_label))
+
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["Rating", "spin button", "76", "Focus mode"]
+    assert brailled[-1] == helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
+    assert session.orca.get("DocumentPresenter", "InFocusMode")
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["75"]
+    assert brailled[-1] == helpers.BrailleLine(8, "Rating 75 $l", "Rating 75 $l", "\x00" * 12)
 
 
 @pytest.mark.native_app

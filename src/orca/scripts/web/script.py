@@ -990,11 +990,13 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             notify = force = handled = True
 
-        elif (
-            event.source != focus
-            and AXUtilities.is_editable(event.source)
-            and (AXUtilities.is_focused(event.source) or not AXUtilities.is_focusable(event.source))
-        ):
+        # TODO - JD: Can this be removed now that events use the priority queue?
+        elif event.source != focus and AXUtilities.is_editable(event.source):
+            if not AXUtilities.is_focused(event.source) and AXUtilities.is_focusable(event.source):
+                msg = "WEB: Ignoring caret event from unfocused editable widget."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+
             msg = "WEB: Editable object is not (yet) the locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             notify = force = handled = (
