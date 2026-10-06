@@ -143,6 +143,7 @@ orca_integration_tests = {
     'integration_tests/test_braille_presenter_commands.py',
     'integration_tests/test_typing_echo.py',
     'integration_tests/test_gtk_text_view_emoji.py',
+    'integration_tests/test_repeated_symbols_text_view.py',
   ],
   'gtk3-terminal': [
     'integration_tests/test_caret_selection_terminal.py',

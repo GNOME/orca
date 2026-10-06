@@ -56,6 +56,7 @@ from .orca_fixtures import (  # noqa: F401
     _gtk3_text_view,
     _gtk3_text_view_blank_line,
     _gtk3_text_view_emoji,
+    _gtk3_text_view_repeated_symbols,
     _gtk3_toolbar,
     _gtk3_tree_view,
     _gtk3_tri_state_checkbox,

@@ -1509,6 +1509,7 @@ class SpeechPresenter(Extension):
         if len(text) < 4 or limit < 4:
             return text
 
+        text = text.replace("\ufeff", "")
         pattern = re.compile(r"([^a-zA-Z0-9\s])\1{" + str(limit - 1) + ",}")
         return re.sub(pattern, replacement, text)
 

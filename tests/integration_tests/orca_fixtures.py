@@ -166,6 +166,12 @@ _gtk3_text_view_emoji = _make_native_app_fixture(
         "End.",
     ),
 )
+_gtk3_text_view_repeated_symbols = _make_native_app_fixture(
+    gtk3_text_view,
+    name="gtk3_text_view_repeated_symbols",
+    required_font=gtk3_text_view.FONT_FAMILY,
+    lines=("Start.", "🎵" * 10, "🎵\ufeff" * 10, "End."),
+)
 _gtk3_announcement = _make_native_app_fixture(gtk3_announcement, scope="function")
 _gtk3_multi_select_list = _make_native_app_fixture(gtk3_multi_select_list, scope="function")
 _gtk3_tree_view = _make_native_app_fixture(gtk3_tree_view, scope="function")
