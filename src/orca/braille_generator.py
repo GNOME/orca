@@ -296,6 +296,10 @@ class BrailleGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_accessible_role(self, obj: Atspi.Accessible) -> list[Any]:
+        string = self._get_content_string(obj)
+        if string and string.isspace():
+            return []
+
         result = []
         role = self._get_resolved_role(obj)
         do_not_present = [

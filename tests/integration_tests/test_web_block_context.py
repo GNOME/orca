@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import capture, move_to_top, reset_web_state
+from .helpers import BrailleLine, capture, move_to_bottom, move_to_top, reset_web_state
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -85,3 +85,28 @@ def test_block_context_boundaries_stay_on_separate_lines(
         spoken, braille = capture(session)
         assert spoken == expected_speech
         assert [line.full for line in braille] == [expected_line]
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize(
+    "direction", [keyboard.KEYSYM_UP, keyboard.KEYSYM_DOWN], ids=["up", "down"]
+)
+def test_landmark_whitespace_does_not_add_role(
+    web_block_context: BrowserSession, direction: int
+) -> None:
+    """Tests whitespace between controls does not add the landmark role to braille."""
+
+    session = web_block_context
+    reset_web_state(session)
+    move_to_bottom(session)
+    capture(session)
+    if direction == keyboard.KEYSYM_DOWN:
+        for _ in range(2):
+            keyboard.tap_key(keyboard.KEYSYM_UP)
+            capture(session)
+
+    keyboard.tap_key(direction)
+    spoken, braille = capture(session)
+    assert spoken == ["banner", "First", "link", "Next", "button"]
+    line = "First\u00a0Next button"
+    assert braille[-1] == BrailleLine(1, line, line, "\xc0" * 5 + "\x00" * 12)
