@@ -25,6 +25,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from . import (
+    ax_cache_manager,
     debug,
     document_presenter,
     input_event_manager,
@@ -38,16 +39,22 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
+    from collections.abc import Hashable
+
     import gi
 
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
+    from .input_event import InputEvent
     from .scripts import default
 
 
 class TextSelectionPresenter:
     """Presents changes in text selection."""
+
+    def __init__(self) -> None:
+        self._last_selection_removal: tuple[Hashable, InputEvent] | None = None
 
     def present_selected_text(
         self,
@@ -68,11 +75,26 @@ class TextSelectionPresenter:
         presentation_manager.get_manager().speak_message(message)
         return True
 
-    @staticmethod
-    def present_selection_removed() -> None:
+    def present_selection_removed(self, obj: Atspi.Accessible | None = None) -> None:
         """Presents that the current text selection was removed."""
 
+        event = input_event_manager.get_manager().get_last_input_event()
+        self._last_selection_removal = (
+            (ax_cache_manager.get_object_key(obj), event)
+            if obj is not None and event is not None
+            else None
+        )
         presentation_manager.get_manager().speak_message(messages.SELECTION_REMOVED)
+
+    def selection_removal_was_presented(self, obj: Atspi.Accessible) -> bool:
+        """Returns whether selection removal in obj was presented for the current input."""
+
+        if self._last_selection_removal is None:
+            return False
+        obj_key, event = self._last_selection_removal
+        if obj_key != ax_cache_manager.get_object_key(obj):
+            return False
+        return input_event_manager.get_manager().last_event_equals_or_is_release_for_event(event)
 
     @staticmethod
     def _present_pending_page_change(obj: Atspi.Accessible) -> bool:
@@ -287,7 +309,7 @@ class TextSelectionPresenter:
             and not new_string
         ):
             if speak_message:
-                presentation_manager.get_manager().speak_message(messages.SELECTION_REMOVED)
+                self.present_selection_removed(obj)
             return False
 
         changes, preceding_child_change_presented = self._compute_changes(
@@ -395,7 +417,7 @@ class TextSelectionPresenter:
             msg = "TEXT SELECTION PRESENTER: Presenting selection removal."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             if speak_message:
-                presentation_manager.get_manager().speak_message(messages.SELECTION_REMOVED)
+                self.present_selection_removed(selection_obj)
             return True
 
         start_obj, start_offset = range_start

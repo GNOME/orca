@@ -97,6 +97,14 @@ def test_selection_mask_uncontracted(gtk3_text_view: NativeAppSession) -> None:
         helpers.BrailleLine(24, line, "Line two has additional words to", _mask(line, 23)),
     )
 
+    keyboard.tap_key(keyboard.KEYSYM_LEFT)
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["Text unselected.", "L"]
+    assert brailled[-1] == helpers.BrailleLine(
+        1, line, "Line two has additional words to", "\x00" * len(line)
+    )
+    assert helpers.say_selection(session) == ["No selected text."]
+
 
 @pytest.mark.native_app
 def test_selection_mask_contracted(gtk3_text_view: NativeAppSession) -> None:

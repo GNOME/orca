@@ -175,8 +175,10 @@ def test_editable_selection_contracted(web_contracted_braille: BrowserSession) -
 
 
 @pytest.mark.native_app
+@pytest.mark.parametrize("collapse_to_start", [False, True], ids=["right", "left"])
 def test_editable_selection_midstring_extend_and_unselect(
     web_contracted_braille: BrowserSession,
+    collapse_to_start: bool,
 ) -> None:
     """Tests a selection that starts mid-line, extends to the end, then is collapsed."""
 
@@ -211,11 +213,17 @@ def test_editable_selection_midstring_extend_and_unselect(
         ),
     )
     # Collapsing the selection clears the whole mask and announces the change.
-    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    keyboard.tap_key(keyboard.KEYSYM_LEFT if collapse_to_start else keyboard.KEYSYM_RIGHT)
     _assert_selection(
         session,
-        speech=["Text unselected."],
+        speech=["Text unselected.", " "] if collapse_to_start else ["Text unselected."],
         line=helpers.BrailleLine(
-            32, _FULL_CONTRACTED, 'gd p * ab "* $ucat$ "ey": 9de$4 ', "\x00" * len(_FULL_CONTRACTED)
+            1 if collapse_to_start else 32,
+            _FULL_CONTRACTED,
+            ' p * ab "* $ucat$ "ey": 9de$4 $l'
+            if collapse_to_start
+            else 'gd p * ab "* $ucat$ "ey": 9de$4 ',
+            "\x00" * len(_FULL_CONTRACTED),
         ),
     )
+    assert helpers.say_selection(session) == ["No selected text."]

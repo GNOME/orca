@@ -472,6 +472,12 @@ class Script(script.Script):
 
         obj, offset = manager.get_last_cursor_position()
         if offset == event.detail1 and obj == event.source:
+            if text_selection_presenter.get_presenter().selection_removal_was_presented(
+                event.source
+            ):
+                msg = "DEFAULT: Selection removal already presented for this input"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
             navigation_reasons = {
                 TextEventReason.NAVIGATION_BY_WORD,
                 TextEventReason.NAVIGATION_BY_CHARACTER,
