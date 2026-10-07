@@ -1749,11 +1749,29 @@ class Utilities(script_utilities.Utilities):
                 return AXUtilities.rects_are_on_same_line(rect, x_rect)
 
             x_obj_block = AXUtilities.get_nearest_block_ancestor(x_obj)
+            same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, inline_flow=True)
+            if obj_block != x_obj_block or not same_line:
+                # A focusable tab-order control that is hidden but still holds its place (an
+                # off-screen or clipped dropdown toggle) is an inline sibling; keep it on the
+                # line when its parent shares obj's block. Non-focusable hidden content (e.g.
+                # off-screen labels) is left out.
+                x_obj_parent = AXObject.get_parent(x_obj)
+                if (
+                    x_obj_parent is not None
+                    and AXUtilities.is_focusable(x_obj)
+                    and AXUtilities.get_nearest_block_ancestor(x_obj_parent) == obj_block
+                    and (
+                        AXUtilities.object_is_outside_parent(x_obj)
+                        or (AXUtilities.is_visible(x_obj) and not AXUtilities.is_showing(x_obj))
+                    )
+                ):
+                    return True
+
             if obj_block == x_obj_block:
                 if abs(rect.x - x_rect.x) <= 1 and abs(rect.y - x_rect.y) <= 1:
                     # Coinciding position is stacked (skip links) unless one contains the other.
                     return AXUtilities.get_common_ancestor(obj, x_obj) in (obj, x_obj)
-                if not AXUtilities.rects_are_on_same_line(rect, x_rect, inline_flow=True):
+                if not same_line:
                     return False
                 # A tall image can vertically overlap text on the line below it; a text run joins
                 # this line only if it also shares the line with text already on it, not merely
@@ -1765,22 +1783,6 @@ class Utilities(script_utilities.Utilities):
                             return AXUtilities.rects_are_on_same_line(
                                 e_rect, x_rect, inline_flow=True
                             )
-                return True
-
-            # A focusable tab-order control that is hidden but still holds its place (an
-            # off-screen or clipped dropdown toggle) is an inline sibling; keep it on the line
-            # when its parent shares obj's block. Non-focusable hidden content (e.g. off-screen
-            # labels) is left out.
-            x_obj_parent = AXObject.get_parent(x_obj)
-            if (
-                x_obj_parent is not None
-                and AXUtilities.is_focusable(x_obj)
-                and AXUtilities.get_nearest_block_ancestor(x_obj_parent) == obj_block
-                and (
-                    AXUtilities.object_is_outside_parent(x_obj)
-                    or (AXUtilities.is_visible(x_obj) and not AXUtilities.is_showing(x_obj))
-                )
-            ):
                 return True
 
             reason = None

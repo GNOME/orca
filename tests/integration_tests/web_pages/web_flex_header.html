@@ -9,6 +9,16 @@
   .bar select { display: block; }
   .stacked { display: flex; flex-direction: column; align-items: flex-start; gap: 1em; }
   .stacked button { display: flex; }
+  .floated { overflow: hidden; }
+  .floated .item { float: left; margin: 0 4px; }
+  .floated a, .floated button { display: block; font-size: 16px; padding: 8px 12px; }
+  .navbar { list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color: #333; }
+  .navbar li { float: left; }
+  .navbar a { display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none; }
+  .navbar.inline-block-items li { float: none; display: inline-block; }
+  .navbar.inline-items li { float: none; display: inline; }
+  .navbar.grid-items { display: grid; grid-template-columns: 1fr 1fr; }
+  .navbar.grid-items li { float: none; }
 </style></head>
 <body>
 <p>Before header.</p>
@@ -25,4 +35,51 @@
   <button>Stacked three</button>
 </header>
 <p>After header.</p>
+<div class="floated">
+  <div class="item"><a href="#">Link 1</a></div>
+  <div class="item"><button>Button 1</button></div>
+  <div class="item"><a href="#">Link 2</a></div>
+  <div class="item"><button>Button 2</button></div>
+</div>
+<p>After floated controls.</p>
+<h2>Floated list</h2>
+<ul class="navbar">
+  <li><a href="#home">Home</a></li>
+  <li><a href="#news">News</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="#about">About</a></li>
+</ul>
+<p>After navigation.</p>
+<h2>Wrapped floated list</h2>
+<ul class="navbar">
+  <li><div><a href="#home">Home</a></div></li>
+  <li><div><a href="#news">News</a></div></li>
+  <li><div><a href="#contact">Contact</a></div></li>
+  <li><div><a href="#about">About</a></div></li>
+</ul>
+<p>After navigation.</p>
+<h2>Wrapped inline-block list</h2>
+<ul class="navbar inline-block-items">
+  <li><div><a href="#home">Home</a></div></li>
+  <li><div><a href="#news">News</a></div></li>
+  <li><div><a href="#contact">Contact</a></div></li>
+  <li><div><a href="#about">About</a></div></li>
+</ul>
+<p>After navigation.</p>
+<h2>Wrapped inline list</h2>
+<ul class="navbar inline-items">
+  <li><div><a href="#home">Home</a></div></li>
+  <li><div><a href="#news">News</a></div></li>
+  <li><div><a href="#contact">Contact</a></div></li>
+  <li><div><a href="#about">About</a></div></li>
+</ul>
+<p>After navigation.</p>
+<h2>Wrapped grid list</h2>
+<ul class="navbar grid-items">
+  <li><div><a href="#home">Home</a></div></li>
+  <li><div><a href="#news">News</a></div></li>
+  <li><div><a href="#contact">Contact</a></div></li>
+  <li><div><a href="#about">About</a></div></li>
+</ul>
+<p>After navigation.</p>
 </body></html>

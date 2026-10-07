@@ -949,9 +949,15 @@ class AXUtilities:
             if rv is not None:
                 return rv
 
-        inline = AXUtilitiesRole.is_inline_element(obj)
+        role = AXObject.get_role(obj)
         parent = AXObject.get_parent(obj)
-        if not inline and above_start and AXUtilitiesRole.is_section(obj):
+        if AXUtilitiesRole.is_list_item(obj, role):
+            inline = "grid" not in AXObject.get_attribute(parent, "display")
+        else:
+            inline = AXUtilitiesRole.is_inline_element(obj, role)
+        if not inline and AXUtilitiesRole.is_widget(obj, role):
+            inline = AXUtilitiesRole.children_are_presentational(obj, role)
+        if not inline and above_start and AXUtilitiesRole.is_section(obj, role):
             # A generic section whose text is only embedded objects (e.g. like-button-view-
             # model) is a transparent wrapper; the section gate keeps a structural [OBJ]-only
             # element (a table row of cells) from being treated as a wrapper.

@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Tests a flex row of mixed-display items groups on one line, but a stacked flex reflows."""
+"""Tests line grouping of mixed controls in flex and floated layouts."""
 
 from __future__ import annotations
 
@@ -79,3 +79,96 @@ def test_line_down_groups_flex_row_but_reflows_stacked_flex(
         spoken, braille = helpers.capture(session)
         assert spoken == expected_speech
         assert [line.full for line in braille] == [expected_line]
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize(
+    "direction", [keyboard.KEYSYM_UP, keyboard.KEYSYM_DOWN], ids=["up", "down"]
+)
+def test_line_navigation_groups_floated_controls(
+    web_flex_header: BrowserSession, direction: int
+) -> None:
+    """Tests floated links and buttons on one visual line are presented together."""
+
+    session = web_flex_header
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    helpers.capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    helpers.capture(session)
+    if direction == keyboard.KEYSYM_DOWN:
+        for _ in range(2):
+            keyboard.tap_key(keyboard.KEYSYM_UP)
+            helpers.capture(session)
+
+    keyboard.tap_key(direction)
+    spoken, braille = helpers.capture(session)
+    assert spoken == [
+        "Link 1",
+        "link",
+        "Button 1",
+        "button",
+        "Link 2",
+        "link",
+        "Button 2",
+        "button",
+    ]
+    assert braille[-1].full == "Link 1 Button 1 button Link 2 Button 2 button"
+
+
+_LIST_LAYOUTS = [
+    ("Floated list", True),
+    ("Wrapped floated list", True),
+    ("Wrapped inline-block list", True),
+    ("Wrapped inline list", False),
+    ("Wrapped grid list", False),
+]
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("layout", range(len(_LIST_LAYOUTS)), ids=[x[0] for x in _LIST_LAYOUTS])
+@pytest.mark.parametrize(
+    "direction", [keyboard.KEYSYM_UP, keyboard.KEYSYM_DOWN], ids=["up", "down"]
+)
+def test_line_navigation_groups_list_items_by_layout(
+    web_flex_header: BrowserSession, layout: int, direction: int
+) -> None:
+    """Tests list layout controls line grouping, including links in block wrappers."""
+
+    session = web_flex_header
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
+    heading, grouped = _LIST_LAYOUTS[layout]
+    if direction == keyboard.KEYSYM_UP and layout == len(_LIST_LAYOUTS) - 1:
+        helpers.move_to_bottom(session)
+        helpers.capture(session)
+    else:
+        heading_count = layout + (2 if direction == keyboard.KEYSYM_UP else 1)
+        for _ in range(heading_count):
+            keyboard.tap_key(keyboard.KEYSYM_H)
+            helpers.capture(session)
+        if direction == keyboard.KEYSYM_UP:
+            keyboard.tap_key(keyboard.KEYSYM_UP)
+            helpers.capture(session)
+
+    names = ["Home", "News", "Contact", "About"]
+    lines = [names] if grouped else [[name] for name in names]
+    if direction == keyboard.KEYSYM_UP:
+        lines.reverse()
+    for index, line in enumerate(lines):
+        keyboard.tap_key(direction)
+        spoken, braille = helpers.capture(session)
+        expected = [part for name in line for part in (name, "link")]
+        if index == 0:
+            expected.insert(0, "List with 4 items")
+        assert spoken == expected
+        assert braille[-1].full == " ".join(line)
+
+    keyboard.tap_key(direction)
+    expected = (
+        ["leaving list.", heading, "heading 2"]
+        if direction == keyboard.KEYSYM_UP
+        else ["leaving list.", "After navigation."]
+    )
+    assert helpers.speech(session) == expected
