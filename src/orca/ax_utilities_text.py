@@ -273,8 +273,10 @@ class AXUtilitiesText:
     def _find_text_selection_endpoint(
         root: Atspi.Accessible,
         find_start: bool,
+        ranges: list[tuple[int, int]] | None = None,
     ) -> tuple[Atspi.Accessible, int] | None:
-        ranges = AXText.get_selected_ranges(root)
+        if ranges is None:
+            ranges = AXText.get_selected_ranges(root)
         if ranges:
             start, end = ranges[0] if find_start else ranges[-1]
             string = AXText.get_substring(root, start, end)
@@ -316,17 +318,20 @@ class AXUtilitiesText:
     @staticmethod
     def get_text_selection_endpoints(
         root: Atspi.Accessible,
+        ranges: list[tuple[int, int]] | None = None,
     ) -> tuple[
         tuple[Atspi.Accessible | None, int],
         tuple[Atspi.Accessible | None, int],
     ]:
         """Returns the first and last selected text positions under root."""
 
+        if ranges is None:
+            ranges = AXText.get_selected_ranges(root)
         start: tuple[Atspi.Accessible | None, int] = (None, -1)
         end: tuple[Atspi.Accessible | None, int] = (None, -1)
-        if found_start := AXUtilitiesText._find_text_selection_endpoint(root, True):
+        if found_start := AXUtilitiesText._find_text_selection_endpoint(root, True, ranges):
             start = found_start
-            end = AXUtilitiesText._find_text_selection_endpoint(root, False) or (None, -1)
+            end = AXUtilitiesText._find_text_selection_endpoint(root, False, ranges) or (None, -1)
         tokens = [
             "AXUtilitiesText: Text selection endpoints under",
             root,

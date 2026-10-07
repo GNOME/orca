@@ -202,7 +202,7 @@ class TestAXUtilitiesDocument:
         result = AXUtilitiesDocument.get_document_text_selection_endpoints(document, root)
 
         assert result == ((start, 2), (end, 8))
-        get_endpoints.assert_called_once_with(root)
+        get_endpoints.assert_called_once_with(root, None)
 
     def test_get_document_text_selection_endpoints_uses_document_getter(
         self,

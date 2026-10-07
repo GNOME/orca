@@ -422,10 +422,11 @@ class TestTextSelectionManager:
         self,
         test_context: OrcaTestContext,
     ) -> None:
-        """Test native selection remains presentable when document endpoints are unavailable."""
+        """Test native selection uses Text endpoints when the Document result is empty."""
 
         self._setup_dependencies(test_context)
         from orca.text_selection_manager import (
+            AXText,
             AXUtilities,
             SelectionChangeState,
             TextSelectionManager,
@@ -450,15 +451,22 @@ class TestTextSelectionManager:
             "get_text_selection_endpoints_from_document_interface",
             return_value=(True, no_selection),
         )
-        test_context.patch_object(AXUtilities, "has_selected_text", return_value=True)
+        test_context.patch_object(AXText, "get_selected_ranges", return_value=[(0, 3)])
+        endpoints = ((event_source, 0), (event_source, 3))
+        get_text_endpoints = test_context.patch_object(
+            AXUtilities,
+            "get_document_text_selection_endpoints",
+            return_value=endpoints,
+        )
         update_cache = test_context.patch_object(AXUtilities, "update_cached_selected_text")
 
         state, old_selection, selection = manager.update_selection_state(event_source)
 
         assert state == SelectionChangeState.NOT_ORCA
         assert old_selection == no_selection
-        assert selection == no_selection
-        boundaries_cache.put.assert_called_once_with("root-key", no_selection)
+        assert selection == endpoints
+        get_text_endpoints.assert_called_once_with(None, event_source, ranges=[(0, 3)])
+        boundaries_cache.put.assert_called_once_with("root-key", endpoints)
         update_cache.assert_not_called()
 
     def test_unpresentable_selection_change_updates_boundaries_and_text_caches(

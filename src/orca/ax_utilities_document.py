@@ -93,6 +93,7 @@ class AXUtilitiesDocument:
         document: Atspi.Accessible | None,
         root: Atspi.Accessible,
         search_text_objects: bool = True,
+        ranges: list[tuple[int, int]] | None = None,
     ) -> tuple[
         tuple[Atspi.Accessible | None, int],
         tuple[Atspi.Accessible | None, int],
@@ -112,7 +113,7 @@ class AXUtilitiesDocument:
 
         msg = "AXUtilitiesDocument: Getting text selection boundaries from text objects."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        start, end = AXUtilitiesText.get_text_selection_endpoints(root)
+        start, end = AXUtilitiesText.get_text_selection_endpoints(root, ranges)
         if end[0] is not None:
             end = end[0], end[1] + 1
         return start, end

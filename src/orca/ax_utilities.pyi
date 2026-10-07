@@ -500,6 +500,7 @@ class AXUtilities:
         document: Atspi.Accessible | None,
         root: Atspi.Accessible,
         search_text_objects: bool = True,
+        ranges: list[tuple[int, int]] | None = None,
     ) -> tuple[
         tuple[Atspi.Accessible | None, int],
         tuple[Atspi.Accessible | None, int],
@@ -1636,6 +1637,7 @@ class AXUtilities:
     @staticmethod
     def get_text_selection_endpoints(
         root: Atspi.Accessible,
+        ranges: list[tuple[int, int]] | None = None,
     ) -> tuple[
         tuple[Atspi.Accessible | None, int],
         tuple[Atspi.Accessible | None, int],

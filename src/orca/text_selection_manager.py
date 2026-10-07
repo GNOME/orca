@@ -551,6 +551,7 @@ class TextSelectionManager:
         self,
         document: Atspi.Accessible | None,
         selection_root: Atspi.Accessible,
+        obj: Atspi.Accessible,
     ) -> SelectionBoundaries:
         """Returns the current selection endpoints."""
 
@@ -558,7 +559,14 @@ class TextSelectionManager:
             document
         )
         if success:
-            return endpoints
+            start, end = endpoints
+            if start[0] is not None or end[0] is not None:
+                return endpoints
+            ranges = AXText.get_selected_ranges(obj)
+            if not ranges:
+                return endpoints
+            # An unimplemented Document getter can return an empty selection.
+            return AXUtilities.get_document_text_selection_endpoints(None, obj, ranges=ranges)
 
         command = self._last_selection_command
         if command is not None and self._get_current_selection_command() is command:
@@ -581,7 +589,7 @@ class TextSelectionManager:
         key = ax_cache_manager.get_object_key(selection_root)
         old_selection = self._get_cached_selection(key)
         old_start, old_end = old_selection
-        selection = self._get_selection_endpoints_for_change(document, selection_root)
+        selection = self._get_selection_endpoints_for_change(document, selection_root, obj)
         start, end = selection
         tokens = [
             "TEXT SELECTION MANAGER: Updating text selection state for",
@@ -606,8 +614,8 @@ class TextSelectionManager:
         if (
             start[0] is None
             and end[0] is None
-            and AXUtilities.has_selected_text(selection_root)
             and (state != SelectionChangeState.NOT_ORCA or old_selection_exists)
+            and AXUtilities.has_selected_text(selection_root)
         ):
             msg = "TEXT SELECTION MANAGER: Ignoring indeterminate selection boundaries."
             debug.print_message(debug.LEVEL_INFO, msg, True)
