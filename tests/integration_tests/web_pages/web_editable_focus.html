@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Editable Focus ready</title>
+</head>
+<body>
+<h1>Editable focus</h1>
+<h2>Unnamed editor</h2>
+<button onclick="document.getElementById('unnamed').focus()">Go to unnamed editor</button>
+<div id="unnamed" contenteditable="true" spellcheck="false">2. Two pages: <a href="#first">first page</a> and <a href="#second">second page</a> end.</div>
+<h2>Editor inside a named group</h2>
+<button onclick="document.getElementById('grouped').focus()">Go to grouped editor</button>
+<div role="group" aria-label="Message group">
+<div id="grouped" contenteditable="true" spellcheck="false">2. Two pages: <a href="#first">first page</a> and <a href="#second">second page</a> end.</div>
+</div>
+<h2>Named editor</h2>
+<button onclick="document.getElementById('named').focus()">Go to named editor</button>
+<div id="named" contenteditable="true" aria-label="Message" spellcheck="false">2. Two pages: <a href="#first">first page</a> and <a href="#second">second page</a> end.</div>
+<h2>Named editor inside a named group</h2>
+<button onclick="document.getElementById('grouped-named').focus()">Go to grouped named editor</button>
+<div role="group" aria-label="Message group">
+<div id="grouped-named" contenteditable="true" aria-label="Message" spellcheck="false">2. Two pages: <a href="#first">first page</a> and <a href="#second">second page</a> end.</div>
+</div>
+<h2>Named editor beginning with a link</h2>
+<button onclick="document.getElementById('link-first').focus()">Go to link-first editor</button>
+<div role="group" aria-label="Message group">
+<div id="link-first" contenteditable="true" aria-label="Message" spellcheck="false"><a href="#first">first page</a> and <a href="#second">second page</a> end.</div>
+</div>
+<dialog id="dialog" aria-label="Editor dialog"><button autofocus>Close</button></dialog>
+<script>
+const dialog = document.getElementById('dialog');
+document.addEventListener('keydown', event => {
+  if (event.key === 'F2' && event.target.isContentEditable) {
+    event.preventDefault();
+    dialog.showModal();
+  }
+});
+dialog.querySelector('button').addEventListener('click', () => dialog.close());
+</script>
+</body>
+</html>

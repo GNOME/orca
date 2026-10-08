@@ -2992,6 +2992,21 @@ class Utilities(script_utilities.Utilities):
 
         return AXUtilities.find_ancestor(obj, is_same_fragment) is not None
 
+    def focus_entered_content_editable(
+        self,
+        old_focus: Atspi.Accessible | None,
+        new_focus: Atspi.Accessible,
+    ) -> bool:
+        """Returns True if focus entered content editable."""
+
+        if old_focus == new_focus or not AXUtilities.is_editable(new_focus):
+            return False
+
+        container = AXUtilities.find_outermost_ancestor_inclusive(
+            AXObject.get_parent(new_focus), AXUtilities.is_editable
+        )
+        return not AXUtilities.is_ancestor(old_focus, container or new_focus, inclusive=True)
+
     def is_content_editable_with_embedded_objects(self, obj: Atspi.Accessible) -> bool:
         """Returns true if obj is content editable with embedded objects."""
 

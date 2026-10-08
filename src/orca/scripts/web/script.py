@@ -522,12 +522,13 @@ class Script(default.Script):
             contents = self.utilities.get_line_contents_at_offset(new_focus, caret_offset)
         elif (
             self.utilities.is_content_editable_with_embedded_objects(new_focus)
+            and not (AXUtilities.is_table_cell(new_focus) and AXObject.get_name(new_focus))
             and (
                 last_command_was_caret_nav
                 or last_command_was_struct_nav
                 or last_command_was_line_nav
+                or self.utilities.focus_entered_content_editable(old_focus, new_focus)
             )
-            and not (AXUtilities.is_table_cell(new_focus) and AXObject.get_name(new_focus))
         ):
             tokens = ["WEB: New focus", new_focus, "content editable. Generating line."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)

@@ -240,6 +240,7 @@ orca_integration_tests = {
     'integration_tests/test_web_editable_boundaries.py',
     'integration_tests/test_web_editable_embedded.py',
     'integration_tests/test_web_editable_embedded_selection.py',
+    'integration_tests/test_web_editable_focus.py',
     'integration_tests/test_web_alert.py',
     'integration_tests/test_web_braille_panning.py',
     'integration_tests/test_web_braille_contractions.py',

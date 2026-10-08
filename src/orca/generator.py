@@ -26,7 +26,7 @@
 from __future__ import annotations
 
 import time
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 from difflib import SequenceMatcher
 from enum import Enum
 from typing import TYPE_CHECKING, Any
@@ -105,6 +105,7 @@ class GeneratorContext:
     resolved_role: Atspi.Role | str | None
     role_subject: Atspi.Accessible | None
     include_context: bool
+    presented_names: set[Atspi.Accessible] | None = field(default=None, kw_only=True)
 
 
 class _GeneratorCache:
@@ -722,6 +723,10 @@ class Generator:
 
     @log_generator_output
     def _generate_accessible_label_and_name(self, obj: Atspi.Accessible) -> list[Any]:
+        presented_names = self._context.presented_names
+        if presented_names is not None and obj in presented_names:
+            return []
+
         focus: Atspi.Accessible | None = self._context.focus
 
         # TODO - JD: The role check is a quick workaround for issue #535 in which we stopped
@@ -745,6 +750,8 @@ class Generator:
         result = []
         label = self._generate_accessible_label(obj)
         name = self._generate_accessible_name(obj)
+        if presented_names is not None and (label or name):
+            presented_names.add(obj)
 
         # If we don't have a label, always use the name.
         if not label:

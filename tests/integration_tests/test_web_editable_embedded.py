@@ -45,7 +45,7 @@ def test_line_navigation_down_and_up(web_editable_embedded: BrowserSession) -> N
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert capture(session, wait_async=True) == (
-        ["Focus mode"],
+        ["First line of notes.", "Focus mode"],
         [
             BrailleLine(0, "First line of notes. $l", "First line of notes. $l", "\x00" * 23),
             BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10),

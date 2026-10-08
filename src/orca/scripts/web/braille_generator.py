@@ -273,7 +273,12 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         context: BrailleGeneratorContext,
     ) -> tuple[list[list[Any]], Atspi.Accessible | None]:
         self._context = context
-        return self._generate_web_braille_contents(contents)
+        if context.presented_names is None:
+            self._context = replace(context, presented_names=set())
+        try:
+            return self._generate_web_braille_contents(contents)
+        finally:
+            self._context = context
 
     def _generate_web_braille_contents(
         self,
@@ -291,6 +296,17 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         last_region = None
         focused_region = None
         original_context = self._context
+        if contents and AXUtilities.is_editable(contents[0][0]):
+            first = contents[0][0]
+            block = AXUtilities.get_nearest_block_ancestor(first)
+            if block != first and AXUtilities.is_editable(block):
+                self._context = replace(original_context, content_subject=block)
+                label = self._as_string(self._generate_accessible_label_and_name(block))
+                if label:
+                    last_region = braille.Component(block, label)
+                    result.append([last_region])
+                self._context = original_context
+
         for i, content in enumerate(contents):
             acc, start, end, string = content
             item_context = replace(

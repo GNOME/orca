@@ -38,7 +38,7 @@ def _radio_line(group: str, *labels: str) -> tuple[str, str]:
 
     return (
         " ".join(f"{label} not selected radio button" for label in labels),
-        " ".join(f"{group} & y {label} radio button" for label in labels),
+        f"{group} " + " ".join(f"& y {label} radio button" for label in labels),
     )
 
 

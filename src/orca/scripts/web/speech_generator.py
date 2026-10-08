@@ -376,6 +376,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         if obj == self._get_prior_obj() and AXUtilities.is_editable(obj):
+            if self._context.presented_names is not None:
+                self._context.presented_names.add(obj)
             return []
 
         if AXUtilities.is_label(obj, self._get_resolved_role()) and AXObject.supports_text(obj):
@@ -760,7 +762,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         context: SpeechGeneratorContext,
     ) -> list[Any]:
         self._context = context
-        return self._generate_web_contents(contents)
+        if context.presented_names is None:
+            self._context = replace(context, presented_names=set())
+        try:
+            return self._generate_web_contents(contents)
+        finally:
+            self._context = context
 
     @staticmethod
     def _cell_named_by(obj: Atspi.Accessible) -> Atspi.Accessible | None:
