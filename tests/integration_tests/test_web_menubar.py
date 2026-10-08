@@ -52,7 +52,8 @@ def test_arrow_navigation_through_the_menubar(web_menubar: BrowserSession) -> No
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     spoken, brailled = capture(session)
-    assert spoken == ["expanded", "Books"]
+    # Expansion is announced only if handled before focus moves into the menu.
+    assert spoken in (["expanded", "Books"], ["Books"])
     assert brailled[-1] == BrailleLine(1, "Books", "Books", "\x00" * 5)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -67,7 +68,7 @@ def test_arrow_navigation_through_the_menubar(web_menubar: BrowserSession) -> No
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
     spoken, brailled = capture(session)
-    assert spoken == ["expanded", "Letters"]
+    assert spoken in (["expanded", "Letters"], ["Letters"])
     assert brailled[-1] == BrailleLine(1, "Letters", "Letters", "\x00" * 7)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)

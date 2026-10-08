@@ -1186,8 +1186,12 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if AXUtilitiesRole.is_button(event.source, role) and AXUtilitiesRole.is_menu_related(focus):
-            msg = "AXUtilitiesEvent: Ignoring button expansion after focus moved into a menu."
+        if (
+            AXUtilitiesRole.is_button(event.source, role)
+            or AXUtilitiesRole.is_menu(event.source, role)
+            or AXUtilitiesRole.is_menu_item_of_any_kind(event.source, role)
+        ) and AXUtilitiesRole.is_menu_related(focus):
+            msg = "AXUtilitiesEvent: Ignoring expansion after focus moved into a menu."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
