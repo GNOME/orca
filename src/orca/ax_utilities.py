@@ -935,14 +935,11 @@ class AXUtilities:
     def get_nearest_block_ancestor(
         obj: Atspi.Accessible, original: Atspi.Accessible | None = None
     ) -> Atspi.Accessible | None:
-        """Returns obj or its nearest ancestor that is not an inline element."""
+        """Returns obj or its nearest ancestor that separates blocks for line grouping."""
 
         if original is None:
             original = obj
 
-        # The wrapper transparency below holds only while ascending from the inline start, not
-        # for the start itself; the start is kept out of the cache too, so its answer and the
-        # ancestor answer for the same object cannot overwrite one another.
         above_start = obj is not original
         if above_start:
             rv = AXUtilities._CACHE.get_nearest_block_ancestor(obj)
@@ -957,12 +954,10 @@ class AXUtilities:
             inline = AXUtilitiesRole.is_inline_element(obj, role)
         if not inline and AXUtilitiesRole.is_widget(obj, role):
             inline = AXUtilitiesRole.children_are_presentational(obj, role)
-        if not inline and above_start and AXUtilitiesRole.is_section(obj, role):
-            # A generic section whose text is only embedded objects (e.g. like-button-view-
-            # model) is a transparent wrapper; the section gate keeps a structural [OBJ]-only
-            # element (a table row of cells) from being treated as a wrapper.
-            text = AXText.get_all_text(obj)
-            inline = "\ufffc" in text and not re.search(r"[^\s\ufffc]", text)
+        if not inline and AXUtilitiesRole.is_section(obj, role):
+            inline = "grid" not in AXObject.get_attribute(obj, "display") and "grid" not in (
+                AXObject.get_attribute(parent, "display")
+            )
 
         if inline:
             rv = (

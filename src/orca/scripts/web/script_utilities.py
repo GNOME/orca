@@ -1739,14 +1739,15 @@ class Utilities(script_utilities.Utilities):
                 x_rect = self._get_extents(x_obj, x_start, x_end)
 
             if x_obj == obj:
-                # Contiguous ranges from the same text object are different AT-SPI lines;
-                # character extents at wrap boundaries can be unreliable.
-                if AXObject.supports_text(obj):
-                    for existing_obj, e_start, e_end, _e_string in objects:
-                        if existing_obj == x_obj and (x_start == e_end or x_end == e_start):
-                            return False
+                # Preserve explicit line breaks even when their bounds overlap the next line.
+                first_obj, first_start, _, _ = objects[0]
+                last_obj, _, last_end, last_string = objects[-1]
+                if (first_obj == x_obj and x_end == first_start and _x_string.endswith("\n")) or (
+                    last_obj == x_obj and x_start == last_end and last_string.endswith("\n")
+                ):
+                    return False
 
-                return AXUtilities.rects_are_on_same_line(rect, x_rect)
+                return AXUtilities.rects_are_on_same_line(rect, x_rect, inline_flow=True)
 
             x_obj_block = AXUtilities.get_nearest_block_ancestor(x_obj)
             same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, inline_flow=True)

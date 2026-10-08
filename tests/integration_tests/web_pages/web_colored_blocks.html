@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Colored Blocks ready</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 32px; }
+  .blocks { display: flex; gap: 15px; align-items: center; }
+  .block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+    border: 3px solid #333;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+  }
+  .block:nth-child(1) { background: #c00; }
+  .block:nth-child(2) { background: #060; }
+  .block:nth-child(3) { background: #05c; }
+  .block[onclick] { cursor: pointer; }
+  .column { flex-direction: column; }
+  .wrapped { flex-wrap: wrap; width: 270px; }
+  .multiline .block { flex-direction: column; }
+</style>
+<script>
+  function selectColor(block) {
+    document.getElementById("result").textContent = block.textContent + " selected.";
+  }
+</script>
+</head>
+<body>
+<h1>Colored blocks</h1>
+<h2>Clickable blocks</h2>
+<div class="blocks">
+  <div class="block" id="red" onclick="selectColor(this)">Red</div>
+  <div class="block" id="green" onclick="selectColor(this)">Green</div>
+  <div class="block" id="blue" onclick="selectColor(this)">Blue</div>
+</div>
+<p>After blocks.</p>
+<h2>Plain blocks</h2>
+<div class="blocks">
+  <div class="block">Red</div>
+  <div class="block">Green</div>
+  <div class="block">Blue</div>
+</div>
+<p>After blocks.</p>
+<h2>Stacked clickable blocks</h2>
+<div class="blocks column">
+  <div class="block" onclick="selectColor(this)">Red</div>
+  <div class="block" onclick="selectColor(this)">Green</div>
+  <div class="block" onclick="selectColor(this)">Blue</div>
+</div>
+<p>After blocks.</p>
+<h2>Stacked plain blocks</h2>
+<div class="blocks column">
+  <div class="block">Red</div>
+  <div class="block">Green</div>
+  <div class="block">Blue</div>
+</div>
+<p>After blocks.</p>
+<h2>Wrapped clickable blocks</h2>
+<div class="blocks wrapped">
+  <div class="block" onclick="selectColor(this)">Red</div>
+  <div class="block" onclick="selectColor(this)">Green</div>
+  <div class="block" onclick="selectColor(this)">Blue</div>
+</div>
+<p>After blocks.</p>
+<h2>Wrapped plain blocks</h2>
+<div class="blocks wrapped">
+  <div class="block">Red</div>
+  <div class="block">Green</div>
+  <div class="block">Blue</div>
+</div>
+<p>After blocks.</p>
+<h2>Nested clickable labels</h2>
+<div class="blocks">
+  <div class="block" onclick="selectColor(this)"><div>Red</div></div>
+  <div class="block" onclick="selectColor(this)"><div>Green</div></div>
+  <div class="block" onclick="selectColor(this)"><div>Blue</div></div>
+</div>
+<p>After blocks.</p>
+<h2>Nested plain labels</h2>
+<div class="blocks">
+  <div class="block"><div>Red</div></div>
+  <div class="block"><div>Green</div></div>
+  <div class="block"><div>Blue</div></div>
+</div>
+<p>After blocks.</p>
+<h2>Multiline clickable labels</h2>
+<div class="blocks multiline">
+  <div class="block" onclick="selectColor(this)"><div>Red</div><div>Tone</div></div>
+  <div class="block" onclick="selectColor(this)"><div>Green</div><div>Tone</div></div>
+  <div class="block" onclick="selectColor(this)"><div>Blue</div><div>Tone</div></div>
+</div>
+<p>After blocks.</p>
+<h2>Multiline plain labels</h2>
+<div class="blocks multiline">
+  <div class="block"><div>Red</div><div>Tone</div></div>
+  <div class="block"><div>Green</div><div>Tone</div></div>
+  <div class="block"><div>Blue</div><div>Tone</div></div>
+</div>
+<p>After blocks.</p>
+<h2>End of examples</h2>
+<p id="result">No color selected.</p>
+</body>
+</html>

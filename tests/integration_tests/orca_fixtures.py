@@ -589,6 +589,7 @@ _web_blockquote_line_breaks = _make_web_fixture("web_blockquote_line_breaks.html
 _web_code_block = _make_web_fixture("web_code_block.html")
 _web_code_block_multiline = _make_web_fixture("web_code_block_multiline.html")
 _web_flex_header = _make_web_fixture("web_flex_header.html")
+_web_colored_blocks = _make_web_fixture("web_colored_blocks.html")
 _web_plain_text = _make_plain_text_fixture("web_plain_text.txt")
 _web_languages = _make_web_fixture("web_languages.html")
 _web_line_breaks = _make_web_fixture("web_line_breaks.html", caret_browsing=True)

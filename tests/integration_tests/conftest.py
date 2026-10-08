@@ -78,6 +78,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_caret_context,
     _web_code_block,
     _web_code_block_multiline,
+    _web_colored_blocks,
     _web_contracted_braille,
     _web_cssed_brokenness,
     _web_custom_wrappers,
