@@ -86,6 +86,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_dialogs,
     _web_disclosure,
     _web_dynamic_content,
+    _web_editable_boundaries,
     _web_editable_embedded,
     _web_editable_embedded_selection,
     _web_editing,

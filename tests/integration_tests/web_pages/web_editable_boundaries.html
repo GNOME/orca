@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Editable Boundaries ready</title>
+<style>
+  .floated button { float: left; margin-right: 1em; }
+  .floated [contenteditable] { margin-left: 12em; }
+</style>
+</head>
+<body>
+<h1>Editable boundaries</h1>
+<h2>Stacked editor</h2>
+<button onclick="document.getElementById('stacked').focus()">Go to the editor</button>
+<div id="stacked" contenteditable="true" spellcheck="false">Editor text.</div>
+<h2>Floated editor</h2>
+<div class="floated">
+<button onclick="document.getElementById('floated').focus()">Go to the editor</button>
+<div id="floated" contenteditable="true" spellcheck="false">Editor text.</div>
+</div>
+</body>
+</html>

@@ -955,8 +955,10 @@ class AXUtilities:
         if not inline and AXUtilitiesRole.is_widget(obj, role):
             inline = AXUtilitiesRole.children_are_presentational(obj, role)
         if not inline and AXUtilitiesRole.is_section(obj, role):
-            inline = "grid" not in AXObject.get_attribute(obj, "display") and "grid" not in (
-                AXObject.get_attribute(parent, "display")
+            inline = (
+                "grid" not in AXObject.get_attribute(obj, "display")
+                and "grid" not in AXObject.get_attribute(parent, "display")
+                and not AXUtilitiesState.is_editable(obj)
             )
 
         if inline:
