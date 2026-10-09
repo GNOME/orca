@@ -522,14 +522,12 @@ class TextSelectionManager:
         reported_elements = AXUtilities.get_text_selection_elements(
             old_start[0],
             old_end[0],
-        ) + AXUtilities.get_text_selection_elements(start[0], end[0])
+        )
+        if start[0] != old_start[0] or end[0] != old_end[0]:
+            reported_elements += AXUtilities.get_text_selection_elements(start[0], end[0])
         if event_source is not None:
             reported_elements.append(event_source)
-        elements: list[Atspi.Accessible] = []
-        for element in reported_elements:
-            if element not in elements:
-                elements.append(element)
-        for element in elements:
+        for element in dict.fromkeys(reported_elements):
             AXUtilities.update_cached_selected_text(element)
 
     def _store_selection_change(

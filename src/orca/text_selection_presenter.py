@@ -523,7 +523,11 @@ class TextSelectionPresenter:
         start_obj, _start_offset = start
         end_obj, _end_offset = end
         old_elements = AXUtilities.get_text_selection_elements(old_start_obj, old_end_obj)
-        new_elements = AXUtilities.get_text_selection_elements(start_obj, end_obj)
+        new_elements = (
+            old_elements
+            if start_obj == old_start_obj and end_obj == old_end_obj
+            else AXUtilities.get_text_selection_elements(start_obj, end_obj)
+        )
         if not old_elements and not new_elements:
             manager = text_selection_manager.get_manager()
             if not manager.is_selection_change_from_selection_command(obj):
@@ -547,10 +551,7 @@ class TextSelectionPresenter:
                 AXUtilities.update_cached_selected_text(element)
             return bool(new_elements)
 
-        elements = []
-        for element in old_elements + new_elements:
-            if element not in elements:
-                elements.append(element)
+        elements = dict.fromkeys(old_elements + new_elements)
 
         tokens = [
             "TEXT SELECTION PRESENTER: Document selection element count:",

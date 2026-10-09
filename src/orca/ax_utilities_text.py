@@ -376,9 +376,11 @@ class AXUtilitiesText:
             if not _is_selection_element(child):
                 continue
             elements.append(child)
+            descendants = []
             if not AXUtilitiesRole.is_code(child):
-                elements.extend(AXUtilitiesObject.find_all_descendants(child, _include, _exclude))
-            if end_obj in elements:
+                descendants = AXUtilitiesObject.find_all_descendants(child, _include, _exclude)
+                elements.extend(descendants)
+            if end_obj == child or end_obj in descendants:
                 break
 
         if end_obj == start_obj:
