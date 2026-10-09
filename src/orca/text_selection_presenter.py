@@ -49,6 +49,14 @@ if TYPE_CHECKING:
     from .input_event import InputEvent
     from .scripts import default
 
+    DocumentTextChange = tuple[
+        tuple[Atspi.Accessible, int],
+        tuple[Atspi.Accessible, int],
+        bool,
+        bool,
+        str,
+    ]
+
 
 class TextSelectionPresenter:
     """Presents changes in text selection."""
@@ -343,16 +351,7 @@ class TextSelectionPresenter:
         old_end: tuple[Atspi.Accessible | None, int],
         start: tuple[Atspi.Accessible | None, int],
         end: tuple[Atspi.Accessible | None, int],
-    ) -> (
-        tuple[
-            tuple[Atspi.Accessible, int],
-            tuple[Atspi.Accessible, int],
-            bool,
-            bool,
-            str,
-        ]
-        | None
-    ):
+    ) -> DocumentTextChange | None:
         """Returns the changed document range and its selection state."""
 
         old_start_obj, _old_start_offset = old_start
@@ -394,10 +393,13 @@ class TextSelectionPresenter:
         start: tuple[Atspi.Accessible | None, int],
         end: tuple[Atspi.Accessible | None, int],
         speak_message: bool,
+        *,
+        change: DocumentTextChange | None = None,
     ) -> bool:
         """Presents a document text selection change as a single phrase."""
 
-        change = self._get_document_text_change(old_start, old_end, start, end)
+        if change is None:
+            change = self._get_document_text_change(old_start, old_end, start, end)
         if change is None:
             msg = "TEXT SELECTION PRESENTER: Could not identify changed document text range."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -522,6 +524,32 @@ class TextSelectionPresenter:
         old_end_obj, _old_end_offset = old_end
         start_obj, _start_offset = start
         end_obj, _end_offset = end
+        if start_obj is not None and start == old_start and end == old_end:
+            msg = "TEXT SELECTION PRESENTER: Ignoring duplicate document selection boundaries."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        change = self._get_document_text_change(old_start, old_end, start, end)
+        if change is not None and self._present_document_text_change(
+            script, old_start, old_end, start, end, speak_message, change=change
+        ):
+            range_start, range_end, _include_start, _include_end, _message = change
+            elements = dict.fromkeys(
+                AXUtilities.get_text_selection_elements(range_start[0], range_end[0])
+            )
+            visited = set()
+            for endpoint in (range_start[0], range_end[0]):
+                ancestor = endpoint
+                while ancestor is not None and ancestor not in visited:
+                    visited.add(ancestor)
+                    if AXUtilities.is_document(ancestor):
+                        break
+                    elements[ancestor] = None
+                    ancestor = AXObject.get_parent(ancestor)
+            for element in elements:
+                AXUtilities.update_cached_selected_text(element)
+            return True
+
         old_elements = AXUtilities.get_text_selection_elements(old_start_obj, old_end_obj)
         new_elements = (
             old_elements
@@ -544,13 +572,6 @@ class TextSelectionPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return self._handle_basic_change(script, obj, speak_message)
 
-        if start == old_start and end == old_end:
-            msg = "TEXT SELECTION PRESENTER: Ignoring duplicate document selection boundaries."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            for element in new_elements:
-                AXUtilities.update_cached_selected_text(element)
-            return bool(new_elements)
-
         elements = dict.fromkeys(old_elements + new_elements)
 
         tokens = [
@@ -561,18 +582,6 @@ class TextSelectionPresenter:
 
         if not elements:
             return False
-
-        if self._present_document_text_change(
-            script,
-            old_start,
-            old_end,
-            start,
-            end,
-            speak_message,
-        ):
-            for element in elements:
-                AXUtilities.update_cached_selected_text(element)
-            return True
 
         boundary_objects = (old_start_obj, old_end_obj, start_obj, end_obj)
         for element in elements:

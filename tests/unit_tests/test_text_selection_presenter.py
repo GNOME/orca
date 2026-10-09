@@ -450,7 +450,7 @@ class TestTextSelectionPresenter:
         test_context.patch_object(
             AXUtilities,
             "get_text_selection_elements",
-            side_effect=[[], [start_obj, end_obj]],
+            return_value=[start_obj, end_obj],
         )
         present_change = test_context.patch_object(
             presenter,
@@ -473,6 +473,7 @@ class TestTextSelectionPresenter:
             start,
             end,
             True,
+            change=(start, end, True, False, dependencies["orca.messages"].TEXT_SELECTED),
         )
         assert [call.args for call in update_cache.call_args_list] == [
             (start_obj,),
