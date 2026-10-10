@@ -59,6 +59,18 @@ class Script(default.Script):
 
         return Utilities(self)
 
+    def locus_of_focus_changed(
+        self,
+        event: Atspi.Event | None,
+        old_focus: Atspi.Accessible | None,
+        new_focus: Atspi.Accessible | None,
+    ) -> bool:
+        """Updates the caret context when focus changes."""
+
+        if old_focus != new_focus:
+            self.utilities.clear_caret_context()
+        return super().locus_of_focus_changed(event, old_focus, new_focus)
+
     def _on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 

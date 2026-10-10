@@ -49,6 +49,7 @@ from .apps import (
     gtk3_multi_select_list,
     gtk3_redundant_names,
     gtk3_terminal,
+    gtk3_terminal_focus,
     gtk3_text_view,
     gtk3_toolbar,
     gtk3_tree_view,
@@ -129,6 +130,9 @@ def _make_native_app_fixture(
         )
 
     return fixture
+
+
+_gtk3_terminal_focus = _make_native_app_fixture(gtk3_terminal_focus, scope="function")
 
 
 _gtk3_text_view = _make_native_app_fixture(

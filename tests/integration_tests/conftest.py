@@ -45,6 +45,7 @@ from .orca_fixtures import (  # noqa: F401
     _gtk3_multi_select_list,
     _gtk3_redundant_names,
     _gtk3_terminal_flatrev,
+    _gtk3_terminal_focus,
     _gtk3_terminal_nano,
     _gtk3_terminal_pager,
     _gtk3_terminal_review_update,
