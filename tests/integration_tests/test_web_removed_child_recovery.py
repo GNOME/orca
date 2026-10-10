@@ -66,3 +66,32 @@ def test_navigation_continues_after_focused_line_removed(
         ["Go.", "heading 1"],
         [BrailleLine(1, "Go. h1", "Go. h1", "\x00" * 6)],
     )
+
+
+@pytest.mark.native_app
+def test_navigation_recovers_focused_replacement(
+    web_removed_child_recovery: BrowserSession,
+) -> None:
+    """Tests navigation retains the focused replacement in both directions."""
+
+    session = web_removed_child_recovery
+    reset_web_state(session)
+    keyboard.press_key(keyboard.KEYSYM_CONTROL_L)
+    keyboard.tap_key(keyboard.KEYSYM_END)
+    keyboard.release_key(keyboard.KEYSYM_CONTROL_L)
+    capture(session, wait_async=True)
+
+    for key, expected in (
+        (keyboard.KEYSYM_UP, ["Replacement image", "image"]),
+        (keyboard.KEYSYM_UP, ["Last paragraph here."]),
+        (keyboard.KEYSYM_DOWN, ["Replacement image", "image"]),
+        (keyboard.KEYSYM_DOWN, ["End of page."]),
+        (keyboard.KEYSYM_UP, ["Replacement image", "image"]),
+    ):
+        keyboard.tap_key(key)
+        spoken, brailled = capture(session, wait_async=True)
+        assert spoken == expected
+        if expected == ["Replacement image", "image"]:
+            assert brailled[-1] == BrailleLine(
+                1, "Replacement image image", "Replacement image image", "\x00" * 23
+            )

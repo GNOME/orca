@@ -3215,6 +3215,21 @@ class Utilities(script_utilities.Utilities):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        focused_event = self._script.get_queued_event("object:state-changed:focused")
+        if (
+            focused_event
+            and focused_event.detail1
+            and focused_event.source != focus
+            and AXUtilities.is_focused(focused_event.source)
+            and self.get_top_level_document_for_object(focused_event.source)
+            == self.get_top_level_document_for_object(event.source)
+        ):
+            obj = focused_event.source
+            tokens = ["WEB: Recovering removed focus using focused object", obj]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            focus_manager.get_manager().set_locus_of_focus(event, obj)
+            return True
+
         if event.detail1 == -1:
             msg = "WEB: Event detail1 is useless."
             debug.print_message(debug.LEVEL_INFO, msg, True)
