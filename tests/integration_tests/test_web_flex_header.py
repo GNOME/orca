@@ -122,6 +122,7 @@ _LIST_LAYOUTS = [
     ("Wrapped floated list", True),
     ("Wrapped inline-block list", True),
     ("Wrapped inline list", False),
+    ("Scrolling inline list", False),
     ("Wrapped grid list", False),
 ]
 

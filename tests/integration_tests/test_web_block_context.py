@@ -88,6 +88,48 @@ def test_block_context_boundaries_stay_on_separate_lines(
 
 
 @pytest.mark.native_app
+@pytest.mark.parametrize("heading_count", [1, 2], ids=["clip", "clip-path"])
+@pytest.mark.parametrize(
+    "direction", [keyboard.KEYSYM_UP, keyboard.KEYSYM_DOWN], ids=["up", "down"]
+)
+def test_clipped_buttons_share_line_with_links(
+    web_block_context: BrowserSession, heading_count: int, direction: int
+) -> None:
+    """Tests clipped buttons remain on their links' line in both directions."""
+
+    session = web_block_context
+    reset_web_state(session)
+    move_to_top(session)
+    for _ in range(heading_count + (direction == keyboard.KEYSYM_UP)):
+        keyboard.tap_key(keyboard.KEYSYM_H)
+        capture(session)
+    if direction == keyboard.KEYSYM_UP:
+        keyboard.tap_key(keyboard.KEYSYM_UP)
+        capture(session)
+
+    keyboard.tap_key(direction)
+    spoken, braille = capture(session)
+    expected = ["List with 3 items"]
+    for name in ("Motors", "Electronics", "Collectibles"):
+        expected.extend([name, "link", f"Expand: {name}", "button"])
+    assert spoken == expected
+    assert braille[-1].full == (
+        "Motors Expand: Motors button Electronics Expand: Electronics button "
+        "Collectibles Expand: Collectibles button"
+    )
+
+    keyboard.tap_key(direction)
+    spoken, _ = capture(session)
+    heading = "Clipped buttons" if heading_count == 1 else "Clip-path buttons"
+    expected = (
+        ["leaving list.", heading, "heading 2"]
+        if direction == keyboard.KEYSYM_UP
+        else ["leaving list.", f"After {heading.lower()}."]
+    )
+    assert spoken == expected
+
+
+@pytest.mark.native_app
 @pytest.mark.parametrize(
     "direction", [keyboard.KEYSYM_UP, keyboard.KEYSYM_DOWN], ids=["up", "down"]
 )

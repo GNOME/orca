@@ -17,6 +17,7 @@
   .navbar a { display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none; }
   .navbar.inline-block-items li { float: none; display: inline-block; }
   .navbar.inline-items li { float: none; display: inline; }
+  .navbar.scrolling { height: 48px; overflow: auto; }
   .navbar.grid-items { display: grid; grid-template-columns: 1fr 1fr; }
   .navbar.grid-items li { float: none; }
 </style></head>
@@ -68,6 +69,14 @@
 <p>After navigation.</p>
 <h2>Wrapped inline list</h2>
 <ul class="navbar inline-items">
+  <li><div><a href="#home">Home</a></div></li>
+  <li><div><a href="#news">News</a></div></li>
+  <li><div><a href="#contact">Contact</a></div></li>
+  <li><div><a href="#about">About</a></div></li>
+</ul>
+<p>After navigation.</p>
+<h2>Scrolling inline list</h2>
+<ul class="navbar inline-items scrolling">
   <li><div><a href="#home">Home</a></div></li>
   <li><div><a href="#news">News</a></div></li>
   <li><div><a href="#contact">Contact</a></div></li>

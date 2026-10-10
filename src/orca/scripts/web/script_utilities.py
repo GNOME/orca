@@ -1765,10 +1765,7 @@ class Utilities(script_utilities.Utilities):
                     x_obj_parent is not None
                     and AXUtilities.is_focusable(x_obj)
                     and AXUtilities.get_nearest_block_ancestor(x_obj_parent) == obj_block
-                    and (
-                        AXUtilities.object_is_outside_parent(x_obj)
-                        or (AXUtilities.is_visible(x_obj) and not AXUtilities.is_showing(x_obj))
-                    )
+                    and AXUtilities.object_is_outside_parent(x_obj)
                 ):
                     return True
 

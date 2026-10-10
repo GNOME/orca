@@ -6,6 +6,10 @@
   .hnav li { display: inline-block; margin-right: 2em; }
   /* Off-screen but focusable and in the accessible name, like eBay's dropdown toggles. */
   .hnav .expand { position: absolute; top: -10000px; }
+  .hnav.clipped li { position: relative; }
+  .hnav.clipped .expand { top: auto; width: 1px; height: 1px; padding: 0; border: 0; overflow: hidden; white-space: nowrap; }
+  .clipped-rect .expand { clip: rect(0, 0, 0, 0); }
+  .clipped-path .expand { clip-path: inset(50%); }
   .hbar a { margin-right: 2em; }
   ul, pre { margin: 0; }
 </style>
@@ -32,6 +36,21 @@ Code two</pre>
   </ul>
 </nav>
 <p>The end.</p>
+<h2>Clipped buttons</h2>
+<ul class="hnav clipped clipped-rect">
+  <li><a href="#a">Motors</a><button class="expand">Expand: Motors</button></li>
+  <li><a href="#b">Electronics</a><button class="expand">Expand: Electronics</button></li>
+  <li><a href="#c">Collectibles</a><button class="expand">Expand: Collectibles</button></li>
+</ul>
+<p>After clipped buttons.</p>
+<h2>Clip-path buttons</h2>
+<ul class="hnav clipped clipped-path">
+  <li><a href="#a">Motors</a><button class="expand">Expand: Motors</button></li>
+  <li><a href="#b">Electronics</a><button class="expand">Expand: Electronics</button></li>
+  <li><a href="#c">Collectibles</a><button class="expand">Expand: Collectibles</button></li>
+</ul>
+<p>After clip-path buttons.</p>
+<h2>Banner controls</h2>
 <header><a href="#first">First</a>&nbsp;<button>Next</button></header>
 <p>After banner.</p>
 </body></html>
