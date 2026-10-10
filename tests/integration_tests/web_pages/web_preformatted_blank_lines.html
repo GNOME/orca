@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Preformatted Blank Lines ready</title>
+<style>
+  pre { font: 13px/1.45 monospace; padding: 16px; overflow: auto; }
+  code { font: inherit; white-space: pre; }
+</style>
+</head>
+<body>
+<h1>Release notes</h1>
+<!-- Excerpt: https://github.com/systemd/systemd/releases/tag/v261 -->
+<div class="snippet-clipboard-content">
+<pre class="notranslate"><code>    * systemd-logind's integration with the UAPI.1 Boot Loader
+      Specification (which allows the systemctl reboot --boot-loader-entry=
+      switch to work) so far has supported a special directory
+      /run/boot-loader-entries/ which allowed defining boot loader entries
+      outside of the ESP/XBOOTLDR partition for compatibility with legacy
+      systems that do not natively implement UAPI.1. However, it appears
+      that (to our knowledge) it is not actually being used by any project
+      (quite unlike UAPI.1 itself, which found adoption far beyond
+      systemd), and its implementation is incomplete. With the future 262
+      release we intend to remove support for /run/boot-loader-entries/ and
+      related interfaces, in order to simplify our codebase. Support for
+      UAPI.1 is – of course – kept in place.
+
+    * The experimental "systemd-sysupdated" D-Bus API is going to be
+      removed in the next release. The plan is that in its place
+      clients should directly talk to systemd-sysupdate (i.e. the backend
+      of "systemd-sysupdated") via Varlink IPC. The "updatectl" tool will
+      be reworked along these lines.
+</code></pre>
+</div>
+<p>End of release notes.</p>
+</body>
+</html>

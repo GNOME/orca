@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca List Replacement ready</title>
+<style>ul { list-style: none; padding: 0; }</style>
+</head>
+<body>
+<h1>Issues</h1>
+<ul id="issues">
+  <li><a href="#alpha">Alpha</a></li>
+  <li><a href="#beta">Beta</a></li>
+  <li><a href="#gamma">Gamma</a></li>
+</ul>
+<button id="next">Next page</button>
+<script>
+const pages = [["Alpha", "Beta", "Gamma"], ["Delta", "Epsilon", "Zeta"]];
+let page = 0;
+document.getElementById("next").addEventListener("click", () => {
+  page = (page + 1) % pages.length;
+  document.getElementById("issues").replaceChildren(...pages[page].map(title => {
+    const item = document.createElement("li");
+    const link = document.createElement("a");
+    link.href = "#" + title.toLowerCase();
+    link.textContent = title;
+    item.append(link);
+    return item;
+  }));
+});
+</script>
+</body>
+</html>
