@@ -1497,6 +1497,16 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        if caret_navigator.get_navigator().last_input_event_was_navigation_command():
+            msg = "WEB: Event ignored: Last command was caret nav"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if structural_navigator.get_navigator().last_input_event_was_navigation_command():
+            msg = "WEB: Event ignored: Last command was struct nav"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         if not self.utilities.in_document_content(focus_manager.get_manager().get_locus_of_focus()):
             msg = "WEB: Event ignored: locusOfFocus is not in document content"
             debug.print_message(debug.LEVEL_INFO, msg, True)

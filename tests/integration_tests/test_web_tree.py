@@ -33,26 +33,20 @@ if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
 
 
-# Only one caret walk here: walking the ARIA tree leaves its roving-tabindex/DOM focus
-# in a state that no keyboard reset clears, so a second caret walk in the same session
-# (layout-off, or bottom-to-top) stalls after the first item. The layout-off and
-# bottom-to-top paths are covered on the other pages.
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom(web_tree: BrowserSession) -> None:
-    """Tests Down-arrow caret navigation through the whole page (layout mode on)."""
+def test_caret_navigation_treats_tree_as_whole(web_tree: BrowserSession) -> None:
+    """Tests that ordinary browse mode presents the tree without descending it."""
 
     session = web_tree
     reset_web_state(session)
 
-    for expected in (
-        ["Food", "tree", "Fruits", "expanded", "tree level 1"],
-        ["Apple", "tree level 2"],
-        ["Banana"],
-        ["Vegetables", "collapsed", "tree level 1"],
-        ["Carrot", "tree level 2"],
-    ):
+    for _ in range(2):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        assert speech(session) == expected
+        assert speech(session) == ["Food", "tree"]
+        assert not session.orca.get("DocumentPresenter", "InFocusMode")
+
+        keyboard.tap_key(keyboard.KEYSYM_UP)
+        assert speech(session) == ["Tree", "heading 1"]
 
 
 @pytest.mark.native_app

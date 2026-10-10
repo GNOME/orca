@@ -209,6 +209,7 @@ orca_integration_tests = {
     'integration_tests/test_web_text_attributes.py',
     'integration_tests/test_web_form_state_changes.py',
     'integration_tests/test_web_tree.py',
+    'integration_tests/test_web_widget_boundaries.py',
     'integration_tests/test_web_tri_state_checkbox.py',
     'integration_tests/test_web_live_regions.py',
     'integration_tests/test_web_dialogs.py',

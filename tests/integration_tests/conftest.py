@@ -156,6 +156,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_tri_state_checkbox,
     _web_useless_images,
     _web_weird_headings,
+    _web_widget_boundaries,
     _web_window_splitter,
     _web_wrapped_link,
     _web_wrapping_text,

@@ -927,7 +927,6 @@ class Utilities(script_utilities.Utilities):
             Atspi.Role.BUTTON,
             Atspi.Role.CHECK_BOX,
             Atspi.Role.CHECK_MENU_ITEM,
-            Atspi.Role.LIST_BOX,
             Atspi.Role.MATH,
             Atspi.Role.MENU_ITEM,
             Atspi.Role.PAGE_TAB,
@@ -979,7 +978,12 @@ class Utilities(script_utilities.Utilities):
         if role == Atspi.Role.COMBO_BOX:
             return True
 
-        if role in [Atspi.Role.EMBEDDED, Atspi.Role.TREE, Atspi.Role.TREE_TABLE]:
+        if role in [
+            Atspi.Role.EMBEDDED,
+            Atspi.Role.LIST_BOX,
+            Atspi.Role.TREE,
+            Atspi.Role.TREE_TABLE,
+        ]:
             return not document_presenter.get_presenter().browse_mode_is_sticky(self._script.app)
 
         if role == Atspi.Role.LINK:

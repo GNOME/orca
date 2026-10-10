@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Widget Boundaries ready</title>
+<style>
+[role="tree"], [role="group"] { list-style: none; }
+[aria-expanded="false"] > [role="group"] { display: none; }
+[role="listbox"] { list-style: none; padding: 0; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const tree = document.querySelector('[role="tree"]');
+  const items = Array.from(tree.querySelectorAll('[role="treeitem"]'));
+  tree.addEventListener("keydown", function (event) {
+    const current = event.target.closest('[role="treeitem"]');
+    if (!current) return;
+    const visible = items.filter(item => item.getClientRects().length);
+    const index = visible.indexOf(current);
+    let next;
+    if (event.key === "ArrowDown") next = visible[index + 1];
+    else if (event.key === "ArrowUp") next = visible[index - 1];
+    else if (event.key === "ArrowRight" && current.hasAttribute("aria-expanded")) {
+      current.setAttribute("aria-expanded", "true");
+    } else if (event.key === "ArrowLeft" && current.hasAttribute("aria-expanded")) {
+      current.setAttribute("aria-expanded", "false");
+    } else return;
+    if (next) {
+      items.forEach(item => { item.tabIndex = -1; });
+      next.tabIndex = 0;
+      next.focus();
+    }
+    event.preventDefault();
+  });
+});
+</script>
+</head>
+<body>
+<h1>Widget boundaries</h1>
+<p>Before colors.</p>
+<select size="3" aria-label="Colors">
+  <option selected>Red</option>
+  <option>Green</option>
+  <option>Blue</option>
+</select>
+<p>After colors.</p>
+<p>Before animals.</p>
+<select multiple size="3" aria-label="Animals">
+  <option selected>Cat</option>
+  <option>Dog</option>
+  <option>Bird</option>
+</select>
+<p>After animals.</p>
+<p>Before food.</p>
+<ul role="tree" aria-label="Food">
+  <li role="treeitem" tabindex="0" aria-expanded="true">
+    Fruits
+    <ul role="group">
+      <li role="treeitem" tabindex="-1">Apple</li>
+      <li role="treeitem" tabindex="-1">Banana</li>
+    </ul>
+  </li>
+</ul>
+<p>After food.</p>
+<p>Before cities.</p>
+<ul role="listbox" tabindex="0" aria-label="Cities" aria-activedescendant="oslo">
+  <li role="option" id="oslo" aria-selected="true">Oslo</li>
+  <li role="option" aria-selected="false">Lima</li>
+  <li role="option" aria-selected="false">Rome</li>
+</ul>
+<p>After cities.</p>
+<p>End of page.</p>
+</body>
+</html>
