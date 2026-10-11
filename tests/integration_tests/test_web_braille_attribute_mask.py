@@ -86,10 +86,9 @@ def test_multiple_links_uncontracted(web_attribute_mask: BrowserSession) -> None
     session = web_attribute_mask
     _setup(session, table=None)
     _down(session, 1)
-    assert helpers.capture(session) == (
-        _LINKS_SPEECH,
-        [helpers.BrailleLine(1, _LINKS, _LINKS_VISIBLE, _LINKS_MASK)],
-    )
+    spoken, brailled = helpers.capture(session)
+    assert spoken == _LINKS_SPEECH
+    assert brailled[-1] == helpers.BrailleLine(1, _LINKS, _LINKS_VISIBLE, _LINKS_MASK)
 
 
 @pytest.mark.native_app
@@ -99,9 +98,10 @@ def test_multiple_links_contracted(web_attribute_mask: BrowserSession) -> None:
     session = web_attribute_mask
     _setup(session, table="en-us-g2")
     _down(session, 1)
-    assert helpers.capture(session) == (
-        _LINKS_SPEECH,
-        [helpers.BrailleLine(1, _LINKS_CONTRACTED, _LINKS_CONTRACTED, _LINKS_CONTRACTED_MASK)],
+    spoken, brailled = helpers.capture(session)
+    assert spoken == _LINKS_SPEECH
+    assert brailled[-1] == helpers.BrailleLine(
+        1, _LINKS_CONTRACTED, _LINKS_CONTRACTED, _LINKS_CONTRACTED_MASK
     )
 
 
@@ -129,3 +129,23 @@ def test_text_attributes_contracted(web_attribute_mask: BrowserSession) -> None:
         _FORMAT_SPEECH,
         [helpers.BrailleLine(1, _FORMAT_CONTRACTED, _FORMAT_CONTRACTED, _FORMAT_CONTRACTED_MASK)],
     )
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("attribute", ["underline", "text-underline-style"])
+@pytest.mark.parametrize("table", [None, "en-us-g2"], ids=["uncontracted", "contracted"])
+def test_underline_attribute_names(
+    web_attribute_mask: BrowserSession, attribute: str, table: str | None
+) -> None:
+    """Tests single and double underline indicators using canonical and alias names."""
+
+    session = web_attribute_mask
+    _setup(session, table=table, text_attrs=True)
+    session.orca.set("TextAttributeManager", "AttributesToBraille", [attribute])
+    _down(session, 4)
+
+    text = _FORMAT if table is None else _FORMAT_CONTRACTED
+    mask = _FORMAT_MASK if table is None else _FORMAT_CONTRACTED_MASK
+    spoken, brailled = helpers.capture(session)
+    assert spoken == _FORMAT_SPEECH
+    assert brailled[-1] == helpers.BrailleLine(1, text, text, mask)

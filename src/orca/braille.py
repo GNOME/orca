@@ -1266,8 +1266,11 @@ class _AccessibleTextRegion(Region):
                     region_mask[i] |= link_indicator
 
         if attr_indicator:
-            enabled = text_attribute_manager.get_manager().get_attributes_to_braille()
-            check_spelling = "invalid" in enabled
+            enabled = [
+                AXTextAttribute.from_string(name)
+                for name in text_attribute_manager.get_manager().get_attributes_to_braille()
+            ]
+            check_spelling = AXTextAttribute.INVALID in enabled
             offset = self.line_offset
             while offset < line_end_offset:
                 attributes, start_offset, end_offset = AXText.get_text_attributes_at_offset(
@@ -1284,11 +1287,10 @@ class _AccessibleTextRegion(Region):
                 ):
                     mask = attr_indicator
                 else:
-                    for attrib in attributes:
-                        if attrib not in enabled:
-                            continue
-                        ax_text_attr = AXTextAttribute.from_string(attrib)
-                        if ax_text_attr and not ax_text_attr.value_is_default(attributes[attrib]):
+                    for ax_text_attr in enabled:
+                        if ax_text_attr and not ax_text_attr.value_is_default(
+                            ax_text_attr.get_value_from_attrs(attributes)
+                        ):
                             mask = attr_indicator
                             break
                 if mask != INDICATOR_NONE:
