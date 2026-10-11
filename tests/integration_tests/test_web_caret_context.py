@@ -166,10 +166,13 @@ def test_word_navigation_left_to_right(web_caret_context: BrowserSession) -> Non
         ["context"],
         ["Paragraph "],
         ["one"],
+        ["."],
         ["Paragraph "],
         ["three"],
+        ["."],
         ["Paragraph "],
         ["four"],
+        ["."],
     ]
     result = []
     for _ in expected:

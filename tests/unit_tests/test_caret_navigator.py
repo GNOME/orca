@@ -745,7 +745,10 @@ class TestCaretNavigator:
 
         assert getattr(navigator, f"{direction}_word")(mock_script, mock_event)
 
-        context_method.assert_called_once_with(*boundary, skip_space=True)
+        if direction == "next":
+            context_method.assert_called_once_with(*boundary, skip_space=True, include_current=True)
+        else:
+            context_method.assert_called_once_with(*boundary, skip_space=True)
         get_boundary.assert_called_once_with(root, forward=direction == "next")
         set_caret_position.assert_called_once_with(
             mock_script,

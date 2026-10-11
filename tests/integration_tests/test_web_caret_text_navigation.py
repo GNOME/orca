@@ -88,13 +88,15 @@ def test_word_navigation(web_structural_navigation: BrowserSession) -> None:
     session = web_structural_navigation
     reset_web_state(session)
 
-    assert [_word_right(session) for _ in range(6)] == [
+    assert [_word_right(session) for _ in range(8)] == [
         ["Structural "],
         ["navigation"],
         ["Intro "],
         ["paragraph"],
+        ["."],
         ["Quoted "],
         ["text"],
+        ["."],
     ]
 
 
@@ -125,7 +127,7 @@ def test_word_navigation_backward(web_structural_navigation: BrowserSession) -> 
 
     session = web_structural_navigation
     reset_web_state(session)
-    for _ in range(7):
+    for _ in range(9):
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
@@ -150,7 +152,7 @@ def test_character_navigation_onto_embedded_button(
 
     session = web_structural_navigation
     reset_web_state(session)
-    for _ in range(6):
+    for _ in range(8):
         _word_right(session)
     assert _right(session) == ["Save", "button"]
     assert _right(session) == ["Agree", "check box not checked"]
@@ -166,7 +168,7 @@ def test_character_navigation_onto_embedded_image(
 
     session = web_structural_navigation
     reset_web_state(session)
-    for _ in range(24):
+    for _ in range(26):
         _word_right(session)
     assert _right(session) == ["Red square", "image"]
 

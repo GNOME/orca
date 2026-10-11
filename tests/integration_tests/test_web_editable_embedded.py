@@ -243,14 +243,17 @@ def test_word_navigation_left_to_right(web_editable_embedded: BrowserSession) ->
         ["line "],
         ["of "],
         ["notes"],
+        ["."],
         ["See "],
         ["the "],
         ["link"],
         ["below"],
+        ["."],
         ["Last "],
         ["line "],
         ["of "],
         ["notes"],
+        ["."],
     ]
     result = []
     for _ in expected:

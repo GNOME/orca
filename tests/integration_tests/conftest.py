@@ -59,6 +59,7 @@ from .orca_fixtures import (  # noqa: F401
     _gtk3_text_view_blank_line,
     _gtk3_text_view_emoji,
     _gtk3_text_view_repeated_symbols,
+    _gtk3_text_view_word_boundaries,
     _gtk3_toolbar,
     _gtk3_tree_view,
     _gtk3_tri_state_checkbox,
@@ -163,6 +164,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_weird_headings,
     _web_widget_boundaries,
     _web_window_splitter,
+    _web_word_boundaries,
     _web_wrapped_link,
     _web_wrapping_text,
 )

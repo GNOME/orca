@@ -118,6 +118,7 @@ orca_integration_tests = {
     'integration_tests/test_caret_navigation.py',
     'integration_tests/test_caret_navigation_orca_controlled.py',
     'integration_tests/test_caret_navigation_orca_controlled_blank_line.py',
+    'integration_tests/test_caret_navigation_word_boundaries.py',
     'integration_tests/test_say_all_text_view.py',
     'integration_tests/test_caret_selection_text_view.py',
     'integration_tests/test_clipboard.py',
@@ -160,6 +161,7 @@ orca_integration_tests = {
     'integration_tests/test_web_caret_selection.py',
     'integration_tests/test_web_mixed_line_heights.py',
     'integration_tests/test_web_navigation.py',
+    'integration_tests/test_web_word_boundaries.py',
     'integration_tests/test_web_language_switching.py',
     'integration_tests/test_web_table_navigation.py',
     'integration_tests/test_web_table_missing_cells.py',
@@ -280,6 +282,9 @@ foreach group, test_files : orca_integration_tests
     test_name = test_file.split('/')[-1].split('.')[0]
     is_gsettings = test_name == 'test_gsettings'
     test_timeout = test_name == 'test_web_text_attributes' ? 300 : 120
+    if test_name in ['test_web_word_boundaries', 'test_caret_navigation_word_boundaries']
+      test_timeout = 180
+    endif
     test(
       test_name,
       is_gsettings ? python : integration_wrapper,

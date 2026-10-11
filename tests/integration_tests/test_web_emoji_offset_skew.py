@@ -1172,6 +1172,7 @@ _WORD_RIGHT_SPEECH: list[list[str]] = [
     ["of "],
     ["the "],
     ["test"],
+    ["."],
     # "Streaming and social links below"
     ["Streaming "],
     ["and "],
@@ -1192,8 +1193,10 @@ _WORD_RIGHT_SPEECH: list[list[str]] = [
     ["basic "],
     ["note "],
     ["symbols"],
+    [", "],
     ["no "],
     ["skew"],
+    [": "],
     ["link "],
     ["notes"],
     # "next line 1"
@@ -1212,18 +1215,21 @@ _WORD_RIGHT_SPEECH: list[list[str]] = [
     ["🎵"],
     ["service "],
     ["one"],
+    [": "],
     ["profile "],
     ["one"],
     # "🎵 service two: profile two"
     ["🎵"],
     ["service "],
     ["two"],
+    [": "],
     ["profile "],
     ["two"],
     # "🎵 service three: profile three"
     ["🎵"],
     ["service "],
     ["three"],
+    [": "],
     ["profile "],
     ["three"],
     # "from 🇺🇸 to 🇮🇹 abroad: profile four back 🇺🇸🇮🇹"
@@ -1233,6 +1239,7 @@ _WORD_RIGHT_SPEECH: list[list[str]] = [
     ["to "],
     ["🇮🇹"],
     ["abroad"],
+    [": "],
     ["profile "],
     ["four"],
     ["back "],
@@ -1244,6 +1251,7 @@ _WORD_RIGHT_SPEECH: list[list[str]] = [
     ["and "],
     ["👨‍👩‍👧‍👦"],
     ["here"],
+    [": "],
     ["profile "],
     ["five"],
     # "🎵🎵🎵🎵🎵🎵🎵🎵🎵🎵 a pile of emoji: profile six"
@@ -1252,11 +1260,13 @@ _WORD_RIGHT_SPEECH: list[list[str]] = [
     ["pile "],
     ["of "],
     ["emoji"],
+    [": "],
     ["profile "],
     ["six"],
     # "last line, no link"
     ["last "],
     ["line"],
+    [", "],
     ["no "],
     ["link"],
     # "Bottom of the test."
@@ -1264,6 +1274,7 @@ _WORD_RIGHT_SPEECH: list[list[str]] = [
     ["of "],
     ["the "],
     ["test"],
+    ["."],
 ]
 
 _WORD_LEFT_SPEECH: list[list[str]] = [

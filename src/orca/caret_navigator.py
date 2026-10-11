@@ -859,9 +859,11 @@ class CaretNavigator(Extension):
                 forward=True,
             )
         if selection_boundary is not None:
-            obj, offset = script.utilities.next_context(*selection_boundary, skip_space=True)
+            obj, offset = script.utilities.next_context(
+                *selection_boundary, skip_space=True, include_current=True
+            )
         else:
-            obj, offset = script.utilities.next_context(skip_space=True)
+            obj, offset = script.utilities.next_context(skip_space=True, include_current=True)
         if obj is None:
             return False
 

@@ -1184,6 +1184,7 @@ def test_word_navigation_across_table_cells(web_tables: BrowserSession) -> None:
         ["Before "],
         ["the "],
         ["tables"],
+        ["."],
         ["Role"],
         ["Office"],
         ["Ada"],
@@ -1206,7 +1207,7 @@ def test_word_navigation_across_table_cells_backward(web_tables: BrowserSession)
 
     session = web_tables
     move_to_top(session)
-    for _ in range(12):  # to the last cell of the first table
+    for _ in range(13):  # to the last cell of the first table
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
         speech(session)
 
@@ -1233,7 +1234,7 @@ def test_word_navigation_across_spanned_cells(web_tables: BrowserSession) -> Non
 
     session = web_tables
     move_to_top(session)
-    for _ in range(12):  # past the first table
+    for _ in range(13):  # past the first table
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
         speech(session)
 
@@ -1265,7 +1266,7 @@ def test_word_navigation_across_spanned_cells_backward(web_tables: BrowserSessio
 
     session = web_tables
     move_to_top(session)
-    for _ in range(25):  # to the last cell of the spanned table
+    for _ in range(26):  # to the last cell of the spanned table
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
         speech(session)
 

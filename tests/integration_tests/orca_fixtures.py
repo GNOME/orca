@@ -158,6 +158,29 @@ _gtk3_text_view_blank_line = _make_native_app_fixture(
         "",
     ),
 )
+_gtk3_text_view_word_boundaries = _make_native_app_fixture(
+    gtk3_text_view,
+    name="gtk3_text_view_word_boundaries",
+    required_font=gtk3_text_view.FONT_FAMILY,
+    lines=(
+        "Start doesn't end",
+        "Start don't end",
+        "Start doesn’t end",
+        "Start don’t end",
+        "a.b end",
+        "Start word. end",
+        "Start 'word' end",
+        "Start `word` end",
+        "Start doesn't, end",
+        "Start don't, end",
+        "Start doesn’t, end",
+        "Start don’t, end",
+        "Start ctrl+alt+f end",
+        "Start c++ end",
+        "Start yay!? end",
+        "doesn't",
+    ),
+)
 _gtk3_text_view_emoji = _make_native_app_fixture(
     gtk3_text_view,
     name="gtk3_text_view_emoji",
@@ -593,6 +616,7 @@ def _make_plain_text_fixture(page: str) -> Callable[..., Iterator[BrowserSession
 
 
 _web_basic = _make_web_fixture("web_basic.html")
+_web_word_boundaries = _make_web_fixture("web_word_boundaries.html")
 _web_block_context = _make_web_fixture("web_block_context.html")
 _web_radio_button_lines = _make_web_fixture("web_radio_button_lines.html")
 _web_blockquote_line_breaks = _make_web_fixture("web_blockquote_line_breaks.html")

@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
+from .helpers import speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -118,6 +119,9 @@ def test_word_navigation_switches_voice_language(web_languages: BrowserSession) 
     session = web_languages
     session.orca.set("SpeechManager", "AutoLanguageSwitching", True)
     _down_to_italiano(session)
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+    assert speech(session) == ["• "]
 
     session.reader.reset()
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)

@@ -36,6 +36,7 @@ from gi.repository import Atspi
 
 from . import (
     ax_event_synthesizer,
+    caret_navigator,
     debug,
     focus_manager,
     input_event_manager,
@@ -752,13 +753,15 @@ class Utilities:
         offset: int = -1,
         skip_space: bool = False,
         restrict_to: Atspi.Accessible | None = None,
+        *,
+        include_current: bool = False,
     ) -> tuple[Atspi.Accessible | None, int]:
         """Returns the next viable/valid caret context given obj and offset."""
 
         if obj is None:
             obj, offset = self.get_caret_context()
 
-        next_offset = offset + 1
+        next_offset = offset if include_current else offset + 1
         if skip_space:
             character_count = AXText.get_character_count(obj)
             while next_offset <= character_count:
@@ -856,17 +859,22 @@ class Utilities:
         obj: Atspi.Accessible,
         offset: int | None = None,
     ) -> tuple[str, int, int]:
-        """Returns the word at offset, adjusted for native navigation commands."""
+        """Returns the word at offset, adjusted for the navigation command."""
 
         if offset is None:
             offset = AXText.get_caret_offset(obj)
+
+        manager = input_event_manager.get_manager()
+        if caret_navigator.get_navigator().last_input_event_was_navigation_command():
+            if manager.last_event_was_next_word_navigation():
+                offset = max(0, offset - 1)
+            return AXText.get_word_at_offset(obj, offset)
 
         word, start, end = AXText.get_word_at_offset(obj, offset)
         prev_obj, prev_offset = focus_manager.get_manager().get_penultimate_cursor_position()
         if prev_obj != obj:
             return word, start, end
 
-        manager = input_event_manager.get_manager()
         was_previous_word_nav = manager.last_event_was_previous_word_navigation()
         was_next_word_nav = manager.last_event_was_next_word_navigation()
 
