@@ -250,6 +250,12 @@ _gtk3_terminal_vim = _make_terminal_fixture(
 
 _VIM_DOC_LINE_COUNT = 20
 _VIM_DOC = "\n".join(f"line {n:02d}" for n in range(1, _VIM_DOC_LINE_COUNT + 1)) + "\n"
+_gtk3_terminal_vim_pages = _make_terminal_fixture(
+    "gtk3_terminal_vim_pages",
+    binary_names=("vim",),
+    args=("-u", "NONE", "-i", "NONE", "-n", "doc.txt"),
+    files={"doc.txt": _VIM_DOC},
+)
 # scrolloff forces a scroll on each arrow key; showcmd repaints the pending command area.
 _gtk3_terminal_vim_scroll = _make_terminal_fixture(
     "gtk3_terminal_vim_scroll",

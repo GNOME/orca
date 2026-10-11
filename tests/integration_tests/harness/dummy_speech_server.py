@@ -59,10 +59,13 @@ class SpeechServer(speechserver.SpeechServer):
 
         def advance() -> bool:
             try:
-                next(utterance_iterator)
+                context, _voice = next(utterance_iterator)
             except StopIteration:
                 self._say_all_source = 0
                 return GLib.SOURCE_REMOVE
+            context.current_offset = context.end_offset
+            context.current_end_offset = None
+            progress_callback(context, speechserver.SayAllContext.COMPLETED)
             return GLib.SOURCE_CONTINUE
 
         self._say_all_source = GLib.idle_add(advance)

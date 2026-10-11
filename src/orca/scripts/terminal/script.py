@@ -102,5 +102,6 @@ class Script(default.Script):
 
         offset = AXText.get_caret_offset(event.source)
         focus_manager.get_manager().set_last_cursor_position(event.source, offset)
+        self.utilities.set_caret_context(event.source, offset)
         AXUtilities.update_cached_selected_text(event.source)
         return True
