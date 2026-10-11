@@ -49,12 +49,12 @@ def test_paging_through_feed_articles(web_feed: BrowserSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     spoken, brailled = capture(session)
-    assert spoken == ["Feed with 3 articles", "Trail reports", "heading 2"]
+    assert spoken == ["Trail reports", "heading 2"]
     assert brailled[-1] == BrailleLine(1, "Trail reports h2", "Trail reports h2", "\x00" * 16)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     spoken, brailled = capture(session)
-    assert spoken == ["article", "Fell Lane", "heading 3"]
+    assert spoken == ["Trail reports", "Feed with 3 articles", "article", "Fell Lane", "heading 3"]
     assert brailled[-1] == BrailleLine(1, "Fell Lane h3", "Fell Lane h3", "\x00" * 12)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)

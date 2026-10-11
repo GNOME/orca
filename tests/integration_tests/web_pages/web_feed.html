@@ -8,7 +8,7 @@ article { margin: 0 0 1em; padding: 4px; border: 1px solid #aaa; }
 </style>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const feed = document.getElementById("restaurant-feed");
+  const feed = document.getElementById("trail-feed");
   const articles = Array.from(feed.querySelectorAll("article"));
 
   feed.addEventListener("keydown", function (event) {
@@ -34,8 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <p><button type="button" id="before">Search trails</button></p>
 
-<div id="restaurant-feed" role="feed" aria-labelledby="feed-label" aria-busy="false">
-  <h2 id="feed-label">Trail reports</h2>
+<h2 id="feed-label">Trail reports</h2>
+<div id="trail-feed" role="feed" aria-labelledby="feed-label" aria-busy="false">
   <article tabindex="0" aria-posinset="1" aria-setsize="3" aria-labelledby="art1-title" aria-describedby="art1-body">
     <h3 id="art1-title">Fell Lane</h3>
     <p id="art1-body">Wet underfoot after the bridge.</p>
