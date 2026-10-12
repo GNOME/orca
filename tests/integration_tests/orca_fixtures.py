@@ -506,6 +506,8 @@ def _document_loaded(accessible: Atspi.Accessible) -> bool:
     stack = [accessible]
     while stack:
         node = stack.pop()
+        if node is None:
+            continue
         try:
             count = node.get_child_count()
             if "document" in node.get_role_name() and count:

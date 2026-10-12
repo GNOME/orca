@@ -44,6 +44,7 @@ def prepare_launch(profile_dir: Path, *, caret_browsing: bool = False) -> tuple[
 
     prefs = {
         "app.update.disabledForTesting": True,
+        "browser.newtabpage.enabled": False,
         "browser.shell.checkDefaultBrowser": False,
         "browser.startup.homepage_override.mstone": "ignore",
         "browser.aboutwelcome.enabled": False,
