@@ -53,19 +53,25 @@ class SpeechServer(speechserver.SpeechServer):
         utterance_iterator: Iterator[tuple[speechserver.SayAllContext, ACSS]],
         progress_callback: Callable[[speechserver.SayAllContext, int], None],
     ) -> None:
-        """Yields between utterances so browser events arrive while Say All is active."""
+        """Reports speech progress, then yields to pending events before reporting completion."""
 
         self.stop()
+        pending_context: speechserver.SayAllContext | None = None
 
         def advance() -> bool:
+            nonlocal pending_context
+            if pending_context is not None:
+                pending_context.current_offset = pending_context.end_offset
+                pending_context.current_end_offset = None
+                progress_callback(pending_context.copy(), speechserver.SayAllContext.COMPLETED)
+                pending_context = None
+                return GLib.SOURCE_CONTINUE
             try:
-                context, _voice = next(utterance_iterator)
+                pending_context, _voice = next(utterance_iterator)
             except StopIteration:
                 self._say_all_source = 0
                 return GLib.SOURCE_REMOVE
-            context.current_offset = context.end_offset
-            context.current_end_offset = None
-            progress_callback(context, speechserver.SayAllContext.COMPLETED)
+            progress_callback(pending_context.copy(), speechserver.SayAllContext.PROGRESS)
             return GLib.SOURCE_CONTINUE
 
         self._say_all_source = GLib.idle_add(advance)
