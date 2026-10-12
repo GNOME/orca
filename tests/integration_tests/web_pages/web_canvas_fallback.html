@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Canvas Fallback ready</title>
+</head>
+<body>
+<h1>Canvas fallback</h1>
+<p>Before canvas.</p>
+<canvas id="sample" width="480" height="160">
+  <h2>Message</h2>
+  <p>Quiet <a href="#after">river</a> flows.</p>
+  <p><button type="button">Save</button></p>
+</canvas>
+<p id="after">After canvas.</p>
+<script>
+const context = document.getElementById("sample").getContext("2d");
+context.font = "bold 24px sans-serif";
+context.fillText("Message", 10, 30);
+context.font = "18px sans-serif";
+context.fillText("Quiet river flows.", 10, 70);
+context.strokeRect(10, 90, 80, 35);
+context.fillText("Save", 25, 114);
+</script>
+</body>
+</html>

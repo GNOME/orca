@@ -73,7 +73,7 @@ def test_table_navigation_across_grid_cells(web_grid_named_cells: BrowserSession
         [_URL, "Row 1, column 2."],
         [
             BrailleLine(1, _TITLE, _TITLE, "\x00" * 20),
-            BrailleLine(0, _URL, _URL, "\x00" * 24),
+            BrailleLine(1, _URL, _URL, "\x00" * 24),
             BrailleLine(0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16),
         ],
     )
@@ -82,8 +82,8 @@ def test_table_navigation_across_grid_cells(web_grid_named_cells: BrowserSession
     assert capture(session) == (
         [_ACTIONS, "Row 1, column 3."],
         [
-            BrailleLine(0, _URL, _URL, "\x00" * 24),
-            BrailleLine(0, _ACTIONS, "Copy download link Show in folde", "\x00" * 53),
+            BrailleLine(1, _URL, _URL, "\x00" * 24),
+            BrailleLine(1, _ACTIONS, "Copy download link Show in folde", "\x00" * 53),
             BrailleLine(0, "Row 1, column 3.", "Row 1, column 3.", "\x00" * 16),
         ],
     )
@@ -92,8 +92,8 @@ def test_table_navigation_across_grid_cells(web_grid_named_cells: BrowserSession
     assert capture(session) == (
         [_URL, "Row 1, column 2."],
         [
-            BrailleLine(0, _ACTIONS, "Copy download link Show in folde", "\x00" * 53),
-            BrailleLine(0, _URL, _URL, "\x00" * 24),
+            BrailleLine(1, _ACTIONS, "Copy download link Show in folde", "\x00" * 53),
+            BrailleLine(1, _URL, _URL, "\x00" * 24),
             BrailleLine(0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16),
         ],
     )
@@ -102,8 +102,8 @@ def test_table_navigation_across_grid_cells(web_grid_named_cells: BrowserSession
     assert capture(session) == (
         [_TITLE, "Row 1, column 1."],
         [
-            BrailleLine(0, _URL, _URL, "\x00" * 24),
-            BrailleLine(0, _TITLE, _TITLE, "\x00" * 20),
+            BrailleLine(1, _URL, _URL, "\x00" * 24),
+            BrailleLine(1, _TITLE, _TITLE, "\x00" * 20),
             BrailleLine(0, "Row 1, column 1.", "Row 1, column 1.", "\x00" * 16),
         ],
     )
@@ -112,8 +112,8 @@ def test_table_navigation_across_grid_cells(web_grid_named_cells: BrowserSession
     assert capture(session) == (
         ["meeting-notes.pdf", "Row 2, column 1."],
         [
-            BrailleLine(0, _TITLE, _TITLE, "\x00" * 20),
-            BrailleLine(0, "meeting-notes.pdf", "meeting-notes.pdf", "\x00" * 17),
+            BrailleLine(1, _TITLE, _TITLE, "\x00" * 20),
+            BrailleLine(1, "meeting-notes.pdf", "meeting-notes.pdf", "\x00" * 17),
             BrailleLine(0, "Row 2, column 1.", "Row 2, column 1.", "\x00" * 16),
         ],
     )

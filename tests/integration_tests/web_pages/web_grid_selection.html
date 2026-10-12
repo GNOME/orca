@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Grid Selection ready</title>
+<style>
+  table { border-collapse: collapse; }
+  th, td { border: 1px solid #777; padding: 1em; }
+  [aria-selected="true"] { background: #cce5ff; }
+  td:focus { outline: 3px solid #b00020; outline-offset: -3px; }
+</style>
+</head>
+<body>
+<h1>Grid selection</h1>
+<p>Use arrow keys to move between cells and Space to toggle selection.</p>
+<p>Before the grid.</p>
+<table role="grid" aria-label="Activities" aria-multiselectable="true">
+  <tr><th scope="col">Morning</th><th scope="col">Afternoon</th></tr>
+  <tr>
+    <td tabindex="0" aria-selected="false">Reading</td>
+    <td tabindex="-1" aria-selected="true">Writing</td>
+  </tr>
+  <tr>
+    <td tabindex="-1" aria-selected="false">Music</td>
+    <td tabindex="-1" aria-selected="false">Art</td>
+  </tr>
+</table>
+<p>After the grid.</p>
+<script>
+const grid = document.querySelector('[role="grid"]');
+const cells = Array.from(grid.querySelectorAll('td'));
+let current = cells[0];
+grid.addEventListener('focusin', event => {
+  if (!cells.includes(event.target)) return;
+  current.tabIndex = -1;
+  current = event.target;
+  current.tabIndex = 0;
+});
+grid.addEventListener('keydown', event => {
+  const index = cells.indexOf(event.target);
+  if (index < 0) return;
+  let next = index;
+  switch (event.key) {
+    case 'ArrowLeft': if (index % 2) next--; break;
+    case 'ArrowRight': if (!(index % 2)) next++; break;
+    case 'ArrowUp': if (index >= 2) next -= 2; break;
+    case 'ArrowDown': if (index < 2) next += 2; break;
+    case ' ':
+      current.setAttribute('aria-selected', current.getAttribute('aria-selected') !== 'true');
+      break;
+    default: return;
+  }
+  event.preventDefault();
+  if (next !== index) cells[next].focus();
+});
+</script>
+</body>
+</html>

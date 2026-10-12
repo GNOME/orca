@@ -656,7 +656,9 @@ class TableNavigator(Extension):
         if script.utilities.grab_focus_when_setting_caret(cell):
             AXObject.grab_focus(cell)
 
-        obj = AXUtilities.get_descendant_supporting_text(cell) or cell
+        obj = cell
+        if not (AXUtilities.is_web_element(cell) and AXObject.supports_text(cell)):
+            obj = AXUtilities.get_descendant_supporting_text(cell) or cell
         focus_mgr = focus_manager.get_manager()
         focus_mgr.set_locus_of_focus(None, obj, False)
         focus_mgr.emit_region_changed(obj, mode=focus_manager.TABLE_NAVIGATOR)

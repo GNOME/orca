@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Tests value-change announcements for a slider and a progress bar in web content."""
+"""Tests sliders, progress bars, and meters in web content."""
 
 from __future__ import annotations
 
@@ -35,10 +35,10 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom(web_sliders: BrowserSession) -> None:
+def test_caret_navigation_top_to_bottom(web_range_widgets: BrowserSession) -> None:
     """Tests Down-arrow caret navigation through the whole page (layout mode on)."""
 
-    session = web_sliders
+    session = web_range_widgets
     helpers.reset_web_state(session)
 
     # In layout mode the "Volume" label shares the slider's line.
@@ -54,10 +54,10 @@ def test_caret_navigation_top_to_bottom(web_sliders: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
-def test_caret_navigation_top_to_bottom_layout_off(web_sliders: BrowserSession) -> None:
+def test_caret_navigation_top_to_bottom_layout_off(web_range_widgets: BrowserSession) -> None:
     """Tests the same navigation with layout mode disabled: the label is its own line."""
 
-    session = web_sliders
+    session = web_range_widgets
     helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
     for expected in (
@@ -74,10 +74,10 @@ def test_caret_navigation_top_to_bottom_layout_off(web_sliders: BrowserSession) 
 
 
 @pytest.mark.native_app
-def test_caret_navigation_bottom_to_top(web_sliders: BrowserSession) -> None:
+def test_caret_navigation_bottom_to_top(web_range_widgets: BrowserSession) -> None:
     """Tests Up-arrow caret navigation from the bottom of the page (layout mode on)."""
 
-    session = web_sliders
+    session = web_range_widgets
     helpers.reset_web_state(session)
     helpers.move_to_bottom(session)
 
@@ -86,17 +86,17 @@ def test_caret_navigation_bottom_to_top(web_sliders: BrowserSession) -> None:
         ["30 percent."],
         ["Download"],
         ["Volume", "horizontal slider", "2", "50 percent."],
-        ["Sliders", "heading 1"],
+        ["Range widgets", "heading 1"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_UP)
         assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
-def test_caret_navigation_bottom_to_top_layout_off(web_sliders: BrowserSession) -> None:
+def test_caret_navigation_bottom_to_top_layout_off(web_range_widgets: BrowserSession) -> None:
     """Tests the same navigation with layout mode disabled: the label is its own line."""
 
-    session = web_sliders
+    session = web_range_widgets
     helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
     helpers.move_to_bottom(session)
@@ -107,17 +107,17 @@ def test_caret_navigation_bottom_to_top_layout_off(web_sliders: BrowserSession) 
         ["Download"],
         ["Volume", "horizontal slider", "2", "50 percent."],
         ["Volume"],
-        ["Sliders", "heading 1"],
+        ["Range widgets", "heading 1"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_UP)
         assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
-def test_slider_value_changes_and_progress_bar(web_sliders: BrowserSession) -> None:
+def test_slider_value_changes_and_progress_bar(web_range_widgets: BrowserSession) -> None:
     """Tests slider value changes within min/max bounds and a progress bar's value."""
 
-    session = web_sliders
+    session = web_range_widgets
     helpers.reset_web_state(session)
 
     # Tab gives the slider DOM focus, which switches Orca to focus mode so the
@@ -173,10 +173,10 @@ def _where_am_i(session: BrowserSession) -> tuple[list[str], list[tuple[int, str
 
 
 @pytest.mark.native_app
-def test_where_am_i_on_slider(web_sliders: BrowserSession) -> None:
+def test_where_am_i_on_slider(web_range_widgets: BrowserSession) -> None:
     """Tests Where Am I on a horizontal slider (at its current value of 0)."""
 
-    session = web_sliders
+    session = web_range_widgets
     helpers.reset_web_state(session)
 
     helpers.tab_and_swallow_presentation(session)
@@ -187,3 +187,39 @@ def test_where_am_i_on_slider(web_sliders: BrowserSession) -> None:
             BrailleLine(1, "Volume 0 horizontal slider", "Volume 0 horizontal slider", "\x00" * 26),
         ],
     )
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("click_count", [1, 2], ids=["basic", "detailed"])
+def test_where_am_i_on_native_meter(web_range_widgets: BrowserSession, click_count: int) -> None:
+    """Tests Where Am I on a native meter."""
+
+    session = web_range_widgets
+    helpers.reset_web_state(session)
+    session.orca.set("CaretNavigator", "LayoutMode", False)
+    helpers.move_to_bottom(session)
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    helpers.capture(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER, click_count=click_count)
+    spoken, brailled = helpers.capture(session)
+    value = helpers.expected_for_browser(session, "50", firefox="50 gigabytes")
+    assert spoken == ["Disk usage", "level bar", value]
+    line = f"Disk usage {value} level bar"
+    assert brailled[-1] == BrailleLine(1, line, line[:32], "\x00" * len(line))
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("click_count", [1, 2], ids=["basic", "detailed"])
+def test_where_am_i_on_aria_meter(web_range_widgets: BrowserSession, click_count: int) -> None:
+    """Tests Where Am I on an ARIA meter with value text."""
+
+    session = web_range_widgets
+    helpers.reset_web_state(session)
+    helpers.move_to_bottom(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER, click_count=click_count)
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["Battery charge", "level bar", "80 percent"]
+    line = "Battery charge 80 percent level bar"
+    assert brailled[-1] == BrailleLine(1, line, line[:32], "\x00" * len(line))
