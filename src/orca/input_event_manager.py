@@ -27,7 +27,6 @@
 
 from __future__ import annotations
 
-import os
 import sys
 import time
 
@@ -38,10 +37,10 @@ import orca
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import ax_device_manager, debug, focus_manager, input_event, script_manager
+from . import ax_device_manager, dbus_service, debug, focus_manager, input_event, script_manager
 from .ax_utilities import AXUtilities
 
-_DOUBLE_CLICK_TIMEOUT: float = float(os.environ.get("ORCA_TEST_DOUBLE_CLICK_TIMEOUT") or 0.5)
+_DOUBLE_CLICK_TIMEOUT: float = 0.05 if dbus_service.get_testing_secret() else 0.5
 
 
 class InputEventManager:

@@ -33,6 +33,7 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 import pytest
@@ -262,9 +263,7 @@ class TestInputEventManager:
 
         from orca import input_event_manager as input_event_manager_module
 
-        orca_dir = input_event_manager_module.os.path.dirname(
-            input_event_manager_module.os.path.realpath(input_event_manager_module.__file__)
-        )
+        orca_dir = Path(input_event_manager_module.__file__).resolve().parent
         frame = self._frame(test_context, f"{orca_dir}/flat_review_presenter.py")
         test_context.patch_object(
             input_event_manager_module.sys,

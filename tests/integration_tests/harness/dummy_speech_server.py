@@ -48,6 +48,16 @@ class SpeechServer(speechserver.SpeechServer):
         speechserver.SpeechServer._active_servers[server_id] = self
         self._say_all_source = 0
 
+    def get_voice_family(self) -> speechserver.VoiceFamily:
+        """Returns the test voice."""
+
+        return speechserver.VoiceFamily({speechserver.VoiceFamily.NAME: "Test voice"})
+
+    def get_voice_families(self) -> list[speechserver.VoiceFamily]:
+        """Returns the available test voices."""
+
+        return [self.get_voice_family()]
+
     def say_all(
         self,
         utterance_iterator: Iterator[tuple[speechserver.SayAllContext, ACSS]],

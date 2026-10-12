@@ -48,8 +48,6 @@ def resolve_binary(name: str) -> str | None:
 
     if override := os.environ.get("ORCA_TEST_BROWSER_BINARY"):
         return override
-    if name == "chromium" and (override := os.environ.get("ORCA_TEST_CHROMIUM_BINARY")):
-        return override
     return BROWSERS[name].resolve_binary()
 
 

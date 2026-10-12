@@ -69,8 +69,6 @@ if TYPE_CHECKING:
 
 _WEB_PAGES_DIR = Path(__file__).parent / "web_pages"
 
-_DUMMY_SPEECH_SERVER_MODULE = f"{__name__.rsplit('.', 1)[0]}.harness.dummy_speech_server"
-
 
 @dataclass
 class NativeAppSession:
@@ -93,7 +91,6 @@ def _orca(tmp_path_factory: pytest.TempPathFactory) -> Iterator[OrcaSession]:
 
     sandbox_dir = tmp_path_factory.mktemp("orca-session")
     env = sandbox.build_sandbox_env(sandbox_dir)
-    sandbox.write_sandbox_speechd_conf(sandbox_dir)
 
     session = OrcaSession(env)
     session.launch()
@@ -370,8 +367,6 @@ def _run_app_with_orca(
     speech_log = sandbox_dir / "speech.jsonl"
     braille_log = sandbox_dir / "braille.jsonl"
     env = sandbox.build_sandbox_env(sandbox_dir)
-    env["ORCA_TEST_SPEECH_SERVER_FACTORY"] = _DUMMY_SPEECH_SERVER_MODULE
-    sandbox.write_sandbox_speechd_conf(sandbox_dir)
 
     with _launch_subprocess(argv, env) as (_process, app_accessible):
         if ready_predicate is not None:

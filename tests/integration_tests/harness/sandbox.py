@@ -50,27 +50,8 @@ def build_sandbox_env(sandbox: Path) -> dict[str, str]:
     env["LANG"] = "en_US.UTF-8"
     env["LC_ALL"] = "en_US.UTF-8"
     env["GDK_BACKEND"] = "x11"
-    # Multi-click window: above an intentional click_count=2 (its presses are back-to-back),
-    # below the idle-gated drain spacing between captures, so two separate same-key commands
-    # don't accidentally coalesce into a double-click.
-    env.setdefault("ORCA_TEST_DOUBLE_CLICK_TIMEOUT", "0.05")
     # Point BrlAPI at a dead address so Orca never attaches to a brltty running on
     # the host. A real display pads every braille line to its cell count, which
     # makes the exact-braille assertions depend on the developer's hardware.
     env["BRLAPI_HOST"] = "127.0.0.1:9999"
     return env
-
-
-def write_sandbox_speechd_conf(sandbox: Path) -> None:
-    """Pins the sandbox speech-dispatcher to the dummy output module."""
-
-    # The sandbox's fresh XDG_RUNTIME_DIR makes speech-dispatcher auto-spawn a
-    # new instance instead of reusing the user's; without audio access its
-    # default espeak-ng module crashes on some utterances, so point it at
-    # sd_dummy which never touches audio.
-    conf_dir = sandbox / "config" / "speech-dispatcher"
-    conf_dir.mkdir(parents=True, exist_ok=True)
-    (conf_dir / "speechd.conf").write_text(
-        'DefaultModule dummy\nAddModule "dummy" "sd_dummy" ""\n',
-        encoding="utf-8",
-    )

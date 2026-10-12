@@ -57,10 +57,7 @@ def browser_accessibility(
     binary = next(
         (path for candidate in app.BINARY_NAMES if (path := shutil.which(candidate))), None
     )
-    if name == browser.selected_browser() and (
-        os.environ.get("ORCA_TEST_BROWSER_BINARY")
-        or (name == "chromium" and os.environ.get("ORCA_TEST_CHROMIUM_BINARY"))
-    ):
+    if name == browser.selected_browser() and os.environ.get("ORCA_TEST_BROWSER_BINARY"):
         binary = browser.resolve_binary(name)
     if binary is None:
         pytest.skip(f"{name} is not installed; tried {app.BINARY_NAMES!r}")
@@ -97,8 +94,6 @@ def _browser_session(
         env.pop(variable, None)
     if enabled:
         env[_ACCESSIBILITY_VARIABLES[name]] = "1"
-    env["ORCA_TEST_SPEECH_SERVER_FACTORY"] = "tests.integration_tests.harness.dummy_speech_server"
-    sandbox.write_sandbox_speechd_conf(tmp_path)
     orca = OrcaSession(env)
     try:
         orca.launch()

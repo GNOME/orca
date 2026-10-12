@@ -194,6 +194,7 @@ class OrcaTestContext:
 
         if "orca.dbus_service" in essential_modules:
             dbus_service_mock = essential_modules["orca.dbus_service"]
+            dbus_service_mock.get_testing_secret.return_value = None
             controller_mock = self.mocker.Mock()
             controller_mock.register_decorated_module = self.mocker.Mock()
             dbus_service_mock.get_remote_controller = self.mocker.Mock(return_value=controller_mock)
