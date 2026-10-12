@@ -1813,10 +1813,12 @@ class SpeechGenerator(generator.Generator):
             self._only_speak_displayed_text()
             or self._context.active_mode == focus_manager.MOUSE_REVIEW
             or not obj
-            or not AXUtilities.is_selectable(obj)
-            or AXUtilities.is_selected(obj)
             or AXUtilities.is_text(obj, role)
         ):
+            return []
+
+        state_set = AXObject.get_state_set(obj)
+        if not AXUtilities.is_selectable(obj, state_set) or AXUtilities.is_selected(obj, state_set):
             return []
 
         if AXUtilities.is_list_item(obj, role):
@@ -1824,16 +1826,10 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(STATE, obj=obj))
             return result
 
-        parent = AXObject.get_parent(obj)
-        table = AXUtilities.get_table(obj)
-        if table:
-            if (
-                input_event_manager.get_manager().last_event_was_left_or_right()
-                or AXUtilities.is_layout_table(table)
-                or not AXUtilities.is_gui_cell(obj)
-            ):
+        if AXUtilities.is_table_cell_or_header(obj, role):
+            if not AXUtilities.is_focused(obj, state_set):
                 return []
-        elif AXUtilities.is_layered_pane(parent):
+        elif AXUtilities.is_layered_pane(parent := AXObject.get_parent(obj)):
             if obj in AXUtilities.selected_children(parent):
                 return []
         else:
@@ -3951,7 +3947,8 @@ class SpeechGenerator(generator.Generator):
         if result and not isinstance(result[-1], Pause):
             result += self._generate_pause(obj)
         result += self._generate_tree_item_level(obj)
-        result += self._generate_state_unselected(obj)
+        if not self._reading_row:
+            result += self._generate_state_unselected(obj)
         result += self._generate_default_suffix(obj)
 
         if (

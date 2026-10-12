@@ -151,9 +151,9 @@ def test_table_selection_where_am_i_and_endpoints(gtk3_tree_view: NativeAppSessi
     assert capture(session) == (
         [
             "Grace",
-            "not selected Admiral",
-            "not selected Boston",
-            "not selected Done check box checked",
+            "Admiral",
+            "Boston",
+            "Done check box checked",
             "not selected",
         ],
         [
@@ -165,20 +165,26 @@ def test_table_selection_where_am_i_and_endpoints(gtk3_tree_view: NativeAppSessi
             )
         ],
     )
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    assert capture(session) == (
+        ["Role column header Admiral", "not selected"],
+        [BrailleLine(1, " Role column header Admiral", "Admiral", "\x00" * 27)],
+    )
+
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_DOWN)
     assert capture(session) == (
         [
             "Alan",
-            "not selected Analyst",
-            "not selected Manchester",
-            "not selected Done check box not checked",
+            "Analyst",
+            "Manchester",
+            "Done check box not checked",
             "not selected",
         ],
         [
             BrailleLine(
                 1,
-                " Name column header Alan Analyst Manchester < > check boxDone",
-                "Alan Analyst Manchester < > chec",
+                " Role column header Alan Analyst Manchester < > check boxDone",
+                "Analyst Manchester < > check box",
                 "\x00" * 61,
             )
         ],
@@ -187,19 +193,25 @@ def test_table_selection_where_am_i_and_endpoints(gtk3_tree_view: NativeAppSessi
     assert capture(session) == (
         [
             "Grace",
-            "not selected Admiral",
-            "not selected Boston",
-            "not selected Done check box checked",
+            "Admiral",
+            "Boston",
+            "Done check box checked",
             "not selected",
         ],
         [
             BrailleLine(
                 1,
-                " Name column header Grace Admiral Boston <x> check boxDone",
-                "Grace Admiral Boston <x> check b",
+                " Role column header Grace Admiral Boston <x> check boxDone",
+                "Admiral Boston <x> check boxDone",
                 "\x00" * 58,
             )
         ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_LEFT)
+    assert capture(session) == (
+        ["Name column header Grace", "not selected"],
+        [BrailleLine(1, " Name column header Grace", "Grace", "\x00" * 25)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)

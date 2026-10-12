@@ -1617,6 +1617,8 @@ class Generator:
 
         if reading_row and not row:
             result.extend(self._generate_position_in_list(obj))
+        if reading_row:
+            result.extend(self._generate_state_unselected(obj))
         return result
 
     # TODO - JD: If we had dedicated generators for cell types, we wouldn't need this.

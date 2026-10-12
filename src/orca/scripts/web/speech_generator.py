@@ -671,7 +671,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_state_unselected(self, obj: Atspi.Accessible) -> list[Any]:
-        if not self._context.in_focus_mode:
+        if not self._context.in_focus_mode and not AXUtilities.is_table_cell_or_header(
+            obj, self._get_resolved_role()
+        ):
             return []
 
         return super()._generate_state_unselected(obj)
