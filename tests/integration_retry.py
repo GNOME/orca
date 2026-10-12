@@ -92,7 +92,7 @@ def _attempt(
     return result.returncode, data
 
 
-def _run(test_file: str, directory: Path) -> int:
+def _run(test_file: str, directory: Path, pytest_args: list[str]) -> int:
     """Retries only failed assertions, after the first pytest session has ended."""
 
     directory.mkdir(parents=True, exist_ok=True)
@@ -105,7 +105,7 @@ def _run(test_file: str, directory: Path) -> int:
     retry_log.unlink(missing_ok=True)
     debug_archive.unlink(missing_ok=True)
     with tempfile.TemporaryDirectory(prefix="orca-retry-") as temporary:
-        code, first = _attempt([test_file], Path(temporary) / "first.json", first_log)
+        code, first = _attempt([test_file, *pytest_args], Path(temporary) / "first.json", first_log)
         if code == 0 and first:
             first_log.unlink()
             return 0
@@ -118,7 +118,11 @@ def _run(test_file: str, directory: Path) -> int:
         retry_env.pop("ORCA_TEST_DEBUG_FILE", None)
         retry_env["ORCA_TEST_DEBUG_DIR"] = str(debug_dir)
         code, second = _attempt(
-            failed, Path(temporary) / "retry.json", retry_log, first["root"], env=retry_env
+            [*failed, *pytest_args],
+            Path(temporary) / "retry.json",
+            retry_log,
+            first["root"],
+            env=retry_env,
         )
         passed = (
             set(second.get("passed", [])) if code in (0, 1) and not second.get("blocked") else set()
@@ -155,8 +159,8 @@ def main() -> int:
         return 0
     directory = os.environ.get("ORCA_TEST_RETRY_DIR")
     if directory:
-        return _run(args[0], Path(directory))
-    os.execv(sys.executable, [sys.executable, "-m", "pytest", args[0], "-v"])  # noqa: S606
+        return _run(args[0], Path(directory), args[1:])
+    os.execv(sys.executable, [sys.executable, "-m", "pytest", *args, "-v"])  # noqa: S606
     return 1
 
 

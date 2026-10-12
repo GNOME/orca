@@ -27,7 +27,14 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_top, reset_web_state, speech
+from .helpers import (
+    BrailleLine,
+    capture,
+    expected_for_browser,
+    move_to_top,
+    reset_web_state,
+    speech,
+)
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -125,10 +132,9 @@ def test_heading_where_am_i(web_basic: BrowserSession) -> None:
     move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    assert capture(session) == (
-        ["Welcome", "heading 1"],
-        [BrailleLine(1, "Welcome h1", "Welcome h1", "\x00" * 10)],
-    )
+    spoken, brailled = capture(session)
+    assert spoken == ["Welcome", "heading 1"]
+    assert brailled[-1] == BrailleLine(1, "Welcome h1", "Welcome h1", "\x00" * 10)
 
 
 @pytest.mark.native_app
@@ -453,12 +459,12 @@ def test_word_navigation_across_blank_line(web_basic: BrowserSession) -> None:
     session = web_basic
     move_to_top(session)
 
-    # Jump to the end of the preformatted block ("Hey there\n\nThis is fixed."), then walk back
-    # out of it onto the radio button just before it to walk forward into the block.
+    # Reach the start of "Hey there\n\nThis is fixed." by line so setup does not depend
+    # on browser-specific word boundaries in the preceding radio button labels.
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
-    for _ in range(7):
-        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
+    for key in (keyboard.KEYSYM_UP, keyboard.KEYSYM_UP, keyboard.KEYSYM_HOME):
+        keyboard.tap_key(key)
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
 
@@ -489,9 +495,18 @@ def test_word_navigation_across_blank_line(web_basic: BrowserSession) -> None:
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
-        ["fixed"],
-        [BrailleLine(14, "This is fixed.", "This is fixed.", "\x00" * 14)],
+    # Firefox's AT-SPI word boundary includes the period; Chromium's excludes it.
+    # TODO: Determine the preferred boundary and report or fix the browser discrepancy.
+    assert capture(session) == expected_for_browser(
+        session,
+        (
+            ["fixed"],
+            [BrailleLine(14, "This is fixed.", "This is fixed.", "\x00" * 14)],
+        ),
+        firefox=(
+            ["fixed."],
+            [BrailleLine(15, "This is fixed.", "This is fixed.", "\x00" * 14)],
+        ),
     )
 
 

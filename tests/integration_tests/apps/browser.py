@@ -32,50 +32,57 @@ from pathlib import Path
 from . import chromium_browser, firefox_browser
 
 BROWSERS = {"chromium": chromium_browser, "firefox": firefox_browser}
+USER_AGENTS = {"chromium": "chromium", "gecko": "firefox"}
+_SELECTED_BROWSER: str | None = None
+
+
+def configure(user_agent: str | None) -> None:
+    """Sets the browser selected by the Meson suite, if any."""
+
+    global _SELECTED_BROWSER  # noqa: PLW0603
+    _SELECTED_BROWSER = USER_AGENTS[user_agent] if user_agent is not None else None
 
 
 def selected_browser() -> str:
-    """Returns the configured browser, rejecting misspellings before launching anything."""
+    """Returns the browser selected by the Meson suite."""
 
-    name = os.environ.get("ORCA_TEST_BROWSER", "chromium")
-    if name not in BROWSERS:
-        raise ValueError(f"Unknown ORCA_TEST_BROWSER {name!r}; choose from {tuple(BROWSERS)}")
-    return name
+    if _SELECTED_BROWSER is None:
+        raise RuntimeError("Browser tests require the chromium or gecko Meson suite")
+    return _SELECTED_BROWSER
 
 
 def resolve_binary(name: str) -> str | None:
     """Resolves the override or the selected browser's default executable."""
 
-    if override := os.environ.get("ORCA_TEST_BROWSER_BINARY"):
+    if override := os.environ.get("ORCA_TEST_USER_AGENT_PATH"):
         return override
     return BROWSERS[name].resolve_binary()
 
 
 def main(*, browser_name: str | None = None) -> int:
-    """Launches URL [profile_dir] [binary] [--caret-browsing] [extra browser flags...]."""
+    """Launches the requested browser with its profile and flags."""
 
-    name = browser_name or selected_browser()
-    app = BROWSERS[name]
-    os.environ.update(app.ENVIRONMENT)
-    if len(sys.argv) < 2:
+    args = sys.argv[1:]
+    name = browser_name or (args.pop(0) if args else None)
+    if name not in BROWSERS or not args:
         print(
             "Usage: python -m tests.integration_tests.apps.browser "
-            "<url> [profile_dir] [binary] [--caret-browsing] [extra browser flags...]",
+            "<browser> <url> [profile_dir] [binary] [--caret-browsing] [extra browser flags...]",
             file=sys.stderr,
         )
         return 2
-    url = sys.argv[1]
+    app = BROWSERS[name]
+    os.environ.update(app.ENVIRONMENT)
+    url = args[0]
     profile_dir = (
-        Path(sys.argv[2])
-        if len(sys.argv) > 2
-        else Path(tempfile.mkdtemp(prefix=f"orca-{name}-debug-"))
+        Path(args[1]) if len(args) > 1 else Path(tempfile.mkdtemp(prefix=f"orca-{name}-debug-"))
     )
     profile_dir.mkdir(parents=True, exist_ok=True)
-    binary = sys.argv[3] if len(sys.argv) > 3 else resolve_binary(name)
+    binary = args[2] if len(args) > 2 else resolve_binary(name)
     if binary is None:
         print(f"No {name} binary found; tried {app.BINARY_NAMES!r}.", file=sys.stderr)
         return 2
-    flags = sys.argv[4:]
+    flags = args[3:]
     caret_browsing = "--caret-browsing" in flags
     if caret_browsing:
         flags.remove("--caret-browsing")

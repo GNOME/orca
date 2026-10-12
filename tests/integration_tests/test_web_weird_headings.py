@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import browser
 from .caret_selection_helpers import NEXT_CHARACTER, PREVIOUS_CHARACTER
 from .harness import keyboard
 from .helpers import move_to_bottom, move_to_top, reset_web_state, say_selection, speech
@@ -162,9 +163,23 @@ def test_named_heading_with_text_remains_caret_navigable(
     assert speech(session) == ["R"]
 
 
+# Gecko lacks the Document selection API: https://bugzilla.mozilla.org/show_bug.cgi?id=1879510
+_TEXT_SELECTION_PARENT_ANCHOR = pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Our Text fallback starts at offset 0 when selection moves from a child into its parent",
+    raises=AssertionError,
+    strict=True,
+)
+
+
 @pytest.mark.parametrize(
     ("heading_number", "selected_text"),
-    [(3, "Om"), (6, "Om"), (12, "Om"), (13, "Re")],
+    [
+        pytest.param(3, "Om", marks=_TEXT_SELECTION_PARENT_ANCHOR),
+        pytest.param(6, "Om", marks=_TEXT_SELECTION_PARENT_ANCHOR),
+        pytest.param(12, "Om", marks=_TEXT_SELECTION_PARENT_ANCHOR),
+        (13, "Re"),
+    ],
 )
 @pytest.mark.native_app
 def test_heading_selection_uses_text_not_the_accessible_name(

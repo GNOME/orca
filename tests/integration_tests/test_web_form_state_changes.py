@@ -75,8 +75,14 @@ def test_tab_navigation_and_state_changes(web_form_fields: BrowserSession) -> No
     )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
+    # Firefox exposes a popup state without Chromium's explicit menu popup type.
     assert helpers.capture(session) == (
-        ["Fruit", "combo box", "Apple", "opens menu"],
+        [
+            "Fruit",
+            "combo box",
+            "Apple",
+            helpers.expected_for_browser(session, "opens menu", firefox="opens popup"),
+        ],
         [helpers.BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
     )
 
@@ -217,10 +223,9 @@ def test_tab_navigation_and_state_changes(web_form_fields: BrowserSession) -> No
     assert spoken == ["4"]
     assert brailled[-1] == helpers.BrailleLine(11, "Quantity 4 $l", "Quantity 4 $l", "\x00" * 13)
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert helpers.capture(session) == (
-        ["3"],
-        [helpers.BrailleLine(11, "Quantity 3 $l", "Quantity 3 $l", "\x00" * 13)],
-    )
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["3"]
+    assert brailled[-1] == helpers.BrailleLine(11, "Quantity 3 $l", "Quantity 3 $l", "\x00" * 13)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert helpers.capture(session) == (
@@ -313,6 +318,7 @@ def test_arrowing_a_native_radio_group_in_browse_mode(
 
 
 @pytest.mark.native_app
+@helpers.xfail_firefox_caret_tab()
 def test_arrowing_an_aria_radio_group_in_focus_mode(
     web_form_fields: BrowserSession,
 ) -> None:

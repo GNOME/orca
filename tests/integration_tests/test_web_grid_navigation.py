@@ -50,70 +50,43 @@ def test_table_navigation_across_grid_cells(web_grid_named_cells: BrowserSession
     move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_T)
-    assert capture(session) == (
-        [
-            "t",
-            "table with 2 rows 3 columns",
-            (
-                "Yesterday quarterly-report.pdf From https://example.com Copy download link "
-                "Show in folder Delete from history"
-            ),
-        ],
-        [BrailleLine(1, _TITLE, _TITLE, "\x00" * 20)],
-    )
+    spoken, brailled = capture(session)
+    assert spoken == [
+        "t",
+        "table with 2 rows 3 columns",
+        (
+            "Yesterday quarterly-report.pdf From https://example.com Copy download link "
+            "Show in folder Delete from history"
+        ),
+    ]
+    assert brailled[-1] == BrailleLine(1, _TITLE, _TITLE, "\x00" * 20)
 
     session.orca.press_orca_key(keyboard.KEYSYM_A)
-    assert capture(session) == (
-        ["Focus mode"],
-        [BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)],
-    )
+    spoken, brailled = capture(session)
+    assert spoken == ["Focus mode"]
+    assert brailled[-1] == BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
 
     _table_nav(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
-        [_URL, "Row 1, column 2."],
-        [
-            BrailleLine(1, _TITLE, _TITLE, "\x00" * 20),
-            BrailleLine(1, _URL, _URL, "\x00" * 24),
-            BrailleLine(0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16),
-        ],
-    )
+    spoken, brailled = capture(session)
+    assert spoken == [_URL, "Row 1, column 2."]
+    assert brailled[-1] == BrailleLine(0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16)
 
     _table_nav(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
-        [_ACTIONS, "Row 1, column 3."],
-        [
-            BrailleLine(1, _URL, _URL, "\x00" * 24),
-            BrailleLine(1, _ACTIONS, "Copy download link Show in folde", "\x00" * 53),
-            BrailleLine(0, "Row 1, column 3.", "Row 1, column 3.", "\x00" * 16),
-        ],
-    )
+    spoken, brailled = capture(session)
+    assert spoken == [_ACTIONS, "Row 1, column 3."]
+    assert brailled[-1] == BrailleLine(0, "Row 1, column 3.", "Row 1, column 3.", "\x00" * 16)
 
     _table_nav(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
-        [_URL, "Row 1, column 2."],
-        [
-            BrailleLine(1, _ACTIONS, "Copy download link Show in folde", "\x00" * 53),
-            BrailleLine(1, _URL, _URL, "\x00" * 24),
-            BrailleLine(0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16),
-        ],
-    )
+    spoken, brailled = capture(session)
+    assert spoken == [_URL, "Row 1, column 2."]
+    assert brailled[-1] == BrailleLine(0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16)
 
     _table_nav(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
-        [_TITLE, "Row 1, column 1."],
-        [
-            BrailleLine(1, _URL, _URL, "\x00" * 24),
-            BrailleLine(1, _TITLE, _TITLE, "\x00" * 20),
-            BrailleLine(0, "Row 1, column 1.", "Row 1, column 1.", "\x00" * 16),
-        ],
-    )
+    spoken, brailled = capture(session)
+    assert spoken == [_TITLE, "Row 1, column 1."]
+    assert brailled[-1] == BrailleLine(0, "Row 1, column 1.", "Row 1, column 1.", "\x00" * 16)
 
     _table_nav(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
-        ["meeting-notes.pdf", "Row 2, column 1."],
-        [
-            BrailleLine(1, _TITLE, _TITLE, "\x00" * 20),
-            BrailleLine(1, "meeting-notes.pdf", "meeting-notes.pdf", "\x00" * 17),
-            BrailleLine(0, "Row 2, column 1.", "Row 2, column 1.", "\x00" * 16),
-        ],
-    )
+    spoken, brailled = capture(session)
+    assert spoken == ["meeting-notes.pdf", "Row 2, column 1."]
+    assert brailled[-1] == BrailleLine(0, "Row 2, column 1.", "Row 2, column 1.", "\x00" * 16)

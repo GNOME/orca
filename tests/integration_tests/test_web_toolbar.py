@@ -27,10 +27,33 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, reset_web_state
+from .helpers import BrailleLine, capture, expected_for_browser, reset_web_state
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
+
+
+def _spinbutton_braille(
+    session: BrowserSession, value: str, *, where_am_i: bool = False
+) -> BrailleLine:
+    # Firefox exposes the value through AT-SPI Text; Chromium exposes empty Text.
+    # We use braille.Text for Firefox and include the role for Chromium.
+    # Firefox reports caret offset -1; Where Am I requests braille at offset 0.
+    return expected_for_browser(
+        session,
+        BrailleLine(
+            1,
+            f"Font size in points {value} spin button",
+            f"Font size in points {value} spin bu",
+            "\x00" * 36,
+        ),
+        firefox=BrailleLine(
+            21 if where_am_i else 20,
+            f"Font size in points {value}",
+            f"Font size in points {value}",
+            "\x00" * 24,
+        ),
+    )
 
 
 @pytest.mark.native_app
@@ -130,44 +153,32 @@ def test_arrow_navigation_through_toolbar_controls(web_toolbar: BrowserSession) 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
     spoken, brailled = capture(session)
     assert spoken == ["Font size in points", "spin button", "14pt"]
-    assert brailled[-1] == BrailleLine(
-        1, "Font size in points 14pt spin button", "Font size in points 14pt spin bu", "\x00" * 36
-    )
+    assert brailled[-1] == _spinbutton_braille(session, "14pt")
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
     spoken, brailled = capture(session)
     assert " ".join(spoken) == "Font size in points spin button 14pt"
-    assert brailled[-1] == BrailleLine(
-        1, "Font size in points 14pt spin button", "Font size in points 14pt spin bu", "\x00" * 36
-    )
+    assert brailled[-1] == _spinbutton_braille(session, "14pt", where_am_i=True)
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     spoken, brailled = capture(session)
     assert spoken == ["15pt"]
-    assert brailled[-1] == BrailleLine(
-        1, "Font size in points 15pt spin button", "Font size in points 15pt spin bu", "\x00" * 36
-    )
+    assert brailled[-1] == _spinbutton_braille(session, "15pt")
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
     spoken, brailled = capture(session)
     assert " ".join(spoken) == "Font size in points spin button 15pt"
-    assert brailled[-1] == BrailleLine(
-        1, "Font size in points 15pt spin button", "Font size in points 15pt spin bu", "\x00" * 36
-    )
+    assert brailled[-1] == _spinbutton_braille(session, "15pt", where_am_i=True)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     spoken, brailled = capture(session)
     assert spoken == ["14pt"]
-    assert brailled[-1] == BrailleLine(
-        1, "Font size in points 14pt spin button", "Font size in points 14pt spin bu", "\x00" * 36
-    )
+    assert brailled[-1] == _spinbutton_braille(session, "14pt")
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
     spoken, brailled = capture(session)
     assert " ".join(spoken) == "Font size in points spin button 14pt"
-    assert brailled[-1] == BrailleLine(
-        1, "Font size in points 14pt spin button", "Font size in points 14pt spin bu", "\x00" * 36
-    )
+    assert brailled[-1] == _spinbutton_braille(session, "14pt", where_am_i=True)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
     spoken, brailled = capture(session)

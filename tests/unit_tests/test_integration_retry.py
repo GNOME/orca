@@ -13,9 +13,23 @@ import pytest
 _RUNNER = Path(__file__).parents[1] / "integration_retry.py"
 
 
-def _run(tmp_path: Path, source: str, *, retry: bool = True) -> subprocess.CompletedProcess:
+def _run(
+    tmp_path: Path, source: str, *, retry: bool = True, user_agent: str | None = None
+) -> subprocess.CompletedProcess:
     test_file = tmp_path / "test_example.py"
     test_file.write_text(source, encoding="utf-8")
+    args = []
+    if user_agent is not None:
+        args.append(f"--user-agent={user_agent}")
+        (tmp_path / "conftest.py").write_text(
+            "from pathlib import Path\n"
+            "def pytest_addoption(parser):\n"
+            "    parser.addoption('--user-agent')\n"
+            "def pytest_configure(config):\n"
+            "    with Path(__file__).with_name('user-agents').open('a') as log:\n"
+            "        log.write(str(config.getoption('user_agent')) + '\\n')\n",
+            encoding="utf-8",
+        )
     env = os.environ.copy()
     env.pop("PYTEST_ADDOPTS", None)
     env.pop("ORCA_TEST_RETRY_DIR", None)
@@ -27,7 +41,7 @@ def _run(tmp_path: Path, source: str, *, retry: bool = True) -> subprocess.Compl
     build = tmp_path / "build"
     build.mkdir()
     return subprocess.run(
-        [sys.executable, str(_RUNNER), str(test_file)],
+        [sys.executable, str(_RUNNER), str(test_file), *args],
         cwd=build,
         env=env,
         capture_output=True,
@@ -37,7 +51,10 @@ def _run(tmp_path: Path, source: str, *, retry: bool = True) -> subprocess.Compl
     )
 
 
-def test_retry_uses_fresh_fixtures_and_only_failed_cases(tmp_path: Path) -> None:
+@pytest.mark.parametrize("user_agent", [None, "chromium", "gecko"])
+def test_retry_uses_fresh_fixtures_and_only_failed_cases(
+    tmp_path: Path, user_agent: str | None
+) -> None:
     """A recovered assertion does not rerun passing or other parametrized cases."""
 
     result = _run(
@@ -69,8 +86,11 @@ def test_example(value):
     if value == "fails.once":
         assert previous, "original assertion"
 """,
+        user_agent=user_agent,
     )
     assert result.returncode == 0, result.stdout + result.stderr
+    if user_agent is not None:
+        assert (tmp_path / "user-agents").read_text().splitlines() == [user_agent, user_agent]
     assert (tmp_path / "passes").read_text() == "called\n"
     assert (tmp_path / "fails.once").read_text() == "called\ncalled\n"
     setup1, teardown1, setup2, teardown2 = (tmp_path / "fixtures").read_text().splitlines()

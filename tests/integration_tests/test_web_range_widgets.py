@@ -34,6 +34,17 @@ if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
 
 
+# Firefox omits the native range's orientation state; Chromium exposes HORIZONTAL.
+def _slider_role(session: BrowserSession) -> str:
+    return helpers.expected_for_browser(session, "horizontal slider", firefox="slider")
+
+
+def _meter_value(session: BrowserSession) -> str:
+    # Firefox exposes the native meter's fallback text as its value text.
+    # Both browsers expose the same numeric value of 50.
+    return helpers.expected_for_browser(session, "50", firefox="50 gigabytes")
+
+
 @pytest.mark.native_app
 def test_caret_navigation_top_to_bottom(web_range_widgets: BrowserSession) -> None:
     """Tests Down-arrow caret navigation through the whole page (layout mode on)."""
@@ -43,10 +54,10 @@ def test_caret_navigation_top_to_bottom(web_range_widgets: BrowserSession) -> No
 
     # In layout mode the "Volume" label shares the slider's line.
     for expected in (
-        ["Volume", "horizontal slider", "2", "50 percent."],
+        ["Volume", _slider_role(session), "2", "50 percent."],
         ["Download"],
         ["30 percent."],
-        ["Disk usage", "level bar", "50"],
+        ["Disk usage", "level bar", _meter_value(session)],
         ["Battery charge", "level bar", "80 percent"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -60,13 +71,21 @@ def test_caret_navigation_top_to_bottom_layout_off(web_range_widgets: BrowserSes
     session = web_range_widgets
     helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
+    # Firefox exposes click actions on labels and spaces between labels and controls.
+    # With layout mode disabled, we move the caret to these spaces without speaking.
     for expected in (
-        ["Volume"],
-        ["Volume", "horizontal slider", "2", "50 percent."],
+        helpers.expected_for_browser(session, ["Volume"], firefox=["Volume", "clickable"]),
+        *helpers.expected_for_browser(session, [], firefox=[[]]),
+        ["Volume", _slider_role(session), "2", "50 percent."],
         ["Download"],
         ["30 percent."],
-        ["Disk usage"],
-        ["Disk usage", "level bar", "50"],
+        helpers.expected_for_browser(
+            session,
+            ["Disk usage"],
+            firefox=["Disk usage", "clickable"],
+        ),
+        *helpers.expected_for_browser(session, [], firefox=[[]]),
+        ["Disk usage", "level bar", _meter_value(session)],
         ["Battery charge", "level bar", "80 percent"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -82,10 +101,10 @@ def test_caret_navigation_bottom_to_top(web_range_widgets: BrowserSession) -> No
     helpers.move_to_bottom(session)
 
     for expected in (
-        ["Disk usage", "level bar", "50"],
+        ["Disk usage", "level bar", _meter_value(session)],
         ["30 percent."],
         ["Download"],
-        ["Volume", "horizontal slider", "2", "50 percent."],
+        ["Volume", _slider_role(session), "2", "50 percent."],
         ["Range widgets", "heading 1"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_UP)
@@ -100,13 +119,21 @@ def test_caret_navigation_bottom_to_top_layout_off(web_range_widgets: BrowserSes
     helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
     helpers.move_to_bottom(session)
+    # Firefox exposes click actions on labels and spaces between labels and controls.
+    # With layout mode disabled, we move the caret to these spaces without speaking.
     for expected in (
-        ["Disk usage", "level bar", "50"],
-        ["Disk usage"],
+        ["Disk usage", "level bar", _meter_value(session)],
+        *helpers.expected_for_browser(session, [], firefox=[[]]),
+        helpers.expected_for_browser(
+            session,
+            ["Disk usage"],
+            firefox=["Disk usage", "clickable"],
+        ),
         ["30 percent."],
         ["Download"],
-        ["Volume", "horizontal slider", "2", "50 percent."],
-        ["Volume"],
+        ["Volume", _slider_role(session), "2", "50 percent."],
+        *helpers.expected_for_browser(session, [], firefox=[[]]),
+        helpers.expected_for_browser(session, ["Volume"], firefox=["Volume", "clickable"]),
         ["Range widgets", "heading 1"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_UP)
@@ -125,7 +152,7 @@ def test_slider_value_changes_and_progress_bar(web_range_widgets: BrowserSession
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert helpers.speech(session) == [
         "Volume",
-        "horizontal slider",
+        _slider_role(session),
         "2",
         "50 percent.",
         "Focus mode",
@@ -167,7 +194,7 @@ def test_slider_value_changes_and_progress_bar(web_range_widgets: BrowserSession
     assert helpers.speech(session) == ["30 percent."]
 
 
-def _where_am_i(session: BrowserSession) -> tuple[list[str], list[tuple[int, str, str | None]]]:
+def _where_am_i(session: BrowserSession) -> tuple[list[str], list[BrailleLine]]:
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
     return helpers.capture(session)
 
@@ -180,13 +207,14 @@ def test_where_am_i_on_slider(web_range_widgets: BrowserSession) -> None:
     helpers.reset_web_state(session)
 
     helpers.tab_and_swallow_presentation(session)
-    assert _where_am_i(session) == (
-        ["Volume", "horizontal slider", "0", "0 percent."],
-        [
-            BrailleLine(1, "Volume 0 horizontal slider", "Volume 0 horizontal slider", "\x00" * 26),
-            BrailleLine(1, "Volume 0 horizontal slider", "Volume 0 horizontal slider", "\x00" * 26),
-        ],
+    spoken, brailled = _where_am_i(session)
+    assert spoken == ["Volume", _slider_role(session), "0", "0 percent."]
+    line = helpers.expected_for_browser(
+        session,
+        "Volume 0 horizontal slider",
+        firefox="Volume 0 slider",
     )
+    assert brailled[-1] == BrailleLine(1, line, line, "\x00" * len(line))
 
 
 @pytest.mark.native_app

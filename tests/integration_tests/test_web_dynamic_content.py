@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import reset_web_state, speech
+from .helpers import reset_web_state, skip_firefox_caret_tab, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -68,6 +68,7 @@ def test_adding_list_items_is_silent(web_dynamic_content: BrowserSession) -> Non
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 def test_removing_list_items_is_silent(web_dynamic_content: BrowserSession) -> None:
     """Tests that removing list items while focus is on the button is not announced."""
 
@@ -86,6 +87,7 @@ def test_removing_list_items_is_silent(web_dynamic_content: BrowserSession) -> N
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 def test_toggling_panel_is_silent(web_dynamic_content: BrowserSession) -> None:
     """Tests that showing and hiding a display:none panel is not announced."""
 
@@ -105,6 +107,7 @@ def test_toggling_panel_is_silent(web_dynamic_content: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 def test_reload_rereads_page(web_dynamic_content: BrowserSession) -> None:
     """Tests that reloading the page presents its contents anew (busy + load-complete)."""
 
@@ -137,6 +140,7 @@ def test_reload_rereads_page(web_dynamic_content: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 def test_reload_presents_page_summary(web_dynamic_content: BrowserSession) -> None:
     """Tests that the page-summary-on-load setting presents a structural summary on reload."""
 

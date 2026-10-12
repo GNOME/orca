@@ -181,10 +181,15 @@ def test_flat_review_by_line_and_character(web_landmarks: BrowserSession) -> Non
             [BrailleLine(1, "Secondary Help $l", "Secondary Help $l", "\x00" * 17)],
         )
 
+        # Firefox retains the label's trailing space in flat-review braille.
         keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
-        assert helpers.capture(session) == (
-            ["Search"],
-            [BrailleLine(1, "Search $l", "Search $l", "\x00" * 9)],
+        assert helpers.capture(session) == helpers.expected_for_browser(
+            session,
+            (["Search"], [BrailleLine(1, "Search $l", "Search $l", "\x00" * 9)]),
+            firefox=(
+                ["Search", "entry"],
+                [BrailleLine(1, "Search  $l", "Search  $l", "\x00" * 10)],
+            ),
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_HOME)

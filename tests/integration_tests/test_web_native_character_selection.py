@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import browser
 from .harness import keyboard
 from .helpers import say_selection, speech
 from .version_helpers import requires_browser_version
@@ -128,6 +129,13 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
     return selected, unselected
 
 
+# Gecko lacks the Document selection API: https://bugzilla.mozilla.org/show_bug.cgi?id=1879510
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Our Text fallback loses complete selection boundaries when a child reports a change",
+    raises=pytest.fail.Exception,
+    strict=True,
+)
 # Provisional minimum while selection failures are investigated.
 @requires_browser_version("chromium", 157, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
@@ -181,6 +189,13 @@ def test_selection_to_the_right_after_structural_navigation(
         assert say_selection(session) == ["Selected text is:  Q"]
 
 
+# Gecko keeps reporting the image's Text selection range after native Shift+Left.
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Gecko retains the selected image range after native Shift+Left",
+    raises=AssertionError,
+    strict=True,
+)
 @pytest.mark.native_app
 def test_selection_after_image_navigation(web_native_text_selection: BrowserSession) -> None:
     """Tests image navigation positions the native caret before the embedded image."""

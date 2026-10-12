@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import move_to_bottom, move_to_top, reset_web_state, speech
+from .helpers import expected_for_browser, move_to_bottom, move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -114,7 +114,8 @@ def test_word_navigation_left_to_right(web_inline_list: BrowserSession) -> None:
         ["• "],
         ["beta"],
         ["Tail "],
-        ["paragraph"],
+        # Firefox includes the period in the word boundary; retain both for browser review.
+        expected_for_browser(session, ["paragraph"], firefox=["paragraph."]),
     ]
     result = []
     for _ in expected:
@@ -132,8 +133,8 @@ def test_word_navigation_right_to_left(web_inline_list: BrowserSession) -> None:
     move_to_bottom(session)
 
     expected = [
-        ["."],
-        ["paragraph"],
+        # The same punctuation boundary difference applies in reverse.
+        *expected_for_browser(session, [["."], ["paragraph"]], firefox=[["paragraph."]]),
         ["Tail "],
         ["beta"],
         ["• "],

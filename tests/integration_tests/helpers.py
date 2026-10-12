@@ -25,10 +25,13 @@ from __future__ import annotations
 import contextlib
 from typing import TYPE_CHECKING, NamedTuple, TypeVar
 
+import pytest
+
 from orca.output_reader import BrailleRecord, SpeechRecord
 
 from .apps.browser import BROWSERS
 from .harness import keyboard
+from .version_helpers import firefox_is_older_than_build
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -36,6 +39,31 @@ if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession, NativeAppSession
 
 _Expected = TypeVar("_Expected")
+_FIREFOX_CARET_TAB_FIXED = (159, 20261002095017)
+_FIREFOX_CARET_TAB_REASON = (
+    "Firefox uses stale Tab position after AT-SPI caret movement: "
+    "https://bugzilla.mozilla.org/show_bug.cgi?id=2076648"
+)
+
+
+def xfail_firefox_caret_tab() -> pytest.MarkDecorator:
+    """Marks tests affected by Firefox's caret/Tab bug on older builds."""
+
+    return pytest.mark.xfail(
+        firefox_is_older_than_build(*_FIREFOX_CARET_TAB_FIXED),
+        reason=_FIREFOX_CARET_TAB_REASON,
+        raises=AssertionError,
+        strict=True,
+    )
+
+
+def skip_firefox_caret_tab() -> pytest.MarkDecorator:
+    """Skips tests whose setup needs Firefox's caret/Tab fix."""
+
+    return pytest.mark.skipif(
+        firefox_is_older_than_build(*_FIREFOX_CARET_TAB_FIXED),
+        reason=_FIREFOX_CARET_TAB_REASON,
+    )
 
 
 def expected_for_browser(

@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import browser
 from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top
 
@@ -33,7 +34,16 @@ if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
 
 
+# Gecko's PlatformEvent does not forward EVENT_OBJECT_ATTRIBUTE_CHANGED:
+# https://searchfox.org/firefox-main/source/accessible/atk/AccessibleWrap.cpp
+# aria-sort attribute mapping: https://www.w3.org/TR/core-aam-1.2/#aria-sort-ascending
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Firefox does not emit AT-SPI row-reordered or sort-attribute notifications",
+    raises=AssertionError,
+    strict=True,
+)
 def test_row_reorder_announced(web_sortable_table: BrowserSession) -> None:
     """Tests that activating the sort button announces the row reorder and sort order."""
 
@@ -81,6 +91,12 @@ def test_row_reorder_announced(web_sortable_table: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Firefox does not emit AT-SPI column-reordered or sort-attribute notifications",
+    raises=AssertionError,
+    strict=True,
+)
 def test_column_reorder_announced(web_sortable_table: BrowserSession) -> None:
     """Tests that toggling a row header's sort order announces the column reorder."""
 

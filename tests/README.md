@@ -25,6 +25,7 @@ launch Orca need an installed build of the version being tested.
   openSUSE, install `liblouis-devel`).
 * MathCAT enabled in the installed Orca build for the math tests.
 * Chrome (beta preferred) or Chromium for the web tests.
+* Firefox (Nightly preferred) for the Firefox tests.
 * `python-xlib` for window setup when running web tests with Firefox.
 
 ## Running Tests
@@ -46,7 +47,8 @@ Orca's tests are grouped into the following named suites:
     * "core": infrastructure such as GSettings, D-Bus support, and browser smoke tests
     * "gtk3": non-terminal GTK3 UI tests
     * "gtk3-terminal": for terminal applications using VTE for GTK3
-    * "web": for web content using Chrome (beta preferred) or Chromium
+    * "chromium": for web content using Chrome (beta preferred) or Chromium
+    * "gecko": for web content using Firefox (Nightly preferred)
 
 ```bash
 meson test -C _build
@@ -77,6 +79,14 @@ that the test harness should not first kill any running instance of Orca
 because doing so might be unexpected. If you rely on Orca in your active
 session, you can still run the tests by signing in as a second local user
 (via `su` or `ssh`) and running them from there.
+
+`ORCA_TEST_USER_AGENT_PATH` overrides the browser executable. It must match the
+selected suite; this is not checked by the harness. For example:
+
+```bash
+ORCA_TEST_USER_AGENT_PATH=/usr/bin/firefox meson test -C _build --suite gecko
+ORCA_TEST_USER_AGENT_PATH=/opt/google/chrome-canary/chrome meson test -C _build --suite chromium
+```
 
 ## Adding New Unit Tests
 

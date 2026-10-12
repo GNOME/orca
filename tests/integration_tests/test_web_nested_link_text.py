@@ -29,7 +29,15 @@ import pytest
 from orca.output_reader import SpeechRecord
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_bottom, move_to_top, reset_web_state, speech
+from .helpers import (
+    BrailleLine,
+    capture,
+    expected_for_browser,
+    move_to_bottom,
+    move_to_top,
+    reset_web_state,
+    speech,
+)
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -42,7 +50,7 @@ def _line(full: str, mask: str) -> BrailleLine:
     return BrailleLine(1, full, full[:32], mask)
 
 
-@pytest.mark.web
+@pytest.mark.native_app
 def test_line_navigation_over_nested_link_text(web_nested_link_text: BrowserSession) -> None:
     """Tests line navigation over nested link text."""
 
@@ -190,7 +198,7 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     )
 
 
-@pytest.mark.web
+@pytest.mark.native_app
 def test_word_navigation_over_nested_link_text(web_nested_link_text: BrowserSession) -> None:
     """Tests word navigation over nested link text."""
 
@@ -199,8 +207,8 @@ def test_word_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     speech(session)
 
     expected = [
-        ["."],
-        ["After"],
+        # Firefox includes the period in the word boundary; retain both for browser review.
+        *expected_for_browser(session, [["."], ["After"]], firefox=[["After."]]),
         ["after"],
         ["here"],
         ["link "],
@@ -220,7 +228,7 @@ def test_word_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
         assert speech(session) == utterances
 
 
-@pytest.mark.web
+@pytest.mark.native_app
 def test_tab_navigation_over_nested_link_text(web_nested_link_text: BrowserSession) -> None:
     """Tests tab navigation over nested link text."""
 
@@ -248,7 +256,7 @@ def test_tab_navigation_over_nested_link_text(web_nested_link_text: BrowserSessi
         )
 
 
-@pytest.mark.web
+@pytest.mark.native_app
 def test_say_all_over_nested_link_text(web_nested_link_text: BrowserSession) -> None:
     """Tests Say All over nested link text."""
 
@@ -330,7 +338,7 @@ def test_say_all_over_nested_link_text(web_nested_link_text: BrowserSession) -> 
     ]
 
 
-@pytest.mark.web
+@pytest.mark.native_app
 def test_nested_link_text_uses_the_hyperlink_voice(web_nested_link_text: BrowserSession) -> None:
     """Tests that nested link text uses the hyperlink voice."""
 
@@ -353,7 +361,7 @@ def test_nested_link_text_uses_the_hyperlink_voice(web_nested_link_text: Browser
     )
 
 
-@pytest.mark.web
+@pytest.mark.native_app
 def test_say_all_uses_the_hyperlink_voice(web_nested_link_text: BrowserSession) -> None:
     """Tests that Say All uses the hyperlink voice for nested link text."""
 

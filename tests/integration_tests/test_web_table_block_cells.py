@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_top, speech
+from .helpers import BrailleLine, capture, expected_for_browser, move_to_top, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -175,7 +175,23 @@ def test_clipped_header_labels_join_the_visible_ones(
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        ["table with 2 rows 5 columns", "TREND DIRECTION", "NAME", "PRICE", "CHANGE", "% CHG"],
+        # In this MarketWatch fixture, Firefox honors scope="col" on <td>; Chromium does not.
+        expected_for_browser(
+            session,
+            ["table with 2 rows 5 columns", "TREND DIRECTION", "NAME", "PRICE", "CHANGE", "% CHG"],
+            firefox=[
+                "table with 2 rows 5 columns",
+                "TREND DIRECTION column header",
+                "NAME column header",
+                "column 2",
+                "PRICE column header",
+                "column 3",
+                "CHANGE column header",
+                "column 4",
+                "% CHG column header",
+                "column 5",
+            ],
+        ),
         [
             BrailleLine(
                 1,
@@ -187,9 +203,32 @@ def test_clipped_header_labels_join_the_visible_ones(
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
-        ["Trending up arrow", "Nikkei", "link", "42,062.98", "+112.50", "0.27%"],
-        [BrailleLine(1, _NIKKEI_ROW, _NIKKEI_ROW[:32], _NIKKEI_MASK)],
+    # Those header roles also add context to the data row's speech and full braille.
+    header_prefix = " TREND DIRECTION column header "
+    assert capture(session) == expected_for_browser(
+        session,
+        (
+            ["Trending up arrow", "Nikkei", "link", "42,062.98", "+112.50", "0.27%"],
+            [BrailleLine(1, _NIKKEI_ROW, _NIKKEI_ROW[:32], _NIKKEI_MASK)],
+        ),
+        firefox=(
+            [
+                "TREND DIRECTION column header Trending up arrow",
+                "Nikkei",
+                "link",
+                "PRICE column header 42,062.98",
+                "CHANGE column header +112.50",
+                "% CHG column header 0.27%",
+            ],
+            [
+                BrailleLine(
+                    1,
+                    header_prefix + _NIKKEI_ROW,
+                    _NIKKEI_ROW[:32],
+                    "\x00" * len(header_prefix) + _NIKKEI_MASK,
+                )
+            ],
+        ),
     )
 
 
@@ -205,7 +244,12 @@ def test_line_breaks_in_cells_are_not_combined(web_table_block_cells: BrowserSes
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert speech(session) == [expected]
 
-    for expected in ["Katherine", "Johnson", "Physicist", "Hampton"]:
+    # Firefox retains the newline before <br> in text directly inside a cell.
+    for expected in expected_for_browser(
+        session,
+        ["Katherine", "Johnson", "Physicist", "Hampton"],
+        firefox=["Katherine\n", "Johnson", "Physicist\n", "Hampton"],
+    ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert speech(session) == [expected]
 

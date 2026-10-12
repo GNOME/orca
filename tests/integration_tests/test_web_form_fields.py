@@ -63,7 +63,8 @@ def test_say_all_over_form_fields(web_form_fields: BrowserSession) -> None:
         "Fruit",
         "combo box",
         "Apple",
-        "opens menu",
+        # Firefox exposes HAS_POPUP without a type; Chromium also exposes haspopup=menu.
+        helpers.expected_for_browser(session, "opens menu", firefox="opens popup"),
         "Preferred contact",
         "combo box",
         "Email",
@@ -146,7 +147,13 @@ def test_structural_navigation_by_form_field(web_form_fields: BrowserSession) ->
 
     keyboard.tap_key(keyboard.KEYSYM_F)
     assert helpers.capture(session) == (
-        ["f", "Fruit", "combo box", "Apple", "opens menu"],
+        [
+            "f",
+            "Fruit",
+            "combo box",
+            "Apple",
+            helpers.expected_for_browser(session, "opens menu", firefox="opens popup"),
+        ],
         [helpers.BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
     )
 
@@ -641,7 +648,13 @@ def test_structural_navigation_by_combo_box(web_form_fields: BrowserSession) -> 
 
     keyboard.tap_key(keyboard.KEYSYM_C)
     assert helpers.capture(session) == (
-        ["c", "Fruit", "combo box", "Apple", "opens menu"],
+        [
+            "c",
+            "Fruit",
+            "combo box",
+            "Apple",
+            helpers.expected_for_browser(session, "opens menu", firefox="opens popup"),
+        ],
         [helpers.BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
     )
 
@@ -683,7 +696,13 @@ def test_structural_navigation_by_combo_box(web_form_fields: BrowserSession) -> 
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_C)
     assert helpers.capture(session) == (
-        ["C", "Fruit", "combo box", "Apple", "opens menu"],
+        [
+            "C",
+            "Fruit",
+            "combo box",
+            "Apple",
+            helpers.expected_for_browser(session, "opens menu", firefox="opens popup"),
+        ],
         [helpers.BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
     )
 
@@ -701,9 +720,8 @@ def test_fieldset_legend_role_only_on_entry(web_form_fields: BrowserSession) -> 
     session = web_form_fields
     helpers.move_to_top(session)
 
-    for _ in range(14):
-        keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        helpers.capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_R)
+    helpers.capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert helpers.capture(session) == (
@@ -776,6 +794,7 @@ def test_where_am_i_on_form_controls(web_form_fields: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
+@helpers.xfail_firefox_caret_tab()
 def test_position_in_set_when_arrowing_a_combo_box(web_form_fields: BrowserSession) -> None:
     """Tests position in set when arrowing a combo box."""
 
@@ -802,6 +821,7 @@ def test_position_in_set_when_arrowing_a_combo_box(web_form_fields: BrowserSessi
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("click_count", [1, 2], ids=["basic", "detailed"])
+@helpers.xfail_firefox_caret_tab()
 def test_where_am_i_on_noneditable_combo_box(
     web_form_fields: BrowserSession, click_count: int
 ) -> None:

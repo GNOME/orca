@@ -27,14 +27,14 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_top, speech
+from .helpers import BrailleLine, capture, expected_for_browser, move_to_top, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
 
 # Chromium names the alt-less image with a version-dependent "missing image
 # descriptions" annotation, so these tests pin Orca's stable role labels and the
-# braille link mask rather than that name.
+# braille link mask rather than that name. Firefox supplies no image role description.
 
 
 @pytest.mark.native_app
@@ -66,7 +66,7 @@ def test_next_image_reaches_the_alt_less_image(web_image_link: BrowserSession) -
     keyboard.tap_key(keyboard.KEYSYM_G)
     speech, _braille = capture(session)
     assert speech[0] == "g"
-    assert speech[-1] == "Unlabeled image"
+    assert speech[-1] == expected_for_browser(session, "Unlabeled image", firefox="image link")
 
 
 @pytest.mark.native_app
@@ -95,13 +95,14 @@ def test_small_standalone_image_is_filtered_from_content(
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     speech, braille = capture(session)
-    assert speech[-1] == "Unlabeled image"
+    assert speech[-1] == expected_for_browser(session, "Unlabeled image", firefox="image link")
     assert set(braille[0].mask) == {"\xc0"}
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    image_role = expected_for_browser(session, "Unlabeled image", firefox="image")
     assert capture(session) == (
-        ["Unlabeled image"],
-        [BrailleLine(1, "Unlabeled image", "Unlabeled image", "\x00" * 15)],
+        [image_role],
+        [BrailleLine(1, image_role, image_role, "\x00" * len(image_role))],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -142,8 +143,8 @@ def test_say_all_skips_the_useless_image(web_image_link: BrowserSession) -> None
     move_to_top(web_image_link)
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
     spoken = speech(web_image_link)
-    # The link image and the large standalone image each read as "Unlabeled image";
-    # the small useless image is filtered out, so there are two, not three.
-    assert spoken.count("Unlabeled image") == 2
+    # The linked and large standalone images are presented; the tiny one is omitted.
+    image_role = expected_for_browser(web_image_link, "Unlabeled image", firefox="image")
+    assert spoken.count(image_role) == 2
     assert "Intro paragraph." in spoken
     assert "Closing paragraph." in spoken

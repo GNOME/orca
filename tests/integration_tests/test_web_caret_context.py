@@ -26,8 +26,16 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import browser
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_bottom, reset_web_state, speech
+from .helpers import (
+    BrailleLine,
+    capture,
+    expected_for_browser,
+    move_to_bottom,
+    reset_web_state,
+    speech,
+)
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -174,6 +182,21 @@ def test_word_navigation_left_to_right(web_caret_context: BrowserSession) -> Non
         ["four"],
         ["."],
     ]
+    # Firefox includes punctuation in the AT-SPI word ranges.
+    expected = expected_for_browser(
+        session,
+        expected,
+        firefox=[
+            ["Caret "],
+            ["context"],
+            ["Paragraph "],
+            ["one."],
+            ["Paragraph "],
+            ["three."],
+            ["Paragraph "],
+            ["four."],
+        ],
+    )
     result = []
     for _ in expected:
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
@@ -202,6 +225,21 @@ def test_word_navigation_right_to_left(web_caret_context: BrowserSession) -> Non
         ["context"],
         ["Caret "],
     ]
+    # Firefox includes punctuation in the AT-SPI word ranges.
+    expected = expected_for_browser(
+        session,
+        expected,
+        firefox=[
+            ["four."],
+            ["Paragraph "],
+            ["three."],
+            ["Paragraph "],
+            ["one."],
+            ["Paragraph "],
+            ["context"],
+            ["Caret "],
+        ],
+    )
     result = []
     for _ in expected:
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
@@ -212,6 +250,13 @@ def test_word_navigation_right_to_left(web_caret_context: BrowserSession) -> Non
 # Keep this test last: focusing the span dirties caret context in a way reset_web_state
 # does not fully clear, which would break a later top-of-document test.
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Firefox does not expose focused aria-hidden elements: "
+    "https://bugzilla.mozilla.org/show_bug.cgi?id=1944935",
+    raises=AssertionError,
+    strict=True,
+)
 def test_focusable_aria_hidden_span_is_exposed_on_focus(
     web_caret_context: BrowserSession,
 ) -> None:

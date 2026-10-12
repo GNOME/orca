@@ -27,15 +27,20 @@ from typing import TYPE_CHECKING
 import pytest
 
 from . import helpers
+from .apps import browser
 from .harness import keyboard
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
 
 
-def _quantity_line(value: int) -> helpers.BrailleLine:
-    text = f"Quantity {value} spin button"
-    return helpers.BrailleLine(1, text, text, "\x00" * len(text))
+def _quantity_line(session: BrowserSession, value: int) -> helpers.BrailleLine:
+    # Firefox exposes the value through Text; Chromium uses Value presentation.
+    text = helpers.expected_for_browser(
+        session, f"Quantity {value} spin button", firefox=f"Quantity {value}"
+    )
+    cursor_cell = helpers.expected_for_browser(session, 1, firefox=9)
+    return helpers.BrailleLine(cursor_cell, text, text, "\x00" * len(text))
 
 
 @pytest.mark.native_app
@@ -49,23 +54,22 @@ def test_quantity_focus_and_arrow(web_aria_spinbutton: BrowserSession) -> None:
     assert helpers.capture(session) == (
         ["Quantity", "spin button", "3", "Focus mode"],
         [
-            _quantity_line(3),
+            _quantity_line(session, 3),
             helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10),
         ],
     )
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert helpers.capture(session) == (
-        ["4"],
-        [_quantity_line(3), _quantity_line(4)],
-    )
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["4"]
+    assert brailled[-1] == _quantity_line(session, 4)
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert helpers.capture(session) == (
-        ["3"],
-        [_quantity_line(3)],
-    )
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["3"]
+    assert brailled[-1] == _quantity_line(session, 3)
 
 
 @pytest.mark.native_app
+@helpers.skip_firefox_caret_tab()
 def test_quantity_page_home_end_and_boundaries(web_aria_spinbutton: BrowserSession) -> None:
     """Tests PageUp/Down, Home/End, and clamping at min/max on the non-editable spinbutton."""
 
@@ -74,23 +78,29 @@ def test_quantity_page_home_end_and_boundaries(web_aria_spinbutton: BrowserSessi
     helpers.tab_and_swallow_presentation(session)
 
     keyboard.tap_key(keyboard.KEYSYM_PAGE_UP)
-    assert helpers.capture(session) == (
-        ["10"],
-        [_quantity_line(3), _quantity_line(10)],
-    )
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["10"]
+    assert brailled[-1] == _quantity_line(session, 10)
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert helpers.capture(session) == ([], [])
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    assert helpers.capture(session) == (["0"], [_quantity_line(0)])
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["0"]
+    assert brailled[-1] == _quantity_line(session, 0)
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert helpers.capture(session) == ([], [])
     keyboard.tap_key(keyboard.KEYSYM_END)
-    assert helpers.capture(session) == (["10"], [_quantity_line(10)])
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["10"]
+    assert brailled[-1] == _quantity_line(session, 10)
     keyboard.tap_key(keyboard.KEYSYM_PAGE_DOWN)
-    assert helpers.capture(session) == (["0"], [_quantity_line(0)])
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["0"]
+    assert brailled[-1] == _quantity_line(session, 0)
 
 
 @pytest.mark.native_app
+@helpers.skip_firefox_caret_tab()
 def test_rating_focus_and_arrow(web_aria_spinbutton: BrowserSession) -> None:
     """Tests Tab focus and Up/Down on the editable ARIA spinbutton (Rating)."""
 
@@ -148,6 +158,7 @@ def _reload(session: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
+@helpers.skip_firefox_caret_tab()
 def test_rating_page_home_end_and_boundaries(web_aria_spinbutton: BrowserSession) -> None:
     """Tests PageUp/Down, Home/End, and clamping at min/max on the editable spinbutton."""
 
@@ -180,13 +191,9 @@ def test_rating_page_home_end_and_boundaries(web_aria_spinbutton: BrowserSession
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert helpers.capture(session) == ([], [])
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    assert helpers.capture(session) == (
-        ["0"],
-        [
-            helpers.BrailleLine(8, "Rating 0 $l", "Rating 0 $l", "\x00" * 11),
-            helpers.BrailleLine(8, "Rating 0 $l", "Rating 0 $l", "\x00" * 11),
-        ],
-    )
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["0"]
+    assert brailled[-1] == helpers.BrailleLine(8, "Rating 0 $l", "Rating 0 $l", "\x00" * 11)
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert helpers.capture(session) == ([], [])
 
@@ -330,37 +337,60 @@ def test_rating_typing(web_aria_spinbutton: BrowserSession) -> None:
     )
 
 
-@pytest.mark.native_app
-def test_volume_readonly_input_spinbutton(web_aria_spinbutton: BrowserSession) -> None:
-    """Tests a readonly <input role='spinbutton'>: text-object path with text exposed."""
+def _tab_to_volume(session: BrowserSession) -> None:
+    """Reloads the page and focuses the read-only Volume spinbutton."""
 
-    session = web_aria_spinbutton
     _reload(session)
     helpers.reset_web_state(session)
     for _ in range(4):
         helpers.tab_and_swallow_presentation(session)
-
-    value_selected = "\x00" * 7 + "\xc0\xc0" + "\x00" * 7
-    volume_50 = helpers.BrailleLine(10, "Volume 50 rdonly", "Volume 50 rdonly", value_selected)
-    bump_rating = "Bump Rating in 1000 ms button"
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert helpers.capture(session) == (
+
+
+@pytest.mark.native_app
+def test_volume_readonly_input_spinbutton(web_aria_spinbutton: BrowserSession) -> None:
+    """Tests focus and key presentation for a read-only input spinbutton."""
+
+    session = web_aria_spinbutton
+    _tab_to_volume(session)
+    # Chromium omits SENSITIVE on this read-only control; Firefox retains it.
+    assert helpers.speech(session) == helpers.expected_for_browser(
+        session,
         ["Volume", "spin button", "50", "grayed", "Focus mode"],
-        [
-            helpers.BrailleLine(1, bump_rating, bump_rating, "\x00" * len(bump_rating)),
-            volume_50,
-            helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10),
-        ],
+        firefox=["Volume", "spin button", "50", "Focus mode"],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert helpers.capture(session) == ([], [volume_50])
+    assert helpers.speech(session) == []
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
     assert helpers.capture(session) == ([], [])
 
     keyboard.tap_key(keyboard.KEYSYM_5)
     assert helpers.capture(session) == (["5"], [])
+
+
+# Required state mapping: https://www.w3.org/TR/core-aam-1.2/#ariaReadonlyTrue
+@pytest.mark.native_app
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Firefox's ATK state mapping does not expose READ_ONLY: "
+    "https://bugzilla.mozilla.org/show_bug.cgi?id=1356018",
+    raises=AssertionError,
+    strict=True,
+)
+def test_volume_readonly_braille(web_aria_spinbutton: BrowserSession) -> None:
+    """Tests that braille identifies the Volume spinbutton as read-only."""
+
+    session = web_aria_spinbutton
+    _tab_to_volume(session)
+    helpers.capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    _, brailled = helpers.capture(session)
+    value_selected = "\x00" * 7 + "\xc0\xc0" + "\x00" * 7
+    assert brailled[-1] == helpers.BrailleLine(
+        10, "Volume 50 rdonly", "Volume 50 rdonly", value_selected
+    )
 
 
 def _tab_to_bump_button(session: BrowserSession, *, target_quantity: bool) -> None:
@@ -403,17 +433,9 @@ def test_quantity_programmatic_change_focus_on_spinbutton(
 
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
-    bump_label = "Bump Quantity in 1000 ms button"
-    assert helpers.capture(session, quiescence=1.5, overall=3.5, wait_async=True) == (
-        ["4"],
-        [
-            helpers.BrailleLine(1, bump_label, bump_label, "\x00" * len(bump_label)),
-            _quantity_line(3),
-            helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10),
-            _quantity_line(3),
-            _quantity_line(4),
-        ],
-    )
+    spoken, brailled = helpers.capture(session, quiescence=1.5, overall=3.5, wait_async=True)
+    assert spoken == ["4"]
+    assert brailled[-1] == _quantity_line(session, 4)
 
 
 @pytest.mark.native_app

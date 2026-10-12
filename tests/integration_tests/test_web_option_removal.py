@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, reset_web_state
+from .helpers import BrailleLine, capture, expected_for_browser, reset_web_state
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -40,11 +40,15 @@ def test_focused_option_removed(web_option_removal: BrowserSession) -> None:
     session = web_option_removal
     reset_web_state(session)
 
+    # Firefox includes the list bullet in the options' names and text; Chromium omits it.
+    option_a = expected_for_browser(session, "Option A", firefox="• Option A")
+    option_b = expected_for_browser(session, "Option B", firefox="• Option B")
+
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert capture(session) == (
-        ["Items", "List with 3 items", "Option A", "Focus mode"],
+        ["Items", "List with 3 items", option_a, "Focus mode"],
         [
-            BrailleLine(1, "Option A", "Option A", "\x00" * 8),
+            BrailleLine(1, option_a, option_a, "\x00" * len(option_a)),
             BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10),
         ],
     )
@@ -52,9 +56,9 @@ def test_focused_option_removed(web_option_removal: BrowserSession) -> None:
     # Delete moves aria-activedescendant to the next option and removes the old one.
     keyboard.tap_key(keyboard.KEYSYM_DELETE)
     assert capture(session, wait_async=True) == (
-        ["Option B"],
+        [option_b],
         [
-            BrailleLine(1, "Option A", "Option A", "\x00" * 8),
-            BrailleLine(1, "Option B", "Option B", "\x00" * 8),
+            BrailleLine(1, option_a, option_a, "\x00" * len(option_a)),
+            BrailleLine(1, option_b, option_b, "\x00" * len(option_b)),
         ],
     )

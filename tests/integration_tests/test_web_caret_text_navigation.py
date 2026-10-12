@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import move_to_top, reset_web_state, speech
+from .helpers import expected_for_browser, move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -88,16 +88,17 @@ def test_word_navigation(web_structural_navigation: BrowserSession) -> None:
     session = web_structural_navigation
     reset_web_state(session)
 
-    assert [_word_right(session) for _ in range(8)] == [
+    expected = [
         ["Structural "],
         ["navigation"],
         ["Intro "],
-        ["paragraph"],
-        ["."],
+        # Firefox includes sentence-ending punctuation in the AT-SPI word boundary.
+        *expected_for_browser(session, [["paragraph"], ["."]], firefox=[["paragraph."]]),
         ["Quoted "],
-        ["text"],
-        ["."],
+        *expected_for_browser(session, [["text"], ["."]], firefox=[["text."]]),
     ]
+
+    assert [_word_right(session) for _ in expected] == expected
 
 
 @pytest.mark.native_app
@@ -127,21 +128,21 @@ def test_word_navigation_backward(web_structural_navigation: BrowserSession) -> 
 
     session = web_structural_navigation
     reset_web_state(session)
-    for _ in range(9):
+    for _ in range(expected_for_browser(session, 9, firefox=7)):
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
 
-    # Going back, Control+Left also stops on the sentence-ending periods.
-    assert [_word_left(session) for _ in range(7)] == [
-        ["."],
-        ["text"],
+    # Chromium exposes each period as a separate word range; Firefox includes it
+    # in the preceding word. TODO: Review these word boundaries.
+    expected = [
+        *expected_for_browser(session, [["."], ["text"]], firefox=[["text."]]),
         ["Quoted "],
-        ["."],
-        ["paragraph"],
+        *expected_for_browser(session, [["."], ["paragraph"]], firefox=[["paragraph."]]),
         ["Intro "],
         ["navigation"],
     ]
+    assert [_word_left(session) for _ in expected] == expected
 
 
 @pytest.mark.native_app
@@ -152,7 +153,7 @@ def test_character_navigation_onto_embedded_button(
 
     session = web_structural_navigation
     reset_web_state(session)
-    for _ in range(8):
+    for _ in range(expected_for_browser(session, 8, firefox=6)):
         _word_right(session)
     assert _right(session) == ["Save", "button"]
     assert _right(session) == ["Agree", "check box not checked"]
@@ -168,8 +169,10 @@ def test_character_navigation_onto_embedded_image(
 
     session = web_structural_navigation
     reset_web_state(session)
-    for _ in range(26):
-        _word_right(session)
+    # Use "Go to next image", then Left, to reach the character before the image.
+    keyboard.tap_key(keyboard.KEYSYM_G)
+    speech(session)
+    assert _left(session) == ["n"]
     assert _right(session) == ["Red square", "image"]
 
 
@@ -189,7 +192,10 @@ def test_line_start_and_end(web_structural_navigation: BrowserSession) -> None:
     keyboard.tap_key(keyboard.KEYSYM_HOME)
     assert speech(session) == ["I"]
     keyboard.tap_key(keyboard.KEYSYM_END)
-    assert speech(session) == ["Intro paragraph."]
+    # At the offset after the period, Firefox returns an empty character range.
+    # Chromium returns invalid offsets, causing us to present the whole line.
+    # TODO: Review handling of invalid character ranges.
+    assert speech(session) == expected_for_browser(session, ["Intro paragraph."], firefox=["blank"])
 
 
 @pytest.mark.native_app

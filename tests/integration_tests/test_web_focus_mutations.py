@@ -27,7 +27,13 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, reset_web_state
+from .helpers import (
+    BrailleLine,
+    capture,
+    expected_for_browser,
+    reset_web_state,
+    skip_firefox_caret_tab,
+)
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -51,8 +57,9 @@ def test_focus_replaces_element(web_focus_mutations: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 def test_similar_relabel_is_suppressed(web_focus_mutations: BrowserSession) -> None:
-    """Tests that relabeling the focused button to a near-identical name is not announced."""
+    """Tests that relabeling the focused button to a near-identical name is not spoken."""
 
     session = web_focus_mutations
     reset_web_state(session)
@@ -66,12 +73,19 @@ def test_similar_relabel_is_suppressed(web_focus_mutations: BrowserSession) -> N
         [BrailleLine(1, "Save button", "Save button", "\x00" * 11)],
     )
 
-    # "Save" -> "Saved" exceeds the name-similarity threshold, so Orca suppresses it.
+    # "Save" -> "Saved" exceeds the name-similarity threshold, so we suppress speech.
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert capture(session, wait_async=True) == ([], [])
+    spoken, brailled = capture(session, wait_async=True)
+    assert spoken == []
+    assert brailled[-1:] == expected_for_browser(
+        session,
+        [],
+        firefox=[BrailleLine(1, "Saved button", "Saved button", "\x00" * 12)],
+    )
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 def test_distinct_relabel_is_announced(web_focus_mutations: BrowserSession) -> None:
     """Tests that relabeling the focused button to a distinct name re-announces it."""
 
@@ -90,7 +104,8 @@ def test_distinct_relabel_is_announced(web_focus_mutations: BrowserSession) -> N
     )
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert capture(session, wait_async=True) == (
-        ["Loading complete"],
-        [BrailleLine(1, "Loading complete button", "Loading complete button", "\x00" * 23)],
+    spoken, brailled = capture(session, wait_async=True)
+    assert spoken == ["Loading complete"]
+    assert brailled[-1] == BrailleLine(
+        1, "Loading complete button", "Loading complete button", "\x00" * 23
     )

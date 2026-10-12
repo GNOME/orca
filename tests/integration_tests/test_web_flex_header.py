@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from . import helpers
+from .apps import browser
 from .harness import keyboard
 
 if TYPE_CHECKING:
@@ -66,6 +67,12 @@ _DOWN_LINES = [
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Firefox's embedded-character range bounds include the next stacked button",
+    raises=AssertionError,
+    strict=True,
+)
 def test_line_down_groups_flex_row_but_reflows_stacked_flex(
     web_flex_header: BrowserSession,
 ) -> None:
@@ -74,9 +81,15 @@ def test_line_down_groups_flex_row_but_reflows_stacked_flex(
     session = web_flex_header
     helpers.reset_web_state(session)
     helpers.move_to_top(session)
-    for expected_speech, expected_line in _DOWN_LINES:
+    for common_speech, expected_line in _DOWN_LINES:
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         spoken, braille = helpers.capture(session)
+        # Firefox exposes HAS_POPUP without Chromium's haspopup=menu attribute.
+        expected_speech = helpers.expected_for_browser(
+            session,
+            common_speech,
+            firefox=["opens popup" if part == "opens menu" else part for part in common_speech],
+        )
         assert spoken == expected_speech
         assert [line.full for line in braille] == [expected_line]
 

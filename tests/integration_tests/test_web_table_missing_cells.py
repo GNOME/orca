@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_top
+from .helpers import BrailleLine, capture, expected_for_browser, move_to_top
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -64,7 +64,13 @@ def test_navigation_around_a_missing_cell(web_missing_cells: BrowserSession) -> 
     # Down from the "Type" header skips the missing cell to the body cell below it.
     _table_nav(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        ["Type column header Input", "Row 3, column 2."],
+        # Chromium reports colindex=1 for this cell in column 2, so it repeats the header.
+        # TODO: Investigate Chromium's index; this movement stays in the same column.
+        expected_for_browser(
+            session,
+            ["Type column header Input", "Row 3, column 2."],
+            firefox=["Input", "Row 3, column 2."],
+        ),
         [
             BrailleLine(1, "Type", "Type", "\x00" * 4),
             BrailleLine(1, "Input", "Input", "\x00" * 5),
@@ -108,7 +114,12 @@ def test_navigation_around_a_missing_cell(web_missing_cells: BrowserSession) -> 
     # to its right, which lives in a lower row of the cell's span.
     _table_nav(keyboard.KEYSYM_RIGHT)
     assert capture(session) == (
-        ["Input", "Row 3, column 2."],
+        # The same Chromium index discrepancy suppresses the header on this column change.
+        expected_for_browser(
+            session,
+            ["Input", "Row 3, column 2."],
+            firefox=["Type column header Input", "Row 3, column 2."],
+        ),
         [
             BrailleLine(1, "Gemini Pro", "Gemini Pro", "\x00" * 10),
             BrailleLine(1, "Input", "Input", "\x00" * 5),

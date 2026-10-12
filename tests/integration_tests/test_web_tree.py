@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import reset_web_state, speech
+from .helpers import expected_for_browser, reset_web_state, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -56,9 +56,16 @@ def test_tree_navigation_level_and_expansion(web_tree: BrowserSession) -> None:
     session = web_tree
     reset_web_state(session)
 
+    # Firefox includes list bullets in tree item names; Chromium omits them.
+    fruits = expected_for_browser(session, "Fruits", firefox="• Fruits")
+    apple = expected_for_browser(session, "Apple", firefox="◦ Apple")
+    banana = expected_for_browser(session, "Banana", firefox="◦ Banana")
+    vegetables = expected_for_browser(session, "Vegetables", firefox="• Vegetables")
+    carrot = expected_for_browser(session, "Carrot", firefox="◦ Carrot")
+
     # Tab focuses the tree's first item, an expanded level-1 node.
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Fruits", "expanded", "tree level 1", "Focus mode"]
+    assert speech(session) == [fruits, "expanded", "tree level 1", "Focus mode"]
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
     assert speech(session) == ["collapsed"]
@@ -67,23 +74,23 @@ def test_tree_navigation_level_and_expansion(web_tree: BrowserSession) -> None:
     assert speech(session) == ["expanded"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Apple", "tree level 2"]
+    assert speech(session) == [apple, "tree level 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Banana"]
+    assert speech(session) == [banana]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Vegetables", "collapsed", "tree level 1"]
+    assert speech(session) == [vegetables, "collapsed", "tree level 1"]
 
     # Expanding the collapsed node reveals its child, which Down then reaches.
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
     assert speech(session) == ["expanded"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Carrot", "tree level 2"]
+    assert speech(session) == [carrot, "tree level 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == ["Vegetables", "expanded", "tree level 1"]
+    assert speech(session) == [vegetables, "expanded", "tree level 1"]
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
     assert speech(session) == ["collapsed"]

@@ -34,18 +34,21 @@ if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
 
 
-_TOP_TO_BOTTOM = (
-    ["List with 3 items", "• Apple"],
-    ["• Bread"],
-    ["• Cheese"],
-    ["leaving list.", "List with 3 items", "1. Wash"],
-    ["2. Rinse"],
-    ["3. Dry"],
-    ["leaving list.", "List with 2 items", "• Produce"],
-    ["List with 2 items Nesting level 1", "◦ Carrot"],
-    ["◦ Onion"],
-    ["leaving list.", "List with 2 items", "• Dairy"],
-)
+# Firefox exposes a space after Produce before the nested list; Chromium omits it.
+def _top_to_bottom(session: BrowserSession) -> tuple[list[str], ...]:
+    produce = helpers.expected_for_browser(session, "• Produce", firefox="• Produce ")
+    return (
+        ["List with 3 items", "• Apple"],
+        ["• Bread"],
+        ["• Cheese"],
+        ["leaving list.", "List with 3 items", "1. Wash"],
+        ["2. Rinse"],
+        ["3. Dry"],
+        ["leaving list.", "List with 2 items", produce],
+        ["List with 2 items Nesting level 1", "◦ Carrot"],
+        ["◦ Onion"],
+        ["leaving list.", "List with 2 items", "• Dairy"],
+    )
 
 
 @pytest.mark.native_app
@@ -55,7 +58,7 @@ def test_caret_navigation_top_to_bottom(web_lists: BrowserSession) -> None:
     session = web_lists
     helpers.reset_web_state(session)
 
-    for expected in _TOP_TO_BOTTOM:
+    for expected in _top_to_bottom(session):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert helpers.capture(session)[0] == expected
 
@@ -67,23 +70,25 @@ def test_caret_navigation_top_to_bottom_layout_off(web_lists: BrowserSession) ->
     session = web_lists
     helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
-    for expected in _TOP_TO_BOTTOM:
+    for expected in _top_to_bottom(session):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert helpers.capture(session)[0] == expected
 
 
-_BOTTOM_TO_TOP = (
-    ["List with 2 items Nesting level 1", "◦ Onion"],
-    ["◦ Carrot"],
-    ["leaving list.", "• Produce"],
-    ["leaving list.", "List with 3 items", "3. Dry"],
-    ["2. Rinse"],
-    ["1. Wash"],
-    ["leaving list.", "List with 3 items", "• Cheese"],
-    ["• Bread"],
-    ["• Apple"],
-    ["leaving list.", "Grocery lists", "heading 1"],
-)
+def _bottom_to_top(session: BrowserSession) -> tuple[list[str], ...]:
+    produce = helpers.expected_for_browser(session, "• Produce", firefox="• Produce ")
+    return (
+        ["List with 2 items Nesting level 1", "◦ Onion"],
+        ["◦ Carrot"],
+        ["leaving list.", produce],
+        ["leaving list.", "List with 3 items", "3. Dry"],
+        ["2. Rinse"],
+        ["1. Wash"],
+        ["leaving list.", "List with 3 items", "• Cheese"],
+        ["• Bread"],
+        ["• Apple"],
+        ["leaving list.", "Grocery lists", "heading 1"],
+    )
 
 
 @pytest.mark.native_app
@@ -94,7 +99,7 @@ def test_caret_navigation_bottom_to_top(web_lists: BrowserSession) -> None:
     helpers.reset_web_state(session)
     helpers.move_to_bottom(session)
 
-    for expected in _BOTTOM_TO_TOP:
+    for expected in _bottom_to_top(session):
         keyboard.tap_key(keyboard.KEYSYM_UP)
         assert helpers.capture(session)[0] == expected
 
@@ -107,7 +112,7 @@ def test_caret_navigation_bottom_to_top_layout_off(web_lists: BrowserSession) ->
     helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
     helpers.move_to_bottom(session)
-    for expected in _BOTTOM_TO_TOP:
+    for expected in _bottom_to_top(session):
         keyboard.tap_key(keyboard.KEYSYM_UP)
         assert helpers.capture(session)[0] == expected
 
@@ -118,6 +123,7 @@ def test_structural_navigation_by_list(web_lists: BrowserSession) -> None:
 
     session = web_lists
     helpers.reset_web_state(session)
+    produce = helpers.expected_for_browser(session, "• Produce", firefox="• Produce ")
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
@@ -133,8 +139,8 @@ def test_structural_navigation_by_list(web_lists: BrowserSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
-        ["l", "leaving list.", "List with 2 items", "• Produce"],
-        [BrailleLine(1, "• Produce", "• Produce", "\x00" * 9)],
+        ["l", "leaving list.", "List with 2 items", produce],
+        [BrailleLine(1, produce, produce, "\x00" * len(produce))],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_L)
@@ -169,8 +175,8 @@ def test_structural_navigation_by_list(web_lists: BrowserSession) -> None:
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
-        ["L", "leaving list.", "• Produce"],
-        [BrailleLine(1, "• Produce", "• Produce", "\x00" * 9)],
+        ["L", "leaving list.", produce],
+        [BrailleLine(1, produce, produce, "\x00" * len(produce))],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_L)
@@ -192,6 +198,7 @@ def test_structural_navigation_by_list_item(web_lists: BrowserSession) -> None:
 
     session = web_lists
     helpers.reset_web_state(session)
+    produce = helpers.expected_for_browser(session, "• Produce", firefox="• Produce ")
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
@@ -231,8 +238,8 @@ def test_structural_navigation_by_list_item(web_lists: BrowserSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["i", "leaving list.", "List with 2 items", "• Produce"],
-        [BrailleLine(1, "• Produce", "• Produce", "\x00" * 9)],
+        ["i", "leaving list.", "List with 2 items", produce],
+        [BrailleLine(1, produce, produce, "\x00" * len(produce))],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
@@ -287,8 +294,8 @@ def test_structural_navigation_by_list_item(web_lists: BrowserSession) -> None:
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["I", "leaving list.", "• Produce"],
-        [BrailleLine(1, "• Produce", "• Produce", "\x00" * 9)],
+        ["I", "leaving list.", produce],
+        [BrailleLine(1, produce, produce, "\x00" * len(produce))],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_I)
@@ -319,7 +326,7 @@ def test_say_all_lists(web_lists: BrowserSession) -> None:
         "3. Dry",
         "leaving list.",
         "List with 2 items",
-        "• Produce",
+        helpers.expected_for_browser(session, "• Produce", firefox="• Produce "),
         "List with 2 items",
         "Nesting level 1",
         "◦ Carrot",

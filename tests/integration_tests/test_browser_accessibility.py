@@ -57,8 +57,6 @@ def browser_accessibility(
     binary = next(
         (path for candidate in app.BINARY_NAMES if (path := shutil.which(candidate))), None
     )
-    if name == browser.selected_browser() and os.environ.get("ORCA_TEST_BROWSER_BINARY"):
-        binary = browser.resolve_binary(name)
     if binary is None:
         pytest.skip(f"{name} is not installed; tried {app.BINARY_NAMES!r}")
     print(f"Browser accessibility smoke test: {name}, executable: {binary}")

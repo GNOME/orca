@@ -27,10 +27,14 @@ from typing import TYPE_CHECKING
 import pytest
 
 from . import helpers
+from .apps import browser
 from .harness import keyboard
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
+
+
+pytestmark = helpers.skip_firefox_caret_tab()
 
 
 def _set_echo(
@@ -66,6 +70,8 @@ def _focus_field(session: BrowserSession, tab_count: int) -> None:
     for _ in range(tab_count):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
     _quiet(session)
+    # Gecko omits text-selection-changed when deleting selected text, leaving our
+    # cached selection stale. A later event can cause a spurious "Text unselected."
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
     keyboard.tap_key(keyboard.KEYSYM_DELETE)
     _quiet(session)
@@ -88,6 +94,12 @@ def test_key_echo_insertion_in_textarea(web_editing: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Gecko omits AT-SPI text-selection-changed when deleting selected text",
+    raises=AssertionError,
+    strict=True,
+)
 def test_word_echo_insertion_in_textarea(web_editing: BrowserSession) -> None:
     """Tests that word echo speaks each word as a space completes it in a textarea."""
 
@@ -102,6 +114,12 @@ def test_word_echo_insertion_in_textarea(web_editing: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Gecko omits AT-SPI text-selection-changed when deleting selected text",
+    raises=AssertionError,
+    strict=True,
+)
 def test_backspace_and_delete_in_textarea(web_editing: BrowserSession) -> None:
     """Tests that Backspace and Delete in a textarea announce the affected character."""
 
@@ -240,7 +258,7 @@ def test_say_character_blank_line_speaks_newline_when_disabled(
         session.orca.set("SpeechPresenter", "SpeakBlankLines", original)
 
 
-@pytest.mark.web
+@pytest.mark.native_app
 def test_ctrl_backspace_in_textarea(web_editing: BrowserSession) -> None:
     """Tests Ctrl+BackSpace over a word, and at the start of a line, in a textarea."""
 
@@ -253,11 +271,14 @@ def test_ctrl_backspace_in_textarea(web_editing: BrowserSession) -> None:
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_BACKSPACE)
     assert helpers.speech(session) == ["bar"]
 
-    # The textarea deletes only the newline.
+    # At a line start, Firefox deletes the preceding word and newline;
+    # Chromium deletes only the newline.
     _type("foo")
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     _type("word")
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
     _quiet(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_BACKSPACE)
-    assert helpers.speech(session) == ["\n"]
+    assert helpers.speech(session) == helpers.expected_for_browser(
+        session, ["\n"], firefox=["foo\n"]
+    )

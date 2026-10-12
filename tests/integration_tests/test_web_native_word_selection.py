@@ -26,8 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import browser
 from .harness import keyboard
-from .helpers import speech
+from .helpers import expected_for_browser, speech
 from .version_helpers import requires_browser_version
 from .web_native_selection_helpers import (
     LONG_PARAGRAPH,
@@ -71,6 +72,16 @@ def test_word_selection_within_button(
             assert select_word(session, keyboard.KEYSYM_LEFT) == [word, "unselected"]
 
 
+# Gecko's native word selection stalls at the separator even without a screen reader.
+# Our Text fallback also falsely announces unselection of text that remains selected.
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason=(
+        "Gecko's native word selection stalls at the separator; our Text fallback loses boundaries"
+    ),
+    raises=pytest.fail.Exception,
+    strict=True,
+)
 # Provisional minimum while selection failures are investigated.
 @requires_browser_version("chromium", 157, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
@@ -121,6 +132,13 @@ def test_word_selection_and_unselection(web_native_text_selection: BrowserSessio
     assert_walks(selected, unselected, expected_selected, expected_unselected)
 
 
+# Gecko lacks the Document selection API: https://bugzilla.mozilla.org/show_bug.cgi?id=1879510
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Our Text fallback replaces complete selection boundaries with the button-only range",
+    raises=pytest.fail.Exception,
+    strict=True,
+)
 @requires_browser_version("chromium", 157, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_word_selection_and_unselection_from_bottom(
@@ -156,6 +174,16 @@ def test_word_selection_and_unselection_from_bottom(
     assert_walks(selected, unselected, expected_selected, expected_unselected)
 
 
+# Gecko's native word selection stalls at the separator even without a screen reader.
+# Our Text fallback also falsely announces unselection of text that remains selected.
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason=(
+        "Gecko's native word selection stalls at the separator; our Text fallback loses boundaries"
+    ),
+    raises=pytest.fail.Exception,
+    strict=True,
+)
 @requires_browser_version("chromium", 157, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_word_selection_and_unselection_from_image(
@@ -239,10 +267,12 @@ def test_selection_after_modifier_release(web_native_text_selection: BrowserSess
         keyboard.press_key(keyboard.KEYSYM_CONTROL_L)
         keyboard.press_key(keyboard.KEYSYM_SHIFT_L)
         try:
-            # Release promptly so caret events can arrive after Shift is up.
             keyboard.press_key(keyboard.KEYSYM_LEFT)
         finally:
             keyboard.release_key(keyboard.KEYSYM_LEFT)
             keyboard.release_key(keyboard.KEYSYM_SHIFT_L)
             keyboard.release_key(keyboard.KEYSYM_CONTROL_L)
-        assert speech(session, wait_async=True) == ["region", "selected"]
+        # Firefox's native selection includes more than Chromium's.
+        assert speech(session, wait_async=True) == expected_for_browser(
+            session, ["region", "selected"], firefox=["Clickable ", "selected"]
+        )

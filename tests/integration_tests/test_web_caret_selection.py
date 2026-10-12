@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import browser
 from .caret_selection_helpers import (
     END_OF_LINE,
     NEXT_CHARACTER,
@@ -162,7 +163,26 @@ def test_selection_in_a_paragraph(web_structural_navigation: BrowserSession) -> 
 
 @requires_browser_version("chromium", 153)
 @pytest.mark.native_app
-def test_selection_across_objects(web_structural_navigation: BrowserSession) -> None:
+@pytest.mark.parametrize(
+    "reverse",
+    [
+        pytest.param(False, id="forward"),
+        pytest.param(
+            True,
+            id="reverse",
+            marks=pytest.mark.xfail(
+                browser.selected_browser() == "firefox",
+                reason=(
+                    "Firefox reads object-local selection indices "
+                    "but modifies document-wide indices"
+                ),
+                raises=AssertionError,
+                strict=True,
+            ),
+        ),
+    ],
+)
+def test_selection_across_objects(web_structural_navigation: BrowserSession, reverse: bool) -> None:
     """Tests selection which spans more than one text object."""
 
     session = web_structural_navigation
@@ -183,6 +203,9 @@ def test_selection_across_objects(web_structural_navigation: BrowserSession) -> 
     assert say_selection(session) == [
         "Selected text is:  Structural navigation Intro paragraph. Quoted text."
     ]
+
+    if not reverse:
+        return
 
     spoken, brailled = select(session, PREVIOUS_LINE)
     assert spoken == ["Quoted text.", "unselected"]

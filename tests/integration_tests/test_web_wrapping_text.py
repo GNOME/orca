@@ -33,7 +33,14 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_top, reset_web_state, speech
+from .helpers import (
+    BrailleLine,
+    capture,
+    expected_for_browser,
+    move_to_top,
+    reset_web_state,
+    speech,
+)
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -55,6 +62,8 @@ def test_line_assembly_layout_mode_on(web_wrapping_text: BrowserSession) -> None
     reset_web_state(session)
     assert session.orca.get("CaretNavigator", "LayoutMode") is True
 
+    # AT-SPI line ranges include the space after "bold here" in Firefox
+    # and before "then slanted" in Chromium.
     assert _walk(session, 27) == [
         ["leaving banner.", "main content", "Wrapping text", "heading 1"],
         ["Alpha bravo charlie delta echo "],
@@ -63,8 +72,16 @@ def test_line_assembly_layout_mode_on(web_wrapping_text: BrowserSession) -> None
         ["before india juliet kilo lima "],
         ["mike november oscar papa "],
         ["quebec."],
-        ["Plain words then bold here"],
-        [" then slanted there then a bit "],
+        expected_for_browser(
+            session,
+            ["Plain words then bold here"],
+            firefox=["Plain words then bold here "],
+        ),
+        expected_for_browser(
+            session,
+            [" then slanted there then a bit "],
+            firefox=["then slanted there then a bit "],
+        ),
         ["of ", "inline code", " and water is "],
         ["H", "subscript", "two", "O and x", "superscript", "squared", " plus more "],
         ["trailing words that wrap "],
@@ -103,8 +120,16 @@ def test_line_assembly_layout_mode_off(web_wrapping_text: BrowserSession) -> Non
             ["before india juliet kilo lima "],
             ["mike november oscar papa "],
             ["quebec."],
-            ["Plain words then bold here"],
-            [" then slanted there then a bit "],
+            expected_for_browser(
+                session,
+                ["Plain words then bold here"],
+                firefox=["Plain words then bold here "],
+            ),
+            expected_for_browser(
+                session,
+                [" then slanted there then a bit "],
+                firefox=["then slanted there then a bit "],
+            ),
             ["of "],
             ["inline code"],
             [" and water is "],
@@ -140,8 +165,16 @@ def test_line_assembly_walking_up(web_wrapping_text: BrowserSession) -> None:
         ["trailing words that wrap "],
         ["H", "subscript", "two", "O and x", "superscript", "squared", " plus more "],
         ["of ", "inline code", " and water is "],
-        [" then slanted there then a bit "],
-        ["Plain words then bold here"],
+        expected_for_browser(
+            session,
+            [" then slanted there then a bit "],
+            firefox=["then slanted there then a bit "],
+        ),
+        expected_for_browser(
+            session,
+            ["Plain words then bold here"],
+            firefox=["Plain words then bold here "],
+        ),
         ["quebec."],
         ["mike november oscar papa "],
         ["before india juliet kilo lima "],
@@ -188,7 +221,7 @@ def test_eol_indicator_on_code_blocks_not_inline(web_wrapping_text: BrowserSessi
     )
 
     # A pre whose line ends in a link: the code block's $l belongs at the end of the
-    # line, never mid-line after one of its fragments.
+    # line, never mid-line after one of its fragments. Present the line only once.
     assert _down_to_line(session, 4) == (
         ["code start", "see ", "the docs", "link"],
         [

@@ -29,8 +29,10 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import browser
 from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top, speech
+from .version_helpers import firefox_is_nightly
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -53,6 +55,12 @@ _FRACTION = "the fraction with numerator; x plus 1; and denominator y minus 2"
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Firefox's embedded MathML range bounds include the following line of text",
+    raises=AssertionError,
+    strict=True,
+)
 def test_line_navigation_over_inline_and_standalone_math(web_math: BrowserSession) -> None:
     """Tests inline and standalone math are presented correctly."""
 
@@ -60,16 +68,16 @@ def test_line_navigation_over_inline_and_standalone_math(web_math: BrowserSessio
     move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    # Nightly enables mathml.legacy_mathvariant_attribute.disabled: like Chromium,
+    # it exposes italic 𝑥/𝑦, for which MathCAT adds English-letter indicators.
+    # Release Firefox exposes plain x/y. Keep the MathCAT difference visible.
+    fraction = (
+        "⠹⠭⠬⠂⠌⠽⠤⠆⠼" if session.browser == "firefox" and not firefox_is_nightly() else "⠹⠰⠭⠬⠂⠌⠰⠽⠤⠆⠼"
+    )
+    line = f"A fraction surrounded by text: {fraction} is a lovely thing!"
     assert capture(session) == (
         ["A fraction surrounded by text: ", _FRACTION, " is a lovely thing!"],
-        [
-            BrailleLine(
-                1,
-                "A fraction surrounded by text: ⠹⠰⠭⠬⠂⠌⠰⠽⠤⠆⠼ is a lovely thing!",
-                "A fraction surrounded by text: ⠹",
-                "\x00" * 61,
-            )
-        ],
+        [BrailleLine(1, line, "A fraction surrounded by text: ⠹", "\x00" * len(line))],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)

@@ -27,7 +27,15 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_bottom, reset_web_state, speech
+from .helpers import (
+    BrailleLine,
+    capture,
+    expected_for_browser,
+    move_to_bottom,
+    reset_web_state,
+    skip_firefox_caret_tab,
+    speech,
+)
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -87,6 +95,7 @@ def test_line_navigation_down_and_up(web_editable_embedded: BrowserSession) -> N
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 def test_word_navigation_onto_embedded_link(web_editable_embedded: BrowserSession) -> None:
     """Tests that word-navigating onto an embedded link in a contenteditable announces it."""
 
@@ -116,6 +125,7 @@ def test_word_navigation_onto_embedded_link(web_editable_embedded: BrowserSessio
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 def test_character_navigation_into_embedded_link(web_editable_embedded: BrowserSession) -> None:
     """Tests that character-navigating into an embedded link switches braille to the link."""
 
@@ -147,6 +157,7 @@ def test_character_navigation_into_embedded_link(web_editable_embedded: BrowserS
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 def test_character_deletion_and_insertion(web_editable_embedded: BrowserSession) -> None:
     """Tests presentation of character deletion and insertion in a contenteditable."""
 
@@ -173,6 +184,7 @@ def test_character_deletion_and_insertion(web_editable_embedded: BrowserSession)
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 def test_navigation_after_edit_reads_fresh_content(web_editable_embedded: BrowserSession) -> None:
     """Tests that arrowing to an edited line reads its current text rather than a stale cache."""
 
@@ -255,6 +267,25 @@ def test_word_navigation_left_to_right(web_editable_embedded: BrowserSession) ->
         ["notes"],
         ["."],
     ]
+    # Firefox includes punctuation in the AT-SPI word ranges.
+    expected = expected_for_browser(
+        session,
+        expected,
+        firefox=[
+            ["First "],
+            ["line "],
+            ["of "],
+            ["notes."],
+            ["See "],
+            ["the "],
+            ["link"],
+            ["below."],
+            ["Last "],
+            ["line "],
+            ["of "],
+            ["notes."],
+        ],
+    )
     result = []
     for _ in expected:
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
@@ -287,6 +318,25 @@ def test_word_navigation_right_to_left(web_editable_embedded: BrowserSession) ->
         ["line "],
         ["First "],
     ]
+    # Firefox includes punctuation in the AT-SPI word ranges.
+    expected = expected_for_browser(
+        session,
+        expected,
+        firefox=[
+            ["notes."],
+            ["of "],
+            ["line "],
+            ["Last "],
+            ["below."],
+            ["link"],
+            ["the "],
+            ["See "],
+            ["notes."],
+            ["of "],
+            ["line "],
+            ["First "],
+        ],
+    )
     result = []
     for _ in expected:
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)

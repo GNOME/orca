@@ -26,8 +26,17 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import browser
 from .harness import keyboard
-from .helpers import BrailleLine, capture, reset_web_state, say_selection, speech
+from .helpers import (
+    BrailleLine,
+    capture,
+    expected_for_browser,
+    reset_web_state,
+    say_selection,
+    skip_firefox_caret_tab,
+    speech,
+)
 from .version_helpers import requires_browser_version
 from .web_native_selection_helpers import (
     USES_DOCUMENT_SELECTION,
@@ -47,10 +56,12 @@ def test_selecting_and_unselecting_an_option(web_selection: BrowserSession) -> N
     session = web_selection
     reset_web_state(session)
 
+    # Firefox includes the list bullet in the option's name and text.
+    olives = expected_for_browser(session, "Olives", firefox="• Olives")
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     spoken, brailled = capture(session)
-    assert spoken == ["Toppings", "multi-select List with 2 items", "Olives", "Focus mode"]
-    assert brailled[0] == BrailleLine(1, "Olives", "Olives", "\x00" * 6)
+    assert spoken == ["Toppings", "multi-select List with 2 items", olives, "Focus mode"]
+    assert brailled[0] == BrailleLine(1, olives, olives, "\x00" * len(olives))
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
     spoken, brailled = capture(session)
@@ -64,6 +75,7 @@ def test_selecting_and_unselecting_an_option(web_selection: BrowserSession) -> N
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 def test_selecting_a_tree_item(web_selection: BrowserSession) -> None:
     """Tests selecting a tree item."""
 
@@ -80,6 +92,13 @@ def test_selecting_a_tree_item(web_selection: BrowserSession) -> None:
     assert brailled[-1] == BrailleLine(0, "selected", "selected", "\x00" * 8)
 
 
+# Gecko lacks the Document selection API: https://bugzilla.mozilla.org/show_bug.cgi?id=1879510
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Our Text fallback replaces complete selection boundaries with the button-only range",
+    raises=AssertionError,
+    strict=True,
+)
 @requires_browser_version("chromium", 156)
 @pytest.mark.skipif(
     not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
@@ -148,6 +167,13 @@ def test_selection_containing_whole_inline_button(
         assert say_selection(session) == ["No selected text."]
 
 
+# Gecko lacks the Document selection API: https://bugzilla.mozilla.org/show_bug.cgi?id=1879510
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Our Text fallback replaces complete selection boundaries with the button-only range",
+    raises=AssertionError,
+    strict=True,
+)
 @requires_browser_version("chromium", 156)
 @pytest.mark.skipif(
     not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"

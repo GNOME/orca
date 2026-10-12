@@ -30,6 +30,7 @@ from .harness import keyboard
 from .helpers import (
     BrailleLine,
     capture,
+    expected_for_browser,
     move_to_bottom,
     reset_web_state,
     speech,
@@ -38,6 +39,20 @@ from .helpers import (
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
+
+
+# Firefox exposes <mark> as MARK, while Chromium maps it to static text.
+def _marked_word(session: BrowserSession) -> list[str]:
+    return expected_for_browser(
+        session,
+        ["marked"],
+        firefox=["highlight start", "marked", "highlight end"],
+    )
+
+
+def _marked_braille(session: BrowserSession) -> BrailleLine:
+    line = expected_for_browser(session, "A marked word.", firefox="A marked mark word.")
+    return BrailleLine(1, line, line, "\x00" * len(line))
 
 
 def _line_down(
@@ -58,7 +73,7 @@ def test_caret_navigation_top_to_bottom(web_text_attributes: BrowserSession) -> 
     for expected in (
         ["A ", "deletion start", "removed", "deletion end", " word."],
         ["An ", "insertion start", "added", "insertion end", " word."],
-        ["A ", "marked", " word."],
+        ["A ", *_marked_word(session), " word."],
         ["A ", "subscript", "lower", " word."],
         ["A ", "superscript", "higher", " word."],
         ["A ", "linked", "link", " word."],
@@ -84,7 +99,7 @@ def test_caret_navigation_top_to_bottom_layout_off(web_text_attributes: BrowserS
         ["insertion start", "added", "insertion end"],
         [" word."],
         ["A "],
-        ["marked"],
+        _marked_word(session),
         [" word."],
         ["A "],
         ["subscript", "lower"],
@@ -114,7 +129,7 @@ def test_caret_navigation_bottom_to_top(web_text_attributes: BrowserSession) -> 
         ["A ", "linked", "link", " word."],
         ["A ", "superscript", "higher", " word."],
         ["A ", "subscript", "lower", " word."],
-        ["A ", "marked", " word."],
+        ["A ", *_marked_word(session), " word."],
         ["An ", "insertion start", "added", "insertion end", " word."],
         ["A ", "deletion start", "removed", "deletion end", " word."],
         ["Text attributes", "heading 1"],
@@ -143,7 +158,7 @@ def test_caret_navigation_bottom_to_top_layout_off(web_text_attributes: BrowserS
         ["subscript", "lower"],
         ["A "],
         [" word."],
-        ["marked"],
+        _marked_word(session),
         ["A "],
         [" word."],
         ["insertion start", "added", "insertion end"],
@@ -190,8 +205,8 @@ def test_inline_markup_presentation(web_text_attributes: BrowserSession) -> None
     )
 
     assert _line_down(session) == (
-        ["A ", "marked", " word."],
-        [BrailleLine(1, "A marked word.", "A marked word.", "\x00" * 14)],
+        ["A ", *_marked_word(session), " word."],
+        [_marked_braille(session)],
     )
 
     assert _line_down(session) == (
@@ -221,8 +236,14 @@ def test_formatting_change_announcements(web_text_attributes: BrowserSession) ->
     _line_down(session)  # deletion line
     _line_down(session)  # insertion line
     assert _line_down(session) == (
-        ["A ", "background color: yellow", "marked", "background color: white", " word."],
-        [BrailleLine(1, "A marked word.", "A marked word.", "\x00" * 14)],
+        [
+            "A ",
+            "background color: yellow",
+            *_marked_word(session),
+            "background color: white",
+            " word.",
+        ],
+        [_marked_braille(session)],
     )
 
     _line_down(session)  # subscript line
@@ -399,33 +420,30 @@ def test_word_navigation_left_to_right(web_text_attributes: BrowserSession) -> N
     reset_web_state(session)
     session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
 
+    # Firefox includes sentence-final periods in its AT-SPI word ranges.
+    word = expected_for_browser(session, [["word"], ["."]], firefox=[["word."]])
+    normal = expected_for_browser(session, [["normal"], ["."]], firefox=[["normal."]])
     expected = [
         ["Text "],
         ["attributes"],
         ["A "],
         ["deletion start", "removed", "deletion end"],
-        ["word"],
-        ["."],
+        *word,
         ["An "],
         ["insertion start", "added", "insertion end"],
-        ["word"],
-        ["."],
+        *word,
         ["A "],
-        ["marked"],
-        ["word"],
-        ["."],
+        _marked_word(session),
+        *word,
         ["A "],
         ["lower"],
-        ["word"],
-        ["."],
+        *word,
         ["A "],
         ["higher"],
-        ["word"],
-        ["."],
+        *word,
         ["A "],
         ["linked"],
-        ["word"],
-        ["."],
+        *word,
         ["Normal "],
         ["heavy "],
         ["then "],
@@ -433,8 +451,7 @@ def test_word_navigation_left_to_right(web_text_attributes: BrowserSession) -> N
         ["then "],
         ["lined "],
         ["then "],
-        ["normal"],
-        ["."],
+        *normal,
     ]
     result = []
     for _ in expected:
@@ -476,7 +493,7 @@ def test_word_navigation_right_to_left(web_text_attributes: BrowserSession) -> N
         ["A "],
         ["."],
         ["word"],
-        ["marked"],
+        _marked_word(session),
         ["A "],
         ["."],
         ["word"],
@@ -489,6 +506,41 @@ def test_word_navigation_right_to_left(web_text_attributes: BrowserSession) -> N
         ["attributes"],
         ["Text "],
     ]
+    # Firefox includes sentence-final periods in its AT-SPI word ranges.
+    expected = expected_for_browser(
+        session,
+        expected,
+        firefox=[
+            ["normal."],
+            ["then "],
+            ["lined "],
+            ["then "],
+            ["slanted "],
+            ["then "],
+            ["heavy "],
+            ["Normal "],
+            ["word."],
+            ["linked"],
+            ["A "],
+            ["word."],
+            ["higher"],
+            ["A "],
+            ["word."],
+            ["lower"],
+            ["A "],
+            ["word."],
+            _marked_word(session),
+            ["A "],
+            ["word."],
+            ["insertion start", "added", "insertion end"],
+            ["An "],
+            ["word."],
+            ["deletion start", "removed", "deletion end"],
+            ["A "],
+            ["attributes"],
+            ["Text "],
+        ],
+    )
     result = []
     for _ in expected:
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)

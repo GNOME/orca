@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import capture, move_to_bottom, reset_web_state, speech
+from .helpers import capture, move_to_bottom, reset_web_state, speech, xfail_firefox_caret_tab
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -136,6 +136,7 @@ def test_live_region_politeness(web_live_regions: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
+@xfail_firefox_caret_tab()
 def test_status_role_live_region_is_announced(web_live_regions: BrowserSession) -> None:
     """Tests that an update to a polite role=status live region is announced."""
 
@@ -151,6 +152,7 @@ def test_status_role_live_region_is_announced(web_live_regions: BrowserSession) 
 
 
 @pytest.mark.native_app
+@xfail_firefox_caret_tab()
 def test_live_region_with_icon_content_is_announced_by_name(
     web_live_regions: BrowserSession,
 ) -> None:
@@ -168,6 +170,7 @@ def test_live_region_with_icon_content_is_announced_by_name(
 
 
 @pytest.mark.native_app
+@xfail_firefox_caret_tab()
 def test_live_region_child_removal_is_silent(web_live_regions: BrowserSession) -> None:
     """Tests that removing a child of a polite live region away from focus is not announced."""
 
@@ -183,6 +186,7 @@ def test_live_region_child_removal_is_silent(web_live_regions: BrowserSession) -
 
 
 @pytest.mark.native_app
+@xfail_firefox_caret_tab()
 def test_busy_live_region_rewritten_in_place(web_live_regions: BrowserSession) -> None:
     """Tests that a region rewritten while aria-busy is announced once it is no longer busy."""
 
@@ -198,6 +202,7 @@ def test_busy_live_region_rewritten_in_place(web_live_regions: BrowserSession) -
 
 
 @pytest.mark.native_app
+@xfail_firefox_caret_tab()
 def test_busy_live_region_finalized_with_its_content(web_live_regions: BrowserSession) -> None:
     """Tests that clearing aria-busy along with a final rewrite yields one announcement."""
 

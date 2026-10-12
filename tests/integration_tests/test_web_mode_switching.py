@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import reset_web_state, speech
+from .helpers import expected_for_browser, reset_web_state, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -73,7 +73,8 @@ def test_native_navigation_switches_mode_automatically(
         "Fruit",
         "combo box",
         "Apple",
-        "opens menu",
+        # Firefox exposes a popup state without Chromium's haspopup=menu type.
+        expected_for_browser(session, "opens menu", firefox="opens popup"),
         "Focus mode",
     ]
     assert _next(session, keyboard.KEYSYM_TAB) == ["City", "entry"]

@@ -28,6 +28,7 @@ from typing import TYPE_CHECKING
 
 os.environ["GSETTINGS_BACKEND"] = "memory"
 
+from .apps import browser
 from .dbus_fixtures import (  # noqa: F401
     _bus,
     _dbus_service_proxy,
@@ -177,8 +178,16 @@ if TYPE_CHECKING:
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../src"))
 
 
+def pytest_addoption(parser: pytest.Parser) -> None:
+    """Registers the user agent supplied by the Meson suite."""
+
+    parser.addoption("--user-agent", choices=tuple(browser.USER_AGENTS))
+
+
 def pytest_configure(config: pytest.Config) -> None:
-    """Register custom markers."""
+    """Configures the suite's browser and registers custom markers."""
+
+    browser.configure(config.getoption("user_agent"))
 
     config.addinivalue_line("markers", "dbus: marks tests as D-Bus specific tests")
     config.addinivalue_line("markers", "gsettings: marks tests as GSettings integration tests")

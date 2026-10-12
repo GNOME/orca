@@ -65,9 +65,11 @@ def test_activate_same_page_link_to_paragraph(web_long_line: BrowserSession) -> 
 
     _next_link(session)  # The "link" anchored to #long.
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    # Firefox reports caret offset 0 on the destination; Chromium reports -1.
+    cursor_cell = helpers.expected_for_browser(session, 0, firefox=1)
     assert helpers.capture(session, wait_async=True) == (
         [_LONG_LINE],
-        [helpers.BrailleLine(0, _LONG_LINE, _LONG_VISIBLE, "\x00" * len(_LONG_LINE))],
+        [helpers.BrailleLine(cursor_cell, _LONG_LINE, _LONG_VISIBLE, "\x00" * len(_LONG_LINE))],
     )
 
 
@@ -81,7 +83,8 @@ def test_activate_same_page_link_to_second_paragraph(web_long_line: BrowserSessi
     _next_link(session)  # The "link" anchored to #long.
     _next_link(session)  # The "middle link" anchored to #second.
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    cursor_cell = helpers.expected_for_browser(session, 0, firefox=1)
     assert helpers.capture(session, wait_async=True) == (
         [_SECOND_LINE],
-        [helpers.BrailleLine(0, _SECOND_LINE, _SECOND_LINE, "\x00" * len(_SECOND_LINE))],
+        [helpers.BrailleLine(cursor_cell, _SECOND_LINE, _SECOND_LINE, "\x00" * len(_SECOND_LINE))],
     )

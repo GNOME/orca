@@ -559,6 +559,7 @@ def _run_browser_session(
         sys.executable,
         "-m",
         browser.__name__,
+        browser_name,
         f"file://{page_path}",
         str(profile_dir),
         binary,
@@ -581,14 +582,13 @@ def _make_web_fixture(
     name: str | None = None,
     scope: Literal["function", "class", "module", "package", "session"] = "session",
 ) -> Callable[..., Iterator[BrowserSession]]:
-    @pytest.fixture(scope=scope, name=name or Path(page).stem, params=[browser.selected_browser()])
+    @pytest.fixture(scope=scope, name=name or Path(page).stem)
     def fixture(
-        request: pytest.FixtureRequest,
         tmp_path_factory: pytest.TempPathFactory,
     ) -> Iterator[BrowserSession]:
         yield from _run_browser_session(
             tmp_path_factory,
-            browser_name=request.param,
+            browser_name=browser.selected_browser(),
             page=page,
             caret_browsing=caret_browsing,
         )
@@ -597,14 +597,13 @@ def _make_web_fixture(
 
 
 def _make_plain_text_fixture(page: str) -> Callable[..., Iterator[BrowserSession]]:
-    @pytest.fixture(scope="session", name=Path(page).stem, params=[browser.selected_browser()])
+    @pytest.fixture(scope="session", name=Path(page).stem)
     def fixture(
-        request: pytest.FixtureRequest,
         tmp_path_factory: pytest.TempPathFactory,
     ) -> Iterator[BrowserSession]:
         yield from _run_browser_session(
             tmp_path_factory,
-            browser_name=request.param,
+            browser_name=browser.selected_browser(),
             page=page,
             ready_predicate=_document_loaded,
         )

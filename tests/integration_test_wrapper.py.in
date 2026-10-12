@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import contextlib
 import os
 import shutil
@@ -343,7 +344,7 @@ def _teardown(children: list[subprocess.Popen]) -> None:
             proc.kill()
 
 
-def _run_test(test_file: str) -> int:
+def _run_test(test_args: list[str]) -> int:
     """Sets up the Xvfb + AT-SPI stack, runs pytest, tears everything down."""
 
     children: list[subprocess.Popen] = []
@@ -354,7 +355,7 @@ def _run_test(test_file: str) -> int:
         # @PYTHON@ is substituted with the Python interpreter path by meson's
         # configure_file(); see tests/meson.build.
         pytest_proc = subprocess.run(
-            ["@PYTHON@", "-m", "tests.integration_retry", test_file],
+            ["@PYTHON@", "-m", "tests.integration_retry", *test_args],
             env=env,
             check=False,
         )
@@ -366,14 +367,14 @@ def _run_test(test_file: str) -> int:
 def main() -> int:
     """Runs an integration test inside a private Xvfb + a11y stack."""
 
-    args = [arg for arg in sys.argv[1:] if arg != _SANDBOX_READY_FLAG]
-    sandbox_ready = _SANDBOX_READY_FLAG in sys.argv
-
-    if len(args) != 1:
-        print("Usage: integration_test_wrapper.py <test_file>", file=sys.stderr)
-        return 1
-
-    test_file = args[0]
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("test_file")
+    parser.add_argument("--user-agent", choices=("chromium", "gecko"))
+    parser.add_argument(_SANDBOX_READY_FLAG, action="store_true", help=argparse.SUPPRESS)
+    args = parser.parse_args()
+    test_args = [args.test_file]
+    if args.user_agent is not None:
+        test_args.append(f"--user-agent={args.user_agent}")
 
     searched = ", ".join(_ATSPI_DIRECTORIES)
     if shutil.which("Xvfb") is None:
@@ -398,7 +399,7 @@ def main() -> int:
     # sandbox path so dbus-daemon writes its sockets into our sandbox rather than into the
     # caller's real /run/user/$UID. The child invocation signals "sandbox is
     # ready, skip this block" by passing --sandbox-ready in argv.
-    if not sandbox_ready:
+    if not args.sandbox_ready:
         sandbox = tempfile.mkdtemp(prefix="orca-integration-test-")
         runtime_dir = os.path.join(sandbox, "runtime")
         os.makedirs(runtime_dir, mode=0o700, exist_ok=True)
@@ -421,7 +422,7 @@ def main() -> int:
         # hold our stderr fd open and block meson's pipe reader after the wrapper exits.
         proc = subprocess.Popen(
             ["dbus-run-session", f"--config-file={_write_bus_config(sandbox)}", "--",
-             sys.executable, sys.argv[0], _SANDBOX_READY_FLAG, test_file],
+             sys.executable, sys.argv[0], _SANDBOX_READY_FLAG, *test_args],
             env=child_env,
             start_new_session=True,
         )
@@ -441,7 +442,7 @@ def main() -> int:
             shutil.rmtree(sandbox, ignore_errors=True)
         return returncode
 
-    return _run_test(test_file)
+    return _run_test(test_args)
 
 
 if __name__ == "__main__":

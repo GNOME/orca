@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_top
+from .helpers import BrailleLine, capture, expected_for_browser, move_to_top
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -40,10 +40,20 @@ def test_line_reading_emoji_text_and_inline_links(web_emoji_links: BrowserSessio
     session = web_emoji_links
     move_to_top(session)
 
+    # Firefox pads non-BMP characters with U+FEFF to retain UTF-16 offsets in ATK text.
+    # The padding affects braille offsets; speech during character navigation is unchanged.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
         ["🎧 Streaming links:"],
-        [BrailleLine(1, "🎧 Streaming links:", "🎧 Streaming links:", "\x00" * 18)],
+        [
+            expected_for_browser(
+                session,
+                BrailleLine(1, "🎧 Streaming links:", "🎧 Streaming links:", "\x00" * 18),
+                firefox=BrailleLine(
+                    1, "🎧\ufeff Streaming links:", "🎧\ufeff Streaming links:", "\x00" * 19
+                ),
+            )
+        ],
     )
 
     # The trailing newline rides along in braille but is filtered from speech.
@@ -68,7 +78,18 @@ def test_line_reading_emoji_text_and_inline_links(web_emoji_links: BrowserSessio
     text = "🎵 Follow me on Spotify to get notified whenever I release something!"
     assert capture(session) == (
         [text + ""],
-        [BrailleLine(1, text, "🎵 Follow me on Spotify to get no", "\x00" * len(text))],
+        [
+            expected_for_browser(
+                session,
+                BrailleLine(1, text, "🎵 Follow me on Spotify to get no", "\x00" * len(text)),
+                firefox=BrailleLine(
+                    1,
+                    "🎵\ufeff" + text[1:],
+                    "🎵\ufeff Follow me on Spotify to get n",
+                    "\x00" * (len(text) + 1),
+                ),
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)

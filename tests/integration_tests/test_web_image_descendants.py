@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import browser
 from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state, say_selection, speech
 
@@ -44,7 +45,15 @@ def _move_before_image(session: BrowserSession, section: int) -> None:
     speech(session)
 
 
+# Image-map links are still skipped after AT-SPI caret setting in Nightly builds
+# containing the fix for Mozilla bug 2076648. Investigate this case separately.
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Firefox skips image-map links on Tab after AT-SPI caret setting",
+    raises=AssertionError,
+    strict=True,
+)
 def test_tab_navigation_reaches_image_descendants(web_image_descendants: BrowserSession) -> None:
     """Tests Tab and Shift+Tab reach image-map links and SVG controls."""
 
@@ -68,7 +77,20 @@ def test_tab_navigation_reaches_image_descendants(web_image_descendants: Browser
         assert actual_braille[-1] == braille
 
 
+# Gecko maps DIAGRAM (SVG) and IMAGE_MAP to ATK_ROLE_IMAGE:
+# Image-map mapping bug: https://bugzilla.mozilla.org/show_bug.cgi?id=2080150
+# HTML-AAM's missing image-map role mapping: https://github.com/w3c/html-aam/issues/614
+# The graphics-document mapping specifies DOCUMENT_FRAME:
+# https://www.w3.org/TR/graphics-aam-1.0/#role-map-graphics-document
+# SVG mapping bug: https://bugzilla.mozilla.org/show_bug.cgi?id=2080155
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Gecko maps image-map and SVG containers to IMAGE, excluding their descendants "
+    "from caret navigation",
+    raises=AssertionError,
+    strict=True,
+)
 @pytest.mark.parametrize("by_word", [False, True], ids=["character", "word"])
 @pytest.mark.parametrize(
     "section, characters, words",
@@ -111,6 +133,13 @@ def test_caret_navigation_through_image_descendants(
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Gecko's SVG-to-IMAGE mapping prevents reaching the text before selection: "
+    "https://bugzilla.mozilla.org/show_bug.cgi?id=2080155",
+    raises=AssertionError,
+    strict=True,
+)
 def test_native_selection_within_svg_text(web_image_descendants: BrowserSession) -> None:
     """Tests SVG text can be selected, reported, and unselected by character."""
 

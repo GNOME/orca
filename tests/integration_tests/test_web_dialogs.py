@@ -26,8 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import browser
 from .harness import keyboard
-from .helpers import move_to_bottom, reset_web_state, speech
+from .helpers import expected_for_browser, move_to_bottom, reset_web_state, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -97,8 +98,8 @@ def test_caret_navigation_bottom_to_top_layout_off(web_dialogs: BrowserSession) 
 
 
 @pytest.mark.native_app
-def test_dialog_appearance_and_alert(web_dialogs: BrowserSession) -> None:
-    """Tests that opening a modal dialog announces it and its default button, plus an alert."""
+def test_dialog_appearance(web_dialogs: BrowserSession) -> None:
+    """Tests that opening a modal dialog announces it and its default button."""
 
     session = web_dialogs
     reset_web_state(session)
@@ -108,7 +109,13 @@ def test_dialog_appearance_and_alert(web_dialogs: BrowserSession) -> None:
 
     # Opening the modal announces its content and lands on the autofocused default button.
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session) == ["Delete this item?", "OK", "button"]
+    # Firefox retains a space between the embedded buttons when we expand
+    # the dialog text and exclude the buttons; Chromium has no such space.
+    assert speech(session) == [
+        expected_for_browser(session, "Delete this item?", firefox="Delete this item? "),
+        "OK",
+        "button",
+    ]
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert speech(session) == ["Cancel", "button"]
@@ -118,6 +125,19 @@ def test_dialog_appearance_and_alert(web_dialogs: BrowserSession) -> None:
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
 
+
+@pytest.mark.native_app
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Gecko maps ARIA alert to AT-SPI ALERT instead of NOTIFICATION: "
+    "https://www.w3.org/TR/core-aam-1.2/#role-map-alert",
+    raises=AssertionError,
+    strict=True,
+)
+def test_alert_announcement(web_dialogs: BrowserSession) -> None:
+    """Tests that activating Trigger alert announces the alert text."""
+
+    session = web_dialogs
     reset_web_state(session)
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert speech(session) == ["Open dialog", "button"]

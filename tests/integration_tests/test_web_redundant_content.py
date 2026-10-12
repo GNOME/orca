@@ -27,7 +27,15 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_bottom, move_to_top, reset_web_state, speech
+from .helpers import (
+    BrailleLine,
+    capture,
+    expected_for_browser,
+    move_to_bottom,
+    move_to_top,
+    reset_web_state,
+    speech,
+)
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -87,16 +95,28 @@ def test_line_navigation_drops_error_message_from_content(
     move_to_top(web_redundant_content)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    # Firefox exposes this ARIA textbox as editable; Chromium does not, so it omits $l.
     assert capture(web_redundant_content) == (
         ["Status: ", "entry", "x", "invalid entry: Field is required.", " done."],
-        [
-            BrailleLine(
-                1,
-                "Status: x invalid: Field is required.  done.",
-                "Status: x invalid: Field is requ",
-                "\x00" * 44,
-            )
-        ],
+        expected_for_browser(
+            web_redundant_content,
+            [
+                BrailleLine(
+                    1,
+                    "Status: x invalid: Field is required.  done.",
+                    "Status: x invalid: Field is requ",
+                    "\x00" * 44,
+                )
+            ],
+            firefox=[
+                BrailleLine(
+                    1,
+                    "Status: x $l invalid: Field is required.  done.",
+                    "Status: x $l invalid: Field is r",
+                    "\x00" * 47,
+                )
+            ],
+        ),
     )
 
 

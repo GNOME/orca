@@ -40,7 +40,7 @@ def resolve_binary() -> str | None:
     if binary is not None:
         warnings.warn(
             f"Web test expectations were captured against {_BETA_PATH}; using {binary}. "
-            "Set ORCA_TEST_BROWSER_BINARY to choose a different build.",
+            "Set ORCA_TEST_USER_AGENT_PATH to choose a different build.",
             stacklevel=2,
         )
     return binary

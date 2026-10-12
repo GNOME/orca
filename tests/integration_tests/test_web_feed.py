@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, reset_web_state
+from .helpers import BrailleLine, capture, reset_web_state, skip_firefox_caret_tab
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -111,6 +111,7 @@ def test_paging_through_feed_articles(web_feed: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 def test_moving_out_of_the_feed_in_browse_mode(web_feed: BrowserSession) -> None:
     """Tests the feed pattern's move-out keys while in browse mode."""
 
@@ -152,6 +153,7 @@ def test_moving_out_of_the_feed_in_browse_mode(web_feed: BrowserSession) -> None
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 def test_moving_after_the_feed_in_focus_mode(web_feed: BrowserSession) -> None:
     """Tests the key the feed pattern defines for moving past the feed."""
 
@@ -191,6 +193,7 @@ def test_moving_after_the_feed_in_focus_mode(web_feed: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 def test_moving_before_the_feed_in_focus_mode(web_feed: BrowserSession) -> None:
     """Tests the key the feed pattern defines for moving ahead of the feed."""
 

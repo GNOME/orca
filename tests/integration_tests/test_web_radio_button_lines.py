@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import capture, move_to_bottom, move_to_top, reset_web_state
+from .helpers import capture, expected_for_browser, move_to_bottom, move_to_top, reset_web_state
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -154,9 +154,24 @@ def test_radio_button_line_navigation(
         lines = _UP_LINES if layout_mode else _UP_LINES_LAYOUT_OFF
 
     try:
-        for expected_speech, expected_braille in lines:
+        for common_speech, expected_braille in lines:
             keyboard.tap_key(key)
             spoken, brailled = capture(session)
+            # Firefox presents the fieldset role first and exposes label click actions.
+            expected_speech = expected_for_browser(
+                session,
+                common_speech,
+                firefox={
+                    "First day panel": "panel First day",
+                    "leaving panel. Second day panel": "leaving panel. panel Second day",
+                    "leaving panel. Vertical choices panel": (
+                        "leaving panel. panel Vertical choices"
+                    ),
+                    "Yes": "Yes clickable",
+                    "If needed": "If needed clickable",
+                    "No": "No clickable",
+                }.get(common_speech, common_speech),
+            )
             assert " ".join(spoken) == expected_speech
             assert brailled[-1].full == expected_braille
     finally:

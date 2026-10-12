@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, reset_web_state
+from .helpers import BrailleLine, capture, expected_for_browser, reset_web_state
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -42,9 +42,11 @@ def test_listbox_navigation(web_listbox: BrowserSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     spoken, brailled = capture(session)
+    # Both browsers expose option set sizes: per group in Firefox, five in Chromium.
+    # Chromium also exposes setsize on the listbox; without it, we fall back on the child count.
     assert spoken == [
         "Transuranium elements",
-        "List with 5 items",
+        expected_for_browser(session, "List with 5 items", firefox="List with 2 items"),
         "Actinides",
         "Neptunium",
         "Focus mode",

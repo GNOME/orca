@@ -22,9 +22,12 @@
 
 from __future__ import annotations
 
+import configparser
 import functools
 import re
+import shutil
 import subprocess
+from pathlib import Path
 
 import gi
 import pytest
@@ -58,6 +61,56 @@ def requires_browser_version(name: str, *minimum: int, when: bool = True) -> pyt
     binary = browser.resolve_binary(name) if applies else None
     actual = command_version((binary, "--version")) if binary is not None else None
     return requires_version(name, actual, *minimum, when=applies)
+
+
+@functools.cache
+def _firefox_build_info() -> tuple[int, int, bool] | None:
+    """Returns Firefox's major version, build ID, and whether it is a Nightly build."""
+
+    if browser.selected_browser() != "firefox":
+        return None
+    binary = browser.resolve_binary("firefox")
+    if binary is None:
+        return None
+    pattern = r"(\d+)(?:\.\d+)+([ab]\d+|esr)?\s+(\d{14})(?:\s|$)"
+    config = configparser.ConfigParser(interpolation=None)
+    try:
+        executable = Path(shutil.which(binary) or binary).resolve()
+        config.read(executable.with_name("application.ini"), encoding="utf-8")
+        match = re.fullmatch(
+            pattern,
+            f"{config.get('App', 'Version', fallback='')} "
+            f"{config.get('App', 'BuildID', fallback='')}",
+        )
+    except (OSError, configparser.Error, UnicodeError):
+        match = None
+    if match is None:
+        try:
+            result = subprocess.run(
+                [binary, "--full-version"], capture_output=True, text=True, timeout=30, check=True
+            )
+        except (OSError, subprocess.SubprocessError):
+            return None
+        match = re.search(pattern, result.stdout)
+    if match is None:
+        return None
+    return int(match[1]), int(match[3]), (match[2] or "").startswith("a")
+
+
+def firefox_is_older_than_build(major: int, build_id: int) -> bool:
+    """Returns whether Firefox is selected and predates the build, or cannot be identified."""
+
+    if browser.selected_browser() != "firefox":
+        return False
+    info = _firefox_build_info()
+    return info is None or info[:2] < (major, build_id)
+
+
+def firefox_is_nightly() -> bool:
+    """Returns whether the selected Firefox executable reports a Nightly version."""
+
+    info = _firefox_build_info()
+    return info is not None and info[2]
 
 
 def atspi_version() -> Version:

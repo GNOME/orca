@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import reset_web_state, speech
+from .helpers import expected_for_browser, reset_web_state, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -75,7 +75,12 @@ def test_tab_to_frame_document_in_application_switches_to_browse_mode(
     assert _in_focus_mode(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["document web", "Browse mode"]
+    # Firefox names the child document from the iframe; Chromium leaves it unnamed.
+    assert speech(session) == expected_for_browser(
+        session,
+        ["document web", "Browse mode"],
+        firefox=["Embedded frame", "document web", "Browse mode"],
+    )
     assert not _in_focus_mode(session)
 
 
@@ -92,7 +97,12 @@ def test_tab_to_aria_document_in_application_switches_to_browse_mode(
     assert speech(session) == ["Application button", "button", "Focus mode"]
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["document web", "Browse mode"]
+    # The iframe document name differs as described in the preceding test.
+    assert speech(session) == expected_for_browser(
+        session,
+        ["document web", "Browse mode"],
+        firefox=["Embedded frame", "document web", "Browse mode"],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert speech(session) == ["Embedded document", "document frame"]

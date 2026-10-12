@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from . import helpers
+from .apps import browser
 from .harness import keyboard
 from .helpers import BrailleLine
 
@@ -106,20 +107,63 @@ _LINES = [
 
 
 @pytest.mark.native_app
+@pytest.mark.parametrize(
+    "presentation",
+    [
+        pytest.param(
+            "speech",
+            marks=pytest.mark.xfail(
+                browser.selected_browser() == "firefox",
+                reason="Temporary aria-hidden recreates the focused SVG in Gecko, interrupting "
+                "the following text. Related: https://bugzilla.mozilla.org/show_bug.cgi?id=1944935",
+                raises=AssertionError,
+                strict=True,
+            ),
+        ),
+        pytest.param(
+            "braille",
+            marks=pytest.mark.xfail(
+                browser.selected_browser() == "firefox",
+                reason="The reference link repeats 'Reference' in braille with Firefox",
+                raises=AssertionError,
+                strict=True,
+            ),
+        ),
+    ],
+)
 def test_line_navigation_with_temporary_aria_hidden(
     web_temporary_aria_hidden: BrowserSession,
+    presentation: str,
 ) -> None:
     """Tests temporarily hidden objects and surrounding text are read in both directions."""
 
     session = web_temporary_aria_hidden
     helpers.reset_web_state(session)
 
+    expected = list(_LINES)
+    expected[1] = (
+        helpers.expected_for_browser(
+            session,
+            _LINES[1][0],
+            firefox=[
+                "In his book Topics in Analytic Number Theory\xa0",
+                "Reference\xa0",
+                "13",
+                "link",
+                ", Hans Rademacher ",
+            ],
+        ),
+        _LINES[1][1],
+    )
+
     for key, lines in (
-        (keyboard.KEYSYM_DOWN, _LINES[1:]),
-        (keyboard.KEYSYM_UP, reversed(_LINES[:-1])),
+        (keyboard.KEYSYM_DOWN, expected[1:]),
+        (keyboard.KEYSYM_UP, reversed(expected[:-1])),
     ):
         for expected_speech, expected_braille in lines:
             keyboard.tap_key(key)
             spoken, brailled = helpers.capture(session, wait_async=True)
-            assert spoken == expected_speech
-            assert brailled[-1] == expected_braille
+            if presentation == "speech":
+                assert spoken == expected_speech
+            else:
+                assert brailled[-1] == expected_braille

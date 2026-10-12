@@ -33,7 +33,14 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_top, reset_web_state, speech
+from .helpers import (
+    BrailleLine,
+    capture,
+    expected_for_browser,
+    move_to_top,
+    reset_web_state,
+    speech,
+)
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -76,7 +83,14 @@ def test_forward_navigation_by_role(web_structural_navigation: BrowserSession) -
     assert _next(session, keyboard.KEYSYM_Q) == ["q", "block quote", "Quoted text."]
     assert _next(session, keyboard.KEYSYM_B) == ["b", "leaving blockquote.", "Save", "button"]
     assert _next(session, keyboard.KEYSYM_X) == ["x", "Agree", "check box not checked"]
-    assert _next(session, keyboard.KEYSYM_C) == ["c", "Fruit", "combo box", "Apple", "opens menu"]
+    # Firefox exposes a popup state without Chromium's explicit haspopup=menu type.
+    assert _next(session, keyboard.KEYSYM_C) == [
+        "c",
+        "Fruit",
+        "combo box",
+        "Apple",
+        expected_for_browser(session, "opens menu", firefox="opens popup"),
+    ]
     assert _next(session, keyboard.KEYSYM_E) == ["e", "City", "entry"]
     assert _next(session, keyboard.KEYSYM_R) == ["r", "Option A", "not selected radio button"]
     assert _next(session, keyboard.KEYSYM_S) == ["s", "separator"]

@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import browser
 from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state, speech
 
@@ -34,6 +35,13 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Gecko maps ARIA alertdialog to AT-SPI DIALOG instead of ALERT: "
+    "https://www.w3.org/TR/core-aam-1.2/#role-map-alertdialog",
+    raises=AssertionError,
+    strict=True,
+)
 def test_inserted_alertdialog_is_presented(web_alert: BrowserSession) -> None:
     """Tests that appending a role=alertdialog element into a plain container presents it."""
 

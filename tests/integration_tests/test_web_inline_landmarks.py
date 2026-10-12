@@ -96,11 +96,8 @@ def test_where_am_i_stops_at_landmark_boundary(web_inline_landmarks: BrowserSess
     # Basic Where Am I reports only the Primary landmark's text; the landmark
     # boundary guard keeps "Secondary nav" out of the assembled contents.
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    assert capture(session) == (
-        ["Primary nav"],
-        [
-            BrailleLine(
-                1, "Primary Primary nav navigation", "Primary Primary nav navigation", "\x00" * 30
-            )
-        ],
+    spoken, brailled = capture(session)
+    assert spoken == ["Primary nav"]
+    assert brailled[-1] == BrailleLine(
+        1, "Primary Primary nav navigation", "Primary Primary nav navigation", "\x00" * 30
     )

@@ -268,6 +268,8 @@ orca_integration_tests = {
     'integration_tests/test_web_listbox.py',
     'integration_tests/test_web_tabs.py',
     'integration_tests/test_web_treegrid.py',
+    'integration_tests/test_web_emoji_offset_skew.py',
+    'integration_tests/test_web_native_character_selection.py',
   ],
 }
 integration_wrapper = configure_file(
@@ -279,47 +281,37 @@ integration_wrapper = configure_file(
   },
 )
 
+test_timeouts = {
+  'test_gsettings': 30,
+  'test_web_word_boundaries': 180,
+  'test_caret_navigation_word_boundaries': 180,
+  'test_web_form_fields_navigation': 180,
+  'test_web_text_attributes': 300,
+  # Thorough character-nav coverage exceeds the shared 120s cap; give it room.
+  'test_web_emoji_offset_skew': 300,
+  # A full character walk down the page and back up also exceeds the shared 120s cap.
+  'test_web_native_character_selection': 360,
+}
+
 foreach group, test_files : orca_integration_tests
-  foreach test_file : test_files
-    test_name = test_file.split('/')[-1].split('.')[0]
-    is_gsettings = test_name == 'test_gsettings'
-    test_timeout = test_name == 'test_web_text_attributes' ? 300 : 120
-    if test_name in ['test_web_word_boundaries', 'test_caret_navigation_word_boundaries']
-      test_timeout = 180
-    endif
-    test(
-      test_name,
-      is_gsettings ? python : integration_wrapper,
-      args: is_gsettings ? ['-m', 'tests.integration_retry', files(test_file)] : [files(test_file)],
-      env: test_env,
-      suite: ['integration', group],
-      timeout: is_gsettings ? 30 : test_timeout,
-      is_parallel: is_gsettings,
-    )
+  foreach variant : group == 'web' ? ['chromium', 'gecko'] : [group]
+    user_agent_args = group == 'web' ? ['--user-agent=' + variant] : []
+    foreach test_file : test_files
+      test_name = test_file.split('/')[-1].split('.')[0]
+      is_gsettings = test_name == 'test_gsettings'
+      test_timeout = test_timeouts.get(test_name, 120)
+      test(
+        variant == 'gecko' ? test_name + '_gecko' : test_name,
+        is_gsettings ? python : integration_wrapper,
+        args: is_gsettings ? ['-m', 'tests.integration_retry', files(test_file)] : [files(test_file)] + user_agent_args,
+        env: test_env,
+        suite: ['integration', variant],
+        timeout: test_timeout,
+        is_parallel: is_gsettings,
+      )
+    endforeach
   endforeach
 endforeach
-
-# Thorough character-nav coverage exceeds the shared 120s cap; give it room.
-test(
-  'test_web_emoji_offset_skew',
-  integration_wrapper,
-  args: [files('integration_tests/test_web_emoji_offset_skew.py')],
-  env: test_env,
-  suite: ['integration', 'web'],
-  timeout: 300,
-  is_parallel: false,
-)
-
-# A full character walk down the page and back up also exceeds the shared 120s cap.
-test(
-  'test_web_native_character_selection',
-  integration_wrapper,
-  args: [files('integration_tests/test_web_native_character_selection.py')],
-  env: test_env,
-  suite: ['integration', 'web'],
-  timeout: 360,
-  is_parallel: false,
-)
 
 # The integration tests are a work in progress; run them with `meson test --suite integration`.
 add_test_setup(

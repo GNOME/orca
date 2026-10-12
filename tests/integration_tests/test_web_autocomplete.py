@@ -26,11 +26,17 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import browser
 from .harness import keyboard
-from .helpers import reset_web_state, speech
+from .helpers import expected_for_browser, reset_web_state, speech, xfail_firefox_caret_tab
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
+
+
+def _popup_description(session: BrowserSession) -> str:
+    # Firefox exposes HAS_POPUP without a type; Chromium exposes haspopup=listbox.
+    return expected_for_browser(session, "opens listbox", firefox="opens popup")
 
 
 @pytest.mark.native_app
@@ -41,7 +47,12 @@ def test_combobox_listbox_navigation(web_autocomplete: BrowserSession) -> None:
     reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Fruit", "editable combo box", "opens listbox", "Focus mode"]
+    assert speech(session) == [
+        "Fruit",
+        "editable combo box",
+        _popup_description(session),
+        "Focus mode",
+    ]
 
     # Down opens the popup and lands on the first option; further arrows move selection.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -60,6 +71,14 @@ def test_combobox_listbox_navigation(web_autocomplete: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Gecko maps ARIA alert to AT-SPI ALERT instead of NOTIFICATION: "
+    "https://www.w3.org/TR/core-aam-1.2/#role-map-alert",
+    raises=AssertionError,
+    strict=True,
+)
+@xfail_firefox_caret_tab()
 def test_alert_region_announced(web_autocomplete: BrowserSession) -> None:
     """Tests that populating a role=alert region after activating Submit is announced."""
 
@@ -67,7 +86,12 @@ def test_alert_region_announced(web_autocomplete: BrowserSession) -> None:
     reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Fruit", "editable combo box", "opens listbox", "Focus mode"]
+    assert speech(session) == [
+        "Fruit",
+        "editable combo box",
+        _popup_description(session),
+        "Focus mode",
+    ]
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert speech(session) == ["Submit", "button", "Browse mode"]

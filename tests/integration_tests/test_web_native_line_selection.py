@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import browser
 from .harness import keyboard
 from .helpers import say_selection, speech
 from .version_helpers import requires_browser_version
@@ -40,6 +41,14 @@ if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
 
 
+# Gecko's native Shift+Up selection stalls at City even without a screen reader.
+# Our Text fallback also falsely announces unselection of text that remains selected.
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Our Text fallback loses selection boundaries; Gecko's reverse selection stalls at City",
+    raises=pytest.fail.Exception,
+    strict=True,
+)
 @requires_browser_version("chromium", 156, when=USES_DOCUMENT_SELECTION)
 @pytest.mark.native_app
 def test_line_selection_and_unselection(web_native_text_selection: BrowserSession) -> None:
@@ -149,6 +158,13 @@ def test_selected_text_has_no_added_trailing_space(
         ]
 
 
+# Gecko clears the selection with Shift+Down but emits only a caret-moved event.
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox",
+    reason="Gecko omits the selection-changed event when Shift+Down clears the selection",
+    raises=AssertionError,
+    strict=True,
+)
 @pytest.mark.native_app
 def test_selection_by_line_up_then_down(web_native_text_selection: BrowserSession) -> None:
     """Tests selection by line up and then down."""

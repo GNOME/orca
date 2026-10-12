@@ -80,7 +80,8 @@ def test_tabs_navigation(web_tabs: BrowserSession) -> None:
     assert spoken == ["Spring", "page tab"]
     assert brailled[-1] == BrailleLine(1, "Spring page tab", "Spring page tab", "\x00" * 15)
 
-    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    # Return to the first tablist without relying on browser-specific Tab wrapping.
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
     spoken, brailled = capture(session)
     assert spoken == ["Cusco", "page tab"]
     assert brailled[-1] == BrailleLine(1, "Cusco page tab", "Cusco page tab", "\x00" * 14)

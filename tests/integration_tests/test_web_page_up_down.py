@@ -42,29 +42,29 @@ def test_page_down_then_up(web_page_up_down: BrowserSession) -> None:
     helpers.reset_web_state(session)
     helpers.move_to_top(session)
 
-    keyboard.tap_key(keyboard.KEYSYM_PAGE_DOWN)
-    assert helpers.capture(session) == (
-        ["Line twenty."],
-        [BrailleLine(1, "Line twenty.", "Line twenty.", "\x00" * 12)],
+    # Native Page Down/Up distances differ despite matching viewport and line heights.
+    lines = helpers.expected_for_browser(
+        session,
+        [("Line twenty.", 1), ("Line thirty-nine.", 1), ("Line twenty.", 1), ("Line one.", 1)],
+        firefox=[
+            ("Line twenty-two.", 1),
+            ("Line forty.", 12),
+            ("Line nineteen.", 15),
+            ("Line one.", 1),
+        ],
     )
-
-    keyboard.tap_key(keyboard.KEYSYM_PAGE_DOWN)
-    assert helpers.capture(session) == (
-        ["Line thirty-nine."],
-        [BrailleLine(1, "Line thirty-nine.", "Line thirty-nine.", "\x00" * 17)],
-    )
-
-    keyboard.tap_key(keyboard.KEYSYM_PAGE_UP)
-    assert helpers.capture(session) == (
-        ["Line twenty."],
-        [BrailleLine(1, "Line twenty.", "Line twenty.", "\x00" * 12)],
-    )
-
-    keyboard.tap_key(keyboard.KEYSYM_PAGE_UP)
-    assert helpers.capture(session) == (
-        ["Line one."],
-        [BrailleLine(1, "Line one.", "Line one.", "\x00" * 9)],
-    )
+    keys = [
+        keyboard.KEYSYM_PAGE_DOWN,
+        keyboard.KEYSYM_PAGE_DOWN,
+        keyboard.KEYSYM_PAGE_UP,
+        keyboard.KEYSYM_PAGE_UP,
+    ]
+    for key, (line, cursor) in zip(keys, lines, strict=True):
+        keyboard.tap_key(key)
+        assert helpers.capture(session) == (
+            [line],
+            [BrailleLine(cursor, line, line, "\x00" * len(line))],
+        )
 
 
 @pytest.mark.native_app

@@ -27,14 +27,18 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, reset_web_state
+from .helpers import BrailleLine, capture, reset_web_state, xfail_firefox_caret_tab
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-@pytest.mark.parametrize("table_navigation", [False, True], ids=["application", "orca-table"])
+@pytest.mark.parametrize(
+    "table_navigation",
+    [False, pytest.param(True, marks=xfail_firefox_caret_tab())],
+    ids=["application", "orca-table"],
+)
 def test_select_and_unselect_grid_cells(
     web_grid_selection: BrowserSession, table_navigation: bool
 ) -> None:

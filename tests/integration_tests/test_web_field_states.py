@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import reset_web_state, speech
+from .helpers import expected_for_browser, reset_web_state, speech, xfail_firefox_caret_tab
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -45,14 +45,24 @@ def test_field_state_announcements_on_focus(web_field_states: BrowserSession) ->
     session = web_field_states
     reset_web_state(session)
 
-    assert _tab(session) == ["Name", "entry required", "Focus mode"]
+    # Firefox exposes INVALID_ENTRY on this empty required field; Chromium omits it.
+    assert _tab(session) == expected_for_browser(
+        session,
+        ["Name", "entry required", "Focus mode"],
+        firefox=["Name", "entry required", "invalid entry", "Focus mode"],
+    )
     assert _tab(session) == ["Email", "entry", "invalid entry"]
     assert _tab(session) == ["Password", "password text", "At least eight characters."]
     assert _tab(session) == ["City", "entry", "Where you live now."]
-    assert _tab(session) == ["More options", "toggle button collapsed"]
+    # Firefox maps summary to a push button; Chromium maps it to a toggle button.
+    assert _tab(session) == [
+        "More options",
+        expected_for_browser(session, "toggle button collapsed", firefox="collapsed button"),
+    ]
 
 
 @pytest.mark.native_app
+@xfail_firefox_caret_tab()
 def test_disclosure_expand_and_collapse(web_field_states: BrowserSession) -> None:
     """Tests that activating a disclosure widget announces the expanded and collapsed states."""
 

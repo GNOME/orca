@@ -40,6 +40,48 @@ _FLAGS_ROW_MASK = "\x00" * 22 + "\xc0" * 12 + "\x00" * 10
 _FAMILY_ROW_MASK = "\x00" * 30 + "\xc0" * 12 + "\x00"
 _PILE_OF_EMOJI_MASK = "\x00" * 28 + "\xc0" * 11 + "\x00"
 
+# Firefox inserts U+FEFF after non-BMP characters to retain UTF-16 offsets in ATK text.
+_FIREFOX_EMOJI_BRAILLE = {
+    "🎵 service one: profile one ": helpers.BrailleLine(
+        1,
+        "🎵\ufeff service one: profile one ",
+        "🎵\ufeff service one: profile one ",
+        "\x00" * 16 + "\xc0" * 11 + "\x00",
+    ),
+    "🎵 service two: profile two ": helpers.BrailleLine(
+        1,
+        "🎵\ufeff service two: profile two ",
+        "🎵\ufeff service two: profile two ",
+        "\x00" * 16 + "\xc0" * 11 + "\x00",
+    ),
+    "🎵 service three: profile three ": helpers.BrailleLine(
+        1,
+        "🎵\ufeff service three: profile three ",
+        "🎵\ufeff service three: profile three ",
+        "\x00" * 18 + "\xc0" * 13 + "\x00",
+    ),
+    "from 🇺🇸 to 🇮🇹 abroad: profile four back 🇺🇸🇮🇹": helpers.BrailleLine(
+        1,
+        "from 🇺\ufeff🇸\ufeff to 🇮\ufeff🇹\ufeff abroad: profile four "
+        "back 🇺\ufeff🇸\ufeff🇮\ufeff🇹\ufeff",
+        "from 🇺\ufeff🇸\ufeff to 🇮\ufeff🇹\ufeff abroad: profil",
+        "\x00" * 26 + "\xc0" * 12 + "\x00" * 14,
+    ),
+    "the 👨‍👩‍👧‍👦 and 👨‍👩‍👧‍👦 here: profile five ": helpers.BrailleLine(
+        1,
+        "the 👨\ufeff‍👩\ufeff‍👧\ufeff‍👦\ufeff and "
+        "👨\ufeff‍👩\ufeff‍👧\ufeff‍👦\ufeff here: profile five ",
+        "the 👨\ufeff‍👩\ufeff‍👧\ufeff‍👦\ufeff and 👨\ufeff‍👩\ufeff‍👧\ufeff‍👦\ufeff ",
+        "\x00" * 38 + "\xc0" * 12 + "\x00",
+    ),
+    "🎵🎵🎵🎵🎵🎵🎵🎵🎵🎵 a pile of emoji: profile six ": helpers.BrailleLine(
+        1,
+        "🎵\ufeff" * 10 + " a pile of emoji: profile six ",
+        "🎵\ufeff" * 10 + " a pile of e",
+        "\x00" * 38 + "\xc0" * 11 + "\x00",
+    ),
+}
+
 _DOWN_LINES = [
     (
         ["Streaming and social links below"],
@@ -225,8 +267,8 @@ _UP_LINES = [
             )
         ],
     ),
-    # Up from the family row lands at the end of the flags line first.
-    # This is the asymmetric extra stop described in the note above.
+    # Chromium reports the final flag character's bounds below this line,
+    # causing Up to present the trailing text separately before the whole line.
     (
         [" back 🇺🇸🇮🇹"],
         [
@@ -1233,7 +1275,7 @@ _WORD_RIGHT_SPEECH: list[list[str]] = [
     ["profile "],
     ["three"],
     # "from 🇺🇸 to 🇮🇹 abroad: profile four back 🇺🇸🇮🇹"
-    # Isolated flag emojis are individual word stops; the back-to-back pair is one word stop.
+    # Isolated flag emojis are separate words; the adjacent pair is one word.
     ["from "],
     ["🇺🇸"],
     ["to "],
@@ -1245,7 +1287,7 @@ _WORD_RIGHT_SPEECH: list[list[str]] = [
     ["back "],
     ["🇺🇸🇮🇹"],
     # "the 👨‍👩‍👧‍👦 and 👨‍👩‍👧‍👦 here: profile five"
-    # Each ZWJ family emoji is one word stop.
+    # Each ZWJ family emoji is announced as one word.
     ["the "],
     ["👨‍👩‍👧‍👦"],
     ["and "],
@@ -1300,7 +1342,7 @@ _WORD_LEFT_SPEECH: list[list[str]] = [
     ["a "],
     ["10 🎵 characters "],
     # "the 👨‍👩‍👧‍👦 and 👨‍👩‍👧‍👦 here: profile five" right-to-left
-    # Each ZWJ family emoji is one word stop.
+    # Each ZWJ family emoji is announced as one word.
     ["five"],
     ["profile "],
     [": "],
@@ -1310,8 +1352,8 @@ _WORD_LEFT_SPEECH: list[list[str]] = [
     ["👨‍👩‍👧‍👦"],
     ["the "],
     # "from 🇺🇸 to 🇮🇹 abroad: profile four back 🇺🇸🇮🇹" right-to-left
-    # The back-to-back pair "🇺🇸🇮🇹" is one word stop (includes trailing newline).
-    # Isolated flag emojis are individual word stops.
+    # The adjacent pair "🇺🇸🇮🇹" is one word (includes trailing newline).
+    # Isolated flag emojis are separate words.
     ["🇺🇸🇮🇹"],
     ["back "],
     ["four"],
@@ -1390,11 +1432,103 @@ _WORD_LEFT_SPEECH: list[list[str]] = [
 ]
 
 
+# Firefox includes punctuation and following spaces in its word ranges.
+# Ctrl+Left returns the same ranges in reverse order.
+_FIREFOX_WORD_SPEECH: list[list[str]] = [
+    ["Top "],
+    ["of "],
+    ["the "],
+    ["test."],
+    ["Streaming "],
+    ["and "],
+    ["social "],
+    ["links "],
+    ["below"],
+    ["♪ "],
+    ["♫ "],
+    ["♪ "],
+    ["♫ "],
+    ["♪ "],
+    ["♫ "],
+    ["♪ "],
+    ["♫ "],
+    ["♪ "],
+    ["♫ "],
+    ["basic "],
+    ["note "],
+    ["symbols, "],
+    ["no "],
+    ["skew: "],
+    ["link "],
+    ["notes"],
+    ["next "],
+    ["line "],
+    ["1"],
+    ["next "],
+    ["line "],
+    ["2"],
+    ["next "],
+    ["line "],
+    ["3"],
+    ["🎵 "],
+    ["service "],
+    ["one: "],
+    ["profile "],
+    ["one"],
+    ["🎵 "],
+    ["service "],
+    ["two: "],
+    ["profile "],
+    ["two"],
+    ["🎵 "],
+    ["service "],
+    ["three: "],
+    ["profile "],
+    ["three"],
+    ["from "],
+    ["🇺🇸 "],
+    ["to "],
+    ["🇮🇹 "],
+    ["abroad: "],
+    ["profile "],
+    ["four"],
+    ["back "],
+    ["🇺🇸🇮🇹"],
+    ["the "],
+    ["👨‍👩‍👧‍👦 "],
+    ["and "],
+    ["👨‍👩‍👧‍👦 "],
+    ["here: "],
+    ["profile "],
+    ["five"],
+    ["10 🎵 characters "],
+    ["a "],
+    ["pile "],
+    ["of "],
+    ["emoji: "],
+    ["profile "],
+    ["six"],
+    ["last "],
+    ["line, "],
+    ["no "],
+    ["link"],
+    ["Bottom "],
+    ["of "],
+    ["the "],
+    ["test."],
+]
+
+
 def _assert_line(session: BrowserSession, key: int, speech: list[str], braille: list) -> None:
     """Presses key once and asserts both speech and braille."""
 
     keyboard.tap_key(key)
-    assert helpers.capture(session) == (speech, braille)
+    expected_braille = helpers.expected_for_browser(
+        session,
+        braille,
+        firefox=[_FIREFOX_EMOJI_BRAILLE.get(line.full, line) for line in braille],
+    )
+    assert helpers.capture(session) == (speech, expected_braille)
 
 
 def _collect_speech(session: BrowserSession, key: int, count: int) -> list[list[str]]:
@@ -1430,13 +1564,16 @@ def test_line_down(web_emoji_offset_skew: BrowserSession) -> None:
 
 @pytest.mark.native_app
 def test_line_up(web_emoji_offset_skew: BrowserSession) -> None:
-    """Tests Up-arrow back through the emoji-links page to confirm symmetric presentation."""
+    """Tests Up-arrow through the emoji-links page from bottom to top."""
 
     session = web_emoji_offset_skew
     helpers.reset_web_state(session)
     helpers.move_to_bottom(session)
     helpers.capture(session)
-    for expected_speech, expected_braille in _UP_LINES:
+    expected = helpers.expected_for_browser(
+        session, _UP_LINES, firefox=_UP_LINES[:3] + _UP_LINES[4:]
+    )
+    for expected_speech, expected_braille in expected:
         _assert_line(session, keyboard.KEYSYM_UP, expected_speech, expected_braille)
 
 
@@ -1472,10 +1609,10 @@ def test_word_right(web_emoji_offset_skew: BrowserSession) -> None:
     session = web_emoji_offset_skew
     helpers.reset_web_state(session)
     helpers.move_to_top(session)
-    assert (
-        _collect_word_speech(session, keyboard.KEYSYM_RIGHT, len(_WORD_RIGHT_SPEECH))
-        == _WORD_RIGHT_SPEECH
+    expected = helpers.expected_for_browser(
+        session, _WORD_RIGHT_SPEECH, firefox=_FIREFOX_WORD_SPEECH
     )
+    assert _collect_word_speech(session, keyboard.KEYSYM_RIGHT, len(expected)) == expected
 
 
 @pytest.mark.native_app
@@ -1486,7 +1623,7 @@ def test_word_left(web_emoji_offset_skew: BrowserSession) -> None:
     helpers.reset_web_state(session)
     helpers.move_to_bottom(session)
     helpers.capture(session)
-    assert (
-        _collect_word_speech(session, keyboard.KEYSYM_LEFT, len(_WORD_LEFT_SPEECH))
-        == _WORD_LEFT_SPEECH
+    expected = helpers.expected_for_browser(
+        session, _WORD_LEFT_SPEECH, firefox=list(reversed(_FIREFOX_WORD_SPEECH))
     )
+    assert _collect_word_speech(session, keyboard.KEYSYM_LEFT, len(expected)) == expected
