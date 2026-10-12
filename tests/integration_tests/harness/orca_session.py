@@ -91,6 +91,7 @@ class OrcaSession:
 
         if self._process is None or self._process.poll() is not None:
             return
+        grace_period *= float(os.environ.get("ORCA_TEST_TIMEOUT_SCALE") or 1.0)
         self._process.terminate()
         try:
             self._process.wait(timeout=grace_period)
