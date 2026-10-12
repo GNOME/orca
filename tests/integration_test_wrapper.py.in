@@ -390,7 +390,7 @@ def main() -> int:
     if _other_orca_is_running():
         _skip_and_exit(
             "another Orca instance is running as this user; stop it before running "
-            "this test (it would collide on the org.gnome.Orca.Service bus name)"
+            "this test (it would collide on the org.gnome.Orca1.Service bus name)"
         )
 
     # Run ourselves as a child of dbus-run-session so every subsequent process
