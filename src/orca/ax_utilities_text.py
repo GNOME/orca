@@ -138,19 +138,19 @@ class _AXUtilitiesTextCache:
             self, self.LAST_TEXT_UNIT_SPOKEN
         )
 
-    def get_last_text_unit_spoken(self) -> TextUnit | None:
-        """Returns the cached last text unit spoken."""
+    def get_last_text_unit_spoken(self) -> tuple[TextUnit | None, str | None]:
+        """Returns the cached last text unit spoken and its optional text."""
 
         if self._last_text_unit_spoken_cache is None:
-            return None
+            return None, None
 
-        return self._last_text_unit_spoken_cache.get(self._LAST_TEXT_UNIT_SPOKEN_KEY, None)
+        return self._last_text_unit_spoken_cache.get(self._LAST_TEXT_UNIT_SPOKEN_KEY, (None, None))
 
-    def set_last_text_unit_spoken(self, unit: TextUnit) -> None:
-        """Stores the last text unit spoken."""
+    def set_last_text_unit_spoken(self, unit: TextUnit, text: str | None = None) -> None:
+        """Stores the last text unit spoken and its optional text."""
 
         if self._last_text_unit_spoken_cache is not None:
-            self._last_text_unit_spoken_cache.put(self._LAST_TEXT_UNIT_SPOKEN_KEY, unit)
+            self._last_text_unit_spoken_cache.put(self._LAST_TEXT_UNIT_SPOKEN_KEY, (unit, text))
 
     def get_text_attributes(self) -> dict[str, str]:
         """Returns the cached text attributes."""
@@ -504,16 +504,16 @@ class AXUtilitiesText:
     )
 
     @staticmethod
-    def get_last_text_unit_spoken() -> TextUnit | None:
-        """Returns the last text unit spoken."""
+    def get_last_text_unit_spoken() -> tuple[TextUnit | None, str | None]:
+        """Returns the last text unit spoken and its optional text."""
 
         return AXUtilitiesText._CACHE.get_last_text_unit_spoken()
 
     @staticmethod
-    def set_last_text_unit_spoken(unit: TextUnit) -> None:
-        """Sets the last text unit spoken."""
+    def set_last_text_unit_spoken(unit: TextUnit, text: str | None = None) -> None:
+        """Sets the last text unit spoken and its optional text."""
 
-        AXUtilitiesText._CACHE.set_last_text_unit_spoken(unit)
+        AXUtilitiesText._CACHE.set_last_text_unit_spoken(unit, text)
 
     @staticmethod
     def get_cached_text_attributes() -> dict[str, str]:

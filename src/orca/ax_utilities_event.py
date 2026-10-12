@@ -49,7 +49,7 @@ from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
-from .ax_utilities_text import AXUtilitiesText, CaretSetReason
+from .ax_utilities_text import AXUtilitiesText, CaretSetReason, TextUnit
 from .ax_value import AXValue
 
 if TYPE_CHECKING:
@@ -324,10 +324,15 @@ class AXUtilitiesEvent:
     def save_terminal_line_navigation_repaint_line(
         event: Atspi.Event, mgr: InputEventManager
     ) -> None:
+        unit, line = AXUtilitiesText.get_last_text_unit_spoken()
+        if unit != TextUnit.LINE or line is None:
+            AXUtilitiesEvent._LAST_TERMINAL_LINE_NAVIGATION_REPAINT_LINE = None
+            return
+
         AXUtilitiesEvent._LAST_TERMINAL_LINE_NAVIGATION_REPAINT_LINE = (
             ax_cache_manager.get_object_key(event.source),
             mgr.get_last_input_event(),
-            AXText.get_line_at_offset(event.source)[0],
+            line,
         )
 
     @staticmethod

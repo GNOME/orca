@@ -78,7 +78,7 @@ class Utilities(script_utilities.Utilities):
         word, start, end = AXText.get_word_at_offset(obj, offset)
         if (
             offset == AXText.get_character_count(obj)
-            and AXUtilities.get_last_text_unit_spoken() == TextUnit.WORD
+            and AXUtilities.get_last_text_unit_spoken()[0] == TextUnit.WORD
         ):
             prev_obj, prev_offset = focus_manager.get_manager().get_penultimate_cursor_position()
             if prev_obj == obj:

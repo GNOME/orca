@@ -881,7 +881,7 @@ class Utilities:
         # If we're in an ongoing series of native navigation-by-word commands, just present the
         # newly-traversed string.
         prev_word, prev_start, prev_end = AXText.get_word_at_offset(prev_obj, prev_offset)
-        if AXUtilities.get_last_text_unit_spoken() == TextUnit.WORD:
+        if AXUtilities.get_last_text_unit_spoken()[0] == TextUnit.WORD:
             if was_previous_word_nav:
                 start = offset
                 end = prev_offset

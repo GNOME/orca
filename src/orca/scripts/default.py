@@ -1255,7 +1255,7 @@ class Script(script.Script):
             line,
         )
 
-        AXUtilities.set_last_text_unit_spoken(TextUnit.LINE)
+        AXUtilities.set_last_text_unit_spoken(TextUnit.LINE, line)
 
     def say_phrase(
         self,

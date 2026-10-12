@@ -832,7 +832,7 @@ class TestAXText:
 
         assert AXUtilitiesText.get_cached_text_attributes() == {"weight": "bold"}
         assert AXUtilitiesText.get_cached_selected_text(mock_accessible) == ("selected", 1, 9)
-        assert AXUtilitiesText.get_last_text_unit_spoken() is TextUnit.WORD
+        assert AXUtilitiesText.get_last_text_unit_spoken() == (TextUnit.WORD, None)
 
     def test_is_eoc_with_regular_character(self, test_context: OrcaTestContext) -> None:
         """Test AXText.is_eoc with regular character."""
