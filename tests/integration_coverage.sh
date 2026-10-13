@@ -8,7 +8,8 @@
 # Defaults to the integration suite, including both browsers. Use Meson test names.
 #   ORCA_BUILD_DIR          meson build directory (default: autodetect)
 #   ORCA_TEST_BINARY        Orca binary to measure (default: installed build binary)
-#   ORCA_TEST_TIMEOUT_SCALE multiplier for drain windows and test timeouts (default: 3)
+#   ORCA_TEST_TIMEOUT_SCALE multiplier for drain windows (default: 3); test timeouts get
+#                           twice that
 
 set -uo pipefail
 
@@ -18,6 +19,9 @@ wrapper_rel="tests/integration_test_wrapper.py"
 
 # coverage tracing slows Orca enough to trip the harness's drain timeouts; widen them.
 export ORCA_TEST_TIMEOUT_SCALE="${ORCA_TEST_TIMEOUT_SCALE:-3}"
+# Every key press waits for the scaled silence, so tests with many presses need more
+# than the scaled time to finish.
+timeout_multiplier="$(awk -v scale="$ORCA_TEST_TIMEOUT_SCALE" 'BEGIN { print scale * 2 }')"
 
 builddir="${ORCA_BUILD_DIR:-}"
 if [ -n "$builddir" ] && [[ "$builddir" != /* ]]; then
@@ -53,7 +57,7 @@ export COVERAGE_RCFILE="$repo/pyproject.toml"
 export COVERAGE_FILE="$repo/.coverage-integration/.coverage"
 
 ORCA_TEST_COVERAGE=1 meson test -C "$builddir" \
-    --timeout-multiplier "$ORCA_TEST_TIMEOUT_SCALE" "${meson_args[@]}" \
+    --timeout-multiplier "$timeout_multiplier" "${meson_args[@]}" \
     --num-processes 1 --print-errorlogs --logbase integration-coverage
 status=$?
 

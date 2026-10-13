@@ -68,6 +68,7 @@ if TYPE_CHECKING:
     from typing import Literal
 
 _WEB_PAGES_DIR = Path(__file__).parent / "web_pages"
+_TIMEOUT_SCALE = float(os.environ.get("ORCA_TEST_TIMEOUT_SCALE") or 1.0)
 
 
 @dataclass
@@ -229,7 +230,7 @@ def _make_terminal_fixture(
 _gtk3_terminal_shell = _make_terminal_fixture(
     "gtk3_terminal_shell", binary_names=("bash",), args=("--norc", "--noprofile")
 )
-_LIVE_UPDATE_HOLD = 3.0 * float(os.environ.get("ORCA_TEST_TIMEOUT_SCALE") or 1.0)
+_LIVE_UPDATE_HOLD = 3.0 * _TIMEOUT_SCALE
 _gtk3_terminal_flatrev = _make_terminal_fixture(
     "gtk3_terminal_flatrev",
     binary_names=("bash",),
@@ -543,7 +544,10 @@ def _run_browser_session(
         stylesheet = (_WEB_PAGES_DIR / "test_defaults.css").read_text(encoding="utf-8")
         page_html, count = re.subn(
             r"(<head\b[^>]*>)",
-            lambda match: f"{match[0]}\n<style>\n{stylesheet}</style>\n",
+            lambda match: (
+                f"{match[0]}\n<style>\n{stylesheet}</style>\n"
+                f"<script>const timeoutScale = {_TIMEOUT_SCALE:g};</script>\n"
+            ),
             source_page.read_text(encoding="utf-8"),
             count=1,
             flags=re.IGNORECASE,
