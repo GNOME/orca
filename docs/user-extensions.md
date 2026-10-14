@@ -276,6 +276,26 @@ Available modifier masks:
 - `keybindings.ORCA_SHIFT_MODIFIER_MASK`
 - `keybindings.ORCA_CTRL_MODIFIER_MASK`
 
+### Multi-Press Keybindings
+
+A keybinding can respond to a key being pressed two or three times in quick
+succession through the optional `click_count` argument. The default is `1`.
+
+```python
+keybindings.KeyBinding("F9", keybindings.ORCA_MODIFIER_MASK, click_count=2)
+```
+
+Each press runs the command bound to that press count. If a key has both a
+single-press and a double-press binding, pressing it twice runs the
+single-press command on the first press and the double-press command on the
+second press. Orca's own commands follow this pattern, e.g. Orca+T presents the
+time and Orca+T pressed twice presents the date. Design multi-press commands so
+that running the single-press command first is not a problem.
+
+A keybinding with a different `click_count` is a different keybinding. It does
+not conflict with a binding that uses the same key and modifiers but a
+different press count.
+
 ### Keybinding Conflicts
 
 User-extension commands cannot take a keybinding that is already used by an
@@ -512,9 +532,7 @@ volume = self.controller.get_value_internal("SpeechManager", "Volume")
 voice = self.controller.get_value_internal("SpeechManager", "CurrentVoice")
 synth = self.controller.get_value_internal("SpeechManager", "CurrentSynthesizer")
 muted = self.controller.get_value_internal("SpeechManager", "SpeechIsMuted")
-layout = self.controller.get_value_internal(
-    "CommandManager", "KeyboardLayoutIsDesktop"
-)
+layout = self.controller.get_value_internal("CommandManager", "KeyboardLayoutIsDesktop")
 ```
 
 ### `set_value_internal(module_name, property_name, value)`
@@ -590,6 +608,7 @@ instances:
 
 ```python
 from orca.extension import ExtensionPreference
+
 
 def get_preferences(self) -> list[ExtensionPreference]:
     return [
@@ -730,6 +749,7 @@ preferences page:
 ```python
 def on_enabled(self) -> None:
     self.controller.present_message_internal(_("Example extension enabled."))
+
 
 def on_disabled(self) -> None:
     self.controller.present_message_internal(_("Example extension disabled."))
@@ -967,10 +987,12 @@ class HelloWorld(Extension):
                 self.GROUP_LABEL,
                 "Says hello slowly",
                 desktop_keybinding=keybindings.KeyBinding(
-                    "F9", keybindings.ORCA_MODIFIER_MASK,
+                    "F9",
+                    keybindings.ORCA_MODIFIER_MASK,
                 ),
                 laptop_keybinding=keybindings.KeyBinding(
-                    "F9", keybindings.ORCA_MODIFIER_MASK,
+                    "F9",
+                    keybindings.ORCA_MODIFIER_MASK,
                 ),
             ),
             KeyboardCommand(
@@ -979,10 +1001,12 @@ class HelloWorld(Extension):
                 self.GROUP_LABEL,
                 "Says goodbye fast",
                 desktop_keybinding=keybindings.KeyBinding(
-                    "F10", keybindings.ORCA_MODIFIER_MASK,
+                    "F10",
+                    keybindings.ORCA_MODIFIER_MASK,
                 ),
                 laptop_keybinding=keybindings.KeyBinding(
-                    "F10", keybindings.ORCA_MODIFIER_MASK,
+                    "F10",
+                    keybindings.ORCA_MODIFIER_MASK,
                 ),
             ),
             KeyboardCommand(
@@ -991,10 +1015,12 @@ class HelloWorld(Extension):
                 self.GROUP_LABEL,
                 "Reports current voice settings",
                 desktop_keybinding=keybindings.KeyBinding(
-                    "F8", keybindings.ORCA_MODIFIER_MASK,
+                    "F8",
+                    keybindings.ORCA_MODIFIER_MASK,
                 ),
                 laptop_keybinding=keybindings.KeyBinding(
-                    "F8", keybindings.ORCA_MODIFIER_MASK,
+                    "F8",
+                    keybindings.ORCA_MODIFIER_MASK,
                 ),
             ),
         ]
@@ -1003,9 +1029,7 @@ class HelloWorld(Extension):
         """Decreases the speech rate, says hello, then restores it."""
 
         original_rate = self.controller.get_value_internal("SpeechManager", "Rate")
-        self.controller.set_value_internal(
-            "SpeechManager", "Rate", self._get_slow_rate()
-        )
+        self.controller.set_value_internal("SpeechManager", "Rate", self._get_slow_rate())
         self.controller.present_message_internal(self._get_greeting_message())
         self.controller.set_value_internal("SpeechManager", "Rate", original_rate)
         return True
@@ -1014,9 +1038,7 @@ class HelloWorld(Extension):
         """Increases the speech rate, says goodbye, then restores it."""
 
         original_rate = self.controller.get_value_internal("SpeechManager", "Rate")
-        self.controller.set_value_internal(
-            "SpeechManager", "Rate", self._get_fast_rate()
-        )
+        self.controller.set_value_internal("SpeechManager", "Rate", self._get_fast_rate())
         self.controller.present_message_internal(self._get_goodbye_message())
         self.controller.set_value_internal("SpeechManager", "Rate", original_rate)
         return True
@@ -1028,13 +1050,16 @@ class HelloWorld(Extension):
         volume = self.controller.get_value_internal("SpeechManager", "Volume")
         pitch = self.controller.get_value_internal("SpeechManager", "Pitch")
         pitch_range = self.controller.get_value_internal(
-            "SpeechManager", "PitchRange",
+            "SpeechManager",
+            "PitchRange",
         )
         voice = self.controller.get_value_internal(
-            "SpeechManager", "CurrentVoice",
+            "SpeechManager",
+            "CurrentVoice",
         )
         synthesizer = self.controller.get_value_internal(
-            "SpeechManager", "CurrentSynthesizer",
+            "SpeechManager",
+            "CurrentSynthesizer",
         )
 
         parts = [
@@ -1093,10 +1118,12 @@ class ModalCommandObserver(Extension):
                 self.GROUP_LABEL,
                 "Toggles modal command observation",
                 desktop_keybinding=keybindings.KeyBinding(
-                    "F2", keybindings.ORCA_SHIFT_MODIFIER_MASK,
+                    "F2",
+                    keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 ),
                 laptop_keybinding=keybindings.KeyBinding(
-                    "F2", keybindings.ORCA_SHIFT_MODIFIER_MASK,
+                    "F2",
+                    keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 ),
             ),
         ]
@@ -1106,9 +1133,7 @@ class ModalCommandObserver(Extension):
 
         if not self._enabled:
             if not manager.set_modal_handler(self):
-                self.controller.present_message_internal(
-                    "Another modal input handler is active."
-                )
+                self.controller.present_message_internal("Another modal input handler is active.")
                 return True
             self._enabled = True
             self.controller.present_message_internal("Modal command observer enabled.")
@@ -1137,9 +1162,7 @@ class ModalCommandObserver(Extension):
             return True
 
         description = command.get_description() or command.get_name()
-        self.controller.present_message_internal(
-            f"I see you want to use {description}. Ok."
-        )
+        self.controller.present_message_internal(f"I see you want to use {description}. Ok.")
         return command.execute(script, event)
 
     def _is_consumed_event(self, event) -> bool:

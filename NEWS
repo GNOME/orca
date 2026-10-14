@@ -1,3 +1,62 @@
+51.1 - 14 October 2026
+
+Web:
+
+* Fix several bugs related to grouping objects on the same visual line.
+
+* Improve presentation of tables/grids where selection does not follow
+  focus.
+
+* Fix presentation of contenteditables newly-focused via native
+  navigation.
+
+* Prefer pending focus event when recovering from destruction of the
+  current object.
+
+* Fall back on text for childless ARIA combo boxes with no valuetext
+  value.
+
+* Fix presentation of headings with explicit names and empty children.
+
+* Fix Where Am I sometimes triggering mode changes.
+
+* Fix some substrings being skipped over during forward word navigation.
+
+* Ignore caret-moved events from ignored, but exposed children of input
+  elements.
+
+General:
+
+* Fix multiple bugs related to text-selection.
+
+* Fix Say All starting from the incorrect location in terminals.
+
+* Fix presentation of repeated symbols separated by zero-width no-break
+  spaces.
+
+* Clear stale braille selection indicators when the caret moves.
+
+* Fix a couple of bugs related to profiles in the preferences UI.
+
+* Add support for the GPaste3 D-Bus interface.
+
+* Fix bug causing object navigator object click to fail.
+
+* Fix several "chattiness" issues.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  de              German                    Christian Kirbach
+  el              Greek                     Efstathios Iosifidis
+  he              Hebrew                    Yaron Shahrabani
+  kab             Kabyle                    Athmane Mokraoui
+  nb              Norwegian Bokmål          Kjartan Maraas
+  nn              Norwegian Nynorsk         Roy-Magne Mo
+  pt_BR           Brazilian Portuguese      Rafael Fontenelle
+  sl              Slovenian                 Martin
+
+=========
+
 51.0 - 14 September 2026
 
 Web:

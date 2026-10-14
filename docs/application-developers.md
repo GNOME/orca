@@ -120,9 +120,8 @@ When a user navigates among rows in a table/grid, sometimes the full row should 
 other times just the current cell/item. It can be difficult to programmatically determine which
 makes sense for any given application. In addition, user needs and preferences vary. For these
 reasons, the amount Orca reads when arrowing up or down in a container with the accessible `table`
-role is a [user-configurable option](https://gnome.pages.gitlab.gnome.org/orca/help/preferences_speech.html)
-which can be set on a [per-application basis](https://gnome.pages.gitlab.gnome.org/orca/help/preferences_introduction.html)
-and customized by the type of table (GUI, spreadsheet, and document).
+role is a user-configurable option which can be set on a per-application basis and customized by
+the type of table (GUI, spreadsheet, and document).
 
 ## Speaking Your Application's Non-Focusable Static Text
 
@@ -199,11 +198,14 @@ Simple examples are provided below.
 #!/usr/bin/python
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+
 def on_button_clicked(button):
     button.get_accessible().emit("announcement", "Hello world. I am an announcement.")
+
 
 def on_activate(application):
     window = Gtk.ApplicationWindow(application=application)
@@ -211,6 +213,7 @@ def on_activate(application):
     button.connect("clicked", on_button_clicked)
     window.add(button)
     window.show_all()
+
 
 app = Gtk.Application()
 app.connect("activate", on_activate)
@@ -230,13 +233,18 @@ Here is an example of using the `notification` signal:
 #!/usr/bin/python
 
 import gi
+
 gi.require_version("Atk", "1.0")
 gi.require_version("Gtk", "3.0")
 
 from gi.repository import Atk, Gtk
 
+
 def on_button_clicked(button):
-    button.get_accessible().emit("notification", "Hello world. I am a notification.", Atk.Live.POLITE)
+    button.get_accessible().emit(
+        "notification", "Hello world. I am a notification.", Atk.Live.POLITE
+    )
+
 
 def on_activate(application):
     window = Gtk.ApplicationWindow(application=application)
@@ -244,6 +252,7 @@ def on_activate(application):
     button.connect("clicked", on_button_clicked)
     window.add(button)
     window.show_all()
+
 
 app = Gtk.Application()
 app.connect("activate", on_activate)
@@ -256,12 +265,15 @@ app.run(None)
 #!/usr/bin/python
 
 import gi
+
 gi.require_version("Gtk", "4.0")
 
 from gi.repository import Gtk
 
+
 def on_button_clicked(button):
     button.announce("Hello world. I am a notification.", Gtk.AccessibleAnnouncementPriority.MEDIUM)
+
 
 def on_activate(application):
     window = Gtk.ApplicationWindow(application=application)
@@ -269,6 +281,7 @@ def on_activate(application):
     button.connect("clicked", on_button_clicked)
     window.set_child(button)
     window.present()
+
 
 app = Gtk.Application()
 app.connect("activate", on_activate)
@@ -288,12 +301,14 @@ from PySide6.QtCore import Slot
 from PySide6.QtGui import QAccessible, QAccessibleAnnouncementEvent
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
 
+
 @Slot()
 def on_button_clicked(checked):
     announcement_event = QAccessibleAnnouncementEvent(button, "Hello world. I am a notification.")
     # prio could be set like this (Polite is the default anyway)
     announcement_event.setPoliteness(QAccessible.AnnouncementPoliteness.Polite)
     QAccessible.updateAccessibility(announcement_event)
+
 
 app = QApplication(sys.argv)
 main_window = QMainWindow()
@@ -321,6 +336,7 @@ import time
 
 ANNOUNCER_PATH = "/com/example/Announcer"
 
+
 @dbus_interface("org.a11y.atspi.Application")
 class Application:
     """A minimal accessible application to fulfill AT-SPI2's expectations that events come from a
@@ -330,13 +346,17 @@ class Application:
     def ToolkitName(self) -> str:
         return "Announcer"
 
+
 @dbus_interface("org.a11y.atspi.Event.Object")
 class ObjectEvents:
     """Just a holder for the one needed signal."""
 
     @dbus_signal
-    def Announcement(self, subtype: str, detail1: int, detail2: int, value: Variant, props: Structure):
+    def Announcement(
+        self, subtype: str, detail1: int, detail2: int, value: Variant, props: Structure
+    ):
         pass
+
 
 @dbus_interface("org.a11y.atspi.Accessible")
 class Accessible:
@@ -344,7 +364,7 @@ class Accessible:
     accessible object."""
 
     def GetState(self) -> list[UInt32]:
-        return [1<<25, 0] # ATSPI_STATE_SHOWING
+        return [1 << 25, 0]  # ATSPI_STATE_SHOWING
 
     @property
     def Name(self) -> str:
@@ -355,16 +375,30 @@ class Accessible:
         return "", ObjPath("/org/a11y/atspi/null")
 
     def GetRole(self) -> UInt32:
-        return 75 # ATSPI_ROLE_APPLICATION
+        return 75  # ATSPI_ROLE_APPLICATION
 
     def GetAttributes(self) -> Dict[str, str]:
         return {}
+
 
 @dbus_class
 class Announcer(Accessible, Application, ObjectEvents):
     pass
 
-CacheEntry = Tuple[Tuple[str, ObjPath], Tuple[str, ObjPath], Tuple[str, ObjPath], Int32, Int32, List[str], str, UInt32, str, List[UInt32]]
+
+CacheEntry = Tuple[
+    Tuple[str, ObjPath],
+    Tuple[str, ObjPath],
+    Tuple[str, ObjPath],
+    Int32,
+    Int32,
+    List[str],
+    str,
+    UInt32,
+    str,
+    List[UInt32],
+]
+
 
 @dbus_interface("org.a11y.atspi.Cache")
 class Cache:
@@ -373,6 +407,7 @@ class Cache:
 
     def GetItems(self) -> List[CacheEntry]:
         return []
+
 
 session_bus = SessionMessageBus()
 a11y_bus_info_provider = session_bus.get_proxy("org.a11y.Bus", "/org/a11y/bus")
@@ -421,9 +456,11 @@ when disabled for focus changes, users can always obtain the help text on demand
 #!/usr/bin/python
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 
 from gi.repository import Gtk
+
 
 def on_activate(application):
     window = Gtk.ApplicationWindow(application=application)
@@ -442,6 +479,7 @@ def on_activate(application):
     entry.get_accessible().set_help_text("Enter 10 characters.")
     window.show_all()
 
+
 app = Gtk.Application()
 app.connect("activate", on_activate)
 app.run(None)
@@ -453,9 +491,11 @@ app.run(None)
 #!/usr/bin/python
 
 import gi
+
 gi.require_version("Gtk", "4.0")
 
 from gi.repository import Gtk
+
 
 def on_activate(application):
     window = Gtk.ApplicationWindow(application=application)
@@ -473,6 +513,7 @@ def on_activate(application):
     # This text is presented by Orca as a "tutorial message."
     entry.update_property([Gtk.AccessibleProperty.HELP_TEXT], ["Enter 10 characters."])
     window.present()
+
 
 app = Gtk.Application()
 app.connect("activate", on_activate)
@@ -506,6 +547,63 @@ window.show()
 
 app.exec()
 ```
+
+## Orca-Controlled Text Selection (Coming in v52)
+
+Orca v52 will support Orca-controlled text selection. When Orca is controlling caret navigation,
+it will optionally also handle selection commands such as Shift+Arrow and Ctrl+Shift+Arrow, using
+AT-SPI to update the application's text selection. Applications and toolkits should support these
+selection requests and expose the resulting selection and events correctly.
+
+Due to the unexpected number of bugs and missing implementations discovered in applications and
+toolkits, this feature is currently unsupported, non-user-facing, and disabled by default. In
+order for application and toolkit developers to test it and fix bugs before this feature goes live,
+there is a GSettings key through which it can be enabled.
+
+Enable it for the default profile with:
+
+```sh
+gsettings set org.gnome.Orca.CaretNavigation:/org/gnome/orca/default/caret-navigation/ selection-enabled true
+```
+
+(Re)start Orca after changing the setting. This is needed because Orca must register key grabs
+for all the selection commands. When this feature is user-facing, that will be managed by Orca's
+preferences UI. Until then, it only happens upon launch.
+
+In non-web applications, toggle Orca's caret navigation on with Orca+F12. With Orca's caret
+navigation active, test extending and shrinking selections by using the following selection
+commands:
+
+* Shift+Left/Right: Character
+* Shift+Ctrl+Left/Right: Word
+* Shift+Up/Down: Line
+* Shift+Home/End: Line edge
+* Shift+Ctrl+Home/End: TextView/document edge
+
+Check that the application's visible selection, the text copied to the clipboard, and Orca's
+announcements agree. Also check that using Orca's caret navigation (i.e. the above without
+Shift) clears the current selection.
+
+What happens in response to a mouse click is currently beyond Orca's control because Orca
+isn't notified of any mouse clicks. Your app should handle those in the same way it would
+without Orca running.
+
+Please note that a number of bugs in the Orca feature have been fixed in Orca v51.1, therefore
+using at least v51.1 is recommended to reduce the likelihood that a text-selection failure is
+due to an Orca bug. Also please note that implementing this feature, taking into account all
+possible scenarios, was non-trivial. There are undoubtedly still some Orca bugs. If you find
+one while testing your app, please report it.
+
+To clear the setting and restore the default (disabled):
+
+```sh
+gsettings reset org.gnome.Orca.CaretNavigation:/org/gnome/orca/default/caret-navigation/ selection-enabled
+```
+
+To explicitly disable the feature, use the `gsettings set` command above with `false` instead of
+`true`. If testing with another profile, replace `default` in the path with that profile's ID.
+See [Orca GSettings Schemas Reference](gsettings-schemas.md) for more about profiles and
+application-specific overrides.
 
 ## Tools For Debugging
 
