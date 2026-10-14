@@ -163,6 +163,32 @@ def test_selection_in_a_paragraph(web_structural_navigation: BrowserSession) -> 
 
 @requires_browser_version("chromium", 153)
 @pytest.mark.native_app
+def test_selection_retains_anchor_at_paragraph_start(
+    web_structural_navigation: BrowserSession,
+) -> None:
+    """Tests that an empty selection in the new focus does not discard the anchor."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+
+    spoken, brailled = select(session, NEXT_LINE)
+    assert spoken == ["Structural navigation", "selected"]
+    assert brailled == BrailleLine(1, _PARAGRAPH, _PARAGRAPH, "\x00" * 16)
+
+    # The paragraph has no selected text, but the heading must remain selected.
+    for _ in range(2):
+        session.orca.select_with_caret_navigator(START_OF_LINE)
+        assert capture(session)[0] == []
+    assert say_selection(session) == ["Selected text is:  Structural navigation"]
+
+    spoken, brailled = select(session, NEXT_WORD)
+    assert spoken == ["Intro", "selected"]
+    assert brailled == BrailleLine(6, _PARAGRAPH, _PARAGRAPH, "\xc0" * 5 + "\x00" * 11)
+    assert say_selection(session) == ["Selected text is:  Structural navigation Intro"]
+
+
+@requires_browser_version("chromium", 153)
+@pytest.mark.native_app
 @pytest.mark.parametrize(
     "reverse",
     [

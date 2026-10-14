@@ -948,7 +948,7 @@ class TextSelectionManager:
         return _TextSelectionResult(
             succeeded,
             (new_caret_context_object,),
-            snapshot.anchor if selection_exists else None,
+            snapshot.anchor if snapshot.anchor != new_focus else None,
         )
 
     def _apply_selection_across_text_objects(
@@ -1002,7 +1002,6 @@ class TextSelectionManager:
                 return _TextSelectionResult(False, (), None)
 
         old_destination_range = destination_start, destination_end
-        destination_range_is_empty = destination_range[0] == destination_range[1]
         if not self._set_text_object_selection(
             destination_object,
             *destination_range,
@@ -1020,7 +1019,9 @@ class TextSelectionManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return _TextSelectionResult(False, (), None)
 
-        selection_exists = not source_range_is_empty or not destination_range_is_empty
+        # An empty selection in the newly focused object does not mean the selection
+        # extending from the anchor has collapsed. It collapses when focus returns to the anchor.
+        selection_exists = snapshot.anchor != new_focus
         return _TextSelectionResult(
             True,
             (source_object, new_caret_context_object),
