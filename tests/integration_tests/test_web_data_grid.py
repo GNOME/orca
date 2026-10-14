@@ -28,12 +28,15 @@ import pytest
 
 from .harness import keyboard
 from .helpers import BrailleLine, capture, reset_web_state
+from .version_helpers import firefox_is_older_than_build
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
+# Firefox 156 exposes these cells as selectable despite the absence of aria-selected.
+@pytest.mark.skipif(firefox_is_older_than_build(157, 0), reason="Needs Firefox 157 or later")
 def test_arrow_navigation_through_grid_cells(web_data_grid: BrowserSession) -> None:
     """Tests arrowing through the grid's cells and jumping to the last and first one."""
 

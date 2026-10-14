@@ -10,6 +10,9 @@ variables:
   FDO_UPSTREAM_REPO: "gnome/orca"
 
 .orca_opensuse_tumbleweed_x86_64:
+  rules:
+    - !reference [.manual-development-branch, rules]
+    - when: on_success
   variables:
     FDO_DISTRIBUTION_VERSION: "tumbleweed"
     FDO_DISTRIBUTION_TAG: "x86_64-${BASE_TAG}"

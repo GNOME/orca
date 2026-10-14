@@ -45,6 +45,7 @@ def prepare_launch(profile_dir: Path, *, caret_browsing: bool = False) -> tuple[
     prefs = {
         "app.update.disabledForTesting": True,
         "browser.newtabpage.enabled": False,
+        "browser.pagethumbnails.capturing_disabled": True,
         "browser.shell.checkDefaultBrowser": False,
         "browser.startup.homepage_override.mstone": "ignore",
         "browser.aboutwelcome.enabled": False,
@@ -53,6 +54,8 @@ def prepare_launch(profile_dir: Path, *, caret_browsing: bool = False) -> tuple[
         "accessibility.browsewithcaret": caret_browsing,
         "accessibility.warn_on_browsewithcaret": False,
         "layout.css.devPixelsPerPx": "1.0",
+        "ui.textScaleFactor": 100,
+        "font.name.serif.x-western": "DejaVu Serif",
     }
     (profile_dir / "user.js").write_text(
         "".join(

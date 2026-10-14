@@ -199,5 +199,9 @@ def test_heading_selection_uses_text_not_the_accessible_name(
     assert say_selection(session) == [f"Selected text is:  {selected_text}"]
     for character in reversed(selected_text):
         session.orca.select_with_caret_navigator(PREVIOUS_CHARACTER)
-        assert speech(session) == [character, "unselected"]
+        actual = speech(session)
+        assert actual == [character, "unselected"], (
+            f"Late speech after unselection: {speech(session, wait_async=True, overall=3.0)!r}\n"
+            f"Selection query afterward: {say_selection(session)!r}"
+        )
     assert say_selection(session) == ["No selected text."]

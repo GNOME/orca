@@ -28,13 +28,27 @@ import pytest
 
 from . import helpers
 from .harness import keyboard
+from .version_helpers import firefox_is_older_than_build
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
 
 
 @pytest.mark.native_app
-@pytest.mark.parametrize("sticky", [False, True], ids=["browse", "sticky-browse"])
+@pytest.mark.parametrize(
+    "sticky",
+    [
+        pytest.param(False, id="browse"),
+        # Reverse navigation skips the child tree items in Firefox 156.
+        pytest.param(
+            True,
+            id="sticky-browse",
+            marks=pytest.mark.skipif(
+                firefox_is_older_than_build(157, 0), reason="Needs Firefox 157 or later"
+            ),
+        ),
+    ],
+)
 def test_caret_navigation_through_widgets(
     web_widget_boundaries: BrowserSession, sticky: bool
 ) -> None:

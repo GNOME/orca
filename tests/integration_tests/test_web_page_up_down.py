@@ -49,7 +49,7 @@ def test_page_down_then_up(web_page_up_down: BrowserSession) -> None:
         firefox=[
             ("Line twenty-two.", 1),
             ("Line forty.", 12),
-            ("Line nineteen.", 15),
+            ("Line nineteen.", 11),
             ("Line one.", 1),
         ],
     )
