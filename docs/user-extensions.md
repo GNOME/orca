@@ -25,17 +25,6 @@ single-file extensions and package extensions:
 Each `.py` file or package directory with an `__init__.py` file that contains an
 `Extension` subclass is a potential extension.
 
-## What Extensions Can Use
-
-User extensions should only rely on what this document describes, including
-what the examples use. Anything else in Orca, even if it is public, is for
-Orca's own use and may change or be removed as Orca's internals change.
-
-Everything this document describes is available in Orca 51.0 and later. When
-something is added, this document will say which version added it. Nothing is
-currently deprecated. If something is deprecated or scheduled for removal, this
-document will say so.
-
 ## Extension Catalogs and Stores
 
 User extensions are an advanced customization mechanism. The Orca project does
@@ -109,6 +98,17 @@ dconf reset /org/gnome/orca/default/extensions/disabled-extensions
 Disabling a user extension does not revoke its approval.
 
 ## Extension Class Basics
+
+### What Extensions Can Use
+
+User extensions should only rely on what this document describes, including
+what the examples use. Anything else in Orca, even if it is public, is for
+Orca's own use and may change or be removed as Orca's internals change.
+
+Everything this document describes is available in Orca 51.0 and later. When
+something is added, this document will say which version added it. Nothing is
+currently deprecated. If something is deprecated or scheduled for removal, this
+document will say so.
 
 ### Required Class Attributes
 
