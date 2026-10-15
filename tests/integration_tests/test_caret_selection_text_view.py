@@ -212,7 +212,7 @@ def test_selection_to_the_line_boundaries(gtk3_text_view: NativeAppSession) -> N
 
     assert select(session, START_OF_LINE) == (
         [_TO_THE_END_OF_LINE_TWO, "unselected", "Line", "selected"],
-        BrailleLine(1, _LINE_TWO, " two has additional words to mak", "\xc0" * 4 + "\x00" * 57),
+        BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\xc0" * 4 + "\x00" * 57),
     )
     assert say_selection(session) == ["Selected text is:  Line"]
 
@@ -239,7 +239,7 @@ def test_selection_to_the_file_boundaries(gtk3_text_view: NativeAppSession) -> N
 
     assert select(session, START_OF_FILE) == (
         [_REST_OF_THE_FILE, "unselected", "Line one.\n", "selected"],
-        BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61),
+        BrailleLine(1, "Line one. $l", "Line one. $l", "\xc0" * 9 + "\x00" * 3),
     )
     assert say_selection(session) == ["Selected text is:  Line one.\n"]
 
@@ -256,25 +256,25 @@ def test_selection_backward_from_the_caret(gtk3_text_view: NativeAppSession) -> 
 
     assert select(session, PREVIOUS_CHARACTER) == (
         ["e", "selected"],
-        BrailleLine(5, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 3 + "\xc0" + "\x00" * 57),
+        BrailleLine(4, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 3 + "\xc0" + "\x00" * 57),
     )
     assert say_selection(session) == ["Selected text is:  e"]
 
     assert select(session, PREVIOUS_CHARACTER) == (
         ["n", "selected"],
-        BrailleLine(5, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 2 + "\xc0" * 2 + "\x00" * 57),
+        BrailleLine(3, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 2 + "\xc0" * 2 + "\x00" * 57),
     )
     assert say_selection(session) == ["Selected text is:  ne"]
 
     assert select(session, PREVIOUS_CHARACTER) == (
         ["i", "selected"],
-        BrailleLine(5, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" + "\xc0" * 3 + "\x00" * 57),
+        BrailleLine(2, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" + "\xc0" * 3 + "\x00" * 57),
     )
     assert say_selection(session) == ["Selected text is:  ine"]
 
     assert select(session, PREVIOUS_WORD) == (
         ["L", "selected"],
-        BrailleLine(5, _LINE_TWO, _LINE_TWO_VISIBLE, "\xc0" * 4 + "\x00" * 57),
+        BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\xc0" * 4 + "\x00" * 57),
     )
     assert say_selection(session) == ["Selected text is:  Line"]
 

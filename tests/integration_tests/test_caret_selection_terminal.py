@@ -45,7 +45,7 @@ if TYPE_CHECKING:
 _ORCA_CONTROLS = "The screen reader is controlling the caret."
 _APP_CONTROLS = "The application is controlling the caret."
 
-# VTE reports the terminal cursor on the pager status line throughout these selections.
+# After selection collapses, VTE reports the terminal cursor on the pager status line.
 _STATUS_LINE = BrailleLine(8, "doc.txt", "doc.txt", "\x00" * 7)
 
 
@@ -74,11 +74,20 @@ def test_selection_by_character(gtk3_terminal_pager: NativeAppSession) -> None:
 
     _move_to_the_second_line(session)
 
-    assert select(session, NEXT_CHARACTER) == (["l", "selected"], _STATUS_LINE)
-    assert select(session, NEXT_CHARACTER) == (["i", "selected"], _STATUS_LINE)
+    assert select(session, NEXT_CHARACTER) == (
+        ["l", "selected"],
+        BrailleLine(2, "line 02", "line 02", "\xc0" + "\x00" * 6),
+    )
+    assert select(session, NEXT_CHARACTER) == (
+        ["i", "selected"],
+        BrailleLine(3, "line 02", "line 02", "\xc0" * 2 + "\x00" * 5),
+    )
     assert say_selection(session) == ["Selected text is:  li"]
 
-    assert select(session, PREVIOUS_CHARACTER) == (["i", "unselected"], _STATUS_LINE)
+    assert select(session, PREVIOUS_CHARACTER) == (
+        ["i", "unselected"],
+        BrailleLine(2, "line 02", "line 02", "\xc0" + "\x00" * 6),
+    )
     assert say_selection(session) == ["Selected text is:  l"]
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
@@ -97,11 +106,20 @@ def test_selection_by_word_and_line(gtk3_terminal_pager: NativeAppSession) -> No
 
     _move_to_the_second_line(session)
 
-    assert select(session, NEXT_WORD) == (["line", "selected"], _STATUS_LINE)
-    assert select(session, END_OF_LINE) == ([" 02", "selected"], _STATUS_LINE)
+    assert select(session, NEXT_WORD) == (
+        ["line", "selected"],
+        BrailleLine(5, "line 02", "line 02", "\xc0" * 4 + "\x00" * 3),
+    )
+    assert select(session, END_OF_LINE) == (
+        [" 02", "selected"],
+        BrailleLine(8, "line 02", "line 02", "\xc0" * 7),
+    )
     assert say_selection(session) == ["Selected text is:  line 02"]
 
-    assert select(session, NEXT_LINE) == (["\n", "selected"], _STATUS_LINE)
+    assert select(session, NEXT_LINE) == (
+        ["\n", "selected"],
+        BrailleLine(1, "line 03", "line 03", "\x00" * 7),
+    )
     assert say_selection(session) == ["Selected text is:  line 02\n"]
 
     assert select(session, PREVIOUS_LINE) == (["line 02\n", "unselected"], _STATUS_LINE)
@@ -124,7 +142,10 @@ def test_selection_removed_by_caret_navigation(gtk3_terminal_pager: NativeAppSes
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
     assert speech(session) == ["line 01\n"]
 
-    assert select(session, NEXT_WORD) == (["line", "selected"], _STATUS_LINE)
+    assert select(session, NEXT_WORD) == (
+        ["line", "selected"],
+        BrailleLine(5, "line 01", "line 01", "\xc0" * 4 + "\x00" * 3),
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert speech(session) == ["Text unselected.", "line 02\n"]

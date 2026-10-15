@@ -470,8 +470,8 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        obj, offset = manager.get_last_cursor_position()
-        if offset == event.detail1 and obj == event.source:
+        obj, previous_offset = manager.get_last_cursor_position()
+        if previous_offset == event.detail1 and obj == event.source:
             if text_selection_presenter.get_presenter().selection_removal_was_presented(
                 event.source
             ):
@@ -501,7 +501,9 @@ class Script(script.Script):
         offset = AXText.get_caret_offset(event.source)
 
         # TODO - JD: These need to be harmonized / unified / simplified.
-        manager.set_last_cursor_position(event.source, offset)
+        # Preserve the previous position if the focus event already saved this one.
+        if offset != previous_offset or obj != event.source:
+            manager.set_last_cursor_position(event.source, offset)
         self.utilities.set_caret_context(event.source, offset)
 
         # The text-changed and text-selection-changed handlers already refreshed braille
@@ -1014,7 +1016,11 @@ class Script(script.Script):
                     self,
                     selection_obj,
                 )
-        self.update_braille(event.source)
+        selection_focus = selection_command.get_selection_focus() if selection_command else None
+        if selection_focus is not None:
+            self.update_braille(selection_focus.accessible_object, offset=selection_focus.offset)
+        else:
+            self.update_braille(event.source)
         return True
 
     def _on_column_reordered(self, event: Atspi.Event) -> bool:

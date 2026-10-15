@@ -63,6 +63,12 @@ def requires_browser_version(name: str, *minimum: int, when: bool = True) -> pyt
     return requires_version(name, actual, *minimum, when=applies)
 
 
+def requires_atril_version(*minimum: int) -> pytest.MarkDecorator:
+    """Skips tests which require fixes in a newer Atril release."""
+
+    return requires_version("Atril", command_version(("atril", "--version")), *minimum)
+
+
 @functools.cache
 def _firefox_build_info() -> tuple[int, int, bool] | None:
     """Returns Firefox's major version, build ID, and whether it is a Nightly build."""

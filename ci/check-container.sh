@@ -5,7 +5,7 @@ set -euxo pipefail
 source ci/env.sh
 
 echo "Container dependency versions"
-for binary in Xvfb chromium firefox bash less nano vim seq gdbus dbus-run-session \
+for binary in Xvfb atril chromium firefox bash less nano vim seq gdbus dbus-run-session \
     dbus-update-activation-environment pgrep flock fusermount glib-compile-schemas; do
     printf '%s: ' "$binary"
     rpm -qf --queryformat '%{NAME} %{VERSION}-%{RELEASE}\n' "$(command -v "$binary")"

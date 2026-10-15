@@ -44,6 +44,7 @@ from gi.repository import Atspi, GLib, PangoCairo
 from orca.output_reader import OutputReader
 
 from .apps import (
+    atril,
     browser,
     gtk3_announcement,
     gtk3_multi_select_list,
@@ -58,7 +59,7 @@ from .apps import (
     gtk3_two_windows,
     gtk3_widget_notebook,
 )
-from .harness import sandbox
+from .harness import keyboard, sandbox
 from .harness.orca_session import OrcaSession
 from .version_helpers import has_typelib
 
@@ -77,6 +78,13 @@ class NativeAppSession:
 
     orca: OrcaSession
     reader: OutputReader
+
+
+@dataclass
+class AtrilSession(NativeAppSession):
+    """An Atril session with the two PDF page objects used to check selection."""
+
+    pages: tuple[Atspi.Accessible, ...]
 
 
 @dataclass
@@ -128,6 +136,50 @@ def _make_native_app_fixture(
         )
 
     return fixture
+
+
+@pytest.fixture(scope="session", name="atril")
+def _atril(tmp_path_factory: pytest.TempPathFactory) -> Iterator[AtrilSession]:
+    """Opens the two-page PDF in Atril with native caret navigation enabled."""
+
+    binary = shutil.which("atril")
+    if binary is None:
+        pytest.skip("Atril is not installed")
+    pages: list[Atspi.Accessible] = []
+
+    def pages_loaded(app: Atspi.Accessible) -> bool:
+        pending = [app]
+        while pending:
+            obj = pending.pop()
+            children = [
+                child
+                for i in range(obj.get_child_count())
+                if (child := obj.get_child_at_index(i)) is not None
+            ]
+            if obj.get_role() == Atspi.Role.DOCUMENT_FRAME:
+                candidates = [child for child in children if child.get_role() == Atspi.Role.PAGE]
+                if len(candidates) == 2 and all(
+                    Atspi.Text.get_character_count(page) > 0 for page in candidates
+                ):
+                    pages[:] = candidates
+                    return True
+            pending.extend(children)
+        return False
+
+    sandbox_dir = tmp_path_factory.mktemp("atril-session")
+    document = sandbox_dir / "simple-two-pages.pdf"
+    shutil.copyfile(Path(__file__).parent / "documents" / document.name, document)
+    argv = [sys.executable, "-m", atril.__name__, binary, str(document)]
+    for session in _run_app_with_orca(
+        sandbox_dir,
+        argv=argv,
+        ready_predicate=pages_loaded,
+        prepare_window=atril.prepare_window,
+    ):
+        keyboard.tap_key(keyboard.KEYSYM_F7)
+        session.reader.drain(quiescence_timeout=0.1, overall_timeout=2.0)
+        session.reader.reset()
+        yield AtrilSession(session.orca, session.reader, tuple(pages))
 
 
 _gtk3_terminal_focus = _make_native_app_fixture(gtk3_terminal_focus, scope="function")

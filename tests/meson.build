@@ -114,6 +114,15 @@ orca_integration_tests = {
     'integration_tests/test_gsettings.py',
     'integration_tests/test_learn_mode.py',
   ],
+  'document': [
+    'integration_tests/test_atril_native_navigation.py',
+    'integration_tests/test_atril_native_selection.py',
+    'integration_tests/test_atril_selection_page_boundaries.py',
+    'integration_tests/test_caret_atril_native_caret_disabled.py',
+    'integration_tests/test_caret_navigation_atril.py',
+    'integration_tests/test_caret_selection_atril.py',
+    'integration_tests/test_caret_selection_atril_unvisited_page.py',
+  ],
   'gtk3': [
     'integration_tests/test_caret_navigation.py',
     'integration_tests/test_caret_navigation_orca_controlled.py',

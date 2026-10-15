@@ -26,7 +26,9 @@ launch Orca need an installed build of the version being tested.
 * MathCAT enabled in the installed Orca build for the math tests.
 * Chrome (beta preferred) or Chromium for the web tests.
 * Firefox (Nightly preferred) for the Firefox tests.
-* `python-xlib` for window setup when running web tests with Firefox.
+* Atril for PDF navigation and selection tests (skipped if absent). Tests that depend
+  on its selection fixes require 1.28.7 or later.
+* `python-xlib` for window setup when running tests with Firefox or Atril.
 
 ## Running Tests
 
@@ -45,6 +47,7 @@ Orca's tests are grouped into the following named suites:
 * "unit": the only suite run by default with `meson test`
 * "integration": the superset of the following:
     * "core": infrastructure such as GSettings, D-Bus support, and browser smoke tests
+    * "document": document viewers and editors (currently Atril)
     * "gtk3": non-terminal GTK3 UI tests
     * "gtk3-terminal": for terminal applications using VTE for GTK3
     * "chromium": for web content using Chrome (beta preferred) or Chromium

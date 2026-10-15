@@ -154,6 +154,15 @@ integration-tests-firefox:
     - firefox --full-version
     - meson test -C "${MESON_BUILD_DIR}" --suite gecko --num-processes 1 --timeout-multiplier 2 --print-errorlogs
 
+integration-tests-document:
+  extends: .integration-tests
+  rules:
+    - when: manual
+  allow_failure: true
+  script:
+    - atril --version
+    - meson test -C "${MESON_BUILD_DIR}" --suite document --num-processes 1 --timeout-multiplier 2 --print-errorlogs
+
 # Linters: Ruff and Mypy
 #
 # The configurations are in pyproject.toml.
