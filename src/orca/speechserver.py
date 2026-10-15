@@ -27,21 +27,12 @@
 
 from __future__ import annotations
 
-from enum import Enum, StrEnum
+from enum import Enum
 from typing import TYPE_CHECKING, Any
 
 from . import debug, gsettings_registry, guilabels, language_utilities
 from .acss import ACSS
 from .ax_utilities_debugging import AXUtilitiesDebugging
-
-
-class VoiceType(StrEnum):
-    """Voice type identifiers. Values match GSettings path components."""
-
-    DEFAULT = "default"
-    UPPERCASE = "uppercase"
-    HYPERLINK = "hyperlink"
-    SYSTEM = "system"
 
 
 @gsettings_registry.get_registry().gsettings_enum(

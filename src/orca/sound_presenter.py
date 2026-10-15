@@ -36,7 +36,8 @@ from . import (
     gsettings_registry,
     sound,
 )
-from .generator import GeneratorContext, PresentationReason
+from .enums import PresentationReason
+from .generator import GeneratorContext
 
 if TYPE_CHECKING:
     from collections.abc import Callable

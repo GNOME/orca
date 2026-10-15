@@ -51,10 +51,10 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .ax_utilities_text import TextUnit
+from .enums import TextUnit
 
 if TYPE_CHECKING:
-    from .ax_utilities_text import CaretSetReason
+    from .enums import CaretSetReason
 
 
 class Utilities:

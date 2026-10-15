@@ -25,7 +25,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from orca import (
-    braille_presenter,
     debug,
     focus_manager,
     input_event_manager,
@@ -40,8 +39,7 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
-from orca.ax_utilities_event import TextEventReason
-from orca.ax_utilities_text import CaretSetReason
+from orca.enums import BraillePanDirection, CaretSetReason, TextEventReason
 from orca.scripts import default
 
 from .braille_generator import BrailleGenerator
@@ -75,7 +73,7 @@ class Script(default.Script):
 
     def handle_braille_pan_at_edge(
         self,
-        direction: braille_presenter.PanDirection,
+        direction: BraillePanDirection,
     ) -> bool | None:
         """Handles braille panning when the presenter reaches the edge of a line."""
 
@@ -83,7 +81,7 @@ class Script(default.Script):
         if AXUtilities.is_spreadsheet_cell(focus) or not AXUtilities.is_paragraph(focus):
             return super().handle_braille_pan_at_edge(direction)
 
-        if direction == braille_presenter.PanDirection.LEFT:
+        if direction == BraillePanDirection.LEFT:
             start_offset = AXText.get_line_at_offset(focus)[1]
             if start_offset > 0:
                 AXUtilities.set_caret_offset_with_reason(

@@ -43,7 +43,7 @@ from . import (
     speech_presenter,
 )
 from .ax_utilities_math import AXUtilitiesMath
-from .ax_utilities_text import CaretSetReason
+from .enums import ActivePresentationMode, CaretSetReason
 from .extension import Extension
 
 try:
@@ -318,7 +318,7 @@ class MathNavigator(Extension):
 
         focus_manager.get_manager().emit_region_changed(
             math_root,
-            mode=focus_manager.MATH_NAVIGATOR,
+            mode=ActivePresentationMode.MATH_NAVIGATOR,
         )
 
         msg = "MATH NAVIGATOR: Entered math navigation."

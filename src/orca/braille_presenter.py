@@ -52,10 +52,9 @@ from . import (
 )
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .ax_utilities_text import CaretSetReason
 from .braille_generator import BrailleGeneratorContext
+from .enums import BraillePanDirection, CaretSetReason, PresentationReason
 from .extension import BrailleOutput, BrailleOutputResult, Extension
-from .generator import PresentationReason
 from .orca_platform import tablesdir  # pylint: disable=import-error
 
 if TYPE_CHECKING:
@@ -121,13 +120,6 @@ class ProgressBarVerbosity(Enum):
     WINDOW = 2
 
 
-class PanDirection(Enum):
-    """Braille panning direction."""
-
-    LEFT = "left"
-    RIGHT = "right"
-
-
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Braille", name="braille")
 class BraillePresenter(Extension):
     """Provides braille presentation support."""
@@ -191,7 +183,7 @@ class BraillePresenter(Extension):
     ) -> bool:
         """Pans the braille display to the left."""
 
-        return self._pan_braille(PanDirection.LEFT, script, event)
+        return self._pan_braille(BraillePanDirection.LEFT, script, event)
 
     def pan_braille_right(
         self,
@@ -200,11 +192,11 @@ class BraillePresenter(Extension):
     ) -> bool:
         """Pans the braille display to the right."""
 
-        return self._pan_braille(PanDirection.RIGHT, script, event)
+        return self._pan_braille(BraillePanDirection.RIGHT, script, event)
 
     def _pan_braille(
         self,
-        direction: PanDirection,
+        direction: BraillePanDirection,
         script: default.Script | None,
         event: input_event.InputEvent | None = None,
     ) -> bool:
@@ -223,7 +215,7 @@ class BraillePresenter(Extension):
         if flat_review_result is not None:
             return flat_review_result
 
-        did_pan = self.pan_left() if direction == PanDirection.LEFT else self.pan_right()
+        did_pan = self.pan_left() if direction == BraillePanDirection.LEFT else self.pan_right()
         if did_pan:
             return True
 
@@ -236,7 +228,7 @@ class BraillePresenter(Extension):
 
     @staticmethod
     def _pan_flat_review_braille(
-        direction: PanDirection,
+        direction: BraillePanDirection,
         script: default.Script | None,
         event: input_event.InputEvent | None = None,
     ) -> bool | None:
@@ -247,13 +239,13 @@ class BraillePresenter(Extension):
             return None
         if script is None:
             return True
-        if direction == PanDirection.LEFT:
+        if direction == BraillePanDirection.LEFT:
             return flat_review.pan_braille_left(script, event)
         return flat_review.pan_braille_right(script, event)
 
     def _handle_braille_pan_at_edge(
         self,
-        direction: PanDirection,
+        direction: BraillePanDirection,
         script: default.Script | None,
         event: input_event.InputEvent | None = None,
     ) -> bool:
@@ -264,7 +256,7 @@ class BraillePresenter(Extension):
         if not is_text_area:
             return True
 
-        if direction == PanDirection.LEFT:
+        if direction == BraillePanDirection.LEFT:
             start_offset = AXText.get_line_at_offset(focus)[1]
             moved_caret = False
             if start_offset > 0:

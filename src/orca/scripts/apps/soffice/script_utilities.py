@@ -35,7 +35,7 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
-from orca.ax_utilities_text import TextUnit
+from orca.enums import TextUnit
 
 if TYPE_CHECKING:
     import gi

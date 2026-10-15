@@ -80,9 +80,15 @@ from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
-from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
-from orca.ax_utilities_text import CaretSetReason, TextUnit
-from orca.generator import PresentationReason
+from orca.ax_utilities_event import AXUtilitiesEvent
+from orca.enums import (
+    ActivePresentationMode,
+    BraillePanDirection,
+    CaretSetReason,
+    PresentationReason,
+    TextEventReason,
+    TextUnit,
+)
 
 if TYPE_CHECKING:
     import gi
@@ -336,7 +342,7 @@ class Script(script.Script):
 
     def handle_braille_pan_at_edge(
         self,
-        _direction: braille_presenter.PanDirection,
+        _direction: BraillePanDirection,
     ) -> bool | None:
         """Handles braille panning when the presenter reaches the edge of a line."""
 
@@ -1241,7 +1247,7 @@ class Script(script.Script):
                 obj,
                 start_offset,
                 end_offset,
-                focus_manager.CARET_TRACKING,
+                ActivePresentationMode.CARET_TRACKING,
             )
 
         presentation_manager.get_manager().speak_character_at_offset(obj, offset, character)
@@ -1262,7 +1268,7 @@ class Script(script.Script):
                 obj,
                 start_offset,
                 start_offset + len(line),
-                focus_manager.CARET_TRACKING,
+                ActivePresentationMode.CARET_TRACKING,
             )
 
         speech_presenter.get_presenter().speak_line(
@@ -1297,7 +1303,7 @@ class Script(script.Script):
                 obj,
                 start_offset,
                 end_offset,
-                focus_manager.CARET_TRACKING,
+                ActivePresentationMode.CARET_TRACKING,
             )
 
         speech_presenter.get_presenter().speak_phrase(self, obj, start_offset, end_offset, phrase)

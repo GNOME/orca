@@ -27,7 +27,7 @@ from orca import debug, messages, speech_generator, table_navigator
 from orca.ax_object import AXObject
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
-from orca.generator import PresentationReason
+from orca.enums import PresentationReason
 
 if TYPE_CHECKING:
     import gi

@@ -28,7 +28,6 @@
 
 from __future__ import annotations
 
-import enum
 import re
 import time
 from dataclasses import dataclass
@@ -53,49 +52,7 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
-
-class TextUnit(enum.Enum):
-    """Text units that can be spoken."""
-
-    CHAR = enum.auto()
-    WORD = enum.auto()
-    LINE = enum.auto()
-    PHRASE = enum.auto()
-
-
-class CaretSetReason(enum.Enum):
-    """Enum representing the reason Orca set the caret offset."""
-
-    BRAILLE_CUT = enum.auto()
-    BRAILLE_PANNING = enum.auto()
-    BRAILLE_ROUTING = enum.auto()
-    CARET_NAVIGATION = enum.auto()
-    FLAT_REVIEW = enum.auto()
-    LINE_PRESENTATION = enum.auto()
-    LIVE_REGION_NAVIGATION = enum.auto()
-    MATH_NAVIGATION = enum.auto()
-    OBJECT_PRESENTATION = enum.auto()
-    RESULT_NAVIGATION = enum.auto()
-    SAY_ALL_COMMAND = enum.auto()
-    SCROLL_INTO_VIEW = enum.auto()
-    STRUCTURAL_NAVIGATION = enum.auto()
-    TABLE_NAVIGATION = enum.auto()
-    TEXT_SELECTION_BY_CHARACTER = enum.auto()
-    TEXT_SELECTION_BY_LINE = enum.auto()
-    TEXT_SELECTION_BY_WORD = enum.auto()
-    TEXT_SELECTION_TO_FILE_BOUNDARY = enum.auto()
-    TEXT_SELECTION_TO_LINE_BOUNDARY = enum.auto()
-
-    def is_text_selection(self) -> bool:
-        """Returns True if the caret was set while changing a text selection."""
-
-        return self in {
-            CaretSetReason.TEXT_SELECTION_BY_CHARACTER,
-            CaretSetReason.TEXT_SELECTION_BY_LINE,
-            CaretSetReason.TEXT_SELECTION_BY_WORD,
-            CaretSetReason.TEXT_SELECTION_TO_FILE_BOUNDARY,
-            CaretSetReason.TEXT_SELECTION_TO_LINE_BOUNDARY,
-        }
+    from .enums import CaretSetReason, TextUnit
 
 
 @dataclass(frozen=True)

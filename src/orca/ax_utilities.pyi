@@ -36,9 +36,9 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from .ax_text import AXTextAttribute
-from .ax_utilities_event import TextEventReason
 from .ax_utilities_hypertext import CaretPolicy
-from .ax_utilities_text import CaretSetReason, LastCaretSet, TextUnit
+from .ax_utilities_text import LastCaretSet
+from .enums import CaretSetReason, TextEventReason, TextUnit
 
 class AXUtilities:
     # From ax_utilities.py

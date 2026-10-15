@@ -821,7 +821,8 @@ class TestAXText:
 
         self._setup_dependencies(test_context)
         from orca import ax_cache_manager
-        from orca.ax_utilities_text import AXUtilitiesText, TextUnit
+        from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextUnit
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         AXUtilitiesText._CACHE.set_text_attributes({"weight": "bold"})
@@ -986,7 +987,8 @@ class TestAXText:
 
         self._setup_dependencies(test_context)
         from orca.ax_text import AXText
-        from orca.ax_utilities_text import AXUtilitiesText, CaretSetReason
+        from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import CaretSetReason
 
         test_context.patch_object(AXText, "set_caret_offset", return_value=True)
         result = AXUtilitiesText.set_caret_offset_to_start(
@@ -999,7 +1001,8 @@ class TestAXText:
 
         self._setup_dependencies(test_context)
         from orca.ax_text import AXText
-        from orca.ax_utilities_text import AXUtilitiesText, CaretSetReason
+        from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import CaretSetReason
 
         test_context.patch_object(AXText, "get_character_count", return_value=100)
         test_context.patch_object(AXText, "set_caret_offset", return_value=True)

@@ -58,8 +58,7 @@ from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .ax_utilities_event import TextEventReason
-from .ax_utilities_text import CaretSetReason
+from .enums import ActivePresentationMode, CaretSetReason, TextEventReason
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -244,7 +243,7 @@ class FlatReviewPresenter(Extension):
         """Returns True if the flat review presenter is active."""
 
         mode, _obj = focus_manager.get_manager().get_active_mode_and_object_of_interest()
-        return mode == focus_manager.FLAT_REVIEW
+        return mode == ActivePresentationMode.FLAT_REVIEW
 
     def last_input_event_was_review_command(self) -> bool:
         """Returns True if the last input event was a flat review command."""
@@ -353,7 +352,7 @@ class FlatReviewPresenter(Extension):
                         self._context.set_current_location(fallback)
                         break
 
-            manager.emit_region_changed(current_obj, mode=focus_manager.FLAT_REVIEW)
+            manager.emit_region_changed(current_obj, mode=ActivePresentationMode.FLAT_REVIEW)
             self._context_input_event = input_event_manager.get_manager().get_last_input_event()
             app = AXUtilities.get_application(current_obj)
             if app is not None:
@@ -381,7 +380,7 @@ class FlatReviewPresenter(Extension):
         # On invalidates the context elsewhere; off stays put; only auto moves the location here.
         if (
             self.get_focus_tracking() == FocusTracking.AUTO.value
-            and mode != focus_manager.FLAT_REVIEW
+            and mode != ActivePresentationMode.FLAT_REVIEW
             and obj != self._context.get_current_object()
             and not self._restrict
         ):
@@ -395,7 +394,7 @@ class FlatReviewPresenter(Extension):
             self._context.set_current_to_zone_with_object(obj)
 
         # If we are restricting, and the current mode is not flat review, calculate a new context
-        if self._restrict and mode != focus_manager.FLAT_REVIEW:
+        if self._restrict and mode != ActivePresentationMode.FLAT_REVIEW:
             msg = "FLAT REVIEW PRESENTER: Creating new restricted context."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._context = flat_review.Context(script, obj)
@@ -424,9 +423,12 @@ class FlatReviewPresenter(Extension):
 
         context = self.get_or_create_context(script)
         manager = focus_manager.get_manager()
-        if manager.get_active_mode_and_object_of_interest()[0] != focus_manager.FLAT_REVIEW:
+        if (
+            manager.get_active_mode_and_object_of_interest()[0]
+            != ActivePresentationMode.FLAT_REVIEW
+        ):
             manager.emit_region_changed(
-                context.get_current_object(), mode=focus_manager.FLAT_REVIEW
+                context.get_current_object(), mode=ActivePresentationMode.FLAT_REVIEW
             )
         if event is None:
             return
@@ -463,7 +465,9 @@ class FlatReviewPresenter(Extension):
         self._pending_caret_moved = None
         self._pending_text_inserted = None
         focus = focus_manager.get_manager().get_locus_of_focus()
-        focus_manager.get_manager().emit_region_changed(focus, mode=focus_manager.FOCUS_TRACKING)
+        focus_manager.get_manager().emit_region_changed(
+            focus, mode=ActivePresentationMode.FOCUS_TRACKING
+        )
         if event is None or script is None:
             return
 
@@ -483,10 +487,12 @@ class FlatReviewPresenter(Extension):
             manager.remove_region_changed_listener(self._on_region_changed)
             self._region_changed_listener_registered = False
 
-    def _on_region_changed(self, _obj: Atspi.Accessible | None, mode: str) -> None:
+    def _on_region_changed(
+        self, _obj: Atspi.Accessible | None, mode: ActivePresentationMode
+    ) -> None:
         """Resets the review state when focus leaves flat review and tracking is on."""
 
-        if mode == focus_manager.FLAT_REVIEW:
+        if mode == ActivePresentationMode.FLAT_REVIEW:
             return
         if self.get_focus_tracking() != FocusTracking.ON.value:
             return
@@ -1175,7 +1181,7 @@ class FlatReviewPresenter(Extension):
         self._context = self.get_or_create_context(script)
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(),
-            mode=focus_manager.FLAT_REVIEW,
+            mode=ActivePresentationMode.FLAT_REVIEW,
         )
         if not isinstance(event, input_event.BrailleEvent):
             script.present_object(self._context.get_current_object(), generate_braille=False)
@@ -1694,7 +1700,7 @@ class FlatReviewPresenter(Extension):
         line_string = self._context.get_current_line_string()
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(),
-            mode=focus_manager.FLAT_REVIEW,
+            mode=ActivePresentationMode.FLAT_REVIEW,
         )
 
         if not isinstance(event, input_event.BrailleEvent):
@@ -1751,7 +1757,7 @@ class FlatReviewPresenter(Extension):
         word_string = self._context.get_current_word_string()
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(),
-            mode=focus_manager.FLAT_REVIEW,
+            mode=ActivePresentationMode.FLAT_REVIEW,
         )
         if not isinstance(event, input_event.BrailleEvent):
             presenter = presentation_manager.get_manager()
@@ -1809,7 +1815,9 @@ class FlatReviewPresenter(Extension):
             char_string = self._context.get_current_character_string()
             obj = self._context.get_current_object()
             offset = self._context.get_current_text_offset()
-            focus_manager.get_manager().emit_region_changed(obj, mode=focus_manager.FLAT_REVIEW)
+            focus_manager.get_manager().emit_region_changed(
+                obj, mode=ActivePresentationMode.FLAT_REVIEW
+            )
         if not isinstance(event, input_event.BrailleEvent):
             presenter = presentation_manager.get_manager()
             if not char_string or (char_string == "\n" and speech_type != 3):

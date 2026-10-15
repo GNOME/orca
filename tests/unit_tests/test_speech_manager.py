@@ -129,9 +129,8 @@ class TestSpeechManager:
         speechserver_mock.VoiceFamily.VARIANT = "variant"
         speechserver_mock.PunctuationStyle = PunctuationStyle
         speechserver_mock.CapitalizationStyle = CapitalizationStyle
-        from orca.speechserver import VoiceType
+        from orca.enums import VoiceType
 
-        speechserver_mock.VoiceType = VoiceType
         speechserver_mock.DEFAULT_VOICE = VoiceType.DEFAULT
         speechserver_mock.UPPERCASE_VOICE = VoiceType.UPPERCASE
         speechserver_mock.HYPERLINK_VOICE = VoiceType.HYPERLINK
@@ -792,7 +791,6 @@ class TestSpeechManager:
 
         essential_modules = self._setup_dependencies(test_context)
         essential_modules["orca.acss"].ACSS = dict
-        essential_modules["orca.speechserver"].VoiceType.DEFAULT = "default"
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
@@ -1403,9 +1401,8 @@ class TestVoicesPreferencesGridUI:
         speechserver_mock = essential_modules["orca.speechserver"]
         speechserver_mock.PunctuationStyle = PunctuationStyle
         speechserver_mock.CapitalizationStyle = CapitalizationStyle
-        from orca.speechserver import VoiceType
+        from orca.enums import VoiceType
 
-        speechserver_mock.VoiceType = VoiceType
         speechserver_mock.DEFAULT_VOICE = VoiceType.DEFAULT
         speechserver_mock.UPPERCASE_VOICE = VoiceType.UPPERCASE
         speechserver_mock.HYPERLINK_VOICE = VoiceType.HYPERLINK

@@ -46,7 +46,7 @@ from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
-from .ax_utilities_text import CaretSetReason
+from .enums import CaretSetReason
 from .orca_platform import tablesdir  # pylint: disable=import-error
 
 try:

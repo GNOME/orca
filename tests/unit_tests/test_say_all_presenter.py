@@ -39,6 +39,8 @@ import pytest
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from orca.enums import ActivePresentationMode
+
 if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
@@ -300,7 +302,7 @@ class TestSayAllPresenter:
 
         pres_manager.interrupt_presentation.assert_not_called()
         manager_instance.emit_region_changed.assert_called_once_with(
-            focus_obj, mode=focus_manager_mock.SAY_ALL
+            focus_obj, mode=ActivePresentationMode.SAY_ALL
         )
         speech_pres.say_all.assert_called_once()
 
@@ -697,7 +699,6 @@ class TestSayAllPresenter:
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_instance = test_context.Mock()
         focus_manager_mock.get_manager.return_value = focus_instance
-        focus_manager_mock.SAY_ALL = "say-all"
 
         assert presenter._say_all_is_running is False
 
@@ -731,7 +732,6 @@ class TestSayAllPresenter:
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_instance = test_context.Mock()
         focus_manager_mock.get_manager.return_value = focus_instance
-        focus_manager_mock.SAY_ALL = "say-all"
 
         presenter._progress_callback(mock_context, speechserver.SayAllContext.PROGRESS)
 
@@ -739,7 +739,7 @@ class TestSayAllPresenter:
             mock_context.obj,
             mock_context.current_offset,
             mock_context.current_end_offset,
-            "say-all",
+            ActivePresentationMode.SAY_ALL,
         )
 
     def test_progress_callback_native_navigation_uses_focus_tracking_mode(
@@ -797,7 +797,7 @@ class TestSayAllPresenter:
             mock_context.obj,
             mock_context.current_offset,
             None,
-            fm.FOCUS_TRACKING,
+            ActivePresentationMode.FOCUS_TRACKING,
         )
 
     def test_progress_callback_non_keyboard_interrupt_stops_say_all(

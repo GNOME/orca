@@ -39,6 +39,8 @@ import pytest
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from orca.enums import ActivePresentationMode
+
 if TYPE_CHECKING:
     from unittest.mock import MagicMock
 
@@ -212,7 +214,7 @@ class TestFocusManager:
             "_object_of_interest",
             new=test_context.Mock(spec=Atspi.Accessible),
         )
-        manager._active_mode = "focus-tracking"
+        manager._active_mode = ActivePresentationMode.FOCUS_TRACKING
 
         manager.clear_state()
         assert manager._focus is None
@@ -364,7 +366,7 @@ class TestFocusManager:
             pytest.param(None, None, None, False, id="all_defaults"),
             pytest.param(5, None, None, False, id="start_only"),
             pytest.param(5, 10, None, False, id="start_and_end"),
-            pytest.param(5, 10, "caret-tracking", False, id="all_specified"),
+            pytest.param(5, 10, ActivePresentationMode.CARET_TRACKING, False, id="all_specified"),
             pytest.param(None, None, None, True, id="null_object"),
         ],
     )
@@ -378,7 +380,7 @@ class TestFocusManager:
     ) -> None:
         """Test FocusManager.emit_region_changed with various scenarios."""
         essential_modules = self._setup_dependencies(test_context)
-        from orca.focus_manager import FLAT_REVIEW, FOCUS_TRACKING, FocusManager
+        from orca.focus_manager import FocusManager
 
         manager = FocusManager()
 
@@ -390,7 +392,7 @@ class TestFocusManager:
             test_context.patch_object(mock_obj, "emit", new=test_context.Mock())
             expected_start = start_offset if start_offset is not None else 0
             expected_end = end_offset if end_offset is not None else expected_start
-            expected_mode = mode if mode is not None else FOCUS_TRACKING
+            expected_mode = mode if mode is not None else ActivePresentationMode.FOCUS_TRACKING
 
             manager.emit_region_changed(mock_obj, start_offset, end_offset, mode)
             mock_obj.emit.assert_any_call("mode-changed::" + expected_mode, 1, "")
@@ -398,19 +400,19 @@ class TestFocusManager:
             assert manager._active_mode == expected_mode
             assert manager._object_of_interest == mock_obj
 
-            manager.emit_region_changed(mock_obj, mode=FLAT_REVIEW)
+            manager.emit_region_changed(mock_obj, mode=ActivePresentationMode.FLAT_REVIEW)
             braille_presenter_mock = essential_modules["orca.braille_presenter"]
             presenter = braille_presenter_mock.get_presenter.return_value
             presenter.set_brlapi_priority.assert_called_with(high=True)
 
-            manager.emit_region_changed(mock_obj, mode=FOCUS_TRACKING)
+            manager.emit_region_changed(mock_obj, mode=ActivePresentationMode.FOCUS_TRACKING)
             presenter.set_brlapi_priority.assert_called_with()
 
     @pytest.mark.parametrize(
         "active_mode, expected",
         [
-            pytest.param("say-all", True, id="in_say_all"),
-            pytest.param("focus-tracking", False, id="not_in_say_all"),
+            pytest.param(ActivePresentationMode.SAY_ALL, True, id="in_say_all"),
+            pytest.param(ActivePresentationMode.FOCUS_TRACKING, False, id="not_in_say_all"),
             pytest.param(None, False, id="no_mode"),
         ],
     )
@@ -433,7 +435,7 @@ class TestFocusManager:
 
         manager = FocusManager()
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        mode = "caret-tracking"
+        mode = ActivePresentationMode.CARET_TRACKING
         manager._active_mode = mode
         manager._object_of_interest = mock_obj
         result_mode, result_obj = manager.get_active_mode_and_object_of_interest()
@@ -773,18 +775,20 @@ class TestFocusManager:
         """Test reset_active_mode sets FOCUS_TRACKING and emits signal when focus exists."""
 
         self._setup_dependencies(test_context)
-        from orca.focus_manager import FOCUS_TRACKING, FocusManager
+        from orca.focus_manager import FocusManager
 
         manager = FocusManager()
         mock_focus = test_context.Mock(spec=Atspi.Accessible)
         mock_focus.emit = test_context.Mock()
         manager._focus = mock_focus
-        manager._active_mode = "say-all"
+        manager._active_mode = ActivePresentationMode.SAY_ALL
 
         manager.reset_active_mode("test reason")
 
-        assert manager._active_mode == FOCUS_TRACKING
-        mock_focus.emit.assert_called_once_with("mode-changed::" + FOCUS_TRACKING, 1, "test reason")
+        assert manager._active_mode == ActivePresentationMode.FOCUS_TRACKING
+        mock_focus.emit.assert_called_once_with(
+            "mode-changed::" + ActivePresentationMode.FOCUS_TRACKING, 1, "test reason"
+        )
 
     def test_reset_active_mode_without_focus(self, test_context: OrcaTestContext) -> None:
         """Test reset_active_mode sets None when focus is None."""
@@ -794,7 +798,7 @@ class TestFocusManager:
 
         manager = FocusManager()
         manager._focus = None
-        manager._active_mode = "say-all"
+        manager._active_mode = ActivePresentationMode.SAY_ALL
 
         manager.reset_active_mode()
 
@@ -804,15 +808,17 @@ class TestFocusManager:
         """Test reset_active_mode works without a reason string."""
 
         self._setup_dependencies(test_context)
-        from orca.focus_manager import FOCUS_TRACKING, FocusManager
+        from orca.focus_manager import FocusManager
 
         manager = FocusManager()
         mock_focus = test_context.Mock(spec=Atspi.Accessible)
         mock_focus.emit = test_context.Mock()
         manager._focus = mock_focus
-        manager._active_mode = "say-all"
+        manager._active_mode = ActivePresentationMode.SAY_ALL
 
         manager.reset_active_mode()
 
-        assert manager._active_mode == FOCUS_TRACKING
-        mock_focus.emit.assert_called_once_with("mode-changed::" + FOCUS_TRACKING, 1, "")
+        assert manager._active_mode == ActivePresentationMode.FOCUS_TRACKING
+        mock_focus.emit.assert_called_once_with(
+            "mode-changed::" + ActivePresentationMode.FOCUS_TRACKING, 1, ""
+        )

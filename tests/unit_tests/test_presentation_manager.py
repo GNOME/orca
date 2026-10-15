@@ -178,7 +178,7 @@ class TestPresentationManager:
 
         essential_modules = self._setup_dependencies(test_context)
         from orca import ax_cache_manager
-        from orca.generator import PresentationReason
+        from orca.enums import PresentationReason
         from orca.presentation_manager import get_manager
 
         events = []
@@ -298,8 +298,8 @@ class TestPresentationManager:
         """Test present_message delegates speech to speech_presenter."""
 
         essential_modules = self._setup_dependencies(test_context)
+        from orca.enums import VoiceType
         from orca.presentation_manager import get_manager
-        from orca.speechserver import VoiceType
 
         manager = get_manager()
         manager.present_message("This is a full message")
@@ -315,8 +315,8 @@ class TestPresentationManager:
         """Test present_message uses full when messages_are_detailed is True."""
 
         essential_modules = self._setup_dependencies(test_context)
+        from orca.enums import VoiceType
         from orca.presentation_manager import get_manager
-        from orca.speechserver import VoiceType
 
         manager = get_manager()
         manager.present_message("Full message", brief="Brief")
@@ -360,8 +360,8 @@ class TestPresentationManager:
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
         speech_pres.get_messages_are_detailed.return_value = False
 
+        from orca.enums import VoiceType
         from orca.presentation_manager import get_manager
-        from orca.speechserver import VoiceType
 
         manager = get_manager()
         manager.present_message("Full message", brief="Brief")
@@ -595,8 +595,8 @@ class TestPresentationManager:
         """Test speak_message delegates to speech_presenter."""
 
         essential_modules = self._setup_dependencies(test_context)
+        from orca.enums import VoiceType
         from orca.presentation_manager import get_manager
-        from orca.speechserver import VoiceType
 
         manager = get_manager()
         manager.speak_message("Hello world")

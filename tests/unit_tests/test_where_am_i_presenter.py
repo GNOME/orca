@@ -859,7 +859,7 @@ class TestWhereAmIPresenter:
         result = presenter._do_where_am_i(mock_script, basic_only=False)
         assert result is True
         call_args = mock_script.present_object.call_args
-        from orca.generator import PresentationReason
+        from orca.enums import PresentationReason
 
         assert call_args[1]["reason"] == PresentationReason.WHERE_AM_I_DETAILED
 

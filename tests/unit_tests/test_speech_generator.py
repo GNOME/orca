@@ -71,7 +71,7 @@ class TestSpeechGeneratorVoice:
         """Returns a minimal speech-generator context with default and uppercase voices."""
 
         from orca.acss import ACSS
-        from orca.speechserver import VoiceType
+        from orca.enums import VoiceType
 
         context = test_context.Mock()
         context.voices = {
@@ -91,8 +91,8 @@ class TestSpeechGeneratorVoice:
 
         self._setup_dependencies(test_context)
         from orca.acss import ACSS
+        from orca.enums import VoiceType
         from orca.speech_generator import SpeechGenerator
-        from orca.speechserver import VoiceType
 
         generator = SpeechGenerator(test_context.Mock())
         generator._resolve_language_and_dialect = test_context.Mock(return_value=("", ""))
@@ -109,8 +109,8 @@ class TestSpeechGeneratorVoice:
 
         self._setup_dependencies(test_context)
         from orca.acss import ACSS
+        from orca.enums import VoiceType
         from orca.speech_generator import SpeechGenerator
-        from orca.speechserver import VoiceType
 
         generator = SpeechGenerator(test_context.Mock())
         generator._resolve_language_and_dialect = test_context.Mock(return_value=("", ""))
@@ -504,7 +504,7 @@ class TestGeneratorCellsToPresent:
         self, test_context: OrcaTestContext, *, full_row: bool
     ) -> tuple[Any, dict[str, MagicMock]]:
         essential_modules = test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
-        from orca.generator import PresentationReason
+        from orca.enums import PresentationReason
         from orca.speech_generator import SpeechGenerator, SpeechGeneratorContext
 
         script = test_context.Mock()
@@ -550,7 +550,7 @@ class TestGeneratorCombineCellResults:
         detailed: bool,
     ) -> tuple[Any, list[bool], dict[str, MagicMock]]:
         essential_modules = test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
-        from orca.generator import PresentationReason
+        from orca.enums import PresentationReason
         from orca.speech_generator import SpeechGenerator, SpeechGeneratorContext
 
         essential_modules["orca.ax_utilities"].AXUtilities.find_ancestor = test_context.Mock(

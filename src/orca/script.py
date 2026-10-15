@@ -35,9 +35,9 @@ from . import (
     script_utilities,
     sound_generator,
     speech_generator,
-    structural_navigator,
 )
 from .ax_object import AXObject
+from .enums import StructuralNavigationMode
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -48,7 +48,7 @@ if TYPE_CHECKING:
     from gi.repository import Atspi
 
     from . import label_inference
-    from .generator import PresentationReason
+    from .enums import PresentationReason
 
 
 class _ScriptCache:
@@ -107,9 +107,7 @@ class Script:
 
         self.set_up_commands()
 
-        self._default_sn_mode: structural_navigator.NavigationMode = (
-            structural_navigator.NavigationMode.OFF
-        )
+        self._default_sn_mode: StructuralNavigationMode = StructuralNavigationMode.OFF
         self._default_caret_navigation_enabled: bool = False
 
         tokens = ["SCRIPT:", self.name, "initialized"]

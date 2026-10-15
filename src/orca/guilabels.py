@@ -1238,7 +1238,7 @@ SPEECH_VOICE_TYPE_SYSTEM = C_("VoiceType", "System")
 SPEECH_VOICE_TYPE_UPPERCASE = C_("VoiceType", "Uppercase")
 
 # Maps voice type names to their translatable labels. Used to build voice type
-# UIs dynamically. Keys match speechserver.VoiceType values.
+# UIs dynamically. Keys match VoiceType values.
 VOICE_TYPE_LABELS: dict[str, str] = {
     "default": SPEECH_VOICE_TYPE_DEFAULT,
     "uppercase": SPEECH_VOICE_TYPE_UPPERCASE,

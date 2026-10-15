@@ -49,7 +49,7 @@ from . import (
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .ax_utilities_text import CaretSetReason
+from .enums import ActivePresentationMode, CaretSetReason
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -712,7 +712,7 @@ class CaretNavigator(Extension):
         focus_manager.get_manager().emit_region_changed(
             obj,
             start_offset=offset,
-            mode=focus_manager.CARET_NAVIGATOR,
+            mode=ActivePresentationMode.CARET_NAVIGATOR,
         )
         if not notify_user:
             return True
@@ -763,7 +763,7 @@ class CaretNavigator(Extension):
         focus_manager.get_manager().emit_region_changed(
             obj,
             start_offset=offset,
-            mode=focus_manager.CARET_NAVIGATOR,
+            mode=ActivePresentationMode.CARET_NAVIGATOR,
         )
         if not notify_user:
             return True
@@ -814,7 +814,7 @@ class CaretNavigator(Extension):
         focus_manager.get_manager().emit_region_changed(
             obj,
             start_offset=offset,
-            mode=focus_manager.CARET_NAVIGATOR,
+            mode=ActivePresentationMode.CARET_NAVIGATOR,
         )
         if not notify_user:
             return True
@@ -902,7 +902,7 @@ class CaretNavigator(Extension):
             obj,
             start,
             end,
-            focus_manager.CARET_NAVIGATOR,
+            ActivePresentationMode.CARET_NAVIGATOR,
         )
         if not notify_user:
             return True
@@ -976,7 +976,7 @@ class CaretNavigator(Extension):
             obj,
             start,
             end,
-            focus_manager.CARET_NAVIGATOR,
+            ActivePresentationMode.CARET_NAVIGATOR,
         )
 
         if not notify_user:
@@ -1095,7 +1095,7 @@ class CaretNavigator(Extension):
             obj,
             offset,
             end,
-            focus_manager.CARET_NAVIGATOR,
+            ActivePresentationMode.CARET_NAVIGATOR,
         )
 
         if notify_user:
@@ -1207,7 +1207,7 @@ class CaretNavigator(Extension):
             obj,
             start,
             end,
-            focus_manager.CARET_NAVIGATOR,
+            ActivePresentationMode.CARET_NAVIGATOR,
         )
 
         if notify_user:
@@ -1262,7 +1262,7 @@ class CaretNavigator(Extension):
             obj,
             start,
             end,
-            focus_manager.CARET_NAVIGATOR,
+            ActivePresentationMode.CARET_NAVIGATOR,
         )
 
         if not notify_user:
@@ -1320,7 +1320,7 @@ class CaretNavigator(Extension):
             obj,
             start,
             end,
-            focus_manager.CARET_NAVIGATOR,
+            ActivePresentationMode.CARET_NAVIGATOR,
         )
 
         if not notify_user:
@@ -1379,7 +1379,7 @@ class CaretNavigator(Extension):
             obj,
             start,
             end,
-            focus_manager.CARET_NAVIGATOR,
+            ActivePresentationMode.CARET_NAVIGATOR,
         )
 
         if not notify_user:
@@ -1453,7 +1453,7 @@ class CaretNavigator(Extension):
             obj,
             start,
             end,
-            focus_manager.CARET_NAVIGATOR,
+            ActivePresentationMode.CARET_NAVIGATOR,
         )
         if not notify_user:
             return True

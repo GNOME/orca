@@ -46,13 +46,8 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .braille_rolenames import short_role_names
-from .generator import (
-    ContentItem,
-    ContentPosition,
-    GeneratorContext,
-    GeneratorMode,
-    PresentationReason,
-)
+from .enums import PresentationReason
+from .generator import ContentItem, ContentPosition, GeneratorContext, GeneratorMode
 
 if TYPE_CHECKING:
     from . import script

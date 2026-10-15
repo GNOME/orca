@@ -49,7 +49,7 @@ from . import (
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_utilities import AXUtilities
-from .ax_utilities_text import CaretSetReason
+from .enums import ActivePresentationMode, CaretSetReason
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -661,7 +661,7 @@ class TableNavigator(Extension):
             obj = AXUtilities.get_descendant_supporting_text(cell) or cell
         focus_mgr = focus_manager.get_manager()
         focus_mgr.set_locus_of_focus(None, obj, False)
-        focus_mgr.emit_region_changed(obj, mode=focus_manager.TABLE_NAVIGATOR)
+        focus_mgr.emit_region_changed(obj, mode=ActivePresentationMode.TABLE_NAVIGATOR)
 
         if AXObject.supports_text(obj) and not AXUtilities.is_gui_cell(cell):
             script.utilities.set_caret_position(obj, 0, reason=CaretSetReason.TABLE_NAVIGATION)

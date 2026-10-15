@@ -34,6 +34,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from orca.enums import ActivePresentationMode
+
 if TYPE_CHECKING:
     from unittest.mock import MagicMock
 
@@ -144,17 +146,13 @@ class TestFlatReviewPresenter:
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_manager_instance = test_context.Mock()
         focus_manager_instance.get_active_mode_and_object_of_interest = test_context.Mock(
-            return_value=("focus_tracking", test_context.Mock()),
+            return_value=(ActivePresentationMode.FOCUS_TRACKING, test_context.Mock()),
         )
         focus_manager_instance.get_locus_of_focus = test_context.Mock(
             return_value=test_context.Mock(),
         )
         focus_manager_instance.emit_region_changed = test_context.Mock()
-        focus_manager_instance.FLAT_REVIEW = "flat_review"
-        focus_manager_instance.FOCUS_TRACKING = "focus_tracking"
         focus_manager_mock.get_manager = test_context.Mock(return_value=focus_manager_instance)
-        focus_manager_mock.FLAT_REVIEW = "flat_review"
-        focus_manager_mock.FOCUS_TRACKING = "focus_tracking"
 
         script_manager_mock = essential_modules["orca.script_manager"]
         script_manager_instance = test_context.Mock()
@@ -294,8 +292,8 @@ class TestFlatReviewPresenter:
     @pytest.mark.parametrize(
         "active_mode,expected",
         [
-            ("focus_tracking", False),
-            ("flat_review", True),
+            (ActivePresentationMode.FOCUS_TRACKING, False),
+            (ActivePresentationMode.FLAT_REVIEW, True),
         ],
     )
     def test_is_active(
@@ -326,7 +324,7 @@ class TestFlatReviewPresenter:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities import AXUtilities
-        from orca.ax_utilities_event import TextEventReason
+        from orca.enums import TextEventReason
         from orca.flat_review_presenter import FlatReviewPresenter, FocusTracking
 
         presenter = FlatReviewPresenter()
@@ -351,7 +349,7 @@ class TestFlatReviewPresenter:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities import AXUtilities
-        from orca.ax_utilities_event import TextEventReason
+        from orca.enums import TextEventReason
         from orca.flat_review_presenter import FlatReviewPresenter, FocusTracking
 
         presenter = FlatReviewPresenter()
@@ -402,7 +400,10 @@ class TestFlatReviewPresenter:
         root_obj = test_context.Mock()
         essential_modules[
             "focus_manager_instance"
-        ].get_active_mode_and_object_of_interest.return_value = ("focus_tracking", root_obj)
+        ].get_active_mode_and_object_of_interest.return_value = (
+            ActivePresentationMode.FOCUS_TRACKING,
+            root_obj,
+        )
         context = presenter.get_or_create_context(script_mock)
 
         assert context is not None
@@ -502,7 +503,7 @@ class TestFlatReviewPresenter:
             essential_modules[
                 "focus_manager_instance"
             ].get_active_mode_and_object_of_interest.return_value = (
-                "flat_review",
+                ActivePresentationMode.FLAT_REVIEW,
                 test_context.Mock(),
             )
         script_mock = test_context.Mock() if provides_script else None
@@ -532,7 +533,7 @@ class TestFlatReviewPresenter:
             assert presenter._last_input_event is None
             essential_modules["focus_manager_instance"].emit_region_changed.assert_called_with(
                 focus_obj,
-                mode=essential_modules["focus_manager_instance"].FOCUS_TRACKING,
+                mode=ActivePresentationMode.FOCUS_TRACKING,
             )
         else:
             essential_modules["focus_manager_instance"].emit_region_changed.assert_not_called()
@@ -560,7 +561,10 @@ class TestFlatReviewPresenter:
         presenter = FlatReviewPresenter()
         essential_modules[
             "focus_manager_instance"
-        ].get_active_mode_and_object_of_interest.return_value = ("flat_review", test_context.Mock())
+        ].get_active_mode_and_object_of_interest.return_value = (
+            ActivePresentationMode.FLAT_REVIEW,
+            test_context.Mock(),
+        )
         presenter._context = test_context.Mock()
         script_mock = test_context.Mock()
         event_mock = test_context.Mock()
@@ -691,9 +695,11 @@ class TestFlatReviewPresenter:
 
         focus_manager_instance = essential_modules["focus_manager_instance"]
 
-        def track_mode(obj: object = None, *_args: object, mode: str | None = None) -> None:
+        def track_mode(
+            obj: object = None, *_args: object, mode: ActivePresentationMode | None = None
+        ) -> None:
             focus_manager_instance.get_active_mode_and_object_of_interest.return_value = (
-                mode or "focus_tracking",
+                mode or ActivePresentationMode.FOCUS_TRACKING,
                 obj,
             )
 
@@ -731,7 +737,10 @@ class TestFlatReviewPresenter:
         root_obj = test_context.Mock()
         essential_modules[
             "focus_manager_instance"
-        ].get_active_mode_and_object_of_interest.return_value = ("focus_tracking", root_obj)
+        ].get_active_mode_and_object_of_interest.return_value = (
+            ActivePresentationMode.FOCUS_TRACKING,
+            root_obj,
+        )
         presenter_restricted.get_or_create_context(script_mock)
 
         assert essential_modules["orca.flat_review"].Context.call_count >= 2
@@ -774,7 +783,7 @@ class TestFlatReviewPresenter:
         presenter.quit()
         focus_manager_instance.emit_region_changed.assert_called_with(
             focus_obj,
-            mode=focus_manager_instance.FOCUS_TRACKING,
+            mode=ActivePresentationMode.FOCUS_TRACKING,
         )
 
     def test_error_handling_navigation_failure(self, test_context: OrcaTestContext) -> None:

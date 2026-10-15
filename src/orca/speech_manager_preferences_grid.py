@@ -45,6 +45,7 @@ from . import (
     speechserver,
 )
 from .acss import ACSS
+from .enums import VoiceType
 from .speechserver import CapitalizationStyle, PunctuationStyle
 
 if TYPE_CHECKING:
@@ -227,7 +228,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = True
 
         self._voices: dict[str, ACSS] = {}
-        for vt in speechserver.VoiceType:
+        for vt in VoiceType:
             self._voices[vt] = manager.get_voice_properties(vt, app_name=self._app_name)
 
         self._voice_families: list[speechserver.VoiceFamily] = []
@@ -417,7 +418,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         """Reload settings from manager and refresh the UI."""
 
         app = self._app_name
-        for vt in speechserver.VoiceType:
+        for vt in VoiceType:
             self._voices[vt] = self._manager.get_voice_properties(vt, app_name=app)
 
         self._voice_families = self._manager.get_voice_families()
@@ -515,7 +516,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _get_acss_for_voice_type(self, voice_type: str) -> ACSS:
         """Return the local ACSS copy for the given voice type."""
 
-        return self._voices.get(voice_type, self._voices[speechserver.VoiceType.DEFAULT])
+        return self._voices.get(voice_type, self._voices[VoiceType.DEFAULT])
 
     def _populate_speech_systems(self) -> None:
         """Populate the speech systems combo."""
@@ -745,7 +746,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         # from the new synthesizer. Without this, import_voice only writes
         # keys present in the ACSS dict, so old family values persist in dconf.
         default_family = self._voice_families[0] if self._voice_families else None
-        for voice_type in speechserver.VoiceType:
+        for voice_type in VoiceType:
             voice_acss = self._get_acss_for_voice_type(voice_type)
             if ACSS.FAMILY in voice_acss:
                 del voice_acss[ACSS.FAMILY]
@@ -757,7 +758,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def get_voice_for_type(self, voice_type: str) -> ACSS:
         """Returns a copy of the primary voice currently configured for voice_type."""
 
-        return ACSS(self._voices.get(voice_type, self._voices[speechserver.VoiceType.DEFAULT]))
+        return ACSS(self._voices.get(voice_type, self._voices[VoiceType.DEFAULT]))
 
     def set_voice_for_type(self, voice_type: str, voice: ACSS) -> None:
         """Updates the primary voice for voice_type and marks the grid as changed."""
@@ -780,12 +781,12 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def get_primary_voice_family(self) -> dict[str, str]:
         """Returns the family dict of the primary default voice."""
 
-        return self._voices.get(speechserver.VoiceType.DEFAULT, ACSS({})).get(ACSS.FAMILY, {})
+        return self._voices.get(VoiceType.DEFAULT, ACSS({})).get(ACSS.FAMILY, {})
 
     def get_primary_language_codes(self) -> list[str]:
         """Returns the language codes of the primary default voice."""
 
-        family = self._voices.get(speechserver.VoiceType.DEFAULT, ACSS({})).get(ACSS.FAMILY, {})
+        family = self._voices.get(VoiceType.DEFAULT, ACSS({})).get(ACSS.FAMILY, {})
         lang = family.get(speechserver.VoiceFamily.LANG, "")
         if not lang:
             return []
@@ -1018,7 +1019,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         is_primary = voice_set == gsettings_registry.PRIMARY_VOICE_SET
         self._delete_button.set_sensitive(not is_primary)
 
-        for vt in speechserver.VoiceType:
+        for vt in VoiceType:
             label = guilabels.VOICE_TYPE_LABELS.get(vt, vt)
 
             def _make_handler(voice_type: str = vt):
@@ -1123,9 +1124,9 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             if response_id not in (Gtk.ResponseType.CANCEL, Gtk.ResponseType.DELETE_EVENT):
                 lang_code = lang_combo.get_active_id()
                 if lang_code:
-                    self._staged_configs.setdefault(lang_code, {})[
-                        speechserver.VoiceType.DEFAULT
-                    ] = self._default_voice_set_config(lang_code)
+                    self._staged_configs.setdefault(lang_code, {})[VoiceType.DEFAULT] = (
+                        self._default_voice_set_config(lang_code)
+                    )
                     self._deleted_sets.discard(lang_code)
                     self._refresh_voice_set_combo()
                     self._select_voice_set(lang_code)
@@ -1388,7 +1389,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         profile = registry.get_active_profile()
 
         for voice_set in self._deleted_sets:
-            for vt in speechserver.VoiceType:
+            for vt in VoiceType:
                 sub = gsettings_registry.get_registry().voice_set_sub_path(vt, voice_set)
                 gs = registry.get_settings("voice", profile, sub)
                 if gs is not None:

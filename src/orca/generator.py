@@ -36,11 +36,12 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import ax_cache_manager, braille, debug, focus_manager, messages, object_properties
+from . import ax_cache_manager, braille, debug, messages, object_properties
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
+from .enums import ActivePresentationMode, PresentationReason
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Hashable
@@ -54,16 +55,6 @@ class GeneratorMode(Enum):
     SPEECH = "speech"
     BRAILLE = "braille"
     SOUND = "sound"
-
-
-class PresentationReason(Enum):
-    """Why a presentation is being generated, beyond what active_mode captures."""
-
-    FOCUS_CHANGE = "focus-change"
-    STATE_CHANGE = "state-change"
-    PROGRESS_BAR_UPDATE = "progress-bar-update"
-    WHERE_AM_I_BASIC = "where-am-i-basic"
-    WHERE_AM_I_DETAILED = "where-am-i-detailed"
 
 
 @dataclass(frozen=True)
@@ -93,7 +84,7 @@ class GeneratorContext:
     verbose: bool
     focus: Atspi.Accessible | None
     in_focus_mode: bool
-    active_mode: str | None
+    active_mode: ActivePresentationMode | None
     reason: PresentationReason
     prior_obj: Atspi.Accessible | None
     offset: int | None
@@ -435,7 +426,10 @@ class Generator:
     def _is_say_all(self) -> bool:
         """Returns True if this presentation is part of a say-all read."""
 
-        return self._context is not None and self._context.active_mode == focus_manager.SAY_ALL
+        return (
+            self._context is not None
+            and self._context.active_mode == ActivePresentationMode.SAY_ALL
+        )
 
     def _get_offset(self) -> int | None:
         """Returns the caller-supplied caret offset from the context."""

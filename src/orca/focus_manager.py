@@ -34,6 +34,7 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .enums import ActivePresentationMode
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -42,17 +43,6 @@ if TYPE_CHECKING:
 
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
-
-CARET_TRACKING = "caret-tracking"
-CARET_NAVIGATOR = "caret-navigator"
-FOCUS_TRACKING = "focus-tracking"
-FLAT_REVIEW = "flat-review"
-MATH_NAVIGATOR = "math-navigator"
-MOUSE_REVIEW = "mouse-review"
-OBJECT_NAVIGATOR = "object-navigator"
-SAY_ALL = "say-all"
-STRUCTURAL_NAVIGATOR = "structural-navigator"
-TABLE_NAVIGATOR = "table-navigator"
 
 
 class FocusManager:
@@ -63,17 +53,19 @@ class FocusManager:
         self._focus: Atspi.Accessible | None = None
         self._object_of_interest: Atspi.Accessible | None = None
         self._object_to_restore: Atspi.Accessible | None = None
-        self._active_mode: str | None = None
+        self._active_mode: ActivePresentationMode | None = None
         self._last_cursor_position: tuple[Atspi.Accessible | None, int] = (None, -1)
         self._penultimate_cursor_position: tuple[Atspi.Accessible | None, int] = (None, -1)
         self._preferences_window: Atspi.Accessible | None = None
         self._preferences_window_pending: bool = False
         self._old_focus_was_dead: bool = False
-        self._region_changed_listeners: list[Callable[[Atspi.Accessible, str], None]] = []
+        self._region_changed_listeners: list[
+            Callable[[Atspi.Accessible, ActivePresentationMode], None]
+        ] = []
 
     def add_region_changed_listener(
         self,
-        callback: Callable[[Atspi.Accessible, str], None],
+        callback: Callable[[Atspi.Accessible, ActivePresentationMode], None],
     ) -> None:
         """Registers a callback to be called when the region of interest changes."""
 
@@ -81,7 +73,7 @@ class FocusManager:
 
     def remove_region_changed_listener(
         self,
-        callback: Callable[[Atspi.Accessible, str], None],
+        callback: Callable[[Atspi.Accessible, ActivePresentationMode], None],
     ) -> None:
         """Unregisters a previously-registered region-changed callback."""
 
@@ -167,7 +159,7 @@ class FocusManager:
         obj: Atspi.Accessible,
         start_offset: int | None = None,
         end_offset: int | None = None,
-        mode: str | None = None,
+        mode: ActivePresentationMode | None = None,
     ) -> None:
         """Notifies interested clients that the current region of interest has changed."""
 
@@ -176,7 +168,7 @@ class FocusManager:
         if end_offset is None:
             end_offset = start_offset
         if mode is None:
-            mode = FOCUS_TRACKING
+            mode = ActivePresentationMode.FOCUS_TRACKING
 
         if obj is not None:
             obj.emit("mode-changed::" + mode, 1, "")
@@ -190,7 +182,7 @@ class FocusManager:
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._active_mode = mode
-            if mode == FLAT_REVIEW:
+            if mode == ActivePresentationMode.FLAT_REVIEW:
                 braille_presenter.get_presenter().set_brlapi_priority(high=True)
             else:
                 braille_presenter.get_presenter().set_brlapi_priority()
@@ -224,7 +216,7 @@ class FocusManager:
     def in_say_all(self) -> bool:
         """Returns True if we are in say-all mode."""
 
-        return self._active_mode == SAY_ALL
+        return self._active_mode == ActivePresentationMode.SAY_ALL
 
     def reset_active_mode(self, reason: str = "") -> None:
         """Resets the active mode."""
@@ -234,12 +226,14 @@ class FocusManager:
             tokens += [":", reason]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if self._focus is not None:
-            self._active_mode = FOCUS_TRACKING
-            self._focus.emit("mode-changed::" + FOCUS_TRACKING, 1, reason)
+            self._active_mode = ActivePresentationMode.FOCUS_TRACKING
+            self._focus.emit("mode-changed::" + ActivePresentationMode.FOCUS_TRACKING, 1, reason)
         else:
             self._active_mode = None
 
-    def get_active_mode_and_object_of_interest(self) -> tuple[str | None, Atspi.Accessible | None]:
+    def get_active_mode_and_object_of_interest(
+        self,
+    ) -> tuple[ActivePresentationMode | None, Atspi.Accessible | None]:
         """Returns the current mode and associated object of interest"""
 
         tokens = [
@@ -370,7 +364,7 @@ class FocusManager:
         self._focus = obj
 
         if notify_script and script is not None:
-            self.emit_region_changed(self._focus, mode=FOCUS_TRACKING)
+            self.emit_region_changed(self._focus, mode=ActivePresentationMode.FOCUS_TRACKING)
             script.locus_of_focus_changed(event, old_focus, self._focus)
 
         self._save_object_details(self._focus)

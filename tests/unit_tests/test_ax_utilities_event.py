@@ -40,6 +40,8 @@ import pytest
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from orca.enums import ActivePresentationMode
+
 if TYPE_CHECKING:
     from unittest.mock import MagicMock
 
@@ -367,7 +369,8 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent.get_text_event_reason with cached reason."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         AXUtilitiesEvent._CACHE.set_text_event_reason(mock_event, TextEventReason.TYPING)
@@ -692,7 +695,8 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent.get_text_event_reason dispatches correctly."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_event.type = case["event_type"]
@@ -747,8 +751,9 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager, input_event_manager
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -756,7 +761,11 @@ class TestAXUtilitiesEvent:
         mock_event.source = mock_obj
 
         mock_focus_manager = test_context.Mock()
-        focus_mode = focus_manager.SAY_ALL if case["say_all_mode"] else "normal"
+        focus_mode = (
+            ActivePresentationMode.SAY_ALL
+            if case["say_all_mode"]
+            else ActivePresentationMode.FOCUS_TRACKING
+        )
         focus_object = mock_obj if case["focus_matches_source"] else mock_focus
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
             focus_mode,
@@ -799,9 +808,10 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
-        from orca.ax_utilities_text import AXUtilitiesText, CaretSetReason
+        from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import CaretSetReason, TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_event.source = test_context.Mock(spec=Atspi.Accessible)
@@ -921,9 +931,10 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager, input_event_manager
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1010,9 +1021,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1073,10 +1085,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1122,10 +1135,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1209,10 +1223,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1283,10 +1298,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1350,10 +1366,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1403,8 +1420,9 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager, input_event_manager
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1442,8 +1460,9 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager, input_event_manager
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1945,9 +1964,10 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager, input_event_manager
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2028,8 +2048,9 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2056,8 +2077,9 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2084,9 +2106,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2117,9 +2140,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2155,9 +2179,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2194,9 +2219,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2234,9 +2260,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2275,9 +2302,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2317,9 +2345,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2406,10 +2435,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2452,10 +2482,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2501,9 +2532,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2538,9 +2570,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2621,10 +2654,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2784,10 +2818,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2849,10 +2884,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2907,10 +2943,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2964,10 +3001,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -3036,10 +3074,11 @@ class TestAXUtilitiesEvent:
         from orca import input_event_manager
         from orca.ax_object import AXObject
         from orca.ax_text import AXText
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -3099,10 +3138,11 @@ class TestAXUtilitiesEvent:
         from orca import input_event_manager
         from orca.ax_object import AXObject
         from orca.ax_text import AXText
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -3154,10 +3194,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -3207,7 +3248,8 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import ax_cache_manager
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.enums import TextEventReason
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event = test_context.Mock(spec=Atspi.Event)
@@ -3226,9 +3268,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -3261,10 +3304,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -3336,9 +3380,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -3373,10 +3418,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -3425,10 +3471,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -3481,9 +3528,10 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager, input_event_manager, text_selection_manager
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -3577,7 +3625,8 @@ class TestAXUtilitiesEvent:
 
         mock_input_manager.last_event_was_caret_selection.return_value = False
         selection_command.should_notify_user.return_value = True
-        from orca.ax_utilities_text import AXUtilitiesText, CaretSetReason
+        from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import CaretSetReason
 
         last_caret_set = test_context.Mock()
         last_caret_set.reason = CaretSetReason.TEXT_SELECTION_BY_CHARACTER
@@ -3596,9 +3645,10 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager, input_event_manager
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -3666,10 +3716,11 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager, input_event_manager
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -4197,10 +4248,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities_text import AXUtilitiesText
+        from orca.enums import TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)

@@ -54,7 +54,7 @@ from . import (
 from .acss import ACSS
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
-from .ax_utilities_text import CaretSetReason
+from .enums import ActivePresentationMode, CaretSetReason
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -195,7 +195,7 @@ class SayAllPresenter(Extension):
             presentation_manager.get_manager().present_message(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
-        focus_manager.get_manager().emit_region_changed(obj, mode=focus_manager.SAY_ALL)
+        focus_manager.get_manager().emit_region_changed(obj, mode=ActivePresentationMode.SAY_ALL)
         speech_presenter.get_presenter().say_all(
             self._say_all_iter(obj, offset),
             self._progress_callback,
@@ -627,7 +627,7 @@ class SayAllPresenter(Extension):
                 context.obj,
                 context.current_offset,
                 context.current_end_offset,
-                focus_manager.SAY_ALL,
+                ActivePresentationMode.SAY_ALL,
             )
             return
 
@@ -665,7 +665,11 @@ class SayAllPresenter(Extension):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
-        mode = focus_manager.SAY_ALL if self._say_all_is_running else focus_manager.FOCUS_TRACKING
+        mode = (
+            ActivePresentationMode.SAY_ALL
+            if self._say_all_is_running
+            else ActivePresentationMode.FOCUS_TRACKING
+        )
         focus_manager.get_manager().emit_region_changed(
             context.obj,
             context.current_offset,

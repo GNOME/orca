@@ -38,6 +38,7 @@ from . import (
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+from .enums import ActivePresentationMode
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -165,7 +166,7 @@ class ObjectNavigator(Extension):
         mode, region = focus_manager.get_manager().get_active_mode_and_object_of_interest()
         obj = region or focus_manager.get_manager().get_locus_of_focus()
         if self._last_locus_of_focus == obj or (
-            region is None and mode == focus_manager.FLAT_REVIEW
+            region is None and mode == ActivePresentationMode.FLAT_REVIEW
         ):
             return
 
@@ -179,7 +180,7 @@ class ObjectNavigator(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         focus_manager.get_manager().emit_region_changed(
             self._navigator_focus,
-            mode=focus_manager.OBJECT_NAVIGATOR,
+            mode=ActivePresentationMode.OBJECT_NAVIGATOR,
         )
         if not notify_user:
             msg = "OBJECT NAVIGATOR: _present called with notify_user=False"

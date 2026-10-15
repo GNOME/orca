@@ -28,7 +28,7 @@ from typing import TYPE_CHECKING
 from orca import clipboard, debug, focus_manager, input_event_manager, script_utilities
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
-from orca.ax_utilities_event import TextEventReason
+from orca.enums import TextEventReason
 
 if TYPE_CHECKING:
     import gi

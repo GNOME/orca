@@ -66,6 +66,7 @@ from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .enums import ActivePresentationMode
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -174,7 +175,7 @@ class _StringContext:
             self._obj,
             self._start,
             self._end,
-            focus_manager.MOUSE_REVIEW,
+            ActivePresentationMode.MOUSE_REVIEW,
         )
         presenter = presentation_manager.get_manager()
         presenter.speak_accessible_text(self._obj, self._string)
@@ -349,7 +350,7 @@ class _ItemContext:
         if self._frame and self._frame != prior.get_frame():
             focus_manager.get_manager().emit_region_changed(
                 self._frame,
-                mode=focus_manager.MOUSE_REVIEW,
+                mode=ActivePresentationMode.MOUSE_REVIEW,
             )
             self._script.present_object(
                 self._frame,
@@ -360,7 +361,7 @@ class _ItemContext:
             prior_obj = prior_obj or self._get_container()
             focus_manager.get_manager().emit_region_changed(
                 self._obj,
-                mode=focus_manager.MOUSE_REVIEW,
+                mode=ActivePresentationMode.MOUSE_REVIEW,
             )
             self._script.present_object(self._obj, prior_obj=prior_obj)
             if self._string.get_string() == AXObject.get_name(self._obj):

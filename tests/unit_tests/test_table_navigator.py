@@ -40,6 +40,8 @@ import pytest
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from orca.enums import ActivePresentationMode
+
 if TYPE_CHECKING:
     from unittest.mock import MagicMock
 
@@ -2222,9 +2224,8 @@ class TestTableNavigator:
         mock_focus_manager = test_context.Mock()
         essential_modules["orca.focus_manager"].get_manager.return_value = mock_focus_manager
 
-        from orca import focus_manager, gsettings_registry
+        from orca import gsettings_registry
 
-        essential_modules["orca.focus_manager"].TABLE_NAVIGATOR = focus_manager.TABLE_NAVIGATOR
         registry = gsettings_registry.get_registry()
         registry.set_runtime_value("speech", "announce-cell-coordinates", False)
         registry.set_runtime_value("speech", "announce-cell-span", False)
@@ -2252,4 +2253,4 @@ class TestTableNavigator:
 
         mock_focus_manager.emit_region_changed.assert_called()
         call_kwargs = mock_focus_manager.emit_region_changed.call_args
-        assert call_kwargs.kwargs.get("mode") == focus_manager.TABLE_NAVIGATOR
+        assert call_kwargs.kwargs.get("mode") == ActivePresentationMode.TABLE_NAVIGATOR

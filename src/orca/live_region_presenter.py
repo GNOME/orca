@@ -44,7 +44,7 @@ from . import (
 )
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
-from .ax_utilities_text import CaretSetReason
+from .enums import CaretSetReason
 from .extension import Extension
 
 if TYPE_CHECKING:

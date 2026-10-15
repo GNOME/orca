@@ -42,18 +42,17 @@ from gi.repository import Atspi
 from orca import (
     caret_navigator,
     debug,
-    focus_manager,
     input_event_manager,
     messages,
     object_properties,
     speech_generator,
-    speechserver,
 )
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
-from orca.generator import ContentItem, ContentPosition, PresentationReason
+from orca.enums import ActivePresentationMode, PresentationReason, VoiceType
+from orca.generator import ContentItem, ContentPosition
 
 if TYPE_CHECKING:
     from orca.speech_generator import SpeechGeneratorContext
@@ -106,7 +105,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         stop_after_roles: list | None = None,
     ) -> list[Any]:
         if (
-            self._context.active_mode == focus_manager.FLAT_REVIEW
+            self._context.active_mode == ActivePresentationMode.FLAT_REVIEW
             or not self._script.utilities.in_document_content(obj)
         ):
             return super()._generate_ancestors(
@@ -232,7 +231,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if obj != self._context.focus:
             if AXUtilities.is_dialog_or_alert(obj, self._get_resolved_role()):
                 return super()._generate_accessible_description(obj)
-            if self._context.active_mode != focus_manager.MOUSE_REVIEW:
+            if self._context.active_mode != ActivePresentationMode.MOUSE_REVIEW:
                 return []
 
         if AXUtilities.is_text(obj, self._get_resolved_role()) and (
@@ -809,7 +808,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             contents[0][0],
         )
         prev_attrs: dict[str, str] = {}
-        system_voice = self.voice(speechserver.VoiceType.SYSTEM) if announce_attrs else []
+        system_voice = self.voice(VoiceType.SYSTEM) if announce_attrs else []
 
         original_context = self._context
         base_position = original_context.content_position

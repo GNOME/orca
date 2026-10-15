@@ -114,6 +114,7 @@ lib_sources = [
   'document_presenter.py',
   'document_presenter_command_definitions.py',
   'document_presenter_preferences_grid.py',
+  'enums.py',
   'event_manager.py',
   'extension.py',
   'extension_loader.py',

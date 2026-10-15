@@ -36,6 +36,8 @@ from unittest.mock import call
 
 import pytest
 
+from orca.enums import ActivePresentationMode
+
 if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
@@ -272,10 +274,10 @@ class TestCaretNavigator:
             AXText,
             AXUtilities,
             CaretNavigator,
-            CaretSetReason,
             text_selection_manager,
             text_selection_presenter,
         )
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
@@ -338,10 +340,10 @@ class TestCaretNavigator:
         self._setup_dependencies(test_context)
         from orca.caret_navigator import (
             CaretNavigator,
-            CaretSetReason,
             text_selection_manager,
             text_selection_presenter,
         )
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
@@ -393,8 +395,8 @@ class TestCaretNavigator:
             AXText,
             AXUtilities,
             CaretNavigator,
-            CaretSetReason,
         )
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
@@ -725,7 +727,8 @@ class TestCaretNavigator:
         """Test word navigation starts from the appropriate selection boundary."""
 
         self._setup_dependencies(test_context)
-        from orca.caret_navigator import CaretNavigator, CaretSetReason
+        from orca.caret_navigator import CaretNavigator
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
@@ -1177,7 +1180,8 @@ class TestCaretNavigator:
         """Test line selection includes the final line before an adjacent UI control."""
 
         self._setup_dependencies(test_context)
-        from orca.caret_navigator import CaretNavigator, CaretSetReason
+        from orca.caret_navigator import CaretNavigator
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
@@ -1216,7 +1220,8 @@ class TestCaretNavigator:
         """Test line selection at a line end includes the entire next line."""
 
         self._setup_dependencies(test_context)
-        from orca.caret_navigator import CaretNavigator, CaretSetReason
+        from orca.caret_navigator import CaretNavigator
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         script = test_context.Mock()
@@ -1252,7 +1257,8 @@ class TestCaretNavigator:
         """Test backward line selection at a line end includes the current line."""
 
         self._setup_dependencies(test_context)
-        from orca.caret_navigator import CaretNavigator, CaretSetReason
+        from orca.caret_navigator import CaretNavigator
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         script = test_context.Mock()
@@ -1293,12 +1299,8 @@ class TestCaretNavigator:
         """Test Up clears a multi-object selection and moves above its start."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.caret_navigator import (
-            AXUtilities,
-            CaretNavigator,
-            CaretSetReason,
-            text_selection_manager,
-        )
+        from orca.caret_navigator import AXUtilities, CaretNavigator, text_selection_manager
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
@@ -1350,12 +1352,8 @@ class TestCaretNavigator:
         """Test Down clears a multi-object selection and moves below its end."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.caret_navigator import (
-            AXUtilities,
-            CaretNavigator,
-            CaretSetReason,
-            text_selection_manager,
-        )
+        from orca.caret_navigator import AXUtilities, CaretNavigator, text_selection_manager
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
@@ -1447,7 +1445,8 @@ class TestCaretNavigator:
 
         self._setup_dependencies(test_context)
         from orca.ax_text import AXText
-        from orca.caret_navigator import CaretNavigator, CaretSetReason
+        from orca.caret_navigator import CaretNavigator
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
@@ -1478,7 +1477,8 @@ class TestCaretNavigator:
 
         self._setup_dependencies(test_context)
         from orca.ax_text import AXText
-        from orca.caret_navigator import CaretNavigator, CaretSetReason
+        from orca.caret_navigator import CaretNavigator
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
@@ -1848,13 +1848,8 @@ class TestCaretNavigator:
         """Test selecting the final line uses the end of the text."""
 
         self._setup_dependencies(test_context)
-        from orca.caret_navigator import (
-            AXObject,
-            AXText,
-            AXUtilities,
-            CaretNavigator,
-            CaretSetReason,
-        )
+        from orca.caret_navigator import AXObject, AXText, AXUtilities, CaretNavigator
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
@@ -1905,13 +1900,8 @@ class TestCaretNavigator:
         """Test selecting the next line starts a selection in the next object."""
 
         self._setup_dependencies(test_context)
-        from orca.caret_navigator import (
-            AXText,
-            AXUtilities,
-            CaretNavigator,
-            CaretSetReason,
-            text_selection_manager,
-        )
+        from orca.caret_navigator import AXText, AXUtilities, CaretNavigator, text_selection_manager
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
@@ -1978,13 +1968,8 @@ class TestCaretNavigator:
         """Test selection moves from a complete web element to the next visual line."""
 
         self._setup_dependencies(test_context)
-        from orca.caret_navigator import (
-            AXObject,
-            AXText,
-            AXUtilities,
-            CaretNavigator,
-            CaretSetReason,
-        )
+        from orca.caret_navigator import AXObject, AXText, AXUtilities, CaretNavigator
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
@@ -2599,12 +2584,8 @@ class TestCaretNavigator:
         """Test selecting the previous line from the text end unselects only the final line."""
 
         self._setup_dependencies(test_context)
-        from orca.caret_navigator import (
-            AXObject,
-            AXUtilities,
-            CaretNavigator,
-            CaretSetReason,
-        )
+        from orca.caret_navigator import AXObject, AXUtilities, CaretNavigator
+        from orca.enums import CaretSetReason
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
@@ -2705,7 +2686,6 @@ class TestCaretNavigator:
         """Test successful caret navigation emits region_changed with CARET_NAVIGATOR mode."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca import focus_manager
         from orca.caret_navigator import AXUtilities, CaretNavigator
 
         ax_object_mock = essential_modules["orca.ax_object"]
@@ -2718,7 +2698,6 @@ class TestCaretNavigator:
         focus_manager_mock = essential_modules["orca.focus_manager"]
         manager_instance = test_context.Mock()
         focus_manager_mock.get_manager.return_value = manager_instance
-        focus_manager_mock.CARET_NAVIGATOR = focus_manager.CARET_NAVIGATOR
 
         navigator = CaretNavigator()
         get_root = test_context.patch_object(navigator, "_get_root_object", return_value=None)
@@ -2736,4 +2715,4 @@ class TestCaretNavigator:
         get_root.assert_called_once_with(mock_script)
         manager_instance.emit_region_changed.assert_called()
         call_kwargs = manager_instance.emit_region_changed.call_args
-        assert call_kwargs.kwargs.get("mode") == focus_manager.CARET_NAVIGATOR
+        assert call_kwargs.kwargs.get("mode") == ActivePresentationMode.CARET_NAVIGATOR

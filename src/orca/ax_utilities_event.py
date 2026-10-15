@@ -49,8 +49,9 @@ from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
-from .ax_utilities_text import AXUtilitiesText, CaretSetReason, TextUnit
+from .ax_utilities_text import AXUtilitiesText
 from .ax_value import AXValue
+from .enums import ActivePresentationMode, CaretSetReason, TextEventReason, TextUnit
 
 if TYPE_CHECKING:
     from collections.abc import Hashable
@@ -68,62 +69,6 @@ class CheckedState(enum.Enum):
     UNCHECKED = enum.auto()
     CHECKED = enum.auto()
     MIXED = enum.auto()
-
-
-class TextEventReason(enum.Enum):
-    """Enum representing the reason for an object:text- event."""
-
-    UNKNOWN = enum.auto()
-    AUTO_DELETION_PRESENTABLE = enum.auto()
-    AUTO_DELETION_UNPRESENTABLE = enum.auto()
-    AUTO_INSERTION_PRESENTABLE = enum.auto()
-    AUTO_INSERTION_UNPRESENTABLE = enum.auto()
-    AUTO_SELECTION = enum.auto()
-    AUTO_UNSELECTION = enum.auto()
-    BACKSPACE = enum.auto()
-    BRAILLE_PANNING = enum.auto()
-    CHILDREN_CHANGE = enum.auto()
-    CUT = enum.auto()
-    DELETE = enum.auto()
-    FOCUS_CHANGE = enum.auto()
-    LIVE_REGION_UPDATE = enum.auto()
-    MOUSE_MIDDLE_BUTTON = enum.auto()
-    MOUSE_PRIMARY_BUTTON = enum.auto()
-    NAVIGATION_BY_CHARACTER = enum.auto()
-    NAVIGATION_BY_LINE = enum.auto()
-    NAVIGATION_BY_PARAGRAPH = enum.auto()
-    NAVIGATION_BY_PAGE = enum.auto()
-    NAVIGATION_BY_WORD = enum.auto()
-    NAVIGATION_TO_FILE_BOUNDARY = enum.auto()
-    NAVIGATION_TO_LINE_BOUNDARY = enum.auto()
-    PAGE_SWITCH = enum.auto()
-    PASTE = enum.auto()
-    REDO = enum.auto()
-    SAY_ALL = enum.auto()
-    SEARCH_PRESENTABLE = enum.auto()
-    SEARCH_UNPRESENTABLE = enum.auto()
-    SELECT_ALL = enum.auto()
-    SELECTED_TEXT_DELETION = enum.auto()
-    SELECTED_TEXT_INSERTION = enum.auto()
-    SELECTED_TEXT_RESTORATION = enum.auto()
-    SELECTION_BY_CHARACTER = enum.auto()
-    SELECTION_BY_LINE = enum.auto()
-    SELECTION_BY_PARAGRAPH = enum.auto()
-    SELECTION_BY_PAGE = enum.auto()
-    SELECTION_BY_WORD = enum.auto()
-    SELECTION_UNPRESENTABLE = enum.auto()
-    SELECTION_TO_FILE_BOUNDARY = enum.auto()
-    SELECTION_TO_LINE_BOUNDARY = enum.auto()
-    SPIN_BUTTON_VALUE_CHANGE = enum.auto()
-    SYSTEM_UPDATE = enum.auto()
-    TERMINAL_LINE_NAVIGATION_REPAINT = enum.auto()
-    TYPING = enum.auto()
-    TYPING_ECHOABLE = enum.auto()
-    UI_UPDATE = enum.auto()
-    UNDO = enum.auto()
-    UNSPECIFIED_COMMAND = enum.auto()
-    UNSPECIFIED_NAVIGATION = enum.auto()
-    UNSPECIFIED_SELECTION = enum.auto()
 
 
 class _AXUtilitiesEventCache:
@@ -514,7 +459,7 @@ class AXUtilitiesEvent:
         if not AXUtilitiesRole.is_terminal(obj):
             return False
         mode, acc = focus_manager.get_manager().get_active_mode_and_object_of_interest()
-        return mode == focus_manager.FLAT_REVIEW and obj == acc
+        return mode == ActivePresentationMode.FLAT_REVIEW and obj == acc
 
     @staticmethod
     def _is_terminal_escape_sequence(string: str) -> bool:
@@ -676,7 +621,7 @@ class AXUtilitiesEvent:
                 return reason
 
         mode, focus = focus_manager.get_manager().get_active_mode_and_object_of_interest()
-        if mode == focus_manager.SAY_ALL:
+        if mode == ActivePresentationMode.SAY_ALL:
             return TextEventReason.SAY_ALL
         if focus != obj and AXUtilitiesRole.is_text_input_search(focus):
             if mgr.last_event_was_backspace() or mgr.last_event_was_delete():

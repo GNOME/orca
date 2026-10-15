@@ -63,6 +63,7 @@ from .acss import ACSS
 from .ax_hypertext import AXHypertext
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
+from .enums import PresentationReason, VoiceType
 from .extension import Extension, SpeechOutput, SpeechOutputResult
 from .speechserver import VoiceFamily
 from .text_attribute_manager import TextAttributeChangeMode
@@ -74,7 +75,6 @@ if TYPE_CHECKING:
 
     from .command import Command
     from .dbus_service import UInt32
-    from .generator import PresentationReason
     from .speech_generator import SpeechGeneratorContext
     from .speech_presenter_preferences_grid import SpeechPreferencesGrid
 
@@ -2260,7 +2260,7 @@ class SpeechPresenter(Extension):
             obj=obj,
         )
 
-    def speak_message(self, text: str, voice_type: str = speechserver.VoiceType.SYSTEM) -> None:
+    def speak_message(self, text: str, voice_type: str = VoiceType.SYSTEM) -> None:
         """Speaks a message using the given voice type (the system voice by default)."""
 
         try:
@@ -2307,7 +2307,6 @@ class SpeechPresenter(Extension):
 
         from .generator import (  # pylint: disable=import-outside-toplevel
             ContentPosition,
-            PresentationReason,
         )
         from .speech_generator import (  # pylint: disable=import-outside-toplevel
             SpeechGeneratorContext,
@@ -2357,7 +2356,7 @@ class SpeechPresenter(Extension):
             auto_language_switching_ui=speech_mgr.get_auto_language_switching_ui() and auto_switch,
             insert_pauses_between_utterances=speech_mgr.get_insert_pauses_between_utterances(),
             punctuation_level=speech_mgr.get_punctuation_level(),
-            voices={vt: speech_mgr.get_voice_properties(vt) for vt in speechserver.VoiceType},
+            voices={vt: speech_mgr.get_voice_properties(vt) for vt in VoiceType},
             speech_server=speech_mgr.get_server(),
             only_displayed_text=self.get_only_speak_displayed_text(),
             speak_description=self.get_speak_description(),

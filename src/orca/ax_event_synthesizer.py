@@ -43,7 +43,7 @@ from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_debugging import AXUtilitiesDebugging
 from .ax_utilities_role import AXUtilitiesRole
-from .ax_utilities_text import CaretSetReason
+from .enums import CaretSetReason
 
 
 class _Snapshot(NamedTuple):

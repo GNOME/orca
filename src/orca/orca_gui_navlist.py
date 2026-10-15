@@ -37,7 +37,7 @@ from gi.repository import Gdk, GObject, Gtk
 from . import debug, guilabels, orca_gui_helpers, script_manager
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_utilities import AXUtilities
-from .ax_utilities_text import CaretSetReason
+from .enums import CaretSetReason
 
 if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")

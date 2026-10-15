@@ -50,8 +50,8 @@ from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
+from .enums import PresentationReason
 from .extension import Extension
-from .generator import PresentationReason
 
 if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")

@@ -43,7 +43,6 @@ from gi.repository import Atspi
 
 from . import (
     debug,
-    focus_manager,
     generator,
     input_event_manager,
     math_presenter,
@@ -60,7 +59,8 @@ from .ax_table import AXTable
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
-from .generator import GeneratorContext, GeneratorMode, PresentationReason
+from .enums import ActivePresentationMode, PresentationReason, VoiceType
+from .generator import GeneratorContext, GeneratorMode
 from .speechserver import VoiceFamily
 
 if TYPE_CHECKING:
@@ -131,12 +131,12 @@ STATE = "state"  # Candidate for sound
 VALUE = "value"  # Candidate for sound
 
 voice_type = {
-    DEFAULT: speechserver.VoiceType.DEFAULT,
-    UPPERCASE: speechserver.VoiceType.UPPERCASE,
-    HYPERLINK: speechserver.VoiceType.HYPERLINK,
-    SYSTEM: speechserver.VoiceType.SYSTEM,
-    STATE: speechserver.VoiceType.SYSTEM,  # Users may prefer VoiceType.DEFAULT here
-    VALUE: speechserver.VoiceType.SYSTEM,  # Users may prefer VoiceType.DEFAULT here
+    DEFAULT: VoiceType.DEFAULT,
+    UPPERCASE: VoiceType.UPPERCASE,
+    HYPERLINK: VoiceType.HYPERLINK,
+    SYSTEM: VoiceType.SYSTEM,
+    STATE: VoiceType.SYSTEM,  # Users may prefer VoiceType.DEFAULT here
+    VALUE: VoiceType.SYSTEM,  # Users may prefer VoiceType.DEFAULT here
 }
 
 
@@ -338,14 +338,14 @@ class SpeechGenerator(generator.Generator):
         """Applies voice overrides and auto-language-switching for default voice key."""
 
         voice_override: ACSS | None = None
-        resolved_voice_type = speechserver.VoiceType.DEFAULT
+        resolved_voice_type = VoiceType.DEFAULT
         if context is not None:
             if AXUtilities.is_link_descendant(obj, inclusive=True):
-                voice_override = context.voices.get(speechserver.VoiceType.HYPERLINK)
-                resolved_voice_type = speechserver.VoiceType.HYPERLINK
+                voice_override = context.voices.get(VoiceType.HYPERLINK)
+                resolved_voice_type = VoiceType.HYPERLINK
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
-                voice_override = context.voices.get(speechserver.VoiceType.UPPERCASE)
-                resolved_voice_type = speechserver.VoiceType.UPPERCASE
+                voice_override = context.voices.get(VoiceType.UPPERCASE)
+                resolved_voice_type = VoiceType.UPPERCASE
 
         voice_props[ACSS.VOICE_TYPE] = resolved_voice_type
         if voice_override and voice_override.get("established"):
@@ -409,7 +409,7 @@ class SpeechGenerator(generator.Generator):
             debug.print_tokens(debug.LEVEL_WARNING, tokens, True, True)
             return []
 
-        voice = ACSS(dict(effective_context.voices[speechserver.VoiceType.DEFAULT]))
+        voice = ACSS(dict(effective_context.voices[VoiceType.DEFAULT]))
 
         language = language or effective_context.language
         dialect = dialect or effective_context.dialect
@@ -587,7 +587,7 @@ class SpeechGenerator(generator.Generator):
 
         if (
             self._context is not None
-            and self._context.active_mode == focus_manager.OBJECT_NAVIGATOR
+            and self._context.active_mode == ActivePresentationMode.OBJECT_NAVIGATOR
         ):
             return True
 
@@ -1128,7 +1128,7 @@ class SpeechGenerator(generator.Generator):
         stop_at_roles: list | None = None,
         stop_after_roles: list | None = None,
     ) -> list[Any]:
-        if self._context.active_mode == focus_manager.FLAT_REVIEW:
+        if self._context.active_mode == ActivePresentationMode.FLAT_REVIEW:
             return []
 
         leaving = self._is_leaving()
@@ -1811,7 +1811,7 @@ class SpeechGenerator(generator.Generator):
         role = self._get_resolved_role()
         if (
             self._only_speak_displayed_text()
-            or self._context.active_mode == focus_manager.MOUSE_REVIEW
+            or self._context.active_mode == ActivePresentationMode.MOUSE_REVIEW
             or not obj
             or AXUtilities.is_text(obj, role)
         ):
@@ -2066,7 +2066,10 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_text_line(self, obj: Atspi.Accessible) -> list[Any]:
-        if self._context.active_mode == focus_manager.MOUSE_REVIEW and AXUtilities.is_editable(obj):
+        if (
+            self._context.active_mode == ActivePresentationMode.MOUSE_REVIEW
+            and AXUtilities.is_editable(obj)
+        ):
             return []
 
         announce_formatting = self._should_announce_attribute_changes(obj)
@@ -2140,7 +2143,7 @@ class SpeechGenerator(generator.Generator):
         """Returns the leading annotations to speak before each run's text."""
 
         announce_spelling = self._context is not None and self._context.speak_misspelled_indicator
-        system_voice = self.voice(speechserver.VoiceType.SYSTEM)
+        system_voice = self.voice(VoiceType.SYSTEM)
         annotations_per_run: list[list[Any]] = []
         prev_had_spelling = False
         prev_had_grammar = False

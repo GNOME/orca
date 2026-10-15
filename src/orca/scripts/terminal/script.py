@@ -33,7 +33,7 @@ from orca import (
 )
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
-from orca.ax_utilities_event import TextEventReason
+from orca.enums import TextEventReason
 from orca.scripts import default
 
 from .script_utilities import Utilities

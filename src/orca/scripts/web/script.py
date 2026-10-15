@@ -56,11 +56,16 @@ from orca.ax_event_synthesizer import AXEventSynthesizer
 from orca.ax_object import AXObject
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
-from orca.ax_utilities_event import TextEventReason
-from orca.ax_utilities_text import CaretSetReason, TextUnit
-from orca.generator import PresentationReason
+from orca.enums import (
+    ActivePresentationMode,
+    BraillePanDirection,
+    CaretSetReason,
+    PresentationReason,
+    StructuralNavigationMode,
+    TextEventReason,
+    TextUnit,
+)
 from orca.scripts import default
-from orca.structural_navigator import NavigationMode
 
 from .braille_generator import BrailleGenerator
 from .script_utilities import Utilities
@@ -81,7 +86,7 @@ class Script(default.Script):
         super().__init__(app)
 
         self.present_if_inactive: bool = False
-        self._default_sn_mode = NavigationMode.DOCUMENT
+        self._default_sn_mode = StructuralNavigationMode.DOCUMENT
         self._default_caret_navigation_enabled: bool = True
 
         self._loading_content = False
@@ -156,7 +161,7 @@ class Script(default.Script):
                 obj,
                 start,
                 end,
-                focus_manager.CARET_TRACKING,
+                ActivePresentationMode.CARET_TRACKING,
             )
 
         speech_pres = speech_presenter.get_presenter()
@@ -204,7 +209,7 @@ class Script(default.Script):
                 text_obj,
                 start_offset,
                 end_offset,
-                focus_manager.CARET_TRACKING,
+                ActivePresentationMode.CARET_TRACKING,
             )
 
         speech_pres = speech_presenter.get_presenter()
@@ -236,7 +241,7 @@ class Script(default.Script):
             return
 
         mode, _obj = focus_manager.get_manager().get_active_mode_and_object_of_interest()
-        if mode in [focus_manager.OBJECT_NAVIGATOR, focus_manager.MOUSE_REVIEW]:
+        if mode in [ActivePresentationMode.OBJECT_NAVIGATOR, ActivePresentationMode.MOUSE_REVIEW]:
             super().present_object(
                 obj,
                 offset=offset,
@@ -433,14 +438,14 @@ class Script(default.Script):
 
     def handle_braille_pan_at_edge(
         self,
-        direction: braille_presenter.PanDirection,
+        direction: BraillePanDirection,
     ) -> bool | None:
         """Handles braille panning when the presenter reaches the edge of a line."""
 
         if not self.utilities.in_document_content():
             return super().handle_braille_pan_at_edge(direction)
 
-        if direction == braille_presenter.PanDirection.LEFT:
+        if direction == BraillePanDirection.LEFT:
             contents = self.utilities.get_previous_line_contents()
         else:
             contents = self.utilities.get_next_line_contents()
@@ -451,7 +456,7 @@ class Script(default.Script):
         self.utilities.set_caret_position(obj, start, reason=CaretSetReason.BRAILLE_PANNING)
         self.update_braille(obj, offset=start)
         presenter = braille_presenter.get_presenter()
-        if direction == braille_presenter.PanDirection.LEFT:
+        if direction == BraillePanDirection.LEFT:
             presenter.pan_to_end()
         else:
             presenter.pan_to_beginning()
@@ -495,7 +500,10 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
-            if last_command_was_struct_nav and sn_navigator.get_mode(self) == NavigationMode.GUI:
+            if (
+                last_command_was_struct_nav
+                and sn_navigator.get_mode(self) == StructuralNavigationMode.GUI
+            ):
                 msg = "WEB: Not refreshing grabs: Last command was GUI structural navigation"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False

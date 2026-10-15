@@ -40,6 +40,8 @@ import pytest
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from orca.enums import ActivePresentationMode
+
 if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
@@ -282,11 +284,12 @@ class TestStructuralNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        from orca.structural_navigator import NavigationMode, get_navigator
+        from orca.enums import StructuralNavigationMode
+        from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        current_nav_mode = getattr(NavigationMode, current_mode)
-        expected_nav_mode = getattr(NavigationMode, expected_next_mode)
+        current_nav_mode = getattr(StructuralNavigationMode, current_mode)
+        expected_nav_mode = getattr(StructuralNavigationMode, expected_next_mode)
 
         mock_get_mode, mock_set_mode = self._setup_cycle_navigation_mode_mocks(
             test_context,
@@ -333,12 +336,13 @@ class TestStructuralNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        from orca.structural_navigator import NavigationMode, get_navigator
+        from orca.enums import StructuralNavigationMode
+        from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
 
         if scenario == "no_notify":
-            self._setup_cycle_navigation_mode_mocks(test_context, nav, NavigationMode.OFF)
+            self._setup_cycle_navigation_mode_mocks(test_context, nav, StructuralNavigationMode.OFF)
             essential_modules["orca.AXObject"].supports_collection.return_value = True
         else:
             mock_is_active_script = test_context.Mock(return_value=is_active_script)
@@ -641,34 +645,37 @@ class TestStructuralNavigator:
 
         self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        from orca.structural_navigator import NavigationMode, get_navigator
+        from orca.enums import StructuralNavigationMode
+        from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
         result = nav.get_mode(mock_script)
-        assert result == NavigationMode.OFF
+        assert result == StructuralNavigationMode.OFF
 
     def test_get_mode_cached(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.get_mode returns cached mode for known script."""
 
         self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        from orca.structural_navigator import NavigationMode, get_navigator
+        from orca.enums import StructuralNavigationMode
+        from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        nav._mode_for_script[mock_script] = NavigationMode.DOCUMENT
+        nav._mode_for_script[mock_script] = StructuralNavigationMode.DOCUMENT
         result = nav.get_mode(mock_script)
-        assert result == NavigationMode.DOCUMENT
+        assert result == StructuralNavigationMode.DOCUMENT
 
     def test_set_mode(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.set_mode sets mode for script."""
 
         self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        from orca.structural_navigator import NavigationMode, get_navigator
+        from orca.enums import StructuralNavigationMode
+        from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        nav.set_mode(mock_script, NavigationMode.GUI)
-        assert nav._mode_for_script[mock_script] == NavigationMode.GUI
+        nav.set_mode(mock_script, StructuralNavigationMode.GUI)
+        assert nav._mode_for_script[mock_script] == StructuralNavigationMode.GUI
 
     def test_determine_root_container_document_mode(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator._determine_root_container for document mode."""
@@ -773,11 +780,12 @@ class TestStructuralNavigator:
 
         self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        from orca.structural_navigator import NavigationMode, get_navigator
+        from orca.enums import StructuralNavigationMode
+        from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
         result = nav.get_mode(mock_script)
-        assert result == NavigationMode.OFF
+        assert result == StructuralNavigationMode.OFF
 
     def test_last_input_event_was_navigation_command(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.last_input_event_was_navigation_command method."""
@@ -1286,7 +1294,7 @@ class TestStructuralNavigator:
         test_context: OrcaTestContext,
         mode_value: str,
     ) -> None:
-        """Test NavigationMode enum values."""
+        """Test StructuralNavigationMode enum values."""
 
         essential_modules = test_context.setup_shared_dependencies(
             [
@@ -1300,14 +1308,14 @@ class TestStructuralNavigator:
         )
         self._setup_mocks(test_context, essential_modules)
 
-        from orca.structural_navigator import NavigationMode
+        from orca.enums import StructuralNavigationMode
 
         if mode_value == "OFF":
-            assert NavigationMode.OFF.value == "OFF"
+            assert StructuralNavigationMode.OFF.value == "OFF"
         elif mode_value == "DOCUMENT":
-            assert NavigationMode.DOCUMENT.value == "DOCUMENT"
+            assert StructuralNavigationMode.DOCUMENT.value == "DOCUMENT"
         elif mode_value == "GUI":
-            assert NavigationMode.GUI.value == "GUI"
+            assert StructuralNavigationMode.GUI.value == "GUI"
 
     def test_basic_structural_navigator_state(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator basic state management."""
@@ -1363,7 +1371,8 @@ class TestStructuralNavigator:
         essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
 
         from orca import gsettings_registry
-        from orca.structural_navigator import NavigationMode, get_navigator
+        from orca.enums import StructuralNavigationMode
+        from orca.structural_navigator import get_navigator
 
         gsettings_registry.get_registry().set_runtime_value(
             "structural-navigation",
@@ -1371,12 +1380,12 @@ class TestStructuralNavigator:
             False,
         )
         nav = get_navigator()
-        nav._previous_mode_for_script[mock_script] = NavigationMode.DOCUMENT
+        nav._previous_mode_for_script[mock_script] = StructuralNavigationMode.DOCUMENT
         test_context.patch_object(nav, "_is_active_script", return_value=True)
 
         result = nav.set_is_enabled(True)
         assert result is True
-        assert nav._mode_for_script[mock_script] == NavigationMode.DOCUMENT
+        assert nav._mode_for_script[mock_script] == StructuralNavigationMode.DOCUMENT
         mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     def test_set_is_enabled_true_without_previous_mode(self, test_context: OrcaTestContext) -> None:
@@ -1415,16 +1424,17 @@ class TestStructuralNavigator:
         ].get_manager.return_value.get_active_script.return_value = mock_script
         mock_cmd_mgr = test_context.Mock()
         essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
-        from orca.structural_navigator import NavigationMode, get_navigator
+        from orca.enums import StructuralNavigationMode
+        from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        nav._mode_for_script[mock_script] = NavigationMode.DOCUMENT
+        nav._mode_for_script[mock_script] = StructuralNavigationMode.DOCUMENT
         test_context.patch_object(nav, "_is_active_script", return_value=True)
 
         result = nav.set_is_enabled(False)
         assert result is True
-        assert nav._previous_mode_for_script[mock_script] == NavigationMode.DOCUMENT
-        assert nav._mode_for_script[mock_script] == NavigationMode.OFF
+        assert nav._previous_mode_for_script[mock_script] == StructuralNavigationMode.DOCUMENT
+        assert nav._mode_for_script[mock_script] == StructuralNavigationMode.OFF
         mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     def test_set_is_enabled_false_already_off(self, test_context: OrcaTestContext) -> None:
@@ -1437,10 +1447,11 @@ class TestStructuralNavigator:
         ].get_manager.return_value.get_active_script.return_value = mock_script
         mock_cmd_mgr = test_context.Mock()
         essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
-        from orca.structural_navigator import NavigationMode, get_navigator
+        from orca.enums import StructuralNavigationMode
+        from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        nav._mode_for_script[mock_script] = NavigationMode.OFF
+        nav._mode_for_script[mock_script] = StructuralNavigationMode.OFF
 
         result = nav.set_is_enabled(False)
         assert result is True
@@ -1546,21 +1557,20 @@ class TestStructuralNavigator:
         """Test _present_line emits region_changed with STRUCTURAL_NAVIGATOR mode."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca import focus_manager
-        from orca.structural_navigator import NavigationMode, get_navigator
+        from orca.enums import StructuralNavigationMode
+        from orca.structural_navigator import get_navigator
 
         focus_manager_mock = essential_modules["orca.focus_manager"]
         manager_instance = test_context.Mock()
         focus_manager_mock.get_manager.return_value = manager_instance
         manager_instance.in_say_all.return_value = False
-        focus_manager_mock.STRUCTURAL_NAVIGATOR = focus_manager.STRUCTURAL_NAVIGATOR
 
         nav = get_navigator()
         mock_script = test_context.Mock()
         mock_obj = test_context.Mock()
         test_offset = 5
 
-        test_context.patch_object(nav, "get_mode", return_value=NavigationMode.DOCUMENT)
+        test_context.patch_object(nav, "get_mode", return_value=StructuralNavigationMode.DOCUMENT)
         mock_script.utilities.get_line_contents_at_offset.return_value = [
             (mock_obj, test_offset, test_offset + 10, "test text"),
         ]
@@ -1569,7 +1579,7 @@ class TestStructuralNavigator:
 
         manager_instance.emit_region_changed.assert_called()
         call_kwargs = manager_instance.emit_region_changed.call_args
-        assert call_kwargs.kwargs.get("mode") == focus_manager.STRUCTURAL_NAVIGATOR
+        assert call_kwargs.kwargs.get("mode") == ActivePresentationMode.STRUCTURAL_NAVIGATOR
 
     def test_present_object_emits_region_changed_in_document_mode(
         self,
@@ -1578,24 +1588,23 @@ class TestStructuralNavigator:
         """Test _present_object emits region_changed with STRUCTURAL_NAVIGATOR mode."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca import focus_manager
-        from orca.structural_navigator import NavigationMode, get_navigator
+        from orca.enums import StructuralNavigationMode
+        from orca.structural_navigator import get_navigator
 
         focus_manager_mock = essential_modules["orca.focus_manager"]
         manager_instance = test_context.Mock()
         focus_manager_mock.get_manager.return_value = manager_instance
         manager_instance.in_say_all.return_value = False
-        focus_manager_mock.STRUCTURAL_NAVIGATOR = focus_manager.STRUCTURAL_NAVIGATOR
 
         nav = get_navigator()
         mock_script = test_context.Mock()
         mock_obj = test_context.Mock()
         test_offset = 10
 
-        test_context.patch_object(nav, "get_mode", return_value=NavigationMode.DOCUMENT)
+        test_context.patch_object(nav, "get_mode", return_value=StructuralNavigationMode.DOCUMENT)
 
         nav._present_object(mock_script, mock_obj, offset=test_offset, notify_user=True)
 
         manager_instance.emit_region_changed.assert_called()
         call_kwargs = manager_instance.emit_region_changed.call_args
-        assert call_kwargs.kwargs.get("mode") == focus_manager.STRUCTURAL_NAVIGATOR
+        assert call_kwargs.kwargs.get("mode") == ActivePresentationMode.STRUCTURAL_NAVIGATOR

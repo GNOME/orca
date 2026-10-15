@@ -50,7 +50,7 @@ from . import (
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
-from .generator import PresentationReason
+from .enums import PresentationReason, VoiceType
 
 if TYPE_CHECKING:
     import gi
@@ -271,7 +271,7 @@ class PresentationManager:
         self,
         full: str,
         brief: str | None = None,
-        voice_type: str = speechserver.VoiceType.SYSTEM,
+        voice_type: str = VoiceType.SYSTEM,
     ) -> None:
         """Convenience method to speak a message and 'flash' it in braille."""
 
@@ -452,7 +452,7 @@ class PresentationManager:
     def speak_message(
         self,
         text: str,
-        voice_type: str = speechserver.VoiceType.SYSTEM,
+        voice_type: str = VoiceType.SYSTEM,
     ) -> None:
         """Speaks a single string."""
 

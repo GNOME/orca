@@ -63,7 +63,7 @@ from orca.ax_utilities_hypertext import CaretPolicy
 if TYPE_CHECKING:
     from collections.abc import Hashable, Iterator
 
-    from orca.ax_utilities_text import CaretSetReason
+    from orca.enums import CaretSetReason
 
     from .script import Script
 

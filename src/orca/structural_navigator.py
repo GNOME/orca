@@ -60,7 +60,7 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .ax_utilities_text import CaretSetReason
+from .enums import ActivePresentationMode, CaretSetReason, StructuralNavigationMode
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -70,14 +70,6 @@ if TYPE_CHECKING:
     from .dbus_service import UInt32
     from .input_event import InputEvent
     from .scripts import default
-
-
-class NavigationMode(Enum):
-    """Represents the structural navigation modes available."""
-
-    OFF = "OFF"
-    DOCUMENT = "DOCUMENT"
-    GUI = "GUI"
 
 
 class NavigationType(Enum):
@@ -141,8 +133,8 @@ class StructuralNavigator(Extension):
         # To make it possible for focus mode to suspend this navigation without
         # changing the user's preferred setting.
         self._suspended: bool = False
-        self._mode_for_script: dict[default.Script, NavigationMode] = {}
-        self._previous_mode_for_script: dict[default.Script, NavigationMode] = {}
+        self._mode_for_script: dict[default.Script, StructuralNavigationMode] = {}
+        self._previous_mode_for_script: dict[default.Script, StructuralNavigationMode] = {}
         super().__init__()
 
     @staticmethod
@@ -180,12 +172,12 @@ class StructuralNavigator(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
-    def get_mode(self, script: default.Script) -> NavigationMode:
+    def get_mode(self, script: default.Script) -> StructuralNavigationMode:
         """Returns the current structural-navigator mode associated with script."""
 
-        return self._mode_for_script.get(script, NavigationMode.OFF)
+        return self._mode_for_script.get(script, StructuralNavigationMode.OFF)
 
-    def set_mode(self, script: default.Script, mode: NavigationMode) -> None:
+    def set_mode(self, script: default.Script, mode: StructuralNavigationMode) -> None:
         """Sets the structural-navigator mode."""
 
         tokens = ["STRUCTURAL NAVIGATOR: Setting mode for", script, "to", mode]
@@ -197,7 +189,7 @@ class StructuralNavigator(Extension):
 
         # Use the per-script mode combined with the user's preference to determine
         # whether commands should be active, without overwriting the preference.
-        effective = mode != NavigationMode.OFF and self.get_is_enabled()
+        effective = mode != StructuralNavigationMode.OFF and self.get_is_enabled()
         command_manager.get_manager().set_group_enabled(
             guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
             effective,
@@ -328,7 +320,7 @@ class StructuralNavigator(Extension):
             return True
 
         current_mode = self.get_mode(script)
-        if not value and current_mode == NavigationMode.OFF:
+        if not value and current_mode == StructuralNavigationMode.OFF:
             return True
 
         self._last_input_event = None
@@ -341,7 +333,7 @@ class StructuralNavigator(Extension):
             self._previous_mode_for_script[script] = current_mode
             tokens = ["STRUCTURAL NAVIGATOR: Saving", current_mode, "as previous mode for", script]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            self._mode_for_script[script] = NavigationMode.OFF
+            self._mode_for_script[script] = StructuralNavigationMode.OFF
 
         command_manager.get_manager().set_group_enabled(
             guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
@@ -431,20 +423,20 @@ class StructuralNavigator(Extension):
         previous_mode = self.get_mode(script)
         msg = ""
         mode = None
-        if previous_mode == NavigationMode.OFF:
-            mode = NavigationMode.DOCUMENT
+        if previous_mode == StructuralNavigationMode.OFF:
+            mode = StructuralNavigationMode.DOCUMENT
             msg = messages.STRUCTURAL_NAVIGATION_KEYS_DOCUMENT
-        elif previous_mode == NavigationMode.GUI:
-            mode = NavigationMode.OFF
+        elif previous_mode == StructuralNavigationMode.GUI:
+            mode = StructuralNavigationMode.OFF
             msg = messages.STRUCTURAL_NAVIGATION_KEYS_OFF
         else:
-            mode = NavigationMode.GUI
+            mode = StructuralNavigationMode.GUI
             msg = messages.STRUCTURAL_NAVIGATION_KEYS_GUI
 
         if notify_user:
             presentation_manager.get_manager().present_message(msg)
         self.set_mode(script, mode)
-        if mode == NavigationMode.DOCUMENT:
+        if mode == StructuralNavigationMode.DOCUMENT:
             root = self._determine_root_container(script)
             if not AXObject.supports_collection(root) and notify_user:
                 presentation_manager.get_manager().present_message(
@@ -750,7 +742,7 @@ class StructuralNavigator(Extension):
             return
 
         prior_obj = manager.get_locus_of_focus()
-        manager.emit_region_changed(obj, offset, mode=focus_manager.STRUCTURAL_NAVIGATOR)
+        manager.emit_region_changed(obj, offset, mode=ActivePresentationMode.STRUCTURAL_NAVIGATOR)
         contents = script.utilities.get_line_contents_at_offset(obj, offset or 0)
         if contents and contents[0] and AXObject.supports_text(contents[0][0]):
             script.utilities.set_caret_position(
@@ -785,7 +777,7 @@ class StructuralNavigator(Extension):
             offset = 0
 
         manager = focus_manager.get_manager()
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             manager.set_locus_of_focus(None, obj)
             AXObject.grab_focus(obj)
             AXObject.clear_cache(obj, False, "Checking state after focus grab")
@@ -798,7 +790,7 @@ class StructuralNavigator(Extension):
             presenter.say_all(script, event=None, obj=obj, offset=offset)
             return
 
-        manager.emit_region_changed(obj, offset, mode=focus_manager.STRUCTURAL_NAVIGATOR)
+        manager.emit_region_changed(obj, offset, mode=ActivePresentationMode.STRUCTURAL_NAVIGATOR)
         if not notify_user:
             msg = "STRUCTURAL NAVIGATOR: _present_object called with notify_user=False"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -841,11 +833,11 @@ class StructuralNavigator(Extension):
         focus = focus_manager.get_manager().get_locus_of_focus()
         root = AXUtilities.find_ancestor_inclusive(focus, AXUtilities.is_modal_dialog)
         if root is None:
-            if mode == NavigationMode.DOCUMENT:
+            if mode == StructuralNavigationMode.DOCUMENT:
                 root = AXUtilities.get_embedded_document_frame_for_object(
                     focus
                 ) or script.utilities.get_top_level_document_for_object(focus)
-            elif mode == NavigationMode.GUI:
+            elif mode == StructuralNavigationMode.GUI:
                 root = AXUtilities.find_ancestor_inclusive(focus, AXUtilities.is_dialog_or_window)
                 if root is None:
                     root = focus_manager.get_manager().get_active_window()
@@ -867,7 +859,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_annotations(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -926,7 +918,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_blockquotes(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -972,7 +964,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_buttons(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -1018,7 +1010,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_checkboxes(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -1137,7 +1129,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_comboboxes(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -1186,7 +1178,7 @@ class StructuralNavigator(Extension):
             parent = AXObject.get_parent(obj)
             return parent is not None and not AXUtilities.is_editable(parent)
 
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
 
             def pred(x):
                 return self._is_non_document_object(x)
@@ -1241,7 +1233,7 @@ class StructuralNavigator(Extension):
             return True
 
         def pred(x):
-            if self.get_mode(script) == NavigationMode.GUI:
+            if self.get_mode(script) == StructuralNavigationMode.GUI:
                 return self._is_non_document_object(x)
             return is_not_noneditable_doc_frame(x)
 
@@ -1296,7 +1288,7 @@ class StructuralNavigator(Extension):
         level: int | None = None,
     ) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -1563,7 +1555,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_iframes(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -1618,7 +1610,7 @@ class StructuralNavigator(Extension):
         )
 
     def _get_all_images(self, script: default.Script) -> list[Atspi.Accessible]:
-        is_gui_mode = self.get_mode(script) == NavigationMode.GUI
+        is_gui_mode = self.get_mode(script) == StructuralNavigationMode.GUI
         skip_unlabeled = self.get_skip_unlabeled_images()
 
         def pred(obj):
@@ -1669,7 +1661,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_landmarks(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -1730,7 +1722,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_lists(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -1788,7 +1780,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_list_items(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -1839,7 +1831,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_live_regions(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -1893,7 +1885,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_math(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -1947,7 +1939,7 @@ class StructuralNavigator(Extension):
             return AXText.get_character_count(obj) > 2
 
         def pred(x):
-            if self.get_mode(script) == NavigationMode.GUI:
+            if self.get_mode(script) == StructuralNavigationMode.GUI:
                 return self._is_non_document_object(x)
             return has_at_least_three_characters(x)
 
@@ -1994,7 +1986,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_radio_buttons(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -2050,7 +2042,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_separators(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -2082,7 +2074,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_tables(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -2151,7 +2143,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_unvisited_links(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -2209,7 +2201,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_visited_links(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -2265,7 +2257,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_links(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
@@ -2315,7 +2307,7 @@ class StructuralNavigator(Extension):
 
     def _get_all_clickables(self, script: default.Script) -> list[Atspi.Accessible]:
         pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
+        if self.get_mode(script) == StructuralNavigationMode.GUI:
             pred = self._is_non_document_object
 
         root = self._determine_root_container(script)
