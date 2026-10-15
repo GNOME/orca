@@ -47,7 +47,6 @@ from . import (
     debug,
     gsettings_registry,
     guilabels,
-    input_event,
     keybindings,
     messages,
     orca_modifier_manager,
@@ -57,6 +56,7 @@ from . import (
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from . import input_event
     from .command_manager_preferences_grid import KeybindingsPreferencesGrid
     from .scripts import default
 
