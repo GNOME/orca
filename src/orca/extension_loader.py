@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import ast
 import hashlib
+import importlib.machinery
 import importlib.util
 import os
 import sys
@@ -51,6 +52,7 @@ _SCHEMA = "extensions"
 _KEY_DISABLED = "disabled-extensions"
 _KEY_APPROVED = "approved-user-extensions"
 _KEY_SETTINGS = "settings"
+_USER_EXTENSION_PACKAGE = "orca_user_extension"
 
 
 class UserExtensionStatus(Enum):
@@ -808,7 +810,7 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
         """Removes a user extension and its submodules from the module cache."""
 
         namespace = ExtensionLoader._get_user_extension_namespace(source_id)
-        module_name = f"orca_user_extension.{namespace}"
+        module_name = f"{_USER_EXTENSION_PACKAGE}.{namespace}"
         names = [
             name
             for name in sys.modules
@@ -831,6 +833,16 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
         return None
 
     @staticmethod
+    def _add_user_extension_package() -> None:
+        """Adds the package which holds user extensions to the module cache if needed."""
+
+        if _USER_EXTENSION_PACKAGE in sys.modules:
+            return
+
+        spec = importlib.machinery.ModuleSpec(_USER_EXTENSION_PACKAGE, None, is_package=True)
+        sys.modules[_USER_EXTENSION_PACKAGE] = importlib.util.module_from_spec(spec)
+
+    @staticmethod
     def _load_from_file(filepath: str, filename: str) -> Extension | None:
         """Loads an Extension subclass from a Python file or package."""
 
@@ -841,7 +853,8 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
             return None
 
         namespace = ExtensionLoader._get_user_extension_namespace(filename)
-        module_name = f"orca_user_extension.{namespace}"
+        module_name = f"{_USER_EXTENSION_PACKAGE}.{namespace}"
+        ExtensionLoader._add_user_extension_package()
         try:
             if os.path.isdir(filepath):
                 spec = importlib.util.spec_from_file_location(

@@ -146,6 +146,42 @@ class TestExtensionLoaderDataclass:
         finally:
             sys.modules.pop("orca_user_extension.pkgtest", None)
 
+    def test_package_extension_can_import_its_own_modules(
+        self, test_context: OrcaTestContext, tmp_path: Path
+    ) -> None:
+        """Test a package extension can use a relative import of one of its modules."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        essential_modules[
+            "orca.gsettings_registry"
+        ].GSettingsRegistry.sanitize_gsettings_path.side_effect = lambda name: name.lower()
+        from orca.extension import Extension
+        from orca.extension_loader import ExtensionLoader
+
+        ext_dir = tmp_path / "reltest"
+        ext_dir.mkdir()
+        (ext_dir / "labels.py").write_text('GROUP_LABEL = "Relative"\n')
+        (ext_dir / "__init__.py").write_text(
+            "from orca.extension import Extension\n"
+            "from . import labels\n"
+            "class RelativeExtension(Extension):\n"
+            "    GROUP_LABEL = labels.GROUP_LABEL\n"
+        )
+
+        try:
+            result = ExtensionLoader._load_from_file(str(ext_dir), "reltest")
+            assert isinstance(result, Extension)
+            assert result.GROUP_LABEL == "Relative"
+        finally:
+            sys.modules.pop("orca_user_extension.reltest.labels", None)
+            sys.modules.pop("orca_user_extension.reltest", None)
+            sys.modules.pop("orca_user_extension", None)
+
     def test_iter_speech_output_handlers_returns_enabled_user_extensions_with_hook(
         self,
         test_context: OrcaTestContext,
