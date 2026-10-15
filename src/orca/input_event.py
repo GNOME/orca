@@ -753,7 +753,8 @@ class KeyboardEvent(InputEvent):
         self._present()
 
         if self.is_pressed_key() and self._handler:
-            GLib.timeout_add(1, self._handle)
+            # Execute commands before processing queued accessibility events.
+            GLib.idle_add(self._handle, priority=GLib.PRIORITY_DEFAULT)
 
         tokens = ["TOTAL PROCESSING TIME:", round(time.time() - start_time, 4)]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -762,7 +763,7 @@ class KeyboardEvent(InputEvent):
         debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
     def _handle(self) -> bool:
-        """Handles this event after a timeout. Returns False to stop the timeout."""
+        """Handles this event after the keyboard callback returns. Runs only once."""
 
         start_time = time.time()
         data = f"'{self.keyval_name}' ({self.hw_code})"
