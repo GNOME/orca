@@ -23,6 +23,7 @@
 from __future__ import annotations
 
 import os
+import re
 import struct
 import subprocess
 import sys
@@ -510,3 +511,19 @@ import orca.extension
             text=True,
         )
         assert result.returncode == 0, result.stderr
+
+
+class TestExtensionDocumentation:
+    """Tests that the user extensions documentation matches extension.py."""
+
+    _DOCUMENT = Path(__file__).resolve().parents[2] / "docs" / "user-extensions.md"
+
+    def test_presentation_modes_match_documentation(self, test_context: OrcaTestContext) -> None:
+        """Test the documented presentation modes are exactly the ones Orca has."""
+
+        test_context.setup_shared_dependencies(["orca.command_manager"])
+        from orca.extension import ActivePresentationMode
+
+        text = self._DOCUMENT.read_text(encoding="utf-8")
+        documented = set(re.findall(r"ActivePresentationMode\.([A-Z_]+)", text))
+        assert documented == {mode.name for mode in ActivePresentationMode}

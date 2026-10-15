@@ -29,7 +29,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from . import braille_presenter, debug, script_manager
+from . import braille_presenter, debug, extension_loader, script_manager
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
@@ -212,6 +212,8 @@ class FocusManager:
 
         for listener in self._region_changed_listeners:
             listener(obj, mode)
+
+        extension_loader.get_loader().notify_region_changed(obj, start_offset, end_offset, mode)
 
     def in_say_all(self) -> bool:
         """Returns True if we are in say-all mode."""

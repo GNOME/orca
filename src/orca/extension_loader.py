@@ -34,11 +34,18 @@ from enum import Enum
 from typing import TYPE_CHECKING, Any
 
 from . import command_manager, debug, gsettings_registry
-from .extension import Extension, get_translation
+from .extension import Extension, RegionChange, get_translation
 
 if TYPE_CHECKING:
     import gettext
     from collections.abc import Callable
+
+    import gi
+
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
+    from .enums import ActivePresentationMode
 
 _SCHEMA = "extensions"
 _KEY_DISABLED = "disabled-extensions"
@@ -108,6 +115,7 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
         self._user_extensions_by_source: dict[str, Extension] = {}
         self._speech_output_handlers: list[Extension] = []
         self._braille_output_handlers: list[Extension] = []
+        self._region_changed_handlers: list[Extension] = []
         self._orca_is_ready = False
 
     @gsettings_registry.get_registry().gsetting(
@@ -426,6 +434,11 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
             for extension in self._user_extensions
             if self._extension_handles_braille_output(extension)
         ]
+        self._region_changed_handlers = [
+            extension
+            for extension in self._user_extensions
+            if self._extension_handles_region_changed(extension)
+        ]
 
     def set_up_all_commands(self) -> None:
         """Calls set_up_commands on all enabled extensions (built-in and user)."""
@@ -532,6 +545,30 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
 
         return [ext for ext in self._braille_output_handlers if ext.module_name not in disabled]
 
+    def notify_region_changed(
+        self,
+        obj: Atspi.Accessible | None,
+        start_offset: int,
+        end_offset: int,
+        mode: ActivePresentationMode,
+    ) -> None:
+        """Notifies enabled user extensions that Orca moved to a new object or region."""
+
+        if not self._region_changed_handlers:
+            return
+
+        change = RegionChange(obj, start_offset, end_offset, mode)
+        disabled = self.get_disabled_extensions()
+        for extension in self._region_changed_handlers:
+            if extension.module_name in disabled:
+                continue
+            tokens = ["EXTENSION LOADER: Calling on_region_changed() for", extension.module_name]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            try:
+                extension.on_region_changed(change)
+            except Exception:  # pylint: disable=broad-exception-caught
+                debug.print_exception(debug.LEVEL_WARNING)
+
     def get_loaded_user_extension(self, class_name: str) -> Extension | None:
         """Returns the loaded user extension with class_name."""
 
@@ -551,6 +588,12 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
         """Returns True if extension overrides the braille-output hook."""
 
         return type(extension).on_braille_output is not Extension.on_braille_output
+
+    @staticmethod
+    def _extension_handles_region_changed(extension: Extension) -> bool:
+        """Returns True if extension overrides the region-changed hook."""
+
+        return type(extension).on_region_changed is not Extension.on_region_changed
 
     @staticmethod
     def _get_user_extension_status(

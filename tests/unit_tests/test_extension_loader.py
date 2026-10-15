@@ -270,6 +270,61 @@ class TestExtensionLoaderDataclass:
         assert loader.iter_braille_output_handlers() == []
         loader.get_disabled_extensions.assert_not_called()
 
+    def test_notify_region_changed_calls_enabled_hooks_past_failures(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test region changes reach enabled hooks even when an earlier hook fails."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        from orca.extension import ActivePresentationMode, Extension, RegionChange
+        from orca.extension_loader import ExtensionLoader
+
+        changes: list[RegionChange] = []
+
+        class NoHookExtension(Extension):
+            GROUP_LABEL = "No Hook"
+
+        class FailingHookExtension(Extension):
+            GROUP_LABEL = "Failing"
+
+            def on_region_changed(self, change):
+                raise RuntimeError
+
+        class EnabledHookExtension(Extension):
+            GROUP_LABEL = "Enabled"
+
+            def on_region_changed(self, change):
+                changes.append(change)
+
+        class DisabledHookExtension(Extension):
+            GROUP_LABEL = "Disabled"
+
+            def on_region_changed(self, change):
+                changes.append(change)
+
+        loader = ExtensionLoader()
+        loader._user_extensions = [
+            NoHookExtension(),
+            FailingHookExtension(),
+            EnabledHookExtension(),
+            DisabledHookExtension(),
+        ]
+        loader._region_changed_handlers = [
+            ext for ext in loader._user_extensions if loader._extension_handles_region_changed(ext)
+        ]
+        loader.get_disabled_extensions = test_context.Mock(return_value=["DisabledHookExtension"])
+
+        obj = test_context.Mock()
+        loader.notify_region_changed(obj, 3, 7, ActivePresentationMode.FLAT_REVIEW)
+
+        assert changes == [RegionChange(obj, 3, 7, ActivePresentationMode.FLAT_REVIEW)]
+
     def test_notify_user_extensions_ready_runs_all_hooks(
         self,
         test_context: OrcaTestContext,

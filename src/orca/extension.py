@@ -29,6 +29,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, ClassVar
 
 from . import command_manager, dbus_service, debug, gsettings_registry
+from .enums import ActivePresentationMode
 from .extension_preferences import ExtensionPreference, ExtensionPreferenceKind
 
 if TYPE_CHECKING:
@@ -37,11 +38,13 @@ if TYPE_CHECKING:
     from .command import Command
 
 __all__ = [
+    "ActivePresentationMode",
     "BrailleOutput",
     "BrailleOutputResult",
     "Extension",
     "ExtensionPreference",
     "ExtensionPreferenceKind",
+    "RegionChange",
     "SpeechOutput",
     "SpeechOutputResult",
     "get_translation",
@@ -130,6 +133,16 @@ class BrailleOutputResult:
         """Returns a result indicating that the extension handled braille output."""
 
         return cls(consume=True)
+
+
+@dataclass(frozen=True)
+class RegionChange:
+    """The object or region Orca moved to, and the mode responsible for the move."""
+
+    obj: Any | None
+    start_offset: int
+    end_offset: int
+    mode: ActivePresentationMode
 
 
 class ExtensionSettings:
@@ -358,6 +371,9 @@ class Extension:
         """Called before Orca displays generated braille."""
 
         return None
+
+    def on_region_changed(self, change: RegionChange) -> None:  # pylint: disable=unused-argument
+        """Called when Orca moves to a new object or region."""
 
     def on_ready(self) -> None:
         """Called when Orca is ready for normal operation."""

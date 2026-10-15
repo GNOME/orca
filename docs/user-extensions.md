@@ -958,6 +958,41 @@ are tightly coupled to the region objects and to Orca's braille line model. For
 that reason, Orca does not provide an API for extensions to return modified
 regions.
 
+### Region Changed Hook (Added in Orca 51.2)
+
+Override `on_region_changed(change)` to be told when Orca moves to a new object,
+or to a new range of text within an object. This is useful for extensions that
+need to follow where the user is, such as a magnifier or a highlighter. The hook
+receives a `RegionChange` instance with:
+
+- `obj`: The accessible object Orca moved to, or `None`.
+- `start_offset` and `end_offset`: The range of text within `obj`. When Orca
+  moved to a position rather than a range, both offsets are the same. When Orca
+  moved to the object as a whole, both are `0`.
+- `mode`: What caused the move, as an `ActivePresentationMode`. Import it from
+  `orca.extension` along with `Extension` and `RegionChange`.
+
+| `mode` | Cause |
+| --- | --- |
+| `ActivePresentationMode.CARET_NAVIGATOR` | Orca's caret navigation moved the caret. |
+| `ActivePresentationMode.CARET_TRACKING` | The caret moved in the application. |
+| `ActivePresentationMode.FLAT_REVIEW` | Flat review moved. |
+| `ActivePresentationMode.FOCUS_TRACKING` | Focus changed. |
+| `ActivePresentationMode.MATH_NAVIGATOR` | Math navigation moved. |
+| `ActivePresentationMode.MOUSE_REVIEW` | Mouse review moved to the object under the pointer. |
+| `ActivePresentationMode.OBJECT_NAVIGATOR` | Object navigation moved. |
+| `ActivePresentationMode.SAY_ALL` | Say All moved to the next part of the document. |
+| `ActivePresentationMode.STRUCTURAL_NAVIGATOR` | Structural navigation moved, for instance to the next heading. |
+| `ActivePresentationMode.TABLE_NAVIGATOR` | Table navigation moved. |
+
+Orca calls the hook before it presents the new location. The exception is Say
+All, where the hook is called as each part is spoken. The hook can also be
+called when Orca moves without presenting anything.
+
+Region changed hooks run synchronously on Orca's main thread and must return
+quickly. They are called in extension load order. If a hook raises an exception,
+Orca logs it and continues notifying the other extensions.
+
 ## Examples
 
 To keep them short, these examples do not mark user-visible strings for
