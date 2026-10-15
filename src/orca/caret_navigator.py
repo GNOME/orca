@@ -718,7 +718,7 @@ class CaretNavigator(Extension):
             return True
 
         script.update_braille(obj, offset=offset)
-        script.say_character(obj, offset)
+        script.say_character(obj, offset, emit_region_changed=False)
         return True
 
     @dbus_service.command
@@ -769,7 +769,7 @@ class CaretNavigator(Extension):
             return True
 
         script.update_braille(obj, offset=offset)
-        script.say_character(obj, offset)
+        script.say_character(obj, offset, emit_region_changed=False)
         return True
 
     @dbus_service.command
@@ -820,7 +820,7 @@ class CaretNavigator(Extension):
             return True
 
         script.update_braille(obj, offset=offset)
-        script.say_character(obj, offset)
+        script.say_character(obj, offset, emit_region_changed=False)
         return True
 
     @dbus_service.command
@@ -908,7 +908,7 @@ class CaretNavigator(Extension):
             return True
 
         script.update_braille(obj, offset=end)
-        script.say_word(obj, end)
+        script.say_word(obj, end, emit_region_changed=False)
         return True
 
     @dbus_service.command
@@ -983,7 +983,7 @@ class CaretNavigator(Extension):
             return True
 
         script.update_braille(obj, offset=start)
-        script.say_word(obj, start)
+        script.say_word(obj, start, emit_region_changed=False)
         return True
 
     @dbus_service.command
@@ -1268,7 +1268,7 @@ class CaretNavigator(Extension):
         if not notify_user:
             return True
 
-        script.say_character(obj, start)
+        script.say_character(obj, start, emit_region_changed=False)
         presentation_manager.get_manager().display_contents(line)
         return True
 
@@ -1326,7 +1326,7 @@ class CaretNavigator(Extension):
         if not notify_user:
             return True
 
-        script.say_character(obj, end)
+        script.say_character(obj, end, emit_region_changed=False)
         presentation_manager.get_manager().display_contents(line)
         return True
 

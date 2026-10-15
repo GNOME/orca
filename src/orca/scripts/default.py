@@ -1221,7 +1221,13 @@ class Script(script.Script):
                 return True
         return False
 
-    def say_character(self, obj: Atspi.Accessible, offset: int) -> None:
+    def say_character(
+        self,
+        obj: Atspi.Accessible,
+        offset: int,
+        *,
+        emit_region_changed: bool = True,
+    ) -> None:
         """Speak the character at the specified offset."""
 
         if input_event_manager.get_manager().last_event_was_forward_caret_selection():
@@ -1230,26 +1236,32 @@ class Script(script.Script):
         character, start_offset, end_offset = AXText.get_character_at_offset(
             obj, offset, ensure_whole_characters=True
         )
-        focus_manager.get_manager().emit_region_changed(
-            obj,
-            start_offset,
-            end_offset,
-            focus_manager.CARET_TRACKING,
-        )
-
-        presentation_manager.get_manager().speak_character_at_offset(obj, offset, character)
-        AXUtilities.set_last_text_unit_spoken(TextUnit.CHAR)
-
-    def say_line(self, obj: Atspi.Accessible, offset: int) -> None:
-        """Speaks the line at the specified offset."""
-
-        line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
-        if line and line != "\n":
-            end_offset = start_offset + len(line)
+        if emit_region_changed:
             focus_manager.get_manager().emit_region_changed(
                 obj,
                 start_offset,
                 end_offset,
+                focus_manager.CARET_TRACKING,
+            )
+
+        presentation_manager.get_manager().speak_character_at_offset(obj, offset, character)
+        AXUtilities.set_last_text_unit_spoken(TextUnit.CHAR)
+
+    def say_line(
+        self,
+        obj: Atspi.Accessible,
+        offset: int,
+        *,
+        emit_region_changed: bool = True,
+    ) -> None:
+        """Speaks the line at the specified offset."""
+
+        line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
+        if emit_region_changed:
+            focus_manager.get_manager().emit_region_changed(
+                obj,
+                start_offset,
+                start_offset + len(line),
                 focus_manager.CARET_TRACKING,
             )
 
@@ -1270,6 +1282,7 @@ class Script(script.Script):
         end_offset: int,
         *,
         include_whole_objects: bool = False,
+        emit_region_changed: bool = True,
     ) -> None:
         """Speaks the substring between start and end offset."""
 
@@ -1279,7 +1292,7 @@ class Script(script.Script):
         if not phrase:
             return
 
-        if len(phrase) > 1 or phrase.isalnum():
+        if emit_region_changed:
             focus_manager.get_manager().emit_region_changed(
                 obj,
                 start_offset,
@@ -1290,7 +1303,13 @@ class Script(script.Script):
         speech_presenter.get_presenter().speak_phrase(self, obj, start_offset, end_offset, phrase)
         AXUtilities.set_last_text_unit_spoken(TextUnit.PHRASE)
 
-    def say_word(self, obj: Atspi.Accessible, offset: int) -> None:
+    def say_word(
+        self,
+        obj: Atspi.Accessible,
+        offset: int,
+        *,
+        emit_region_changed: bool = True,
+    ) -> None:
         """Speaks the word at the specified offset, taking into account the previous position."""
 
         word, start_offset, end_offset = self.utilities.get_word_at_offset_adjusted_for_navigation(
@@ -1298,7 +1317,7 @@ class Script(script.Script):
             offset,
         )
         if not word and offset == AXText.get_character_count(obj):
-            self.say_character(obj, offset)
+            self.say_character(obj, offset, emit_region_changed=emit_region_changed)
             AXUtilities.set_last_text_unit_spoken(TextUnit.WORD)
             return
 
@@ -1340,7 +1359,7 @@ class Script(script.Script):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         speech_presenter.get_presenter().present_text_attribute_state(obj, start_offset)
-        self.say_phrase(obj, start_offset, end_offset)
+        self.say_phrase(obj, start_offset, end_offset, emit_region_changed=emit_region_changed)
         AXUtilities.set_last_text_unit_spoken(TextUnit.WORD)
 
     def present_object(

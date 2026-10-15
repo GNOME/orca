@@ -121,7 +121,13 @@ class Script(default.Script):
 
         return self._loading_content
 
-    def say_character(self, obj: Atspi.Accessible, offset: int) -> None:
+    def say_character(
+        self,
+        obj: Atspi.Accessible,
+        offset: int,
+        *,
+        emit_region_changed: bool = True,
+    ) -> None:
         """Speaks the character at the specified offset."""
 
         tokens = ["WEB: Say character for", obj, "offset", offset]
@@ -129,7 +135,7 @@ class Script(default.Script):
         if not self.utilities.in_document_content(obj):
             msg = "WEB: Object is not in document content."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            super().say_character(obj, offset)
+            super().say_character(obj, offset, emit_region_changed=emit_region_changed)
             return
 
         contents: list[tuple[Atspi.Accessible, int, int, str]] | None = None
@@ -144,8 +150,16 @@ class Script(default.Script):
         if not contents:
             return
 
+        obj, start, end, string = contents[0]
+        if emit_region_changed:
+            focus_manager.get_manager().emit_region_changed(
+                obj,
+                start,
+                end,
+                focus_manager.CARET_TRACKING,
+            )
+
         speech_pres = speech_presenter.get_presenter()
-        obj, start, _end, string = contents[0]
         if start > 0 and string == "\n":
             if speech_pres.get_speak_blank_lines():
                 presentation_manager.get_manager().speak_message(messages.BLANK)
@@ -163,7 +177,13 @@ class Script(default.Script):
 
         AXUtilities.set_last_text_unit_spoken(TextUnit.CHAR)
 
-    def say_word(self, obj: Atspi.Accessible, offset: int) -> None:
+    def say_word(
+        self,
+        obj: Atspi.Accessible,
+        offset: int,
+        *,
+        emit_region_changed: bool = True,
+    ) -> None:
         """Speaks the word at the specified offset."""
 
         tokens = ["WEB: Say word for", obj, "offset", offset]
@@ -171,14 +191,21 @@ class Script(default.Script):
         if not self.utilities.in_document_content(obj):
             msg = "WEB: Object is not in document content."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            super().say_word(obj, offset)
+            super().say_word(obj, offset, emit_region_changed=emit_region_changed)
             return
 
         if input_event_manager.get_manager().last_event_was_right():
             offset -= 1
 
         word_contents = self.utilities.get_word_contents_at_offset(obj, offset, use_cache=True)
-        text_obj, start_offset, _end_offset, _word = word_contents[0]
+        text_obj, start_offset, end_offset, _word = word_contents[0]
+        if emit_region_changed:
+            focus_manager.get_manager().emit_region_changed(
+                text_obj,
+                start_offset,
+                end_offset,
+                focus_manager.CARET_TRACKING,
+            )
 
         speech_pres = speech_presenter.get_presenter()
         speech_pres.present_text_attribute_state(text_obj, start_offset)
