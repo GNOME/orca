@@ -920,12 +920,21 @@ class OrcaRemoteController:
 
         return self._dbus_service_interface.DisplayMessage(message, persistent)
 
-    def play_sound_file_internal(self, path: str, interrupt: bool = True) -> bool:
+    def play_sound_file_internal(
+        self,
+        path: str,
+        interrupt: bool = True,
+        volume: float = 1.0,
+    ) -> bool:
         """Plays a sound file without a D-Bus round-trip."""
 
         from . import presentation_manager  # pylint: disable=import-outside-toplevel
 
-        return presentation_manager.get_manager().play_sound_file(path, interrupt=interrupt)
+        return presentation_manager.get_manager().play_sound_file(
+            path,
+            interrupt=interrupt,
+            volume=volume,
+        )
 
     def play_tone_internal(
         self,

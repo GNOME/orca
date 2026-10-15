@@ -414,8 +414,23 @@ class TestPresentationManager:
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
         speech_pres.speak_accessible_text.assert_not_called()
 
-    def test_play_sound_file(self, test_context: OrcaTestContext, tmp_path) -> None:
-        """Test play_sound_file creates an icon and plays it."""
+    @pytest.mark.parametrize(
+        "volume, expected_volume",
+        [
+            pytest.param(None, 0.4, id="default"),
+            pytest.param(0.5, 0.2, id="half"),
+            pytest.param(2.0, 0.4, id="above_range"),
+            pytest.param(-1.0, 0.0, id="below_range"),
+        ],
+    )
+    def test_play_sound_file(
+        self,
+        test_context: OrcaTestContext,
+        tmp_path,
+        volume: float | None,
+        expected_volume: float,
+    ) -> None:
+        """Test play_sound_file plays an icon relative to the sound volume."""
 
         essential_modules = self._setup_dependencies(test_context)
         from orca.presentation_manager import PresentationManager
@@ -424,12 +439,20 @@ class TestPresentationManager:
         sound_file.write_text("")
         icon = test_context.Mock()
         essential_modules["orca.sound"].Icon.return_value = icon
+        sound_presenter = essential_modules["orca.sound_presenter"].get_presenter()
+        sound_presenter.get_sound_volume.return_value = 0.4
 
-        result = PresentationManager.play_sound_file(str(sound_file), interrupt=False)
+        if volume is None:
+            result = PresentationManager.play_sound_file(str(sound_file), interrupt=False)
+        else:
+            result = PresentationManager.play_sound_file(
+                str(sound_file), interrupt=False, volume=volume
+            )
 
         assert result is True
-        essential_modules["orca.sound"].Icon.assert_called_once_with(str(tmp_path), "ding.ogg")
-        sound_presenter = essential_modules["orca.sound_presenter"].get_presenter()
+        args = essential_modules["orca.sound"].Icon.call_args.args
+        assert args[:2] == (str(tmp_path), "ding.ogg")
+        assert args[2] == pytest.approx(expected_volume)
         sound_presenter.play.assert_called_once_with(icon, False)
 
     def test_play_sound_file_missing(self, test_context: OrcaTestContext, tmp_path) -> None:

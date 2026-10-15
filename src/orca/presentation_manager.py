@@ -318,8 +318,8 @@ class PresentationManager:
         )
 
     @staticmethod
-    def play_sound_file(path: str, interrupt: bool = True) -> bool:
-        """Plays the sound file at path."""
+    def play_sound_file(path: str, interrupt: bool = True, volume: float = 1.0) -> bool:
+        """Plays the sound file at path, with volume relative to the sound volume."""
 
         sound_path = os.path.abspath(os.path.expanduser(path))
         if not os.path.isfile(sound_path):
@@ -327,8 +327,13 @@ class PresentationManager:
             debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             return False
 
-        icon = sound.Icon(os.path.dirname(sound_path), os.path.basename(sound_path))
-        sound_presenter.get_presenter().play(icon, interrupt)
+        presenter = sound_presenter.get_presenter()
+        icon = sound.Icon(
+            os.path.dirname(sound_path),
+            os.path.basename(sound_path),
+            presenter.get_sound_volume() * min(max(0.0, volume), 1.0),
+        )
+        presenter.play(icon, interrupt)
         return True
 
     @staticmethod

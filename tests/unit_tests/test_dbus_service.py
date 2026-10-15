@@ -1617,12 +1617,16 @@ class TestRemoteControllerInternalAPIs:
 
         controller = dbus_service.OrcaRemoteController()
 
-        assert controller.play_sound_file_internal("/tmp/ding.ogg", interrupt=False) is True
+        assert (
+            controller.play_sound_file_internal("/tmp/ding.ogg", interrupt=False, volume=0.5)
+            is True
+        )
         assert controller.play_tone_internal(0.25, 440, 0.5, "square", interrupt=False) is True
 
         presentation_manager_instance.play_sound_file.assert_called_once_with(
             "/tmp/ding.ogg",
             interrupt=False,
+            volume=0.5,
         )
         presentation_manager_instance.play_tone.assert_called_once_with(
             0.25,

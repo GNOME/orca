@@ -40,13 +40,14 @@ from . import debug
 class Icon:
     """Sound file representing a particular aspect of an object."""
 
-    def __init__(self, location: str, filename: str) -> None:
+    def __init__(self, location: str, filename: str, volume: float = 1.0) -> None:
         self.path = os.path.join(location, filename)
+        self.volume = volume
         tokens = ["SOUND: Looking for '", filename, "' in", location]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def __str__(self) -> str:
-        return f"Icon(path: {self.path}, is_valid: {self.is_valid()})"
+        return f"Icon(path: {self.path}, volume: {self.volume}, is_valid: {self.is_valid()})"
 
     def is_valid(self) -> bool:
         """Returns True if the path associated with this icon is valid."""
@@ -138,6 +139,7 @@ class Player:
             self._player.set_state(Gst.State.NULL)
 
         self._player.set_property("uri", f"file://{icon.path}")
+        self._player.set_property("volume", icon.volume)
         self._player.set_state(Gst.State.PLAYING)
 
     def _play_tone(self, tone: Tone, interrupt: bool = True) -> None:

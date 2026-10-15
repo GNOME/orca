@@ -424,16 +424,23 @@ braille display, or the extension displays another string.
 self.controller.display_message_internal("Persistent braille text", persistent=True)
 ```
 
-### `play_sound_file_internal(path, interrupt=True)`
+### `play_sound_file_internal(path, interrupt=True, volume=1.0)` (`volume` Added in Orca 51.2)
 
 Plays the sound file at `path`. The path must name an existing file.
 
 ```python
 self.controller.play_sound_file_internal("/home/me/sounds/ding.ogg")
+self.controller.play_sound_file_internal("/home/me/sounds/ding.ogg", volume=0.5)
 ```
 
 Set `interrupt=False` to play the file without first interrupting any sound
 already being played.
+
+The file plays at the volume set in Orca's sound preferences. In Orca 51.1 and
+earlier, it played at full volume. `volume` is a fraction of the user's sound
+volume and is clamped between `0.0` and `1.0`, so `volume=0.5` plays the file at
+half of the user's sound volume. To get the current sound volume, use
+`get_value_internal("SoundPresenter", "SoundVolume")`.
 
 ### `play_tone_internal(duration, frequency, volume=1.0, wave="sine", interrupt=True)`
 
