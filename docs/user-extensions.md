@@ -25,6 +25,17 @@ single-file extensions and package extensions:
 Each `.py` file or package directory with an `__init__.py` file that contains an
 `Extension` subclass is a potential extension.
 
+## What Extensions Can Use
+
+User extensions should only rely on what this document describes, including
+what the examples use. Anything else in Orca, even if it is public, is for
+Orca's own use and may change or be removed as Orca's internals change.
+
+Everything this document describes is available in Orca 51.0 and later. When
+something is added, this document will say which version added it. Nothing is
+currently deprecated. If something is deprecated or scheduled for removal, this
+document will say so.
+
 ## Extension Catalogs and Stores
 
 User extensions are an advanced customization mechanism. The Orca project does
@@ -254,6 +265,32 @@ description = _("Reverse")
 
 ## Commands and Keybindings
 
+### Declaring Commands
+
+Override `_get_commands()` and return a list of `KeyboardCommand` instances.
+Orca registers these as your extension's commands. `KeyboardCommand` takes:
+
+- `name`: A stable identifier for the command. Do not translate it. Orca saves
+  keybindings the user assigns in preferences under this name, so renaming a
+  command loses the user's keybinding.
+- `function`: The command function. See [Command Functions](#command-functions).
+- `group_label`: Normally `self.GROUP_LABEL`.
+- `description`: The user-visible description shown in Orca's keybindings list.
+  Mark it for translation. See [Localization](#localization).
+- `desktop_keybinding` and `laptop_keybinding`: Optional default keybindings.
+  See [Keybindings](#keybindings).
+
+Orca may call `_get_commands()` more than once during a session, such as when
+another user extension is enabled, disabled, or reloaded. It should only build
+and return the list.
+
+Do not override `set_up_commands()` or `reset_commands()`. Orca uses them to
+register and remove your extension's commands.
+
+For complete examples, see
+[Example 1](#example-1-commands-controller-api-and-settings) and
+[Example 2](#example-2-modal-command-observer).
+
 ### Command Functions
 
 Command functions take no arguments (other than `self`) and return `True` when
@@ -262,9 +299,7 @@ internal command dispatch.
 
 ### Keybindings
 
-Each command needs a `KeyboardCommand` with a name, function, group label,
-description, and optional keybindings for desktop and laptop layouts. If no
-keybinding is provided, the user can assign one in preferences.
+If a command has no keybinding, the user can assign one in preferences.
 
 Available modifier masks:
 
@@ -335,11 +370,9 @@ Command extensions can use the remote controller, available as
 `self.controller` on the `Extension` base class. The controller provides access
 to all of Orca's settings and its commands, both bound and unbound.
 
-Please note: User extensions should only rely on the API documented here. Public
-Python functions in Orca are intended only for Orca's own use. These functions
-may change or be removed as Orca's internals change. In-process helper functions
-whose names end in `_internal()` are the only supported way for user extensions
-to reach Orca functionality.
+Please note: The controller's helper functions whose names end in
+`_internal()` are the ones intended for user extensions. Its other public
+functions are for Orca's own use.
 
 ### `get_version_internal()`
 
@@ -926,6 +959,9 @@ that reason, Orca does not provide an API for extensions to return modified
 regions.
 
 ## Examples
+
+To keep them short, these examples do not mark user-visible strings for
+translation. See [Localization](#localization).
 
 ### Example 1: Commands, Controller API, and Settings
 
