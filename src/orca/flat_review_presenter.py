@@ -1173,13 +1173,13 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
-        if not isinstance(event, input_event.BrailleEvent):
-            script.present_object(self._context.get_current_object(), generate_braille=False)
-
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(),
             mode=focus_manager.FLAT_REVIEW,
         )
+        if not isinstance(event, input_event.BrailleEvent):
+            script.present_object(self._context.get_current_object(), generate_braille=False)
+
         self._last_input_event = event
         return True
 
@@ -1692,6 +1692,10 @@ class FlatReviewPresenter(Extension):
 
         self._context = self.get_or_create_context(script)
         line_string = self._context.get_current_line_string()
+        focus_manager.get_manager().emit_region_changed(
+            self._context.get_current_object(),
+            mode=focus_manager.FLAT_REVIEW,
+        )
 
         if not isinstance(event, input_event.BrailleEvent):
             presenter = presentation_manager.get_manager()
@@ -1730,10 +1734,6 @@ class FlatReviewPresenter(Extension):
                         self._context.get_current_line_start_offset(),
                     )
 
-        focus_manager.get_manager().emit_region_changed(
-            self._context.get_current_object(),
-            mode=focus_manager.FLAT_REVIEW,
-        )
         self._update_braille(script)
         self._last_presented_unit = flat_review.Context.LINE
         self._current_contents = line_string
@@ -1749,6 +1749,10 @@ class FlatReviewPresenter(Extension):
 
         self._context = self.get_or_create_context(script)
         word_string = self._context.get_current_word_string()
+        focus_manager.get_manager().emit_region_changed(
+            self._context.get_current_object(),
+            mode=focus_manager.FLAT_REVIEW,
+        )
         if not isinstance(event, input_event.BrailleEvent):
             presenter = presentation_manager.get_manager()
             if not word_string or word_string == "\n":
@@ -1783,10 +1787,6 @@ class FlatReviewPresenter(Extension):
                         word_string,
                     )
 
-        focus_manager.get_manager().emit_region_changed(
-            self._context.get_current_object(),
-            mode=focus_manager.FLAT_REVIEW,
-        )
         self._update_braille(script)
         self._last_presented_unit = flat_review.Context.WORD
         self._current_contents = word_string
@@ -1809,6 +1809,7 @@ class FlatReviewPresenter(Extension):
             char_string = self._context.get_current_character_string()
             obj = self._context.get_current_object()
             offset = self._context.get_current_text_offset()
+            focus_manager.get_manager().emit_region_changed(obj, mode=focus_manager.FLAT_REVIEW)
         if not isinstance(event, input_event.BrailleEvent):
             presenter = presentation_manager.get_manager()
             if not char_string or (char_string == "\n" and speech_type != 3):
@@ -1825,10 +1826,6 @@ class FlatReviewPresenter(Extension):
         if not self._context:
             return True
 
-        focus_manager.get_manager().emit_region_changed(
-            self._context.get_current_object(),
-            mode=focus_manager.FLAT_REVIEW,
-        )
         self._update_braille(script)
         self._last_presented_unit = flat_review.Context.CHAR
         self._current_contents = char_string
