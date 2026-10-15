@@ -22,14 +22,16 @@
 
 from __future__ import annotations
 
+import os
 import struct
+import subprocess
+import sys
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 import pytest
 
 if TYPE_CHECKING:
-    from pathlib import Path
-
     from .orca_test_context import OrcaTestContext
 
 
@@ -474,3 +476,37 @@ class TestExtensionSettings:
 
         with pytest.raises(TypeError):
             settings.set("bad", {1: "one"})
+
+
+@pytest.mark.unit
+class TestExtensionImport:
+    """Tests for importing the extension module."""
+
+    # orca_i18n and orca_platform are generated at build time, so they are not in src.
+    _IMPORT_EXTENSION_FIRST = """
+import sys
+from unittest import mock
+
+i18n = mock.MagicMock()
+i18n._ = lambda text: text
+i18n.C_ = lambda context, text: text
+i18n.ngettext = lambda singular, plural, count: singular if count == 1 else plural
+sys.modules["orca.orca_i18n"] = i18n
+sys.modules["orca.orca_platform"] = mock.MagicMock()
+
+import orca.extension
+"""
+
+    def test_extension_can_be_imported_first(self, tmp_path: Path) -> None:
+        """Test orca.extension can be the first Orca module imported."""
+
+        src_dir = Path(__file__).resolve().parents[2] / "src"
+        result = subprocess.run(
+            [sys.executable, "-c", self._IMPORT_EXTENSION_FIRST],
+            capture_output=True,
+            check=False,
+            cwd=tmp_path,
+            env={**os.environ, "PYTHONPATH": str(src_dir)},
+            text=True,
+        )
+        assert result.returncode == 0, result.stderr

@@ -50,7 +50,6 @@ from . import (
     keybindings,
     messages,
     orca_modifier_manager,
-    presentation_manager,
 )
 
 if TYPE_CHECKING:
@@ -330,6 +329,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         self.set_keyboard_layout_is_desktop(new_is_desktop)
 
         if script is not None and notify_user:
+            from . import presentation_manager  # pylint: disable=import-outside-toplevel
+
             if new_is_desktop:
                 presentation_manager.get_manager().present_message(messages.KEYBOARD_LAYOUT_DESKTOP)
             else:
