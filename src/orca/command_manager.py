@@ -42,11 +42,10 @@ from gi.repository import GLib  # pylint: disable=no-name-in-module
 
 from . import (
     ax_device_manager,
-    cmdnames,
+    command_manager_command_definitions,
     dbus_service,
     debug,
     gsettings_registry,
-    guilabels,
     keybindings,
     messages,
     orca_modifier_manager,
@@ -452,14 +451,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             return
         self._initialized = True
 
-        self.add_command(
-            KeyboardCommand(
-                "toggle_keyboard_layout",
-                self.toggle_keyboard_layout,
-                guilabels.KEYBOARD_LAYOUT,
-                cmdnames.TOGGLE_KEYBOARD_LAYOUT,
-            ),
-        )
+        for command in command_manager_command_definitions.get_commands(self):
+            self.add_command(command)
 
         msg = "COMMAND MANAGER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
