@@ -264,7 +264,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         registry.set_ignore_runtime(True)
 
         # Create all preference grids
-        # Profiles grid controls are insensitive for app-specific prefs
+        # Application preferences allow profile selection, but not profile management.
         prof_manager = profile_manager.get_manager()
         self.profiles_grid = prof_manager.create_preferences_grid(
             profile_loaded_callback=self._on_profile_loaded,
