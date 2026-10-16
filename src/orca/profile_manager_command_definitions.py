@@ -27,9 +27,18 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc
 
 if TYPE_CHECKING:
     from .profile_manager import ProfileManager
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for profile commands."""
+
+    return CommandGroupDoc(
+        summary=("Switch to the next profile or present the current profile's name."),
+    )
 
 
 def get_commands(owner: ProfileManager) -> list[Command]:

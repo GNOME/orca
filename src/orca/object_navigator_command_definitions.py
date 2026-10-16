@@ -26,9 +26,19 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc
 
 if TYPE_CHECKING:
     from .object_navigator import ObjectNavigator
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for object navigation commands."""
+
+    return CommandGroupDoc(
+        summary="Move through the accessible object hierarchy.",
+        see_also=("reviewing.object-navigation",),
+    )
 
 
 def get_commands(owner: ObjectNavigator) -> list[Command]:

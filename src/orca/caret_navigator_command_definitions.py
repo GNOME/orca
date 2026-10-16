@@ -26,9 +26,20 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc
 
 if TYPE_CHECKING:
     from .caret_navigator import CaretNavigator
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for caret navigation commands."""
+
+    return CommandGroupDoc(
+        target="documents.caret-navigation.commands",
+        summary=("Move through text by character, word, and line."),
+        see_also=("documents.mode-commands",),
+    )
 
 
 def get_commands(owner: CaretNavigator) -> list[Command]:

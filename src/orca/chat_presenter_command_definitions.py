@@ -25,9 +25,18 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc
 
 if TYPE_CHECKING:
     from .chat_presenter import ChatPresenter
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for chat commands."""
+
+    return CommandGroupDoc(
+        summary="Review recent messages in supported chat applications.",
+    )
 
 
 def get_commands(owner: ChatPresenter) -> list[Command]:

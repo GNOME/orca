@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc, CommandSectionDoc
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -36,6 +37,63 @@ if TYPE_CHECKING:
     from .structural_navigator import StructuralNavigator
 
     CommandCallback = Callable[[default.Script, InputEvent | None, bool], bool]
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for structural navigation commands."""
+
+    return CommandGroupDoc(
+        target="documents.structural-navigation.commands",
+        summary=(
+            "Move among headings, links, interactive controls, tables, landmarks, "
+            "and other structures."
+        ),
+        see_also=("documents.mode-commands",),
+        sections=(
+            CommandSectionDoc(title="Mode", command_names=("structural_navigator_mode_cycle",)),
+            CommandSectionDoc(
+                title="Headings",
+                command_prefixes=("previous_heading", "next_heading", "list_headings"),
+            ),
+            *(
+                CommandSectionDoc(
+                    title=title,
+                    command_names=(f"previous_{singular}", f"next_{singular}", f"list_{plural}"),
+                )
+                for title, singular, plural in (
+                    ("Annotations", "annotation", "annotations"),
+                    ("Blockquotes", "blockquote", "blockquotes"),
+                    ("Buttons", "button", "buttons"),
+                    ("Check boxes", "checkbox", "checkboxes"),
+                    ("Combo boxes", "combobox", "comboboxes"),
+                    ("Text entries", "entry", "entries"),
+                    ("Form fields", "form_field", "form_fields"),
+                    ("Internal frames", "iframe", "iframes"),
+                    ("Images", "image", "images"),
+                    ("Landmarks", "landmark", "landmarks"),
+                    ("Lists", "list", "lists"),
+                    ("List items", "list_item", "list_items"),
+                    ("Math", "math", "math"),
+                    ("Paragraphs", "paragraph", "paragraphs"),
+                    ("Radio buttons", "radio_button", "radio_buttons"),
+                    ("Tables", "table", "tables"),
+                    ("Links", "link", "links"),
+                    ("Unvisited links", "unvisited_link", "unvisited_links"),
+                    ("Visited links", "visited_link", "visited_links"),
+                    ("Large objects", "large_object", "large_objects"),
+                    ("Clickable objects", "clickable", "clickables"),
+                )
+            ),
+            CommandSectionDoc(
+                title="Separators", command_names=("previous_separator", "next_separator")
+            ),
+            CommandSectionDoc(title="Containers", command_prefixes=("container_",)),
+            CommandSectionDoc(
+                title="Live regions",
+                command_names=("previous_live_region", "next_live_region", "last_live_region"),
+            ),
+        ),
+    )
 
 
 NAVIGATION_BINDINGS = (

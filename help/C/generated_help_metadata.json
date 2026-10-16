@@ -1,150 +1,88 @@
 {
-  "groups": [
-    {
-      "id": "profiles",
-      "title": "Profiles",
-      "desc": "Create, switch, rename, and remove settings profiles",
-      "panels": [
-        "manual.profiles"
-      ]
-    },
-    {
-      "id": "sleep-mode",
-      "title": "Sleep mode",
-      "desc": "Disable Orca automatically for selected applications",
-      "panels": [
-        "manual.sleep-mode"
-      ]
-    },
-    {
-      "id": "speech",
-      "title": "Speech",
-      "desc": "Control Orca's spoken output",
-      "panels": [
-        "manual.speech",
-        "manual.global-voice-settings",
-        "manual.voice-sets",
-        "speech_presenter.verbosity",
-        "speech_presenter.tables",
-        "speech_presenter.progress-bars",
-        "speech_presenter.container-announcements",
-        "speech_presenter.on-screen-display"
-      ]
-    },
-    {
-      "id": "braille",
-      "title": "Braille",
-      "desc": "Control Orca's braille output",
-      "panels": [
-        "manual.braille",
-        "braille_presenter.verbosity",
-        "braille_presenter.display-settings",
-        "braille_presenter.flash-messages",
-        "braille_presenter.progress-bars",
-        "braille_presenter.on-screen-display"
-      ]
-    },
-    {
-      "id": "sound",
-      "title": "Sound",
-      "desc": "Control sound cues and progress-bar updates",
-      "panels": [
-        "manual.sound-output",
-        "sound_presenter.progress-bars"
-      ]
-    },
-    {
-      "id": "commands",
-      "title": "Commands",
-      "desc": "Choose keyboard layout, modifier keys, and command bindings",
-      "panels": [
-        "manual.commands"
-      ]
-    },
-    {
-      "id": "echo",
-      "title": "Echo",
-      "desc": "Choose what Orca speaks while you type",
-      "panels": [
-        "typing_echo_presenter.echo"
-      ]
-    },
-    {
-      "id": "flat-review",
-      "title": "Flat Review",
-      "desc": "Control how flat review follows focus and caret changes",
-      "panels": [
-        "flat_review_presenter.flat-review"
-      ]
-    },
-    {
-      "id": "mouse",
-      "title": "Mouse",
-      "desc": "Control what Orca presents as the pointer moves",
-      "panels": [
-        "mouse_review.mouse"
-      ]
-    },
-    {
-      "id": "documents",
-      "title": "Documents",
-      "desc": "Control navigation and presentation in documents and web content",
-      "panels": [
-        "manual.documents",
-        "document_presenter.caret-navigation",
-        "document_presenter.structural-navigation",
-        "document_presenter.table-navigation",
-        "document_presenter.native-navigation",
-        "math_presenter.math-presentation"
-      ]
-    },
-    {
-      "id": "say-all",
-      "title": "Say All",
-      "desc": "Control continuous reading",
-      "panels": [
-        "say_all_presenter.say-all"
-      ]
-    },
-    {
-      "id": "pronunciation",
-      "title": "Pronunciation",
-      "desc": "Customize how words are spoken",
-      "panels": [
-        "manual.pronunciation"
-      ]
-    },
-    {
-      "id": "spell-check",
-      "title": "Spell Check",
-      "desc": "Control how Orca presents spelling errors and suggestions",
-      "panels": [
-        "spellcheck_presenter.spell-check"
-      ]
-    },
-    {
-      "id": "chat",
-      "title": "Chat",
-      "desc": "Control how Orca presents chat messages",
-      "panels": [
-        "chat_presenter.chat"
-      ]
-    },
-    {
-      "id": "text-attributes",
-      "title": "Text Attributes",
-      "desc": "Choose which text formatting changes are spoken or marked in braille",
-      "panels": [
-        "manual.text-attributes"
-      ]
-    },
-    {
-      "id": "system-information",
-      "title": "System information",
-      "desc": "Choose how Orca presents date and time",
-      "panels": [
-        "system_information_presenter.system-information"
-      ]
-    }
+  "index": {
+    "title": "Orca Screen Reader",
+    "description": "Orca is a free, open source, extensible screen reader that provides access to the graphical desktop through speech and refreshable braille. It works with applications that provide accessibility information through the Assistive Technology Service Provider Interface (AT-SPI).",
+    "note_title": "Before you begin",
+    "note": "If you are not yet familiar with the navigation commands provided by your desktop environment, read that documentation first.",
+    "sections": [
+      {"id": "getting_started", "title": "Getting started"},
+      {"id": "reading", "title": "Reading documents and web pages"},
+      {"id": "reviewing", "title": "Reviewing and exploring objects"},
+      {"id": "output", "title": "Output and presentation"},
+      {"id": "interaction", "title": "Interacting with applications"},
+      {"id": "information", "title": "System information"},
+      {"id": "troubleshooting", "title": "Troubleshooting"}
+    ]
+  },
+  "feature_order": [
+    "introduction",
+    "preferences",
+    "features_keyboard_layout",
+    "features_learn_mode",
+    "features_reading_documents",
+    "features_reading_documents_browse_mode_and_focus_mode",
+    "features_reading_documents_caret_navigation",
+    "features_reading_documents_structural_navigation",
+    "features_reading_documents_table_navigation",
+    "features_reading_documents_native_navigation",
+    "features_reading_documents_live_regions",
+    "features_text_attributes",
+    "features_math_navigation",
+    "features_say_all",
+    "features_where_am_i",
+    "features_reviewing_objects_flat_review",
+    "features_reviewing_objects_orca_find",
+    "features_reviewing_objects_object_navigation",
+    "features_reviewing_objects_mouse_review",
+    "features_braille",
+    "features_braille_output",
+    "features_braille_verbosity",
+    "features_braille_display_settings",
+    "features_braille_flash_messages",
+    "features_braille_progress_bars",
+    "features_braille_on_screen_display",
+    "features_typing_echo",
+    "features_speech_and_voices",
+    "features_speech_and_voices_output",
+    "features_speech_and_voices_global_voice_settings",
+    "features_speech_and_voices_voice_sets",
+    "features_speech_and_voices_language_switching",
+    "features_speech_and_voices_pronunciation_dictionary",
+    "features_speech_and_voices_verbosity",
+    "features_speech_and_voices_tables",
+    "features_speech_and_voices_progress_bars",
+    "features_speech_and_voices_container_announcements",
+    "features_speech_and_voices_on_screen_display",
+    "features_sound",
+    "features_actions",
+    "features_bypass_mode",
+    "features_chat",
+    "features_sleep_mode",
+    "features_profiles",
+    "features_spell_check",
+    "features_user_extensions",
+    "features_clipboard",
+    "features_system_information",
+    "features_notifications",
+    "features_debugging"
+  ],
+  "preference_order": [
+    "profiles",
+    "sleep-mode",
+    "speech",
+    "braille",
+    "sound",
+    "commands",
+    "echo",
+    "flat-review",
+    "mouse",
+    "documents",
+    "say-all",
+    "pronunciation",
+    "spell-check",
+    "chat",
+    "text-attributes",
+    "system-information",
+    "extensions"
   ]
 }

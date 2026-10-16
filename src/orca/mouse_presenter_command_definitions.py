@@ -27,9 +27,19 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc
 
 if TYPE_CHECKING:
     from .mouse_presenter import MousePresenter
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for mouse commands."""
+
+    return CommandGroupDoc(
+        summary="Toggle Mouse Review, route the pointer, or click the current item.",
+        see_also=("reviewing.mouse-review",),
+    )
 
 
 def get_commands(owner: MousePresenter) -> list[Command]:

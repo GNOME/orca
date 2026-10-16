@@ -40,6 +40,12 @@ from . import (
     speech_presenter,
     text_attribute_manager,
 )
+from .help_metadata import (
+    PreferenceCategoryDoc,
+    PreferenceControlDoc,
+    PreferencePanelDoc,
+    PreferenceValueDoc,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -57,100 +63,96 @@ class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     )
 
     @classmethod
-    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+    def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for container announcement preferences."""
 
-        return preferences_grid_base.PreferencePanelDoc(
+        return PreferencePanelDoc(
             title=guilabels.ANNOUNCEMENTS,
             panel_id="speech_presenter.container-announcements",
-            description=(
-                "Container announcements control whether Orca announces when navigation "
-                "enters or exits document and web content containers."
-            ),
             schema="speech",
             controls=(
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.ANNOUNCE_WHEN_ENTERING,
                     kind="group",
-                    summary="Controls which container boundaries Orca announces.",
+                    summary="Selects the structures Orca announces. This group also includes "
+                    "tracked-change announcements.",
                     controls=(
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_ARTICLES,
                             kind="switch",
-                            summary="Controls whether Orca announces when entering or exiting "
-                            "an article.",
+                            summary=("Controls whether Orca announces articles."),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_ARTICLE,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_BLOCKQUOTES,
                             kind="switch",
-                            summary="Controls whether Orca announces when entering or exiting "
-                            "a blockquote.",
+                            summary=("Controls whether Orca announces blockquotes."),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_BLOCKQUOTE,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_CODE_BLOCKS,
                             kind="switch",
-                            summary="Controls whether Orca announces when entering or exiting "
-                            "a code block.",
+                            summary=("Controls whether Orca announces code blocks."),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_CODE_BLOCK,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_EMBEDDED_DOCUMENTS,
                             kind="switch",
-                            summary="Controls whether Orca announces when entering or exiting "
-                            "a document embedded within an application.",
+                            summary=(
+                                "Controls whether Orca announces documents embedded within an "
+                                "application."
+                            ),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_DOCUMENT,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_FORMS,
                             kind="switch",
-                            summary="Controls whether Orca announces when entering or exiting "
-                            "a form.",
+                            summary=("Controls whether Orca announces forms."),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_FORM,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_LANDMARKS,
                             kind="switch",
-                            summary="Controls whether Orca announces when entering or exiting "
-                            "an ARIA landmark.",
+                            summary=(
+                                "Controls whether Orca announces landmarks, named regions "
+                                "of a page such as navigation or main content."
+                            ),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_LANDMARK,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_LISTS,
                             kind="switch",
-                            summary="Controls whether Orca announces when entering or exiting "
-                            "a list.",
+                            summary=("Controls whether Orca announces lists."),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_LIST,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_PANELS,
                             kind="switch",
-                            summary="Controls whether Orca announces when entering or exiting "
-                            "a panel.",
+                            summary=("Controls whether Orca announces panels."),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_GROUPING,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_TABLES,
                             kind="switch",
-                            summary="Controls whether Orca announces when entering or exiting "
-                            "a table.",
+                            summary=("Controls whether Orca announces tables."),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_TABLE,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_TRACKED_CHANGES,
                             kind="switch",
-                            summary="Controls whether Orca announces tracked changes such as "
-                            "insertions, deletions, highlights, and suggestions.",
+                            summary=(
+                                "Controls whether Orca announces tracked changes such as "
+                                "insertions, deletions, highlights, and suggestions."
+                            ),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_TRACKED_CHANGES,
                         ),
@@ -189,39 +191,37 @@ class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     )
 
     @classmethod
-    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+    def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for speech progress-bar preferences."""
 
-        return preferences_grid_base.PreferencePanelDoc(
+        return PreferencePanelDoc(
             title=guilabels.PROGRESS_BARS,
             panel_id="speech_presenter.progress-bars",
-            description=(
-                "Progress bar settings control whether Orca speaks progress changes, how "
-                "often it speaks them, and which progress bars are included."
-            ),
             schema="speech",
             controls=(
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.GENERAL_SPEAK_UPDATES,
                     kind="switch",
                     summary="Controls whether Orca speaks progress-bar updates.",
                     schema="speech",
                     key=speech_presenter.SpeechPresenter.KEY_SPEAK_PROGRESS_BAR_UPDATES,
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.GENERAL_FREQUENCY_SECS,
                     kind="integer",
-                    summary="Sets how many seconds Orca waits between spoken updates for "
-                    "the same progress bar.",
+                    summary=(
+                        "Sets the minimum number of seconds between updates for the same "
+                        "progress bar. Zero removes this minimum delay."
+                    ),
                     schema="speech",
                     key=speech_presenter.SpeechPresenter.KEY_PROGRESS_BAR_SPEECH_INTERVAL,
                     minimum="0",
                     maximum="100",
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.GENERAL_APPLIES_TO,
                     kind="choice",
-                    summary="Controls which progress bars Orca speaks.",
+                    summary=("Selects which progress bars provide updates."),
                     schema="speech",
                     key=speech_presenter.SpeechPresenter.KEY_PROGRESS_BAR_SPEECH_VERBOSITY,
                     values=(
@@ -230,18 +230,17 @@ class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         guilabels.PROGRESS_BAR_WINDOW,
                     ),
                     value_docs=(
-                        preferences_grid_base.PreferenceValueDoc(
+                        PreferenceValueDoc(
                             label=guilabels.PROGRESS_BAR_ALL,
-                            summary="Speaks updates for progress bars in any application or "
-                            "window.",
+                            summary=("Progress bars in all applications."),
                         ),
-                        preferences_grid_base.PreferenceValueDoc(
+                        PreferenceValueDoc(
                             label=guilabels.PROGRESS_BAR_APPLICATION,
-                            summary="Speaks updates for progress bars in the active application.",
+                            summary=("Progress bars in the active application."),
                         ),
-                        preferences_grid_base.PreferenceValueDoc(
+                        PreferenceValueDoc(
                             label=guilabels.PROGRESS_BAR_WINDOW,
-                            summary="Speaks updates for progress bars in the active window.",
+                            summary=("Progress bars in the active window."),
                         ),
                     ),
                 ),
@@ -294,24 +293,26 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     )
 
     @classmethod
-    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+    def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for speech verbosity preferences."""
 
-        return preferences_grid_base.PreferencePanelDoc(
+        return PreferencePanelDoc(
             title=guilabels.VERBOSITY,
+            target="speech.verbosity",
             panel_id="speech_presenter.verbosity",
+            command_groups=("speech.commands.verbosity-and-details", "speech.commands.indentation"),
             description=(
                 "Verbosity settings control how much detail Orca speaks about objects, "
                 "text, and formatting."
             ),
             schema="speech",
             controls=(
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.GENERAL,
                     kind="group",
                     summary="Controls overall speech detail.",
                     controls=(
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SPEECH_SYSTEM_MESSAGES_ARE_DETAILED,
                             kind="switch",
                             summary="Controls whether Orca uses detailed messages or brief "
@@ -319,20 +320,23 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_MESSAGES_ARE_DETAILED,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.OBJECT_PRESENTATION_IS_DETAILED,
                             kind="switch",
+                            schema="speech",
+                            key="verbosity-level",
+                            default_labels=(PreferenceValueDoc("on", "verbose"),),
                             summary="Controls whether Orca provides brief or detailed object "
                             "descriptions.",
                         ),
                     ),
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.SPEECH_OBJECT_DETAILS,
                     kind="group",
                     summary="Controls which object, text, and formatting details Orca speaks.",
                     controls=(
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SPEECH_ONLY_SPEAK_DISPLAYED_TEXT,
                             kind="switch",
                             summary="When enabled, Orca speaks only text displayed on screen "
@@ -341,17 +345,17 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_ONLY_SPEAK_DISPLAYED_TEXT,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_DESCRIPTION,
                             kind="switch",
                             summary=(
-                                "Controls whether Orca speaks an object's accessible "
-                                "description in addition to its accessible name."
+                                "Controls whether Orca speaks the description supplied by "
+                                "the application in addition to an object's name."
                             ),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_DESCRIPTION,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_CHILD_POSITION,
                             kind="switch",
                             summary="Controls whether Orca speaks an item's position in a set, "
@@ -359,7 +363,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_POSITION_IN_SET,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.PRESENT_OBJECT_MNEMONICS,
                             kind="switch",
                             summary=(
@@ -369,7 +373,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_WIDGET_MNEMONIC,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_TUTORIAL_MESSAGES,
                             kind="switch",
                             summary=(
@@ -379,7 +383,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_TUTORIAL_MESSAGES,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_BLANK_LINES,
                             kind="switch",
                             summary="Controls whether Orca speaks blank lines when navigating "
@@ -388,7 +392,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_BLANK_LINES,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_MISSPELLED_WORD_INDICATOR,
                             kind="switch",
                             summary="Controls whether Orca announces the misspelled-word "
@@ -397,7 +401,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_MISSPELLED_INDICATOR,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.TEXT_ATTRIBUTE_CHANGES,
                             kind="choice",
                             summary="Controls when Orca speaks text formatting changes.",
@@ -409,7 +413,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 guilabels.TEXT_ATTRIBUTE_CHANGES_ALWAYS,
                             ),
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_INDENTATION,
                             kind="switch",
                             summary="Controls whether Orca speaks indentation information for "
@@ -417,7 +421,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_INDENTATION,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SPEECH_INDENTATION_ONLY_IF_CHANGED,
                             kind="switch",
                             summary="Controls whether indentation is announced only when it "
@@ -602,25 +606,30 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Tables preferences page."""
 
     @classmethod
-    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+    def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for table speech preferences."""
 
-        return preferences_grid_base.PreferencePanelDoc(
+        return PreferencePanelDoc(
             title=guilabels.TABLES,
             panel_id="speech_presenter.tables",
+            command_groups=("speech.commands.tables",),
             description=(
                 "Table settings control how Orca speaks row and cell information while "
-                "you navigate tables."
+                "you navigate tables. In some tables, such as a message list, speaking "
+                "the full row can provide useful context. In other tables, such as a "
+                "spreadsheet, speaking only the focused cell can make navigation faster "
+                "and less verbose. These settings are independent for application tables, "
+                "document tables, and spreadsheets."
             ),
             schema="speech",
             controls=(
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.TABLE_ROW_NAVIGATION,
                     kind="group",
                     summary="Controls whether Orca speaks an entire row or only the focused "
                     "cell when moving by row.",
                     controls=(
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_FULL_ROW_IN_GUI_TABLES,
                             kind="switch",
                             summary=(
@@ -630,7 +639,7 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_ROW_IN_GUI_TABLE,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_FULL_ROW_IN_DOCUMENT_TABLES,
                             kind="switch",
                             summary=(
@@ -641,7 +650,7 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="speech",
                             key=(speech_presenter.SpeechPresenter.KEY_SPEAK_ROW_IN_DOCUMENT_TABLE),
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_FULL_ROW_IN_SPREADSHEETS,
                             kind="switch",
                             summary=(
@@ -653,19 +662,19 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         ),
                     ),
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.TABLE_CELL_NAVIGATION,
                     kind="group",
                     summary="Controls which cell details Orca speaks while navigating tables.",
                     controls=(
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.TABLE_SPEAK_CELL_HEADER,
                             kind="switch",
                             summary="Controls whether Orca speaks the header of a table cell.",
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_CELL_HEADERS,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.TABLE_SPEAK_CELL_COORDINATES,
                             kind="switch",
                             summary="Controls whether Orca speaks table cell coordinates in "
@@ -673,7 +682,7 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_CELL_COORDINATES,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SPREADSHEET_SPEAK_CELL_COORDINATES,
                             kind="switch",
                             summary="Controls whether Orca speaks spreadsheet cell coordinates.",
@@ -682,7 +691,7 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 speech_presenter.SpeechPresenter.KEY_ANNOUNCE_SPREADSHEET_CELL_COORDINATES  # pylint: disable=line-too-long
                             ),
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.TABLE_SPEAK_CELL_SPANS,
                             kind="switch",
                             summary="Controls whether Orca speaks how many rows and columns a "
@@ -690,7 +699,7 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_CELL_SPAN,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SPREADSHEET_SPEAK_SELECTED_RANGE,
                             kind="switch",
                             summary="Controls whether Orca speaks the full selected range when "
@@ -824,16 +833,16 @@ class SpeechOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     _documentation_summary = "Use these settings to control the visual speech monitor window."
 
     @classmethod
-    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+    def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for speech on-screen display preferences."""
 
-        return preferences_grid_base.PreferencePanelDoc(
+        return PreferencePanelDoc(
             title=guilabels.ON_SCREEN_DISPLAY,
             panel_id="speech_presenter.on-screen-display",
-            description=guilabels.SPEECH_MONITOR_INFO,
+            command_groups=("speech.commands.on-screen-display",),
             schema="speech",
             controls=(
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.SPEECH_MONITOR_FONT_SIZE,
                     kind="integer",
                     summary="Sets the text size in the on-screen speech display.",
@@ -842,14 +851,14 @@ class SpeechOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     minimum="8",
                     maximum="72",
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.SPEECH_MONITOR_FOREGROUND,
                     kind="color",
                     summary="Sets the text color in the on-screen speech display.",
                     schema="speech",
                     key=speech_presenter.SpeechPresenter.KEY_MONITOR_FOREGROUND,
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.SPEECH_MONITOR_BACKGROUND,
                     kind="color",
                     summary="Sets the background color in the on-screen speech display.",
@@ -895,62 +904,75 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """Main speech preferences grid with enable toggle and categorized settings."""
 
     @classmethod
-    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+    def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for the speech preferences landing page."""
 
-        return preferences_grid_base.PreferencePanelDoc(
+        return PreferencePanelDoc(
             title=guilabels.SPEECH,
-            panel_id="manual.speech",
-            description=(
-                "Speech settings control Orca's spoken output. The list contains "
-                "speech-related settings and pages.\n\n"
-                "Activate a row, or press Right Arrow, to open its settings. Press "
-                "Left Arrow, Escape, or Alt+Left to return to the list."
+            panel_id="speech_manager.speech",
+            command_groups=("speech.commands.support",),
+            category=PreferenceCategoryDoc(
+                category_id="speech",
+                title="Speech",
+                description=(
+                    "Configure Orca's spoken output, including voices, language switching, and "
+                    "how much information is spoken."
+                ),
+                panels=(
+                    "speech_manager.speech",
+                    "speech_manager.global-voice-settings",
+                    "speech_manager.voice-sets",
+                    "speech_presenter.verbosity",
+                    "speech_presenter.tables",
+                    "speech_presenter.progress-bars",
+                    "speech_presenter.container-announcements",
+                    "speech_presenter.on-screen-display",
+                ),
             ),
+            description=("Speech settings control Orca's spoken output."),
             show_available_settings=False,
             schema="speech",
             controls=(
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.SPEECH_ENABLE_SPEECH,
                     kind="switch",
                     summary="Turns speech output on or off.",
                     schema="speech",
                     key="enable",
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.VOICE_GLOBAL_VOICE_SETTINGS,
                     kind="page",
-                    summary="Opens settings that apply to Orca's spoken output overall.",
+                    summary="Opens speech settings that are not tied to a voice type.",
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.LANGUAGE_VOICE_SETTINGS,
                     kind="page",
-                    summary="Opens settings for voice sets and the voice used for each kind "
-                    "of spoken content.",
+                    summary="Opens settings for choosing and adjusting voices.",
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.VERBOSITY,
                     kind="page",
                     summary="Opens settings for how much information Orca speaks.",
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.TABLES,
                     kind="page",
                     summary="Opens settings for how Orca speaks table rows, cells, and "
                     "coordinates.",
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.PROGRESS_BARS,
                     kind="page",
                     summary="Opens settings for when Orca speaks progress-bar updates.",
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.ANNOUNCEMENTS,
                     kind="page",
                     summary="Opens settings for which document and web-container boundaries "
                     "Orca announces.",
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.ON_SCREEN_DISPLAY,
                     kind="page",
                     summary="Opens settings for the on-screen speech display.",

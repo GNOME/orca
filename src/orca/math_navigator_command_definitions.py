@@ -27,9 +27,54 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandDoc, CommandGroupDoc, CommandSectionDoc
 
 if TYPE_CHECKING:
     from .math_navigator import MathNavigator
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for math navigation commands."""
+
+    return CommandGroupDoc(
+        summary="Move through mathematical expressions.",
+        commands=tuple(
+            CommandDoc(name=f"math_{prefix.lower()}_{digit}", summary=f"Uses place marker {digit}.")
+            for prefix in PLACE_MARKER_PREFIXES
+            for digit in range(10)
+        ),
+        sections=(
+            CommandSectionDoc(
+                title="Entering and leaving math navigation",
+                command_names=("math_enter", "math_exit"),
+            ),
+            CommandSectionDoc(
+                title="Moving through expressions",
+                command_names=tuple(
+                    name
+                    for name, *_rest in COMMAND_SPECS
+                    if name.startswith(("math_move_", "math_zoom_", "math_toggle_zoom_lock_"))
+                ),
+            ),
+            CommandSectionDoc(
+                title="Place markers",
+                command_names=tuple(
+                    f"math_{prefix.lower()}_{digit}"
+                    for prefix in PLACE_MARKER_PREFIXES
+                    for digit in range(10)
+                ),
+            ),
+            CommandSectionDoc(
+                title="Reading and describing expressions",
+                command_names=tuple(
+                    name
+                    for name, *_rest in COMMAND_SPECS
+                    if name != "math_exit"
+                    and not name.startswith(("math_move_", "math_zoom_", "math_toggle_zoom_lock_"))
+                ),
+            ),
+        ),
+    )
 
 
 PLACE_MARKER_PREFIXES = ("MoveTo", "SetPlacemarker", "Read", "Describe")

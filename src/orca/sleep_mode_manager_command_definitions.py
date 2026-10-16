@@ -26,9 +26,18 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc
 
 if TYPE_CHECKING:
     from .sleep_mode_manager import SleepModeManager
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for sleep mode commands."""
+
+    return CommandGroupDoc(
+        summary="Sleep mode temporarily disables Orca for the current application.",
+    )
 
 
 def get_commands(owner: SleepModeManager) -> list[Command]:

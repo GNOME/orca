@@ -27,9 +27,18 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc
 
 if TYPE_CHECKING:
     from .bypass_mode_manager import BypassModeManager
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for bypass mode commands."""
+
+    return CommandGroupDoc(
+        summary="Pass keys to the application temporarily.",
+    )
 
 
 def get_commands(owner: BypassModeManager) -> list[Command]:

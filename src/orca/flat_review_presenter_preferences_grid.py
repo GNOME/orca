@@ -25,6 +25,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from . import flat_review_presenter, guilabels, preferences_grid_base
+from .help_metadata import (
+    PreferenceCategoryDoc,
+    PreferenceControlDoc,
+    PreferencePanelDoc,
+    PreferenceValueDoc,
+)
 
 if TYPE_CHECKING:
     from .flat_review_presenter import FlatReviewPresenter
@@ -39,19 +45,25 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     )
 
     @classmethod
-    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+    def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for flat review preferences."""
 
-        return preferences_grid_base.PreferencePanelDoc(
+        return PreferencePanelDoc(
             title=guilabels.FLAT_REVIEW,
             panel_id="flat_review_presenter.flat-review",
-            description=(
-                "Flat review lets you examine the contents of the window as a sequence "
-                "of lines, items, and characters, independently of the focus and caret."
+            category=PreferenceCategoryDoc(
+                category_id="flat-review",
+                title="Flat Review",
+                description=(
+                    "Flat review lets you examine visible window content without moving focus "
+                    "or the caret. Configure how it follows your location and presents updates."
+                ),
+                panels=("flat_review_presenter.flat-review",),
             ),
+            command_groups=("commands.flat-review",),
             schema="flat-review",
             controls=(
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.FLAT_REVIEW_FOLLOW_FOCUS,
                     kind="choice",
                     summary=(
@@ -60,14 +72,14 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     schema="flat-review",
                     key=flat_review_presenter.FlatReviewPresenter.KEY_FOCUS_TRACKING,
                     value_docs=(
-                        preferences_grid_base.PreferenceValueDoc(
+                        PreferenceValueDoc(
                             label=guilabels.FLAT_REVIEW_FOLLOW_ALWAYS,
                             value="on",
                             summary=(
                                 "Flat review moves whenever the focus or caret location changes."
                             ),
                         ),
-                        preferences_grid_base.PreferenceValueDoc(
+                        PreferenceValueDoc(
                             label=guilabels.FLAT_REVIEW_FOLLOW_AUTOMATICALLY,
                             value="auto",
                             summary=(
@@ -75,14 +87,14 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "location is useful."
                             ),
                         ),
-                        preferences_grid_base.PreferenceValueDoc(
+                        PreferenceValueDoc(
                             label=guilabels.FLAT_REVIEW_FOLLOW_NEVER,
                             value="off",
                             summary="Flat review stays where you last moved it.",
                         ),
                     ),
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.FLAT_REVIEW_SPEAK_UPDATES,
                     kind="switch",
                     summary=(
@@ -91,7 +103,7 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     schema="flat-review",
                     key=flat_review_presenter.FlatReviewPresenter.KEY_SPEAK_UPDATES,
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.FLAT_REVIEW_DISPLAY_UPDATES,
                     kind="switch",
                     summary=(
@@ -101,7 +113,7 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     schema="flat-review",
                     key=flat_review_presenter.FlatReviewPresenter.KEY_DISPLAY_UPDATES,
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.FLAT_REVIEW_RESTRICT,
                     kind="switch",
                     summary=(

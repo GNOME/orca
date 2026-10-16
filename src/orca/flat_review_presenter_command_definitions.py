@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING
 
 from . import braille, cmdnames, keybindings
 from .command import BrailleCommand, Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc, CommandSectionDoc
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -35,6 +36,84 @@ if TYPE_CHECKING:
     from .scripts import default
 
     CommandCallback = Callable[[default.Script, InputEvent | None, bool], bool]
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for flat review commands."""
+
+    return CommandGroupDoc(
+        summary=(
+            "Flat review treats the contents of a window as lines, words, "
+            "and characters for review."
+        ),
+        see_also=("reviewing.flat-review",),
+        sections=(
+            CommandSectionDoc(
+                title="Starting and positioning review",
+                command_types=("keyboard",),
+                command_names=(
+                    "toggleFlatReviewModeHandler",
+                    "reviewHomeHandler",
+                    "reviewEndHandler",
+                    "reviewBottomLeftHandler",
+                    "move_review_to_focus",
+                    "move_focus_to_review",
+                ),
+            ),
+            CommandSectionDoc(
+                title="Lines",
+                command_types=("keyboard",),
+                command_names=(
+                    "reviewPreviousLineHandler",
+                    "reviewCurrentLineHandler",
+                    "reviewNextLineHandler",
+                    "reviewSpellCurrentLineHandler",
+                    "reviewPhoneticCurrentLineHandler",
+                    "reviewEndOfLineHandler",
+                    "reviewAboveHandler",
+                    "reviewBelowHandler",
+                ),
+            ),
+            CommandSectionDoc(
+                title="Words and items",
+                command_types=("keyboard",),
+                command_names=(
+                    "reviewPreviousItemHandler",
+                    "reviewCurrentItemHandler",
+                    "reviewNextItemHandler",
+                    "reviewSpellCurrentItemHandler",
+                    "reviewPhoneticCurrentItemHandler",
+                ),
+            ),
+            CommandSectionDoc(
+                title="Characters",
+                command_types=("keyboard",),
+                command_names=(
+                    "reviewPreviousCharacterHandler",
+                    "reviewCurrentCharacterHandler",
+                    "reviewNextCharacterHandler",
+                    "reviewSpellCurrentCharacterHandler",
+                    "reviewUnicodeCurrentCharacterHandler",
+                ),
+            ),
+            CommandSectionDoc(
+                title="Objects and contents",
+                command_types=("keyboard",),
+                command_names=(
+                    "reviewCurrentAccessibleHandler",
+                    "showContentsHandler",
+                    "flatReviewCopyHandler",
+                    "flatReviewAppendHandler",
+                    "flatReviewSayAllHandler",
+                    "flatReviewToggleRestrictHandler",
+                ),
+            ),
+            CommandSectionDoc(
+                title="Braille display commands",
+                command_types=("braille",),
+            ),
+        ),
+    )
 
 
 # pylint: disable-next=too-many-arguments,too-many-positional-arguments

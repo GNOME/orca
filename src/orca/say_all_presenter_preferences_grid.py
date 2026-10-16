@@ -25,6 +25,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from . import guilabels, preferences_grid_base, say_all_presenter, text_attribute_manager
+from .help_metadata import (
+    PreferenceCategoryDoc,
+    PreferenceControlDoc,
+    PreferencePanelDoc,
+    PreferenceValueDoc,
+)
 
 if TYPE_CHECKING:
     from .say_all_presenter import SayAllPresenter
@@ -37,45 +43,58 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     _documentation_summary = "Use these settings to control Orca's continuous reading command."
 
     @classmethod
-    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+    def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for Say All preferences."""
 
-        return preferences_grid_base.PreferencePanelDoc(
+        return PreferencePanelDoc(
             title=guilabels.GENERAL_SAY_ALL,
             panel_id="say_all_presenter.say-all",
+            category=PreferenceCategoryDoc(
+                category_id="say-all",
+                title="Say All",
+                description=(
+                    "Say All reads continuously from your current location. Configure reading "
+                    "behavior and the information presented."
+                ),
+                panels=("say_all_presenter.say-all",),
+            ),
+            command_groups=("commands.say-all",),
             description="Say All settings control Orca's continuous reading command.",
             schema="say-all",
             controls=(
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.SAY_ALL_BY,
                     kind="choice",
                     summary=(
                         "Say All reads from the current location to the end of the document; "
-                        "this controls whether it pauses after each sentence or after each line."
+                        "this controls whether it reads by sentence or by line."
                     ),
                     schema="say-all",
                     key=say_all_presenter.SayAllPresenter.KEY_STYLE,
                     value_docs=(
-                        preferences_grid_base.PreferenceValueDoc(
+                        PreferenceValueDoc(
                             label=guilabels.SAY_ALL_STYLE_SENTENCE,
                             value=say_all_presenter.SayAllStyle.SENTENCE.string_name,
-                            summary="Pauses after each sentence.",
+                            summary="Reads a sentence at a time.",
                         ),
-                        preferences_grid_base.PreferenceValueDoc(
+                        PreferenceValueDoc(
                             label=guilabels.SAY_ALL_STYLE_LINE,
                             value=say_all_presenter.SayAllStyle.LINE.string_name,
-                            summary="Pauses after each line.",
+                            summary="Reads a line at a time.",
                         ),
                     ),
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.SPEECH_ONLY_SPEAK_DISPLAYED_TEXT,
                     kind="switch",
-                    summary=("Controls whether Say All skips text that is not visually displayed."),
+                    summary=(
+                        "Speaks text without additional information such as object roles "
+                        "and change announcements."
+                    ),
                     schema="say-all",
                     key=say_all_presenter.SayAllPresenter.KEY_ONLY_SPEAK_DISPLAYED_TEXT,
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY,
                     kind="group",
                     summary=(
@@ -83,7 +102,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "is active."
                     ),
                     controls=(
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SAY_ALL_UP_AND_DOWN_ARROW,
                             kind="switch",
                             summary=(
@@ -94,7 +113,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_REWIND_AND_FAST_FORWARD,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.SAY_ALL_STRUCTURAL_NAVIGATION,
                             kind="switch",
                             summary=(
@@ -107,7 +126,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         ),
                     ),
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.CHANGE_ANNOUNCEMENTS,
                     kind="group",
                     summary=(
@@ -115,16 +134,17 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "announces during Say All."
                     ),
                     controls=(
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_TRACKED_CHANGES,
                             kind="switch",
                             summary=(
-                                "Controls whether Orca announces tracked changes during Say All."
+                                "Controls whether Orca announces tracked changes such as "
+                                "insertions, deletions, highlights, and suggestions."
                             ),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_TRACKED_CHANGES,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.TEXT_ATTRIBUTE_CHANGES,
                             kind="choice",
                             summary=(
@@ -134,17 +154,17 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
                             value_docs=(
-                                preferences_grid_base.PreferenceValueDoc(
+                                PreferenceValueDoc(
                                     label=guilabels.TEXT_ATTRIBUTE_CHANGES_OFF,
                                     value="off",
                                     summary="Does not announce formatting changes.",
                                 ),
-                                preferences_grid_base.PreferenceValueDoc(
+                                PreferenceValueDoc(
                                     label=guilabels.TEXT_ATTRIBUTE_CHANGES_EDITABLE,
                                     value="editable-only",
                                     summary="Announces formatting changes only in editable text.",
                                 ),
-                                preferences_grid_base.PreferenceValueDoc(
+                                PreferenceValueDoc(
                                     label=guilabels.TEXT_ATTRIBUTE_CHANGES_ALWAYS,
                                     value="always",
                                     summary="Always announces formatting changes.",
@@ -153,7 +173,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         ),
                     ),
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.ANNOUNCEMENTS,
                     kind="group",
                     summary=(
@@ -161,70 +181,72 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "during Say All."
                     ),
                     controls=(
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_ARTICLES,
                             kind="switch",
-                            summary="Controls whether Orca announces articles during Say All.",
+                            summary=("Controls whether Orca announces articles."),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_ARTICLE,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_BLOCKQUOTES,
                             kind="switch",
-                            summary="Controls whether Orca announces blockquotes during Say All.",
+                            summary=("Controls whether Orca announces blockquotes."),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_BLOCKQUOTE,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_CODE_BLOCKS,
                             kind="switch",
-                            summary="Controls whether Orca announces code blocks during Say All.",
+                            summary=("Controls whether Orca announces code blocks."),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_CODE_BLOCK,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_EMBEDDED_DOCUMENTS,
                             kind="switch",
                             summary=(
-                                "Controls whether Orca announces embedded documents during Say All."
+                                "Controls whether Orca announces documents embedded within an "
+                                "application."
                             ),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_DOCUMENT,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_FORMS,
                             kind="switch",
-                            summary="Controls whether Orca announces forms during Say All.",
+                            summary=("Controls whether Orca announces forms."),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_FORM,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_LANDMARKS,
                             kind="switch",
                             summary=(
-                                "Controls whether Orca announces ARIA landmarks during Say All."
+                                "Controls whether Orca announces landmarks, named regions "
+                                "of a page such as navigation or main content."
                             ),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_LANDMARK,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_LISTS,
                             kind="switch",
-                            summary="Controls whether Orca announces lists during Say All.",
+                            summary=("Controls whether Orca announces lists."),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_LIST,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_PANELS,
                             kind="switch",
-                            summary="Controls whether Orca announces panels during Say All.",
+                            summary=("Controls whether Orca announces panels."),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_GROUPING,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_TABLES,
                             kind="switch",
-                            summary="Controls whether Orca announces tables during Say All.",
+                            summary=("Controls whether Orca announces tables."),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_TABLE,
                         ),

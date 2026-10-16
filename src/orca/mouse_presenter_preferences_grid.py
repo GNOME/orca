@@ -25,6 +25,11 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from . import guilabels, mouse_presenter, preferences_grid_base
+from .help_metadata import (
+    PreferenceCategoryDoc,
+    PreferenceControlDoc,
+    PreferencePanelDoc,
+)
 
 if TYPE_CHECKING:
     from .mouse_presenter import MousePresenter
@@ -39,26 +44,37 @@ class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     )
 
     @classmethod
-    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+    def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for mouse preferences."""
 
-        return preferences_grid_base.PreferencePanelDoc(
+        return PreferencePanelDoc(
             title=guilabels.MOUSE,
             panel_id="mouse_presenter.mouse",
-            description=guilabels.MOUSE_WAYLAND_WARNING,
+            category=PreferenceCategoryDoc(
+                category_id="mouse",
+                title="Mouse",
+                description=(
+                    "Mouse review presents the object under the pointer. Configure this "
+                    "behavior and mouse-triggered tooltips."
+                ),
+                panels=("mouse_presenter.mouse",),
+            ),
+            command_groups=("commands.mouse",),
             schema="mouse-review",
             controls=(
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.GENERAL_PRESENT_TOOLTIPS,
                     kind="switch",
                     summary=(
                         "Controls whether Orca presents tooltips that appear when the "
-                        "pointer hovers over an object."
+                        "pointer hovers over an object. Tooltips requested from the keyboard, "
+                        "such as with Ctrl+F1 in supported applications, are presented "
+                        "regardless of this setting."
                     ),
                     schema="mouse-review",
                     key=mouse_presenter.MousePresenter.KEY_PRESENT_TOOLTIPS,
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.GENERAL_SPEAK_OBJECT_UNDER_MOUSE,
                     kind="switch",
                     summary=(

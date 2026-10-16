@@ -26,6 +26,10 @@ from typing import TYPE_CHECKING
 
 from . import braille, cmdnames, debug
 from .command import BrailleCommand, Command, KeyboardCommand
+from .help_metadata import (
+    CommandGroupDoc,
+    CommandSectionDoc,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -33,6 +37,38 @@ if TYPE_CHECKING:
     from .braille_presenter import BraillePresenter
 
     CommandCallback = Callable[..., bool]
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for braille commands."""
+
+    return CommandGroupDoc(
+        summary="Control braille output, including panning.",
+        sections=(
+            CommandSectionDoc(
+                title="Panning and routing",
+                target="braille.commands.panning-and-routing",
+                command_names=(
+                    "panBrailleLeftHandler",
+                    "panBrailleRightHandler",
+                    "goBrailleHomeHandler",
+                    "processRoutingKeyHandler",
+                    "processBrailleCutBeginHandler",
+                    "processBrailleCutLineHandler",
+                ),
+            ),
+            CommandSectionDoc(
+                title="Contraction",
+                target="braille.commands.contraction",
+                command_names=("contractedBrailleHandler",),
+            ),
+            CommandSectionDoc(
+                title="On-screen display",
+                target="braille.commands.on-screen-display",
+                command_names=("toggle_braille_monitor",),
+            ),
+        ),
+    )
 
 
 def get_commands(owner: BraillePresenter) -> list[Command]:

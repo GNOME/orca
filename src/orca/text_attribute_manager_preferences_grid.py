@@ -31,13 +31,14 @@ from gi.repository import Gdk, GObject, Gtk
 from . import gsettings_registry, guilabels, orca_gui_helpers, text_attribute_manager
 from .ax_text import AXTextAttribute
 from .ax_utilities import AXUtilities
-from .preferences_grid_base import (
+from .help_metadata import (
     PreferenceActionDoc,
+    PreferenceCategoryDoc,
     PreferenceControlDoc,
     PreferencePanelDoc,
-    PreferencesGridBase,
     PreferenceValueDoc,
 )
+from .preferences_grid_base import PreferencesGridBase
 from .text_attribute_manager import PresentationMode
 
 
@@ -52,17 +53,28 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
 
         return PreferencePanelDoc(
             title=guilabels.TEXT_ATTRIBUTES,
-            panel_id="manual.text-attributes",
+            panel_id="text_attribute_manager.text-attributes",
+            category=PreferenceCategoryDoc(
+                category_id="text-attributes",
+                title="Text Attributes",
+                description=(
+                    "Text attributes describe formatting such as fonts, styles, and colors. "
+                    "Configure which attributes are spoken or shown in braille."
+                ),
+                panels=("text_attribute_manager.text-attributes",),
+            ),
+            command_names=(
+                "readCharAttributesHandler",
+                "show_character_attributes",
+                "cycle_text_attribute_change_mode",
+            ),
             description=(
-                "Text attributes are font, style, alignment, and other formatting "
-                "details associated with text."
-                "\n\n"
-                + guilabels.TEXT_ATTRIBUTES_INFO
-                + "\n\n"
-                + "The list contains one row for each text attribute. Use the presentation "
-                + "mode on a row to choose whether Orca speaks the attribute, marks it in "
-                + "braille, does both, or does neither. Use the row menu or drag handle to "
-                + "change the order in which attributes are presented."
+                "The list contains one row for each text attribute. Use the presentation "
+                "mode on a row to choose whether Orca speaks the attribute, marks it in "
+                "braille, does both, or does neither. Use the row menu or drag handle to "
+                "change the order in which attributes are presented. The speech choices "
+                "apply when you request the current character's formatting; they do not "
+                "filter automatic formatting-change announcements."
             ),
             schema="text-attributes",
             show_available_settings=False,

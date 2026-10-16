@@ -27,9 +27,23 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandDoc, CommandGroupDoc
 
 if TYPE_CHECKING:
     from .system_information_presenter import SystemInformationPresenter
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for system information commands."""
+
+    return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "present_modifier_keys_state", summary="Reports Caps Lock and Num Lock state."
+            ),
+        ),
+        summary=("Present details such as date, time, battery, CPU, and memory usage."),
+    )
 
 
 def get_commands(owner: SystemInformationPresenter) -> list[Command]:

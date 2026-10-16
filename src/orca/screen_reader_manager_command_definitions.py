@@ -26,9 +26,20 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc
 
 if TYPE_CHECKING:
     from .screen_reader_manager import ScreenReaderManager
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for screen reader management commands."""
+
+    return CommandGroupDoc(
+        summary=(
+            "These commands open Orca preferences or control the screen reader application itself."
+        ),
+    )
 
 
 def get_commands(owner: ScreenReaderManager) -> list[Command]:

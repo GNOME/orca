@@ -32,6 +32,12 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk  # pylint: disable=no-name-in-module
 
 from . import debug, gsettings_registry, guilabels, orca_gui_helpers, preferences_grid_base
+from .help_metadata import (
+    PreferenceActionDoc,
+    PreferenceCategoryDoc,
+    PreferenceControlDoc,
+    PreferencePanelDoc,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -47,37 +53,59 @@ class ProfilePreferencesGrid(  # pylint: disable=too-many-instance-attributes
     # pylint: disable=no-member
 
     @classmethod
-    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+    def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for profile preferences."""
 
-        return preferences_grid_base.PreferencePanelDoc(
+        return PreferencePanelDoc(
             title="Profiles",
-            panel_id="manual.profiles",
+            panel_id="profile_manager.profiles",
+            category=PreferenceCategoryDoc(
+                category_id="profiles",
+                title="Profiles",
+                description=(
+                    "Profiles are named collections of Orca settings for different activities. "
+                    "Create, select, rename, or remove them."
+                ),
+                panels=("profile_manager.profiles",),
+                application_details=(
+                    "In application preferences, select an existing profile to configure that "
+                    "application for the selected profile. For example, select a work profile "
+                    "to save Writer-specific settings for it. Selecting a profile also changes "
+                    "Orca's active profile. Create, rename, and remove profiles in the global "
+                    "Preferences window."
+                ),
+            ),
+            command_groups=("commands.profiles",),
             summary="Use these settings to create, switch, rename, and remove Orca settings "
             "profiles.",
-            description=guilabels.PROFILES_INFO,
             controls=(
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.CURRENT_PROFILE,
                     kind="list",
-                    summary="Lists the profiles you can select to use or modify.",
+                    summary=(
+                        "Select a profile to activate it, then adjust settings in the other "
+                        "categories and save your changes. Save any edits before switching; "
+                        "unsaved changes to the previous profile are discarded."
+                    ),
                     dynamic_values=True,
                     actions=(
-                        preferences_grid_base.PreferenceActionDoc(
+                        PreferenceActionDoc(
                             label=guilabels.PROFILE_CREATE_NEW,
-                            summary="Creates a new profile by copying the current profile's "
-                            "settings.",
+                            summary=(
+                                "Creates a profile from the current profile's saved settings "
+                                "and switches to it."
+                            ),
                             placement="header",
                         ),
                     ),
                     item_actions=(
-                        preferences_grid_base.PreferenceActionDoc(
-                            label="Rename Profile",
-                            summary="Renames the selected profile.",
+                        PreferenceActionDoc(
+                            label=guilabels.MENU_RENAME,
+                            summary=("Changes the selected profile's name."),
                         ),
-                        preferences_grid_base.PreferenceActionDoc(
-                            label="Remove Profile",
-                            summary="Removes the selected profile.",
+                        PreferenceActionDoc(
+                            label=guilabels.MENU_REMOVE_PROFILE,
+                            summary=("Deletes the selected profile and its saved settings."),
                         ),
                     ),
                 ),

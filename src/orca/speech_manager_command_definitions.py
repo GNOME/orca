@@ -27,9 +27,63 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import (
+    CommandGroupDoc,
+    CommandSectionDoc,
+)
 
 if TYPE_CHECKING:
     from .speech_manager import SpeechManager
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for speech management commands."""
+
+    return CommandGroupDoc(
+        target="speech.commands",
+        summary="Control Orca's spoken output.",
+        sections=(
+            CommandSectionDoc(
+                title="Speech support",
+                target="speech.commands.support",
+                command_names=("toggleSilenceSpeechHandler",),
+            ),
+            CommandSectionDoc(
+                title="Capitalization, punctuation, and numbers",
+                target="speech.commands.output",
+                command_names=(
+                    "cycleCapitalizationStyleHandler",
+                    "cycleSpeakingPunctuationLevelHandler",
+                    "changeNumberStyleHandler",
+                ),
+            ),
+            CommandSectionDoc(
+                title="Synthesizer",
+                target="speech.commands.system-and-synthesizer",
+                command_names=("cycleSynthesizerHandler",),
+            ),
+            CommandSectionDoc(
+                title="Voice sets",
+                target="speech.commands.voice-sets",
+                command_names=("cycleVoiceSetHandler",),
+                command_prefixes=("switch-voice-set-",),
+            ),
+            CommandSectionDoc(
+                title="Voice parameters",
+                target="speech.commands.voice-parameters",
+                command_names=(
+                    "decreaseSpeechRateHandler",
+                    "increaseSpeechRateHandler",
+                    "decreaseSpeechPitchHandler",
+                    "increaseSpeechPitchHandler",
+                    "decreaseSpeechInflectionHandler",
+                    "increaseSpeechInflectionHandler",
+                    "decreaseSpeechVolumeHandler",
+                    "increaseSpeechVolumeHandler",
+                ),
+            ),
+        ),
+    )
 
 
 def get_commands(owner: SpeechManager) -> list[Command]:

@@ -46,21 +46,36 @@ from . import (
     preferences_grid_base,
     presentation_manager,
 )
+from .help_metadata import (
+    PreferenceCategoryDoc,
+    PreferenceControlDoc,
+    PreferencePanelDoc,
+)
 
 
 class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """Preferences grid for approving and disabling user extensions."""
 
     @classmethod
-    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+    def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for user extension preferences."""
 
-        return preferences_grid_base.PreferencePanelDoc(
+        return PreferencePanelDoc(
             title=guilabels.USER_EXTENSIONS,
+            panel_id="extension_loader.user-extensions",
+            category=PreferenceCategoryDoc(
+                category_id="extensions",
+                title="User Extensions",
+                description=(
+                    "User extensions customize or add to Orca's features. Approve extensions "
+                    "and configure which ones are enabled."
+                ),
+                panels=("extension_loader.user-extensions",),
+                application_preferences=False,
+            ),
             summary="Use these settings to approve and enable user extensions.",
-            description=guilabels.EXTENSIONS_INFO,
             controls=(
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.USER_EXTENSIONS,
                     kind="list",
                     summary=(

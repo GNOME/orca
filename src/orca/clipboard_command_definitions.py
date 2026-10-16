@@ -27,9 +27,18 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc
 
 if TYPE_CHECKING:
     from .clipboard import ClipboardPresenter
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for clipboard commands."""
+
+    return CommandGroupDoc(
+        summary="Present the contents of the system clipboard.",
+    )
 
 
 def get_commands(owner: ClipboardPresenter) -> list[Command]:

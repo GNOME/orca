@@ -29,9 +29,19 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc
 
 if TYPE_CHECKING:
     from .notification_presenter import NotificationPresenter
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for notification commands."""
+
+    return CommandGroupDoc(
+        summary="Review messages received from the desktop.",
+        see_also=("reviewing.notifications",),
+    )
 
 
 def get_commands(owner: NotificationPresenter) -> list[Command]:

@@ -26,9 +26,18 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc
 
 if TYPE_CHECKING:
     from .action_presenter import ActionPresenter
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for action commands."""
+
+    return CommandGroupDoc(
+        summary="Actions are operations exposed by the current application for the focused item.",
+    )
 
 
 def get_commands(owner: ActionPresenter) -> list[Command]:

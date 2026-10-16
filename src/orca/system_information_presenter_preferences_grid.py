@@ -27,6 +27,12 @@ import time
 from typing import TYPE_CHECKING
 
 from . import guilabels, preferences_grid_base, system_information_presenter
+from .help_metadata import (
+    PreferenceCategoryDoc,
+    PreferenceControlDoc,
+    PreferencePanelDoc,
+    PreferenceValueDoc,
+)
 
 if TYPE_CHECKING:
     from .system_information_presenter import SystemInformationPresenter
@@ -37,28 +43,41 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 
     _gsettings_schema = "system-information"
     _documentation_summary = (
-        "Use these settings to choose how Orca presents the current date and time."
+        "Use these settings to configure how Orca presents the current date and time."
     )
 
     @classmethod
-    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+    def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for system-information preferences."""
 
-        return preferences_grid_base.PreferencePanelDoc(
+        return PreferencePanelDoc(
             title=guilabels.KB_GROUP_SYSTEM_INFORMATION,
             panel_id="system_information_presenter.system-information",
+            category=PreferenceCategoryDoc(
+                category_id="system-information",
+                title="System information",
+                description=(
+                    "Present the date, time, battery status, and resource usage, and "
+                    "configure date and time formats."
+                ),
+                panels=("system_information_presenter.system-information",),
+            ),
+            command_groups=("commands.system-information",),
             description=(
                 "System information settings control how Orca presents information such as "
                 "the current date and time."
             ),
             controls=(
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.TIME_AND_DATE,
                     kind="group",
                     summary="Controls how Orca presents the current date and time.",
                     controls=(
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.GENERAL_DATE_FORMAT,
+                            default_labels=(
+                                PreferenceValueDoc("the system locale's format", "%x"),
+                            ),
                             kind="choice",
                             summary=(
                                 "Selects the format Orca uses when presenting the current date."
@@ -67,8 +86,11 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             # pylint: disable-next=line-too-long
                             key=system_information_presenter.SystemInformationPresenter.KEY_DATE_FORMAT,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.GENERAL_TIME_FORMAT,
+                            default_labels=(
+                                PreferenceValueDoc("the system locale's format", "%X"),
+                            ),
                             kind="choice",
                             summary=(
                                 "Selects the format Orca uses when presenting the current time."

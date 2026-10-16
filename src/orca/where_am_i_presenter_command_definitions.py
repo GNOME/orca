@@ -26,9 +26,19 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc
 
 if TYPE_CHECKING:
     from .where_am_i_presenter import WhereAmIPresenter
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for Where Am I commands."""
+
+    return CommandGroupDoc(
+        summary="Present information about the current location.",
+        see_also=("reviewing.where-am-i", "text-attributes.feature"),
+    )
 
 
 def get_commands(owner: WhereAmIPresenter) -> list[Command]:

@@ -41,6 +41,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Atk, Gdk, GLib, Gtk  # pylint: disable=no-name-in-module
 
 from . import orca_gui_helpers
+from .help_metadata import PreferencePanelDoc
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Sequence
@@ -204,56 +205,6 @@ ControlType = (
     | ColorPreferenceControl
     | SelectionPreferenceControl
 )
-
-
-@dataclass(frozen=True)
-class PreferenceValueDoc:
-    """Documentation metadata for one preference value."""
-
-    label: str
-    value: str = ""
-    summary: str = ""
-
-
-@dataclass(frozen=True)
-class PreferenceActionDoc:
-    """Documentation metadata for an action associated with a preference control."""
-
-    label: str
-    summary: str = ""
-    placement: str = ""
-
-
-@dataclass(frozen=True)
-class PreferenceControlDoc:
-    """Documentation metadata for a preference control."""
-
-    label: str
-    kind: str
-    summary: str = ""
-    schema: str = ""
-    key: str = ""
-    values: tuple[str, ...] = ()
-    value_docs: tuple[PreferenceValueDoc, ...] = ()
-    actions: tuple[PreferenceActionDoc, ...] = ()
-    item_actions: tuple[PreferenceActionDoc, ...] = ()
-    controls: tuple[PreferenceControlDoc, ...] = ()
-    dynamic_values: bool = False
-    minimum: str = ""
-    maximum: str = ""
-
-
-@dataclass(frozen=True)
-class PreferencePanelDoc:
-    """Documentation metadata for a preference panel."""
-
-    title: str
-    panel_id: str = ""
-    summary: str = ""
-    description: str = ""
-    schema: str = ""
-    controls: tuple[PreferenceControlDoc, ...] = ()
-    show_available_settings: bool = True
 
 
 # pylint: disable=no-member

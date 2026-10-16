@@ -46,6 +46,11 @@ from . import (
 )
 from .acss import ACSS
 from .enums import VoiceType
+from .help_metadata import (
+    PreferenceControlDoc,
+    PreferencePanelDoc,
+    PreferenceValueDoc,
+)
 from .speechserver import CapitalizationStyle, PunctuationStyle
 
 if TYPE_CHECKING:
@@ -59,158 +64,168 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     _VOICE_SCHEMA = "voice"
 
     @classmethod
-    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+    def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for speech output preferences."""
 
-        return preferences_grid_base.PreferencePanelDoc(
+        return PreferencePanelDoc(
             title=guilabels.VOICE_GLOBAL_VOICE_SETTINGS,
-            panel_id="manual.global-voice-settings",
-            summary="Use these settings to enable speech, select the speech backend, and "
-            "configure global speech behavior.",
-            description=(
-                "Global voice settings apply to Orca's spoken output overall, including "
-                "which speech system and synthesizer are used and how numbers, "
-                "punctuation, capitalization, and languages are handled."
-            ),
+            target="speech.global-voice-settings",
+            panel_id="speech_manager.global-voice-settings",
+            command_groups=("speech.commands.system-and-synthesizer", "speech.commands.output"),
+            summary="Use these settings to configure speech behavior that is not tied to "
+            "a voice type.",
             schema="speech",
             controls=(
-                preferences_grid_base.PreferenceControlDoc(
-                    label=guilabels.VOICE_SPEECH_SYSTEM,
-                    kind="choice",
-                    summary="Selects the speech system Orca uses. Supported systems include "
-                    "Speech Dispatcher and Spiel.",
-                    schema="speech",
-                    key="speech-server",
-                    dynamic_values=True,
-                ),
-                preferences_grid_base.PreferenceControlDoc(
-                    label=guilabels.VOICE_SPEECH_SYNTHESIZER,
-                    kind="choice",
-                    summary="Selects the speech synthesizer. Examples include espeak-ng and Voxin.",
-                    schema="speech",
-                    key="synthesizer",
-                    dynamic_values=True,
-                ),
-                preferences_grid_base.PreferenceControlDoc(
-                    label=guilabels.PUNCTUATION_STYLE,
-                    kind="choice",
-                    summary="Controls how much punctuation Orca speaks.",
-                    schema="speech",
-                    key="punctuation-level",
-                    values=(
-                        guilabels.PUNCTUATION_STYLE_NONE,
-                        guilabels.PUNCTUATION_STYLE_SOME,
-                        guilabels.PUNCTUATION_STYLE_MOST,
-                        guilabels.PUNCTUATION_STYLE_ALL,
-                    ),
-                    value_docs=(
-                        preferences_grid_base.PreferenceValueDoc(
-                            label=guilabels.PUNCTUATION_STYLE_NONE,
-                            summary="Requests that punctuation symbols not be spoken.",
+                PreferenceControlDoc(
+                    label=guilabels.VOICE_GLOBAL_VOICE_SETTINGS,
+                    kind="group",
+                    controls=(
+                        PreferenceControlDoc(
+                            label=guilabels.VOICE_SPEECH_SYSTEM,
+                            kind="choice",
+                            summary="Selects the speech system Orca uses. Supported systems "
+                            "include Speech Dispatcher and Spiel.",
+                            schema="speech",
+                            key="speech-server",
+                            dynamic_values=True,
                         ),
-                        preferences_grid_base.PreferenceValueDoc(
-                            label=guilabels.PUNCTUATION_STYLE_SOME,
-                            summary=(
-                                "Requests that some punctuation symbols be spoken. The "
-                                "speech system determines which symbols are included."
+                        PreferenceControlDoc(
+                            label=guilabels.VOICE_SPEECH_SYNTHESIZER,
+                            kind="choice",
+                            summary="Selects the speech synthesizer. Examples include "
+                            "espeak-ng and Voxin.",
+                            schema="speech",
+                            key="synthesizer",
+                            dynamic_values=True,
+                        ),
+                        PreferenceControlDoc(
+                            label=guilabels.PUNCTUATION_STYLE,
+                            kind="choice",
+                            summary="Controls how much punctuation Orca speaks.",
+                            schema="speech",
+                            key="punctuation-level",
+                            values=(
+                                guilabels.PUNCTUATION_STYLE_NONE,
+                                guilabels.PUNCTUATION_STYLE_SOME,
+                                guilabels.PUNCTUATION_STYLE_MOST,
+                                guilabels.PUNCTUATION_STYLE_ALL,
+                            ),
+                            value_docs=(
+                                PreferenceValueDoc(
+                                    label=guilabels.PUNCTUATION_STYLE_NONE,
+                                    summary="Requests that punctuation symbols not be spoken.",
+                                ),
+                                PreferenceValueDoc(
+                                    label=guilabels.PUNCTUATION_STYLE_SOME,
+                                    summary=(
+                                        "Requests that some punctuation symbols be spoken. The "
+                                        "speech system determines which symbols are included."
+                                    ),
+                                ),
+                                PreferenceValueDoc(
+                                    label=guilabels.PUNCTUATION_STYLE_MOST,
+                                    summary=(
+                                        "Requests that most punctuation symbols be spoken. The "
+                                        "speech system determines which symbols are included."
+                                    ),
+                                ),
+                                PreferenceValueDoc(
+                                    label=guilabels.PUNCTUATION_STYLE_ALL,
+                                    summary="Requests that all punctuation symbols be spoken.",
+                                ),
                             ),
                         ),
-                        preferences_grid_base.PreferenceValueDoc(
-                            label=guilabels.PUNCTUATION_STYLE_MOST,
-                            summary=(
-                                "Requests that most punctuation symbols be spoken. The "
-                                "speech system determines which symbols are included."
+                        PreferenceControlDoc(
+                            label=guilabels.VOICE_CAPITALIZATION_STYLE,
+                            kind="choice",
+                            summary="Controls how Orca indicates uppercase letters.",
+                            schema="speech",
+                            key="capitalization-style",
+                            default_labels=(
+                                PreferenceValueDoc(
+                                    guilabels.CAPITALIZATION_STYLE_VOICE_ONLY, "none"
+                                ),
+                            ),
+                            values=(
+                                guilabels.CAPITALIZATION_STYLE_VOICE_ONLY,
+                                guilabels.CAPITALIZATION_STYLE_ICON,
+                                guilabels.CAPITALIZATION_STYLE_SPELL,
+                            ),
+                            value_docs=(
+                                PreferenceValueDoc(
+                                    label=guilabels.CAPITALIZATION_STYLE_VOICE_ONLY,
+                                    summary="Uses the configured uppercase voice without adding "
+                                    "another indication.",
+                                ),
+                                PreferenceValueDoc(
+                                    label=guilabels.CAPITALIZATION_STYLE_ICON,
+                                    summary=(
+                                        "Uses the configured uppercase voice and plays a tone "
+                                        "before speaking an uppercase letter."
+                                    ),
+                                ),
+                                PreferenceValueDoc(
+                                    label=guilabels.CAPITALIZATION_STYLE_SPELL,
+                                    summary=(
+                                        "Uses the configured uppercase voice and says capital "
+                                        "before speaking an uppercase letter."
+                                    ),
+                                ),
                             ),
                         ),
-                        preferences_grid_base.PreferenceValueDoc(
-                            label=guilabels.PUNCTUATION_STYLE_ALL,
-                            summary="Requests that all punctuation symbols be spoken.",
+                        PreferenceControlDoc(
+                            label=guilabels.VOICE_SPEAK_NUMBERS_AS_DIGITS,
+                            kind="switch",
+                            summary="When enabled, Orca speaks 123 as 1 2 3. When disabled, "
+                            "Orca sends the number to the synthesizer, which likely speaks it "
+                            "as one hundred and twenty three.",
+                            schema="speech",
+                            key="speak-numbers-as-digits",
+                        ),
+                        PreferenceControlDoc(
+                            label=guilabels.SPEECH_SPEAK_COLORS_AS_NAMES,
+                            kind="switch",
+                            summary="Controls whether Orca speaks colors by name, such as light "
+                            "blue, instead of as RGB values.",
+                            schema="speech",
+                            key="use-color-names",
+                        ),
+                        PreferenceControlDoc(
+                            label=guilabels.SPEECH_BREAK_INTO_CHUNKS,
+                            kind="switch",
+                            summary="Controls whether Orca inserts brief pauses between parts "
+                            "of a spoken presentation, such as name, role, state, mnemonic, "
+                            "and tutorial message.",
+                            schema="speech",
+                            key="insert-pauses-between-utterances",
+                        ),
+                        PreferenceControlDoc(
+                            label=guilabels.SPEECH_USE_PRONUNCIATION_DICTIONARY,
+                            kind="switch",
+                            summary="Controls whether Orca uses pronunciation dictionary entries.",
+                            schema="speech",
+                            key="use-pronunciation-dictionary",
                         ),
                     ),
                 ),
-                preferences_grid_base.PreferenceControlDoc(
-                    label=guilabels.VOICE_CAPITALIZATION_STYLE,
-                    kind="choice",
-                    summary="Controls how Orca indicates uppercase letters.",
-                    schema="speech",
-                    key="capitalization-style",
-                    values=(
-                        guilabels.CAPITALIZATION_STYLE_VOICE_ONLY,
-                        guilabels.CAPITALIZATION_STYLE_ICON,
-                        guilabels.CAPITALIZATION_STYLE_SPELL,
-                    ),
-                    value_docs=(
-                        preferences_grid_base.PreferenceValueDoc(
-                            label=guilabels.CAPITALIZATION_STYLE_VOICE_ONLY,
-                            summary="Uses the configured uppercase voice without adding "
-                            "another indication.",
-                        ),
-                        preferences_grid_base.PreferenceValueDoc(
-                            label=guilabels.CAPITALIZATION_STYLE_ICON,
-                            summary=(
-                                "Uses the configured uppercase voice and plays a tone "
-                                "before speaking an uppercase letter."
-                            ),
-                        ),
-                        preferences_grid_base.PreferenceValueDoc(
-                            label=guilabels.CAPITALIZATION_STYLE_SPELL,
-                            summary=(
-                                "Uses the configured uppercase voice and says capital "
-                                "before speaking an uppercase letter."
-                            ),
-                        ),
-                    ),
-                ),
-                preferences_grid_base.PreferenceControlDoc(
-                    label=guilabels.VOICE_SPEAK_NUMBERS_AS_DIGITS,
-                    kind="switch",
-                    summary="When enabled, Orca speaks 123 as 1 2 3. When disabled, "
-                    "Orca sends the number to the synthesizer, which likely speaks it "
-                    "as one hundred and twenty three.",
-                    schema="speech",
-                    key="speak-numbers-as-digits",
-                ),
-                preferences_grid_base.PreferenceControlDoc(
-                    label=guilabels.SPEECH_SPEAK_COLORS_AS_NAMES,
-                    kind="switch",
-                    summary="Controls whether Orca speaks colors by name, such as light "
-                    "blue, instead of as RGB values.",
-                    schema="speech",
-                    key="use-color-names",
-                ),
-                preferences_grid_base.PreferenceControlDoc(
-                    label=guilabels.SPEECH_BREAK_INTO_CHUNKS,
-                    kind="switch",
-                    summary="Controls whether Orca inserts brief pauses between parts "
-                    "of a spoken presentation, such as name, role, state, mnemonic, "
-                    "and tutorial message.",
-                    schema="speech",
-                    key="insert-pauses-between-utterances",
-                ),
-                preferences_grid_base.PreferenceControlDoc(
-                    label=guilabels.SPEECH_USE_PRONUNCIATION_DICTIONARY,
-                    kind="switch",
-                    schema="speech",
-                    key="use-pronunciation-dictionary",
-                ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.LANGUAGE_SWITCHING,
                     kind="group",
                     summary="Controls when Orca switches voices based on language.",
                     controls=(
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.AUTO_LANGUAGE_SWITCHING,
                             kind="switch",
                             schema="speech",
                             key="auto-language-switching",
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.AUTO_LANGUAGE_SWITCHING_UI,
                             kind="switch",
                             schema="speech",
                             key="auto-language-switching-ui",
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.ONLY_SWITCH_CONFIGURED_LANGUAGES,
                             kind="switch",
                             schema="speech",
@@ -828,53 +843,54 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     _PRIMARY_LABEL = guilabels.VOICE_SET_GLOBAL
 
     @classmethod
-    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+    def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for voice type preferences."""
 
-        return preferences_grid_base.PreferencePanelDoc(
+        return PreferencePanelDoc(
             title=guilabels.LANGUAGE_VOICE_SETTINGS,
-            panel_id="manual.voice-sets",
-            summary="Use these settings to configure voice sets and the voice used for each "
-            "kind of spoken content.",
-            description=guilabels.VOICE_SET_INFO,
+            target="speech.voice-sets",
+            panel_id="speech_manager.voice-sets",
+            command_groups=("speech.commands.voice-sets", "speech.commands.voice-parameters"),
+            summary="Use these settings to choose and adjust the voices Orca uses.",
             schema="voice",
             controls=(
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.LANGUAGE_VOICE_SETTINGS,
                     kind="group",
-                    summary="Lists the global voice set and any language-specific voice sets.",
+                    summary=f"Lists the {guilabels.VOICE_SET_GLOBAL} voice set and any "
+                    "language-specific voice sets.",
                     controls=(
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.VOICE_SET,
                             kind="choice",
                             summary="Selects the voice set to review or change.",
                             dynamic_values=True,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.VOICE_SET_CREATE_NEW,
                             kind="button",
                             summary="Creates a voice set for a specific language.",
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
-                            label="Delete Voice Set",
+                        PreferenceControlDoc(
+                            label=guilabels.GENERAL_REMOVE,
                             kind="button",
                             summary="Removes the selected language-specific voice set.",
                         ),
                     ),
                 ),
-                preferences_grid_base.PreferenceControlDoc(
+                PreferenceControlDoc(
                     label=guilabels.VOICE_VOICE_TYPE_SETTINGS,
                     kind="group",
                     summary="Lists the voice types in the selected voice set. Activate the "
                     "settings button for a voice type to change how that voice sounds.",
                     controls=(
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.VOICE_LANGUAGE,
                             kind="choice",
                             summary="Selects the language for the selected voice type.",
                             dynamic_values=True,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.VOICE_PERSON,
                             kind="choice",
                             summary="Selects the synthesizer voice for the selected voice type.",
@@ -882,25 +898,25 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             key="family-name",
                             dynamic_values=True,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.VOICE_RATE,
                             kind="integer",
                             schema="voice",
                             key="rate",
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.VOICE_PITCH,
                             kind="number",
                             schema="voice",
                             key="pitch",
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.VOICE_INFLECTION,
                             kind="number",
                             schema="voice",
                             key="pitch-range",
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
+                        PreferenceControlDoc(
                             label=guilabels.VOICE_VOLUME,
                             kind="number",
                             schema="voice",

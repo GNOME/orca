@@ -28,9 +28,46 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc, CommandSectionDoc
 
 if TYPE_CHECKING:
     from .table_navigator import TableNavigator
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for table navigation commands."""
+
+    return CommandGroupDoc(
+        target="documents.table-navigation.commands",
+        summary="Use Orca-controlled table navigation.",
+        sections=(
+            CommandSectionDoc(
+                title="Navigation",
+                command_names=(
+                    "table_navigator_toggle_enabled",
+                    "table_cell_left",
+                    "table_cell_right",
+                    "table_cell_up",
+                    "table_cell_down",
+                    "table_cell_first",
+                    "table_cell_last",
+                    "table_cell_beginning_of_row",
+                    "table_cell_end_of_row",
+                    "table_cell_top_of_column",
+                    "table_cell_bottom_of_column",
+                ),
+            ),
+            CommandSectionDoc(
+                title="Dynamic headers",
+                command_names=(
+                    "set_dynamic_column_headers_row",
+                    "clear_dynamic_column_headers_row",
+                    "set_dynamic_row_headers_column",
+                    "clear_dynamic_row_headers_column",
+                ),
+            ),
+        ),
+    )
 
 
 def get_commands(owner: TableNavigator) -> list[Command]:  # pylint: disable=too-many-locals

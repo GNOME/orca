@@ -26,9 +26,19 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import CommandGroupDoc
 
 if TYPE_CHECKING:
     from .flat_review_finder import FlatReviewFinder
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for find commands."""
+
+    return CommandGroupDoc(
+        summary="Search visible contents in a window and move flat review to a match.",
+        see_also=("reviewing.orca-find",),
+    )
 
 
 def get_commands(owner: FlatReviewFinder) -> list[Command]:

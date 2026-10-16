@@ -26,9 +26,27 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import (
+    CommandDoc,
+    CommandGroupDoc,
+)
 
 if TYPE_CHECKING:
     from .say_all_presenter import SayAllPresenter
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for Say All commands."""
+
+    return CommandGroupDoc(
+        summary="Say All reads from the current location to the end of the document.",
+        commands=(
+            CommandDoc(
+                name="sayAllHandler",
+                summary="Starts reading continuously from the current location.",
+            ),
+        ),
+    )
 
 
 def get_commands(owner: SayAllPresenter) -> list[Command]:

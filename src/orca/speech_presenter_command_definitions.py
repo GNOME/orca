@@ -26,9 +26,47 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
+from .help_metadata import (
+    CommandGroupDoc,
+    CommandSectionDoc,
+)
 
 if TYPE_CHECKING:
     from .speech_presenter import SpeechPresenter
+
+
+def get_documentation() -> CommandGroupDoc:
+    """Returns documentation metadata for speech presentation commands."""
+
+    return CommandGroupDoc(
+        target="speech.commands",
+        summary="Control how much information Orca speaks.",
+        sections=(
+            CommandSectionDoc(
+                title="Verbosity and details",
+                target="speech.commands.verbosity-and-details",
+                command_names=(
+                    "toggleSpeechVerbosityHandler",
+                    "cycle_text_attribute_change_mode",
+                ),
+            ),
+            CommandSectionDoc(
+                title="Table speech",
+                target="speech.commands.tables",
+                command_names=("toggleTableCellReadModeHandler",),
+            ),
+            CommandSectionDoc(
+                title="Indentation",
+                target="speech.commands.indentation",
+                command_names=("toggleSpeakingIndentationHandler",),
+            ),
+            CommandSectionDoc(
+                title="On-screen display",
+                target="speech.commands.on-screen-display",
+                command_names=("toggle_speech_monitor",),
+            ),
+        ),
+    )
 
 
 def get_commands(owner: SpeechPresenter) -> list[Command]:
