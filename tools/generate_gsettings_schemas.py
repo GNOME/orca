@@ -262,6 +262,12 @@ def _format_default(gtype: str, default: Any, key_name: str) -> str:  # pylint: 
 def build_schema_tree(src_dir: Path) -> ET.Element:
     """Build schema XML element tree from @gsetting decorators in source files."""
 
+    return build_schema_tree_with_names(src_dir)[0]
+
+
+def build_schema_tree_with_names(src_dir: Path) -> tuple[ET.Element, dict[str, str]]:
+    """Builds schema XML and returns its logical-name to schema-id mapping."""
+
     schemas, all_settings, all_enums = _discover_schemas(src_dir)
 
     schemalist = ET.Element("schemalist")
@@ -293,7 +299,7 @@ def build_schema_tree(src_dir: Path) -> ET.Element:
             ET.SubElement(key, "default").text = default_str
             ET.SubElement(key, "summary").text = setting.get("summary", "")
 
-    return schemalist
+    return schemalist, schemas
 
 
 def generate_schema_xml(src_dir: Path, output_path: str) -> None:
