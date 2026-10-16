@@ -56,6 +56,7 @@ unit_tests = [
   'unit_tests/test_flat_review_presenter.py',
   'unit_tests/test_focus_manager.py',
   'unit_tests/test_gsettings_registry.py',
+  'unit_tests/test_help_documentation_generator.py',
   'unit_tests/test_input_event.py',
   'unit_tests/test_input_event_manager.py',
   'unit_tests/test_integration_retry.py',
@@ -106,6 +107,15 @@ foreach test_file : unit_tests
     timeout: 120,
   )
 endforeach
+
+test(
+  'generated-help-preview-current',
+  python,
+  args: [files('../tools/generate_help_documentation.py'), '--check'],
+  env: test_env,
+  suite: 'unit',
+  timeout: 120,
+)
 
 orca_integration_tests = {
   'core': [
