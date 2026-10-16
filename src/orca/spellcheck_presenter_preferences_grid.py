@@ -40,10 +40,6 @@ class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Spell Check preferences page."""
 
     _gsettings_schema = "spellcheck"
-    _documentation_summary = (
-        "Use these settings to control what Orca announces while reviewing spelling and "
-        "grammar suggestions."
-    )
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
@@ -60,11 +56,6 @@ class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     "application's spell checker."
                 ),
                 panels=("spellcheck_presenter.spell-check",),
-            ),
-            description=(
-                "Spell Check settings control how much detail Orca presents when "
-                "interacting with supported application spell checkers.\n\n"
-                + guilabels.SPELL_CHECK_DESCRIPTION
             ),
             schema="spellcheck",
             controls=(

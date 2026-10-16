@@ -61,9 +61,9 @@ class SleepModePreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 application_preferences=False,
             ),
             command_groups=("commands.sleep-mode",),
-            summary="Use these settings to choose applications where Orca should automatically "
-            "enter sleep mode.",
-            description=(
+            link_summary="Use these settings to choose applications where Orca should "
+            "automatically enter sleep mode.",
+            instructions=(
                 "Add running applications that should automatically start asleep, then enable "
                 "or disable automatic sleep mode for each application in the list. An application "
                 "must be running to add it; saved applications remain listed even when they are "

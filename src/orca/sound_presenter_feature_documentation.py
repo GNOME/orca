@@ -41,6 +41,8 @@ def get_feature_documentation() -> FeaturePageDoc:
                 ),
                 details=(
                     "Sound icons are short audio cues for events such as an error. "
+                    "Their files are loaded from the sounds directory in your Orca "
+                    "user-data directory, normally `~/.local/share/orca/sounds`.\n\n"
                     "Progress-bar beeps rise in pitch as progress increases."
                 ),
                 preference_categories=("sound",),

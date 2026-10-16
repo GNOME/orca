@@ -40,7 +40,6 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Say All preferences page."""
 
     _gsettings_schema = "say-all"
-    _documentation_summary = "Use these settings to control Orca's continuous reading command."
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
@@ -59,7 +58,6 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 panels=("say_all_presenter.say-all",),
             ),
             command_groups=("commands.say-all",),
-            description="Say All settings control Orca's continuous reading command.",
             schema="say-all",
             controls=(
                 PreferenceControlDoc(

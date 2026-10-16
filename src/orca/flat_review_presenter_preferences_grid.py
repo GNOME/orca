@@ -40,9 +40,6 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Flat Review preferences page."""
 
     _gsettings_schema = "flat-review"
-    _documentation_summary = (
-        "Use these settings to control how flat review follows focus and presents updates."
-    )
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:

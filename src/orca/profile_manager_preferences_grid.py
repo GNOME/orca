@@ -76,7 +76,7 @@ class ProfilePreferencesGrid(  # pylint: disable=too-many-instance-attributes
                 ),
             ),
             command_groups=("commands.profiles",),
-            summary="Use these settings to create, switch, rename, and remove Orca settings "
+            link_summary="Use these settings to create, switch, rename, and remove Orca settings "
             "profiles.",
             controls=(
                 PreferenceControlDoc(

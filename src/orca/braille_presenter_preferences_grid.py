@@ -44,10 +44,6 @@ if TYPE_CHECKING:
 class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Braille Verbosity preferences page."""
 
-    _documentation_summary = (
-        "Use these settings to choose how much context and object information appears in braille."
-    )
-
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for braille verbosity preferences."""
@@ -141,10 +137,6 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
 
 class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Braille Display Settings preferences page."""
-
-    _documentation_summary = (
-        "Use these settings to control braille wrapping, contracted braille, and indicator dots."
-    )
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
@@ -422,8 +414,6 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
 class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Braille Flash Messages preferences page."""
 
-    _documentation_summary = "Use these settings to control temporary braille announcements."
-
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for braille flash message preferences."""
@@ -534,11 +524,6 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
 class BrailleProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Braille Progress Bars preferences page."""
 
-    _documentation_summary = (
-        "Use these settings to decide whether progress-bar changes are shown in braille and "
-        "how often they are updated."
-    )
-
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for braille progress-bar preferences."""
@@ -630,8 +615,6 @@ class BrailleProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGr
 
 class BrailleOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the braille on-screen display preferences page."""
-
-    _documentation_summary = "Use these settings to control the visual braille monitor window."
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:

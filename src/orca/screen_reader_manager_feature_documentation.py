@@ -110,7 +110,7 @@ def _get_configuration_documentation() -> FeaturePageDoc:
     """Returns documentation for opening and using preferences."""
 
     return FeaturePageDoc(
-        page_id="preferences",
+        page_id="preferences_guide",
         title="Preferences",
         link_title="Preferences",
         description="Open preferences and save your settings.",

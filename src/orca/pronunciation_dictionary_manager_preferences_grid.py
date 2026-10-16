@@ -77,7 +77,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
                 ),
                 panels=("pronunciation_dictionary_manager.pronunciation",),
             ),
-            description=(
+            instructions=(
                 "Add a new entry from the dictionary header. Edit or delete an existing "
                 "entry from its row."
             ),

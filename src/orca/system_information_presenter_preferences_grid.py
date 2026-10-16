@@ -42,9 +42,6 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Time and Date preferences page."""
 
     _gsettings_schema = "system-information"
-    _documentation_summary = (
-        "Use these settings to configure how Orca presents the current date and time."
-    )
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
@@ -63,10 +60,6 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 panels=("system_information_presenter.system-information",),
             ),
             command_groups=("commands.system-information",),
-            description=(
-                "System information settings control how Orca presents information such as "
-                "the current date and time."
-            ),
             controls=(
                 PreferenceControlDoc(
                     label=guilabels.TIME_AND_DATE,

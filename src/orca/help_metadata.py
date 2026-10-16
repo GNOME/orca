@@ -187,13 +187,12 @@ class PreferenceCategoryDoc:
 
 @dataclass(frozen=True)
 class PreferencePanelDoc:
-    """Metadata for one preference panel in generated help."""
+    """Settings instructions and link text for one preferences panel."""
 
     title: str
     target: str = ""
     panel_id: str = ""
-    summary: str = ""
-    description: str = ""
+    instructions: str = ""
     link_summary: str = ""
     schema: str = ""
     controls: tuple[PreferenceControlDoc, ...] = ()

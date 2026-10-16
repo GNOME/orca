@@ -37,7 +37,7 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
     return FeatureDocumentationDoc(
         pages=(
             FeaturePageDoc(
-                page_id="features_reading_documents",
+                page_id="features_reading_documents_guide",
                 title="Reading documents and web pages",
                 link_title="Reading documents and web pages",
                 description="Read documents, web pages, and interactive content.",

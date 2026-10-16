@@ -30,7 +30,7 @@ def get_feature_documentation() -> FeaturePageDoc:
     """Returns feature documentation for braille."""
 
     return FeaturePageDoc(
-        page_id="features_braille",
+        page_id="features_braille_guide",
         title="Braille",
         link_title="Braille",
         description="Read and control braille output.",

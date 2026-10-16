@@ -40,6 +40,10 @@ def get_feature_documentation() -> FeaturePageDoc:
                     "Orca can present spelling errors and suggestions while you use "
                     "a supported application's spell checker."
                 ),
+                details=(
+                    "Orca needs to identify the misspelled word, suggestions list, and "
+                    "other parts of the application's spell checker to present this information."
+                ),
                 preference_categories=("spell-check",),
             ),
         ),

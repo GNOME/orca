@@ -39,9 +39,6 @@ class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Mouse preferences page."""
 
     _gsettings_schema = "mouse-review"
-    _documentation_summary = (
-        "Use these settings to control what Orca presents as the pointer moves."
-    )
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:

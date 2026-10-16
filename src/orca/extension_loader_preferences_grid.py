@@ -73,7 +73,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 panels=("extension_loader.user-extensions",),
                 application_preferences=False,
             ),
-            summary="Use these settings to approve and enable user extensions.",
+            link_summary="Use these settings to approve and enable user extensions.",
             controls=(
                 PreferenceControlDoc(
                     label=guilabels.USER_EXTENSIONS,

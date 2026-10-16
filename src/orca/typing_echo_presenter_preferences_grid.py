@@ -39,10 +39,6 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Typing Echo preferences page."""
 
     _gsettings_schema = "typing-echo"
-    _documentation_summary = (
-        "Use these settings to choose which typed keys, characters, words, and sentences "
-        "Orca repeats."
-    )
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:

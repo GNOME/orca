@@ -39,9 +39,6 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for math settings within the Documents page."""
 
     _gsettings_schema = "math-presentation"
-    _documentation_summary = (
-        "Use these settings to control speech, braille, copying, and navigation for math content."
-    )
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
@@ -51,10 +48,6 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             title=guilabels.MATH_PRESENTATION,
             panel_id="math_presenter.math-presentation",
             command_groups=("commands.math-navigation",),
-            description=(
-                "Math presentation settings control how Orca speaks, brailles, copies, "
-                "and navigates mathematical expressions."
-            ),
             schema="math-presentation",
             controls=(
                 PreferenceControlDoc(

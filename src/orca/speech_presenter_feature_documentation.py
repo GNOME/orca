@@ -36,6 +36,11 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                     "Configure whether you hear the current cell or the whole row "
                     "while navigating tables."
                 ),
+                details=(
+                    "In some tables, such as a message list, speaking the full row can "
+                    "provide useful context. In other tables, such as a spreadsheet, "
+                    "speaking only the focused cell can make navigation faster and less verbose."
+                ),
                 preference_panels=("speech_presenter.tables",),
                 command_groups=("speech.commands.tables",),
                 links=(FeatureLinkDoc("documents.table-navigation.feature"),),

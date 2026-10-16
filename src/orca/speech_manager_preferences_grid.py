@@ -72,7 +72,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             target="speech.global-voice-settings",
             panel_id="speech_manager.global-voice-settings",
             command_groups=("speech.commands.system-and-synthesizer", "speech.commands.output"),
-            summary="Use these settings to configure speech behavior that is not tied to "
+            link_summary="Use these settings to configure speech behavior that is not tied to "
             "a voice type.",
             schema="speech",
             controls=(
@@ -851,7 +851,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             target="speech.voice-sets",
             panel_id="speech_manager.voice-sets",
             command_groups=("speech.commands.voice-sets", "speech.commands.voice-parameters"),
-            summary="Use these settings to choose and adjust the voices Orca uses.",
+            link_summary="Use these settings to choose and adjust the voices Orca uses.",
             schema="voice",
             controls=(
                 PreferenceControlDoc(

@@ -39,9 +39,6 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Preferences grid for Chat settings."""
 
     _gsettings_schema = "chat"
-    _documentation_summary = (
-        "Use these settings to control how chat messages and chat-room context are presented."
-    )
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
@@ -60,10 +57,6 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 panels=("chat_presenter.chat",),
             ),
             command_groups=("commands.chat",),
-            description=(
-                "Chat settings control how Orca presents messages, room names, typing "
-                "status, and message history in supported chat applications."
-            ),
             schema="chat",
             controls=(
                 PreferenceControlDoc(

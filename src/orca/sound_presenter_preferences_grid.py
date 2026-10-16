@@ -50,10 +50,6 @@ if TYPE_CHECKING:
 class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Sound Progress Bars preferences page."""
 
-    _documentation_summary = (
-        "Use these settings to decide whether progress-bar changes are indicated with beeps."
-    )
-
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for sound progress-bar preferences."""
@@ -161,11 +157,6 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     "sound_presenter.sound-output",
                     "sound_presenter.progress-bars",
                 ),
-            ),
-            description=(
-                "Sound settings control Orca's non-speech audio output. Sound icon files "
-                "are loaded from the sounds directory in your Orca user-data directory, "
-                "normally ~/.local/share/orca/sounds."
             ),
             show_available_settings=False,
             schema="sound",

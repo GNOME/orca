@@ -68,7 +68,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
                 "show_character_attributes",
                 "cycle_text_attribute_change_mode",
             ),
-            description=(
+            instructions=(
                 "The list contains one row for each text attribute. Use the presentation "
                 "mode on a row to choose whether Orca speaks the attribute, marks it in "
                 "braille, does both, or does neither. Use the row menu or drag handle to "

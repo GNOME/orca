@@ -99,9 +99,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 panels=("command_manager.commands",),
             ),
             command_groups=("keyboard-layout.commands",),
-            description=(
-                "Commands settings let you choose the keyboard layout and Orca Modifier "
-                "keys, and customize command keyboard shortcuts.\n\n"
+            instructions=(
                 "The bindings shown here are for standard keyboards. Braille-display "
                 "button bindings are not configured in the Commands list.\n\n"
                 "To bind or change a command shortcut, arrow to the command and press "

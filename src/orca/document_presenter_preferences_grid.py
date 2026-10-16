@@ -62,9 +62,6 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for caret navigation settings within the Documents page."""
 
     _gsettings_schema = "caret-navigation"
-    _documentation_summary = (
-        "Use these settings to control Orca's caret navigation behavior in document content."
-    )
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
@@ -161,10 +158,6 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
     """Sub-grid for structural navigation settings within the Documents page."""
 
     _gsettings_schema = "structural-navigation"
-    _documentation_summary = (
-        "Use these settings to control navigation by headings, landmarks, interactive widgets, "
-        "and other document structures."
-    )
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
@@ -299,7 +292,6 @@ class TableNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for table navigation settings within the Documents page."""
 
     _gsettings_schema = "table-navigation"
-    _documentation_summary = "Use these settings to control table navigation behavior."
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
@@ -367,10 +359,6 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
     """Sub-grid for native navigation settings within the Documents page."""
 
     _gsettings_schema = "document"
-    _documentation_summary = (
-        "Use these settings to control how Orca responds to application-provided navigation "
-        "and find results."
-    )
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:

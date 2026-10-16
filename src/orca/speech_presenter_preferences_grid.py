@@ -58,10 +58,6 @@ if TYPE_CHECKING:
 class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Container Announcements preferences page."""
 
-    _documentation_summary = (
-        "Use these settings to choose which document and web-container boundaries Orca announces."
-    )
-
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for container announcement preferences."""
@@ -185,11 +181,6 @@ class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Progress Bars preferences page."""
 
-    _documentation_summary = (
-        "Use these settings to decide whether progress-bar changes are spoken and how often "
-        "they are announced."
-    )
-
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for speech progress-bar preferences."""
@@ -287,11 +278,6 @@ class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Verbosity preferences page."""
 
-    _documentation_summary = (
-        "Use these settings to choose how much information Orca speaks about objects, text, "
-        "tables, and formatting."
-    )
-
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for speech verbosity preferences."""
@@ -301,10 +287,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             target="speech.verbosity",
             panel_id="speech_presenter.verbosity",
             command_groups=("speech.commands.verbosity-and-details", "speech.commands.indentation"),
-            description=(
-                "Verbosity settings control how much detail Orca speaks about objects, "
-                "text, and formatting."
-            ),
+            link_summary="Configure the details included in Orca's spoken output.",
             schema="speech",
             controls=(
                 PreferenceControlDoc(
@@ -613,12 +596,8 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             title=guilabels.TABLES,
             panel_id="speech_presenter.tables",
             command_groups=("speech.commands.tables",),
-            description=(
-                "Table settings control how Orca speaks row and cell information while "
-                "you navigate tables. In some tables, such as a message list, speaking "
-                "the full row can provide useful context. In other tables, such as a "
-                "spreadsheet, speaking only the focused cell can make navigation faster "
-                "and less verbose. These settings are independent for application tables, "
+            instructions=(
+                "You can configure row presentation separately for application tables, "
                 "document tables, and spreadsheets."
             ),
             schema="speech",
@@ -830,8 +809,6 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 class SpeechOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the speech on-screen display preferences page."""
 
-    _documentation_summary = "Use these settings to control the visual speech monitor window."
-
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
         """Return documentation metadata for speech on-screen display preferences."""
@@ -929,7 +906,6 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     "speech_presenter.on-screen-display",
                 ),
             ),
-            description=("Speech settings control Orca's spoken output."),
             show_available_settings=False,
             schema="speech",
             controls=(

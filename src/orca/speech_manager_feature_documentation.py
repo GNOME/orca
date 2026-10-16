@@ -30,7 +30,7 @@ def get_feature_documentation() -> FeaturePageDoc:
     """Returns feature documentation for speech and voices."""
 
     return FeaturePageDoc(
-        page_id="features_speech_and_voices",
+        page_id="features_speech_and_voices_guide",
         title="Speech and voices",
         link_title="Speech and voices",
         description="Configure speech output, voices, and voice sets.",
