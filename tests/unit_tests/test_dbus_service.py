@@ -30,9 +30,12 @@
 
 from __future__ import annotations
 
+import ast
+import runpy
 import sys
 import types
 import xml.etree.ElementTree as ET
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 import pytest
@@ -142,6 +145,87 @@ class TestDBusService:
 
         assert hasattr(test_function, "dbus_command_description")
         assert test_function.dbus_command_description == "Test command function."
+
+    @pytest.mark.parametrize("kind", ["command", "parameterized_command", "getter", "setter"])
+    @pytest.mark.parametrize("marker_first", [False, True])
+    def test_undocumented_preserves_dbus_method(
+        self,
+        test_context: OrcaTestContext,
+        kind: str,
+        marker_first: bool,
+    ) -> None:
+        """Documentation exclusion preserves identity, execution, and registration metadata."""
+
+        self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        def method(value: bool = True) -> bool:
+            """An undocumented method."""
+
+            return value
+
+        decorator = getattr(dbus_service, kind)
+        if marker_first:
+            decorated = decorator(dbus_service.undocumented(method))
+        else:
+            decorated = dbus_service.undocumented(decorator(method))
+        assert decorated is method
+        assert decorated(False) is False
+        classify = dbus_service._ModuleRegistration._classify_method
+        expected_kind = "PARAMETERIZED" if kind == "parameterized_command" else kind.upper()
+        assert classify(decorated) == (
+            getattr(dbus_service._Kind, expected_kind),
+            "An undocumented method.",
+        )
+
+    @pytest.mark.parametrize("kind", ["command", "parameterized_command", "getter", "setter"])
+    @pytest.mark.parametrize("marker_first", [False, True])
+    def test_undocumented_methods_are_excluded_from_reference_docs(
+        self,
+        kind: str,
+        marker_first: bool,
+    ) -> None:
+        """The source scanner excludes marked methods regardless of decorator order."""
+
+        root = Path(__file__).resolve().parents[2]
+        generator = runpy.run_path(str(root / "tools/generate_dbus_documentation.py"))
+        decorators = [f"@dbus_service.{kind}", "@dbus_service.undocumented"]
+        if marker_first:
+            decorators.reverse()
+        source = (
+            "class Example:\n"
+            f"    @dbus_service.{kind}\n"
+            "    def visible(self, value: bool = True) -> bool: pass\n"
+            + "".join(f"    {decorator}\n" for decorator in decorators)
+            + "    def hidden(self, value: bool = True) -> bool: pass\n"
+        )
+        members = generator["_module_members"](ast.parse(source).body[0])
+        assert sum(len(group) for group in members) == 1
+        for group in members:
+            names = set(group) if isinstance(group, dict) else {entry[0] for entry in group}
+            assert names <= {"Visible"}
+
+    def test_selection_is_excluded_from_reference_docs(self, monkeypatch) -> None:
+        """Reference regeneration hides selection while retaining the schema and preview."""
+
+        root = Path(__file__).resolve().parents[2]
+        monkeypatch.syspath_prepend(str(root / "tools"))
+        dbus = runpy.run_path(str(root / "tools/generate_dbus_documentation.py"))
+        modules = list(dbus["find_modules"](root / "src/orca"))
+        caret = next(module for module in modules if module[0] == "CaretNavigator")
+        commands = {entry[0] for entry in caret[1]}
+        assert "NextCharacter" in commands
+        assert not any(name.startswith("Select") for name in commands)
+        assert "SelectionEnabled" not in caret[3]  # Getters
+        assert "SelectionEnabled" not in caret[4]  # Setters
+
+        gsettings = runpy.run_path(str(root / "tools/generate_gsettings_documentation.py"))
+        assert "selection-enabled" not in gsettings["generate_documentation"](root / "src")
+        schema_tree = gsettings["build_schema_tree"](root / "src")
+        assert schema_tree.find(".//key[@name='selection-enabled']") is not None
+        preview = (root / "help_ng/features_reading_documents_caret_navigation.page").read_text()
+        assert "<gui>Select next character</gui>" in preview
+        assert "<gui>Text selection</gui>" in preview
 
     def test_command_decorator_without_docstring(self, test_context: OrcaTestContext) -> None:
         """Test command decorator without docstring."""

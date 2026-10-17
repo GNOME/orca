@@ -98,6 +98,15 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     key=caret_navigator.CaretNavigator.KEY_TRIGGERS_FOCUS_MODE,
                 ),
                 PreferenceControlDoc(
+                    label=guilabels.CARET_SELECTION_ENABLED,
+                    kind="switch",
+                    summary=(
+                        "Controls whether Shift with caret navigation extends text selections."
+                    ),
+                    schema="caret-navigation",
+                    key=caret_navigator.CaretNavigator.KEY_SELECTION_ENABLED,
+                ),
+                PreferenceControlDoc(
                     label=guilabels.CONTENT_LAYOUT_MODE,
                     kind="switch",
                     summary=(
@@ -145,9 +154,21 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 determine_sensitivity=is_enabled,
             ),
         ]
+        caret_info = guilabels.CARET_NAVIGATION_INFO
+        if nav.get_selection_available():
+            caret_info = f"{caret_info} {guilabels.CARET_SELECTION_INFO}"
+            controls.insert(
+                2,
+                preferences_grid_base.BooleanPreferenceControl(
+                    label=guilabels.CARET_SELECTION_ENABLED,
+                    getter=nav.get_selection_enabled,
+                    setter=nav.set_selection_enabled,
+                    prefs_key=caret_navigator.CaretNavigator.KEY_SELECTION_ENABLED,
+                    determine_sensitivity=is_enabled,
+                ),
+            )
         info = (
-            f"{guilabels.CARET_NAVIGATION_INFO}\n\n{guilabels.AUTOMATIC_FOCUS_MODE_INFO}"
-            f"\n\n{guilabels.LAYOUT_MODE_INFO}"
+            f"{caret_info}\n\n{guilabels.AUTOMATIC_FOCUS_MODE_INFO}\n\n{guilabels.LAYOUT_MODE_INFO}"
         )
         super().__init__(guilabels.KB_GROUP_CARET_NAVIGATION, controls, info_message=info)
 

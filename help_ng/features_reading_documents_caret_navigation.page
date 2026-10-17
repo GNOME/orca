@@ -39,8 +39,11 @@
     changes the current session across applications; it does not save a preference.
   </p>
   <p>
-    Layout mode affects how text from adjacent objects is combined into lines. Use the settings
-    below to configure it and automatic focus mode.
+    Orca can also manage text selection when you hold <key>Shift</key> while using these navigation
+    commands. Text selection is disabled by default because not all applications provide the
+    support Orca needs to manage selections. Avoid enabling it globally. Instead, enable it in
+    application-specific preferences only for applications where Orca's selection support is
+    needed and you have verified that it works correctly.
   </p>
   <section id="settings-caret-navigation">
     <title>Settings</title>
@@ -63,6 +66,12 @@
           <gui>Automatic focus mode</gui>: Controls whether
           Orca switches to focus mode when caret navigation lands on an interactive widget.
           Default: off.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Text selection</gui>: Controls whether
+          Shift with caret navigation extends text selections. Default: off.
         </p>
       </item>
       <item>
@@ -161,6 +170,100 @@
           <gui>Go to the top of the file</gui>
           <keyseq>
             <key>Ctrl</key>
+            <key>Home</key>
+          </keyseq>
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Select next character</gui>
+          <keyseq>
+            <key>Shift</key>
+            <key>Right Arrow</key>
+          </keyseq>
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Select next line</gui>
+          <keyseq>
+            <key>Shift</key>
+            <key>Down Arrow</key>
+          </keyseq>
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Select next word</gui>
+          <keyseq>
+            <key>Ctrl</key>
+            <key>Shift</key>
+            <key>Right Arrow</key>
+          </keyseq>
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Select previous character</gui>
+          <keyseq>
+            <key>Shift</key>
+            <key>Left Arrow</key>
+          </keyseq>
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Select previous line</gui>
+          <keyseq>
+            <key>Shift</key>
+            <key>Up Arrow</key>
+          </keyseq>
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Select previous word</gui>
+          <keyseq>
+            <key>Ctrl</key>
+            <key>Shift</key>
+            <key>Left Arrow</key>
+          </keyseq>
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Select to the beginning of the line</gui>
+          <keyseq>
+            <key>Shift</key>
+            <key>Home</key>
+          </keyseq>
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Select to the bottom of the file</gui>
+          <keyseq>
+            <key>Ctrl</key>
+            <key>Shift</key>
+            <key>End</key>
+          </keyseq>
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Select to the end of the line</gui>
+          <keyseq>
+            <key>Shift</key>
+            <key>End</key>
+          </keyseq>
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Select to the top of the file</gui>
+          <keyseq>
+            <key>Ctrl</key>
+            <key>Shift</key>
             <key>Home</key>
           </keyseq>
         </p>

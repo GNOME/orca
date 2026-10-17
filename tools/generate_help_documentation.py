@@ -1156,6 +1156,10 @@ def _execute_command_definition_module(
         owner_tree = ast.parse(owner_path.read_text(encoding="utf-8"))
         methods = {node.name for node in ast.walk(owner_tree) if isinstance(node, ast.FunctionDef)}
         owner = _FakeCommandOwner(group_label, owner_constants, methods, voice_set)
+        if path.stem == "caret_navigator_command_definitions":
+            # Include developer-opt-in selection commands in the untranslated preview.
+            owner.get_selection_enabled = lambda: True
+            owner.get_selection_available = lambda: True
         raw_commands = namespace["get_commands"](owner)
         voice_set_commands = namespace.get("get_voice_set_commands")
         if voice_set_commands is not None:

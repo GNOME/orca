@@ -31,6 +31,7 @@
 
 from __future__ import annotations
 
+from types import SimpleNamespace
 from typing import TYPE_CHECKING, Any
 from unittest.mock import call
 
@@ -826,22 +827,38 @@ class TestCaretNavigator:
         cmd_manager = command_manager.get_manager()
         assert cmd_manager is not None
 
-    def test_selection_commands_have_shifted_bindings_and_are_disabled_by_default(
+    @pytest.mark.parametrize("selection_value", [None, False, True])
+    @pytest.mark.parametrize(
+        "caret_enabled,suspended",
+        [(False, False), (True, False), (True, True)],
+    )
+    def test_selection_commands_have_shifted_bindings_and_follow_opt_in(
         self,
         test_context: OrcaTestContext,
+        selection_value: bool | None,
+        caret_enabled: bool,
+        suspended: bool,
     ) -> None:
-        """Test selection commands mirror navigation with Shift and default to disabled."""
+        """Selection visibility follows opt-in independently of navigation availability."""
 
         essential_modules = self._setup_dependencies(test_context)
         keybindings = essential_modules["orca.keybindings"]
         keybindings.SHIFT_MODIFIER_MASK = 1
         keybindings.CTRL_SHIFT_MODIFIER_MASK = 3
         keybindings.KeyBinding.side_effect = lambda key, modifiers: (key, modifiers)
+        from orca import gsettings_registry
         from orca.caret_navigator import CaretNavigator
 
+        navigator = CaretNavigator()
+        if selection_value is not None:
+            gsettings_registry.get_registry().set_runtime_value(
+                "caret-navigation", navigator.KEY_SELECTION_ENABLED, selection_value
+            )
+        test_context.patch_object(navigator, "get_is_enabled", return_value=caret_enabled)
+        navigator._suspended = suspended
         commands = {
             command.get_name(): command
-            for command in CaretNavigator()._get_commands()
+            for command in navigator._get_commands()
             if command.get_name().startswith("select_")
         }
         expected_bindings = {
@@ -862,9 +879,59 @@ class TestCaretNavigator:
             assert commands[name].get_default_keybinding(True) == binding
             assert commands[name].get_group_label() == "Caret navigation"
             assert commands[name].get_activation_group() == "caret-selection"
-            assert commands[name].is_enabled() is False
-            assert commands[name].is_user_visible() is False
-            assert commands[name].get_description() == ""
+            assert commands[name].is_enabled() is (
+                bool(selection_value) and caret_enabled and not suspended
+            )
+            assert commands[name].is_user_visible() is (selection_value is not None)
+
+    @pytest.mark.parametrize("selection_value", [None, False, True])
+    def test_selection_preference_follows_opt_in(
+        self,
+        test_context: OrcaTestContext,
+        selection_value: bool | None,
+    ) -> None:
+        """Only opted-in profiles expose the selection switch and explanation in preferences."""
+
+        modules = self._setup_dependencies(test_context)
+        modules["orca.guilabels"].CARET_SELECTION_INFO = "Selection info"
+        from orca import caret_navigator, gsettings_registry
+
+        navigator = caret_navigator.CaretNavigator()
+        test_context.patch_object(caret_navigator, "get_navigator", return_value=navigator)
+        if selection_value is not None:
+            gsettings_registry.get_registry().set_runtime_value(
+                "caret-navigation", navigator.KEY_SELECTION_ENABLED, selection_value
+            )
+
+        def initialize_grid(grid, _label, controls, **kwargs):
+            grid.controls = controls
+            grid.info_message = kwargs["info_message"]
+            grid._widgets = [test_context.Mock()]
+
+        grid_base = test_context.Mock()
+        grid_base.AutoPreferencesGrid = type("Grid", (), {"__init__": initialize_grid})
+        grid_base.BooleanPreferenceControl.side_effect = SimpleNamespace
+        test_context.patch_module("orca.preferences_grid_base", grid_base)
+        for module in (
+            "document_presenter",
+            "math_presenter",
+            "structural_navigator",
+            "table_navigator",
+        ):
+            test_context.patch_module(f"orca.{module}", test_context.Mock())
+        from orca.document_presenter_preferences_grid import CaretNavigationPreferencesGrid
+
+        grid = CaretNavigationPreferencesGrid()
+        selection_controls = [
+            control
+            for control in grid.controls
+            if control.prefs_key == navigator.KEY_SELECTION_ENABLED
+        ]
+        assert len(selection_controls) == int(selection_value is not None)
+        assert ("Selection info" in grid.info_message) is (selection_value is not None)
+        if selection_value is not None:
+            assert selection_controls[0].label == modules["orca.guilabels"].CARET_SELECTION_ENABLED
+            assert selection_controls[0].setter == navigator.set_selection_enabled
 
     def test_get_end_of_file_keeps_native_text_object(
         self,
@@ -1673,6 +1740,57 @@ class TestCaretNavigator:
             call("caret-selection", False),
         ]
 
+    def test_selection_opt_in_survives_saved_false_until_reset(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Retain the selection opt-in across saves and reloads until the stored key is reset."""
+
+        self._setup_dependencies(test_context)
+        from orca import gsettings_registry
+        from orca.caret_navigator import CaretNavigator
+
+        registry = gsettings_registry.get_registry()
+        registry.set_active_profile("default")
+        registry.set_active_app(None)
+        state: dict[str, bool | None] = {"value": None}
+        gs = test_context.Mock()
+        gs.get_user_value.side_effect = lambda _key: state["value"]
+        gs.get_boolean.side_effect = lambda _key: bool(state["value"])
+        gs.set_boolean.side_effect = lambda _key, value: state.update(value=value)
+        gs.reset.side_effect = lambda _key: state.update(value=None)
+        handle = gsettings_registry.GSettingsSchemaHandle(
+            "org.gnome.Orca.CaretNavigation", "caret-navigation"
+        )
+        registry._handles["caret-navigation"] = handle
+        test_context.patch_object(handle, "has_key", return_value=True)
+        test_context.patch_object(handle, "get_for_profile", return_value=gs)
+        test_context.patch_object(registry, "get_settings", return_value=gs)
+        navigator = CaretNavigator()
+        assert navigator.get_selection_available() is False
+
+        # Simulate the initial CLI opt-in, followed by turning selection off and on in the UI.
+        gs.set_boolean(navigator.KEY_SELECTION_ENABLED, True)
+        registry.clear_value_cache()
+        for enabled in (False, True, False):
+            assert navigator.get_selection_available() is True
+            navigator.set_selection_enabled(enabled)
+            registry.save_schema(
+                "caret-navigation",
+                {navigator.KEY_SELECTION_ENABLED: enabled},
+                "default",
+                skip_defaults=True,
+            )
+            registry.clear_runtime_values()
+            navigator = CaretNavigator()
+            assert navigator.get_selection_enabled() is enabled
+            assert navigator.get_selection_available() is True
+
+        gs.reset(navigator.KEY_SELECTION_ENABLED)
+        registry.clear_value_cache()
+        assert navigator.get_selection_enabled() is False
+        assert navigator.get_selection_available() is False
+
     def test_selection_enabled_setting_defaults_to_false(
         self,
         test_context: OrcaTestContext,
@@ -1682,7 +1800,9 @@ class TestCaretNavigator:
         self._setup_dependencies(test_context)
         from orca.caret_navigator import CaretNavigator
 
-        assert CaretNavigator().get_selection_enabled() is False
+        navigator = CaretNavigator()
+        assert navigator.get_selection_enabled() is False
+        assert navigator.get_selection_available() is False
 
     def test_set_selection_enabled_updates_setting_and_command_group(
         self,
@@ -1700,6 +1820,11 @@ class TestCaretNavigator:
         assert navigator.set_selection_enabled(True) is True
         assert navigator.get_selection_enabled() is True
         mock_cmd_mgr.set_group_enabled.assert_called_once_with("caret-selection", True)
+        assert navigator.get_selection_available() is True
+        assert navigator.set_selection_enabled(False) is True
+        assert navigator.get_selection_enabled() is False
+        assert navigator.get_selection_available() is True
+        mock_cmd_mgr.set_group_enabled.assert_called_with("caret-selection", False)
 
     def test_get_triggers_focus_mode(self, test_context: OrcaTestContext) -> None:
         """Test get_triggers_focus_mode returns setting value."""

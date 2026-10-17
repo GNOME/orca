@@ -61,6 +61,7 @@ class SettingDescriptor:
     genum: str | None = None
     migration_key: str | None = None
     user_visible: bool = True
+    preserve_default: bool = False  # Keep explicit values when key presence has meaning.
 
 
 @dataclass
@@ -568,6 +569,7 @@ class GSettingsRegistry:
         voice_type: str | None = None,
         migration_key: str | None = None,
         user_visible: bool = True,
+        preserve_default: bool = False,
     ) -> Callable[[Callable], Callable]:
         """Decorator marking a method's associated GSettings key."""
 
@@ -581,6 +583,7 @@ class GSettingsRegistry:
                 genum=genum,
                 migration_key=migration_key,
                 user_visible=user_visible,
+                preserve_default=preserve_default,
             )
             func.gsetting_key = key  # type: ignore[attr-defined]
             return func
@@ -735,8 +738,10 @@ class GSettingsRegistry:
                     if resolved is None:
                         continue
                     nick = resolved
-                is_redundant = skip_defaults and nick == setting.default
-                if not is_redundant and global_gs is not None:
+                is_redundant = (
+                    not setting.preserve_default and skip_defaults and nick == setting.default
+                )
+                if not setting.preserve_default and not is_redundant and global_gs is not None:
                     is_redundant = nick == global_gs.get_string(key)
                 if is_redundant:
                     if gs.get_user_value(key) is not None:
@@ -746,8 +751,10 @@ class GSettingsRegistry:
                     gs.set_string(key, nick)
                 continue
 
-            is_redundant = skip_defaults and value == setting.default
-            if not is_redundant and global_gs is not None:
+            is_redundant = (
+                not setting.preserve_default and skip_defaults and value == setting.default
+            )
+            if not setting.preserve_default and not is_redundant and global_gs is not None:
                 global_reader = global_readers.get(setting.gtype)
                 if global_reader is not None:
                     is_redundant = value == global_reader(key)
@@ -757,7 +764,9 @@ class GSettingsRegistry:
                 continue
             reader = readers.get(setting.gtype)
             if reader is not None and reader(key) == value:
-                if not app_name or gs.get_user_value(key) is not None:
+                if (not app_name and not setting.preserve_default) or gs.get_user_value(
+                    key
+                ) is not None:
                     continue
             if value is None:
                 tokens = ["GSETTINGS: Skipping None value for", schema_name, "/", key]

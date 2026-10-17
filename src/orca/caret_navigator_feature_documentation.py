@@ -60,8 +60,13 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                     "where browse mode is not supported, you can manually turn Orca's caret "
                     "navigation on or off with Orca Modifier+F12. This command changes the "
                     "current session across applications; it does not save a preference.\n\n"
-                    "Layout mode affects how text from adjacent objects is combined into "
-                    "lines. Use the settings below to configure it and automatic focus mode."
+                    "Orca can also manage text selection when you hold Shift while using "
+                    "these navigation commands. Text selection is disabled by default because "
+                    "not all applications provide the support Orca needs to manage selections. "
+                    "Avoid enabling "
+                    "it globally. Instead, enable it in application-specific preferences "
+                    "only for applications where Orca's selection support is needed and "
+                    "you have verified that it works correctly."
                 ),
             ),
         ),

@@ -51,6 +51,12 @@ from . import (  # pylint: disable=no-name-in-module
 )
 
 
+def undocumented(func):
+    """Omit a method from generated reference docs without changing D-Bus publication."""
+
+    return func
+
+
 def command(func):
     """Decorator to mark a method as a D-Bus command using its docstring.
 

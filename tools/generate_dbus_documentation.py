@@ -36,7 +36,7 @@ INTERFACE_PREFIX = "org.gnome.Orca1"
 DBUS_SERVICE_FILE = "dbus_service.py"
 META_PROTOCOL_MARKER_CLASS = "OrcaModuleDBusInterface"
 
-_DECORATOR_KINDS = ("command", "parameterized_command", "getter", "setter")
+_DECORATOR_KINDS = ("command", "parameterized_command", "getter", "setter", "undocumented")
 _RESERVED_PARAMS = frozenset({"self", "script", "event"})
 
 _BUILTIN_DBUS_SIGNATURE = {
@@ -60,11 +60,14 @@ def _decorator_kind(decorator):
 def _classify_method(func_node):
     """Returns the kind for a function with a @dbus_service.X decorator, or None."""
 
+    kind = None
     for dec in func_node.decorator_list:
-        kind = _decorator_kind(dec)
-        if kind is not None:
-            return kind
-    return None
+        decorator_kind = _decorator_kind(dec)
+        if decorator_kind == "undocumented":
+            return None
+        if kind is None:
+            kind = decorator_kind
+    return kind
 
 
 def _camelize(snake):
@@ -298,8 +301,10 @@ def _format_module_section(name, commands, parameterized, getters, setters, *, m
             lines += [
                 "**Method:** `org.gnome.Orca.Module.ExecuteCommand`",
                 "",
-                "**Parameters:** `CommandName` (string), "
-                "[`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)",
+                (
+                    "**Parameters:** `CommandName` (string), "
+                    "[`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)"
+                ),
                 "",
             ]
         for cname, description in sorted(commands):
@@ -342,8 +347,10 @@ def _format_module_section(name, commands, parameterized, getters, setters, *, m
             lines += [
                 "#### Settings",
                 "",
-                "**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / "
-                "`org.gnome.Orca.Module.ExecuteRuntimeSetter`",
+                (
+                    "**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / "
+                    "`org.gnome.Orca.Module.ExecuteRuntimeSetter`"
+                ),
                 "",
                 "**Parameters:** `PropertyName` (string), `Value` (variant, setter only)",
                 "",
@@ -407,8 +414,10 @@ def generate_documentation(orca_src_dir):
         header.append(f"- **Module Interface Names:** `{INTERFACE_PREFIX}.<ModuleName>`")
     header += [
         "",
-        "Additional information about using the remote controller can be found in "
-        "[remote-controller.md](remote-controller.md).",
+        (
+            "Additional information about using the remote controller can be found in "
+            "[remote-controller.md](remote-controller.md)."
+        ),
         "",
         "---",
         "",

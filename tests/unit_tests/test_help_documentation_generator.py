@@ -1492,7 +1492,6 @@ def test_settings_inventory(generator: dict[str, Any]) -> None:
     """New schema keys require documentation or an explicit coverage decision."""
 
     exceptions = {
-        ("caret-navigation", "selection-enabled"): "Hidden, disabled selection feature",
         ("extensions", "approved-user-extensions"): "Approval editor, not a direct preference",
         ("extensions", "disabled-extensions"): "Extension switches",
         ("extensions", "settings"): "Extension-owned dynamic settings",

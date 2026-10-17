@@ -198,6 +198,7 @@ class OrcaTestContext:
             controller_mock.register_decorated_module = self.mocker.Mock()
             dbus_service_mock.get_remote_controller = self.mocker.Mock(return_value=controller_mock)
             dbus_service_mock.command = lambda func: func
+            dbus_service_mock.undocumented = lambda func: func
             dbus_service_mock.getter = lambda func: func
             dbus_service_mock.setter = lambda func: func
             dbus_service_mock.parameterized_command = lambda func: func

@@ -30,9 +30,25 @@ import pytest
 
 _ORCA_SRC = Path(__file__).resolve().parents[2] / "src/orca"
 _TRANSLATION_ARGUMENTS = {"_": 1, "C_": 2, "ngettext": 2}
-# These existing strings cannot be marked for translation during the v51 string freeze.
+# These strings cannot be marked for translation during the v51 string freeze.
 _UNLOCALIZED_UNTIL_52 = {
-    "guilabels": {repr("You can assign keybindings to any configured voice set in Commands.")},
+    "cmdnames": {
+        repr("Select next character"),
+        repr("Select previous character"),
+        repr("Select next word"),
+        repr("Select previous word"),
+        repr("Select next line"),
+        repr("Select previous line"),
+        repr("Select to the top of the file"),
+        repr("Select to the bottom of the file"),
+        repr("Select to the beginning of the line"),
+        repr("Select to the end of the line"),
+    },
+    "guilabels": {
+        repr("You can assign keybindings to any configured voice set in Commands."),
+        repr("Text selection"),
+        repr("If 'Text selection' is enabled, Orca will also attempt to control text selection."),
+    },
     "messages": {
         "f'{used:.1f} of {total:.1f} GB used.'",
         "f'{used:.1f} of {total:.1f} MB used.'",

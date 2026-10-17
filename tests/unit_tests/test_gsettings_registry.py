@@ -218,9 +218,72 @@ class TestGsettingDecorator:
         assert desc.default is True
         assert desc.migration_key is None
         assert desc.user_visible is True
+        assert desc.preserve_default is False
 
         # Clean up
         del registry._descriptors[("test-schema", "test-key")]
+
+    @pytest.mark.parametrize("preserve_default", [False, True])
+    @pytest.mark.parametrize("stored_value", [None, False, True])
+    @pytest.mark.parametrize(
+        "profile,app_name", [("default", ""), ("work", ""), ("default", "app")]
+    )
+    def test_save_preserves_explicit_defaults_when_requested(
+        self,
+        test_context: OrcaTestContext,
+        preserve_default: bool,
+        stored_value: bool | None,
+        profile: str,
+        app_name: str,
+    ) -> None:
+        """Preserve opted-in keys across saves without changing ordinary default removal."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+
+        @registry.gsetting(
+            key="enabled",
+            schema="test",
+            gtype="b",
+            default=False,
+            summary="Test",
+            preserve_default=preserve_default,
+        )
+        def getter():
+            return False
+
+        state = {"value": stored_value}
+        gs = test_context.Mock()
+        gs.get_boolean.side_effect = lambda _key: bool(state["value"])
+        gs.get_user_value.side_effect = lambda _key: state["value"]
+        gs.set_boolean.side_effect = lambda _key, value: state.update(value=value)
+        gs.reset.side_effect = lambda _key: state.update(value=None)
+        global_gs = test_context.Mock()
+        global_gs.get_boolean.return_value = False
+        test_context.patch_object(
+            registry,
+            "get_settings",
+            side_effect=lambda _schema, _profile, **kwargs: (
+                gs if kwargs.get("app_name", "") == app_name else global_gs
+            ),
+        )
+
+        registry.save_schema("test", {"enabled": False}, profile, app_name, profile == "default")
+
+        if preserve_default:
+            assert state["value"] is False
+            gs.reset.assert_not_called()
+            assert gs.set_boolean.call_count == int(stored_value is not False)
+            registry.save_schema(
+                "test", {"enabled": False}, profile, app_name, profile == "default"
+            )
+            assert gs.set_boolean.call_count == int(stored_value is not False)
+        elif profile == "default" or app_name or stored_value is None:
+            assert state["value"] is None
+        else:
+            assert state["value"] is False
 
     def test_decorator_registers_hidden_setting(self, test_context: OrcaTestContext) -> None:
         """Test @gsetting records that a setting should not be exposed to users."""

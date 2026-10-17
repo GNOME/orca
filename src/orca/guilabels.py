@@ -519,6 +519,12 @@ KB_GROUP_DOCUMENTS = _("Documents")
 # toggled on in other applications.
 KB_GROUP_CARET_NAVIGATION = _("Caret navigation")
 
+# Intentionally unlocalized for the developer-only opt-in. Mark for translation in v52.
+# TODO - JD: Use C_("caret navigation", "Text selection") in v52.
+# Translators: This is a label for a switch which enables Orca to extend text
+# selections when the user holds Shift while using caret-navigation commands.
+CARET_SELECTION_ENABLED = "Text selection"
+
 # Translators: This string is a label for the group of Orca commands which
 # are related to math navigation via MathCAT.
 KB_GROUP_MATH_NAVIGATION = _("Math navigation")
@@ -528,6 +534,14 @@ CARET_NAVIGATION_INFO = _(
     # preferences page explaining what caret navigation does.
     "When enabled, Orca handles the arrow keys, Home, and End to move through "
     "content by character, word, or line.",
+)
+
+# Intentionally unlocalized for the developer-only opt-in. Mark for translation in v52.
+# Translators: This is an informational message on the Caret Navigation preferences
+# page explaining what text selection does. When translating "Text selection", please
+# use terminology consistent with that of CARET_SELECTION_ENABLED above.
+CARET_SELECTION_INFO = (
+    "If 'Text selection' is enabled, Orca will also attempt to control text selection."
 )
 
 # Translators: This string is a label for the group of Orca commands which

@@ -566,12 +566,26 @@ Enable it for the default profile with:
 gsettings set org.gnome.Orca.CaretNavigation:/org/gnome/orca/default/caret-navigation/ selection-enabled true
 ```
 
-(Re)start Orca after changing the setting. This is needed because Orca must register key grabs
-for all the selection commands. When this feature is user-facing, that will be managed by Orca's
-preferences UI. Until then, it only happens upon launch.
+To disable the feature, use the `gsettings set` command above with `false` instead of `true`.
 
-In non-web applications, toggle Orca's caret navigation on with Orca+F12. With Orca's caret
-navigation active, test extending and shrinking selections by using the following selection
+If testing with another profile, replace `default` in the path with that profile's ID.
+See [Orca GSettings Schemas Reference](gsettings-schemas.md) for more about profiles and
+application-specific overrides.
+
+(Re)start Orca after changing the setting to register/deregister grabs for the selection commands.
+
+If you are using Orca v51.2 or later, once you have opted in and restarted Orca, you can toggle
+this feature on/off in Preferences (Document, Caret navigation) without the need to restart.
+Earlier releases of v51 require the command line.
+
+To opt out completely, and restore the non-developer experience, reset the key and restart Orca:
+
+```sh
+gsettings reset org.gnome.Orca.CaretNavigation:/org/gnome/orca/default/caret-navigation/ selection-enabled
+```
+
+In non-web applications, first toggle Orca's caret navigation on with Orca+F12. With Orca's
+caret navigation active, test extending and shrinking selections by using the following selection
 commands:
 
 * Shift+Left/Right: Character
@@ -593,17 +607,6 @@ using at least v51.1 is recommended to reduce the likelihood that a text-selecti
 due to an Orca bug. Also please note that implementing this feature, taking into account all
 possible scenarios, was non-trivial. There are undoubtedly still some Orca bugs. If you find
 one while testing your app, please report it.
-
-To clear the setting and restore the default (disabled):
-
-```sh
-gsettings reset org.gnome.Orca.CaretNavigation:/org/gnome/orca/default/caret-navigation/ selection-enabled
-```
-
-To explicitly disable the feature, use the `gsettings set` command above with `false` instead of
-`true`. If testing with another profile, replace `default` in the path with that profile's ID.
-See [Orca GSettings Schemas Reference](gsettings-schemas.md) for more about profiles and
-application-specific overrides.
 
 ## Tools For Debugging
 
