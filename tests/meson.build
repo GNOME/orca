@@ -65,6 +65,7 @@ unit_tests = [
   'unit_tests/test_language_utilities.py',
   'unit_tests/test_learn_mode_presenter.py',
   'unit_tests/test_live_region_presenter.py',
+  'unit_tests/test_localized_strings.py',
   'unit_tests/test_notification_presenter.py',
   'unit_tests/test_object_navigator.py',
   'unit_tests/test_orca_modifier_manager.py',
