@@ -964,7 +964,10 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _build(self) -> None:
         row = 0
 
-        msg = f"{guilabels.VOICE_SET_INFO} {guilabels.VOICE_SET_INFO_COMMANDS}"
+        # TODO - JD: Restore VOICE_SET_INFO_COMMANDS in the UI once marked for translation in v52.
+        # Uncomment the original assignment and delete the temporary one below.
+        # msg = f"{guilabels.VOICE_SET_INFO} {guilabels.VOICE_SET_INFO_COMMANDS}"
+        msg = guilabels.VOICE_SET_INFO
         info_listbox = orca_gui_helpers.create_info_listbox(msg)
         self.attach(info_listbox, 0, row, 1, 1)
         row += 1

@@ -107,6 +107,9 @@ def test_user_facing_strings_are_localized(module: str) -> None:
 def test_voice_set_commands_hint_restored_in_v52() -> None:
     """Require the temporarily hidden Voice Sets hint to return when string freeze ends."""
 
+    # TODO - JD: Restore VOICE_SET_INFO_COMMANDS in the UI once marked for translation in v52.
+    # In src/orca/speech_manager_preferences_grid.py, uncomment the original msg assignment
+    # and delete the temporary assignment.
     if _major_version() < 52:
         return
 
@@ -118,7 +121,11 @@ def test_voice_set_commands_hint_restored_in_v52() -> None:
         and node.value.id == "guilabels"
         and node.attr == "VOICE_SET_INFO_COMMANDS"
         for node in ast.walk(tree)
-    ), "Mark VOICE_SET_INFO_COMMANDS for translation and restore it in the Voice Sets UI for v52"
+    ), (
+        "Mark VOICE_SET_INFO_COMMANDS for translation in v52, then uncomment the original "
+        "msg assignment and delete the temporary assignment in "
+        "src/orca/speech_manager_preferences_grid.py"
+    )
 
 
 @pytest.mark.parametrize(
