@@ -76,6 +76,17 @@
           </item>
           <item>
             <p>
+              <gui>Headers and footers</gui>: Controls whether
+              Orca announces headers and footers. Default: on.
+            </p>
+            <note>
+              <p>
+                Available in Orca 52 and later.
+              </p>
+            </note>
+          </item>
+          <item>
+            <p>
               <gui>Landmarks</gui>: Controls whether Orca
               announces landmarks, named regions of a page such as navigation or main content.
               Default: on.

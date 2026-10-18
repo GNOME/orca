@@ -47,6 +47,7 @@ _UNLOCALIZED_UNTIL_52 = {
     "guilabels": {
         repr("You can assign keybindings to any configured voice set in Commands."),
         repr("Text selection"),
+        repr("Headers and footers"),
         repr("If 'Text selection' is enabled, Orca will also attempt to control text selection."),
     },
     "messages": {

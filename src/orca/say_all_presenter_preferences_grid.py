@@ -218,6 +218,14 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_FORM,
                         ),
                         PreferenceControlDoc(
+                            label=guilabels.ANNOUNCE_HEADERS_AND_FOOTERS,
+                            kind="switch",
+                            summary=("Controls whether Orca announces headers and footers."),
+                            schema="say-all",
+                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_HEADER_AND_FOOTER,
+                            since="52",
+                        ),
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_LANDMARKS,
                             kind="switch",
                             summary=(
@@ -353,6 +361,18 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         presenter.get_announce_form,
                         presenter.set_announce_form,
                         say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_FORM,
+                    ),
+                    *(
+                        (
+                            (
+                                guilabels.ANNOUNCE_HEADERS_AND_FOOTERS,
+                                presenter.get_announce_header_and_footer,
+                                presenter.set_announce_header_and_footer,
+                                say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_HEADER_AND_FOOTER,
+                            ),
+                        )
+                        if presenter.get_header_and_footer_available()
+                        else ()
                     ),
                     (
                         guilabels.ANNOUNCE_LANDMARKS,

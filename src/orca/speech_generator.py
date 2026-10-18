@@ -99,6 +99,7 @@ class SpeechGeneratorContext(GeneratorContext):
     announce_document: bool
     announce_form: bool
     announce_grouping: bool
+    announce_header_and_footer: bool
     announce_landmark: bool
     announce_list: bool
     announce_table: bool
@@ -859,7 +860,9 @@ class SpeechGenerator(generator.Generator):
             "ROLE_DPUB_SECTION",
             "ROLE_FEED",
             Atspi.Role.FORM,
+            Atspi.Role.FOOTER,
             Atspi.Role.GROUPING,
+            Atspi.Role.HEADER,
             Atspi.Role.LANDMARK,
             Atspi.Role.LIST,
             Atspi.Role.MARK,
@@ -894,6 +897,8 @@ class SpeechGenerator(generator.Generator):
                     "ROLE_DPUB_SECTION",
                 ],
             )
+        if self._context.announce_header_and_footer:
+            enabled.extend([Atspi.Role.HEADER, Atspi.Role.FOOTER])
         if self._context.announce_landmark:
             enabled.extend([Atspi.Role.LANDMARK, "ROLE_DPUB_LANDMARK", "ROLE_REGION"])
         if self._context.announce_list:

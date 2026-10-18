@@ -195,6 +195,7 @@ orca_integration_tests = {
     'integration_tests/test_web_emoji_links.py',
     'integration_tests/test_web_landmarks.py',
     'integration_tests/test_web_region_headings.py',
+    'integration_tests/test_web_article_headers.py',
     'integration_tests/test_web_inline_landmarks.py',
     'integration_tests/test_web_inline_list.py',
     'integration_tests/test_web_inline_list_wrap.py',

@@ -76,6 +76,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_aria_application,
     _web_aria_document,
     _web_aria_spinbutton,
+    _web_article_headers,
     _web_attribute_mask,
     _web_autocomplete,
     _web_basic,

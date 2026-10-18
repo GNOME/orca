@@ -112,6 +112,14 @@ class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_FORM,
                         ),
                         PreferenceControlDoc(
+                            label=guilabels.ANNOUNCE_HEADERS_AND_FOOTERS,
+                            kind="switch",
+                            summary=("Controls whether Orca announces headers and footers."),
+                            schema="speech",
+                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_HEADER_AND_FOOTER,
+                            since="52",
+                        ),
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_LANDMARKS,
                             kind="switch",
                             summary=(

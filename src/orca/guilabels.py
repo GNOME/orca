@@ -64,6 +64,15 @@ ANNOUNCE_EMBEDDED_DOCUMENTS = C_("Context", "Embedded documents")
 # the end of the form, Orca will announce that the form is being exited.
 ANNOUNCE_FORMS = C_("Context", "Forms")
 
+# TODO - JD: Use C_("Context", "Headers and footers") in v52.
+# Translators: Some users want to hear additional information when entering
+# different types of content. If this switch is enabled, Orca will announce
+# that a header or footer has been entered before speaking its contents.
+# Headers and footers are containers for introductory or concluding content,
+# such as the title and author of an article or links to related information.
+# These are not headings or table row and column headers.
+ANNOUNCE_HEADERS_AND_FOOTERS = "Headers and footers"
+
 # Translators: Some users want to hear additional information when entering
 # different types of content. If this checkbox is checked, Orca will announce
 # when an ARIA landmark has been entered or exited. ARIA landmarks are the W3C

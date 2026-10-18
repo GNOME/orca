@@ -98,6 +98,7 @@ class SayAllPresenter(Extension):
     KEY_ANNOUNCE_DOCUMENT = "announce-document"
     KEY_ANNOUNCE_FORM = "announce-form"
     KEY_ANNOUNCE_GROUPING = "announce-grouping"
+    KEY_ANNOUNCE_HEADER_AND_FOOTER = "announce-header-and-footer"
     KEY_ANNOUNCE_LANDMARK = "announce-landmark"
     KEY_ANNOUNCE_LIST = "announce-list"
     KEY_ANNOUNCE_TABLE = "announce-table"
@@ -832,6 +833,44 @@ class SayAllPresenter(Extension):
             self._SCHEMA,
             self.KEY_ANNOUNCE_GROUPING,
             value,
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_ANNOUNCE_HEADER_AND_FOOTER,
+        schema="say-all",
+        gtype="b",
+        default=True,
+        summary="Announce headers and footers",
+        user_visible=False,
+        preserve_default=True,
+    )
+    @dbus_service.undocumented
+    @dbus_service.getter
+    def get_announce_header_and_footer(self) -> bool:
+        """Returns whether headers and footers are announced when entered."""
+
+        return self._get_setting(self.KEY_ANNOUNCE_HEADER_AND_FOOTER, True)
+
+    def get_header_and_footer_available(self) -> bool:
+        """Returns whether header and footer announcements have an explicit value."""
+
+        return (
+            gsettings_registry.get_registry().layered_lookup(
+                self._SCHEMA, self.KEY_ANNOUNCE_HEADER_AND_FOOTER, "b"
+            )
+            is not None
+        )
+
+    @dbus_service.undocumented
+    @dbus_service.setter
+    def set_announce_header_and_footer(self, value: bool) -> bool:
+        """Sets whether headers and footers are announced when entered."""
+
+        tokens = ["SAY ALL PRESENTER: Setting announce headers and footers to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_ANNOUNCE_HEADER_AND_FOOTER, value
         )
         return True
 

@@ -151,6 +151,7 @@ class SpeechPresenter(Extension):
     KEY_ANNOUNCE_DOCUMENT = "announce-document"
     KEY_ANNOUNCE_FORM = "announce-form"
     KEY_ANNOUNCE_GROUPING = "announce-grouping"
+    KEY_ANNOUNCE_HEADER_AND_FOOTER = "announce-header-and-footer"
     KEY_ANNOUNCE_LANDMARK = "announce-landmark"
     KEY_ANNOUNCE_LIST = "announce-list"
     KEY_ANNOUNCE_TABLE = "announce-table"
@@ -736,6 +737,44 @@ class SpeechPresenter(Extension):
             self._SCHEMA,
             self.KEY_ANNOUNCE_GROUPING,
             value,
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_ANNOUNCE_HEADER_AND_FOOTER,
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce headers and footers",
+        user_visible=False,
+        preserve_default=True,
+    )
+    @dbus_service.undocumented
+    @dbus_service.getter
+    def get_announce_header_and_footer(self) -> bool:
+        """Returns whether headers and footers are announced when entered."""
+
+        return self._get_setting(self.KEY_ANNOUNCE_HEADER_AND_FOOTER, "b", True)
+
+    def get_header_and_footer_available(self) -> bool:
+        """Returns whether header and footer announcements have an explicit value."""
+
+        return (
+            gsettings_registry.get_registry().layered_lookup(
+                self._SCHEMA, self.KEY_ANNOUNCE_HEADER_AND_FOOTER, "b"
+            )
+            is not None
+        )
+
+    @dbus_service.undocumented
+    @dbus_service.setter
+    def set_announce_header_and_footer(self, value: bool) -> bool:
+        """Sets whether headers and footers are announced when entered."""
+
+        tokens = ["SPEECH PRESENTER: Setting announce headers and footers to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_ANNOUNCE_HEADER_AND_FOOTER, value
         )
         return True
 
@@ -2374,6 +2413,7 @@ class SpeechPresenter(Extension):
             announce_document=p.get_announce_document(),
             announce_form=p.get_announce_form(),
             announce_grouping=p.get_announce_grouping(),
+            announce_header_and_footer=p.get_announce_header_and_footer(),
             announce_landmark=p.get_announce_landmark(),
             announce_list=p.get_announce_list(),
             announce_table=p.get_announce_table(),
@@ -2737,7 +2777,7 @@ class SpeechPresenter(Extension):
             ),
         )
 
-        announcements = (
+        announcements: tuple[SpeechPreference, ...] = (
             SpeechPreference(
                 self.KEY_ANNOUNCE_ARTICLE,
                 guilabels.ANNOUNCE_ARTICLES,
@@ -2767,6 +2807,18 @@ class SpeechPresenter(Extension):
                 guilabels.ANNOUNCE_FORMS,
                 self.get_announce_form,
                 self.set_announce_form,
+            ),
+            *(
+                (
+                    SpeechPreference(
+                        self.KEY_ANNOUNCE_HEADER_AND_FOOTER,
+                        guilabels.ANNOUNCE_HEADERS_AND_FOOTERS,
+                        self.get_announce_header_and_footer,
+                        self.set_announce_header_and_footer,
+                    ),
+                )
+                if self.get_header_and_footer_available()
+                else ()
             ),
             SpeechPreference(
                 self.KEY_ANNOUNCE_LANDMARK,
