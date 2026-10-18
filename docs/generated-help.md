@@ -42,6 +42,18 @@ generated changes in your commit.
    For a new settings category, also define its `PreferenceCategoryDoc` in the
    preferences grid and add its category ID to `preference_order`.
 
+## Release Availability
+
+Most documentation objects support `since`, which names the major release that
+introduces the documented content. Put it on the highest-level documentation
+object whose contents were all introduced in that release. For an entirely new
+feature, set `since="53"` on its `FeaturePageDoc` and leave it unset on the
+feature's sections, settings, and commands. For a new setting in an existing
+feature, put it on that setting instead.
+
+The generated notice for `since="53"` says "Available in Orca 53 and later."
+Existing documentation may remain unannotated.
+
 ## Labels, Shortcuts, and Links
 
 Use UI constants, not copies of their text, so renaming a label updates the docs:

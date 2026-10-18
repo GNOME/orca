@@ -1758,3 +1758,160 @@ def test_command_names_are_not_copied_into_feature_prose(generator: dict[str, An
                     assert name not in part.value, (
                         f"{path}:{part.lineno}: use cmdnames instead of copying {name!r}"
                     )
+
+
+@pytest.mark.parametrize("since", (52, None, "v52", "52.1", "52..1", "52.alpha"))
+def test_invalid_introduction_release(generator: dict[str, Any], since: Any) -> None:
+    """Rejects malformed release annotations and point releases."""
+
+    with pytest.raises(ValueError, match="Invalid Orca introduction release"):
+        generator["_add_since_notice"](ET.Element("test"), since)
+
+
+def test_versioned_help_generation(
+    generator: dict[str, Any], tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Versioned source metadata survives collection, placement, and serialization."""
+
+    source = tmp_path / "src"
+    shutil.copytree(
+        _ROOT / "src/orca", source / "orca", ignore=shutil.ignore_patterns("__pycache__")
+    )
+    clipboard = source / "orca/clipboard_command_definitions.py"
+    original = clipboard.read_text()
+    clipboard.write_text(
+        original.replace(
+            "from .help_metadata import CommandGroupDoc",
+            "from .help_metadata import CommandDoc, CommandGroupDoc, CommandSectionDoc",
+        ).replace(
+            'summary="Present the contents of the system clipboard.",',
+            """summary="Present the contents of the system clipboard.",
+        since="51",
+        sections=(CommandSectionDoc(
+            title="Clipboard commands",
+            command_names=("present_clipboard_contents",),
+            since="52",
+        ),),
+        commands=(
+            CommandDoc("present_clipboard_contents", since="52"),
+        ),""",
+        )
+    )
+    (source / "orca/version_preferences_grid.py").write_text("""
+class VersionPreferencesGrid(PreferencesGridBase):
+    @classmethod
+    def get_documentation(cls):
+        return PreferencePanelDoc(
+            title="Version settings", panel_id="versioned.panel",
+            since="52",
+            category=PreferenceCategoryDoc(
+                "versioned", "Version settings", "Configure versioned settings.",
+                ("versioned.panel",), since="52",
+            ),
+            controls=(
+                PreferenceControlDoc(
+                    "Mode", "choice", since="52",
+                    value_docs=(
+                        PreferenceValueDoc("New", since="53"),
+                    ),
+                    controls=(PreferenceControlDoc(
+                        "Nested", "switch", since="52",
+                    ),),
+                ),
+            ),
+        )
+""")
+    (source / "orca/version_feature_documentation.py").write_text("""
+from .help_metadata import FeatureDocumentationDoc, FeaturePageDoc, FeatureSectionDoc
+
+
+def get_feature_documentation():
+    return FeatureDocumentationDoc(
+        pages=(FeaturePageDoc(
+            "features_versions", "Versions", "Versions", "Versioned help.", "index",
+            since="52",
+            sections=(
+                FeatureSectionDoc(title="Versions", include_target="versions.section"),
+                FeatureSectionDoc(
+                    title="Additional behavior", intro="Some additional behavior.", since="54",
+                ),
+            ),
+        ),),
+        sections=(FeatureSectionDoc(
+            title="Versions", target="versions.section", intro="Some versioned behavior.",
+            preference_categories=("versioned",), since="53",
+        ),),
+    )
+""")
+    metadata = json.loads(_METADATA_PATH.read_text())
+    metadata["preference_order"].append("versioned")
+    metadata["feature_order"].append("features_versions")
+    metadata_path = tmp_path / "metadata.json"
+    metadata_path.write_text(json.dumps(metadata))
+    shutil.copytree(_HELP_DIR / "figures", tmp_path / "figures")
+    output = tmp_path / "help"
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            str(_SCRIPT),
+            "--src-dir",
+            str(source),
+            "--output-dir",
+            str(output),
+            "--metadata",
+            str(metadata_path),
+        ],
+    )
+    assert generator["main"]() == 0
+
+    page = _parse_generated_page((output / "features_versions.page").read_text())
+    notices = page.findall("m:note/m:p", _NS)
+    assert ["".join(p.itertext()).strip() for p in notices] == [
+        "Available in Orca 52 and later.",
+    ]
+    section = page.find("m:section[@id='versions']", _NS)
+    assert section is not None
+    assert section.find("m:note/m:p", _NS).text.strip() == "Available in Orca 53 and later."
+    additional = page.find("m:section[@id='additional-behavior']", _NS)
+    assert additional is not None
+    assert additional.find("m:note/m:p", _NS).text.strip() == "Available in Orca 54 and later."
+    settings = section.find("m:section[@id='settings-versions']", _NS)
+    assert settings is not None
+    assert len(settings.findall("m:note", _NS)) == 2  # Category and panel.
+    items = {
+        item.find("m:p/m:gui", _NS).text: item
+        for item in page.findall(".//m:item", _NS)
+        if item.find("m:p/m:gui", _NS) is not None
+    }
+    for label in ("Mode", "New", "Nested"):
+        assert items[label].find("m:note", _NS) is not None, label
+
+    page = _parse_generated_page((output / "features_clipboard.page").read_text())
+    assert "Available in Orca 51 and later." in "".join(page.itertext())
+    assert "Available in Orca 52 and later." in "".join(page.itertext())
+    items = {
+        item.find("m:p/m:gui", _NS).text: item
+        for item in page.findall(".//m:item", _NS)
+        if item.find("m:p/m:gui", _NS) is not None
+    }
+    assert len(items) == 1
+    command = next(iter(items.values()))
+    assert command.find("m:note/m:p", _NS).text.strip() == "Available in Orca 52 and later."
+
+    executable = shutil.which("xmllint")
+    schema = Path("/usr/share/xml/mallard/1.1/mallard-1.1.rng")
+    if executable and schema.exists():
+        result = subprocess.run(
+            [
+                executable,
+                "--noout",
+                "--relaxng",
+                str(schema),
+                str(output / "features_versions.page"),
+                str(output / "features_clipboard.page"),
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert result.returncode == 0, result.stderr

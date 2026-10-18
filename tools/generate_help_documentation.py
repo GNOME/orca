@@ -144,6 +144,7 @@ class ValueDoc:
     label: str
     value: str = ""
     summary: str = ""
+    since: str = ""
 
 
 @dataclass
@@ -178,6 +179,7 @@ class ControlDoc:
     dynamic_options: bool = False
     source_file: str = ""
     source_line: int = 0
+    since: str = ""
 
 
 @dataclass
@@ -197,6 +199,7 @@ class PanelDoc:
     category: PreferenceCategoryDoc | None = None
     command_groups: tuple[str, ...] = ()
     command_names: tuple[str, ...] = ()
+    since: str = ""
 
 
 @dataclass
@@ -223,6 +226,7 @@ class CollectedCommandDoc:
     laptop_keybinding: KeyBindingDoc | None = None
     source_file: str = ""
     source_line: int = 0
+    since: str = ""
 
 
 @dataclass
@@ -238,6 +242,7 @@ class CollectedCommandGroupDoc:
     sections: tuple[CommandSectionDoc, ...] = field(default_factory=tuple)
     source_file: str = ""
     source_line: int = 0
+    since: str = ""
 
 
 @dataclass
@@ -281,6 +286,7 @@ class PageDoc:
     panels: list[PanelDoc]
     summary: str = ""
     next_page_id: str = ""
+    since: str = ""
 
 
 class SourceEvaluator:
@@ -789,6 +795,7 @@ def _extract_doc_control(
         dynamic_options=bool(dynamic_values),
         source_file=source_file,
         source_line=node.lineno,
+        since=evaluator.text(_find_keyword(node, "since")),
     )
 
 
@@ -837,6 +844,7 @@ def _extract_doc_values(node: ast.AST, evaluator: SourceEvaluator) -> list[Value
                 label=_strip_mnemonic(label),
                 value=value if isinstance(value, str) else "",
                 summary=summary if isinstance(summary, str) else "",
+                since=evaluator.text(_find_keyword(element, "since")),
             )
         )
     return values
@@ -937,6 +945,7 @@ def _extract_protocol_panel(
         category=_extract_category_doc(_find_keyword(panel_call, "category"), evaluator),
         command_groups=tuple(evaluator.eval(_find_keyword(panel_call, "command_groups")) or ()),
         command_names=tuple(evaluator.eval(_find_keyword(panel_call, "command_names")) or ()),
+        since=evaluator.text(_find_keyword(panel_call, "since")),
     )
 
 
@@ -1264,6 +1273,7 @@ def collect_command_groups(src_dir: Path) -> list[CollectedCommandGroupDoc]:
                 see_also=source_group_doc.see_also,
                 sections=(),
                 source_file=str(path),
+                since=source_group_doc.since,
             ),
         )
         if source_group_doc.target and not group.target:
@@ -1276,12 +1286,19 @@ def collect_command_groups(src_dir: Path) -> list[CollectedCommandGroupDoc]:
             group.see_also = tuple(dict.fromkeys([*group.see_also, *source_group_doc.see_also]))
         if source_group_doc.sections:
             group.sections = (*group.sections, *source_group_doc.sections)
+        if source_group_doc.since:
+            if group.since and group.since != source_group_doc.since:
+                raise ValueError(
+                    f"Conflicting introduction releases for command group {group_label!r}"
+                )
+            group.since = source_group_doc.since
 
         for command in commands:
             metadata = metadata_by_name.get(command.name)
             if metadata is not None:
                 command.summary = metadata.summary
                 command.details = metadata.details
+                command.since = metadata.since
             group.commands.append(command)
 
     for group in groups_by_title.values():
@@ -1572,16 +1589,29 @@ def _show_default(control: ControlDoc) -> bool:
     return not control.default.startswith("@")
 
 
+def _add_since_notice(parent: ET.Element, since: str) -> None:
+    """Adds the public release in which an item became available."""
+
+    if since == "":
+        return
+    if not isinstance(since, str) or not re.fullmatch(r"[0-9]+", since):
+        raise ValueError(f"Invalid Orca introduction release: {since!r}")
+    note = _append_child(parent, "note")
+    _append_child(note, "p", f"Available in Orca {since} and later.")
+
+
 def _add_value_descriptions(parent: ET.Element, control: ControlDoc) -> None:
     """Adds descriptions for documented values."""
 
-    if not any(value_doc.summary for value_doc in control.value_docs):
+    if not any(value_doc.summary or value_doc.since for value_doc in control.value_docs):
         return
 
     value_docs = [
         value_doc
         for value_doc in control.value_docs
-        if value_doc.summary or _is_default_value(control, value_doc.label, value_doc.value)
+        if value_doc.summary
+        or value_doc.since
+        or _is_default_value(control, value_doc.label, value_doc.value)
     ]
     if not value_docs:
         return
@@ -1596,6 +1626,7 @@ def _add_value_descriptions(parent: ET.Element, control: ControlDoc) -> None:
         gui = _append_child(p, "gui", label)
         if value_doc.summary:
             gui.tail = _gui_description_tail(label, _sentence(value_doc.summary))
+        _add_since_notice(item, value_doc.since)
 
 
 def _gui_description_tail(label: str, description: str) -> str:
@@ -1740,6 +1771,7 @@ def _add_control_item(
     else:
         gui.tail = ""
 
+    _add_since_notice(item, control.since)
     _add_value_descriptions(item, control)
     _add_action_descriptions(item, control)
     if control.controls:
@@ -1767,6 +1799,7 @@ def _add_panel_contents(
 ) -> None:
     """Adds the contents of one panel to an existing section."""
 
+    _add_since_notice(parent, panel.since)
     if panel.instructions:
         _add_text_paragraphs(parent, panel.instructions)
     if panel.category:
@@ -1853,6 +1886,7 @@ def _page_docs_from_groups(panels: list[PanelDoc], metadata: dict[str, Any]) -> 
                 link_title=title,
                 description=category.description,
                 panels=group_panels,
+                since=category.since,
             )
         )
 
@@ -2064,6 +2098,7 @@ def _add_command_item(parent: ET.Element, command: CollectedCommandDoc) -> ET.El
         p = _append_child(item, "p")
         gui = _append_child(p, "gui", command.label)
         gui.tail = f": {', '.join(command.braille_bindings)}"
+        _add_since_notice(item, command.since)
         return item
 
     if command.command_type != "keyboard":
@@ -2078,6 +2113,7 @@ def _add_command_item(parent: ET.Element, command: CollectedCommandDoc) -> ET.El
     if command.details:
         details.append(_sentence(command.details))
     gui.tail = _gui_description_tail(command.label, " ".join(details)) if details else ""
+    _add_since_notice(item, command.since)
 
     desktop = command.desktop_keybinding
     laptop = command.laptop_keybinding
@@ -2165,6 +2201,7 @@ def _command_content_registry(
             selected.title = section.title
             selected.sections = ()
             selected.summary = section.summary
+            selected.since = section.since or group.since
             section_id = _id_fragment(section.title)
             for alias in (section.target, f"{aliases[1]}.{section_id}", f"{page_id}#{section_id}"):
                 if alias:
@@ -2347,6 +2384,7 @@ def _add_feature_command_group(
     section = _append_child(parent, "section")
     section.set("id", _id_fragment(f"commands-{group.title}"))
     _append_child(section, "title", title)
+    _add_since_notice(section, group.since)
     if preferences_page and show_location:
         _add_command_preferences_location(section, commands, preferences_page)
     if not group.sections:
@@ -2375,6 +2413,8 @@ def _add_feature_command_group(
             container = _append_child(section, "section")
             container.set("id", _id_fragment(f"{group.title}-{subsection.title}"))
             _append_child(container, "title", subsection.title)
+        if subsection.since != group.since:
+            _add_since_notice(container, subsection.since)
         command_list = _append_child(container, "list")
         for command in selected:
             _add_command_item(command_list, command)
@@ -2590,7 +2630,10 @@ def _resolve_feature_sections(
             sections.append(section_doc)
             continue
         try:
-            sections.append(reusable_sections[section_doc.include_target])
+            reusable = reusable_sections[section_doc.include_target]
+            sections.append(
+                replace(reusable, since=section_doc.since) if section_doc.since else reusable
+            )
         except KeyError as error:
             raise ValueError(
                 f"{page_doc.page_id} references unknown feature section "
@@ -2762,6 +2805,7 @@ def _add_feature_preferences(
     settings = _append_child(parent, "section")
     settings.set("id", _settings_anchor(section))
     _append_child(settings, "title", "Settings")
+    seen_categories = set()
     for preference_page, panel in selected:
         container = settings
         if len(selected) > 1:
@@ -2769,6 +2813,9 @@ def _add_feature_preferences(
             container.set("id", _settings_anchor(section, panel))
             _append_child(container, "title", panel.title)
         category = next(panel.category for panel in preference_page.panels if panel.category)
+        if category.category_id not in seen_categories:
+            _add_since_notice(container, category.since)
+            seen_categories.add(category.category_id)
         path: tuple[tuple[str, str], ...] = ((preference_page.link_title, "category"),)
         if _id_fragment(panel.title) != _id_fragment(preference_page.link_title):
             path += ((panel.title, "group"),)
@@ -2816,6 +2863,7 @@ def _add_feature_section_contents(
 ) -> None:
     """Adds the body of a feature documentation section."""
 
+    _add_since_notice(parent, section_doc.since)
     if not section_doc.intro and not section_doc.details:
         for reference in section_doc.command_groups:
             _add_text_paragraphs(parent, command_context.contents[reference].summary)
@@ -2963,6 +3011,8 @@ def _build_feature_section_page(
     _add_license(info)
 
     _append_child(page, "title", section_doc.title)
+    if page_doc.since != section_doc.since:
+        _add_since_notice(page, page_doc.since)
     _add_feature_section_contents(
         page,
         section_doc,
@@ -3065,6 +3115,7 @@ def _build_feature_page(
     _add_license(info)
 
     _append_orca_logo_feature_title(page, page_doc.title)
+    _add_since_notice(page, page_doc.since)
     if page_doc.intro:
         _add_text_paragraphs(page, page_doc.intro)
     if page_doc.details:
@@ -3077,6 +3128,7 @@ def _build_feature_page(
         )
     if page_doc.preference_category:
         category = command_context.preference_categories[page_doc.preference_category]
+        _add_since_notice(page, category.since)
         for panel in category.panels:
             if _id_fragment(panel.title) == _id_fragment(category.link_title) and all(
                 control.control_type == "page" for control in panel.controls

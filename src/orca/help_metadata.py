@@ -37,6 +37,7 @@ class CommandDoc:
     name: str
     summary: str = ""
     details: str = ""
+    since: str = ""
 
 
 @dataclass(frozen=True)
@@ -51,6 +52,7 @@ class CommandSectionDoc:
     command_types: tuple[str, ...] = field(default_factory=tuple)
     command_names: tuple[str, ...] = field(default_factory=tuple)
     command_prefixes: tuple[str, ...] = field(default_factory=tuple)
+    since: str = ""
 
 
 @dataclass(frozen=True)
@@ -64,6 +66,7 @@ class CommandGroupDoc:
     see_also: tuple[str, ...] = field(default_factory=tuple)
     sections: tuple[CommandSectionDoc, ...] = field(default_factory=tuple)
     commands: tuple[CommandDoc, ...] = field(default_factory=tuple)
+    since: str = ""
 
 
 @dataclass(frozen=True)
@@ -101,6 +104,7 @@ class FeatureSectionDoc:
     after_commands: str = ""
     shortcuts: tuple[CommandShortcutDoc, ...] = field(default_factory=tuple)
     topic_id: str = ""
+    since: str = ""
 
 
 @dataclass(frozen=True)
@@ -131,6 +135,7 @@ class FeaturePageDoc:
     preference_category: str = ""
     preference_panels: tuple[str, ...] = field(default_factory=tuple)
     topics: tuple[str, ...] = field(default_factory=tuple)
+    since: str = ""
 
 
 @dataclass(frozen=True)
@@ -140,6 +145,7 @@ class PreferenceValueDoc:
     label: str
     value: str = ""
     summary: str = ""
+    since: str = ""
 
 
 @dataclass(frozen=True)
@@ -170,6 +176,7 @@ class PreferenceControlDoc:
     minimum: str = ""
     maximum: str = ""
     default_labels: tuple[PreferenceValueDoc, ...] = ()
+    since: str = ""
 
 
 @dataclass(frozen=True)
@@ -183,6 +190,7 @@ class PreferenceCategoryDoc:
     application_preferences: bool = True
     application_details: str = ""
     target: str = ""
+    since: str = ""
 
 
 @dataclass(frozen=True)
@@ -200,3 +208,4 @@ class PreferencePanelDoc:
     category: PreferenceCategoryDoc | None = None
     command_groups: tuple[str, ...] = ()
     command_names: tuple[str, ...] = ()
+    since: str = ""
