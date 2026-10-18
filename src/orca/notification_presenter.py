@@ -94,20 +94,17 @@ class NotificationPresenter(Extension):
         self._current_index = -1
 
     def _timestamp_to_string(self, timestamp: float) -> str:
-        diff = time.time() - timestamp
-        if diff < 60:
-            return messages.seconds_ago(diff)
+        seconds = round(time.time() - timestamp)
+        if seconds < 60:
+            return messages.seconds_ago(seconds)
 
-        if diff < 3600:
-            minutes = round(diff / 60)
+        if (minutes := round(seconds / 60)) < 60:
             return messages.minutes_ago(minutes)
 
-        if diff < 86400:
-            hours = round(diff / 3600)
+        if (hours := round(seconds / 3600)) < 24:
             return messages.hours_ago(hours)
 
-        days = round(diff / 86400)
-        return messages.days_ago(days)
+        return messages.days_ago(round(seconds / 86400))
 
     @dbus_service.command
     def present_last_notification(

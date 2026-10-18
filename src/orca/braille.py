@@ -2457,7 +2457,7 @@ def display_message(message: str, flash_time: int = 0) -> None:
     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     _init_flash(flash_time)
-    region = Region(message, -1)
+    region = Region(" ".join(message.splitlines()), -1)
     line = Line(region)
     display_line(line, region, stop_flash=False)
 

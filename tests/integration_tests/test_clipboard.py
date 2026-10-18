@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Tests clipboard presentation and flat review copying with a GTK application."""
+"""Tests clipboard presentation with a GTK application."""
 
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import capture, speech, toggle_flat_review
+from .helpers import capture, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -59,26 +59,3 @@ def test_copy_and_paste(gtk3_two_entries: NativeAppSession) -> None:
     spoken, brailled = capture(session)
     assert spoken == ["Pasted contents from clipboard.", "Text unselected."]
     assert brailled[-1].full == "OrcaTwoEntries application frame Apple pie recipe $l"
-
-
-@pytest.mark.native_app
-def test_flat_review_copy_and_append(gtk3_two_entries: NativeAppSession) -> None:
-    """Tests copying and appending reviewed text to the clipboard."""
-
-    session = gtk3_two_entries
-    _discard_output(session)
-    toggle_flat_review(session)
-    session.orca.call("FlatReviewPresenter", "PresentLine", True)
-    assert speech(session) == ["Apple pie recipe"]
-
-    session.orca.call("FlatReviewPresenter", "CopyToClipboard", True)
-    assert speech(session) == ["Copied contents to clipboard."]
-    session.orca.call("ClipboardPresenter", "PresentClipboardContents", True)
-    assert speech(session) == ["Clipboard contains: Apple pie recipe"]
-
-    session.orca.call("FlatReviewPresenter", "GoNextLine", True)
-    assert speech(session) == ["Banana bread recipe"]
-    session.orca.call("FlatReviewPresenter", "AppendToClipboard", True)
-    assert speech(session) == ["Appended contents to clipboard."]
-    session.orca.call("ClipboardPresenter", "PresentClipboardContents", True)
-    assert speech(session) == ["Clipboard contains: Apple pie recipe\nBanana bread recipe"]

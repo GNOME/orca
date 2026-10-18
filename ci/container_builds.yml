@@ -6,7 +6,7 @@ include:
 
 variables:
   # Bump the tag when changing image contents or dependency checks.
-  BASE_TAG: "2026-10-14.1-main"
+  BASE_TAG: "2026-10-18.1-main"
   FDO_UPSTREAM_REPO: "gnome/orca"
 
 .orca_opensuse_tumbleweed_x86_64:
@@ -44,6 +44,7 @@ opensuse-container@x86_64:
       less
       libei-devel
       liblouis-devel
+      libnotify-tools
       libtool
       libXi-devel
       libXtst-devel
@@ -54,6 +55,7 @@ opensuse-container@x86_64:
       MozillaFirefox
       nano
       ninja
+      notification-daemon
       procps
       python3
       python3-Babel

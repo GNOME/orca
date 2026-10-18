@@ -39,7 +39,7 @@ import pytest
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("PangoCairo", "1.0")
-from gi.repository import Atspi, GLib, PangoCairo
+from gi.repository import Atspi, Gio, GLib, PangoCairo
 
 from orca.output_reader import OutputReader
 
@@ -258,6 +258,65 @@ _gtk3_two_windows = _make_native_app_fixture(gtk3_two_windows, scope="function")
 _gtk3_widget_notebook = _make_native_app_fixture(gtk3_widget_notebook)
 _gtk3_toolbar = _make_native_app_fixture(gtk3_toolbar, scope="function")
 _gtk3_redundant_names = _make_native_app_fixture(gtk3_redundant_names, scope="function")
+
+_NOTIFICATION_DAEMON = Path("/usr/libexec/notification-daemon")
+
+
+@pytest.fixture(scope="function", name="notification_daemon")
+def _notification_daemon(tmp_path_factory: pytest.TempPathFactory) -> Iterator[NativeAppSession]:
+    """Runs notification-daemon and the two-entries app under their own Orca subprocess."""
+
+    if not _NOTIFICATION_DAEMON.exists():
+        pytest.skip("notification-daemon is not installed")
+    if shutil.which("notify-send") is None:
+        pytest.skip("notify-send is not installed")
+
+    sandbox_dir = tmp_path_factory.mktemp("orca-notifications")
+    process = subprocess.Popen([_NOTIFICATION_DAEMON], env=sandbox.build_sandbox_env(sandbox_dir))
+    try:
+        _wait_for_bus_name(process, "org.freedesktop.Notifications")
+        argv = [sys.executable, "-m", gtk3_two_entries.__name__]
+        yield from _run_app_with_orca(
+            sandbox_dir, argv=argv, ready_predicate=_name_equals(gtk3_two_entries.APP_TITLE)
+        )
+    finally:
+        process.terminate()
+        try:
+            process.wait(timeout=2.0)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait()
+
+
+def _wait_for_bus_name(
+    process: subprocess.Popen,
+    name: str,
+    timeout: float = 10.0,
+    poll_interval: float = 0.05,
+) -> None:
+    """Waits until process owns name on the session bus."""
+
+    bus = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        if (returncode := process.poll()) is not None:
+            raise RuntimeError(f"{process.args!r} exited early with code {returncode}")
+        reply = bus.call_sync(
+            "org.freedesktop.DBus",
+            "/org/freedesktop/DBus",
+            "org.freedesktop.DBus",
+            "NameHasOwner",
+            GLib.Variant("(s)", (name,)),
+            GLib.VariantType("(b)"),
+            Gio.DBusCallFlags.NONE,
+            -1,
+            None,
+        )
+        if reply.unpack()[0]:
+            return
+        time.sleep(poll_interval)
+    raise TimeoutError(f"{name} was not owned within {timeout}s")
+
 
 _PAGER_DOC = "\n".join(f"line {n:02d}" for n in range(1, 21)) + "\n"
 _NANO_DOC = "\n".join(f"line {n}" for n in range(1, 31)) + "\n"

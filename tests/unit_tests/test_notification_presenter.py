@@ -163,7 +163,7 @@ class TestNotificationPresenter:
         messages_mock.NOTIFICATION_NO_MESSAGES = "No notification messages"
         messages_mock.NOTIFICATION_LIST_TOP = "Beginning of notification list"
         messages_mock.NOTIFICATION_LIST_BOTTOM = "End of notification list"
-        messages_mock.seconds_ago = lambda x: f"{int(x)} seconds ago"
+        messages_mock.seconds_ago = lambda x: f"{x} seconds ago"
         messages_mock.minutes_ago = lambda x: f"{x} minutes ago"
         messages_mock.hours_ago = lambda x: f"{x} hours ago"
         messages_mock.days_ago = lambda x: f"{x} days ago"
@@ -306,10 +306,14 @@ class TestNotificationPresenter:
     @pytest.mark.parametrize(
         "time_diff, expected_result",
         [
+            pytest.param(1.4, "1 seconds ago", id="one_second"),
             pytest.param(30, "30 seconds ago", id="thirty_seconds"),
+            pytest.param(59.6, "1 minutes ago", id="almost_one_minute"),
             pytest.param(90, "2 minutes ago", id="ninety_seconds"),
             pytest.param(1800, "30 minutes ago", id="thirty_minutes"),
+            pytest.param(3570, "1 hours ago", id="almost_one_hour"),
             pytest.param(7200, "2 hours ago", id="two_hours"),
+            pytest.param(86100, "1 days ago", id="almost_one_day"),
             pytest.param(90000, "1 days ago", id="one_day"),
         ],
     )

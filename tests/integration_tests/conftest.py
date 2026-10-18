@@ -68,6 +68,7 @@ from .orca_fixtures import (  # noqa: F401
     _gtk3_two_entries,
     _gtk3_two_windows,
     _gtk3_widget_notebook,
+    _notification_daemon,
     _orca,
     _web_accordion,
     _web_alert,
