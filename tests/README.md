@@ -17,6 +17,7 @@ launch Orca need an installed build of the version being tested.
 * `pgrep` (from procps) and `fusermount` (for sandbox FUSE cleanup)
 * Python GObject introspection and Cairo bindings, with the AT-SPI, GTK3, and PangoCairo typelibs
 * `glib-compile-schemas` for the GSettings tests
+* `notification-daemon` and `notify-send` (from libnotify) for the notification tests.
 * The DejaVu Serif, DejaVu Sans, and DejaVu Sans Mono fonts for consistent line wrapping
 * VTE 2.91 (GTK3), including its typelib, Python curses, xterm terminfo, bash, less, nano, vim,
   and `seq` (from coreutils), for the terminal tests
@@ -26,7 +27,7 @@ launch Orca need an installed build of the version being tested.
 * MathCAT enabled in the installed Orca build for the math tests.
 * Chrome (beta preferred) or Chromium for the web tests.
 * Firefox (Nightly preferred) for the Firefox tests.
-* Atril for PDF navigation and selection tests (skipped if absent). Tests that depend
+* Atril for PDF navigation and selection tests. Tests that depend
   on its selection fixes require 1.28.7 or later.
 * `python-xlib` for window setup when running tests with Firefox or Atril.
 
@@ -88,6 +89,21 @@ because doing so might be unexpected. If you rely on Orca in your active
 session, you can still run the tests by signing in as a second local user
 (via `su` or `ssh`) and running them from there.
 
+Most integration tests cover user interactions with applications and toolkits
+by simulating keystrokes, waiting for Orca's response, and checking the resulting
+speech and braille output. Running these tests therefore takes a fair amount of
+time. There are currently over 275 Meson test runs containing over 1,500 test
+cases, many involving numerous simulated keystrokes. CI divides the suites into
+separate container jobs that can run in parallel. Local runs do not require
+containers, and application tests run sequentially by default. A full local run
+can take around 90 minutes, depending on the machine and installed applications.
+
+Running tests directly on the local system is supported and tests the installed
+applications and toolkits. Supporting containers for local runs would add setup
+and maintenance requirements, along with resource management and validation for
+parallel runs. CI already provides container-based testing, so dedicated support
+for local containers is not currently planned.
+
 `ORCA_TEST_USER_AGENT_PATH` overrides the browser executable. It must match the
 selected suite; this is not checked by the harness. For example:
 
@@ -96,11 +112,64 @@ ORCA_TEST_USER_AGENT_PATH=/usr/bin/firefox meson test -C _build --suite gecko
 ORCA_TEST_USER_AGENT_PATH=/opt/google/chrome-canary/chrome meson test -C _build --suite chromium
 ```
 
+## Adding New Integration Tests
+
+Prefer integration tests for new coverage. They exercise Orca with real
+applications and verify the speech and braille output associated with both
+native navigation and Orca commands.
+
+### 1. Choose a Test File and Content
+
+Look for a related test in `tests/integration_tests/` and extend it when
+practical. Otherwise, create a file named `test_[feature].py`, following
+similar existing tests.
+
+Reuse the existing test applications in `tests/integration_tests/apps/`
+and fixtures in `tests/integration_tests/orca_fixtures.py` when practical.
+Web pages live in `tests/integration_tests/web_pages/`, and test documents
+live in `tests/integration_tests/documents/`.
+
+### 2. Test the User's Experience
+
+Simulate the user's key presses using the functions in
+`tests/integration_tests/harness/keyboard.py`, such as `tap_key()` and
+`press_chord()`, and check the resulting speech and braille. Existing
+tests provide plenty of examples of native navigation and Orca commands.
+
+Include relevant variations, such as navigating both forward and backward.
+For bug fixes, confirm that the test fails without the fix and passes
+with it.
+
+### 3. Register New Files with Meson
+
+Add each new test file to the appropriate group in `orca_integration_tests`
+in `tests/meson.build`. Files in the `web` group run in both Chromium and
+Firefox.
+
+Adding tests to an already registered file requires no Meson changes.
+
+### 4. Run the Tests
+
+Build and install the version of Orca being tested, then run the affected
+tests with Meson. For example:
+
+    meson test -C _build --suite gtk3 test_caret_navigation
+    meson test -C _build --suite chromium test_web_code_block
+    meson test -C _build --suite gecko test_web_code_block_gecko
+
+Run web tests in both browsers. See "Running Tests" above for the other
+suites and requirements.
+
 ## Adding New Unit Tests
+
+Integration tests are preferred. Add unit tests only for behavior that
+cannot be adequately tested through integration tests.
 
 ### 1. Create Test File
 
 Follow naming convention: `test_[module_name].py`
+
+Add each new file to the `unit_tests` list in `tests/meson.build`.
 
 ### 2. Test File Structure
 
