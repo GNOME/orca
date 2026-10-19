@@ -53,6 +53,9 @@ Orca's tests are grouped into the following named suites:
     * "chromium": for web content using Chrome (beta preferred) or Chromium
     * "gecko": for web content using Firefox (Nightly preferred)
 
+Note that coverage for GTK4 and Qt, along with additional applications, is in
+progress.
+
 ```bash
 meson test -C _build
 meson test -C _build --suite <suite name>
@@ -74,7 +77,9 @@ the environment to help identify this need.
 The other integration-test suites are mainly intended for maintainer use for the
 purpose of preventing regressions in Orca. Documenting all expected dependencies
 and versions and ensuring compatibility with additional distros are still pending.
-At the present time Fedora and openSUSE are officially supported.
+At the present time Fedora and openSUSE are officially supported. If all of the
+integration tests pass (modulo flakes) on a distro not listed as supported, please
+let us know so that we can add it to a "known to work on" list.
 
 The integration tests cannot run while Orca is already active on the user's
 session because each test launches and drives its own Orca. It was decided
