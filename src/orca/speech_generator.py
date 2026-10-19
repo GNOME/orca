@@ -1084,7 +1084,7 @@ class SpeechGenerator(generator.Generator):
     ) -> list[Any]:
         """Generates presentations for the collected ancestor chain."""
 
-        present_once = [Atspi.Role.BLOCK_QUOTE, Atspi.Role.LIST]
+        present_once = [Atspi.Role.BLOCK_QUOTE, Atspi.Role.LIST, "ROLE_CODE_BLOCK"]
         result: list[Any] = []
         presented_roles: list[Atspi.Role] = []
         original_context = self._context
@@ -1146,13 +1146,23 @@ class SpeechGenerator(generator.Generator):
         if (prior_obj and AXObject.is_dead(prior_obj)) or AXUtilities.is_tool_tip(prior_obj):
             return []
 
-        if prior_obj and AXObject.get_parent(prior_obj) == AXObject.get_parent(obj):
+        include_self = self._context.announce_code_block and (
+            AXUtilities.is_code_block(obj)
+            if leaving
+            else self._get_resolved_role(obj) == "ROLE_CODE_BLOCK"
+        )
+        same_parent = prior_obj and AXObject.get_parent(prior_obj) == AXObject.get_parent(obj)
+        if same_parent and not include_self:
             return []
 
         if AXUtilities.is_page_tab(obj) or AXUtilities.is_tool_tip(obj):
             return []
 
-        common_ancestor = AXUtilities.get_common_ancestor(prior_obj, obj)
+        common_ancestor = (
+            AXObject.get_parent(obj)
+            if same_parent
+            else AXUtilities.get_common_ancestor(prior_obj, obj)
+        )
         if obj == common_ancestor:
             return []
 
@@ -1188,6 +1198,8 @@ class SpeechGenerator(generator.Generator):
         parent = AXObject.get_parent_checked(obj)
         while parent:
             parent_role = self._get_functional_role(parent)
+            if parent_role == "ROLE_CODE_BLOCK":
+                include_self = False
             if parent_role in stop_at_roles:
                 break
 
@@ -1217,6 +1229,11 @@ class SpeechGenerator(generator.Generator):
                 break
 
             parent = AXObject.get_parent_checked(parent)
+
+        # A standalone pre contains its own text; pre/code uses the enclosing pre.
+        if include_self:
+            ancestors.insert(0, obj)
+            ancestor_roles.insert(0, "ROLE_CODE_BLOCK")
 
         return self._present_ancestor_results(ancestors, ancestor_roles, obj, prior_obj, leaving)
 
@@ -1280,7 +1297,7 @@ class SpeechGenerator(generator.Generator):
         result = []
         if AXUtilities.is_block_quote(prior_obj):
             self._context = replace(original_context, prior_obj=prior_obj, leaving=True)
-            result.extend(
+            result.append(
                 self.generate(prior_obj, role=self._get_functional_role(prior_obj)),
             )
             self._context = replace(original_context, leaving=True)
@@ -1312,7 +1329,7 @@ class SpeechGenerator(generator.Generator):
         ):
             return []
 
-        if prior_obj is not None:
+        if prior_obj is not None or role == "ROLE_CODE_BLOCK":
             return self._generate_ancestors(obj)
 
         frame, dialog = self._script.utilities.frame_and_dialog(obj)
@@ -2452,18 +2469,19 @@ class SpeechGenerator(generator.Generator):
         if self._is_leaving():
             return self._generate_leaving(obj)
 
-        if self._is_ancestor() or self._is_minimal():
-            result = self._generate_accessible_label_and_name(obj)
+        is_ancestor = self._is_ancestor()
+        if is_ancestor or self._is_minimal():
+            result = []
+            if not is_ancestor or AXUtilities.has_explicit_name(obj):
+                result += self._generate_accessible_label_and_name(obj)
             result += self._generate_accessible_role(obj)
             return result
 
         result = self._generate_default_prefix(obj)
-        result += self._generate_start_of_code(obj)
         result += self._generate_pause(obj)
         result += self._generate_text_indentation(obj)
         result += self._generate_text_line(obj)
         result += self._generate_pause(obj)
-        result += self._generate_end_of_code(obj)
         result += self._generate_default_suffix(obj)
         return result
 

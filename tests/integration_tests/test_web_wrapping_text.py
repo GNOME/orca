@@ -95,9 +95,9 @@ def test_line_assembly_layout_mode_on(web_wrapping_text: BrowserSession) -> None
         ["to wrap onto a second "],
         ["visual line within "],
         ["the block."],
-        ["leaving blockquote. code start", "code line one"],
-        ["code line two", "code end"],
-        ["Final paragraph after the "],
+        ["leaving blockquote.", "code", "code line one"],
+        ["code line two"],
+        ["leaving code.", "Final paragraph after the "],
         ["preformatted block to confirm "],
         ["the separation."],
     ]
@@ -211,19 +211,19 @@ def test_eol_indicator_on_code_blocks_not_inline(web_wrapping_text: BrowserSessi
     )
 
     assert _down_to_line(session, 13) == (
-        ["leaving blockquote. code start", "code line one"],
+        ["leaving blockquote.", "code", "code line one"],
         [BrailleLine(1, "code line one $l", "code line one $l", "\x00" * 16)],
     )
 
     assert _down_to_line(session, 1) == (
-        ["code line two", "code end"],
+        ["code line two"],
         [BrailleLine(1, "code line two $l", "code line two $l", "\x00" * 16)],
     )
 
     # A pre whose line ends in a link: the code block's $l belongs at the end of the
     # line, never mid-line after one of its fragments. Present the line only once.
     assert _down_to_line(session, 4) == (
-        ["code start", "see ", "the docs", "link"],
+        ["code", "see ", "the docs", "link"],
         [
             BrailleLine(
                 1,
@@ -234,17 +234,17 @@ def test_eol_indicator_on_code_blocks_not_inline(web_wrapping_text: BrowserSessi
         ],
     )
     assert _down_to_line(session, 1) == (
-        ["plain last line", "code end"],
+        ["plain last line"],
         [BrailleLine(1, "plain last line $l", "plain last line $l", "\x00" * 18)],
     )
 
     # A pre line whose last item is an inline child element still ends with the $l.
     assert _down_to_line(session, 4) == (
-        ["code start", "mix ", "tail"],
+        ["code", "mix ", "tail"],
         [BrailleLine(1, "mix tail $l", "mix tail $l", "\x00" * 11)],
     )
     assert _down_to_line(session, 1) == (
-        ["plain end", "code end"],
+        ["plain end"],
         [BrailleLine(1, "plain end $l", "plain end $l", "\x00" * 12)],
     )
 
@@ -261,7 +261,7 @@ def test_fill_in_the_blank_line_assembly(web_wrapping_text: BrowserSession) -> N
     # after ' to ', so 'continue.' is its own visual line. The second paragraph fits
     # on a single visual line.
     assert _down_to_line(session, 30) == (
-        ["Fill in ", "answer", "entry", " to "],
+        ["leaving code.", "Fill in ", "answer", "entry", " to "],
         [BrailleLine(1, "Fill in answer  $l to ", "Fill in answer  $l to ", "\x00" * 12)],
     )
     assert _down_to_line(session, 1) == (

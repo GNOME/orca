@@ -53,7 +53,6 @@ def test_line_navigation_past_the_blank_line(web_code_block: BrowserSession) -> 
             "nvidia - auto - select  @ 1920x1080  + 0 + 0  "
             '{ ViewPortIn = 1920x1080 ,  ViewPortOut = 1920x1080 + 0 + 0 }  " '
         ),
-        "code end",
     ]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)

@@ -104,9 +104,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         stop_at_roles: list | None = None,
         stop_after_roles: list | None = None,
     ) -> list[Any]:
+        prior_obj = self._get_prior_obj()
         if (
             self._context.active_mode == ActivePresentationMode.FLAT_REVIEW
             or not self._script.utilities.in_document_content(obj)
+            or (prior_obj and AXObject.get_parent(prior_obj) == AXObject.get_parent(obj))
         ):
             return super()._generate_ancestors(
                 obj,
@@ -117,10 +119,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             )
 
         result: list[Any] = []
-        prior_obj = self._get_prior_obj()
-        if prior_obj and AXObject.get_parent(prior_obj) == AXObject.get_parent(obj):
-            return result
-
         if prior_obj and self._script.utilities.in_document_content(prior_obj):
             prior_doc = self._script.utilities.get_document_for_object(prior_obj)
             doc = self._script.utilities.get_document_for_object(obj)

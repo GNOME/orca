@@ -47,8 +47,70 @@ def test_line_navigation_to_the_last_line(web_code_block_multiline: BrowserSessi
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert helpers.speech(session) == [
         "Build with voice and video 4  .  characters  :  no",
-        "code end",
     ]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert helpers.speech(session) == ["leaving code.", "End of report."]
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("kind", ["unnamed", "named", "standalone"])
+def test_code_block_entry_announcements(
+    web_code_block_multiline: BrowserSession, kind: str
+) -> None:
+    """Announces each boundary once in either direction, preserving the block's label."""
+
+    session = web_code_block_multiline
+    helpers.reset_web_state(session)
+    if kind != "unnamed":
+        for _step in range(5 if kind == "named" else 8):
+            keyboard.tap_key(keyboard.KEYSYM_DOWN)
+            helpers.speech(session)
+        lines = ["first line", "last line"]
+        spoken_lines = lines
+        if kind == "named":
+            before, after = "End of report.", "After example."
+            label = ["Example"]
+        else:
+            before, after = "After example.", "After standalone."
+            # Chromium treats a standalone pre as text and suppresses its name.
+            label = helpers.expected_for_browser(session, [], firefox=["Standalone"])
+    else:
+        lines = [
+            "Build with GStreamer support.. : yes",
+            "Build for GStreamer version... : 1.0",
+            "Build with D-Bus support...... : yes",
+            "Build with voice and video.... : no",
+        ]
+        spoken_lines = [
+            "Build with GStreamer support .  .   :  yes",
+            "Build for GStreamer version .  .  .   :  1 . 0",
+            "Build with D - Bus support 6  .  characters  :  yes",
+            "Build with voice and video 4  .  characters  :  no",
+        ]
+        before, after = "The build reports:", "End of report."
+        label = []
+
+    braille_label = " ".join(label) + " " if kind == "standalone" and label else ""
+    for key, indices in (
+        (keyboard.KEYSYM_DOWN, range(len(lines))),
+        (keyboard.KEYSYM_UP, range(len(lines) - 1, -1, -1)),
+    ):
+        for index in indices:
+            keyboard.tap_key(key)
+            spoken, brailled = helpers.capture(session)
+            expected = []
+            if index == indices.start:
+                expected += [*label, "code"]
+            expected += [spoken_lines[index]]
+            assert spoken == expected
+            full = braille_label + lines[index] + " $l"
+            assert brailled[-1] == helpers.BrailleLine(
+                len(braille_label) + 1, full, full[:32], "\x00" * len(full)
+            )
+
+        keyboard.tap_key(key)
+        spoken, brailled = helpers.capture(session)
+        text = after if key == keyboard.KEYSYM_DOWN else before
+        assert spoken == ["leaving code.", text]
+        assert brailled[-1] == helpers.BrailleLine(1, text, text, "\x00" * len(text))

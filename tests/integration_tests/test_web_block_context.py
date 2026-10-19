@@ -36,9 +36,9 @@ if TYPE_CHECKING:
 _LINES = [
     (["• Bread"], "• Bread"),
     (["leaving list.", "Cheese"], "Cheese"),
-    (["code start", "Code one"], "Code one $l"),
-    (["Code two", "code end"], "Code two $l"),
-    (["After code"], "After code"),
+    (["code", "Code one"], "Code one $l"),
+    (["Code two"], "Code two $l"),
+    (["leaving code.", "After code"], "After code"),
     (
         ["banner", "Home", "image link", "Shop by category", "button"],
         "Home image Shop by category button",
