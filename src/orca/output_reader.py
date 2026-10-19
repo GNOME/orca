@@ -48,6 +48,7 @@ class SpeechRecord:
     language: str = ""
     dialect: str = ""
     voice_type: str = ""
+    punctuation: str = ""
 
 
 @dataclass
@@ -287,6 +288,7 @@ class OutputReader:
             language=data.get("language", ""),
             dialect=data.get("dialect", ""),
             voice_type=data.get("voice_type", ""),
+            punctuation=data.get("punctuation", ""),
         )
 
     @staticmethod

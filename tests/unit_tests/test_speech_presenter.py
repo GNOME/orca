@@ -162,6 +162,27 @@ class TestSpeechPresenter:
 
         return essential_modules
 
+    def test_speech_grouping_preserves_punctuation(self, test_context: OrcaTestContext) -> None:
+        """Matching voices must not merge code's punctuation override into prose."""
+
+        modules = self._setup_dependencies(test_context)
+        from orca.acss import ACSS
+        from orca.speech_presenter import SpeechPresenter
+
+        manager = modules["orca.speech_manager"].get_manager()
+        manager.apply_voice_set.side_effect = lambda voice: voice
+        presenter = SpeechPresenter()
+        output = []
+        manager.get_server().speak.side_effect = lambda text, voice: output.append(
+            (text, voice.get(ACSS.PUNCTUATIONS))
+        )
+        presenter._speak_list(
+            ["Before", ACSS({}), "return 0;", ACSS({ACSS.PUNCTUATIONS: "all"}), "After", ACSS({})],
+            None,
+            None,
+        )
+        assert output == [("Before", None), ("return 0;", "all"), ("After", None)]
+
     def test_init(self, test_context: OrcaTestContext) -> None:
         """Test presenter initialization and D-Bus registration."""
 
@@ -521,11 +542,6 @@ class TestSpeechPresenter:
         test_context.patch_object(presenter, "_adjust_for_repeats", return_value=return_text)
         test_context.patch_object(
             presenter,
-            "_adjust_for_verbalized_punctuation",
-            return_value=return_text,
-        )
-        test_context.patch_object(
-            presenter,
             "_apply_pronunciation_dictionary",
             return_value=return_text,
         )
@@ -649,52 +665,6 @@ class TestSpeechPresenter:
         presenter = SpeechPresenter()
         result = presenter.change_number_style()
         assert result is True
-
-    def test_should_verbalize_punctuation_false(self, test_context: OrcaTestContext) -> None:
-        """Test _should_verbalize_punctuation static method returns False."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.speech_presenter import SpeechPresenter
-
-        essential_modules[
-            "orca.ax_utilities"
-        ].AXUtilities.find_ancestor_inclusive.return_value = None
-        mock_obj = test_context.Mock()
-        result = SpeechPresenter._should_verbalize_punctuation(mock_obj)
-        assert result is False
-
-    def test_should_verbalize_punctuation_true(self, test_context: OrcaTestContext) -> None:
-        """Test _should_verbalize_punctuation static method returns True."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.speech_presenter import SpeechPresenter
-
-        mock_code_obj = test_context.Mock()
-        (
-            essential_modules["orca.ax_utilities"].AXUtilities.find_ancestor_inclusive.return_value
-        ) = mock_code_obj
-        essential_modules["orca.ax_utilities"].AXUtilities.is_plain_text.return_value = False
-        mock_obj = test_context.Mock()
-        result = SpeechPresenter._should_verbalize_punctuation(mock_obj)
-        assert result is True
-
-    def test_adjust_for_verbalized_punctuation(self, test_context: OrcaTestContext) -> None:
-        """Test _adjust_for_verbalized_punctuation static method."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.speech_presenter import SpeechPresenter
-
-        mock_code_obj = test_context.Mock()
-        (
-            essential_modules["orca.ax_utilities"].AXUtilities.find_ancestor_inclusive.return_value
-        ) = mock_code_obj
-        essential_modules["orca.ax_utilities"].AXUtilities.is_plain_text.return_value = False
-        mock_obj = test_context.Mock()
-        text = "Hello, world! How are you?"
-        result = SpeechPresenter._adjust_for_verbalized_punctuation(mock_obj, text)
-
-        expected = "Hello ,  world !  How are you ? "
-        assert result == expected
 
     @pytest.mark.parametrize(
         "case",

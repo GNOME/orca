@@ -897,48 +897,6 @@ class TestSayAllPresenter:
             "SAY ALL PRESENTER: Stopped Say All.",
         )
 
-    @pytest.mark.parametrize(
-        "end_offset,is_eoc,expected_offset",
-        [
-            pytest.param(16, False, 16, id="text-end-offset"),
-            pytest.param(16, True, 15, id="embedded-object-at-end-offset"),
-            pytest.param(0, True, 0, id="embedded-object-at-zero-offset"),
-        ],
-    )
-    def test_get_next_context_skips_space_and_preserves_offset_handling(
-        self,
-        test_context: OrcaTestContext,
-        end_offset: int,
-        is_eoc: bool,
-        expected_offset: int,
-    ) -> None:
-        """Tests advancing past whitespace without skipping embedded objects."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_utilities import AXUtilities
-        from orca.say_all_presenter import SayAllPresenter
-
-        presenter = SayAllPresenter()
-        mock_script = test_context.Mock()
-        mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        presenter._script = mock_script
-        mock_script.utilities.next_context.return_value = (None, -1)
-        test_context.patch_object(
-            AXUtilities,
-            "character_at_offset_is_eoc",
-            return_value=is_eoc,
-        )
-
-        contents = [(mock_obj, 0, end_offset, "Test sentence.")]
-        presenter._get_next_context(mock_obj, contents, None)
-
-        mock_script.utilities.next_context.assert_called_once_with(
-            mock_obj,
-            expected_offset,
-            skip_space=True,
-            restrict_to=None,
-        )
-
     def test_stop_clears_all_state(self, test_context: OrcaTestContext) -> None:
         """Test SayAllPresenter.stop clears contexts, contents, current_context and running flag."""
 

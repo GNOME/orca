@@ -84,6 +84,7 @@ unit_tests = [
   'unit_tests/test_speech_generator.py',
   'unit_tests/test_speech_manager.py',
   'unit_tests/test_speech_presenter.py',
+  'unit_tests/test_speechdispatcherfactory.py',
   'unit_tests/test_speechserver.py',
   'unit_tests/test_spellcheck_presenter.py',
   'unit_tests/test_structural_navigator.py',
@@ -133,6 +134,7 @@ orca_integration_tests = {
     'integration_tests/test_caret_navigation_atril.py',
     'integration_tests/test_caret_selection_atril.py',
     'integration_tests/test_caret_selection_atril_unvisited_page.py',
+    'integration_tests/test_say_all_atril.py',
   ],
   'gtk3': [
     'integration_tests/test_caret_navigation.py',

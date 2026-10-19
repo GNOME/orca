@@ -53,6 +53,7 @@ from . import (
 )
 from .acss import ACSS
 from .ax_object import AXObject
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .enums import ActivePresentationMode, CaretSetReason
 from .extension import Extension
@@ -291,7 +292,11 @@ class SayAllPresenter(Extension):
         ):
             return True, "is non-focusable label for other object"
         stripped = _text.strip()
-        if stripped and all(unicodedata.category(c).startswith("P") for c in stripped):
+        if (
+            stripped
+            and all(unicodedata.category(c).startswith("P") for c in stripped)
+            and AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_code) is None
+        ):
             return True, "is punctuation only"
         return False, ""
 
@@ -308,13 +313,9 @@ class SayAllPresenter(Extension):
             return self._script.utilities.find_next_object(obj, restrict_to), 0
 
         last_obj, last_offset = contents[-1][0], contents[-1][2]
-        # last_offset is the start of the next text unit (per AT-SPI2 semantics).
-        # next_context() looks for the position after the provided offset. In the case of
-        # text, we will wind up with the same text unit for last_offset and last_offset - 1.
-        # However, if the character at last_offset is an embedded object, we'll skip over
-        # its contents if we pass last_offset directly. Only decrement in that case so that
-        # next_context() can still cross object boundaries at end of text.
-        if AXUtilities.character_at_offset_is_eoc(last_obj, last_offset):
+        # Include the next unit's first character, but preserve end-of-object offsets
+        # so next_context() can cross PDF page boundaries.
+        if last_offset < AXText.get_character_count(last_obj):
             last_offset = max(0, last_offset - 1)
         return self._script.utilities.next_context(
             last_obj,

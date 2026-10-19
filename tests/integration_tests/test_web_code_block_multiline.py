@@ -26,6 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from orca.output_reader import BrailleRecord, SpeechRecord
+
 from . import helpers
 from .harness import keyboard
 
@@ -46,7 +48,7 @@ def test_line_navigation_to_the_last_line(web_code_block_multiline: BrowserSessi
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert helpers.speech(session) == [
-        "Build with voice and video 4  .  characters  :  no",
+        "Build with voice and video 4 . characters : no",
     ]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -83,10 +85,10 @@ def test_code_block_entry_announcements(
             "Build with voice and video.... : no",
         ]
         spoken_lines = [
-            "Build with GStreamer support .  .   :  yes",
-            "Build for GStreamer version .  .  .   :  1 . 0",
-            "Build with D - Bus support 6  .  characters  :  yes",
-            "Build with voice and video 4  .  characters  :  no",
+            "Build with GStreamer support.. : yes",
+            "Build for GStreamer version... : 1.0",
+            "Build with D-Bus support 6 . characters : yes",
+            "Build with voice and video 4 . characters : no",
         ]
         before, after = "The build reports:", "End of report."
         label = []
@@ -114,3 +116,71 @@ def test_code_block_entry_announcements(
         text = after if key == keyboard.KEYSYM_DOWN else before
         assert spoken == ["leaving code.", text]
         assert brailled[-1] == helpers.BrailleLine(1, text, text, "\x00" * len(text))
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize(
+    "punctuation,indentation",
+    [("some", False), ("some", True), ("most", False), ("none", False), ("all", False)],
+)
+def test_code_punctuation(
+    web_code_block_multiline: BrowserSession, punctuation: str, indentation: bool
+) -> None:
+    """Code requests all punctuation without changing indentation or subsequent prose."""
+
+    session = web_code_block_multiline
+    helpers.reset_web_state(session)
+    session.orca.set("SpeechManager", "PunctuationLevel", punctuation)
+    session.orca.set("SpeechPresenter", "SpeakIndentation", indentation)
+    try:
+        for _ in range(11):
+            keyboard.tap_key(keyboard.KEYSYM_DOWN)
+            helpers.speech(session)
+
+        lines = ["if (ready) {", "    return 0;", "}"]
+        override = "all" if punctuation in ("some", "most") else ""
+        for key, indices in (
+            (keyboard.KEYSYM_DOWN, range(3)),
+            (keyboard.KEYSYM_UP, range(2, -1, -1)),
+        ):
+            for index in indices:
+                keyboard.tap_key(key)
+                records = session.reader.drain()
+                spoken = [r for r in records if isinstance(r, SpeechRecord)]
+                content = [r for r in spoken if r.voice_type != "system"]
+                assert [(r.text, r.punctuation) for r in content] == [(lines[index], override)]
+                assert all(r.punctuation == "" for r in spoken if r.voice_type == "system")
+                if indentation and index == 1:
+                    assert "4 spaces" in [r.text.strip() for r in spoken]
+                brailled = [r for r in records if isinstance(r, BrailleRecord)]
+                assert brailled[-1].full == lines[index] + " $l"
+
+            keyboard.tap_key(key)
+            records = session.reader.drain()
+            spoken = [r for r in records if isinstance(r, SpeechRecord)]
+            after = "After punctuation." if key == keyboard.KEYSYM_DOWN else "After standalone."
+            assert after in [r.text for r in spoken]
+            assert all(r.punctuation == "" for r in spoken)
+        assert session.orca.get("SpeechManager", "PunctuationLevel") == punctuation
+    finally:
+        session.orca.set("SpeechManager", "PunctuationLevel", "some")
+        session.orca.set("SpeechPresenter", "SpeakIndentation", False)
+
+
+@pytest.mark.native_app
+def test_say_all_code_punctuation(web_code_block_multiline: BrowserSession) -> None:
+    """Say All carries the override for code and leaves following prose unchanged."""
+
+    session = web_code_block_multiline
+    helpers.reset_web_state(session)
+    session.orca.set("SayAllPresenter", "Style", "line")
+    keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
+    records = session.reader.drain()
+    spoken = [r for r in records if isinstance(r, SpeechRecord)]
+    for line in ("if (ready) {", "    return 0;", "}"):
+        matching = [r for r in spoken if r.text.rstrip("\n") == line]
+        assert matching, (line, spoken)
+        assert all(r.punctuation == "all" for r in matching)
+    assert [(r.text, r.punctuation) for r in spoken if r.text == "After punctuation."] == [
+        ("After punctuation.", "")
+    ]

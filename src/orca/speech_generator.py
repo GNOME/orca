@@ -471,6 +471,40 @@ class SpeechGenerator(generator.Generator):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return [voice]
 
+    def should_verbalize_punctuation(
+        self,
+        obj: Atspi.Accessible | None,
+        context: SpeechGeneratorContext | None = None,
+    ) -> bool:
+        """Returns True if presentation should override punctuation to All for obj."""
+
+        effective_context = context or self._context
+        if obj is None or effective_context is None:
+            return False
+
+        # All already speaks punctuation; None must not be overridden.
+        if effective_context.punctuation_level not in ("some", "most"):
+            return False
+
+        ancestor = AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_code)
+        if ancestor is None:
+            return False
+
+        document = AXUtilities.find_ancestor_inclusive(ancestor, AXUtilities.is_document)
+        return not AXUtilities.is_plain_text(document)
+
+    def adjust_voice_for_presentation(
+        self,
+        obj: Atspi.Accessible | None,
+        voice: list[ACSS],
+        context: SpeechGeneratorContext | None = None,
+    ) -> None:
+        """Adjusts the supplied voice properties for spoken text presentation."""
+
+        if voice and self.should_verbalize_punctuation(obj, context):
+            for acss in voice:
+                acss[ACSS.PUNCTUATIONS] = "all"
+
     def utterances_to_string(self, utterances: list[Any]) -> str:
         """Converts utterances to a string."""
 
@@ -2068,7 +2102,8 @@ class SpeechGenerator(generator.Generator):
         if not result:
             return []
 
-        result.extend(self.voice(DEFAULT, obj=obj))
+        voice = self.voice(DEFAULT, obj=obj)
+        result.extend(voice)
         if result[0] in ["\n", ""]:
             if self._get_content_position(obj).total > 1:
                 return [""]
@@ -2081,9 +2116,9 @@ class SpeechGenerator(generator.Generator):
                 result[0] = messages.BLANK
             return result
 
-        result[0] = speech_presenter.get_presenter().adjust_for_presentation(
-            obj, result[0], self._get_start_offset(obj)
-        )
+        presenter = speech_presenter.get_presenter()
+        self.adjust_voice_for_presentation(obj, voice)
+        result[0] = presenter.adjust_for_presentation(obj, result[0], self._get_start_offset(obj))
         return result
 
     @log_generator_output
@@ -2206,6 +2241,7 @@ class SpeechGenerator(generator.Generator):
             if not string:
                 return []
             voice = self.voice(string=string, obj=obj)
+            self.adjust_voice_for_presentation(obj, voice)
             adjusted = presenter.adjust_for_presentation(obj, string, start_offset)
             return [adjusted, *voice] if adjusted else []
 
@@ -2240,6 +2276,7 @@ class SpeechGenerator(generator.Generator):
                 result[-2] += adjusted
             else:
                 voice = self.voice(string=string, obj=obj, language=language, dialect=dialect)
+                self.adjust_voice_for_presentation(obj, voice)
                 result.extend([adjusted, *voice])
                 open_language_and_dialect = (language, dialect)
 
@@ -2260,8 +2297,11 @@ class SpeechGenerator(generator.Generator):
         if not (result and result[0]):
             return []
 
-        result[0] = speech_presenter.get_presenter().adjust_for_presentation(obj, result[0])
-        result.extend(self.voice(DEFAULT, obj=obj))
+        presenter = speech_presenter.get_presenter()
+        result[0] = presenter.adjust_for_presentation(obj, result[0])
+        voice = self.voice(DEFAULT, obj=obj)
+        self.adjust_voice_for_presentation(obj, voice)
+        result.extend(voice)
         return result
 
     @log_generator_output
@@ -4357,6 +4397,7 @@ class SpeechGenerator(generator.Generator):
             lang, dialect = lang.split("-", 1)
 
         voice = self.voice(obj=obj, string=text, language=lang, dialect=dialect)
+        self.adjust_voice_for_presentation(obj, voice)
         return [text, *voice]
 
     def generate_word(

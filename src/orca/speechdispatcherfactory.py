@@ -90,6 +90,7 @@ class SpeechServer(speechserver.SpeechServer):
         self._probe_pending: bool = False
         self._output_module: str | None = None
         self._current_synthesis_voice: str | None = None
+        self._applied_punctuation_level: PunctuationStyle | None = None
         self._current_capitalization_style: str = CapitalizationStyle.NONE.value
         self._voice_families_cache: dict[
             tuple[str, str, str | None, int | None],
@@ -134,6 +135,7 @@ class SpeechServer(speechserver.SpeechServer):
             SpeechServer._active_servers[server_id] = self
 
     def _init(self) -> None:
+        self._applied_punctuation_level = None
         try:
             self._client = client = speechd.SSIPClient("Orca", component=self._id)
         except (speechd.SSIPCommunicationError, speechd.SpawnError) as error:
@@ -160,8 +162,7 @@ class SpeechServer(speechserver.SpeechServer):
             except (AttributeError, speechd.SSIPCommandError):
                 pass
         self._current_voice_properties = {}
-        mode = self._punctuation_mode_map[self._current_punctuation_level]
-        client.set_punctuation(mode)
+        self._set_punctuation(self._current_punctuation_level)
         client.set_data_mode(speechd.DataMode.SSML)
 
     def update_capitalization_style(self, style: str) -> None:
@@ -193,10 +194,14 @@ class SpeechServer(speechserver.SpeechServer):
     def update_punctuation_level(self, level: PunctuationStyle) -> None:
         """Punctuation level changed, inform this speechServer."""
         super().update_punctuation_level(level)
-        if self._client is None:
+        self._set_punctuation(level)
+
+    def _set_punctuation(self, level: PunctuationStyle) -> None:
+        if self._client is None or level == self._applied_punctuation_level:
             return
         mode = self._punctuation_mode_map[level]
         self._client.set_punctuation(mode)
+        self._applied_punctuation_level = level
 
     def _send_command(self, command: Callable[..., Any], *args: Any, **kwargs: Any) -> Any:
         try:
@@ -273,7 +278,9 @@ class SpeechServer(speechserver.SpeechServer):
 
         family = self._current_voice_properties.get(ACSS.FAMILY) or {}
 
-        punctuation_style = self._current_punctuation_level.name
+        punctuation_style = (
+            self._applied_punctuation_level or self._current_punctuation_level
+        ).name
 
         tokens = [
             "SPEECH DISPATCHER:",
@@ -304,6 +311,13 @@ class SpeechServer(speechserver.SpeechServer):
     def _apply_acss(self, acss: dict[str, Any] | None) -> None:
         super()._apply_acss(acss)
         self._apply_voice_to_backend()
+        punctuation = acss.get(ACSS.PUNCTUATIONS) if acss else None
+        level = (
+            PunctuationStyle[punctuation.upper()]
+            if punctuation
+            else self._current_punctuation_level
+        )
+        self._set_punctuation(level)
 
     def _apply_voice_to_backend(self) -> None:
         """Push current voice properties to the speech-dispatcher connection."""

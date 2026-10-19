@@ -1552,39 +1552,6 @@ class SpeechPresenter(Extension):
         pattern = re.compile(r"([^a-zA-Z0-9\s])\1{" + str(limit - 1) + ",}")
         return re.sub(pattern, replacement, text)
 
-    @staticmethod
-    def _should_verbalize_punctuation(obj: Atspi.Accessible) -> bool:
-        """Returns True if punctuation should be verbalized."""
-
-        ancestor = AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_code)
-        if ancestor is None:
-            return False
-
-        document = AXUtilities.find_ancestor_inclusive(ancestor, AXUtilities.is_document)
-        if AXUtilities.is_plain_text(document):
-            return False
-
-        # If the user has set their punctuation level to All, then the synthesizer will
-        # do the work for us. If the user has set their punctuation level to None, then
-        # they really don't want punctuation and we mustn't override that.
-
-        punct_level = speech_manager.get_manager().get_punctuation_level()
-        return punct_level not in ("all", "none")
-
-    @staticmethod
-    def _adjust_for_verbalized_punctuation(obj: Atspi.Accessible, text: str) -> str:
-        """Surrounds punctuation symbols with spaces to increase the likelihood of presentation."""
-
-        if not SpeechPresenter._should_verbalize_punctuation(obj):
-            return text
-
-        result = text
-        punctuation = set(re.findall(r"[^\w\s]", result))
-        for symbol in punctuation:
-            result = result.replace(symbol, f" {symbol} ")
-
-        return result
-
     def _apply_pronunciation_dictionary(self, text: str) -> str:
         """Applies the pronunciation dictionary to the text."""
 
@@ -1727,8 +1694,6 @@ class SpeechPresenter(Extension):
         if obj is not None:
             text = self.adjust_for_digits(obj, text)
         text = self._adjust_for_repeats(text)
-        if obj is not None:
-            text = self._adjust_for_verbalized_punctuation(obj, text)
         text = self._apply_pronunciation_dictionary(text)
 
         tokens = ["SPEECH PRESENTER: Adjusted text: '", text, "'"]
@@ -1970,6 +1935,7 @@ class SpeechPresenter(Extension):
             language=family.get(VoiceFamily.LANG, "") or "",
             dialect=family.get(VoiceFamily.DIALECT, "") or "",
             voice_type=voice.get(ACSS.VOICE_TYPE) or "",
+            punctuation=voice.get(ACSS.PUNCTUATIONS) or "",
         )
 
     def write_to_monitor(self, text: str) -> None:
@@ -2196,6 +2162,8 @@ class SpeechPresenter(Extension):
                 # spoken together in whichever voice came last.
                 if pending_text and (
                     new_voice != active_voice
+                    or new_voice.get(ACSS.PUNCTUATIONS)
+                    != (active_voice.get(ACSS.PUNCTUATIONS) if active_voice is not None else None)
                     or self._resolved_voice(active_voice) != self._resolved_voice(new_voice)
                 ):
                     tokens = [
@@ -2283,15 +2251,21 @@ class SpeechPresenter(Extension):
     ) -> None:
         """Speaks text from obj, using the specified start_offset for attribute presentation."""
 
-        if obj is not None and start_offset is not None and (script := self._get_active_script()):
-            end_offset = start_offset + len(text)
+        voice = []
+        if script := self._get_active_script():
             generator = script.get_speech_generator()
             context = self._build_generator_context()
-            if utterances := generator.generate_line(obj, start_offset, end_offset, text, context):
-                self._speak(utterances, obj=obj)
-                return
+            if obj is not None and start_offset is not None:
+                end_offset = start_offset + len(text)
+                if utterances := generator.generate_line(
+                    obj, start_offset, end_offset, text, context
+                ):
+                    self._speak(utterances, obj=obj)
+                    return
 
-        voice = self._get_voice(text, obj)
+            voice = generator.voice(obj=obj, string=text, context=context)
+            generator.adjust_voice_for_presentation(obj, voice, context)
+
         text = self.adjust_for_presentation(obj, text, start_offset)
         self._speak(
             text,

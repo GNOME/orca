@@ -35,51 +35,51 @@ if TYPE_CHECKING:
 
 _LINES = [
     (
-        "     *  systemd - logind ' s integration with the UAPI . 1 Boot Loader",
+        "    * systemd-logind's integration with the UAPI.1 Boot Loader",
         "    * systemd-logind's integration with the UAPI.1 Boot Loader",
     ),
     (
-        "      Specification  ( which allows the systemctl reboot  -  - boot - loader - entry = ",
+        "      Specification (which allows the systemctl reboot --boot-loader-entry=",
         "      Specification (which allows the systemctl reboot --boot-loader-entry=",
     ),
     (
-        "      switch to work )  so far has supported a special directory",
+        "      switch to work) so far has supported a special directory",
         "      switch to work) so far has supported a special directory",
     ),
     (
-        "       / run / boot - loader - entries /  which allowed defining boot loader entries",
+        "      /run/boot-loader-entries/ which allowed defining boot loader entries",
         "      /run/boot-loader-entries/ which allowed defining boot loader entries",
     ),
     (
-        "      outside of the ESP / XBOOTLDR partition for compatibility with legacy",
+        "      outside of the ESP/XBOOTLDR partition for compatibility with legacy",
         "      outside of the ESP/XBOOTLDR partition for compatibility with legacy",
     ),
     (
-        "      systems that do not natively implement UAPI . 1 .  However ,  it appears",
+        "      systems that do not natively implement UAPI.1. However, it appears",
         "      systems that do not natively implement UAPI.1. However, it appears",
     ),
     (
-        "      that  ( to our knowledge )  it is not actually being used by any project",
+        "      that (to our knowledge) it is not actually being used by any project",
         "      that (to our knowledge) it is not actually being used by any project",
     ),
     (
-        "       ( quite unlike UAPI . 1 itself ,  which found adoption far beyond",
+        "      (quite unlike UAPI.1 itself, which found adoption far beyond",
         "      (quite unlike UAPI.1 itself, which found adoption far beyond",
     ),
     (
-        "      systemd )  ,  and its implementation is incomplete .  With the future 262",
+        "      systemd), and its implementation is incomplete. With the future 262",
         "      systemd), and its implementation is incomplete. With the future 262",
     ),
     (
-        "      release we intend to remove support for  / run / boot - loader - entries /  and",
+        "      release we intend to remove support for /run/boot-loader-entries/ and",
         "      release we intend to remove support for /run/boot-loader-entries/ and",
     ),
     (
-        "      related interfaces ,  in order to simplify our codebase .  Support for",
+        "      related interfaces, in order to simplify our codebase. Support for",
         "      related interfaces, in order to simplify our codebase. Support for",
     ),
     (
-        "      UAPI . 1 is  –  of course  –  kept in place . ",
+        "      UAPI.1 is \u2013 of course \u2013 kept in place.",
         "      UAPI.1 is – of course – kept in place.",
     ),
     (
@@ -87,23 +87,23 @@ _LINES = [
         "",
     ),
     (
-        '     *  The experimental  " systemd - sysupdated "  D - Bus API is going to be',
+        '    * The experimental "systemd-sysupdated" D-Bus API is going to be',
         '    * The experimental "systemd-sysupdated" D-Bus API is going to be',
     ),
     (
-        "      removed in the next release .  The plan is that in its place",
+        "      removed in the next release. The plan is that in its place",
         "      removed in the next release. The plan is that in its place",
     ),
     (
-        "      clients should directly talk to systemd - sysupdate  ( i . e .  the backend",
+        "      clients should directly talk to systemd-sysupdate (i.e. the backend",
         "      clients should directly talk to systemd-sysupdate (i.e. the backend",
     ),
     (
-        '      of  " systemd - sysupdated "  )  via Varlink IPC .  The  " updatectl "  tool will',
+        '      of "systemd-sysupdated") via Varlink IPC. The "updatectl" tool will',
         '      of "systemd-sysupdated") via Varlink IPC. The "updatectl" tool will',
     ),
     (
-        "      be reworked along these lines . ",
+        "      be reworked along these lines.",
         "      be reworked along these lines.",
     ),
 ]
