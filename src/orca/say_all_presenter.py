@@ -100,6 +100,7 @@ class SayAllPresenter(Extension):
     KEY_ANNOUNCE_FORM = "announce-form"
     KEY_ANNOUNCE_GROUPING = "announce-grouping"
     KEY_ANNOUNCE_HEADER_AND_FOOTER = "announce-header-and-footer"
+    KEY_ANNOUNCE_INLINE_CODE = "announce-inline-code"
     KEY_ANNOUNCE_LANDMARK = "announce-landmark"
     KEY_ANNOUNCE_LIST = "announce-list"
     KEY_ANNOUNCE_TABLE = "announce-table"
@@ -872,6 +873,44 @@ class SayAllPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ANNOUNCE_HEADER_AND_FOOTER, value
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_ANNOUNCE_INLINE_CODE,
+        schema="say-all",
+        gtype="b",
+        default=False,
+        summary="Announce inline code",
+        user_visible=False,
+        preserve_default=True,
+    )
+    @dbus_service.undocumented
+    @dbus_service.getter
+    def get_announce_inline_code(self) -> bool:
+        """Returns whether inline code boundaries are announced."""
+
+        return self._get_setting(self.KEY_ANNOUNCE_INLINE_CODE, False)
+
+    def get_inline_code_available(self) -> bool:
+        """Returns whether inline code announcements have an explicit value."""
+
+        return (
+            gsettings_registry.get_registry().layered_lookup(
+                self._SCHEMA, self.KEY_ANNOUNCE_INLINE_CODE, "b"
+            )
+            is not None
+        )
+
+    @dbus_service.undocumented
+    @dbus_service.setter
+    def set_announce_inline_code(self, value: bool) -> bool:
+        """Sets whether inline code boundaries are announced."""
+
+        tokens = ["SAY ALL PRESENTER: Setting announce inline code to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_ANNOUNCE_INLINE_CODE, value
         )
         return True
 

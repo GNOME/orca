@@ -45,6 +45,7 @@ _UNLOCALIZED_UNTIL_52 = {
         repr("Select to the end of the line"),
     },
     "guilabels": {
+        repr("Inline code"),
         repr("You can assign keybindings to any configured voice set in Commands."),
         repr("Text selection"),
         repr("Headers and footers"),

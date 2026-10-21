@@ -73,6 +73,14 @@ ANNOUNCE_FORMS = C_("Context", "Forms")
 # These are not headings or table row and column headers.
 ANNOUNCE_HEADERS_AND_FOOTERS = "Headers and footers"
 
+# TODO - JD: Use C_("Context", "Inline code") in v52.
+# Translators: Some users want to hear additional information when reading
+# different types of content. If this switch is enabled, Orca will announce
+# the start and end of code snippets within sentences, such as a command name
+# or a variable. This setting is separate from announcements of code blocks,
+# which occupy their own lines rather than forming part of a sentence.
+ANNOUNCE_INLINE_CODE = "Inline code"
+
 # Translators: Some users want to hear additional information when entering
 # different types of content. If this checkbox is checked, Orca will announce
 # when an ARIA landmark has been entered or exited. ARIA landmarks are the W3C

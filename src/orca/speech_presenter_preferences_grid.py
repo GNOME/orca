@@ -120,6 +120,14 @@ class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             since="52",
                         ),
                         PreferenceControlDoc(
+                            label=guilabels.ANNOUNCE_INLINE_CODE,
+                            kind="switch",
+                            summary=("Controls whether Orca announces inline code."),
+                            schema="speech",
+                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_INLINE_CODE,
+                            since="52",
+                        ),
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_LANDMARKS,
                             kind="switch",
                             summary=(

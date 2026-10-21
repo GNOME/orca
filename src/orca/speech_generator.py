@@ -30,6 +30,7 @@
 from __future__ import annotations
 
 import contextlib
+import re
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -99,6 +100,7 @@ class SpeechGeneratorContext(GeneratorContext):
     announce_document: bool
     announce_form: bool
     announce_grouping: bool
+    announce_inline_code: bool
     announce_header_and_footer: bool
     announce_landmark: bool
     announce_list: bool
@@ -601,12 +603,24 @@ class SpeechGenerator(generator.Generator):
 
         def use_ancestor_role(x):
             x_role = AXObject.get_role(x)
-            if x_role == role:
+            is_inline_code = (
+                self._context is not None
+                and self._context.announce_inline_code
+                and AXUtilities.is_code(x)
+                and not AXUtilities.is_code_block_descendant(x, inclusive=True)
+            )
+            if x_role == role and not is_inline_code:
                 return False
-            if not (AXUtilities.is_heading(x, x_role) or AXUtilities.is_link(x, x_role)):
+            if not (
+                AXUtilities.is_heading(x, x_role)
+                or AXUtilities.is_link(x, x_role)
+                or is_inline_code
+            ):
                 return False
             if next_obj is None or not AXUtilities.is_ancestor(next_obj, x, True):
                 return True
+            if is_inline_code:
+                return False
             if index == total - 1:
                 return True
             x_content = AXObject.get_name(x) or AXText.get_all_text(x)
@@ -1661,34 +1675,55 @@ class SpeechGenerator(generator.Generator):
 
         return result
 
+    def _should_announce_code(self, obj: Atspi.Accessible) -> bool:
+        """Returns whether the applicable code announcement setting is enabled."""
+
+        if self._only_speak_displayed_text():
+            return False
+        if self._context is None:
+            return True
+        if self._get_resolved_role(obj) == "ROLE_CODE_BLOCK":
+            return self._context.announce_code_block
+        return self._context.announce_inline_code and not AXUtilities.is_code_block_descendant(
+            obj, inclusive=True
+        )
+
     @log_generator_output
     def _generate_start_of_code(self, obj: Atspi.Accessible) -> list[Any]:
-        if self._only_speak_displayed_text():
-            return []
-
-        if self._context is not None and not self._context.announce_code_block:
+        if not self._should_announce_code(obj):
             return []
 
         start_offset = self._get_start_offset(obj, 0)
         if start_offset != 0:
             return []
 
-        result: list[Any] = [messages.CONTENT_CODE_START]
+        message = (
+            messages.CONTENT_CODE_START
+            if self._get_resolved_role(obj) == "ROLE_CODE_BLOCK"
+            else object_properties.ROLE_CODE_BLOCK
+        )
+        result: list[Any] = [message]
         result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
     def _generate_end_of_code(self, obj: Atspi.Accessible) -> list[Any]:
-        if self._only_speak_displayed_text():
-            return []
-
-        if self._context is not None and not self._context.announce_code_block:
+        if not self._should_announce_code(obj):
             return []
 
         end_offset = self._get_end_offset(obj)
         if end_offset is not None:
             length = AXText.get_character_count(obj)
             if length and length != end_offset:
+                return []
+
+        if self._get_resolved_role(obj) != "ROLE_CODE_BLOCK":
+            text = self._get_content_string(obj)
+            if text is not None and self._get_start_offset(obj) != 0:
+                text = AXText.get_all_text(obj)
+            if text is None or "\ufffc" in text:
+                text = AXUtilities.expand_eocs(obj)
+            if re.search(r"\S\s+\S", text) is None:
                 return []
 
         result: list[Any] = [messages.CONTENT_CODE_END]
@@ -3895,8 +3930,12 @@ class SpeechGenerator(generator.Generator):
 
         result = self._generate_default_prefix(obj)
         if AXUtilities.is_code(obj):
+            result += self._generate_start_of_code(obj)
             result += self._generate_text_indentation(obj)
             result += self._generate_text_line(obj)
+            if end := self._generate_end_of_code(obj):
+                result += self._generate_pause(obj)
+                result += end
         else:
             result += self._generate_text_content(obj) or self._generate_accessible_name(
                 obj,

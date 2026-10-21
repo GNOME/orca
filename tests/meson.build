@@ -222,6 +222,8 @@ orca_integration_tests = {
     'integration_tests/test_web_native_word_selection.py',
     'integration_tests/test_web_native_line_selection.py',
     'integration_tests/test_web_say_selected_text.py',
+    'integration_tests/test_web_inline_code.py',
+    'integration_tests/test_web_inline_code_wrapped.py',
     'integration_tests/test_web_code_block.py',
     'integration_tests/test_web_code_block_multiline.py',
     'integration_tests/test_web_preformatted_blank_lines.py',

@@ -152,6 +152,7 @@ class SpeechPresenter(Extension):
     KEY_ANNOUNCE_FORM = "announce-form"
     KEY_ANNOUNCE_GROUPING = "announce-grouping"
     KEY_ANNOUNCE_HEADER_AND_FOOTER = "announce-header-and-footer"
+    KEY_ANNOUNCE_INLINE_CODE = "announce-inline-code"
     KEY_ANNOUNCE_LANDMARK = "announce-landmark"
     KEY_ANNOUNCE_LIST = "announce-list"
     KEY_ANNOUNCE_TABLE = "announce-table"
@@ -775,6 +776,44 @@ class SpeechPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ANNOUNCE_HEADER_AND_FOOTER, value
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_ANNOUNCE_INLINE_CODE,
+        schema="speech",
+        gtype="b",
+        default=False,
+        summary="Announce inline code",
+        user_visible=False,
+        preserve_default=True,
+    )
+    @dbus_service.undocumented
+    @dbus_service.getter
+    def get_announce_inline_code(self) -> bool:
+        """Returns whether inline code boundaries are announced."""
+
+        return self._get_setting(self.KEY_ANNOUNCE_INLINE_CODE, "b", False)
+
+    def get_inline_code_available(self) -> bool:
+        """Returns whether inline code announcements have an explicit value."""
+
+        return (
+            gsettings_registry.get_registry().layered_lookup(
+                self._SCHEMA, self.KEY_ANNOUNCE_INLINE_CODE, "b"
+            )
+            is not None
+        )
+
+    @dbus_service.undocumented
+    @dbus_service.setter
+    def set_announce_inline_code(self, value: bool) -> bool:
+        """Sets whether inline code boundaries are announced."""
+
+        tokens = ["SPEECH PRESENTER: Setting announce inline code to", value, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_ANNOUNCE_INLINE_CODE, value
         )
         return True
 
@@ -2388,6 +2427,7 @@ class SpeechPresenter(Extension):
             announce_form=p.get_announce_form(),
             announce_grouping=p.get_announce_grouping(),
             announce_header_and_footer=p.get_announce_header_and_footer(),
+            announce_inline_code=p.get_announce_inline_code(),
             announce_landmark=p.get_announce_landmark(),
             announce_list=p.get_announce_list(),
             announce_table=p.get_announce_table(),
@@ -2792,6 +2832,18 @@ class SpeechPresenter(Extension):
                     ),
                 )
                 if self.get_header_and_footer_available()
+                else ()
+            ),
+            *(
+                (
+                    SpeechPreference(
+                        self.KEY_ANNOUNCE_INLINE_CODE,
+                        guilabels.ANNOUNCE_INLINE_CODE,
+                        self.get_announce_inline_code,
+                        self.set_announce_inline_code,
+                    ),
+                )
+                if self.get_inline_code_available()
                 else ()
             ),
             SpeechPreference(

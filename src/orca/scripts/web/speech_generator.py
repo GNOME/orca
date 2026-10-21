@@ -559,6 +559,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             role_subject = self._context.role_subject
             next_obj = self._context.next_content_subject
 
+        if (
+            self._context is not None
+            and self._context.announce_inline_code
+            and obj != role_subject
+            and AXUtilities.is_code(obj)
+        ):
+            return self._generate_end_of_code(obj)
+
         mgr = input_event_manager.get_manager()
         navigating_by_character_or_word = (
             mgr.last_event_was_character_navigation() or mgr.last_event_was_word_navigation()

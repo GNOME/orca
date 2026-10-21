@@ -227,6 +227,14 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             since="52",
                         ),
                         PreferenceControlDoc(
+                            label=guilabels.ANNOUNCE_INLINE_CODE,
+                            kind="switch",
+                            summary=("Controls whether Orca announces inline code."),
+                            schema="say-all",
+                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_INLINE_CODE,
+                            since="52",
+                        ),
+                        PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_LANDMARKS,
                             kind="switch",
                             summary=(
@@ -373,6 +381,18 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             ),
                         )
                         if presenter.get_header_and_footer_available()
+                        else ()
+                    ),
+                    *(
+                        (
+                            (
+                                guilabels.ANNOUNCE_INLINE_CODE,
+                                presenter.get_announce_inline_code,
+                                presenter.set_announce_inline_code,
+                                say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_INLINE_CODE,
+                            ),
+                        )
+                        if presenter.get_inline_code_available()
                         else ()
                     ),
                     (
