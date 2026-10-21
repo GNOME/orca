@@ -32,14 +32,11 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                 title="Tables",
                 topic_id="tables",
                 target="speech.tables.feature",
-                intro=(
-                    "Configure whether you hear the current cell or the whole row "
-                    "while navigating tables."
-                ),
                 details=(
-                    "In some tables, such as a message list, speaking the full row can "
-                    "provide useful context. In other tables, such as a spreadsheet, "
-                    "speaking only the focused cell can make navigation faster and less verbose."
+                    "In some tables, such as a message list, speaking the full row can provide "
+                    "useful context. In other tables, such as a spreadsheet, speaking only the "
+                    "focused cell can make navigation faster and less verbose. The settings "
+                    "below control row presentation for different kinds of tables."
                 ),
                 preference_panels=("speech_presenter.tables",),
                 command_groups=("speech.commands.tables",),
@@ -61,15 +58,10 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                 topic_id="container_announcements",
                 target="speech.container-announcements.feature",
                 intro=(
-                    "Orca can identify containers, such as lists, articles, and tables, "
-                    "as you navigate document and web content."
+                    "Orca can identify document structure and marked-up content, including "
+                    "lists, articles, tables, code, and tracked changes."
                 ),
-                details=(
-                    "This preferences group also includes announcements for tracked changes "
-                    "such as insertions and deletions; these are changes to content rather "
-                    "than containers. Say All has separate announcement settings for "
-                    "continuous reading."
-                ),
+                details=("Say All has separate announcement settings for continuous reading."),
                 links=(FeatureLinkDoc("say-all.feature"),),
                 preference_panels=("speech_presenter.container-announcements",),
             ),
@@ -77,7 +69,15 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                 title="On-screen speech display",
                 topic_id="on_screen_display",
                 target="speech.on-screen-display.feature",
-                intro="The on-screen speech display shows the text Orca is speaking.",
+                intro=(
+                    "The on-screen speech display shows Orca's speech output and provides "
+                    "a history of recent speech."
+                ),
+                details=(
+                    "Application developers can use the window to examine Orca's speech output "
+                    "visually while testing their applications. It also provides a history of "
+                    "recent speech for review and copying."
+                ),
                 preference_panels=("speech_presenter.on-screen-display",),
                 command_groups=("speech.commands.on-screen-display",),
             ),

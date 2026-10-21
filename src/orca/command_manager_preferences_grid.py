@@ -120,10 +120,19 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     values=(guilabels.KEYBOARD_LAYOUT_DESKTOP, guilabels.KEYBOARD_LAYOUT_LAPTOP),
                     value_docs=(
                         PreferenceValueDoc(
+                            summary=(
+                                "Uses numeric keypad keys for some commands. Num Lock must be "
+                                "off to use these keypad shortcuts. The initial Orca Modifier "
+                                "keys are Insert and Keypad Insert."
+                            ),
                             label=guilabels.KEYBOARD_LAYOUT_DESKTOP,
                             value="desktop",
                         ),
                         PreferenceValueDoc(
+                            summary=(
+                                "Does not use numeric keypad keys for commands. The initial "
+                                "Orca Modifier key is Caps Lock."
+                            ),
                             label=guilabels.KEYBOARD_LAYOUT_LAPTOP,
                             value="laptop",
                         ),
@@ -133,8 +142,10 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     label=guilabels.MODIFIER_KEYS,
                     kind="list",
                     summary=(
-                        "Selects the modifier keys for the current layout. "
-                        "Enable each desired key using its own switch."
+                        "Selects modifier keys for the current layout. Enable each desired key "
+                        "using its switch; at least one must remain enabled. Orca takes over "
+                        "the normal behavior of configured modifier keys. Press a configured "
+                        "modifier twice quickly to perform its usual single-press action."
                     ),
                     controls=(
                         PreferenceControlDoc(guilabels.MODIFIER_INSERT, "switch"),

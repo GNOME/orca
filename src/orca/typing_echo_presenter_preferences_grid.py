@@ -63,9 +63,12 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     label=guilabels.ECHO_ENABLE_KEY_ECHO,
                     kind="switch",
                     summary=(
-                        "Controls whether Orca speaks keys as they are pressed. When key "
-                        "echo is enabled, use Keys to Echo to choose which key types Orca "
-                        "speaks."
+                        "Controls whether Orca speaks keys as they are pressed, including keys "
+                        "that do not insert text, such as navigation and function keys. Choose "
+                        "which key types are spoken with the key-type settings below. In "
+                        "terminals, key echo also waits for matching text to appear before "
+                        "announcing a printable key, so input that is not displayed, such as a "
+                        "password, is not echoed."
                     ),
                     schema="typing-echo",
                     key=typing_echo_presenter.TypingEchoPresenter.KEY_KEY_ECHO,
@@ -168,9 +171,15 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             label=guilabels.ECHO_CHARACTER,
                             kind="switch",
                             summary=(
-                                "Controls whether Orca speaks each inserted character. This "
-                                "can include accented letters and other symbols that do not "
-                                "have a dedicated key."
+                                "Announces text inserted as you type in an editable field or "
+                                "terminal, rather than the key press itself. It depends on the "
+                                "application reporting inserted text through its accessibility "
+                                "support. When both key echo and character echo are enabled, "
+                                "Orca uses character echo for printable text typed into an "
+                                "editable field or terminal and suppresses the corresponding "
+                                "key echo, avoiding duplicate announcements. Other enabled key "
+                                "types can still be announced, as can printable keys pressed "
+                                "outside editable text."
                             ),
                             schema="typing-echo",
                             key=typing_echo_presenter.TypingEchoPresenter.KEY_CHARACTER_ECHO,
@@ -178,14 +187,21 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         PreferenceControlDoc(
                             label=guilabels.ECHO_WORD,
                             kind="switch",
-                            summary="Controls whether Orca speaks each completed word.",
+                            summary=(
+                                "Announces completed words. Enable it alongside character echo "
+                                "to have both individual characters and completed words spoken."
+                            ),
                             schema="typing-echo",
                             key=typing_echo_presenter.TypingEchoPresenter.KEY_WORD_ECHO,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ECHO_SENTENCE,
                             kind="switch",
-                            summary=("Controls whether Orca speaks each completed sentence."),
+                            summary=(
+                                "Announces completed sentences. Enable it alongside character "
+                                "echo to have both individual characters and completed "
+                                "sentences spoken."
+                            ),
                             schema="typing-echo",
                             key=typing_echo_presenter.TypingEchoPresenter.KEY_SENTENCE_ECHO,
                         ),

@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
-from .help_metadata import CommandGroupDoc
+from .help_metadata import CommandDoc, CommandGroupDoc
 
 if TYPE_CHECKING:
     from .bypass_mode_manager import BypassModeManager
@@ -37,6 +37,16 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for bypass mode commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "bypass_mode_toggle",
+                details=(
+                    "Turns bypass mode on or off. Switching to another application also ends "
+                    "bypass mode. While it is active, keys normally used as Orca Modifier keys "
+                    "are passed through to the application too."
+                ),
+            ),
+        ),
         summary="Pass keys to the application temporarily.",
     )
 

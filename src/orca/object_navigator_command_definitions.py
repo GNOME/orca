@@ -26,7 +26,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
-from .help_metadata import CommandGroupDoc
+from .help_metadata import CommandDoc, CommandGroupDoc
 
 if TYPE_CHECKING:
     from .object_navigator import ObjectNavigator
@@ -36,6 +36,26 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for object navigation commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "object_navigator_perform_action",
+                details=(
+                    "Acts on the object with navigator focus. Orca first tries suitable "
+                    "accessible actions exposed by the object through its application or "
+                    "toolkit. If no suitable action succeeds, Orca tries to simulate a mouse "
+                    "click at the object's location. This fallback does not currently work on "
+                    "Wayland. Accessible actions can still work on Wayland when supported by "
+                    "the application or toolkit."
+                ),
+            ),
+            CommandDoc(
+                "object_navigator_toggle_simplify",
+                details=(
+                    "Turns simplified object navigation on or off. Simplified navigation hides "
+                    "some layout-only objects to make the hierarchy easier to explore."
+                ),
+            ),
+        ),
         summary="Move through the accessible object hierarchy.",
         see_also=("reviewing.object-navigation",),
     )

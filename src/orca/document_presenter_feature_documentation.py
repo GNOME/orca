@@ -22,7 +22,6 @@
 
 from __future__ import annotations
 
-from . import guilabels
 from .help_metadata import (
     FeatureDocumentationDoc,
     FeatureLinkDoc,
@@ -51,18 +50,31 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                 preference_category="documents",
                 topics=("math-navigation.feature",),
                 topics_guide_xref="index#reading",
+                generate_guide=False,
                 sections=(
                     FeatureSectionDoc(
                         title="Browse mode and focus mode",
                         topic_id="browse_mode_and_focus_mode",
+                        target="documents.modes.feature",
                         command_groups=("documents.mode-commands",),
+                        preference_controls=(
+                            "documents.native-focus-mode",
+                            "documents.sticky-focus-mode",
+                            "documents.caret-focus-mode",
+                            "documents.structural-focus-mode",
+                        ),
                         intro=(
-                            "When reading document content, Orca uses two modes: browse mode "
-                            "and focus mode.\n\n"
+                            "Navigate document content and interact with controls.\n\n"
                             "Browse mode lets Orca provide navigation for reading documents "
                             "and web content. Focus mode lets the application handle its "
                             "navigation keys instead. Other Orca commands, including table "
                             "navigation and commands using the Orca Modifier, remain available."
+                            "\n\n"
+                            "Unlike screen readers that use a virtual buffer, Orca does not "
+                            "create a separate, off-screen copy of a document or web page for "
+                            "browse mode. You navigate the content in the application itself. "
+                            "In browse mode, Orca handles navigation commands and updates your "
+                            "position within that content."
                         ),
                         settings_and_commands=(
                             FeatureLinkDoc(
@@ -70,26 +82,11 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                                 "Browse mode and focus mode commands",
                                 "Switch between browse mode and focus mode.",
                             ),
-                            FeatureLinkDoc("documents.native-navigation"),
-                            FeatureLinkDoc("documents.caret-navigation"),
-                            FeatureLinkDoc("documents.structural-navigation"),
                         ),
                         details=(
-                            "Orca can switch to focus mode automatically when navigation lands "
-                            "on an interactive widget. You can enable or disable automatic "
-                            "focus mode separately for native navigation, caret navigation, "
-                            f"and structural navigation in {guilabels.DOCUMENTS} preferences.\n\n"
-                            "Sticky modes override automatic switching. Sticky focus mode "
-                            "keeps Orca in focus mode until you explicitly change modes. "
-                            "Sticky browse mode keeps Orca in browse mode until you explicitly "
-                            "change modes."
-                            "\n\n"
-                            "Some web applications, including desktop applications built with "
-                            "the Electron web framework, start in sticky focus mode so their "
-                            "own keyboard interactions work. "
-                            f"Configure this with {guilabels.AUTO_STICKY_FOCUS_MODE} "
-                            f"in the {guilabels.NATIVE_NAVIGATION} section of "
-                            f"{guilabels.DOCUMENTS} preferences."
+                            "Orca can switch between modes automatically as you navigate. The "
+                            "settings and commands below control automatic switching and let "
+                            "you choose a mode explicitly."
                         ),
                     ),
                     FeatureSectionDoc(
@@ -125,11 +122,24 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                 title="Native navigation",
                 topic_id="native_navigation",
                 target="documents.native-navigation.feature",
+                links=(
+                    FeatureLinkDoc("documents.modes.feature"),
+                    FeatureLinkDoc("reviewing.orca-find"),
+                ),
                 preference_panels=("document_presenter.native-navigation",),
                 intro=(
                     "Native navigation refers to keyboard input handled by the application "
                     "rather than Orca. Examples include Tab, Shift+Tab, Page Up, Page Down, "
                     "Enter, and Space."
+                ),
+                details=(
+                    "To search text in a document or web page, use the application's search "
+                    "feature. Its search can include text that is not currently visible. The "
+                    "application controls the search and navigation to matches; Orca's "
+                    "presentation depends on the accessibility information it provides. The "
+                    "settings below control presentation of supported application search "
+                    "results. For searching visible window contents with flat review, see "
+                    "[[reviewing.orca-find]]."
                 ),
                 settings_and_commands=(
                     FeatureLinkDoc(

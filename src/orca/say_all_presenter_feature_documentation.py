@@ -22,8 +22,7 @@
 
 from __future__ import annotations
 
-from . import guilabels
-from .help_metadata import FeaturePageDoc, FeatureSectionDoc
+from .help_metadata import FeatureLinkDoc, FeaturePageDoc, FeatureSectionDoc
 
 
 def get_feature_documentation() -> FeaturePageDoc:
@@ -33,22 +32,24 @@ def get_feature_documentation() -> FeaturePageDoc:
         page_id="features_say_all",
         title="Say All",
         link_title="Say All",
-        description="Read continuously from your current location.",
+        description="Read document content continuously from your current location.",
         guide_xref="index#reading",
         target="say-all.feature",
         sections=(
             FeatureSectionDoc(
                 title="Say All",
-                intro="Say All reads continuously from your current location.",
+                intro="Say All speaks document content continuously from your current location.",
                 preference_categories=("say-all",),
                 details=(
-                    "Press a key to interrupt continuous reading. If enabled in "
-                    f"{guilabels.GENERAL_SAY_ALL} preferences, Up Arrow and Down Arrow "
-                    "rewind and fast-forward instead. You can "
-                    "also enable structural navigation during Say All, so moving to "
-                    "another heading or other document element continues reading from there."
+                    "The settings below control continuous presentation and navigation during "
+                    "Say All. For presenting the visible contents of a window or dialog, see "
+                    "[[reviewing.flat-review]]."
                 ),
                 command_groups=("commands.say-all",),
+                links=(
+                    FeatureLinkDoc("reviewing.flat-review"),
+                    FeatureLinkDoc("text-attributes.feature"),
+                ),
             ),
         ),
     )

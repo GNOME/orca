@@ -38,10 +38,77 @@ def get_documentation() -> CommandGroupDoc:
 
     return CommandGroupDoc(
         summary="Move through mathematical expressions.",
-        commands=tuple(
-            CommandDoc(name=f"math_{prefix.lower()}_{digit}", summary=f"Uses place marker {digit}.")
-            for prefix in PLACE_MARKER_PREFIXES
-            for digit in range(10)
+        commands=(
+            *tuple(
+                CommandDoc(
+                    name=f"math_{prefix.lower()}_{digit}",
+                    summary=(
+                        f"Sets place marker {digit} at the current part of the expression."
+                        if prefix == "SetPlacemarker"
+                        else f"Returns to place marker {digit}."
+                        if prefix == "MoveTo"
+                        else f"Speaks the part of the expression at place marker {digit}."
+                        if prefix == "Read"
+                        else f"Describes the structure at place marker {digit}."
+                    ),
+                )
+                for prefix in PLACE_MARKER_PREFIXES
+                for digit in range(10)
+            ),
+            CommandDoc(
+                "math_enter",
+                details=(
+                    "Starts math navigation at the current expression. First move to an "
+                    "expression, such as an equation, fraction, or formula."
+                ),
+            ),
+            CommandDoc("math_exit", details=("Leaves math navigation.")),
+            CommandDoc("math_zoom_in", details=("Explores smaller parts of the expression.")),
+            CommandDoc(
+                "math_zoom_out", details=("Returns to larger structures within the expression.")
+            ),
+            CommandDoc(
+                "math_toggle_speech_mode",
+                details=(
+                    "Chooses whether moving through the expression speaks the selected part or "
+                    "describes its structure."
+                ),
+            ),
+            CommandDoc(
+                "math_where_am_i",
+                details=(
+                    "Describes your location within the expression, rather than your location in "
+                    "the application."
+                ),
+            ),
+            CommandDoc(
+                "math_where_am_i_all",
+                details=(
+                    "Describes your location within the expression, rather than your location in "
+                    "the application."
+                ),
+            ),
+            CommandDoc(
+                "math_read_previous", details=("Speaks the selected part of the expression.")
+            ),
+            CommandDoc("math_read_next", details=("Speaks the selected part of the expression.")),
+            CommandDoc(
+                "math_read_current", details=("Speaks the selected part of the expression.")
+            ),
+            CommandDoc(
+                "math_read_cell_current", details=("Speaks the selected part of the expression.")
+            ),
+            CommandDoc(
+                "math_describe_previous",
+                details=("Gives an outline of the selected part's structure."),
+            ),
+            CommandDoc(
+                "math_describe_next", details=("Gives an outline of the selected part's structure.")
+            ),
+            CommandDoc(
+                "math_describe_current",
+                details=("Gives an outline of the selected part's structure."),
+            ),
         ),
         sections=(
             CommandSectionDoc(

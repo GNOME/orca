@@ -155,8 +155,8 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                     label=guilabels.BRAILLE_ENABLE_END_OF_LINE_SYMBOL,
                     kind="switch",
                     summary=(
-                        "Controls whether Orca shows the end-of-line indicator at the "
-                        "end of each line of text."
+                        "Distinguishes the end of a line of text from the edge of the braille "
+                        "display."
                     ),
                     schema="braille",
                     key=braille_presenter.BraillePresenter.KEY_END_OF_LINE_INDICATOR,
@@ -165,9 +165,8 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                     label=guilabels.BRAILLE_ENABLE_WORD_WRAP,
                     kind="switch",
                     summary=(
-                        "Controls whether Orca adjusts displayed text so only full words are "
-                        "shown. When word wrap is off, Orca uses all available cells so more "
-                        "text can be shown at once."
+                        "Keeps words from being split across successive pans of the braille "
+                        "display."
                     ),
                     schema="braille",
                     key=braille_presenter.BraillePresenter.KEY_WORD_WRAP,
@@ -186,9 +185,8 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                     label=guilabels.BRAILLE_COMPUTER_BRAILLE_AT_CURSOR,
                     kind="switch",
                     summary=(
-                        "When contracted braille is enabled, controls whether the word at "
-                        "the cursor is shown in uncontracted computer braille, which "
-                        "represents characters individually rather than using contractions."
+                        "Shows the word at the cursor in computer braille so you can inspect "
+                        "its individual characters while keeping surrounding text contracted."
                     ),
                     schema="braille",
                     key=braille_presenter.BraillePresenter.KEY_COMPUTER_BRAILLE_AT_CURSOR,
@@ -269,9 +267,13 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                         PreferenceControlDoc(
                             label=guilabels.BRAILLE_TEXT_ATTRIBUTES_INDICATOR,
                             kind="choice",
+                            target="braille.text-attributes-indicator",
                             summary=(
-                                "Selects the dot or dots Orca uses to mark text attributes, "
-                                "such as bold."
+                                "Selects the dots used to mark text attributes in braille, like "
+                                "underlining. The same indicator is used for all attributes "
+                                "enabled for braille; it shows where an attribute is present, "
+                                "rather than which attribute it is. Choosing no indicator hides "
+                                "the markers."
                             ),
                             schema="braille",
                             key=braille_presenter.BraillePresenter.KEY_TEXT_ATTRIBUTES_INDICATOR,
@@ -434,9 +436,9 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
                     label=guilabels.BRAILLE_MESSAGES_ARE_DETAILED,
                     kind="switch",
                     summary=(
-                        "Controls whether Orca shows detailed braille messages when a "
-                        "brief alternative is available. For instance, detailed command "
-                        "feedback might include both the setting name and its new value."
+                        "Chooses detailed rather than brief messages when both forms are "
+                        "available. For example, detailed feedback can include a setting's name "
+                        "and its new value, while brief feedback gives just the value."
                     ),
                     schema="braille",
                     key=braille_presenter.BraillePresenter.KEY_FLASH_MESSAGES_DETAILED,
@@ -445,8 +447,8 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
                     label=guilabels.BRAILLE_MESSAGES_ARE_PERSISTENT,
                     kind="switch",
                     summary=(
-                        "Controls whether flash messages remain displayed until the display "
-                        "is updated instead of disappearing after the configured duration."
+                        "Keeps a flash message displayed until another update replaces it, "
+                        "instead of restoring the previous contents after a timeout."
                     ),
                     schema="braille",
                     key=braille_presenter.BraillePresenter.KEY_FLASH_MESSAGES_PERSISTENT,

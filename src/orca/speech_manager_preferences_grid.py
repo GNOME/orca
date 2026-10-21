@@ -83,8 +83,11 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         PreferenceControlDoc(
                             label=guilabels.VOICE_SPEECH_SYSTEM,
                             kind="choice",
-                            summary="Selects the speech system Orca uses. Supported systems "
-                            "include Speech Dispatcher and Spiel.",
+                            summary=(
+                                "Selects the software Orca uses to communicate with speech "
+                                "synthesizers. Supported systems include Speech Dispatcher "
+                                "and Spiel."
+                            ),
                             schema="speech",
                             key="speech-server",
                             dynamic_values=True,
@@ -92,8 +95,14 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         PreferenceControlDoc(
                             label=guilabels.VOICE_SPEECH_SYNTHESIZER,
                             kind="choice",
-                            summary="Selects the speech synthesizer. Examples include "
-                            "espeak-ng and Voxin.",
+                            summary=(
+                                "Selects the engine that converts text into speech. Examples "
+                                "include espeak-ng and Voxin. The choices come from the selected "
+                                "speech system: output modules in Speech Dispatcher or providers "
+                                "in Spiel. To install and configure additional synthesizers or "
+                                "voices, refer to your speech system's or synthesizer's "
+                                "documentation."
+                            ),
                             schema="speech",
                             key="synthesizer",
                             dynamic_values=True,
@@ -154,8 +163,12 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             value_docs=(
                                 PreferenceValueDoc(
                                     label=guilabels.CAPITALIZATION_STYLE_VOICE_ONLY,
-                                    summary="Uses the configured uppercase voice without adding "
-                                    "another indication.",
+                                    summary=(
+                                        "Uses the configured uppercase voice without adding "
+                                        "another indication. To hear uppercase letters at a "
+                                        "higher pitch, configure the uppercase voice in "
+                                        f'"{guilabels.LANGUAGE_VOICE_SETTINGS}" preferences.'
+                                    ),
                                 ),
                                 PreferenceValueDoc(
                                     label=guilabels.CAPITALIZATION_STYLE_ICON,
@@ -202,6 +215,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         PreferenceControlDoc(
                             label=guilabels.SPEECH_USE_PRONUNCIATION_DICTIONARY,
                             kind="switch",
+                            target="speech.use-pronunciation-dictionary",
                             summary="Controls whether Orca uses pronunciation dictionary entries.",
                             schema="speech",
                             key="use-pronunciation-dictionary",
@@ -211,9 +225,19 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 PreferenceControlDoc(
                     label=guilabels.LANGUAGE_SWITCHING,
                     kind="group",
+                    target="speech.language-switching",
                     summary="Controls when Orca switches voices based on language.",
                     controls=(
                         PreferenceControlDoc(
+                            summary=(
+                                "Controls automatic language switching for document content. "
+                                "For example, disable it in global preferences but enable it in "
+                                "application preferences for one or more web browsers. Other "
+                                "applications continue to use the global setting unless they "
+                                "have their own override. See [[screen-reader.configuration]] "
+                                "for opening global and application preferences and removing "
+                                "overrides."
+                            ),
                             label=guilabels.AUTO_LANGUAGE_SWITCHING,
                             kind="switch",
                             schema="speech",
@@ -226,6 +250,12 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             key="auto-language-switching-ui",
                         ),
                         PreferenceControlDoc(
+                            summary=(
+                                "Limits automatic switching to languages for which you have "
+                                "configured a voice set. With this limit off, Orca can use any "
+                                "language supported by the synthesizer, even without a matching "
+                                "voice set."
+                            ),
                             label=guilabels.ONLY_SWITCH_CONFIGURED_LANGUAGES,
                             kind="switch",
                             schema="speech",
@@ -857,7 +887,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 PreferenceControlDoc(
                     label=guilabels.LANGUAGE_VOICE_SETTINGS,
                     kind="group",
-                    summary=f"Lists the {guilabels.VOICE_SET_GLOBAL} voice set and any "
+                    summary=f'Lists the "{guilabels.VOICE_SET_GLOBAL}" voice set and any '
                     "language-specific voice sets.",
                     controls=(
                         PreferenceControlDoc(
@@ -887,13 +917,23 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         PreferenceControlDoc(
                             label=guilabels.VOICE_LANGUAGE,
                             kind="choice",
-                            summary="Selects the language for the selected voice type.",
+                            summary=(
+                                "Selects the language for the selected voice type. Available "
+                                "languages come from the voices reported by the current "
+                                "synthesizer."
+                            ),
                             dynamic_values=True,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.VOICE_PERSON,
                             kind="choice",
-                            summary="Selects the synthesizer voice for the selected voice type.",
+                            summary=(
+                                "Selects the synthesizer voice for the selected voice type. "
+                                "Choices depend on the current synthesizer and selected "
+                                "language. If an installed voice is missing, check that it is "
+                                "available through the selected speech system and synthesizer "
+                                "and that its language is selected."
+                            ),
                             schema="voice",
                             key="family-name",
                             dynamic_values=True,

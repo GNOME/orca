@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames
 from .command import Command, KeyboardCommand
-from .help_metadata import CommandGroupDoc
+from .help_metadata import CommandDoc, CommandGroupDoc
 
 if TYPE_CHECKING:
     from .debugging_tools_manager import DebuggingToolsManager
@@ -37,6 +37,28 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for debugging tools commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "clear_atspi_app_cache",
+                details=(
+                    "Clears cached AT-SPI information for the current application so Orca can "
+                    "request fresh information. If Orca is presenting incorrect or outdated "
+                    "information, assign a shortcut in Commands preferences, "
+                    "return to the affected application, use the command, and try the "
+                    "interaction again. If this restores correct presentation, mention it when "
+                    "reporting the problem: it suggests that AT-SPI's cached accessibility "
+                    "information was stale, potentially due to a bug in the application or its "
+                    "toolkit."
+                ),
+            ),
+            CommandDoc(
+                "cycleDebugLevelHandler",
+                details=(
+                    "Cycles through all messages, informational messages, warnings, severe errors, "
+                    "and off."
+                ),
+            ),
+        ),
         summary="Provide information useful for troubleshooting Orca.",
     )
 

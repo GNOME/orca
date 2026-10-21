@@ -2,11 +2,11 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_reviewing_objects_flat_review">
   <info>
     <link type="guide" xref="index#reviewing" />
-    <title type="sort">16. Flat review</title>
+    <title type="sort">18. Flat review</title>
     <title type="link">Flat review</title>
     <desc>
-      Flat review lets you examine visible window content without moving focus or the caret.
-      Configure how it follows your location and presents updates.
+      Flat review lets you examine the visible contents of the active window independently of
+      focus and the caret.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -17,7 +17,6 @@
         Creative Commons Share Alike 3.0
       </p>
     </license>
-    <title type="link" role="preferences">Flat Review</title>
   </info>
   <title>Flat review</title>
   <p>
@@ -26,18 +25,20 @@
     and characters.
   </p>
   <p>
-    Any flat review command starts reviewing the visible contents; off-screen content is not
-    included. Orca refreshes the review context as the window, text, or caret changes.
+    Use the flat review navigation commands to begin reviewing the window. Off-screen content is
+    not included.
   </p>
   <p>
-    Flat Review preferences control whether the review location follows focus and caret changes.
-    Using application navigation keys leaves flat review. You can also toggle flat review off
-    and back on to rebuild the context.
+    The review location and the application's caret are separate. You can configure when review
+    follows focus and caret changes, how changes at the review location are presented, or use
+    commands to move one location to the other. The settings and commands below describe these
+    options.
   </p>
   <p>
-    The home position is the beginning of the window's content; the end position is its last
-    item. Bottom left is the start of the last line. Show flat review contents opens the entire
-    review content in a text window.
+    Keeping the review location independent does not freeze the window's content. Text can still
+    change or scroll out of view, so the exact position may no longer be available. Orca retains
+    one review location, rather than a separate location for each window. Reviewing another
+    window replaces the previous one.
   </p>
   <section id="settings-flat-review">
     <title>Settings</title>
@@ -52,26 +53,30 @@
       <item>
         <p>
           <gui>Follow the focus and caret location</gui>: Controls when the
-          flat review location moves to follow the focus or caret. Choices: Always,
-          Automatically, Never.
+          flat review location moves to follow the focus or caret. Using application navigation
+          keys resumes presentation of the application; where flat review resumes depends on
+          this setting. Choices: Always, Automatically, Never.
         </p>
         <list>
           <item>
             <p>
-              <gui>Always</gui>: Flat review moves
-              whenever the focus or caret location changes.
+              <gui>Always</gui>: Return to the focus or
+              caret when you resume flat review after interacting with the application.
+              Unrelated terminal output does not pull review away from its location.
             </p>
           </item>
           <item>
             <p>
-              <gui>Automatically (default)</gui>: Orca decides when
-              moving flat review to the focus or caret location is useful.
+              <gui>Automatically (default)</gui>: Follow selected
+              changes, such as moving focus to another object or navigating to another line,
+              while retaining the review location through other changes.
             </p>
           </item>
           <item>
             <p>
-              <gui>Never</gui>: Flat review stays where
-              you last moved it.
+              <gui>Never</gui>: Keep the review location
+              independent of focus and caret changes, as long as the reviewed content remains
+              available.
             </p>
           </item>
         </list>
@@ -79,13 +84,18 @@
       <item>
         <p>
           <gui>Speak changes at review location</gui>: Controls whether
-          Orca speaks content changes at the flat review location. Default: off.
+          Orca speaks changes to the line, word, or character you last reviewed while you are
+          using flat review. This is independent of whether the review location follows focus
+          and caret changes. Default: off.
         </p>
       </item>
       <item>
         <p>
           <gui>Display changes at review location</gui>: Controls whether
-          Orca refreshes braille when content changes at the flat review location. Default: on.
+          Orca refreshes braille when content changes at the flat review location while you are
+          using flat review. This is independent of focus and caret tracking and of spoken
+          updates. For example, you can stay on a changing terminal line and have Orca update
+          braille without speaking each change. Default: on.
         </p>
       </item>
       <item>
@@ -108,7 +118,9 @@
       <list>
         <item>
           <p>
-            <gui>Enter and exit flat review mode</gui>
+            <gui>Enter and exit flat review mode</gui>: Toggling flat
+            review off and back on discards the previous review location and starts again at the
+            focus.
           </p>
           <list>
             <item>
@@ -126,11 +138,17 @@
                 </keyseq>
               </p>
             </item>
+            <item>
+              <p>
+                Braille: Freeze
+              </p>
+            </item>
           </list>
         </item>
         <item>
           <p>
-            <gui>Move flat review to the home position</gui>
+            <gui>Move flat review to the home position</gui>: Moves to the
+            beginning of the window's content.
           </p>
           <list>
             <item>
@@ -150,11 +168,17 @@
                 </keyseq>
               </p>
             </item>
+            <item>
+              <p>
+                Braille: Top Left
+              </p>
+            </item>
           </list>
         </item>
         <item>
           <p>
-            <gui>Move flat review to the end position</gui>
+            <gui>Move flat review to the end position</gui>: Moves to the last
+            item in the window.
           </p>
           <list>
             <item>
@@ -178,20 +202,34 @@
         </item>
         <item>
           <p>
-            <gui>Move flat review to the bottom left</gui>
-            Unbound by default.
+            <gui>Move flat review to the bottom left</gui>: Moves to the start
+            of the last line.
+          </p>
+          <list>
+            <item>
+              <p>
+                Keyboard: unbound by default.
+              </p>
+            </item>
+            <item>
+              <p>
+                Braille: Bottom Left
+              </p>
+            </item>
+          </list>
+        </item>
+        <item>
+          <p>
+            <gui>Move flat review to the object with focus</gui>: Moves review to
+            the current focus or caret without changing the tracking setting. Unbound by
+            default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Move flat review to the object with focus</gui>
-            Unbound by default.
-          </p>
-        </item>
-        <item>
-          <p>
-            <gui>Move focus to the flat review location</gui>
-            Unbound by default.
+            <gui>Move focus to the flat review location</gui>: Attempts to move
+            focus and the caret to the reviewed location. This requires support from the
+            application. Unbound by default.
           </p>
         </item>
       </list>
@@ -275,7 +313,7 @@
                 Desktop: <keyseq>
                   <key>Keypad 8</key>
                 </keyseq>
-                (press twice)
+                (press twice quickly)
               </p>
             </item>
             <item>
@@ -284,7 +322,7 @@
                   <key>Orca Modifier</key>
                   <key>I</key>
                 </keyseq>
-                (press twice)
+                (press twice quickly)
               </p>
             </item>
           </list>
@@ -299,7 +337,7 @@
                 Desktop: <keyseq>
                   <key>Keypad 8</key>
                 </keyseq>
-                (press three times)
+                (press three times quickly)
               </p>
             </item>
             <item>
@@ -308,7 +346,7 @@
                   <key>Orca Modifier</key>
                   <key>I</key>
                 </keyseq>
-                (press three times)
+                (press three times quickly)
               </p>
             </item>
           </list>
@@ -359,6 +397,11 @@
                 </keyseq>
               </p>
             </item>
+            <item>
+              <p>
+                Braille: Line Up
+              </p>
+            </item>
           </list>
         </item>
         <item>
@@ -381,6 +424,11 @@
                   <key>Ctrl</key>
                   <key>L</key>
                 </keyseq>
+              </p>
+            </item>
+            <item>
+              <p>
+                Braille: Line Down
               </p>
             </item>
           </list>
@@ -466,7 +514,7 @@
                 Desktop: <keyseq>
                   <key>Keypad 5</key>
                 </keyseq>
-                (press twice)
+                (press twice quickly)
               </p>
             </item>
             <item>
@@ -475,7 +523,7 @@
                   <key>Orca Modifier</key>
                   <key>K</key>
                 </keyseq>
-                (press twice)
+                (press twice quickly)
               </p>
             </item>
           </list>
@@ -490,7 +538,7 @@
                 Desktop: <keyseq>
                   <key>Keypad 5</key>
                 </keyseq>
-                (press three times)
+                (press three times quickly)
               </p>
             </item>
             <item>
@@ -499,7 +547,7 @@
                   <key>Orca Modifier</key>
                   <key>K</key>
                 </keyseq>
-                (press three times)
+                (press three times quickly)
               </p>
             </item>
           </list>
@@ -585,7 +633,7 @@
                 Desktop: <keyseq>
                   <key>Keypad 2</key>
                 </keyseq>
-                (press twice)
+                (press twice quickly)
               </p>
             </item>
             <item>
@@ -594,7 +642,7 @@
                   <key>Orca Modifier</key>
                   <key>Comma</key>
                 </keyseq>
-                (press twice)
+                (press twice quickly)
               </p>
             </item>
           </list>
@@ -609,7 +657,7 @@
                 Desktop: <keyseq>
                   <key>Keypad 2</key>
                 </keyseq>
-                (press three times)
+                (press three times quickly)
               </p>
             </item>
             <item>
@@ -618,7 +666,7 @@
                   <key>Orca Modifier</key>
                   <key>Comma</key>
                 </keyseq>
-                (press three times)
+                (press three times quickly)
               </p>
             </item>
           </list>
@@ -654,19 +702,24 @@
         </item>
         <item>
           <p>
-            <gui>Show flat review contents</gui> Unbound by default.
+            <gui>Show flat review contents</gui>: Opens the entire
+            review content in a text window. Unbound by default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Copy the contents under flat review to the clipboard</gui>
-            Unbound by default.
+            <gui>Copy the contents under flat review to the clipboard</gui>: Copies the last
+            text presented by flat review to the clipboard. Works while flat review is active
+            and does not require text selection in the application. See "<link xref="features_clipboard">Clipboard</link>" for the
+            requirements for reliable clipboard access on Wayland. Unbound by default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Append the contents under flat review to the clipboard</gui>
-            Unbound by default.
+            <gui>Append the contents under flat review to the clipboard</gui>: Adds the last text
+            presented by flat review to the clipboard's existing text. Works while flat review
+            is active and does not require text selection in the application. See "<link xref="features_clipboard">Clipboard</link>" for the
+            requirements for reliable clipboard access on Wayland. Unbound by default.
           </p>
         </item>
         <item>
@@ -679,7 +732,7 @@
                 Desktop: <keyseq>
                   <key>Keypad Add</key>
                 </keyseq>
-                (press twice)
+                (press twice quickly)
               </p>
             </item>
             <item>
@@ -688,45 +741,18 @@
                   <key>Orca Modifier</key>
                   <key>Semicolon</key>
                 </keyseq>
-                (press twice)
+                (press twice quickly)
               </p>
             </item>
           </list>
-        </item>
-        <item>
           <p>
-            <gui>Toggle restricting flat review to the current object</gui>
-            Unbound by default.
-          </p>
-        </item>
-      </list>
-    </section>
-    <section id="flat-review-braille-display-commands">
-      <title>Braille display commands</title>
-      <list>
-        <item>
-          <p>
-            <gui>Enter and exit flat review mode</gui>: Freeze
+            Uses flat review to speak the visible contents of the current window or dialog.
           </p>
         </item>
         <item>
           <p>
-            <gui>Move flat review to the bottom left</gui>: Bottom Left
-          </p>
-        </item>
-        <item>
-          <p>
-            <gui>Move flat review to the home position</gui>: Top Left
-          </p>
-        </item>
-        <item>
-          <p>
-            <gui>Move flat review to the word above the current word</gui>: Line Up
-          </p>
-        </item>
-        <item>
-          <p>
-            <gui>Move flat review to the word below the current word</gui>: Line Down
+            <gui>Toggle restricting flat review to the current object</gui>: Unbound by
+            default.
           </p>
         </item>
       </list>

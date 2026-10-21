@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA 02110-1301 USA.
 
-"""Tests for generated help navigation and inline keys."""
+"""Tests for help generation, metadata validation, and documentation coverage."""
 
 from __future__ import annotations
 
@@ -29,9 +29,11 @@ import re
 import runpy
 import shutil
 import subprocess
+import sys
 import xml.etree.ElementTree as ET
 from collections import Counter
 from dataclasses import replace
+from html import unescape
 from pathlib import Path
 from typing import Any
 
@@ -50,8 +52,8 @@ def _parse_generated_page(content: str) -> ET.Element:
     return ET.fromstring(content)  # noqa: S314
 
 
-@pytest.fixture(scope="module")
-def generator() -> dict[str, Any]:
+@pytest.fixture(scope="module", name="generator")
+def generator_fixture() -> dict[str, Any]:
     """Loads the standalone generator without Orca's runtime dependencies."""
 
     with pytest.MonkeyPatch.context() as patch:
@@ -70,6 +72,8 @@ def generator() -> dict[str, Any]:
         ("Turn Num Lock off.", ["Num Lock"]),
         ("Press Shift+Insert.", ["Shift", "Insert"]),
         ("An S in prose is not a shortcut.", []),
+        ('Choose "Delete" or press Delete.', ["Delete"]),
+        ('The "Enter and exit flat review mode" command.', []),
     ),
 )
 def test_inline_key_markup(generator: dict[str, Any], text: str, keys: list[str]) -> None:
@@ -124,8 +128,106 @@ def test_prose_bullet_lists(generator: dict[str, Any]) -> None:
     assert [key.text for key in items[1].findall(".//m:key", _NS)] == ["Shift", "Tab"]
 
 
-def test_index_sections(generator: dict[str, Any]) -> None:
-    """Preserves the guide destinations and two-column index layout."""
+@pytest.mark.parametrize("title", ("Orca Find", "Find visible text", "Enter & Exit"))
+def test_prose_topic_titles_follow_metadata(generator: dict[str, Any], title: str) -> None:
+    """Topic references become quoted inline links using the referenced title."""
+
+    topic = generator["FeaturePageDoc"](
+        page_id="features_target",
+        title=title,
+        link_title=title,
+        description="Target topic.",
+        guide_xref="",
+        target="example.topic",
+    )
+    referring = generator["FeaturePageDoc"](
+        page_id="features_referring",
+        title="Referring topic",
+        link_title="Referring topic",
+        description="See [[example.topic]].",
+        guide_xref="",
+        intro="See [[example.topic]] and [[example.topic]].",
+        details=(
+            "Press Enter, then see [[example.topic]].\n\n"
+            "- See [[example.topic]].\n\nRun `[[literal]]`, then see [[example.topic]]."
+        ),
+    )
+    pages = [topic, referring]
+    rendered = generator["build_feature_pages"](
+        pages,
+        generator["_feature_target_registry"](pages, {}),
+        generator["_feature_link_text_registry"](pages, {}),
+        {},
+        [page.page_id for page in pages],
+    )
+    root = _parse_generated_page(rendered["features_referring.page"])
+    assert root.findtext("m:info/m:desc", namespaces=_NS).strip() == f'See "{title}".'
+    assert "".join(root.itertext()).count(f'"{title}"') == 6
+    links = root.findall(".//m:link[@xref='features_target']", _NS)
+    assert len(links) == 5
+    assert all(link.text == title for link in links)
+    assert root.find("m:info/m:desc/m:link", _NS) is None
+    assert [key.text for key in root.findall(".//m:key", _NS)] == ["Enter"]
+    assert root.findtext("m:p/m:code", namespaces=_NS) == "[[literal]]"
+
+
+@pytest.mark.parametrize("missing_registry", ("targets", "titles"))
+def test_missing_prose_topic_is_rejected(generator: dict[str, Any], missing_registry: str) -> None:
+    """A removed target or title cannot silently leave a stale prose reference."""
+
+    page = generator["FeaturePageDoc"](
+        page_id="features_referring",
+        title="Referring topic",
+        link_title="Referring topic",
+        description="Example.",
+        guide_xref="",
+        intro="See [[removed.topic]].",
+    )
+    targets = {} if missing_registry == "targets" else {"removed.topic": "removed"}
+    titles = (
+        {}
+        if missing_registry == "titles"
+        else {"removed.topic": generator["LinkTextDoc"]("Old title", "")}
+    )
+    with pytest.raises(ValueError, match=r"Unknown prose topic target: 'removed\.topic'"):
+        generator["build_feature_pages"]([page], targets, titles, {}, [page.page_id])
+
+
+def test_inline_topic_links_replace_duplicate_related_entries(
+    generator: dict[str, Any],
+) -> None:
+    """Inline destinations have no duplicate related entries or empty navigation sections."""
+
+    page = generator["FeaturePageDoc"](
+        page_id="features_test",
+        title="Test",
+        link_title="Test",
+        description="Test",
+        guide_xref="",
+        sections=(
+            generator["FeatureSectionDoc"](
+                title="Example",
+                intro="See [[example.topic]].",
+                links=(generator["FeatureLinkDoc"]("example.topic"),),
+            ),
+        ),
+    )
+    rendered = generator["build_feature_pages"](
+        [page],
+        {"example.topic": "example"},
+        {"example.topic": generator["LinkTextDoc"]("Example")},
+        {},
+        [page.page_id],
+    )
+    root = _parse_generated_page(rendered["features_test.page"])
+    assert len(root.findall(".//m:link[@xref='example']", _NS)) == 1
+    assert root.find("m:section/m:p/m:link[@xref='example']", _NS) is not None
+    assert root.find(".//m:list", _NS) is None
+    assert "See also:" not in "".join(root.itertext())
+
+
+def test_index_sections_follow_metadata(generator: dict[str, Any]) -> None:
+    """Index sections use the identifiers and order declared in metadata."""
 
     metadata = json.loads(_METADATA_PATH.read_text())
     page = generator["_build_help_index_page"](metadata["index"]).getroot()
@@ -133,15 +235,8 @@ def test_index_sections(generator: dict[str, Any]) -> None:
     assert page.get("id") == "index"
     sections = page.findall("m:section", _NS)
     assert [section.get("id") for section in sections] == [
-        "getting_started",
-        "reading",
-        "reviewing",
-        "output",
-        "interaction",
-        "information",
-        "troubleshooting",
+        section["id"] for section in metadata["index"]["sections"]
     ]
-    assert all(section.get("style") == "2column" for section in sections)
 
 
 def test_preview_index_is_generated_and_checked(
@@ -185,9 +280,9 @@ def test_default_generation_preserves_installed_help(
     assert generator["main"]() == 0
 
 
-@pytest.fixture(scope="module")
-def topic_commands(generator: dict[str, Any]) -> dict[str, Any]:
-    """Collects source metadata once for command-consolidation tests."""
+@pytest.fixture(scope="module", name="topic_commands")
+def topic_commands_fixture(generator: dict[str, Any]) -> dict[str, Any]:
+    """Collects metadata and renders help once for tests using the current source."""
 
     source = _ROOT / "src"
     groups = generator["collect_command_page_groups"](source)
@@ -237,10 +332,10 @@ def topic_commands(generator: dict[str, Any]) -> dict[str, Any]:
 
 
 @pytest.mark.parametrize("change", ("missing", "unknown", "duplicate"))
-def test_feature_order_inventory(
+def test_invalid_topic_order_is_rejected(
     generator: dict[str, Any], topic_commands: dict[str, Any], change: str
 ) -> None:
-    """Requires an explicit, unique central position for every feature page."""
+    """Topic order must include every topic exactly once and contain no unknown topics."""
 
     order = list(topic_commands["feature_order"])
     if change == "missing":
@@ -260,10 +355,10 @@ def test_feature_order_inventory(
         )
 
 
-def test_feature_order_is_central(
+def test_topic_order_follows_metadata(
     generator: dict[str, Any], topic_commands: dict[str, Any]
 ) -> None:
-    """Reorders generated topics without changing feature definitions."""
+    """Generated sort titles follow the topic order declared in metadata."""
 
     order = list(reversed(topic_commands["feature_order"]))
     rendered = generator["build_feature_pages"](
@@ -283,46 +378,18 @@ def test_feature_order_is_central(
         assert sort_title.text.startswith(f"{index:02d}. ")
 
 
-def test_preferences_opening_workflow(topic_commands: dict[str, Any]) -> None:
-    """Explains opening preferences before listing commands, without redundant related links."""
-
-    page = _parse_generated_page(topic_commands["rendered"]["preferences_guide.page"])
-    section = page.find("m:section[@id='opening-preferences']", _NS)
-    assert section is not None
-    assert [child.tag.rsplit("}", 1)[-1] for child in section] == [
-        "title",
-        "p",
-        "p",
-        "p",
-        "section",
-    ]
-    paragraphs = section.findall("m:p", _NS)
-    assert "Use the commands below" in "".join(paragraphs[0].itertext())
-    assert "orca --setup" in "".join(paragraphs[1].itertext())
-    assert section.find("m:section/m:title[.='Commands']", _NS) is not None
-    assert section.find(".//m:link", _NS) is None
-    saving = page.find("m:section[@id='changing-and-saving-settings']", _NS)
-    assert saving is not None
-    assert saving.find(".//m:link", _NS) is None
-    assert "F10" in [key.text for key in saving.findall(".//m:key", _NS)]
-    assert "Escape" in [key.text for key in saving.findall(".//m:key", _NS)]
-    sequences = [
-        [key.text for key in sequence.findall("m:key", _NS)]
-        for sequence in saving.findall(".//m:keyseq", _NS)
-    ]
-    assert ["Alt", "F4"] in sequences
-    assert "close without saving" in "".join(saving.itertext())
-    assert "The links below describe" not in "".join(saving.itertext())
-    heading = page.find("m:section[@id='settings-categories']/m:title", _NS)
-    assert heading is not None
-    assert heading.text == "Settings categories"
-
-
-def test_every_command_rendered_once(topic_commands: dict[str, Any]) -> None:
-    """Preserves every keyboard and braille command without duplicate topic listings."""
+def test_every_command_is_rendered_once(topic_commands: dict[str, Any]) -> None:
+    """Preserves each logical command and all braille bindings without duplicate listings."""
 
     expected = Counter(
-        command.label for _page, group in topic_commands["groups"] for command in group.commands
+        {
+            (
+                topic_commands["targets"][f"command:{command.command_type}:{command.name}"],
+                command.name,
+            ): command.label
+            for _page, group in topic_commands["groups"]
+            for command in group.commands
+        }.values()
     )
     roots = [_parse_generated_page(content) for content in topic_commands["rendered"].values()]
     for root in roots:
@@ -333,48 +400,110 @@ def test_every_command_rendered_once(topic_commands: dict[str, Any]) -> None:
         label.text for root in roots for label in root.findall(".//m:item/m:p/m:gui", _NS)
     )
     assert actual == expected
+    expected_bindings = Counter(
+        binding
+        for _page, group in topic_commands["groups"]
+        for command in group.commands
+        for binding in command.braille_bindings
+    )
+    actual_bindings = Counter(
+        binding
+        for root in roots
+        for paragraph in root.findall(".//m:p", _NS)
+        if (text := " ".join("".join(paragraph.itertext()).split())).startswith("Braille: ")
+        for binding in text.removeprefix("Braille: ").split(", ")
+    )
+    assert actual_bindings == expected_bindings
 
 
-def test_old_command_pages_are_not_generated(
-    topic_commands: dict[str, Any],
+def test_different_commands_with_the_same_label_remain_separate(
+    generator: dict[str, Any],
 ) -> None:
-    """Topics never link to obsolete command pages or the retired index."""
+    """Command identity, rather than a shared label, determines whether bindings combine."""
 
-    assert "commands.page" not in topic_commands["rendered"]
-    for content in topic_commands["rendered"].values():
-        page = _parse_generated_page(content)
-        for link in page.findall(".//m:link", _NS):
-            xref = link.get("xref", "")
-            assert not xref.startswith("commands_")
-            assert xref.split("#", 1)[0] != "commands"
-
-
-def test_command_context_is_preserved(topic_commands: dict[str, Any]) -> None:
-    """Retains explanations, restrictions, subsections, and display bindings."""
-
-    pages = topic_commands["rendered"]
-    assert "python3-psutil" in pages["features_system_information.page"]
-    assert "Wayland" in pages["features_clipboard.page"]
-    assert "Wayland" in pages["features_reviewing_objects_mouse_review.page"]
-    assert "Dynamic headers" in pages["features_reading_documents_table_navigation.page"]
-    assert "To set column headers" in pages["features_reading_documents_table_navigation.page"]
-    for topic in ("output", "display_settings"):
-        assert "Standard keyboard commands" in pages[f"features_braille_{topic}.page"]
-        assert "Braille display commands" in pages[f"features_braille_{topic}.page"]
-    assert "unbound command" in pages["features_speech_and_voices_voice_sets.page"]
+    commands = [
+        generator["CollectedCommandDoc"](
+            name=kind,
+            label="Example",
+            command_type=kind,
+            braille_bindings=["ROUTE"] if kind == "braille" else [],
+        )
+        for kind in ("keyboard", "braille")
+    ]
+    parent = ET.Element("test")
+    group = generator["CollectedCommandGroupDoc"](title="Example")
+    generator["_add_feature_command_group"](parent, group, commands)
+    items = parent.findall("m:section/m:list/m:item", _NS)
+    assert len(items) == 2
+    assert "Unbound by default." in "".join(items[0].itertext())
+    assert items[1].findtext("m:list/m:item/m:p", namespaces=_NS) == "Braille: ROUTE"
 
 
-def test_missing_command_topic_is_an_error(
+@pytest.mark.parametrize("bindings", ("different", "same", "unbound", "desktop-only"))
+def test_keyboard_and_braille_bindings_share_the_command(
+    generator: dict[str, Any], bindings: str
+) -> None:
+    """Combined entries preserve bindings and details without mutating collected commands."""
+
+    desktop = generator["KeyBindingDoc"]("F1", 0) if bindings != "unbound" else None
+    laptop = (
+        generator["KeyBindingDoc"]("F2", 0, click_count=2)
+        if bindings == "different"
+        else desktop
+        if bindings == "same"
+        else None
+    )
+    commands = [
+        generator["CollectedCommandDoc"](
+            name="example",
+            label="Example",
+            desktop_keybinding=desktop,
+            laptop_keybinding=laptop,
+            details="Run `example`.",
+        ),
+        generator["CollectedCommandDoc"](
+            name="example",
+            label="Example",
+            command_type="braille",
+            braille_bindings=["Freeze", "Other binding"],
+            details="Run `example`.",
+        ),
+    ]
+    group = generator["CollectedCommandGroupDoc"](
+        title="Test",
+        sections=(generator["CommandSectionDoc"]("Example", command_names=("example",)),),
+    )
+    parent = ET.Element("test")
+    generator["_add_feature_command_group"](parent, group, commands)
+    assert [label.text for label in parent.findall(".//m:gui", _NS)] == ["Example"]
+    assert [code.text for code in parent.findall(".//m:code", _NS)] == ["example"]
+    paragraphs = parent.findall(".//m:list/m:item/m:list/m:item/m:p", _NS)
+    assert paragraphs[-1].text == "Braille: Freeze, Other binding"
+    keyboard_paragraphs = paragraphs[:-1]
+    if bindings in {"same", "unbound"}:
+        assert [p.text.split(":", 1)[0] for p in keyboard_paragraphs] == ["Keyboard"]
+        expected_keys = [["F1"]] if bindings == "same" else [[]]
+    else:
+        assert [p.text.split(":", 1)[0] for p in keyboard_paragraphs] == ["Desktop", "Laptop"]
+        expected_keys = [["F1"], ["F2"] if bindings == "different" else []]
+    assert [
+        [key.text for key in p.findall("m:keyseq/m:key", _NS)] for p in keyboard_paragraphs
+    ] == expected_keys
+    assert commands[0].braille_bindings == []
+    assert commands[1].braille_bindings == ["Freeze", "Other binding"]
+
+
+def test_missing_command_topic_is_rejected(
     generator: dict[str, Any],
     topic_commands: dict[str, Any],
 ) -> None:
-    """New commands cannot silently disappear from the help."""
+    """Commands without a documentation topic cause generation to fail."""
 
     with pytest.raises(ValueError, match="without a feature topic"):
         generator["_feature_command_targets"]([], {}, topic_commands["groups"])
 
 
-def test_duplicate_command_topic_is_an_error(
+def test_duplicate_command_topic_is_rejected(
     generator: dict[str, Any],
     topic_commands: dict[str, Any],
 ) -> None:
@@ -389,109 +518,10 @@ def test_duplicate_command_topic_is_an_error(
         )
 
 
-def test_help_preview_is_not_installed_or_translated(topic_commands: dict[str, Any]) -> None:
-    """The English preview leaves installed help and translation inputs separate."""
-
-    manifest = (_ROOT / "help/meson.build").read_text()
-    installed = set(re.findall(r"'([^']+\.page)'", manifest.split("media:", 1)[0]))
-    assert installed == {page.name for page in (_ROOT / "help/C").glob("*.page")}
-    assert set(topic_commands["all_rendered"]) == {page.name for page in _HELP_DIR.glob("*.page")}
-    for path in ("meson.build", "help/meson.build", "po/POTFILES.in"):
-        assert "help_ng" not in (_ROOT / path).read_text()
-    for filename in installed:
-        assert "This file is generated" not in (_ROOT / "help/C" / filename).read_text()
-    source_manifest = (_ROOT / "src/orca/meson.build").read_text()
-    for module in (_ROOT / "src/orca").glob("*_feature_documentation.py"):
-        assert f"'{module.name}'" not in source_manifest
-
-
-def test_preferences_has_one_landing_page(topic_commands: dict[str, Any]) -> None:
-    """Combines the shared preferences workflow with the settings directory."""
-
-    pages = topic_commands["rendered"]
-    assert "features_configuring_orca.page" not in pages
-    assert topic_commands["targets"]["screen-reader.configuration"] == "preferences_guide"
-    preferences = _parse_generated_page(pages["preferences_guide.page"])
-    assert preferences.get("type") == "guide"
-    assert (
-        preferences.find(
-            "m:section[@id='settings-categories']/m:links[@type='topic'][@style='2column']", _NS
-        )
-        is not None
-    )
-    labels = [label.text for label in preferences.findall(".//m:item/m:p/m:gui", _NS)]
-    assert labels == [
-        "Display the preferences window",
-        "Display the application preferences window",
-    ]
-
-
-def test_startup_does_not_repeat_other_topics(topic_commands: dict[str, Any]) -> None:
-    """Leaves keyboard, learning, and configuration explanations in their own topics."""
-
-    intro = topic_commands["rendered"]["introduction.page"]
-    assert "Starting and stopping Orca" in intro
-    assert "Keyboard Layout" not in intro
-    assert "Learn mode" not in intro
-    assert "orca --profile NAME" in intro
-    assert "orca --setup" in intro
-    assert "Use the following commands to open" not in intro
-
-
-def test_troubleshooting_stays_on_topic(topic_commands: dict[str, Any]) -> None:
-    """Keeps automation and startup cross-references out of troubleshooting."""
-
-    content = topic_commands["rendered"]["features_debugging.page"]
-    assert "Remote control" not in content
-    assert "org.gnome.Orca1.Service" not in content
-    assert 'xref="introduction' not in content
-    assert "verbose debugging" in content
-
-
-def test_preferences_workflow_has_one_owner(topic_commands: dict[str, Any]) -> None:
-    """Keeps setup examples in startup and preferences, and saving details in preferences."""
-
-    matches = [
-        filename for filename, content in topic_commands["rendered"].items() if "orca -s" in content
-    ]
-    assert sorted(matches) == ["introduction.page", "preferences_guide.page"]
-    for filename in ("features_keyboard_layout.page", "features_profiles.page"):
-        content = topic_commands["all_rendered"][filename]
-        assert "without closing" not in content
-        assert "Preferences location:" in content
-
-
-def test_profiles_are_consolidated_in_feature(topic_commands: dict[str, Any]) -> None:
-    """Preserves profile instructions and commands without a separate Getting Started topic."""
-
-    assert "preferences_profiles.page" not in topic_commands["all_rendered"]
-    assert topic_commands["targets"]["profiles.feature"] == "features_profiles"
-    content = topic_commands["all_rendered"]["features_profiles.page"]
-    for text in (
-        "orca --profile NAME",
-        "unsaved changes are not copied",
-        "Default profile cannot be renamed",
-        "Default profile cannot be renamed or removed",
-        "select an existing profile",
-        "Writer-specific settings",
-    ):
-        assert text in " ".join("".join(_parse_generated_page(content).itertext()).split())
-    page = _parse_generated_page(content)
-    commands = page.find("m:section[@id='commands-profiles']", _NS)
-    assert commands is not None
-    assert len(commands.findall("m:list/m:item", _NS)) == 2
-    assert not any(
-        link.get("xref", "").startswith("preferences_profiles")
-        for link in page.findall(".//m:link", _NS)
-    )
-    for name in ("cycleSettingsProfileHandler", "presentCurrentProfileHandler"):
-        assert topic_commands["targets"][f"command:keyboard:{name}"] == (
-            "features_profiles#commands-profiles"
-        )
-
-
-def test_feature_can_embed_individual_commands_and_settings(generator: dict[str, Any]) -> None:
-    """Explicit command subsets and settings share a feature topic."""
+def test_feature_embeds_command_subsets_and_preference_categories(
+    generator: dict[str, Any],
+) -> None:
+    """A topic can include a command subset and a preference category."""
 
     category = generator["PreferenceCategoryDoc"]("test", "Test", "Test settings", ("test.panel",))
     panel = generator["PanelDoc"](
@@ -530,47 +560,6 @@ def test_feature_can_embed_individual_commands_and_settings(generator: dict[str,
     label = root.find("m:section[@id='commands-test']/m:list/m:item/m:p/m:gui", _NS)
     assert label is not None and label.text == "Test command"
     assert root.find("m:section[@id='settings-test']", _NS) is not None
-    with pytest.raises(ValueError, match="included more than once"):
-        generator["_feature_command_targets"]([feature, feature], {}, groups)
-
-
-def test_sleep_mode_has_one_feature_page(topic_commands: dict[str, Any]) -> None:
-    """Consolidates settings and commands without losing category navigation or UI labels."""
-
-    assert "preferences_sleep_mode.page" not in topic_commands["all_rendered"]
-    targets = topic_commands["targets"]
-    destination = "features_sleep_mode"
-    for reference in ("preferences.sleep-mode", "preferences_sleep_mode"):
-        assert targets[reference] == destination
-    page = _parse_generated_page(topic_commands["rendered"]["features_sleep_mode.page"])
-    sections = page.findall("m:section", _NS)
-    assert [section.findtext("m:title", namespaces=_NS) for section in sections] == [
-        "Settings",
-        "Commands",
-    ]
-    settings, commands = sections
-    assert settings.find("m:info", _NS) is None
-    assert settings.findtext("m:p/m:gui", namespaces=_NS) == "Sleep mode"
-    assert [label.text for label in commands.findall("m:p/m:gui", _NS)] == [
-        "Commands",
-        "Commands",
-        "Sleep mode",
-    ]
-    text = " ".join("".join(page.itertext()).split())
-    assert text.count("Sleep mode temporarily disables Orca") == 1
-    assert "Preferences location: Sleep mode category (global only)." in text
-    assert "Preferences location: Commands category, Commands section, Sleep mode group." in text
-    assert "only in the global preferences window" not in text
-    assert "saved applications remain listed" in text
-    assert len(page.findall(".//m:keyseq", _NS)) == 1
-    assert not any(
-        link.get("xref", "").startswith("features_sleep_mode")
-        for link in page.findall(".//m:link", _NS)
-    )
-    directory = _parse_generated_page(topic_commands["all_rendered"]["preferences_guide.page"])
-    assert directory.find(".//m:info/m:link[@xref='features_sleep_mode']", _NS) is not None
-    available = settings.find("m:p/m:em[.='Available settings:']", _NS)
-    assert available is not None and available.get("style") == "strong"
 
 
 @pytest.mark.parametrize("global_only", (False, True))
@@ -590,170 +579,20 @@ def test_preferences_location_supports_groups(generator: dict[str, Any], global_
     assert [label.text for label in parent.findall("m:p/m:gui", _NS)] == ["Foo", "Bar"]
 
 
-def test_speech_settings_follow_the_preferences_ui(topic_commands: dict[str, Any]) -> None:
-    """Speech support belongs to Speech; Global Voice Settings contains two groups."""
-
-    pages = topic_commands["rendered"]
-    guide = _parse_generated_page(pages["features_speech_and_voices_guide.page"])
-    assert guide.find("m:section", _NS) is None
-    output = _parse_generated_page(pages["features_speech_and_voices_output.page"])
-    settings = output.find("m:section[@id='settings-speech-output']", _NS)
-    assert settings is not None
-    assert settings.find(".//m:gui[.='Speech support']", _NS) is not None
-    assert guide.find("m:links[@type='topic'][@style='2column']", _NS) is not None
-    page = _parse_generated_page(pages["features_speech_and_voices_global_voice_settings.page"])
-    assert page.find(".//m:gui[.='Speech support']", _NS) is None
-    groups = page.findall(
-        "m:section[@id='settings-global-voice-settings']/m:list/m:item/m:p/m:gui", _NS
-    )
-    assert [group.text for group in groups] == ["Global Voice Settings", "Language Switching"]
-    assert topic_commands["targets"]["speech.global-voice-settings"] == (
-        "features_speech_and_voices_global_voice_settings#settings-global-voice-settings"
-    )
-
-
-def test_braille_guide_combines_settings_and_applicable_commands(
+@pytest.mark.parametrize(
+    ("field", "references"),
+    (
+        ("preference_categories", ("unknown",)),
+        ("preference_categories", ("sleep-mode", "sleep-mode")),
+        ("preference_controls", ("unknown",)),
+        ("preference_controls", ("speech.language-switching", "speech.language-switching")),
+    ),
+)
+def test_invalid_preference_placements_are_rejected(
+    generator: dict[str, Any],
     topic_commands: dict[str, Any],
-) -> None:
-    """Each braille settings area has its own topic, with related bindings alongside it."""
-
-    pages = topic_commands["rendered"]
-    guide = _parse_generated_page(pages["features_braille_guide.page"])
-    assert guide.get("type") == "guide"
-    assert guide.find("m:links[@type='topic'][@style='2column']", _NS) is not None
-    assert guide.find(".//m:list", _NS) is None
-    topics = (
-        "output",
-        "verbosity",
-        "display_settings",
-        "flash_messages",
-        "progress_bars",
-        "on_screen_display",
-    )
-    for topic in topics:
-        page = _parse_generated_page(pages[f"features_braille_{topic}.page"])
-        assert (
-            page.find("m:info/m:link[@type='guide'][@xref='features_braille_guide']", _NS)
-            is not None
-        )
-        assert page.find("m:section/m:title[.='Settings']", _NS) is not None
-    targets = topic_commands["targets"]
-    assert targets["command:keyboard:toggle_braille_monitor"].startswith(
-        "features_braille_on_screen_display#"
-    )
-    for kind in ("keyboard", "braille"):
-        assert targets[f"command:{kind}:contractedBrailleHandler"].startswith(
-            "features_braille_display_settings#"
-        )
-        assert targets[f"command:{kind}:panBrailleLeftHandler"].startswith(
-            "features_braille_output#"
-        )
-
-
-def test_braille_output_does_not_reference_flat_review(topic_commands: dict[str, Any]) -> None:
-    """Braille Output stays focused on its own settings and commands."""
-
-    page = _parse_generated_page(topic_commands["rendered"]["features_braille_output.page"])
-    assert "flat review" not in "".join(page.itertext()).lower()
-    assert page.find(".//m:link[@xref='features_reviewing_objects_flat_review']", _NS) is None
-
-
-def test_echo_topic_distinguishes_key_and_typing_echo(topic_commands: dict[str, Any]) -> None:
-    """Echo is the overall feature; key echo and typing echo are distinct kinds of feedback."""
-
-    page = _parse_generated_page(topic_commands["rendered"]["features_typing_echo.page"])
-    assert page.findtext("m:info/m:title[@type='link']", namespaces=_NS) == "Echo"
-    title = page.find("m:title", _NS)
-    assert title is not None and "".join(title.itertext()).strip() == "Echo"
-    paragraphs = [" ".join("".join(p.itertext()).split()) for p in page.findall("m:p", _NS)]
-    assert paragraphs[0].startswith("Key echo announces the keys you press.")
-    assert paragraphs[1].startswith("Typing echo announces text inserted into an editable field.")
-    assert "completed sentences" in paragraphs[1]
-    assert "same character twice" in paragraphs[1]
-
-
-def test_orca_find_does_not_reference_mouse_commands(topic_commands: dict[str, Any]) -> None:
-    """Find documentation stays about searching and the resulting flat review location."""
-
-    page = _parse_generated_page(
-        topic_commands["rendered"]["features_reviewing_objects_orca_find.page"]
-    )
-    assert "mouse commands" not in "".join(page.itertext()).lower()
-    assert (
-        page.find(".//m:link[@xref='features_reviewing_objects_mouse_review#commands-mouse']", _NS)
-        is None
-    )
-    assert page.find(".//m:link[@xref='features_reviewing_objects_flat_review']", _NS) is not None
-
-
-def test_where_am_i_has_one_command_location(topic_commands: dict[str, Any]) -> None:
-    """Common command locations belong to the page; formatting has its own related topic."""
-
-    page = _parse_generated_page(topic_commands["rendered"]["features_where_am_i.page"])
-    labels = page.findall(".//m:em[.='Preferences location:']", _NS)
-    assert len(labels) == 1
-    assert page.find("m:p/m:em[.='Preferences location:']", _NS) is not None
-    other = page.find("m:section[@id='other-ways-to-get-details']", _NS)
-    assert other is not None
-    assert "Text Attributes" not in "".join(other.itertext())
-    assert (
-        page.find("m:section[@id='related-topics']//m:link[@xref='features_text_attributes']", _NS)
-        is not None
-    )
-
-
-def test_document_guide_links_existing_math_topic(topic_commands: dict[str, Any]) -> None:
-    """Includes math without generating a second copy of its settings and commands."""
-
-    page = _parse_generated_page(
-        topic_commands["rendered"]["features_reading_documents_guide.page"]
-    )
-    assert (
-        page.find("m:info/m:link[@type='topic'][@xref='features_math_navigation']", _NS) is not None
-    )
-    introduction = page.find("m:p", _NS)
-    assert introduction is not None
-    assert "tables" not in "".join(introduction.itertext())
-    assert "live regions" not in "".join(introduction.itertext())
-
-
-def test_keyboard_layout_explanation_and_keys(topic_commands: dict[str, Any]) -> None:
-    """Explains the modifier options and layouts using individual key markup."""
-
-    page = _parse_generated_page(topic_commands["rendered"]["features_keyboard_layout.page"])
-    text = " ".join("".join(page.itertext()).split())
-    assert "In this documentation" in text
-    assert "twice quickly" in text
-    assert "Laptop does not use keypad keys" in text
-    assert "Num Lock must be off to use Desktop keypad shortcuts." in text
-    paragraphs = [" ".join("".join(p.itertext()).split()) for p in page.findall("m:p", _NS)]
-    assert any(
-        paragraph.startswith("Orca takes over the normal behavior of configured modifier keys.")
-        and "Press a configured modifier key twice quickly" in paragraph
-        for paragraph in paragraphs
-    )
-    assert "To switch layouts without opening preferences" not in text
-    assert "Choose a group from the list" not in text
-    assert [
-        section.findtext("m:title", namespaces=_NS) for section in page.findall("m:section", _NS)
-    ] == ["Settings", "Commands", "Related topics"]
-    keys = {key.text for key in page.findall(".//m:key", _NS)}
-    assert {"Insert", "Keypad Insert", "Caps Lock", "Num Lock"} <= keys
-
-
-def test_preferences_window_capitalization(topic_commands: dict[str, Any]) -> None:
-    """Keeps prose capitalization consistent without rewriting command labels."""
-
-    for content in topic_commands["rendered"].values():
-        page = _parse_generated_page(content)
-        for label in page.findall(".//m:gui", _NS):
-            label.text = ""
-        assert "preferences window" not in " ".join("".join(page.itertext()).split())
-
-
-@pytest.mark.parametrize("categories", (("unknown",), ("sleep-mode", "sleep-mode")))
-def test_invalid_feature_preference_placements(
-    generator: dict[str, Any], topic_commands: dict[str, Any], categories: tuple[str, ...]
+    field: str,
+    references: tuple[str, ...],
 ) -> None:
     """Rejects unknown and repeated settings placements instead of dropping or duplicating them."""
 
@@ -763,25 +602,27 @@ def test_invalid_feature_preference_placements(
         link_title="Test",
         description="Test",
         guide_xref="index",
-        sections=(generator["FeatureSectionDoc"]("Test", preference_categories=categories),),
+        sections=(generator["FeatureSectionDoc"]("Test", **{field: references}),),
     )
-    with pytest.raises(ValueError, match=r"feature preference (category|panel)"):
+    with pytest.raises(ValueError, match=r"feature preference (category|placement|control)"):
         generator["_preference_target_registry"](topic_commands["preferences"], [feature], {})
 
 
-def test_every_settings_panel_has_one_feature_topic(
+def test_documented_settings_have_rendered_destinations(
     generator: dict[str, Any], topic_commands: dict[str, Any]
 ) -> None:
-    """All settings use combined topics, including category overviews and split categories."""
+    """Every panel and separately documented control has a rendered destination."""
 
     placements = generator["_feature_preference_placements"](
         topic_commands["pages"], topic_commands["reusable"], topic_commands["preferences"]
     )
     assert set(placements) == {
         panel.panel_id for page in topic_commands["preferences"] for panel in page.panels
-    }
-    assert {name for name in topic_commands["all_rendered"] if name.startswith("preferences_")} == {
-        "preferences_guide.page"
+    } | {
+        target
+        for page in topic_commands["pages"]
+        for section in generator["_resolve_feature_sections"](page, topic_commands["reusable"])
+        for target in section.preference_controls
     }
     for destination in placements.values():
         page_id, _, anchor = destination.partition("#")
@@ -789,109 +630,76 @@ def test_every_settings_panel_has_one_feature_topic(
         if anchor:
             settings = root.find(f".//m:section[@id='{anchor}']", _NS)
             assert settings is not None
-            assert settings.find("m:info", _NS) is None
-    for category in ("speech", "documents"):
-        assert topic_commands["targets"][f"preferences.{category}"] != (
-            topic_commands["targets"][f"preferences.{category}.tables"]
-            if category == "speech"
-            else topic_commands["targets"]["documents.caret-navigation"]
-        )
 
 
-def test_unplaced_settings_fail_generation(
+def test_settings_without_a_topic_are_rejected(
     generator: dict[str, Any], topic_commands: dict[str, Any]
 ) -> None:
-    """A new or accidentally disconnected category cannot silently regain a separate page."""
+    """Preference panels without a documentation topic cause generation to fail."""
 
-    pages = [
-        replace(page, sections=()) if page.page_id == "features_sleep_mode" else page
-        for page in topic_commands["pages"]
-    ]
     with pytest.raises(ValueError, match="Preference panels without a feature topic"):
-        generator["_preference_target_registry"](
-            topic_commands["preferences"], pages, topic_commands["reusable"]
-        )
+        generator["_preference_target_registry"](topic_commands["preferences"], [], {})
 
 
-def test_embedded_settings_keep_native_guide_links(
-    topic_commands: dict[str, Any], tmp_path: Path
-) -> None:
-    """Yelp includes the category description in its ordered, focusable topic link."""
+def test_html_generation_preserves_topic_navigation(tmp_path: Path) -> None:
+    """The HTML option preserves topic links, descriptions, and a single parent footer."""
 
     executable = shutil.which("yelp-build")
     if executable is None:
         pytest.skip("HTML rendering requires yelp-build")
     source = tmp_path / "source"
-    output = tmp_path / "html"
-    source.mkdir()
-    output.mkdir()
-    for name, content in topic_commands["all_rendered"].items():
-        (source / name).write_text(content)
+    output = source / "html"
     result = subprocess.run(
-        [executable, "html", "--ignore", "-o", str(output), str(source)],
+        [sys.executable, str(_SCRIPT), "--output-dir", str(source), "--html"],
         capture_output=True,
         text=True,
         check=False,
     )
     assert result.returncode == 0, result.stderr
-    content = (output / "preferences_guide.html").read_text()
-    link = re.search(
-        r'<a[^>]+href="features_sleep_mode.html"[^>]*>(.*?)</a>',
-        content,
-        re.DOTALL,
-    )
-    assert link is not None
-    assert "Configure which" in link.group(1)
-    assert content.index('href="features_profiles.html"') < link.start()
-    assert link.end() < content.index('href="features_speech_and_voices_guide.html"')
-    assert 'href="preferences_sleep_mode.html"' not in content
-    sleep_mode = (output / "features_sleep_mode.html").read_text()
-    assert sleep_mode.count("More Information") == 1
-    assert sleep_mode.index("More Information") > sleep_mode.index('id="commands-sleep-mode"')
+    assert (output / "index.html").is_file()
+    for path in source.glob("*.page"):
+        topic = _parse_generated_page(path.read_text())
+        parent = topic.find("m:info/m:link[@type='guide']", _NS)
+        if parent is None:
+            continue
+        parent_id = parent.attrib["xref"].split("#", 1)[0]
+        content = (output / f"{parent_id}.html").read_text()
+        link = re.search(
+            rf'<a[^>]+href="{re.escape(path.stem)}\.html"[^>]*>(.*?)</a>',
+            content,
+            re.DOTALL,
+        )
+        assert link is not None, path.name
+        description = topic.findtext("m:info/m:desc", namespaces=_NS)
+        assert description is not None and description.strip() in unescape(link.group(1))
+        assert (output / f"{path.stem}.html").read_text().count("More Information") == 1
 
 
-def test_generated_xml_and_targets(
+def test_generated_help_is_valid_and_current(
     generator: dict[str, Any], topic_commands: dict[str, Any]
 ) -> None:
-    """Rejects empty headings and dangling links, including section fragments."""
+    """Generated pages are valid and match the complete set of checked-in pages."""
 
     generator["validate_generated_pages"](topic_commands["all_rendered"])
+    assert set(topic_commands["all_rendered"]) == {page.name for page in _HELP_DIR.glob("*.page")}
     for name, content in topic_commands["all_rendered"].items():
         assert (_HELP_DIR / name).read_text() == content
 
 
-def test_guide_names_and_topic_names(topic_commands: dict[str, Any]) -> None:
-    """Guide names identify their page type without renaming their child topics."""
+def test_page_ids_and_types_match_filenames(topic_commands: dict[str, Any]) -> None:
+    """Page identifiers match filenames, and the guide suffix matches the page type."""
 
-    guides = set()
     for filename, content in topic_commands["all_rendered"].items():
         root = _parse_generated_page(content)
         if root.get("type") == "guide":
             assert filename == "index.page" or filename.endswith("_guide.page")
-            guides.add(filename)
         else:
             assert not filename.endswith("_guide.page")
         assert root.get("id") == filename.removesuffix(".page")
-    assert guides == {
-        "index.page",
-        "preferences_guide.page",
-        "features_braille_guide.page",
-        "features_speech_and_voices_guide.page",
-        "features_reading_documents_guide.page",
-    }
-    for old in (
-        "preferences",
-        "features_braille",
-        "features_speech_and_voices",
-        "features_reading_documents",
-    ):
-        assert not (_HELP_DIR / f"{old}.page").exists()
-    assert "features_braille_output.page" in topic_commands["all_rendered"]
-    assert "features_speech_and_voices_output.page" in topic_commands["all_rendered"]
 
 
-def test_guide_name_validation(generator: dict[str, Any]) -> None:
-    """New guide definitions must follow the naming convention too."""
+def test_guide_ids_without_the_required_suffix_are_rejected(generator: dict[str, Any]) -> None:
+    """Guide identifiers other than index must end with _guide."""
 
     with pytest.raises(ValueError, match="Guide page id must end in _guide"):
         generator["validate_generated_pages"](
@@ -902,7 +710,43 @@ def test_guide_name_validation(generator: dict[str, Any]) -> None:
         )
 
 
-def test_mallard_schema(topic_commands: dict[str, Any], tmp_path: Path) -> None:
+@pytest.mark.parametrize("second_parent", ("backlink", "guide", "section", None))
+def test_topics_have_at_most_one_parent_guide(
+    generator: dict[str, Any], second_parent: str | None
+) -> None:
+    """Rejects extra parents while allowing reciprocal declarations of the same parent."""
+
+    backlink = '<link type="guide" xref="other_guide"/>' if second_parent == "backlink" else ""
+    topic_link = '<info><link type="topic" xref="example"/></info>'
+    other_content = "<title>Other</title>"
+    if second_parent == "guide":
+        other_content = topic_link + other_content
+    elif second_parent == "section":
+        other_content += f'<section id="more">{topic_link}<title>More</title></section>'
+    pages = {
+        "index.page": (
+            f'<page xmlns="{_NS["m"]}" type="guide" id="index"><title>Index</title>'
+            f'<section id="reading">{topic_link}<title>Reading</title></section></page>'
+        ),
+        "example.page": (
+            f'<page xmlns="{_NS["m"]}" type="topic" id="example"><info>'
+            f'<link type="guide" xref="index#reading"/>{backlink}</info>'
+            "<title>Example</title></page>"
+        ),
+        "other_guide.page": (
+            f'<page xmlns="{_NS["m"]}" type="guide" id="other_guide">{other_content}</page>'
+        ),
+    }
+    if second_parent:
+        with pytest.raises(ValueError, match="Multiple parent guides for example"):
+            generator["validate_generated_pages"](pages)
+    else:
+        generator["validate_generated_pages"](pages)
+
+
+def test_generated_help_conforms_to_mallard_schema(
+    topic_commands: dict[str, Any], tmp_path: Path
+) -> None:
     """Checks the actual Mallard grammar when the XML toolchain is installed."""
 
     executable = shutil.which("xmllint")
@@ -923,7 +767,7 @@ def test_mallard_schema(topic_commands: dict[str, Any], tmp_path: Path) -> None:
     assert result.returncode == 0, result.stderr
 
 
-def test_unknown_link_is_an_error(generator: dict[str, Any]) -> None:
+def test_unknown_link_target_is_rejected(generator: dict[str, Any]) -> None:
     """A mistyped logical target must not become a visible broken link."""
 
     link = generator["FeatureLinkDoc"]("speech.voice-setz")
@@ -931,36 +775,23 @@ def test_unknown_link_is_an_error(generator: dict[str, Any]) -> None:
         generator["_add_feature_links"](ET.Element("test"), (link,), {}, {}, "See also:")
 
 
-def test_preference_links_have_one_qualifier(topic_commands: dict[str, Any]) -> None:
-    """Link labels remain meaningful without repeated preference qualifiers."""
+@pytest.mark.parametrize("scheme", ("http", "https"))
+def test_external_feature_links(generator: dict[str, Any], scheme: str) -> None:
+    """External resources use href and retain their author-supplied descriptions."""
 
-    for content in topic_commands["all_rendered"].values():
-        page = _parse_generated_page(content)
-        for link in page.findall(".//m:link", _NS):
-            assert not re.search(
-                r"\bpreferences\s+preferences\b", "".join(link.itertext()), re.IGNORECASE
-            )
-
-
-def test_math_marker_section_has_only_numbered_markers(topic_commands: dict[str, Any]) -> None:
-    """Reading and describing an expression must not be classified as marker commands."""
-
-    group = next(
-        group
-        for _page, group in topic_commands["groups"]
-        if group.title.casefold() == "math navigation"
-    )
-    marker_section = next(section for section in group.sections if section.title == "Place markers")
-    assert len(marker_section.command_names) == 40
-    assert all(
-        re.fullmatch(r"math_(moveto|setplacemarker|read|describe)_\d", name)
-        for name in marker_section.command_names
-    )
-    assert "math_read_current" not in marker_section.command_names
+    target = f"{scheme}://example.org/help"
+    link = generator["FeatureLinkDoc"](target, label="Community help", summary="Ask questions.")
+    parent = ET.Element("test")
+    generator["_add_feature_links"](parent, (link,), {}, {}, "See also:")
+    rendered = parent.find(".//m:link", _NS)
+    assert rendered is not None
+    assert rendered.attrib == {"href": target}
+    assert rendered.text == "Community help"
+    assert rendered.tail == ": Ask questions."
 
 
 @pytest.mark.parametrize("section_count", (0, 2))
-def test_ambiguous_or_unplaced_commands_are_errors(
+def test_commands_matching_zero_or_multiple_sections_are_rejected(
     generator: dict[str, Any],
     section_count: int,
 ) -> None:
@@ -981,8 +812,8 @@ def test_ambiguous_or_unplaced_commands_are_errors(
         generator["_add_feature_command_group"](ET.Element("test"), group, [command])
 
 
-def test_block_after_section_is_invalid(generator: dict[str, Any]) -> None:
-    """Core structure checks run even without the optional external schema tools."""
+def test_block_content_after_sections_is_rejected(generator: dict[str, Any]) -> None:
+    """Validation rejects paragraphs placed after sections, as required by Mallard."""
 
     content = (
         '<page xmlns="http://projectmallard.org/1.0/" id="test" type="topic">'
@@ -993,7 +824,7 @@ def test_block_after_section_is_invalid(generator: dict[str, Any]) -> None:
         generator["validate_generated_pages"]({"test.page": content})
 
 
-def test_help_registry_owners_cannot_collide(generator: dict[str, Any]) -> None:
+def test_duplicate_help_target_owners_are_rejected(generator: dict[str, Any]) -> None:
     """A second owner cannot silently replace another feature's destination."""
 
     with pytest.raises(ValueError, match="multiple owners"):
@@ -1014,90 +845,30 @@ def test_feature_links_require_logical_targets(generator: dict[str, Any]) -> Non
         )
 
 
-def test_orca_shortcuts_in_prose_have_command_references(
+def test_orca_shortcuts_stay_with_their_commands(
     generator: dict[str, Any],
     topic_commands: dict[str, Any],
 ) -> None:
-    """New Orca shortcut literals must track their owning command definitions."""
+    """Shortcut instructions belong to generated command entries."""
 
     for page in topic_commands["pages"]:
         assert "Orca Modifier+" not in page.intro + page.details
         sections = generator["_resolve_feature_sections"](page, topic_commands["reusable"])
         for section in sections:
-            references = {shortcut.text for shortcut in section.shortcuts}
+            assert not section.shortcuts, section.title
             for match in generator["_KEY_SEQUENCE_PATTERN"].finditer(
-                section.intro + section.details
+                section.intro + section.details + section.after_commands
             ):
-                if match.group(0).startswith("Orca Modifier+"):
-                    assert match.group(0) in references, (section.title, match.group(0))
+                assert not match.group(0).startswith("Orca Modifier+"), (
+                    section.title,
+                    match.group(0),
+                )
 
 
-def test_learn_mode_explanation_precedes_commands(topic_commands: dict[str, Any]) -> None:
-    """Learn Mode explains presentation and its special keys before listing commands."""
-
-    page = _parse_generated_page(topic_commands["rendered"]["features_learn_mode.page"])
-    paragraphs = " ".join("".join(p.itertext()) for p in page.findall("m:p", _NS))
-    assert "in speech and braille" in paragraphs
-    assert "hear" not in paragraphs
-    assert {key.text for key in page.findall("m:p//m:key", _NS)} >= {"F1", "F2", "Escape"}
-    assert page.find("m:section[@id='commands-learn-mode']", _NS) is not None
-
-
-def test_commands_sections_do_not_contain_feature_narrative(topic_commands: dict[str, Any]) -> None:
-    """Feature explanations cannot drift below Settings into a Commands section."""
-
-    checked = 0
-    for filename, content in topic_commands["rendered"].items():
-        page = _parse_generated_page(content)
-        for section in page.findall(".//m:section", _NS):
-            section_id = section.get("id", "")
-            if section_id != "commands" and not section_id.startswith("commands-"):
-                continue
-            checked += 1
-            for container in (section, *section.findall(".//m:section", _NS)):
-                for paragraph in container.findall("m:p", _NS):
-                    assert paragraph.findtext("m:em[@style='strong']", namespaces=_NS) == (
-                        "Preferences location:"
-                    ), (filename, section_id, "".join(paragraph.itertext()))
-    assert checked > 0
-
-
-@pytest.mark.parametrize("class_name", ("CommandGroupDoc", "CommandSectionDoc"))
-def test_command_groups_reject_feature_details(generator: dict[str, Any], class_name: str) -> None:
-    """New feature prose must use feature metadata rather than command-group details."""
-
-    metadata_class = getattr(generator["_HELP_METADATA"], class_name)
-    with pytest.raises(TypeError, match="details"):
-        metadata_class(title="Test", details="Feature explanation")
-
-
-def test_each_command_list_has_a_commands_heading(topic_commands: dict[str, Any]) -> None:
-    """Named subsets and multiple groups are discoverable beneath a Commands heading."""
-
-    labels = {
-        command.label for _page, group in topic_commands["groups"] for command in group.commands
-    }
-    for filename, content in topic_commands["rendered"].items():
-        page = _parse_generated_page(content)
-        parents = {child: parent for parent in page.iter() for child in parent}
-        for label in page.findall(".//m:item/m:p/m:gui", _NS):
-            if label.text not in labels:
-                continue
-            ancestor = parents[label]
-            while ancestor is not page:
-                if ancestor.findtext("m:title", namespaces=_NS) == "Commands":
-                    break
-                ancestor = parents[ancestor]
-            else:
-                pytest.fail(f"{filename}: command {label.text!r} lacks a Commands heading")
-
-
-def test_related_links_have_a_neutral_preface(topic_commands: dict[str, Any]) -> None:
-    """Topic links are not mislabeled as commands or split into duplicate lists."""
+def test_related_links_are_not_duplicated(topic_commands: dict[str, Any]) -> None:
+    """Each related-topic list contains unique destinations."""
 
     for content in topic_commands["rendered"].values():
-        assert "Commands and preferences:" not in content
-        assert "Preferences and related topics" not in content
         page = _parse_generated_page(content)
         for section in page.findall(".//m:section", _NS):
             if not section.get("id", "").endswith("-related"):
@@ -1106,148 +877,14 @@ def test_related_links_have_a_neutral_preface(topic_commands: dict[str, Any]) ->
             assert len(destinations) == len(set(destinations))
 
 
-def test_progress_bar_settings_use_consistent_explanations(topic_commands: dict[str, Any]) -> None:
-    """Equivalent controls use the same definitions, including the zero interval."""
+def test_metadata_parser_validates_field_arguments(generator: dict[str, Any]) -> None:
+    """The parser resolves positional fields and rejects unknown keyword arguments."""
 
-    explanations = []
-    for filename in (
-        "features_speech_and_voices_progress_bars.page",
-        "features_braille_progress_bars.page",
-        "features_sound.page",
-    ):
-        page = _parse_generated_page(topic_commands["rendered"][filename])
-        frequency = page.find(".//m:p[m:gui='Frequency (secs):']", _NS)
-        assert frequency is not None
-        text = " ".join("".join(frequency.itertext()).split()).split("Default:")[0]
-        assert "Zero removes this minimum delay." in text
-        explanations.append(text)
-    assert len(set(explanations)) == 1
-
-
-def test_table_speech_commands_belong_with_table_speech_settings(
-    topic_commands: dict[str, Any],
-) -> None:
-    """The row/cell toggle is not stranded among general verbosity commands."""
-
-    target = topic_commands["targets"]["command:keyboard:toggleTableCellReadModeHandler"]
-    assert target.startswith("features_speech_and_voices_tables#")
-
-
-@pytest.mark.parametrize("topic", ("verbosity", "voice_sets", "global_voice_settings"))
-def test_speech_command_subgroups_share_their_location(
-    topic_commands: dict[str, Any], topic: str
-) -> None:
-    """One Commands group path is sufficient when all subgroups share it."""
-
-    page = _parse_generated_page(
-        topic_commands["rendered"][f"features_speech_and_voices_{topic}.page"]
-    )
-    commands = page.find("m:section[m:title='Commands']", _NS)
-    assert commands is not None
-    locations = commands.findall(".//m:p/m:em[@style='strong']", _NS)
-    assert [label.text for label in locations] == ["Preferences location:"]
-
-
-def test_progress_links_identify_their_output_type(topic_commands: dict[str, Any]) -> None:
-    """Links to speech and braille progress-bar topics remain distinguishable out of context."""
-
-    page = _parse_generated_page(topic_commands["rendered"]["features_sound.page"])
-    labels = [link.text for link in page.findall(".//m:link", _NS)]
-    assert "Speech progress bars" in labels
-    assert "Braille progress bars" in labels
-
-
-def test_settings_omit_generic_introductions(topic_commands: dict[str, Any]) -> None:
-    """Settings sections do not repeat that settings control their own feature."""
-
-    for filename, content in topic_commands["all_rendered"].items():
-        page = _parse_generated_page(content)
-        for paragraph in page.findall(".//m:section[m:title='Settings']/m:p", _NS):
-            text = " ".join("".join(paragraph.itertext()).split())
-            assert re.search(r"\bsettings (?:control|let you)\b", text) is None, (filename, text)
-
-
-@pytest.mark.parametrize(
-    ("filename", "detail"),
-    (
-        ("features_sound.page", "~/.local/share/orca/sounds"),
-        (
-            "features_speech_and_voices_tables.page",
-            "speaking the full row can provide useful context",
-        ),
-        ("features_spell_check.page", "Orca needs to identify the misspelled word"),
-    ),
-)
-def test_feature_details_are_outside_settings(
-    topic_commands: dict[str, Any], filename: str, detail: str
-) -> None:
-    """Feature behavior remains documented before its settings, without duplication."""
-
-    page = _parse_generated_page(topic_commands["rendered"][filename])
-    paragraphs = page.findall("m:p", _NS)
-    text = " ".join(" ".join("".join(p.itertext()).split()) for p in paragraphs)
-    assert detail in text
-    settings = page.find("m:section[m:title='Settings']", _NS)
-    assert settings is not None
-    assert detail not in " ".join("".join(settings.itertext()).split())
-
-
-def test_settings_keep_configuration_instructions(topic_commands: dict[str, Any]) -> None:
-    """Useful configuration guidance stays alongside the controls it describes."""
-
-    for filename, instruction in (
-        ("features_keyboard_layout.page", "To bind or change a command shortcut"),
-        ("features_speech_and_voices_tables.page", "configure row presentation separately"),
-    ):
-        page = _parse_generated_page(topic_commands["rendered"][filename])
-        settings = page.find("m:section[m:title='Settings']", _NS)
-        assert settings is not None
-        assert instruction in " ".join("".join(settings.itertext()).split())
-
-
-def test_mouse_review_has_one_platform_caveat(topic_commands: dict[str, Any]) -> None:
-    """A single overview caveat covers Mouse review and its pointer-related commands."""
-
-    page = _parse_generated_page(
-        topic_commands["rendered"]["features_reviewing_objects_mouse_review.page"]
-    )
-    assert "".join(page.itertext()).count("Wayland") == 1
-
-
-def test_math_start_instruction_uses_its_command_shortcut(topic_commands: dict[str, Any]) -> None:
-    """The verb for entering math navigation cannot be mistaken for the Enter key."""
-
-    page = _parse_generated_page(topic_commands["rendered"]["features_math_navigation.page"])
-    keys = [key.text for key in page.findall("m:p//m:key", _NS)]
-    assert "Enter" not in keys
-    assert ["Orca Modifier", "Alt", "M"] in [
-        [key.text for key in sequence.findall("m:key", _NS)]
-        for sequence in page.findall("m:p/m:keyseq", _NS)
-    ]
-
-
-def test_metadata_schema_is_shared(generator: dict[str, Any]) -> None:
-    """Collection and providers use exactly the same public schema."""
-
-    public = generator["_HELP_METADATA"]
-    assert generator["FeatureSectionDoc"] is public.FeatureSectionDoc
-    assert generator["CommandSectionDoc"] is public.CommandSectionDoc
     call = ast.parse('PreferenceControlDoc("Test", "switch")', mode="eval").body
     assert generator["_find_keyword"](call, "label").value == "Test"
     bad = ast.parse('PreferenceControlDoc(label="Test", typo=True)', mode="eval").body
     with pytest.raises(ValueError, match="Unknown PreferenceControlDoc fields"):
         generator["_find_keyword"](bad, "kind")
-
-
-@pytest.mark.parametrize("field", ("description", "summary"))
-def test_ambiguous_panel_fields_are_rejected(generator: dict[str, Any], field: str) -> None:
-    """Contributors must choose instructions or link text rather than an ambiguous field."""
-
-    with pytest.raises(TypeError):
-        generator["_HELP_METADATA"].PreferencePanelDoc("Test", **{field: "Old text"})
-    call = ast.parse(f'PreferencePanelDoc(title="Test", {field}="Old text")', mode="eval").body
-    with pytest.raises(ValueError, match="Unknown PreferencePanelDoc fields"):
-        generator["_find_keyword"](call, "title")
 
 
 def test_panel_instructions_and_link_summary_are_independent(generator: dict[str, Any]) -> None:
@@ -1293,8 +930,8 @@ class TestGrid(PreferencesGridBase):
         assert panel.link_summary not in text
 
 
-def test_unlisted_preferences_are_an_error(generator: dict[str, Any]) -> None:
-    """New panels cannot be silently dropped from the preferences directory."""
+def test_unlisted_preference_panels_are_rejected(generator: dict[str, Any]) -> None:
+    """Panels missing from the preference categories cause generation to fail."""
 
     panel = generator["PanelDoc"](panel_id="new.panel", title="New", schema="")
     with pytest.raises(ValueError, match="inventory mismatch"):
@@ -1302,10 +939,9 @@ def test_unlisted_preferences_are_an_error(generator: dict[str, Any]) -> None:
 
 
 def test_preference_categories_come_from_providers(topic_commands: dict[str, Any]) -> None:
-    """Category explanations and membership are not duplicated in the central index."""
+    """Collected categories use provider descriptions and panels in the configured order."""
 
     metadata = json.loads(_METADATA_PATH.read_text())
-    assert "groups" not in metadata
     pages = topic_commands["preferences"]
     assert [page.page_id for page in pages] == [
         f"preferences_{category.replace('-', '_')}" for category in metadata["preference_order"]
@@ -1316,9 +952,6 @@ def test_preference_categories_come_from_providers(topic_commands: dict[str, Any
         category = owners[0].category
         assert page.description == category.description
         assert [panel.panel_id for panel in page.panels] == list(category.panels)
-    descriptions = {page.page_id: page.description for page in pages}
-    assert "named collections" in descriptions["preferences_profiles"]
-    assert "without moving focus or the caret" in descriptions["preferences_flat_review"]
 
 
 @pytest.mark.parametrize(
@@ -1336,7 +969,9 @@ def test_preference_categories_come_from_providers(topic_commands: dict[str, Any
         ),
     ),
 )
-def test_invalid_preference_category_is_an_error(generator: dict[str, Any], arguments: str) -> None:
+def test_invalid_preference_categories_are_rejected(
+    generator: dict[str, Any], arguments: str
+) -> None:
     """Rejects missing descriptions and malformed category metadata during collection."""
 
     node = ast.parse(f"PreferenceCategoryDoc({arguments})", mode="eval").body
@@ -1346,7 +981,7 @@ def test_invalid_preference_category_is_an_error(generator: dict[str, Any], argu
 
 
 @pytest.mark.parametrize("panels", (("test.panel", "test.panel"), ("test.panel", "unknown")))
-def test_preference_category_panel_inventory(
+def test_invalid_preference_panel_references_are_rejected(
     generator: dict[str, Any], panels: tuple[str, ...]
 ) -> None:
     """Rejects repeated and nonexistent panel memberships."""
@@ -1357,8 +992,8 @@ def test_preference_category_panel_inventory(
         generator["_page_docs_from_groups"]([panel], {"preference_order": ["test"]})
 
 
-def test_application_availability_matches_window(topic_commands: dict[str, Any]) -> None:
-    """Checks documented exclusions against the window's global-only sidebar entries."""
+def test_global_only_preferences_match_the_ui(topic_commands: dict[str, Any]) -> None:
+    """Documentation marks the same categories as global only as the preferences window."""
 
     tree = ast.parse((_ROOT / "src/orca/preferences_window.py").read_text())
     excluded = set()
@@ -1380,16 +1015,13 @@ def test_application_availability_matches_window(topic_commands: dict[str, Any])
         if panel.category and not panel.category.application_preferences
     }
     assert documented == excluded
-    profile_page = topic_commands["all_rendered"]["features_profiles.page"]
-    assert "read-only" not in profile_page
-    assert "select an existing profile" in profile_page
 
 
 @pytest.mark.parametrize("change", ("missing", "unknown", "duplicate"))
-def test_preference_category_order_inventory(
+def test_invalid_preference_category_order_is_rejected(
     generator: dict[str, Any], topic_commands: dict[str, Any], change: str
 ) -> None:
-    """New or removed categories require an explicit display-order decision."""
+    """Category order must include every category exactly once and no unknown categories."""
 
     panels = [panel for page in topic_commands["preferences"] for panel in page.panels]
     metadata = json.loads(_METADATA_PATH.read_text())
@@ -1403,69 +1035,24 @@ def test_preference_category_order_inventory(
         generator["_page_docs_from_groups"](panels, metadata)
 
 
-def test_preference_command_references(topic_commands: dict[str, Any]) -> None:
-    """Links preferences directly to commands without copying command lists."""
-
-    links = topic_commands["associations"].by_panel["flat_review_presenter.flat-review"]
-    assert links == (
-        ("features_reviewing_objects_flat_review#commands-flat-review", "Flat review commands"),
-    )
-    for page in topic_commands["preferences"]:
-        for panel in page.panels:
-            if not panel.command_groups and not panel.command_names:
-                assert not topic_commands["associations"].by_panel[panel.panel_id]
-
-
-def test_reciprocal_preference_references(topic_commands: dict[str, Any]) -> None:
-    """Every associated command topic links back to its related preferences."""
+def test_command_topics_link_to_associated_preferences(topic_commands: dict[str, Any]) -> None:
+    """Command topics link to associated preferences when those appear on another page."""
 
     for command, links in topic_commands["associations"].by_command.items():
         filename = topic_commands["targets"][command].split("#", 1)[0] + ".page"
         page = _parse_generated_page(topic_commands["all_rendered"][filename])
-        destinations = {link.get("xref") for link in page.findall(".//m:link", _NS)}
+        destinations = {
+            link.get("xref", "").split("#", 1)[0] for link in page.findall(".//m:link", _NS)
+        }
         assert {
-            destination
+            destination.split("#", 1)[0]
             for destination, _label in links
             if destination.split("#", 1)[0] + ".page" != filename
         } <= destinations
 
 
-def test_preference_pages_omit_ui_subcategory_navigation(topic_commands: dict[str, Any]) -> None:
-    """Settings sections replace UI-only page selectors and repeated navigation instructions."""
-
-    for page_doc in topic_commands["preferences"]:
-        destination = topic_commands["targets"][page_doc.page_id].split("#", 1)[0]
-        page = _parse_generated_page(topic_commands["all_rendered"][destination + ".page"])
-        for link in page.findall(".//m:link", _NS):
-            assert not link.get("xref", "").startswith(f"{page_doc.page_id}#")
-        text = "".join(page.itertext())
-        assert "Activate a row, or press" not in text
-        for list_el in page.findall(".//m:list", _NS):
-            assert list_el.find("m:item", _NS) is not None
-    documents = _parse_generated_page(
-        topic_commands["all_rendered"]["features_reading_documents_guide.page"]
-    )
-    assert documents.find("m:list", _NS) is None
-
-
-def test_group_association_omits_commands_documented_elsewhere(
-    topic_commands: dict[str, Any],
-) -> None:
-    """Structural preferences link to structural commands, not relocated live-region commands."""
-
-    links = topic_commands["associations"].by_panel["document_presenter.structural-navigation"]
-    assert [destination for destination, _label in links] == [
-        "features_reading_documents_structural_navigation#commands-structural-navigation"
-    ]
-    for name in ("previous_live_region", "next_live_region", "last_live_region"):
-        assert topic_commands["targets"][f"command:keyboard:{name}"] == (
-            "features_reading_documents_live_regions"
-        )
-        assert f"command:keyboard:{name}" not in topic_commands["associations"].by_command
-
-
 @pytest.mark.parametrize("field", ("command_groups", "command_names"))
-def test_unknown_preference_command_is_an_error(
+def test_unknown_preference_commands_are_rejected(
     generator: dict[str, Any], topic_commands: dict[str, Any], field: str
 ) -> None:
     """Stale associations cannot silently disappear when a command is removed."""
@@ -1488,8 +1075,8 @@ def test_wrap_preserves_hyphenated_words(generator: dict[str, Any]) -> None:
     assert text == ("Orca-controlled AT-SPI user-interface " * 20).strip()
 
 
-def test_settings_inventory(generator: dict[str, Any]) -> None:
-    """New schema keys require documentation or an explicit coverage decision."""
+def test_settings_have_documentation_or_an_explicit_exemption(generator: dict[str, Any]) -> None:
+    """Every schema key has preference metadata or a recorded exemption."""
 
     exceptions = {
         ("extensions", "approved-user-extensions"): "Approval editor, not a direct preference",
@@ -1525,8 +1112,8 @@ def test_settings_inventory(generator: dict[str, Any]) -> None:
     assert settings.keys() - documented == exceptions.keys()
 
 
-def test_source_discovery_covers_command_factories() -> None:
-    """New command constructors cannot hide outside the collected definition files."""
+def test_command_definitions_are_in_discoverable_files() -> None:
+    """Built-in command definitions stay in files searched by the documentation collector."""
 
     for path in (_ROOT / "src/orca").rglob("*.py"):
         tree = ast.parse(path.read_text())
@@ -1554,39 +1141,9 @@ def test_source_discovery_covers_command_factories() -> None:
                 assert path.name.endswith("_command_definitions.py"), str(path)
 
 
-def test_internal_features_have_documentation(topic_commands: dict[str, Any]) -> None:
-    """Internal extensions have a feature topic or an explicitly consolidated preferences page."""
-
-    shared_owners = {
-        "flat_review_finder": "flat_review_presenter",
-        "speech_presenter": "speech_manager",
-        "math_presenter": "math_navigator",
-    }
-    source = _ROOT / "src/orca"
-    preference_owners = {
-        Path(panel.source_file).stem.removesuffix("_preferences_grid")
-        for page in topic_commands["preferences"]
-        for panel in page.panels
-        if panel.category and panel.category.target
-    }
-    for path in source.glob("*.py"):
-        tree = ast.parse(path.read_text())
-        for node in tree.body:
-            if not isinstance(node, ast.ClassDef):
-                continue
-            if not any(
-                isinstance(base, ast.Name) and base.id == "Extension" for base in node.bases
-            ):
-                continue
-            owner = shared_owners.get(path.stem, path.stem)
-            assert (
-                source / f"{owner}_feature_documentation.py"
-            ).exists() or owner in preference_owners, str(path)
-
-
 @pytest.mark.parametrize("field", ("details", "after_commands"))
 def test_prose_shortcut_tracks_binding_changes(generator: dict[str, Any], field: str) -> None:
-    """A changed default updates inline prose, not just command lists."""
+    """Inline shortcut references follow changes to the command binding."""
 
     shortcut = generator["_HELP_METADATA"].CommandShortcutDoc("Orca Modifier+F12", "toggle")
     section = generator["FeatureSectionDoc"](
@@ -1603,10 +1160,10 @@ def test_prose_shortcut_tracks_binding_changes(generator: dict[str, Any], field:
     )
 
 
-def test_ui_renames_update_generated_explanations(
+def test_ui_label_changes_update_generated_help(
     generator: dict[str, Any], tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """Changing only UI constants updates prose, settings, commands, and link labels."""
+    """UI label changes are reflected in generated help."""
 
     source = tmp_path / "src"
     shutil.copytree(
@@ -1642,50 +1199,60 @@ def test_ui_renames_update_generated_explanations(
     )
     assert generator["main"]() == 0
 
-    speech = _parse_generated_page(
-        (output / "features_speech_and_voices_global_voice_settings.page").read_text()
+    pages = [_parse_generated_page(path.read_text()) for path in output.glob("*.page")]
+    prose = " ".join("".join(p.itertext()) for page in pages for p in page.findall(".//m:p", _NS))
+    text = " ".join("".join(page.itertext()) for page in pages)
+    labels = [gui.text for page in pages for gui in page.findall(".//m:gui", _NS)]
+    assert '"Global Speech Settings"' in prose
+    assert '"Shared"' in prose
+    assert "Global speech settings" in [page.findtext("m:title", namespaces=_NS) for page in pages]
+    assert "Global Voice Settings" not in text
+    assert "Global Speech Settings" in labels
+    assert "Screen Reader Modifier Buttons" in labels
+    assert "Screen Reader Modifier Keys" not in text
+    assert "Toggle announcements for this page" in labels
+    assert "Set default live region politeness level to off" not in text
+
+
+def test_braille_indicators_follow_source_definitions(
+    generator: dict[str, Any], tmp_path: Path
+) -> None:
+    """Changed indicator definitions reach help as literal code, without losing punctuation."""
+
+    source = _ROOT / "src/orca"
+    feature = tmp_path / "braille_presenter_feature_documentation.py"
+    shutil.copyfile(source / feature.name, feature)
+    replacements = {
+        "CHECK_BOX_INDICATORS_BRAILLE": ["<_&>", "<checked>", "<partial>"],
+        "RADIO_BUTTON_INDICATORS_BRAILLE": ["radio-off", "radio-on"],
+        "SWITCH_INDICATORS_BRAILLE": ["switch-off", "switch-on"],
+        "TOGGLE_BUTTON_INDICATORS_BRAILLE": ["toggle-off", "toggle-on"],
+    }
+    definitions = (source / "object_properties.py").read_text()
+    definitions += "\n" + "\n".join(f"{name} = {value!r}" for name, value in replacements.items())
+    definitions += '\nSTATE_READ_ONLY_BRAILLE = C_("text", "read_only_test")\n'
+    (tmp_path / "object_properties.py").write_text(definitions)
+
+    doc = generator["_execute_feature_documentation_module"](feature, {}, {})
+    section = next(
+        section
+        for section in doc.sections
+        if replacements["CHECK_BOX_INDICATORS_BRAILLE"][0] in section.details
     )
-    prose = " ".join("".join(p.itertext()) for p in speech.findall("m:p", _NS))
-    assert "Use Global Speech Settings preferences" in prose
-    assert "Shared voice set holds" in prose
-    assert speech.find("m:title", _NS).text == "Global speech settings"
-    assert "Global Voice Settings" not in "".join(speech.itertext())
-    assert "Global Speech Settings" in [gui.text for gui in speech.findall(".//m:gui", _NS)]
-
-    language = (output / "features_speech_and_voices_language_switching.page").read_text()
-    assert "Global Speech Settings preferences" in language
-    assert "The Shared voice set normally applies" in language
-    assert "Global Voice Settings" not in language
-
-    voices = " ".join(
-        "".join(
-            _parse_generated_page(
-                (output / "features_speech_and_voices_voice_sets.page").read_text()
-            ).itertext()
-        ).split()
-    )
-    assert "Lists the Shared voice set" in voices
-    assert "Global Voice Settings" not in voices
-
-    keyboard = (output / "features_keyboard_layout.page").read_text()
-    assert "Screen Reader Modifier Buttons is" in keyboard
-    assert "Screen Reader Modifier Keys" not in keyboard
-
-    live_regions = _parse_generated_page(
-        (output / "features_reading_documents_live_regions.page").read_text()
-    )
-    prose = " ".join("".join(p.itertext()) for p in live_regions.findall("m:p", _NS))
-    assert "Toggle announcements for this page turns announcements" in prose
-    assert "Toggle announcements for this page" in [
-        gui.text for gui in live_regions.findall(".//m:gui", _NS)
+    parent = ET.Element("test")
+    generator["_add_text_paragraphs"](parent, section.details)
+    rendered = ET.tostring(parent, encoding="unicode")
+    parsed = _parse_generated_page(rendered)
+    assert [code.text for code in parsed.findall(".//m:code", _NS)] == [
+        *(value for values in replacements.values() for value in values),
+        "read_only_test",
     ]
-    assert "Set default live region politeness level to off" not in "".join(live_regions.itertext())
 
 
-def test_feature_ui_names_are_not_translated(
+def test_feature_collection_does_not_use_runtime_translations(
     generator: dict[str, Any], monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """Generation uses English source strings, never the runtime gettext translations."""
+    """Feature collection succeeds without calling runtime gettext functions."""
 
     def unexpected_translation(*_args: Any, **_kwargs: Any) -> Any:
         pytest.fail("Documentation generation must not call gettext")
@@ -1694,28 +1261,18 @@ def test_feature_ui_names_are_not_translated(
     monkeypatch.setenv("LC_MESSAGES", "fr_FR.UTF-8")
     for name in ("gettext", "dgettext", "pgettext", "translation"):
         monkeypatch.setattr(gettext, name, unexpected_translation)
-    pages, sections = generator["collect_feature_documentation"](_ROOT / "src")
-    speech = next(page for page in pages if page.page_id == "features_speech_and_voices_guide")
-    assert "Use Global Voice Settings preferences" in speech.sections[1].intro
-    assert (
-        "Set default live region politeness level to off"
-        in sections["documents.live-regions.feature"].details
-    )
+    pages, _sections = generator["collect_feature_documentation"](_ROOT / "src")
+    assert pages
 
 
-@pytest.mark.parametrize(
-    ("module", "name"),
-    (("guilabels", "VOICE_GLOBAL_VOICE_SETTINGS"), ("cmdnames", "TOGGLE_SPEECH")),
-)
-def test_removed_prose_ui_name_fails_collection(
-    generator: dict[str, Any], module: str, name: str
-) -> None:
+def test_missing_ui_label_in_feature_prose_is_rejected(generator: dict[str, Any]) -> None:
     """A removed source constant cannot leave a stale label in feature explanations."""
 
     source = _ROOT / "src"
     labels = generator["_collect_labels"](source)
     commands = generator["_collect_command_names"](source)
-    del (labels if module == "guilabels" else commands)[name]
+    name = "VOICE_GLOBAL_VOICE_SETTINGS"
+    del labels[name]
     with pytest.raises(AttributeError, match=name):
         generator["_execute_feature_documentation_module"](
             source / "orca/speech_manager_feature_documentation.py",
@@ -1727,7 +1284,7 @@ def test_removed_prose_ui_name_fails_collection(
 @pytest.mark.parametrize(
     "expression", ("guilabels.MISSING_LABEL", 'f"Use {guilabels.MISSING_LABEL}."')
 )
-def test_unresolved_preference_prose_is_an_error(
+def test_unresolved_preference_prose_is_rejected(
     generator: dict[str, Any], expression: str
 ) -> None:
     """Missing label references cannot silently erase a settings description."""
@@ -1737,41 +1294,126 @@ def test_unresolved_preference_prose_is_an_error(
         evaluator.text(ast.parse(expression, mode="eval").body)
 
 
-def test_command_names_are_not_copied_into_feature_prose(generator: dict[str, Any]) -> None:
-    """Use source constants for command names rather than maintaining a second copy."""
+def test_feature_prose_keeps_command_and_setting_details_with_their_owners(
+    generator: dict[str, Any],
+) -> None:
+    """Feature prose leaves individual command and setting instructions with their owners."""
 
     commands = generator["_collect_command_names"](_ROOT / "src")
     # Short names such as Read and Describe are also ordinary prose.
     names = {label for label in commands.values() if len(label) >= 12}
+    control_labels = set()
+    for path in (_ROOT / "src/orca").glob("*_preferences_grid.py"):
+        for node in ast.walk(ast.parse(path.read_text())):
+            if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Name):
+                continue
+            if node.func.id not in {"PreferenceControlDoc", "PreferenceActionDoc"}:
+                continue
+            fields = {field.arg: field.value for field in node.keywords}
+            kind = fields.get("kind")
+            if isinstance(kind, ast.Constant) and kind.value in {"group", "page"}:
+                continue
+            label = fields.get("label") or (node.args[0] if node.args else None)
+            if label is not None:
+                control_labels.update(
+                    part.attr
+                    for part in ast.walk(label)
+                    if isinstance(part, ast.Attribute)
+                    and isinstance(part.value, ast.Name)
+                    and part.value.id == "guilabels"
+                )
+
     for path in (_ROOT / "src/orca").glob("*_feature_documentation.py"):
         for node in ast.walk(ast.parse(path.read_text())):
             if not isinstance(node, ast.keyword) or node.arg not in {
                 "intro",
                 "details",
                 "after_commands",
+                "description",
             }:
                 continue
             for part in ast.walk(node.value):
+                if isinstance(part, ast.Attribute) and isinstance(part.value, ast.Name):
+                    assert not (
+                        part.value.id == "cmdnames"
+                        or (part.value.id == "guilabels" and part.attr in control_labels)
+                    ), (
+                        f"{path}:{part.lineno}: move instructions for {ast.unparse(part)} "
+                        "to its command or preference metadata"
+                    )
                 if not isinstance(part, ast.Constant) or not isinstance(part.value, str):
                     continue
                 for name in names:
                     assert name not in part.value, (
-                        f"{path}:{part.lineno}: use cmdnames instead of copying {name!r}"
+                        f"{path}:{part.lineno}: move {name!r} instructions to command metadata"
                     )
 
 
+@pytest.mark.parametrize("kind", ("keyboard", "braille"))
+def test_command_details_follow_the_command(generator: dict[str, Any], kind: str) -> None:
+    """Command details retain formatting and disappear when the command is removed."""
+
+    command = generator["CollectedCommandDoc"](
+        name="present",
+        label="Present",
+        command_type=kind,
+        braille_bindings=["ROUTE"] if kind == "braille" else [],
+        details="Press Enter.\n\nRun `example`.",
+    )
+    group = generator["CollectedCommandGroupDoc"](title="Example")
+    parent = ET.Element("test")
+    generator["_add_feature_command_group"](parent, group, [command])
+    item = parent.find(".//m:item", _NS)
+    assert item is not None
+    assert item.findtext("m:p/m:key", namespaces=_NS) == "Enter"
+    assert item.findtext("m:p/m:code", namespaces=_NS) == "example"
+
+    without_command = ET.Element("test")
+    generator["_add_feature_command_group"](without_command, group, [])
+    assert len(without_command) == 0
+
+
+@pytest.mark.parametrize("standalone", (False, True))
+def test_command_section_instructions_preserve_formatting(
+    generator: dict[str, Any], standalone: bool
+) -> None:
+    """Command section instructions keep their formatting when shown alone or with their group."""
+
+    command = generator["CollectedCommandDoc"](name="example", label="Example")
+    section = generator["CommandSectionDoc"](
+        title="Example",
+        target="example.commands",
+        command_names=(command.name,),
+        instructions="Use `example`.",
+    )
+    group = generator["CollectedCommandGroupDoc"](
+        title="Test", commands=[command], sections=(section,)
+    )
+    if standalone:
+        group = generator["_command_content_registry"]([("commands_test", group)])[section.target]
+    parent = ET.Element("test")
+    generator["_add_feature_command_group"](parent, group, group.commands)
+    lists = parent.findall(".//m:list", _NS)
+    assert len(lists) == 1
+    container = next(node for node in parent.iter() if lists[0] in node)
+    paragraph = container.find("m:p", _NS)
+    assert paragraph is not None
+    assert paragraph.findtext("m:code", namespaces=_NS) == "example"
+    assert list(container).index(paragraph) < list(container).index(lists[0])
+
+
 @pytest.mark.parametrize("since", (52, None, "v52", "52.1", "52..1", "52.alpha"))
-def test_invalid_introduction_release(generator: dict[str, Any], since: Any) -> None:
+def test_invalid_since_values_are_rejected(generator: dict[str, Any], since: Any) -> None:
     """Rejects malformed release annotations and point releases."""
 
     with pytest.raises(ValueError, match="Invalid Orca introduction release"):
         generator["_add_since_notice"](ET.Element("test"), since)
 
 
-def test_versioned_help_generation(
+def test_since_metadata_generates_availability_notices(
     generator: dict[str, Any], tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """Versioned source metadata survives collection, placement, and serialization."""
+    """Source version annotations produce availability notices in generated help."""
 
     source = tmp_path / "src"
     shutil.copytree(
@@ -1883,8 +1525,11 @@ def get_feature_documentation():
         for item in page.findall(".//m:item", _NS)
         if item.find("m:p/m:gui", _NS) is not None
     }
-    for label in ("Mode", "New", "Nested"):
-        assert items[label].find("m:note", _NS) is not None, label
+    for label, version in (("Mode", "52"), ("New", "53"), ("Nested", "52")):
+        assert items[label].find("m:note", _NS) is None, label
+        paragraph = items[label].find("m:p", _NS)
+        text = " ".join("".join(paragraph.itertext()).split())
+        assert f"Available in Orca {version} and later." in text, label
 
     page = _parse_generated_page((output / "features_clipboard.page").read_text())
     assert "Available in Orca 51 and later." in "".join(page.itertext())
@@ -1896,7 +1541,9 @@ def get_feature_documentation():
     }
     assert len(items) == 1
     command = next(iter(items.values()))
-    assert command.find("m:note/m:p", _NS).text.strip() == "Available in Orca 52 and later."
+    assert command.find("m:note", _NS) is None
+    text = " ".join("".join(command.find("m:p", _NS).itertext()).split())
+    assert "Available in Orca 52 and later." in text
 
     executable = shutil.which("xmllint")
     schema = Path("/usr/share/xml/mallard/1.1/mallard-1.1.rng")

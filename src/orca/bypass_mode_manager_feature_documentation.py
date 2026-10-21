@@ -42,11 +42,6 @@ def get_feature_documentation() -> FeaturePageDoc:
                     "Bypass mode stops Orca from handling commands and lets the application "
                     "receive them instead."
                 ),
-                details=(
-                    "Toggle bypass mode off to resume using Orca commands. Switching to "
-                    "another application also ends bypass mode. While bypass mode is active, "
-                    "keys normally used as Orca Modifier keys are passed through too."
-                ),
                 command_groups=("commands.bypass-mode",),
             ),
         ),

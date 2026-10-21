@@ -33,16 +33,12 @@ def get_feature_documentation() -> FeaturePageDoc:
         title="System information",
         link_title="System information",
         description="Check the time, date, battery, and resource usage.",
-        guide_xref="index#information",
+        guide_xref="index#interaction",
         target="system-information.feature",
         sections=(
             FeatureSectionDoc(
                 title="System information",
                 intro="Present the date, time, battery status, and resource usage.",
-                details=(
-                    "Presenting battery status and CPU and memory usage requires the Python "
-                    "psutil package, often packaged as python3-psutil."
-                ),
                 preference_categories=("system-information",),
                 command_groups=("commands.system-information",),
             ),

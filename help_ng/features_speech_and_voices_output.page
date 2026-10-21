@@ -2,7 +2,7 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_speech_and_voices_output">
   <info>
     <link type="guide" xref="features_speech_and_voices_guide" />
-    <title type="sort">29. Speech output</title>
+    <title type="sort">24. Speech output</title>
     <title type="link">Speech output</title>
     <desc>
       Turn Orca's spoken output on or off.
@@ -20,10 +20,6 @@
   <title>Speech output</title>
   <p>
     Turn Orca's spoken output on or off.
-  </p>
-  <p>
-    Use Speech support to configure whether Orca speaks. The Toggle the silencing of speech
-    command temporarily turns speech off or back on without changing your saved preference.
   </p>
   <section id="settings-speech-output">
     <title>Settings</title>
@@ -49,11 +45,14 @@
     <list>
       <item>
         <p>
-          <gui>Toggle the silencing of speech</gui>
-          <keyseq>
+          <gui>Toggle the silencing of speech</gui>: <keyseq>
             <key>Orca Modifier</key>
             <key>S</key>
           </keyseq>
+        </p>
+        <p>
+          Temporarily turns speech off or back on without changing your saved preference. This
+          silences all Orca speech, including flat review. Braille output remains available.
         </p>
       </item>
     </list>

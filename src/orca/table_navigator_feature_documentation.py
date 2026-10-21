@@ -23,7 +23,6 @@
 from __future__ import annotations
 
 from .help_metadata import (
-    CommandShortcutDoc,
     FeatureDocumentationDoc,
     FeatureLinkDoc,
     FeatureSectionDoc,
@@ -39,9 +38,6 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                 title="Table navigation",
                 preference_panels=("document_presenter.table-navigation",),
                 topic_id="table_navigation",
-                shortcuts=(
-                    CommandShortcutDoc("Orca Modifier+Shift+T", "table_navigator_toggle_enabled"),
-                ),
                 command_groups=("documents.table-navigation.commands",),
                 target="documents.table-navigation.feature",
                 intro=(
@@ -51,26 +47,12 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                 details=(
                     "Table navigation is not limited to document content. It can also be used "
                     "in application tables. To move among tables in document content, use "
-                    "structural navigation commands for tables. Table navigation commands "
-                    "move within the current table.\n\n"
-                    "Table navigation commands are enabled by default. Unlike caret navigation "
-                    "and structural navigation commands, table navigation commands are not "
-                    "suspended when Orca switches between browse mode and focus mode. You can "
-                    "turn table navigation on or off with Orca Modifier+Shift+T."
-                    "\n\n"
-                    "Orca's dynamic headers feature lets you mark the current row or column "
-                    "as headers for the table. Orca can then present those cells as row or "
-                    "column headers as you navigate. This is useful when a table does not "
-                    "expose its headers to assistive technologies, such as a text document "
-                    "or spreadsheet where the headers are only visually formatted as bold "
-                    "cells. Headers are announced when they change, rather than "
-                    "repeated for every cell with the same header.\n\n"
-                    "To set column headers, move to the row that contains the column "
-                    "headers, then use the command to set dynamic column headers. To set "
-                    "row headers, move to the column that contains the row headers, then "
-                    "use the command to set dynamic row headers.\n\n"
-                    "To clear dynamic headers, press the shortcut you used to set them "
-                    "twice quickly."
+                    "structural navigation. Table navigation moves within the current table and "
+                    "remains available in both browse mode and focus mode.\n\n"
+                    "Some tables do not expose their headers to assistive technologies, such as "
+                    "a text document or spreadsheet where headers are only visually formatted "
+                    "as bold cells. The dynamic-header commands below let you identify those "
+                    "headers."
                 ),
                 settings_and_commands=(
                     FeatureLinkDoc("documents.table-navigation.commands"),

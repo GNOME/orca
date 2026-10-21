@@ -40,8 +40,7 @@
     <title>Stopping Orca</title>
     <p>
       If your desktop manages Orca as a service, use its screen reader controls to turn Orca
-      off. The quit command is for an Orca instance started as a regular application. Using it
-      for a systemd-managed instance can cause the service to restart Orca.
+      off. For an instance started as a regular application, use the command below.
     </p>
     <section id="commands-stopping-orca">
       <title>Commands</title>
@@ -52,8 +51,13 @@
       <list>
         <item>
           <p>
-            <gui>Quit the screen reader application</gui>
-            Unbound by default.
+            <gui>Quit the screen reader application</gui>: Unbound by
+            default.
+          </p>
+          <p>
+            Quits an Orca instance started as a regular application. For a systemd-managed
+            instance, use the desktop's screen reader controls instead; quitting the application
+            can cause the service to restart it.
           </p>
         </item>
       </list>

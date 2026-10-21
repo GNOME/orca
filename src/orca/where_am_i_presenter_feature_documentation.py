@@ -22,7 +22,6 @@
 
 from __future__ import annotations
 
-from . import cmdnames
 from .help_metadata import FeatureLinkDoc, FeaturePageDoc, FeatureSectionDoc
 
 
@@ -34,7 +33,7 @@ def get_feature_documentation() -> FeaturePageDoc:
         title="Where Am I",
         link_title="Where Am I",
         description="Learn about your current location.",
-        guide_xref="index#reviewing",
+        guide_xref="index#getting_started",
         target="reviewing.where-am-i",
         intro=(
             "Where Am I presents information about your current location, such as the "
@@ -43,13 +42,6 @@ def get_feature_documentation() -> FeaturePageDoc:
         sections=(
             FeatureSectionDoc(
                 title="Basic and detailed Where Am I",
-                intro=(
-                    "Basic Where Am I repeats information about the current item. Detailed "
-                    "Where Am I can add information about containing groups and other "
-                    "details. The information provided depends on the type of object and "
-                    "your current location. Some objects provide the same information for "
-                    "both commands."
-                ),
                 command_names=("whereAmIBasicHandler", "whereAmIDetailedHandler"),
             ),
             FeatureSectionDoc(
@@ -62,13 +54,6 @@ def get_feature_documentation() -> FeaturePageDoc:
             ),
             FeatureSectionDoc(
                 title="Other ways to get details",
-                intro=(
-                    f"{cmdnames.WHERE_AM_I_SELECTION} presents selected text. It can also "
-                    "report selected objects, such as files "
-                    "or spreadsheet cells.\n\n"
-                    "You can also present a spreadsheet cell's formula, an object's "
-                    "size and position, or details about the current link."
-                ),
                 command_names=(
                     "whereAmISelectionHandler",
                     "whereAmILinkHandler",

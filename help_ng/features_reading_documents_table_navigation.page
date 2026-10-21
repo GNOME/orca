@@ -2,7 +2,7 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_reading_documents_table_navigation">
   <info>
     <link type="guide" xref="index#reading" />
-    <title type="sort">09. Table navigation</title>
+    <title type="sort">14. Table navigation</title>
     <title type="link">Table navigation</title>
     <desc>
       Table navigation lets you use Orca commands to move by cell, row, and column in tables.
@@ -23,32 +23,14 @@
   </p>
   <p>
     Table navigation is not limited to document content. It can also be used in application
-    tables. To move among tables in document content, use structural navigation commands for
-    tables. Table navigation commands move within the current table.
+    tables. To move among tables in document content, use structural navigation. Table
+    navigation moves within the current table and remains available in both browse mode and
+    focus mode.
   </p>
   <p>
-    Table navigation commands are enabled by default. Unlike caret navigation and structural
-    navigation commands, table navigation commands are not suspended when Orca switches between
-    browse mode and focus mode. You can turn table navigation on or off with <keyseq>
-      <key>Orca Modifier</key>
-      <key>Shift</key>
-      <key>T</key>
-    </keyseq>.
-  </p>
-  <p>
-    Orca's dynamic headers feature lets you mark the current row or column as headers for the
-    table. Orca can then present those cells as row or column headers as you navigate. This is
-    useful when a table does not expose its headers to assistive technologies, such as a text
-    document or spreadsheet where the headers are only visually formatted as bold cells. Headers
-    are announced when they change, rather than repeated for every cell with the same header.
-  </p>
-  <p>
-    To set column headers, move to the row that contains the column headers, then use the
-    command to set dynamic column headers. To set row headers, move to the column that contains
-    the row headers, then use the command to set dynamic row headers.
-  </p>
-  <p>
-    To clear dynamic headers, press the shortcut you used to set them twice quickly.
+    Some tables do not expose their headers to assistive technologies, such as a text document
+    or spreadsheet where headers are only visually formatted as bold cells. The dynamic-header
+    commands below let you identify those headers.
   </p>
   <section id="settings-table-navigation">
     <title>Settings</title>
@@ -85,18 +67,19 @@
       <list>
         <item>
           <p>
-            <gui>Toggle table navigation keys</gui>
-            <keyseq>
+            <gui>Toggle table navigation keys</gui>: <keyseq>
               <key>Orca Modifier</key>
               <key>Shift</key>
               <key>T</key>
             </keyseq>
           </p>
+          <p>
+            Turns Orca's table navigation commands on or off.
+          </p>
         </item>
         <item>
           <p>
-            <gui>Go left one cell</gui>
-            <keyseq>
+            <gui>Go left one cell</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>Left Arrow</key>
@@ -105,8 +88,7 @@
         </item>
         <item>
           <p>
-            <gui>Go right one cell</gui>
-            <keyseq>
+            <gui>Go right one cell</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>Right Arrow</key>
@@ -115,8 +97,7 @@
         </item>
         <item>
           <p>
-            <gui>Go up one cell</gui>
-            <keyseq>
+            <gui>Go up one cell</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>Up Arrow</key>
@@ -125,8 +106,7 @@
         </item>
         <item>
           <p>
-            <gui>Go down one cell</gui>
-            <keyseq>
+            <gui>Go down one cell</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>Down Arrow</key>
@@ -135,8 +115,7 @@
         </item>
         <item>
           <p>
-            <gui>Go to the first cell in a table</gui>
-            <keyseq>
+            <gui>Go to the first cell in a table</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>Home</key>
@@ -145,8 +124,7 @@
         </item>
         <item>
           <p>
-            <gui>Go to the last cell in a table</gui>
-            <keyseq>
+            <gui>Go to the last cell in a table</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>End</key>
@@ -155,8 +133,7 @@
         </item>
         <item>
           <p>
-            <gui>Go to the beginning of the row</gui>
-            <keyseq>
+            <gui>Go to the beginning of the row</gui>: <keyseq>
               <key>Orca Modifier</key>
               <key>Alt</key>
               <key>Shift</key>
@@ -166,8 +143,7 @@
         </item>
         <item>
           <p>
-            <gui>Go to the end of the row</gui>
-            <keyseq>
+            <gui>Go to the end of the row</gui>: <keyseq>
               <key>Orca Modifier</key>
               <key>Alt</key>
               <key>Shift</key>
@@ -177,8 +153,7 @@
         </item>
         <item>
           <p>
-            <gui>Go to the top of the column</gui>
-            <keyseq>
+            <gui>Go to the top of the column</gui>: <keyseq>
               <key>Orca Modifier</key>
               <key>Alt</key>
               <key>Shift</key>
@@ -188,8 +163,7 @@
         </item>
         <item>
           <p>
-            <gui>Go to the bottom of the column</gui>
-            <keyseq>
+            <gui>Go to the bottom of the column</gui>: <keyseq>
               <key>Orca Modifier</key>
               <key>Alt</key>
               <key>Shift</key>
@@ -204,44 +178,50 @@
       <list>
         <item>
           <p>
-            <gui>Set the row to use as dynamic column headers</gui>
-            <keyseq>
+            <gui>Set the row to use as dynamic column headers</gui>: <keyseq>
               <key>Orca Modifier</key>
               <key>Shift</key>
               <key>R</key>
             </keyseq>
           </p>
+          <p>
+            Marks the current row as column headers for the table. First move to the row
+            containing the headers. Orca presents those headers as you navigate, announcing them
+            when they change rather than repeating them for every cell with the same header.
+          </p>
         </item>
         <item>
           <p>
-            <gui>Clear the dynamic column headers</gui>
-            <keyseq>
+            <gui>Clear the dynamic column headers</gui>: <keyseq>
               <key>Orca Modifier</key>
               <key>Shift</key>
               <key>R</key>
             </keyseq>
-            (press twice)
+            (press twice quickly)
           </p>
         </item>
         <item>
           <p>
-            <gui>Set the column to use as dynamic row headers</gui>
-            <keyseq>
+            <gui>Set the column to use as dynamic row headers</gui>: <keyseq>
               <key>Orca Modifier</key>
               <key>Shift</key>
               <key>C</key>
             </keyseq>
           </p>
+          <p>
+            Marks the current column as row headers for the table. First move to the column
+            containing the headers. Orca presents those headers as you navigate, announcing them
+            when they change rather than repeating them for every cell with the same header.
+          </p>
         </item>
         <item>
           <p>
-            <gui>Clear the dynamic row headers</gui>
-            <keyseq>
+            <gui>Clear the dynamic row headers</gui>: <keyseq>
               <key>Orca Modifier</key>
               <key>Shift</key>
               <key>C</key>
             </keyseq>
-            (press twice)
+            (press twice quickly)
           </p>
         </item>
       </list>
@@ -255,8 +235,8 @@
     <list>
       <item>
         <p>
-          <link xref="features_speech_and_voices_tables">Speech table settings</link>: Configure whether
-          you hear the current cell or the whole row while navigating tables.
+          <link xref="features_speech_and_voices_tables">Speech table settings</link>: In some tables,
+          such as a message list, speaking the full row can provide useful context.
         </p>
       </item>
     </list>

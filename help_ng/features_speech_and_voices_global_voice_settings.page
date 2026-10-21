@@ -2,11 +2,11 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_speech_and_voices_global_voice_settings">
   <info>
     <link type="guide" xref="features_speech_and_voices_guide" />
-    <title type="sort">30. Global voice settings</title>
+    <title type="sort">25. Global voice settings</title>
     <title type="link">Global voice settings</title>
     <desc>
-      Use Global Voice Settings preferences for speech settings that always apply, regardless of
-      which voice type Orca is using.
+      Use "Global Voice Settings" preferences to configure speech behavior shared by all voice
+      types and voice sets.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -20,12 +20,21 @@
   </info>
   <title>Global voice settings</title>
   <p>
-    Use Global Voice Settings preferences for speech settings that always apply, regardless of
-    which voice type Orca is using. Examples include the speech system and synthesizer,
-    capitalization style, punctuation level, how numbers and colors are spoken, whether the
-    pronunciation dictionary is used, and language switching. To choose the voices Orca uses,
-    use Voice Sets preferences. The Global voice set holds the voices Orca normally uses; Global
-    Voice Settings controls behavior that applies regardless of the voice set or voice type.
+    Use "Global Voice Settings" preferences to configure speech behavior shared by all voice
+    types and voice sets.
+  </p>
+  <p>
+    To configure the voices Orca uses, use the separate "Voice Sets" preferences subgroup. The
+    "Global" voice set holds the voices Orca normally uses. You can add voice sets for other
+    languages to use when switching languages.
+  </p>
+  <p>
+    Each voice set consists of four voice types: the default voice is used for presenting
+    on-screen objects and text, the uppercase voice identifies capital letters, the hyperlink
+    voice identifies links, and the system voice presents information supplied by Orca, such as
+    roles, states, and messages. All four initially sound the same. Any voice type you have not
+    explicitly configured uses the default voice's settings. To make the uppercase, hyperlink,
+    or system voice sound different, configure it in "Voice Sets" preferences.
   </p>
   <section id="settings-global-voice-settings">
     <title>Settings</title>
@@ -44,14 +53,18 @@
         <list>
           <item>
             <p>
-              <gui>Speech system:</gui> Selects the speech
-              system Orca uses. Supported systems include Speech Dispatcher and Spiel.
+              <gui>Speech system:</gui> Selects the software
+              Orca uses to communicate with speech synthesizers. Supported systems include
+              Speech Dispatcher and Spiel.
             </p>
           </item>
           <item>
             <p>
-              <gui>Speech synthesizer:</gui> Selects the speech
-              synthesizer. Examples include espeak-ng and Voxin.
+              <gui>Speech synthesizer:</gui> Selects the engine
+              that converts text into speech. Examples include espeak-ng and Voxin. The choices
+              come from the selected speech system: output modules in Speech Dispatcher or
+              providers in Spiel. To install and configure additional synthesizers or voices,
+              refer to your speech system's or synthesizer's documentation.
             </p>
           </item>
           <item>
@@ -98,7 +111,9 @@
               <item>
                 <p>
                   <gui>Voice only</gui>: Uses the
-                  configured uppercase voice without adding another indication.
+                  configured uppercase voice without adding another indication. To hear
+                  uppercase letters at a higher pitch, configure the uppercase voice in "Voice
+                  Sets" preferences.
                 </p>
               </item>
               <item>
@@ -136,38 +151,6 @@
               role, state, mnemonic, and tutorial message. Default: on.
             </p>
           </item>
-          <item>
-            <p>
-              <gui>Use pronunciation dictionary</gui>: Controls whether
-              Orca uses pronunciation dictionary entries. Default: on.
-            </p>
-          </item>
-        </list>
-      </item>
-      <item>
-        <p>
-          <gui>Language Switching</gui>: Controls when Orca
-          switches voices based on language.
-        </p>
-        <list>
-          <item>
-            <p>
-              <gui>Document content</gui>: Automatically
-              switch voice based on document content language. Default: on.
-            </p>
-          </item>
-          <item>
-            <p>
-              <gui>UI elements</gui>: Automatically
-              switch voice based on UI element language. Default: off.
-            </p>
-          </item>
-          <item>
-            <p>
-              <gui>Limit switching to configured voices</gui>: Only switch
-              languages that have a configured voice set. Default: off.
-            </p>
-          </item>
         </list>
       </item>
     </list>
@@ -183,19 +166,20 @@
       <list>
         <item>
           <p>
-            <gui>Cycle to the next capitalization style</gui>
-            Unbound by default.
+            <gui>Cycle to the next capitalization style</gui>: Unbound by
+            default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Cycle to the next speaking of punctuation level</gui>
-            Unbound by default.
+            <gui>Cycle to the next speaking of punctuation level</gui>: Unbound by
+            default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Change spoken number style</gui> Unbound by default.
+            <gui>Change spoken number style</gui>: Unbound by
+            default.
           </p>
         </item>
       </list>
@@ -205,8 +189,8 @@
       <list>
         <item>
           <p>
-            <gui>Cycle to the next speech synthesizer</gui>
-            Unbound by default.
+            <gui>Cycle to the next speech synthesizer</gui>: Unbound by
+            default.
           </p>
         </item>
       </list>
@@ -222,6 +206,18 @@
         <p>
           <link xref="features_speech_and_voices_pronunciation_dictionary">Pronunciation preferences</link>: Customize how
           words are spoken.
+        </p>
+      </item>
+      <item>
+        <p>
+          <link xref="features_speech_and_voices_voice_sets">Voice sets</link>: A voice set
+          contains four voice types: default, uppercase, hyperlink, and system.
+        </p>
+      </item>
+      <item>
+        <p>
+          <link xref="features_speech_and_voices_language_switching">Language switching</link>: Language switching
+          lets you change the voice used for different languages.
         </p>
       </item>
     </list>

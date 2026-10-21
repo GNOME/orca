@@ -21,7 +21,7 @@
 """Feature documentation for settings profiles."""
 
 from . import guilabels
-from .help_metadata import FeaturePageDoc, FeatureSectionDoc
+from .help_metadata import FeatureLinkDoc, FeaturePageDoc, FeatureSectionDoc
 
 
 def get_feature_documentation() -> FeaturePageDoc:
@@ -31,42 +31,23 @@ def get_feature_documentation() -> FeaturePageDoc:
         page_id="features_profiles",
         title="Profiles",
         link_title="Profiles",
-        description="Named collections of settings for different activities.",
-        guide_xref="",
+        description="Create collections of settings for different activities.",
+        guide_xref="index#getting_started",
         target="profiles.feature",
         sections=(
             FeatureSectionDoc(
                 title="Profiles",
                 intro=(
                     "Profiles are named collections of Orca settings for different activities. "
-                    f"Orca normally starts with the {guilabels.PROFILE_DEFAULT} profile. "
+                    f'Orca normally starts with the "{guilabels.PROFILE_DEFAULT}" profile. '
                     "To start with another saved "
                     "profile, run `orca -p NAME` or `orca --profile NAME`, replacing NAME with "
                     "the profile's name. If Orca is already running as an application, add "
                     "`--replace`."
                 ),
                 preference_categories=("profiles",),
-                details=(
-                    "To create a profile, activate the add button beside "
-                    f"{guilabels.CURRENT_PROFILE}, "
-                    f"type a unique name, and choose {guilabels.DIALOG_ADD}. "
-                    "Orca copies the current profile's "
-                    "saved settings and switches to the new profile. Apply recent edits "
-                    "first if you want them included: unsaved changes are not copied and "
-                    "are discarded if you continue.\n\n"
-                    f"To rename a profile, use Tab to reach its {guilabels.MENU_RENAME} button. "
-                    f"Type the new name and choose {guilabels.DIALOG_APPLY} in the rename dialog, "
-                    "then apply or save the "
-                    f"change using the Preferences window's {guilabels.MENU_BUTTON_OPTIONS} "
-                    "menu.\n\n"
-                    f"To remove a profile, use its {guilabels.MENU_REMOVE_PROFILE} button "
-                    "and confirm. Removal "
-                    "takes effect immediately and deletes its saved settings. If you remove "
-                    f"the active profile, Orca switches to {guilabels.PROFILE_DEFAULT}. "
-                    f"The {guilabels.PROFILE_DEFAULT} profile "
-                    "cannot be renamed or removed."
-                ),
                 command_groups=("commands.profiles",),
+                links=(FeatureLinkDoc("screen-reader.settings-backup"),),
             ),
         ),
     )

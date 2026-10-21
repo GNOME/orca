@@ -205,28 +205,6 @@ class TestDBusService:
             names = set(group) if isinstance(group, dict) else {entry[0] for entry in group}
             assert names <= {"Visible"}
 
-    def test_selection_is_excluded_from_reference_docs(self, monkeypatch) -> None:
-        """Reference regeneration hides selection while retaining the schema and preview."""
-
-        root = Path(__file__).resolve().parents[2]
-        monkeypatch.syspath_prepend(str(root / "tools"))
-        dbus = runpy.run_path(str(root / "tools/generate_dbus_documentation.py"))
-        modules = list(dbus["find_modules"](root / "src/orca"))
-        caret = next(module for module in modules if module[0] == "CaretNavigator")
-        commands = {entry[0] for entry in caret[1]}
-        assert "NextCharacter" in commands
-        assert not any(name.startswith("Select") for name in commands)
-        assert "SelectionEnabled" not in caret[3]  # Getters
-        assert "SelectionEnabled" not in caret[4]  # Setters
-
-        gsettings = runpy.run_path(str(root / "tools/generate_gsettings_documentation.py"))
-        assert "selection-enabled" not in gsettings["generate_documentation"](root / "src")
-        schema_tree = gsettings["build_schema_tree"](root / "src")
-        assert schema_tree.find(".//key[@name='selection-enabled']") is not None
-        preview = (root / "help_ng/features_reading_documents_caret_navigation.page").read_text()
-        assert "<gui>Select next character</gui>" in preview
-        assert "<gui>Text selection</gui>" in preview
-
     def test_command_decorator_without_docstring(self, test_context: OrcaTestContext) -> None:
         """Test command decorator without docstring."""
 

@@ -23,7 +23,6 @@
 from __future__ import annotations
 
 from .help_metadata import (
-    CommandShortcutDoc,
     FeatureDocumentationDoc,
     FeatureLinkDoc,
     FeatureSectionDoc,
@@ -39,7 +38,6 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                 title="Caret navigation",
                 preference_panels=("document_presenter.caret-navigation",),
                 topic_id="caret_navigation",
-                shortcuts=(CommandShortcutDoc("Orca Modifier+F12", "toggle_enabled"),),
                 command_groups=("documents.caret-navigation.commands",),
                 target="documents.caret-navigation.feature",
                 intro=(
@@ -51,22 +49,18 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                     FeatureLinkDoc("documents.caret-navigation"),
                 ),
                 details=(
-                    "Caret navigation is not limited to web content. It is intended to work "
-                    "in text objects, including terminals, when the application exposes the "
-                    "needed text information to assistive technologies.\n\n"
-                    "When browse mode is active, you can use caret navigation commands to "
-                    "read and move through document content. If focus mode is active, switch "
-                    "to browse mode before using caret navigation commands. In text objects "
-                    "where browse mode is not supported, you can manually turn Orca's caret "
-                    "navigation on or off with Orca Modifier+F12. This command changes the "
-                    "current session across applications; it does not save a preference.\n\n"
-                    "Orca can also manage text selection when you hold Shift while using "
-                    "these navigation commands. Text selection is disabled by default because "
-                    "not all applications provide the support Orca needs to manage selections. "
-                    "Avoid enabling "
-                    "it globally. Instead, enable it in application-specific preferences "
-                    "only for applications where Orca's selection support is needed and "
-                    "you have verified that it works correctly."
+                    "Caret navigation is not limited to web content. It is intended to work in "
+                    "text objects, including terminals, when the application exposes the needed "
+                    "text information to assistive technologies.\n\n"
+                    "When browse mode is active, you can use caret navigation to move through "
+                    "document content. If focus mode is active, switch to browse mode first. "
+                    "The settings and commands below also provide navigation outside browse "
+                    "mode and text selection in supported applications.\n\n"
+                    "To select document text using the application's own navigation, enable its "
+                    "native caret-navigation support, often called caret browsing. This is "
+                    "typically toggled with F7 and is needed for keyboard-driven selection in "
+                    "document content. The document viewer or application manages the "
+                    "selection; Orca presents the selection changes it reports."
                 ),
             ),
         ),

@@ -22,7 +22,7 @@
 
 from __future__ import annotations
 
-from . import cmdnames, guilabels
+from . import guilabels
 from .help_metadata import FeatureLinkDoc, FeaturePageDoc, FeatureSectionDoc
 
 
@@ -33,30 +33,22 @@ def get_feature_documentation() -> FeaturePageDoc:
         page_id="features_speech_and_voices_guide",
         title="Speech and voices",
         link_title="Speech and voices",
-        description="Configure speech output, voices, and voice sets.",
+        description="Spoken presentation of on-screen content and Orca messages.",
         guide_xref="index#output",
         sections_as_pages=True,
         preference_category="speech",
-        intro=(
-            "These topics describe speech output, voices, voice sets, language switching, "
-            "pronunciation, and verbosity."
-        ),
         sections=(
             FeatureSectionDoc(
                 title="Speech output",
                 topic_id="output",
                 target="speech.output.feature",
                 intro="Turn Orca's spoken output on or off.",
-                details=(
-                    f"Use {guilabels.SPEECH_ENABLE_SPEECH} to configure whether Orca speaks. "
-                    f"The {cmdnames.TOGGLE_SPEECH} command temporarily turns speech off or back on "
-                    "without changing your saved preference."
-                ),
                 preference_panels=("speech_manager.speech",),
                 command_groups=("speech.commands.support",),
             ),
             FeatureSectionDoc(
                 title=guilabels.VOICE_GLOBAL_VOICE_SETTINGS.capitalize(),
+                target="speech.global-voice-settings.feature",
                 preference_panels=("speech_manager.global-voice-settings",),
                 topic_id="global_voice_settings",
                 command_groups=(
@@ -64,17 +56,30 @@ def get_feature_documentation() -> FeaturePageDoc:
                     "speech.commands.system-and-synthesizer",
                 ),
                 intro=(
-                    f"Use {guilabels.VOICE_GLOBAL_VOICE_SETTINGS} preferences for speech "
-                    "settings that always "
-                    "apply, regardless of which voice type Orca is using. Examples include "
-                    "the speech system and synthesizer, capitalization style, punctuation "
-                    "level, how numbers and colors are spoken, whether the pronunciation "
-                    "dictionary is used, and language switching. To choose the voices Orca "
-                    f"uses, use {guilabels.LANGUAGE_VOICE_SETTINGS} preferences. "
-                    f"The {guilabels.VOICE_SET_GLOBAL} voice set holds the voices "
-                    f"Orca normally uses; {guilabels.VOICE_GLOBAL_VOICE_SETTINGS} controls "
-                    "behavior that applies "
-                    "regardless of the voice set or voice type."
+                    f'Use "{guilabels.VOICE_GLOBAL_VOICE_SETTINGS}" preferences to configure '
+                    "speech behavior shared by all voice types and voice sets."
+                ),
+                details=(
+                    "To configure the voices Orca "
+                    f'uses, use the separate "{guilabels.LANGUAGE_VOICE_SETTINGS}" preferences '
+                    "subgroup. "
+                    f'The "{guilabels.VOICE_SET_GLOBAL}" voice set holds the voices '
+                    "Orca normally uses. You can add voice sets for other languages "
+                    "to use when switching languages.\n\n"
+                    "Each voice set consists of four voice types: the default voice is "
+                    "used for presenting on-screen objects and text, "
+                    "the uppercase voice identifies capital letters, the hyperlink voice "
+                    "identifies links, and the system voice presents information supplied "
+                    "by Orca, such as roles, states, and messages. All four initially sound "
+                    "the same. "
+                    "Any voice type you have not explicitly configured uses the default "
+                    "voice's settings. To make the uppercase, hyperlink, or system voice "
+                    f'sound different, configure it in "{guilabels.LANGUAGE_VOICE_SETTINGS}" '
+                    "preferences."
+                ),
+                links=(
+                    FeatureLinkDoc("speech.voice-sets.feature"),
+                    FeatureLinkDoc("speech.language-switching.feature"),
                 ),
                 settings_and_commands=(
                     FeatureLinkDoc(
@@ -95,30 +100,30 @@ def get_feature_documentation() -> FeaturePageDoc:
                 ),
             ),
             FeatureSectionDoc(
+                links=(
+                    FeatureLinkDoc("speech.global-voice-settings"),
+                    FeatureLinkDoc("speech.language-switching.feature"),
+                ),
                 title=guilabels.LANGUAGE_VOICE_SETTINGS.capitalize(),
                 preference_panels=("speech_manager.voice-sets",),
                 topic_id="voice_sets",
-                command_groups=("speech.commands.voice-sets", "speech.commands.voice-parameters"),
+                target="speech.voice-sets.feature",
+                command_groups=("speech.commands.voice-parameters",),
                 intro=(
-                    "A voice set contains four voice types: default, uppercase, hyperlink, "
-                    "and system. You can configure these voice types for the "
-                    f"{guilabels.VOICE_SET_GLOBAL} voice "
-                    "set, which normally applies. You can also create additional voice sets "
-                    "for the languages you frequently use and configure the language, "
-                    "person, rate, pitch, inflection, and volume for each voice type in "
-                    "those voice sets."
+                    "A voice set contains four voice types: default, uppercase, hyperlink, and "
+                    "system. "
+                    f'The "{guilabels.VOICE_SET_GLOBAL}" voice set normally applies. You can also '
+                    "create voice sets for other languages and configure each voice type "
+                    "separately."
                 ),
                 details=(
-                    "The default voice reads ordinary text. The uppercase voice identifies "
-                    "capital letters, the hyperlink voice identifies links, and the system "
-                    "voice presents information supplied by Orca, such as object roles. "
-                    "These voice choices are separate from "
-                    f"{guilabels.VOICE_GLOBAL_VOICE_SETTINGS}, which "
-                    "controls behavior shared by all voice types.\n\n"
-                    "Each configured voice set also has an unbound command for switching "
-                    "directly to that voice set. The voice parameter commands temporarily "
-                    "adjust the active voice set. To save changes or configure individual "
-                    "voice types, use the settings below."
+                    "The default voice is used for presenting on-screen objects and text. The "
+                    "uppercase voice identifies capital letters, the hyperlink voice identifies "
+                    "links, and the system voice presents information supplied by Orca, such as "
+                    "roles, states, and messages. See [[speech.global-voice-settings.feature]] "
+                    "for behavior shared by all voice types and "
+                    "[[speech.language-switching.feature]] for automatic and manual switching "
+                    "between voice sets."
                 ),
                 settings_and_commands=(
                     FeatureLinkDoc(
@@ -141,57 +146,38 @@ def get_feature_documentation() -> FeaturePageDoc:
             FeatureSectionDoc(
                 title="Language switching",
                 topic_id="language_switching",
+                target="speech.language-switching.feature",
+                preference_controls=("speech.language-switching",),
+                command_groups=("speech.commands.voice-sets",),
                 intro=(
-                    "Language switching can automatically change voices for document "
-                    "content and/or user-interface elements when spoken content has "
-                    "language information. You can also use commands to switch manually to "
-                    "a configured voice set."
+                    "Language switching lets you change the voice used for different "
+                    "languages. Orca can switch automatically based on language information "
+                    "provided by the application, or you can switch manually using keyboard "
+                    "commands."
                 ),
                 settings_and_commands=(
-                    FeatureLinkDoc(
-                        "speech.global-voice-settings",
-                        "",
-                        "Configure when Orca switches voices based on language.",
-                    ),
                     FeatureLinkDoc(
                         "speech.voice-sets",
                         "",
                         "Create language-specific voice sets.",
                     ),
-                    FeatureLinkDoc(
-                        "speech.commands.voice-sets",
-                        "Voice set commands",
-                        "Switch voice sets manually.",
-                    ),
                 ),
                 details=(
-                    f"The {guilabels.VOICE_SET_GLOBAL} voice set normally applies. "
-                    "When language switching is "
-                    "enabled, Orca can use a matching language-specific voice set. "
-                    f"If {guilabels.ONLY_SWITCH_CONFIGURED_LANGUAGES} is enabled, "
-                    "Orca switches only to "
-                    "languages for which you have configured a voice set. Language switching "
-                    f"settings are part of {guilabels.VOICE_GLOBAL_VOICE_SETTINGS} preferences, "
-                    "the shared "
-                    "speech-behavior settings rather than a voice set. With that limit "
-                    "off, Orca can use any language supported by the synthesizer, even without "
-                    "a matching voice set. Selecting a language-specific voice set manually "
-                    "suspends automatic language switching until you return to the "
-                    f"{guilabels.VOICE_SET_GLOBAL} "
-                    "voice set."
+                    "Manual language selection takes precedence over automatic switching. "
+                    "Returning to the global voice set restores automatic switching. The "
+                    "settings and commands below control these options; see "
+                    "[[speech.voice-sets.feature]] to configure the voices themselves."
                 ),
             ),
             FeatureSectionDoc(
                 title="Pronunciation dictionary",
                 preference_categories=("pronunciation",),
+                preference_controls=("speech.use-pronunciation-dictionary",),
                 topic_id="pronunciation_dictionary",
+                target="speech.pronunciation.feature",
                 intro=(
                     "The pronunciation dictionary lets you replace how Orca speaks specific "
-                    f"words. {guilabels.VOICE_GLOBAL_VOICE_SETTINGS} preferences include "
-                    "a switch for whether "
-                    f"Orca uses the dictionary; {guilabels.PRONUNCIATION} preferences are "
-                    "where you add, "
-                    "edit, and remove dictionary entries."
+                    "words. The settings below control its use and its entries."
                 ),
                 details=(
                     "For example, replace an abbreviation with its expanded form or use a "
@@ -205,41 +191,19 @@ def get_feature_documentation() -> FeaturePageDoc:
                         "",
                         "Add, edit, and remove pronunciation dictionary entries.",
                     ),
-                    FeatureLinkDoc(
-                        "speech.global-voice-settings",
-                        "",
-                        "Configure whether Orca uses the pronunciation dictionary.",
-                    ),
                 ),
             ),
             FeatureSectionDoc(
                 title="Verbosity",
                 preference_panels=("speech_presenter.verbosity",),
                 topic_id="verbosity",
-                command_groups=(
-                    "speech.commands.verbosity-and-details",
-                    "speech.commands.indentation",
+                command_names=(
+                    "toggleSpeechVerbosityHandler",
+                    "toggleSpeakingIndentationHandler",
                 ),
                 intro=(
                     "Use verbosity settings and commands to control how much information Orca "
                     "includes in spoken output."
-                ),
-                details=(
-                    f"{cmdnames.TOGGLE_SPEECH_VERBOSITY} switches between brief and verbose "
-                    "object presentation. Other settings control individual details "
-                    "independently."
-                ),
-                settings_and_commands=(
-                    FeatureLinkDoc(
-                        "speech.verbosity",
-                        "",
-                        "Configure how much information Orca speaks.",
-                    ),
-                    FeatureLinkDoc(
-                        "speech.commands.verbosity-and-details",
-                        "Verbosity commands",
-                        "Change speech verbosity and spoken details from the keyboard.",
-                    ),
                 ),
             ),
             FeatureSectionDoc(

@@ -39,9 +39,9 @@ def get_feature_documentation() -> FeaturePageDoc:
             FeatureSectionDoc(
                 title="Sleep mode",
                 details=(
-                    "Sleep mode temporarily disables Orca for the current application. "
-                    "While Orca is asleep for an application, only the command to toggle "
-                    "sleep mode remains available. Use it again to wake Orca."
+                    "Sleep mode temporarily disables Orca for an application. It can be "
+                    "activated manually or automatically for selected applications. The "
+                    "settings and commands below control when Orca enters sleep mode."
                 ),
                 preference_categories=("sleep-mode",),
                 command_groups=("commands.sleep-mode",),

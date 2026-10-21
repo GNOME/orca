@@ -42,8 +42,11 @@ def get_documentation() -> CommandGroupDoc:
         summary="Say All reads from the current location to the end of the document.",
         commands=(
             CommandDoc(
-                name="sayAllHandler",
-                summary="Starts reading continuously from the current location.",
+                "sayAllHandler",
+                details=(
+                    "Starts continuous presentation from the current location. Press a key to "
+                    "interrupt it; enabled navigation options can instead move within the content."
+                ),
             ),
         ),
     )

@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
-from .help_metadata import CommandGroupDoc, CommandSectionDoc
+from .help_metadata import CommandDoc, CommandGroupDoc, CommandSectionDoc
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -43,6 +43,34 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for structural navigation commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "structural_navigator_mode_cycle",
+                details=(
+                    "Cycles through off, document mode, and GUI mode. Document mode searches "
+                    "the current document or web page. GUI (graphical user interface) mode "
+                    "searches the current window or dialog outside document content. For "
+                    "example, GUI mode can find toolbar buttons in a browser or a native "
+                    "application, while document mode finds buttons within a web page.\n\n"
+                    "When moving to the next or previous object in GUI mode, Orca attempts to "
+                    "move keyboard focus to that object. Not all applications and toolkits "
+                    "support this for every widget. Orca checks whether the object reports "
+                    "having focus and notifies you if it does not."
+                ),
+            ),
+            CommandDoc(
+                "previous_iframe",
+                details=("An internal frame is a document embedded within another page."),
+            ),
+            CommandDoc(
+                "next_iframe",
+                details=("An internal frame is a document embedded within another page."),
+            ),
+            CommandDoc(
+                "list_iframes",
+                details=("An internal frame is a document embedded within another page."),
+            ),
+        ),
         target="documents.structural-navigation.commands",
         summary=(
             "Move among headings, links, interactive controls, tables, landmarks, "

@@ -28,7 +28,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
-from .help_metadata import CommandGroupDoc, CommandSectionDoc
+from .help_metadata import CommandDoc, CommandGroupDoc, CommandSectionDoc
 
 if TYPE_CHECKING:
     from .table_navigator import TableNavigator
@@ -38,6 +38,30 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for table navigation commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "table_navigator_toggle_enabled",
+                details=("Turns Orca's table navigation commands on or off."),
+            ),
+            CommandDoc(
+                "set_dynamic_column_headers_row",
+                details=(
+                    "Marks the current row as column headers for the table. First move to the "
+                    "row containing the headers. Orca presents those headers as you navigate, "
+                    "announcing them when they change rather than repeating them for every cell "
+                    "with the same header."
+                ),
+            ),
+            CommandDoc(
+                "set_dynamic_row_headers_column",
+                details=(
+                    "Marks the current column as row headers for the table. First move to the "
+                    "column containing the headers. Orca presents those headers as you "
+                    "navigate, announcing them when they change rather than repeating them for "
+                    "every cell with the same header."
+                ),
+            ),
+        ),
         target="documents.table-navigation.commands",
         summary="Use Orca-controlled table navigation.",
         sections=(

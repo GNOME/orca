@@ -2,10 +2,10 @@
 <page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" id="features_typing_echo">
   <info>
     <link type="guide" xref="index#output" />
-    <title type="sort">27. Echo</title>
+    <title type="sort">41. Echo</title>
     <title type="link">Echo</title>
     <desc>
-      Echo speaks the keys you press and the text you enter. Configure key echo and typing echo.
+      Spoken feedback for keys you press and text you enter.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -16,22 +16,14 @@
         Creative Commons Share Alike 3.0
       </p>
     </license>
-    <title type="link" role="preferences">Echo</title>
   </info>
   <title>
     <media type="image" width="40px" height="40px" its:translate="no" src="figures/orca-logo.svg" /> Echo
   </title>
   <p>
-    Key echo announces the keys you press. You can choose which types of keys are spoken.
-  </p>
-  <p>
-    Typing echo announces text inserted into an editable field. You can hear individual
-    characters, completed words, or completed sentences. You can enable both key echo and
-    character echo without hearing the same character twice.
-  </p>
-  <p>
-    Cycle to the next key echo level switches among key echo, word echo, sentence echo, key and
-    word echo, word and sentence echo, and off.
+    Key echo provides feedback about keys you press; typing echo provides feedback about text
+    entered in an editable field or terminal. The settings below describe the available feedback
+    and how the different forms of echo interact.
   </p>
   <section id="settings-echo">
     <title>Settings</title>
@@ -46,8 +38,11 @@
       <item>
         <p>
           <gui>Key echo</gui>: Controls whether Orca
-          speaks keys as they are pressed. When key echo is enabled, use Keys to Echo to choose
-          which key types Orca speaks. Default: on.
+          speaks keys as they are pressed, including keys that do not insert text, such as
+          navigation and function keys. Choose which key types are spoken with the key-type
+          settings below. In terminals, key echo also waits for matching text to appear before
+          announcing a printable key, so input that is not displayed, such as a password, is not
+          echoed. Default: on.
         </p>
       </item>
       <item>
@@ -123,21 +118,28 @@
         <list>
           <item>
             <p>
-              <gui>Character</gui>: Controls whether Orca
-              speaks each inserted character. This can include accented letters and other
-              symbols that do not have a dedicated key. Default: off.
+              <gui>Character</gui>: Announces text
+              inserted as you type in an editable field or terminal, rather than the key press
+              itself. It depends on the application reporting inserted text through its
+              accessibility support. When both key echo and character echo are enabled, Orca
+              uses character echo for printable text typed into an editable field or terminal
+              and suppresses the corresponding key echo, avoiding duplicate announcements. Other
+              enabled key types can still be announced, as can printable keys pressed outside
+              editable text. Default: off.
             </p>
           </item>
           <item>
             <p>
-              <gui>Word</gui>: Controls whether Orca
-              speaks each completed word. Default: off.
+              <gui>Word</gui>: Announces completed words.
+              Enable it alongside character echo to have both individual characters and
+              completed words spoken. Default: off.
             </p>
           </item>
           <item>
             <p>
-              <gui>Sentence</gui>: Controls whether Orca
-              speaks each completed sentence. Default: off.
+              <gui>Sentence</gui>: Announces completed
+              sentences. Enable it alongside character echo to have both individual characters
+              and completed sentences spoken. Default: off.
             </p>
           </item>
         </list>
@@ -153,8 +155,12 @@
     <list>
       <item>
         <p>
-          <gui>Cycle to the next key echo level</gui>
-          Unbound by default.
+          <gui>Cycle to the next key echo level</gui>: Unbound by
+          default.
+        </p>
+        <p>
+          Switches among key echo, word echo, sentence echo, key and word echo, word and
+          sentence echo, and off.
         </p>
       </item>
     </list>

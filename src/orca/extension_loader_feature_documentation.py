@@ -22,8 +22,7 @@
 
 from __future__ import annotations
 
-from . import guilabels
-from .help_metadata import FeaturePageDoc, FeatureSectionDoc
+from .help_metadata import FeatureLinkDoc, FeaturePageDoc, FeatureSectionDoc
 
 
 def get_feature_documentation() -> FeaturePageDoc:
@@ -36,29 +35,37 @@ def get_feature_documentation() -> FeaturePageDoc:
         description="Add and manage personal Orca features.",
         guide_xref="index#interaction",
         target="extensions.feature",
+        intro=(
+            "User extensions add personal features, commands, and settings to Orca. "
+            "Install extension files or package directories in "
+            "`~/.local/share/orca/extensions/`, or the corresponding location under "
+            "your XDG data directory. Only install code from sources you trust: "
+            "approved extensions run with your user account's permissions and can "
+            "access content Orca presents, including typed text and messages.\n\n"
+            "Orca does not have an official extension store. Community catalogs "
+            "and stores are not endorsed or security-reviewed by the Orca project."
+        ),
+        details=(
+            "Use the settings below to inspect and manage installed extensions. You can also "
+            "approve or revoke approval from the command line, as described in "
+            "[[screen-reader.introduction]]. Extensions approved that way load on the next Orca "
+            "startup."
+        ),
         sections=(
             FeatureSectionDoc(
-                title="Installing and approving extensions",
+                title="Extension settings",
                 preference_categories=("extensions",),
+                links=(FeatureLinkDoc("screen-reader.introduction"),),
+            ),
+            FeatureSectionDoc(
+                title="Command shortcuts",
                 intro=(
-                    "User extensions add personal features, commands, and settings to Orca. "
-                    "Install extension files or package directories in "
-                    "~/.local/share/orca/extensions, or the corresponding location under "
-                    "your XDG data directory. Only install code from sources you trust: "
-                    "approved extensions run with your user account's permissions."
+                    "An extension can load successfully even if some of its commands have no "
+                    "shortcut. If a requested shortcut is already used by an Orca command or "
+                    "another extension, the conflicting extension command is left unbound. See "
+                    "[[keyboard-layout.feature]] for configuring shortcuts."
                 ),
-                details=(
-                    f"Open {guilabels.USER_EXTENSIONS} in the global Preferences window "
-                    "to inspect an "
-                    "extension's information and approve it for loading. Changing its code "
-                    "invalidates approval; inspect the changes before reapproving it. "
-                    "Revoking approval prevents the extension from loading.\n\n"
-                    "Use the switch beside an approved extension to enable or disable it "
-                    f"without removing its approval. The {guilabels.EXTENSIONS_SETTINGS_BUTTON} "
-                    "action opens any preferences "
-                    "provided by the extension. Delete removes the extension file or package "
-                    "after confirmation."
-                ),
+                links=(FeatureLinkDoc("preferences.commands"),),
             ),
         ),
     )

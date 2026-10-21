@@ -2,7 +2,7 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_reading_documents_live_regions">
   <info>
     <link type="guide" xref="index#reading" />
-    <title type="sort">11. Live regions</title>
+    <title type="sort">17. Live regions</title>
     <title type="link">Live regions</title>
     <desc>
       Live regions are areas of a web page that update automatically, such as stock tickers,
@@ -24,22 +24,10 @@
     weather updates, chat messages, or alerts.
   </p>
   <p>
-    The Monitor live regions command turns live region support on or off. When enabled, Orca
-    keeps the last nine live region messages so you can review them later.
-  </p>
-  <p>
     Live regions have a politeness level that suggests when assistive technologies should
     present updates. Off requests no announcements, polite requests announcements when other
-    speech has finished, and assertive requests immediate announcements. Advance live region
-    politeness setting cycles through these levels for the current live region.
-  </p>
-  <p>
-    Set default live region politeness level to off turns announcements off for the current
-    page. Use it again to restore announcements. It does not change your saved default settings.
-  </p>
-  <p>
-    Structural navigation commands can move to the next or previous live region, or to the live
-    region that most recently made an announcement.
+    speech has finished, and assertive requests immediate announcements. The commands below
+    control presentation and navigation.
   </p>
   <section id="live-regions-commands">
     <title>Commands</title>
@@ -50,8 +38,7 @@
     <list>
       <item>
         <p>
-          <gui>Go to previous live region</gui>
-          <keyseq>
+          <gui>Go to previous live region</gui>: <keyseq>
             <key>Shift</key>
             <key>D</key>
           </keyseq>
@@ -59,16 +46,14 @@
       </item>
       <item>
         <p>
-          <gui>Go to next live region</gui>
-          <keyseq>
+          <gui>Go to next live region</gui>: <keyseq>
             <key>D</key>
           </keyseq>
         </p>
       </item>
       <item>
         <p>
-          <gui>Go to the last live region which made an announcement</gui>
-          <keyseq>
+          <gui>Go to the last live region which made an announcement</gui>: <keyseq>
             <key>Y</key>
           </keyseq>
         </p>
@@ -83,35 +68,46 @@
       <list>
         <item>
           <p>
-            <gui>Monitor live regions</gui>
-            <keyseq>
+            <gui>Monitor live regions</gui>: <keyseq>
               <key>Orca Modifier</key>
               <key>Backslash</key>
             </keyseq>
           </p>
-        </item>
-        <item>
           <p>
-            <gui>Advance live region politeness setting</gui>
-            Unbound by default.
+            Turns live region support on or off. When enabled, Orca keeps the last nine live
+            region messages so you can review them later.
           </p>
         </item>
         <item>
           <p>
-            <gui>Set default live region politeness level to off</gui>: Toggles whether
-            live region updates are announced. Unbound by default.
+            <gui>Advance live region politeness setting</gui>: Unbound by
+            default.
+          </p>
+          <p>
+            Cycles through off, polite, and assertive politeness levels for the current live
+            region.
           </p>
         </item>
         <item>
           <p>
-            <gui>Present previous live region message</gui>
-            Unbound by default.
+            <gui>Set default live region politeness level to off</gui>: Unbound by
+            default.
+          </p>
+          <p>
+            Turns announcements off for the current page. Use it again to restore announcements.
+            It does not change your saved default settings.
           </p>
         </item>
         <item>
           <p>
-            <gui>Present next live region message</gui>
-            Unbound by default.
+            <gui>Present previous live region message</gui>: Unbound by
+            default.
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Present next live region message</gui>: Unbound by
+            default.
           </p>
         </item>
       </list>

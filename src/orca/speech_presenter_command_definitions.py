@@ -26,10 +26,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
-from .help_metadata import (
-    CommandGroupDoc,
-    CommandSectionDoc,
-)
+from .help_metadata import CommandDoc, CommandGroupDoc, CommandSectionDoc
 
 if TYPE_CHECKING:
     from .speech_presenter import SpeechPresenter
@@ -39,6 +36,29 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for speech presentation commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "toggleSpeechVerbosityHandler",
+                details=(
+                    "Switches between brief and verbose object presentation. Other verbosity "
+                    "settings control individual details independently."
+                ),
+            ),
+            CommandDoc(
+                "toggle_speech_monitor",
+                details=(
+                    "Opens or closes the speech display. It includes recent speech even if the "
+                    "window was closed at the time. Select text and use Ctrl+C to copy it for "
+                    "pasting into another application."
+                ),
+            ),
+            CommandDoc(
+                "cycle_text_attribute_change_mode",
+                details=(
+                    "Cycles through formatting-change announcement modes for the current session."
+                ),
+            ),
+        ),
         target="speech.commands",
         summary="Control how much information Orca speaks.",
         sections=(

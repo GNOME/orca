@@ -30,8 +30,8 @@ def get_feature_documentation() -> FeaturePageDoc:
         page_id="features_spell_check",
         title="Spell checking",
         link_title="Spell checking",
-        description="Hear spelling errors and suggestions in supported spell checkers.",
-        guide_xref="index#interaction",
+        description="Review spelling errors and suggestions in supported spell checkers.",
+        guide_xref="index#reading",
         target="spell-check.feature",
         sections=(
             FeatureSectionDoc(
@@ -41,8 +41,21 @@ def get_feature_documentation() -> FeaturePageDoc:
                     "a supported application's spell checker."
                 ),
                 details=(
-                    "Orca needs to identify the misspelled word, suggestions list, and "
-                    "other parts of the application's spell checker to present this information."
+                    "These features depend on accessibility information from the application "
+                    "or its toolkit that lets Orca recognize the misspelled word, suggestions "
+                    "list, and other parts of the spell-checking dialog. Orca currently "
+                    "recognizes these parts of the interface in some applications. If these "
+                    "features do not work in your application's spell checker, its interface "
+                    "may not yet be recognized, even if other parts of the application work "
+                    "well with Orca. Adding support may require changes in Orca, the "
+                    "application or its toolkit, or both.\n\n"
+                    "Even when an application's spell-checking dialog is not supported, Orca "
+                    "can announce misspelled words as you navigate or type. The application's "
+                    "spelling-error indicators, usually red squiggly underlines, must be "
+                    "enabled and exposed as accessibility text attributes. Announcements "
+                    "while typing also require the application to report changes to those "
+                    "attributes through accessibility events. Configure these announcements "
+                    "in [[speech.verbosity]]."
                 ),
                 preference_categories=("spell-check",),
             ),

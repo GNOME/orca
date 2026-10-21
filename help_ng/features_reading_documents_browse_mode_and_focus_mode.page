@@ -2,10 +2,10 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_reading_documents_browse_mode_and_focus_mode">
   <info>
     <link type="guide" xref="index#reading" />
-    <title type="sort">06. Browse mode and focus mode</title>
+    <title type="sort">11. Browse mode and focus mode</title>
     <title type="link">Browse mode and focus mode</title>
     <desc>
-      When reading document content, Orca uses two modes: browse mode and focus mode.
+      Navigate document content and interact with controls.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -19,7 +19,7 @@
   </info>
   <title>Browse mode and focus mode</title>
   <p>
-    When reading document content, Orca uses two modes: browse mode and focus mode.
+    Navigate document content and interact with controls.
   </p>
   <p>
     Browse mode lets Orca provide navigation for reading documents and web content. Focus mode
@@ -27,21 +27,82 @@
     table navigation and commands using the <key>Orca Modifier</key>, remain available.
   </p>
   <p>
-    Orca can switch to focus mode automatically when navigation lands on an interactive widget.
-    You can enable or disable automatic focus mode separately for native navigation, caret
-    navigation, and structural navigation in Documents preferences.
+    Unlike screen readers that use a virtual buffer, Orca does not create a separate, off-screen
+    copy of a document or web page for browse mode. You navigate the content in the application
+    itself. In browse mode, Orca handles navigation commands and updates your position within
+    that content.
   </p>
   <p>
-    Sticky modes override automatic switching. Sticky focus mode keeps Orca in focus mode until
-    you explicitly change modes. Sticky browse mode keeps Orca in browse mode until you
-    explicitly change modes.
+    Orca can switch between modes automatically as you navigate. The settings and commands below
+    control automatic switching and let you choose a mode explicitly.
   </p>
-  <p>
-    Some web applications, including desktop applications built with the Electron web framework,
-    start in sticky focus mode so their own keyboard interactions work. Configure this with
-    Automatic sticky focus mode for web applications in the Native navigation section of
-    Documents preferences.
-  </p>
+  <section id="settings-browse-mode-and-focus-mode">
+    <title>Settings</title>
+    <section id="settings-browse-mode-and-focus-mode-document-presenter-native-navigation">
+      <title>Native navigation</title>
+      <p>
+        <em style="strong">Preferences location:</em>
+        <gui>Documents</gui> category, <gui>Native navigation</gui> group.
+      </p>
+      <p>
+        <em style="strong">Available settings:</em>
+      </p>
+      <list>
+        <item>
+          <p>
+            <gui>Automatic focus mode</gui>: Controls whether
+            Orca switches to focus mode when native navigation, such as Tab or Shift+Tab, lands
+            on an interactive widget. Default: on.
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Automatic sticky focus mode for web applications</gui>: Starts web
+            applications, including desktop applications built with Electron, in sticky focus
+            mode so their own keyboard interactions work. Default: on.
+          </p>
+        </item>
+      </list>
+    </section>
+    <section id="settings-browse-mode-and-focus-mode-document-presenter-caret-navigation">
+      <title>Caret navigation</title>
+      <p>
+        <em style="strong">Preferences location:</em>
+        <gui>Documents</gui> category, <gui>Caret navigation</gui> group.
+      </p>
+      <p>
+        <em style="strong">Available settings:</em>
+      </p>
+      <list>
+        <item>
+          <p>
+            <gui>Automatic focus mode</gui>: Controls whether
+            Orca switches to focus mode when caret navigation lands on an interactive widget.
+            Default: off.
+          </p>
+        </item>
+      </list>
+    </section>
+    <section id="settings-browse-mode-and-focus-mode-document-presenter-structural-navigation">
+      <title>Structural navigation</title>
+      <p>
+        <em style="strong">Preferences location:</em>
+        <gui>Documents</gui> category, <gui>Structural navigation</gui> group.
+      </p>
+      <p>
+        <em style="strong">Available settings:</em>
+      </p>
+      <list>
+        <item>
+          <p>
+            <gui>Automatic focus mode</gui>: Controls whether
+            Orca switches to focus mode when structural navigation lands on an interactive
+            widget. Default: off.
+          </p>
+        </item>
+      </list>
+    </section>
+  </section>
   <section id="commands-documents">
     <title>Commands</title>
     <p>
@@ -51,8 +112,7 @@
     <list>
       <item>
         <p>
-          <gui>Switch between browse mode and focus mode</gui>
-          <keyseq>
+          <gui>Switch between browse mode and focus mode</gui>: <keyseq>
             <key>Orca Modifier</key>
             <key>A</key>
           </keyseq>
@@ -60,22 +120,28 @@
       </item>
       <item>
         <p>
-          <gui>Enable sticky focus mode</gui>
-          <keyseq>
+          <gui>Enable sticky focus mode</gui>: <keyseq>
             <key>Orca Modifier</key>
             <key>A</key>
           </keyseq>
-          (press twice)
+          (press twice quickly)
+        </p>
+        <p>
+          Keeps Orca in focus mode until you explicitly change modes, overriding automatic
+          switching.
         </p>
       </item>
       <item>
         <p>
-          <gui>Enable sticky browse mode</gui>
-          <keyseq>
+          <gui>Enable sticky browse mode</gui>: <keyseq>
             <key>Orca Modifier</key>
             <key>A</key>
           </keyseq>
-          (press three times)
+          (press three times quickly)
+        </p>
+        <p>
+          Keeps Orca in browse mode until you explicitly change modes, overriding automatic
+          switching.
         </p>
       </item>
     </list>
@@ -88,26 +154,7 @@
     <list>
       <item>
         <p>
-          <link xref="features_reading_documents_native_navigation#settings-native-navigation">Native navigation preferences</link>: Configure
-          automatic focus mode, find results, and page-load behavior for application-provided
-          navigation.
-        </p>
-      </item>
-      <item>
-        <p>
-          <link xref="features_reading_documents_caret_navigation#settings-caret-navigation">Caret navigation preferences</link>: Configure how
-          caret navigation works in text and how lines are presented.
-        </p>
-      </item>
-      <item>
-        <p>
-          <link xref="features_reading_documents_structural_navigation#settings-structural-navigation">Structural navigation preferences</link>: Configure how
-          structural navigation works in document content and application interfaces.
-        </p>
-      </item>
-      <item>
-        <p>
-          <link xref="features_reading_documents_guide">Reading documents and web pages</link>: Read documents,
+          <link xref="index#reading">Reading documents and web pages</link>: Read documents,
           web pages, and interactive content.
         </p>
       </item>

@@ -16,3 +16,4 @@ subprojects/mathcat-py/target/
 .coverage-integration/
 htmlcov-integration/
 .profile-integration/
+help_ng/html/

@@ -22,7 +22,6 @@
 
 from __future__ import annotations
 
-from . import cmdnames, guilabels
 from .help_metadata import (
     FeatureDocumentationDoc,
     FeatureLinkDoc,
@@ -38,8 +37,8 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
         pages=(
             FeaturePageDoc(
                 page_id="features_reviewing_objects",
-                title="Reviewing and Exploring Objects",
-                link_title="Reviewing and exploring objects",
+                title="Reviewing and interacting with objects",
+                link_title="Reviewing and interacting with objects",
                 description="Review contents and objects independently of focus.",
                 guide_xref="",
                 intro=(
@@ -63,19 +62,18 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                             "characters."
                         ),
                         details=(
-                            "Any flat review command starts reviewing the visible contents; "
-                            "off-screen content is not included. Orca refreshes the review "
-                            "context as the window, text, or caret changes.\n\n"
-                            f"{guilabels.FLAT_REVIEW} preferences control whether the review "
-                            "location "
-                            "follows focus and caret changes. Using application navigation "
-                            "keys leaves flat review. You can also toggle flat review off "
-                            "and back on to rebuild the context.\n\n"
-                            "The home position is the beginning of the window's content; "
-                            "the end position is its last item. Bottom left is the start "
-                            f"of the last line. {cmdnames.FLAT_REVIEW_SHOW_CONTENTS} opens "
-                            "the entire "
-                            "review content in a text window."
+                            "Use the flat review navigation commands to begin reviewing "
+                            "the window. Off-screen content is not included.\n\n"
+                            "The review location and the application's caret are separate. "
+                            "You can configure when review follows focus and caret changes, "
+                            "how changes at the review location are presented, or use commands "
+                            "to move one location to the other. The settings and commands "
+                            "below describe these options.\n\n"
+                            "Keeping the review location independent does not freeze the "
+                            "window's content. Text can still change or scroll out of view, "
+                            "so the exact position may no longer be available. Orca retains "
+                            "one review location, rather than a separate location for each "
+                            "window. Reviewing another window replaces the previous one."
                         ),
                         settings_and_commands=(
                             FeatureLinkDoc(
@@ -106,18 +104,13 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                             "location to the matching item or text."
                         ),
                         details=(
-                            "The Find dialog lets you enter text to search for, choose whether "
-                            "to start from the current location or the top of the window, match "
-                            "case, match whole words, search backward, and wrap around. After "
-                            "you perform a search, use the Find commands to move to the next "
-                            "or previous match without reopening the dialog.\n\n"
-                            "If you have not searched yet, Find Next and Find Previous open "
-                            "the dialog. Search text is interpreted as a regular expression; "
-                            "characters such as a period or an asterisk have special meanings. "
-                            "Use a backslash before a special character to match it literally.\n\n"
                             "Finding a match does not move application focus or reposition the "
-                            "caret."
+                            "caret. To search document content beyond the visible portion, use "
+                            "the application's search feature. See "
+                            "[[documents.native-navigation.feature]] for application search and "
+                            "Orca's presentation of its results."
                         ),
+                        links=(FeatureLinkDoc("documents.native-navigation.feature"),),
                         settings_and_commands=(
                             FeatureLinkDoc(
                                 "commands.find",
@@ -137,7 +130,7 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                         include_target="reviewing.object-navigation",
                     ),
                     FeatureSectionDoc(
-                        title="Mouse review",
+                        title="Mouse review and clicking",
                         topic_id="mouse_review",
                         include_target="reviewing.mouse-review",
                     ),

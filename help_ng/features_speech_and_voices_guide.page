@@ -2,11 +2,10 @@
 <page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="guide" id="features_speech_and_voices_guide">
   <info>
     <link type="guide" xref="index#output" />
-    <title type="sort">28. Speech and voices</title>
+    <title type="sort">23. Speech and voices</title>
     <title type="link">Speech and voices</title>
     <desc>
-      Configure Orca's spoken output, including voices, language switching, and how much
-      information is spoken.
+      Spoken presentation of on-screen content and Orca messages.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -17,14 +16,9 @@
         Creative Commons Share Alike 3.0
       </p>
     </license>
-    <title type="link" role="preferences">Speech</title>
   </info>
   <title>
     <media type="image" width="40px" height="40px" its:translate="no" src="figures/orca-logo.svg" /> Speech and voices
   </title>
-  <p>
-    These topics describe speech output, voices, voice sets, language switching, pronunciation,
-    and verbosity.
-  </p>
-  <links type="topic" style="2column" />
+  <links type="topic" />
 </page>

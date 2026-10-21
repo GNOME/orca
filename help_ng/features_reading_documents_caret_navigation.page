@@ -2,7 +2,7 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_reading_documents_caret_navigation">
   <info>
     <link type="guide" xref="index#reading" />
-    <title type="sort">07. Caret navigation</title>
+    <title type="sort">12. Caret navigation</title>
     <title type="link">Caret navigation</title>
     <desc>
       Caret navigation lets you move through text by character, word, and line, as well as to
@@ -29,21 +29,15 @@
     technologies.
   </p>
   <p>
-    When browse mode is active, you can use caret navigation commands to read and move through
-    document content. If focus mode is active, switch to browse mode before using caret
-    navigation commands. In text objects where browse mode is not supported, you can manually
-    turn Orca's caret navigation on or off with <keyseq>
-      <key>Orca Modifier</key>
-      <key>F12</key>
-    </keyseq>. This command
-    changes the current session across applications; it does not save a preference.
+    When browse mode is active, you can use caret navigation to move through document content.
+    If focus mode is active, switch to browse mode first. The settings and commands below also
+    provide navigation outside browse mode and text selection in supported applications.
   </p>
   <p>
-    Orca can also manage text selection when you hold <key>Shift</key> while using these navigation
-    commands. Text selection is disabled by default because not all applications provide the
-    support Orca needs to manage selections. Avoid enabling it globally. Instead, enable it in
-    application-specific preferences only for applications where Orca's selection support is
-    needed and you have verified that it works correctly.
+    To select document text using the application's own navigation, enable its native
+    caret-navigation support, often called caret browsing. This is typically toggled with <key>F7</key> and is needed for keyboard-driven
+    selection in document content. The document viewer or application manages the selection;
+    Orca presents the selection changes it reports.
   </p>
   <section id="settings-caret-navigation">
     <title>Settings</title>
@@ -63,15 +57,11 @@
       </item>
       <item>
         <p>
-          <gui>Automatic focus mode</gui>: Controls whether
-          Orca switches to focus mode when caret navigation lands on an interactive widget.
-          Default: off.
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Text selection</gui>: Controls whether
-          Shift with caret navigation extends text selections. Default: off.
+          <gui>Text selection</gui>: Lets Orca manage
+          text selection when you hold Shift while using its caret navigation commands. Not all
+          applications provide the support Orca needs. Avoid enabling this globally; enable it
+          in application-specific preferences only where Orca's selection support is needed and
+          you have verified it works. Default: off.
         </p>
       </item>
       <item>
@@ -89,200 +79,193 @@
       <em style="strong">Preferences location:</em>
       <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Caret navigation</gui> group.
     </p>
-    <list>
-      <item>
-        <p>
-          <gui>Go to next character</gui>
-          <keyseq>
-            <key>Right Arrow</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Go to next line</gui>
-          <keyseq>
-            <key>Down Arrow</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Go to next word</gui>
-          <keyseq>
-            <key>Ctrl</key>
-            <key>Right Arrow</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Go to previous character</gui>
-          <keyseq>
-            <key>Left Arrow</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Go to previous line</gui>
-          <keyseq>
-            <key>Up Arrow</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Go to previous word</gui>
-          <keyseq>
-            <key>Ctrl</key>
-            <key>Left Arrow</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Go to the beginning of the line</gui>
-          <keyseq>
-            <key>Home</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Go to the bottom of the file</gui>
-          <keyseq>
-            <key>Ctrl</key>
-            <key>End</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Go to the end of the line</gui>
-          <keyseq>
-            <key>End</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Go to the top of the file</gui>
-          <keyseq>
-            <key>Ctrl</key>
-            <key>Home</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Select next character</gui>
-          <keyseq>
-            <key>Shift</key>
-            <key>Right Arrow</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Select next line</gui>
-          <keyseq>
-            <key>Shift</key>
-            <key>Down Arrow</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Select next word</gui>
-          <keyseq>
-            <key>Ctrl</key>
-            <key>Shift</key>
-            <key>Right Arrow</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Select previous character</gui>
-          <keyseq>
-            <key>Shift</key>
-            <key>Left Arrow</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Select previous line</gui>
-          <keyseq>
-            <key>Shift</key>
-            <key>Up Arrow</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Select previous word</gui>
-          <keyseq>
-            <key>Ctrl</key>
-            <key>Shift</key>
-            <key>Left Arrow</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Select to the beginning of the line</gui>
-          <keyseq>
-            <key>Shift</key>
-            <key>Home</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Select to the bottom of the file</gui>
-          <keyseq>
-            <key>Ctrl</key>
-            <key>Shift</key>
-            <key>End</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Select to the end of the line</gui>
-          <keyseq>
-            <key>Shift</key>
-            <key>End</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Select to the top of the file</gui>
-          <keyseq>
-            <key>Ctrl</key>
-            <key>Shift</key>
-            <key>Home</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Switch between native and screen-reader caret navigation</gui>
-          <keyseq>
-            <key>Orca Modifier</key>
-            <key>F12</key>
-          </keyseq>
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Toggle layout mode</gui> Unbound by default.
-        </p>
-      </item>
-    </list>
+    <section id="caret-navigation-navigation">
+      <title>Navigation</title>
+      <list>
+        <item>
+          <p>
+            <gui>Switch between native and screen-reader caret navigation</gui>: <keyseq>
+              <key>Orca Modifier</key>
+              <key>F12</key>
+            </keyseq>
+          </p>
+          <p>
+            Turns Orca's caret navigation on or off in text objects where browse mode is not
+            supported. This changes the current session across applications; it does not save a
+            preference.
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Toggle layout mode</gui>: Unbound by
+            default.
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Go to next character</gui>: <keyseq>
+              <key>Right Arrow</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Go to next line</gui>: <keyseq>
+              <key>Down Arrow</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Go to next word</gui>: <keyseq>
+              <key>Ctrl</key>
+              <key>Right Arrow</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Go to previous character</gui>: <keyseq>
+              <key>Left Arrow</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Go to previous line</gui>: <keyseq>
+              <key>Up Arrow</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Go to previous word</gui>: <keyseq>
+              <key>Ctrl</key>
+              <key>Left Arrow</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Go to the beginning of the line</gui>: <keyseq>
+              <key>Home</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Go to the top of the file</gui>: <keyseq>
+              <key>Ctrl</key>
+              <key>Home</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Go to the bottom of the file</gui>: <keyseq>
+              <key>Ctrl</key>
+              <key>End</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Go to the end of the line</gui>: <keyseq>
+              <key>End</key>
+            </keyseq>
+          </p>
+        </item>
+      </list>
+    </section>
+    <section id="caret-navigation-selection">
+      <title>Selection</title>
+      <list>
+        <item>
+          <p>
+            <gui>Select next character</gui>: <keyseq>
+              <key>Shift</key>
+              <key>Right Arrow</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Select next line</gui>: <keyseq>
+              <key>Shift</key>
+              <key>Down Arrow</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Select next word</gui>: <keyseq>
+              <key>Ctrl</key>
+              <key>Shift</key>
+              <key>Right Arrow</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Select previous character</gui>: <keyseq>
+              <key>Shift</key>
+              <key>Left Arrow</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Select previous line</gui>: <keyseq>
+              <key>Shift</key>
+              <key>Up Arrow</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Select previous word</gui>: <keyseq>
+              <key>Ctrl</key>
+              <key>Shift</key>
+              <key>Left Arrow</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Select to the beginning of the line</gui>: <keyseq>
+              <key>Shift</key>
+              <key>Home</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Select to the bottom of the file</gui>: <keyseq>
+              <key>Ctrl</key>
+              <key>Shift</key>
+              <key>End</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Select to the end of the line</gui>: <keyseq>
+              <key>Shift</key>
+              <key>End</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Select to the top of the file</gui>: <keyseq>
+              <key>Ctrl</key>
+              <key>Shift</key>
+              <key>Home</key>
+            </keyseq>
+          </p>
+        </item>
+      </list>
+    </section>
   </section>
   <section id="caret-navigation-related">
     <title>Related topics</title>

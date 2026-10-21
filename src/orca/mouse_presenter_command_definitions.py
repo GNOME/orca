@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
-from .help_metadata import CommandGroupDoc
+from .help_metadata import CommandDoc, CommandGroupDoc
 
 if TYPE_CHECKING:
     from .mouse_presenter import MousePresenter
@@ -37,6 +37,42 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for mouse commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "toggleMouseReviewHandler",
+                details=(
+                    "Turns mouse review on or off for the current session, whether or not it is "
+                    "enabled in preferences."
+                ),
+            ),
+            CommandDoc(
+                "routePointerToItemHandler",
+                details=(
+                    "Routes the pointer to the flat review location when flat review is active, "
+                    "or to the focused object otherwise."
+                ),
+            ),
+            CommandDoc(
+                "leftClickReviewItemHandler",
+                details=(
+                    "Acts on the flat review location when flat review is active, or on the "
+                    "focused object otherwise. Orca first tries suitable accessible actions "
+                    "exposed by the object through its application or toolkit. If no suitable "
+                    "action succeeds, Orca tries to simulate a mouse click at the object's "
+                    "location. Simulated clicks do not currently work on Wayland."
+                ),
+            ),
+            CommandDoc(
+                "rightClickReviewItemHandler",
+                details=(
+                    "Acts on the flat review location when flat review is active, or on the "
+                    "focused object otherwise. Orca first tries suitable accessible actions "
+                    "exposed by the object through its application or toolkit. If no suitable "
+                    "action succeeds, Orca tries to simulate a mouse click at the object's "
+                    "location. Simulated clicks do not currently work on Wayland."
+                ),
+            ),
+        ),
         summary="Toggle Mouse Review, route the pointer, or click the current item.",
         see_also=("reviewing.mouse-review",),
     )

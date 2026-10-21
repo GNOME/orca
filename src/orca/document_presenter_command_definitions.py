@@ -26,10 +26,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
-from .help_metadata import (
-    CommandGroupDoc,
-    CommandSectionDoc,
-)
+from .help_metadata import CommandDoc, CommandGroupDoc, CommandSectionDoc
 
 if TYPE_CHECKING:
     from .document_presenter import DocumentPresenter
@@ -39,6 +36,22 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for document commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "enable_sticky_focus_mode",
+                details=(
+                    "Keeps Orca in focus mode until you explicitly change modes, overriding "
+                    "automatic switching."
+                ),
+            ),
+            CommandDoc(
+                "enable_sticky_browse_mode",
+                details=(
+                    "Keeps Orca in browse mode until you explicitly change modes, overriding "
+                    "automatic switching."
+                ),
+            ),
+        ),
         link_title="Browse mode and focus mode commands",
         target="documents.mode-commands",
         summary=("Switch between browse mode and focus mode in documents and web content."),

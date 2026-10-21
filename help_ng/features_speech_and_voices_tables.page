@@ -2,10 +2,10 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_speech_and_voices_tables">
   <info>
     <link type="guide" xref="features_speech_and_voices_guide" />
-    <title type="sort">35. Tables</title>
+    <title type="sort">30. Tables</title>
     <title type="link">Tables</title>
     <desc>
-      Configure whether you hear the current cell or the whole row while navigating tables.
+      In some tables, such as a message list, speaking the full row can provide useful context.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -19,22 +19,16 @@
   </info>
   <title>Tables</title>
   <p>
-    Configure whether you hear the current cell or the whole row while navigating tables.
-  </p>
-  <p>
     In some tables, such as a message list, speaking the full row can provide useful context. In
     other tables, such as a spreadsheet, speaking only the focused cell can make navigation
-    faster and less verbose.
+    faster and less verbose. The settings below control row presentation for different kinds of
+    tables.
   </p>
   <section id="settings-tables">
     <title>Settings</title>
     <p>
       <em style="strong">Preferences location:</em>
       <gui>Speech</gui> category, <gui>Tables</gui> group.
-    </p>
-    <p>
-      You can configure row presentation separately for application tables, document tables, and
-      spreadsheets.
     </p>
     <p>
       <em style="strong">Available settings:</em>
@@ -118,8 +112,7 @@
     <list>
       <item>
         <p>
-          <gui>Toggle whether to read just the current table cell or the whole row</gui>
-          <keyseq>
+          <gui>Toggle whether to read just the current table cell or the whole row</gui>: <keyseq>
             <key>Orca Modifier</key>
             <key>F11</key>
           </keyseq>

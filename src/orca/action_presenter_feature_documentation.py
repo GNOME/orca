@@ -32,12 +32,18 @@ def get_feature_documentation() -> FeaturePageDoc:
         page_id="features_actions",
         title="Actions",
         link_title="Actions",
-        description="Use the actions available for the current item.",
-        guide_xref="index#interaction",
+        description="Use the accessible actions available for the current item.",
+        guide_xref="index#reviewing",
         target="actions.feature",
         sections=(
             FeatureSectionDoc(
                 title="Actions",
+                intro=(
+                    "Actions are operations an application or toolkit makes available for "
+                    "an item, such as activating a button, following a link, or expanding "
+                    "a collapsed item. The available actions depend on the item and the "
+                    "application."
+                ),
                 command_groups=("commands.actions",),
             ),
         ),

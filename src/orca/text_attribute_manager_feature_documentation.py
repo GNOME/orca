@@ -22,8 +22,7 @@
 
 from __future__ import annotations
 
-from . import cmdnames, guilabels
-from .help_metadata import CommandShortcutDoc, FeatureLinkDoc, FeaturePageDoc, FeatureSectionDoc
+from .help_metadata import FeatureLinkDoc, FeaturePageDoc, FeatureSectionDoc
 
 
 def get_feature_documentation() -> FeaturePageDoc:
@@ -45,73 +44,36 @@ def get_feature_documentation() -> FeaturePageDoc:
             FeatureSectionDoc(
                 title="Checking formatting",
                 preference_categories=("text-attributes",),
-                shortcuts=(CommandShortcutDoc("Orca Modifier+F", "readCharAttributesHandler"),),
                 command_names=("readCharAttributesHandler", "show_character_attributes"),
                 intro=(
-                    "Press Orca Modifier+F to present formatting information for the current "
-                    f"character. In {guilabels.TEXT_ATTRIBUTES} preferences, you can "
-                    "configure which "
-                    "attributes are spoken and the order in which they are presented. Orca "
-                    "omits attributes whose values are treated as defaults. You can "
-                    "customize these selections for individual applications.\n\n"
-                    "Press the same key combination twice quickly to open a window showing "
-                    "all available attributes for that character, including attributes you "
-                    "have not enabled for speech. You can read and copy the details. Press "
-                    "Escape to close the window.\n\n"
-                    "When flat review is active, these commands use the character at the "
-                    "review location. Otherwise, they use the character at the text caret. "
-                    "If no formatting information is available, Orca tells you."
+                    "The settings and commands below let you choose which formatting "
+                    "information Orca presents and inspect the attributes of the current "
+                    "character."
                 ),
                 settings_and_commands=(FeatureLinkDoc("preferences.text-attributes"),),
             ),
             FeatureSectionDoc(
                 title="Automatic announcements",
                 command_names=("cycle_text_attribute_change_mode",),
-                intro=(
-                    "Orca can announce formatting changes, such as bold or italic, as you "
-                    f"move through text. In {guilabels.SPEECH} preferences, open "
-                    f"{guilabels.VERBOSITY} and set {guilabels.TEXT_ATTRIBUTE_CHANGES} "
-                    f"to {guilabels.TEXT_ATTRIBUTE_CHANGES_OFF}, "
-                    f"{guilabels.TEXT_ATTRIBUTE_CHANGES_EDITABLE}, or "
-                    f"{guilabels.TEXT_ATTRIBUTE_CHANGES_ALWAYS}. Say All has "
-                    f"a separate {guilabels.TEXT_ATTRIBUTE_CHANGES} setting for "
-                    "continuous reading.\n\n"
-                    "Automatic announcements are independent of the attribute list used "
-                    "by the explicit formatting command.\n\n"
-                    f"The {cmdnames.CYCLE_TEXT_ATTRIBUTE_CHANGE_MODE} command switches "
-                    "among these announcement modes for the current session.\n\n"
-                    "Applications can also expose spelling and grammar errors as text "
-                    "attributes, often corresponding to a squiggly underline on screen. "
-                    "Orca can announce these errors when you move into the affected text "
-                    "or when the application marks a word as misspelled while you type.\n\n"
-                    f"The {guilabels.SPEECH_SPEAK_MISSPELLED_WORD_INDICATOR} setting "
-                    f"in {guilabels.SPEECH} preferences controls "
-                    "these error announcements and is enabled by default. These announcements "
-                    "do not require key echo or word echo to be enabled."
+                preference_controls=(
+                    "speech.text-attribute-changes",
+                    "say-all.text-attribute-changes",
                 ),
-                settings_and_commands=(
-                    FeatureLinkDoc("speech.verbosity"),
-                    FeatureLinkDoc("preferences.say-all"),
+                intro=(
+                    "Orca can announce formatting changes, such as bold or italic, as you move "
+                    "through text. The settings below control these announcements. "
+                    "Applications can also expose spelling and grammar errors as "
+                    "text attributes, often corresponding to a squiggly underline on screen. "
+                    "Configure those announcements in [[speech.verbosity]]."
                 ),
             ),
             FeatureSectionDoc(
                 title="Braille indicators",
                 intro=(
-                    f"In {guilabels.TEXT_ATTRIBUTES} preferences, you can configure "
-                    "which attributes "
-                    "are marked in braille, independently of which ones are spoken. "
-                    "Enable braille marking for the mistake attribute to mark spelling "
-                    "and grammar errors.\n\n"
-                    f"In {guilabels.BRAILLE} preferences, open "
-                    f"{guilabels.BRAILLE_DISPLAY_SETTINGS} and configure the "
-                    f"{guilabels.BRAILLE_TEXT_ATTRIBUTES_INDICATOR.removesuffix(':')} "
-                    "indicator. These dots act like underlining on the braille "
-                    "display. The same indicator is used for all attributes you have enabled "
-                    "for braille; it shows where an attribute is present, rather than which "
-                    "attribute it is. If the indicator is set to None, no attribute markers "
-                    "are shown."
+                    "Braille indicators mark formatting without adding words to the display. "
+                    "They are independent of spoken formatting announcements. Configure the "
+                    "indicator in [[braille.display-settings.feature]]."
                 ),
-                settings_and_commands=(FeatureLinkDoc("preferences.braille.display-settings"),),
             ),
         ),
     )

@@ -2,10 +2,10 @@
 <page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" id="features_debugging">
   <info>
     <link type="guide" xref="index#troubleshooting" />
-    <title type="sort">50. Troubleshooting Orca</title>
-    <title type="link">Troubleshooting Orca</title>
+    <title type="sort">50. Troubleshooting and getting help</title>
+    <title type="link">Troubleshooting and getting help</title>
     <desc>
-      Collect information for troubleshooting.
+      Troubleshoot problems, get help, and report bugs or request features.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -18,40 +18,162 @@
     </license>
   </info>
   <title>
-    <media type="image" width="40px" height="40px" its:translate="no" src="figures/orca-logo.svg" /> Troubleshooting Orca
+    <media type="image" width="40px" height="40px" its:translate="no" src="figures/orca-logo.svg" /> Troubleshooting and getting help
   </title>
   <p>
-    Start Orca with verbose debugging enabled using <code>orca --debug</code>, or <code>orca --debug-file FILE</code> to choose the log
-    destination. If Orca is already running as an application, add <code>--replace</code>, for example <code>orca --replace --debug</code>. If your desktop
-    manages Orca as a service, stop it using the desktop's screen reader controls first.
+    <em style="strong">Preferences location:</em>
+    <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Debugging Tools</gui> group.
   </p>
-  <p>
-    Debug logs contain detailed information about your actions and interactions with
-    applications while logging is enabled, including application content. Review logs for
-    private information before sharing them.
-  </p>
-  <p>
-    The debug-level command cycles through all messages, informational messages, warnings,
-    severe errors, and off. The cache command clears stored accessibility information for the
-    current application so Orca can request fresh information from it.
-  </p>
-  <section id="commands-debugging-tools">
-    <title>Commands</title>
+  <section id="checking-whether-orca-can-access-an-application">
+    <title>Checking whether Orca can access an application</title>
     <p>
-      <em style="strong">Preferences location:</em>
-      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Debugging Tools</gui> group.
+      If Orca does not present an application, leave that application running and run <code>orca -l</code> in a terminal. This lists the
+      applications known to AT-SPI, the accessibility service Orca uses.
+    </p>
+    <p>
+      If the application is not listed, Orca has no way of knowing it exists. The application is
+      not exposing an accessibility tree or accessibility events to Orca, so Orca cannot present
+      its content or respond to changes within it.
+    </p>
+    <p>
+      An application being listed does not guarantee that all of its content is accessible, but
+      it confirms that AT-SPI knows about the application.
+    </p>
+  </section>
+  <section id="refreshing-an-application-s-accessibility-information">
+    <title>Refreshing an application's accessibility information</title>
+    <p>
+      AT-SPI caches accessibility information about an application's objects. It clears affected
+      cached information in response to accessibility events from the application or its
+      toolkit. Normally, Orca should receive current information without manual intervention.
+    </p>
+    <section id="commands-refreshing-an-application-s-accessibility-information">
+      <title>Commands</title>
+      <list>
+        <item>
+          <p>
+            <gui>Clear the AT-SPI cache for the current application</gui>: Unbound by
+            default.
+          </p>
+          <p>
+            Clears cached AT-SPI information for the current application so Orca can request
+            fresh information. If Orca is presenting incorrect or outdated information, assign a
+            shortcut in Commands preferences, return to the affected application, use the
+            command, and try the interaction again. If this restores correct presentation,
+            mention it when reporting the problem: it suggests that AT-SPI's cached
+            accessibility information was stale, potentially due to a bug in the application or
+            its toolkit.
+          </p>
+        </item>
+      </list>
+    </section>
+    <section id="refreshing-an-application-s-accessibility-information-related">
+      <title>Related topics</title>
+      <p>
+        See also:
+      </p>
+      <list>
+        <item>
+          <p>
+            <link xref="features_keyboard_layout">Commands preferences</link>: Configure your
+            keyboard layout, Orca Modifier keys, and shortcuts for Orca commands.
+          </p>
+        </item>
+      </list>
+    </section>
+  </section>
+  <section id="testing-speech-output">
+    <title>Testing speech output</title>
+    <p>
+      If Orca is not speaking, test its speech system independently from a terminal. For Speech
+      Dispatcher, run <code>spd-say "This is a speech test."</code>. For Spiel, run <code>spiel "This is a speech test."</code>. You may need to
+      install the corresponding command-line tool first.
+    </p>
+    <p>
+      If the command does not produce speech either, the problem is with the speech system, its
+      synthesizer, or your audio output, rather than Orca alone. If it does produce speech,
+      check Orca's selected speech system, synthesizer, and voice: the command may use different
+      defaults. Both tools let you specify a voice and other options. Run <code>spd-say --help</code> or <code>spiel --help</code> for details.
+    </p>
+  </section>
+  <section id="if-orca-remains-unresponsive">
+    <title>If Orca remains unresponsive</title>
+    <p>
+      If Orca does not respond in other applications either, restart it using your desktop's
+      screen reader controls. If you started Orca as a regular application, you can instead run <code>orca --replace</code>. See "<link xref="introduction">Starting and stopping Orca</link>" for the
+      distinction between these ways of running Orca.
+    </p>
+    <p>
+      See also:
     </p>
     <list>
       <item>
         <p>
-          <gui>Clear the AT-SPI cache for the current application</gui>
-          Unbound by default.
+          <link xref="features_settings_backup">Backing up, restoring, and resetting settings</link>: Back up your
+          settings before testing with defaults, then restore them afterward.
+        </p>
+      </item>
+    </list>
+  </section>
+  <section id="collecting-debugging-information">
+    <title>Collecting debugging information</title>
+    <p>
+      Start Orca with verbose debugging enabled using <code>orca --debug</code>, or <code>orca --debug-file FILE</code> to choose the log
+      destination. If Orca is already running as an application, add <code>--replace</code>, for example <code>orca --replace --debug</code>. If your desktop
+      manages Orca as a service, stop it using the desktop's screen reader controls first.
+    </p>
+    <p>
+      Debug logs can become very large. If possible, limit your activity while logging to the
+      steps needed to demonstrate the problem.
+    </p>
+    <p>
+      Debug logs contain detailed information about your actions and interactions with
+      applications while logging is enabled, including application content. Review logs for
+      private information before sharing them.
+    </p>
+    <section id="commands-debugging-tools">
+      <title>Commands</title>
+      <list>
+        <item>
+          <p>
+            <gui>Cycle the debug level at run time</gui>: Unbound by
+            default.
+          </p>
+          <p>
+            Cycles through all messages, informational messages, warnings, severe errors, and
+            off.
+          </p>
+        </item>
+      </list>
+    </section>
+  </section>
+  <section id="getting-help-and-reporting-problems">
+    <title>Getting help and reporting problems</title>
+    <p>
+      The Orca mailing list is where most Orca-related communication takes place. Its
+      knowledgeable, helpful user community shares advice and discusses problems and ideas. The
+      list archive is searchable, so you can look for earlier discussions of your question.
+    </p>
+    <p>
+      You can file bug reports and feature requests in Orca's GitLab project. For a bug report,
+      include your Orca version, the affected application and its version, the steps to
+      reproduce the problem, and what you expected compared with what happened. Include the
+      results of any troubleshooting steps you tried.
+    </p>
+    <p>
+      See also:
+    </p>
+    <list>
+      <item>
+        <p>
+          <link href="https://www.freelists.org/list/orca">Orca mailing list</link>: Subscribe to the
+          list or search its archive.
         </p>
       </item>
       <item>
         <p>
-          <gui>Cycle the debug level at run time</gui>
-          Unbound by default.
+          <link href="https://gitlab.gnome.org/GNOME/orca">Orca on GitLab</link>: Report bugs and
+          request features.
         </p>
       </item>
     </list>

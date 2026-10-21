@@ -2,10 +2,10 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_braille_verbosity">
   <info>
     <link type="guide" xref="features_braille_guide" />
-    <title type="sort">22. Verbosity</title>
+    <title type="sort">36. Verbosity</title>
     <title type="link">Verbosity</title>
     <desc>
-      Configure how much object information you read in braille.
+      Configure how much object information is displayed in braille.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -19,7 +19,7 @@
   </info>
   <title>Verbosity</title>
   <p>
-    Configure how much object information you read in braille.
+    Configure how much object information is displayed in braille.
   </p>
   <section id="settings-verbosity">
     <title>Settings</title>

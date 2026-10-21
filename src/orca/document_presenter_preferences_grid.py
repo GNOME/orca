@@ -90,6 +90,7 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 PreferenceControlDoc(
                     label=guilabels.AUTOMATIC_FOCUS_MODE,
                     kind="switch",
+                    target="documents.caret-focus-mode",
                     summary=(
                         "Controls whether Orca switches to focus mode when caret "
                         "navigation lands on an interactive widget."
@@ -101,7 +102,11 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     label=guilabels.CARET_SELECTION_ENABLED,
                     kind="switch",
                     summary=(
-                        "Controls whether Shift with caret navigation extends text selections."
+                        "Lets Orca manage text selection when you hold Shift while using its "
+                        "caret navigation commands. Not all applications provide the support "
+                        "Orca needs. Avoid enabling this globally; enable it in "
+                        "application-specific preferences only where Orca's selection support "
+                        "is needed and you have verified it works."
                     ),
                     schema="caret-navigation",
                     key=caret_navigator.CaretNavigator.KEY_SELECTION_ENABLED,
@@ -207,6 +212,7 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
                 PreferenceControlDoc(
                     label=guilabels.AUTOMATIC_FOCUS_MODE,
                     kind="switch",
+                    target="documents.structural-focus-mode",
                     summary=(
                         "Controls whether Orca switches to focus mode when structural "
                         "navigation lands on an interactive widget."
@@ -228,8 +234,8 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
                     label=guilabels.STRUCTURAL_NAVIGATION_LARGE_OBJECT_LENGTH,
                     kind="integer",
                     summary=(
-                        "Sets the minimum number of characters for an element to be "
-                        "included by large object navigation commands."
+                        "Sets the minimum number of characters in a text block for the "
+                        "large-object structural navigation commands."
                     ),
                     schema="structural-navigation",
                     key=structural_navigator.StructuralNavigator.KEY_LARGE_OBJECT_TEXT_LENGTH,
@@ -398,6 +404,7 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 PreferenceControlDoc(
                     label=guilabels.AUTOMATIC_FOCUS_MODE,
                     kind="switch",
+                    target="documents.native-focus-mode",
                     summary=(
                         "Controls whether Orca switches to focus mode when native "
                         "navigation, such as Tab or Shift+Tab, lands on an interactive widget."
@@ -408,9 +415,11 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 PreferenceControlDoc(
                     label=guilabels.AUTO_STICKY_FOCUS_MODE,
                     kind="switch",
+                    target="documents.sticky-focus-mode",
                     summary=(
-                        "Controls whether Orca detects web applications and web-based desktop apps "
-                        "and stays in focus mode."
+                        "Starts web applications, including desktop applications built with "
+                        "Electron, in sticky focus mode so their own keyboard interactions "
+                        "work."
                     ),
                     schema="document",
                     key=document_presenter.DocumentPresenter.KEY_AUTO_STICKY_FOCUS_MODE,

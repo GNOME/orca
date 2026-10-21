@@ -2,11 +2,10 @@
 <page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" id="features_user_extensions">
   <info>
     <link type="guide" xref="index#interaction" />
-    <title type="sort">46. User extensions</title>
+    <title type="sort">49. User extensions</title>
     <title type="link">User extensions</title>
     <desc>
-      User extensions customize or add to Orca's features. Approve extensions and configure
-      which ones are enabled.
+      Add and manage personal Orca features.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -17,30 +16,29 @@
         Creative Commons Share Alike 3.0
       </p>
     </license>
-    <title type="link" role="preferences">User Extensions</title>
   </info>
   <title>
     <media type="image" width="40px" height="40px" its:translate="no" src="figures/orca-logo.svg" /> User extensions
   </title>
-  <section id="installing-and-approving-extensions">
-    <title>Installing and approving extensions</title>
-    <p>
-      User extensions add personal features, commands, and settings to Orca. Install extension
-      files or package directories in ~/.local/share/orca/extensions, or the corresponding
-      location under your XDG data directory. Only install code from sources you trust: approved
-      extensions run with your user account's permissions.
-    </p>
-    <p>
-      Open User Extensions in the global Preferences window to inspect an extension's
-      information and approve it for loading. Changing its code invalidates approval; inspect
-      the changes before reapproving it. Revoking approval prevents the extension from loading.
-    </p>
-    <p>
-      Use the switch beside an approved extension to enable or disable it without removing its
-      approval. The Settings action opens any preferences provided by the extension. <key>Delete</key> removes the extension file or
-      package after confirmation.
-    </p>
-    <section id="settings-installing-and-approving-extensions">
+  <p>
+    User extensions add personal features, commands, and settings to Orca. Install extension
+    files or package directories in <code>~/.local/share/orca/extensions/</code>, or the
+    corresponding location under your XDG data directory. Only install code from sources you
+    trust: approved extensions run with your user account's permissions and can access content
+    Orca presents, including typed text and messages.
+  </p>
+  <p>
+    Orca does not have an official extension store. Community catalogs and stores are not
+    endorsed or security-reviewed by the Orca project.
+  </p>
+  <p>
+    Use the settings below to inspect and manage installed extensions. You can also approve or
+    revoke approval from the command line, as described in "<link xref="introduction">Starting and stopping Orca</link>". Extensions
+    approved that way load on the next Orca startup.
+  </p>
+  <section id="extension-settings">
+    <title>Extension settings</title>
+    <section id="settings-extension-settings">
       <title>Settings</title>
       <p>
         <em style="strong">Preferences location:</em>
@@ -52,11 +50,64 @@
       <list>
         <item>
           <p>
-            <gui>User Extensions</gui>: Lists user
-            extension files and actions for approving or revoking them.
+            <gui>User Extensions</gui>: Lists installed
+            extensions. The switch beside an approved extension enables or disables it without
+            removing approval. These changes take effect without restarting Orca.
           </p>
+          <list>
+            <item>
+              <p>
+                <gui>Approve</gui>: Approves the
+                extension for loading after you inspect its information. Changing its contents,
+                including translations in a package, invalidates approval.
+              </p>
+            </item>
+            <item>
+              <p>
+                <gui>Re-approve</gui>: Approves a changed
+                extension after you inspect the changes. Reapproving a disabled extension leaves
+                it disabled.
+              </p>
+            </item>
+            <item>
+              <p>
+                <gui>Revoke</gui>: Revokes approval and
+                prevents the extension from loading. Approval changes made here take effect
+                without restarting Orca.
+              </p>
+            </item>
+            <item>
+              <p>
+                <gui>Delete</gui>: Removes the extension
+                file or package after confirmation.
+              </p>
+            </item>
+            <item>
+              <p>
+                <gui>Info</gui>: Shows extension
+                information, including shortcut conflicts under "Status".
+              </p>
+            </item>
+            <item>
+              <p>
+                <gui>Settings</gui>: Opens preferences
+                provided by the extension. In Orca's standard extension settings dialog,
+                choosing "OK" stages your changes. Apply or save the main Preferences window to
+                save them.
+              </p>
+            </item>
+          </list>
         </item>
       </list>
     </section>
+  </section>
+  <section id="command-shortcuts">
+    <title>Command shortcuts</title>
+    <p>
+      An extension can load successfully even if some of its commands have no shortcut. If a
+      requested shortcut is already used by an Orca command or another extension, the
+      conflicting extension command is left unbound. See "<link xref="features_keyboard_layout">Keyboard layout and Orca Modifier</link>" for configuring
+      shortcuts.
+    </p>
   </section>
 </page>

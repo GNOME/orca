@@ -27,10 +27,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
-from .help_metadata import (
-    CommandGroupDoc,
-    CommandSectionDoc,
-)
+from .help_metadata import CommandDoc, CommandGroupDoc, CommandSectionDoc
 
 if TYPE_CHECKING:
     from .speech_manager import SpeechManager
@@ -40,6 +37,80 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for speech management commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "toggleSilenceSpeechHandler",
+                details=(
+                    "Temporarily turns speech off or back on without changing your saved "
+                    "preference. This silences all Orca speech, including flat review. Braille "
+                    "output remains available."
+                ),
+            ),
+            CommandDoc(
+                "cycleVoiceSetHandler",
+                details=(
+                    "Cycles through configured voice sets. Selecting a language-specific voice set "
+                    "manually suspends automatic language switching until you return to the global "
+                    "voice set."
+                ),
+            ),
+            CommandDoc(
+                "decreaseSpeechRateHandler",
+                details=(
+                    "Decreases the active voice set's rate temporarily. To save changes or "
+                    "configure individual voice types, see [[speech.voice-sets.feature]]."
+                ),
+            ),
+            CommandDoc(
+                "increaseSpeechRateHandler",
+                details=(
+                    "Increases the active voice set's rate temporarily. To save changes or "
+                    "configure individual voice types, see [[speech.voice-sets.feature]]."
+                ),
+            ),
+            CommandDoc(
+                "decreaseSpeechPitchHandler",
+                details=(
+                    "Decreases the active voice set's pitch temporarily. To save changes or "
+                    "configure individual voice types, see [[speech.voice-sets.feature]]."
+                ),
+            ),
+            CommandDoc(
+                "increaseSpeechPitchHandler",
+                details=(
+                    "Increases the active voice set's pitch temporarily. To save changes or "
+                    "configure individual voice types, see [[speech.voice-sets.feature]]."
+                ),
+            ),
+            CommandDoc(
+                "decreaseSpeechInflectionHandler",
+                details=(
+                    "Decreases the active voice set's inflection temporarily. To save changes "
+                    "or configure individual voice types, see [[speech.voice-sets.feature]]."
+                ),
+            ),
+            CommandDoc(
+                "increaseSpeechInflectionHandler",
+                details=(
+                    "Increases the active voice set's inflection temporarily. To save changes "
+                    "or configure individual voice types, see [[speech.voice-sets.feature]]."
+                ),
+            ),
+            CommandDoc(
+                "decreaseSpeechVolumeHandler",
+                details=(
+                    "Decreases the active voice set's volume temporarily. To save changes or "
+                    "configure individual voice types, see [[speech.voice-sets.feature]]."
+                ),
+            ),
+            CommandDoc(
+                "increaseSpeechVolumeHandler",
+                details=(
+                    "Increases the active voice set's volume temporarily. To save changes or "
+                    "configure individual voice types, see [[speech.voice-sets.feature]]."
+                ),
+            ),
+        ),
         target="speech.commands",
         summary="Control Orca's spoken output.",
         sections=(
@@ -63,6 +134,7 @@ def get_documentation() -> CommandGroupDoc:
                 command_names=("cycleSynthesizerHandler",),
             ),
             CommandSectionDoc(
+                summary=(""),
                 title="Voice sets",
                 target="speech.commands.voice-sets",
                 command_names=("cycleVoiceSetHandler",),

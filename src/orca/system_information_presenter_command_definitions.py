@@ -41,6 +41,14 @@ def get_documentation() -> CommandGroupDoc:
             CommandDoc(
                 "present_modifier_keys_state", summary="Reports Caps Lock and Num Lock state."
             ),
+            CommandDoc(
+                "present_battery_status",
+                details=("Requires the Python psutil package, often packaged as python3-psutil."),
+            ),
+            CommandDoc(
+                "present_cpu_and_memory_usage",
+                details=("Requires the Python psutil package, often packaged as python3-psutil."),
+            ),
         ),
         summary=("Present details such as date, time, battery, CPU, and memory usage."),
     )

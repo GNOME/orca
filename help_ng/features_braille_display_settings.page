@@ -2,10 +2,11 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_braille_display_settings">
   <info>
     <link type="guide" xref="features_braille_guide" />
-    <title type="sort">23. Display settings</title>
+    <title type="sort">37. Display settings</title>
     <title type="link">Display settings</title>
     <desc>
-      Configure braille wrapping, contraction, and indicator dots.
+      Braille display settings control how text fits on your display and how additional
+      information is marked.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -19,11 +20,18 @@
   </info>
   <title>Display settings</title>
   <p>
-    Configure braille wrapping, contraction, and indicator dots.
+    Braille display settings control how text fits on your display and how additional
+    information is marked.
   </p>
   <p>
-    You can toggle contracted braille using a standard keyboard or a braille display. See
-    Braille output for how their bindings are configured.
+    Contracted braille uses abbreviations for words and groups of letters, allowing more text to
+    fit on the display. Orca uses liblouis translation tables to determine the symbols and
+    contractions for your language.
+  </p>
+  <p>
+    Indicator dots mark information such as links and selected text without adding words to the
+    display. See "<link xref="features_text_attributes">Text attributes</link>" to choose which
+    text attributes are marked.
   </p>
   <section id="settings-display-settings">
     <title>Settings</title>
@@ -37,15 +45,14 @@
     <list>
       <item>
         <p>
-          <gui>End of line symbol</gui>: Controls whether
-          Orca shows the end-of-line indicator at the end of each line of text. Default: on.
+          <gui>End of line symbol</gui>: Distinguishes the
+          end of a line of text from the edge of the braille display. Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Word wrap</gui>: Controls whether Orca
-          adjusts displayed text so only full words are shown. When word wrap is off, Orca uses
-          all available cells so more text can be shown at once. Default: off.
+          <gui>Word wrap</gui>: Keeps words from being
+          split across successive pans of the braille display. Default: off.
         </p>
       </item>
       <item>
@@ -57,10 +64,9 @@
       </item>
       <item>
         <p>
-          <gui>Expand word at cursor</gui>: When contracted
-          braille is enabled, controls whether the word at the cursor is shown in uncontracted
-          computer braille, which represents characters individually rather than using
-          contractions. Default: on.
+          <gui>Expand word at cursor</gui>: Shows the word at
+          the cursor in computer braille so you can inspect its individual characters while
+          keeping surrounding text contracted. Default: on.
         </p>
       </item>
       <item>
@@ -93,9 +99,11 @@
           </item>
           <item>
             <p>
-              <gui>Text Attributes:</gui> Selects the dot or
-              dots Orca uses to mark text attributes, such as bold. Choices: None (default), Dot
-              7, Dot 8, Dots 7 and 8.
+              <gui>Text Attributes:</gui> Selects the dots
+              used to mark text attributes in braille, like underlining. The same indicator is
+              used for all attributes enabled for braille; it shows where an attribute is
+              present, rather than which attribute it is. Choosing no indicator hides the
+              markers. Choices: None (default), Dot 7, Dot 8, Dots 7 and 8.
             </p>
           </item>
         </list>
@@ -108,27 +116,25 @@
       <em style="strong">Preferences location:</em>
       <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Braille</gui> group.
     </p>
-    <section id="commands-contraction-keyboard">
-      <title>Standard keyboard commands</title>
-      <list>
-        <item>
-          <p>
-            <gui>Turn contracted braille on and off</gui>
-            Unbound by default.
-          </p>
-        </item>
-      </list>
-    </section>
-    <section id="commands-contraction-braille">
-      <title>Braille display commands</title>
-      <list>
-        <item>
-          <p>
-            <gui>Turn contracted braille on and off</gui>: Six Dots
-          </p>
-        </item>
-      </list>
-    </section>
+    <list>
+      <item>
+        <p>
+          <gui>Turn contracted braille on and off</gui>
+        </p>
+        <list>
+          <item>
+            <p>
+              Keyboard: unbound by default.
+            </p>
+          </item>
+          <item>
+            <p>
+              Braille: Six Dots
+            </p>
+          </item>
+        </list>
+      </item>
+    </list>
   </section>
   <section id="display-settings-related">
     <title>Related topics</title>
@@ -138,8 +144,15 @@
     <list>
       <item>
         <p>
-          <link xref="features_braille_output">Braille output</link>: Read content with
-          a refreshable braille display and control its reading location.
+          <link xref="features_braille_output">Braille output</link>: Braille displays
+          communicate with Orca through BRLTTY, a service that connects braille displays to
+          applications.
+        </p>
+      </item>
+      <item>
+        <p>
+          <link xref="features_clipboard">Clipboard</link>: Present the
+          contents of the system clipboard.
         </p>
       </item>
     </list>

@@ -2,11 +2,11 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_reading_documents_structural_navigation">
   <info>
     <link type="guide" xref="index#reading" />
-    <title type="sort">08. Structural navigation</title>
+    <title type="sort">13. Structural navigation</title>
     <title type="link">Structural navigation</title>
     <desc>
-      Structural navigation lets you move among objects by type such as headings, links, buttons
-      and other interactive controls, lists, landmarks, tables, and large text blocks.
+      Structural navigation lets you move to the next or previous object of a chosen type, or
+      bring up a list of matching objects.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -20,36 +20,27 @@
   </info>
   <title>Structural navigation</title>
   <p>
-    Structural navigation lets you move among objects by type such as headings, links, buttons
-    and other interactive controls, lists, landmarks, tables, and large text blocks.
+    Structural navigation lets you move to the next or previous object of a chosen type, or
+    bring up a list of matching objects. Types include headings, links, buttons and other
+    interactive controls, lists, landmarks, tables, and large text blocks.
+  </p>
+  <p>
+    From a list, you can move to the chosen object without activating it, or activate it when it
+    supports an action, such as following a link or pressing a button.
   </p>
   <p>
     Structural navigation is not limited to web content. It can be used in document content and
-    also in application user interfaces. It relies on the accessible collections interface, an
-    API that lets Orca search the entire accessibility tree quickly. This tree is the structured
-    view of an application's objects provided to assistive technologies. Applications and
-    toolkits that do not support this interface, or omit objects from the tree, will not work as
+    in application user interfaces. It relies on the accessible collections interface, an API
+    that lets Orca search the accessibility tree efficiently. This tree is the structured view
+    of an application's objects provided to assistive technologies. Applications and toolkits
+    that do not support this interface, or omit objects from the tree, will not work as
     expected.
   </p>
   <p>
-    The large object commands find large text blocks; use Large object length to set their
-    minimum size. Internal frames are documents embedded within another page.
-  </p>
-  <p>
-    Structural navigation has three modes: off, document mode, and GUI mode. In document mode,
-    structural navigation searches the current document or web page. In GUI (graphical user
-    interface) mode, it searches the current window excluding document objects. To switch
-    between these modes, use <keyseq>
-      <key>Orca Modifier</key>
-      <key>Z</key>
-    </keyseq>.
-  </p>
-  <p>
-    When browse mode is active, you can use structural navigation commands to move among
-    interactive widgets and other document elements. If focus mode is active, switch to browse
-    mode before using structural navigation commands in document content. You can configure
-    whether structural navigation automatically switches Orca to focus mode when it lands on an
-    interactive widget in Documents preferences.
+    When browse mode is active, structural navigation can move among interactive widgets and
+    other document elements. If focus mode is active, switch to browse mode before using
+    structural navigation in document content. The settings and commands below control its scope
+    and behavior.
   </p>
   <section id="settings-structural-navigation">
     <title>Settings</title>
@@ -69,13 +60,6 @@
       </item>
       <item>
         <p>
-          <gui>Automatic focus mode</gui>: Controls whether
-          Orca switches to focus mode when structural navigation lands on an interactive widget.
-          Default: off.
-        </p>
-      </item>
-      <item>
-        <p>
           <gui>Wrap around</gui>: Controls whether
           structural navigation wraps to the other end of the document. Default: on.
         </p>
@@ -83,7 +67,7 @@
       <item>
         <p>
           <gui>Large object length</gui>: Sets the minimum
-          number of characters for an element to be included by large object navigation
+          number of characters in a text block for the large-object structural navigation
           commands. Default: 75. Range: 1 to 500.
         </p>
       </item>
@@ -106,11 +90,23 @@
       <list>
         <item>
           <p>
-            <gui>Cycles to the next structural navigation mode</gui>
-            <keyseq>
+            <gui>Cycles to the next structural navigation mode</gui>: <keyseq>
               <key>Orca Modifier</key>
               <key>Z</key>
             </keyseq>
+          </p>
+          <p>
+            Cycles through off, document mode, and GUI mode. Document mode searches the current
+            document or web page. GUI (graphical user interface) mode searches the current
+            window or dialog outside document content. For example, GUI mode can find toolbar
+            buttons in a browser or a native application, while document mode finds buttons
+            within a web page.
+          </p>
+          <p>
+            When moving to the next or previous object in GUI mode, Orca attempts to move
+            keyboard focus to that object. Not all applications and toolkits support this for
+            every widget. Orca checks whether the object reports having focus and notifies you
+            if it does not.
           </p>
         </item>
       </list>
@@ -120,8 +116,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous heading</gui>
-            <keyseq>
+            <gui>Go to previous heading</gui>: <keyseq>
               <key>Shift</key>
               <key>H</key>
             </keyseq>
@@ -129,8 +124,7 @@
         </item>
         <item>
           <p>
-            <gui>Go to previous heading at level 1</gui>
-            <keyseq>
+            <gui>Go to previous heading at level 1</gui>: <keyseq>
               <key>Shift</key>
               <key>1</key>
             </keyseq>
@@ -138,8 +132,7 @@
         </item>
         <item>
           <p>
-            <gui>Go to previous heading at level 2</gui>
-            <keyseq>
+            <gui>Go to previous heading at level 2</gui>: <keyseq>
               <key>Shift</key>
               <key>2</key>
             </keyseq>
@@ -147,8 +140,7 @@
         </item>
         <item>
           <p>
-            <gui>Go to previous heading at level 3</gui>
-            <keyseq>
+            <gui>Go to previous heading at level 3</gui>: <keyseq>
               <key>Shift</key>
               <key>3</key>
             </keyseq>
@@ -156,8 +148,7 @@
         </item>
         <item>
           <p>
-            <gui>Go to previous heading at level 4</gui>
-            <keyseq>
+            <gui>Go to previous heading at level 4</gui>: <keyseq>
               <key>Shift</key>
               <key>4</key>
             </keyseq>
@@ -165,8 +156,7 @@
         </item>
         <item>
           <p>
-            <gui>Go to previous heading at level 5</gui>
-            <keyseq>
+            <gui>Go to previous heading at level 5</gui>: <keyseq>
               <key>Shift</key>
               <key>5</key>
             </keyseq>
@@ -174,8 +164,7 @@
         </item>
         <item>
           <p>
-            <gui>Go to previous heading at level 6</gui>
-            <keyseq>
+            <gui>Go to previous heading at level 6</gui>: <keyseq>
               <key>Shift</key>
               <key>6</key>
             </keyseq>
@@ -183,64 +172,56 @@
         </item>
         <item>
           <p>
-            <gui>Go to next heading</gui>
-            <keyseq>
+            <gui>Go to next heading</gui>: <keyseq>
               <key>H</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to next heading at level 1</gui>
-            <keyseq>
+            <gui>Go to next heading at level 1</gui>: <keyseq>
               <key>1</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to next heading at level 2</gui>
-            <keyseq>
+            <gui>Go to next heading at level 2</gui>: <keyseq>
               <key>2</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to next heading at level 3</gui>
-            <keyseq>
+            <gui>Go to next heading at level 3</gui>: <keyseq>
               <key>3</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to next heading at level 4</gui>
-            <keyseq>
+            <gui>Go to next heading at level 4</gui>: <keyseq>
               <key>4</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to next heading at level 5</gui>
-            <keyseq>
+            <gui>Go to next heading at level 5</gui>: <keyseq>
               <key>5</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to next heading at level 6</gui>
-            <keyseq>
+            <gui>Go to next heading at level 6</gui>: <keyseq>
               <key>6</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of headings</gui>
-            <keyseq>
+            <gui>Display a list of headings</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>H</key>
@@ -249,8 +230,7 @@
         </item>
         <item>
           <p>
-            <gui>Display a list of headings at level 1</gui>
-            <keyseq>
+            <gui>Display a list of headings at level 1</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>1</key>
@@ -259,8 +239,7 @@
         </item>
         <item>
           <p>
-            <gui>Display a list of headings at level 2</gui>
-            <keyseq>
+            <gui>Display a list of headings at level 2</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>2</key>
@@ -269,8 +248,7 @@
         </item>
         <item>
           <p>
-            <gui>Display a list of headings at level 3</gui>
-            <keyseq>
+            <gui>Display a list of headings at level 3</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>3</key>
@@ -279,8 +257,7 @@
         </item>
         <item>
           <p>
-            <gui>Display a list of headings at level 4</gui>
-            <keyseq>
+            <gui>Display a list of headings at level 4</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>4</key>
@@ -289,8 +266,7 @@
         </item>
         <item>
           <p>
-            <gui>Display a list of headings at level 5</gui>
-            <keyseq>
+            <gui>Display a list of headings at level 5</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>5</key>
@@ -299,8 +275,7 @@
         </item>
         <item>
           <p>
-            <gui>Display a list of headings at level 6</gui>
-            <keyseq>
+            <gui>Display a list of headings at level 6</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>6</key>
@@ -314,18 +289,20 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous annotation</gui> Unbound by default.
+            <gui>Go to previous annotation</gui>: Unbound by
+            default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to next annotation</gui> Unbound by default.
+            <gui>Go to next annotation</gui>: Unbound by
+            default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of annotations</gui>
-            Unbound by default.
+            <gui>Display a list of annotations</gui>: Unbound by
+            default.
           </p>
         </item>
       </list>
@@ -335,8 +312,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous blockquote</gui>
-            <keyseq>
+            <gui>Go to previous blockquote</gui>: <keyseq>
               <key>Shift</key>
               <key>Q</key>
             </keyseq>
@@ -344,16 +320,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next blockquote</gui>
-            <keyseq>
+            <gui>Go to next blockquote</gui>: <keyseq>
               <key>Q</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of blockquotes</gui>
-            <keyseq>
+            <gui>Display a list of blockquotes</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>Q</key>
@@ -367,8 +341,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous button</gui>
-            <keyseq>
+            <gui>Go to previous button</gui>: <keyseq>
               <key>Shift</key>
               <key>B</key>
             </keyseq>
@@ -376,16 +349,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next button</gui>
-            <keyseq>
+            <gui>Go to next button</gui>: <keyseq>
               <key>B</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of buttons</gui>
-            <keyseq>
+            <gui>Display a list of buttons</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>B</key>
@@ -399,8 +370,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous check box</gui>
-            <keyseq>
+            <gui>Go to previous check box</gui>: <keyseq>
               <key>Shift</key>
               <key>X</key>
             </keyseq>
@@ -408,16 +378,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next check box</gui>
-            <keyseq>
+            <gui>Go to next check box</gui>: <keyseq>
               <key>X</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of check boxes</gui>
-            <keyseq>
+            <gui>Display a list of check boxes</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>X</key>
@@ -431,8 +399,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous combo box</gui>
-            <keyseq>
+            <gui>Go to previous combo box</gui>: <keyseq>
               <key>Shift</key>
               <key>C</key>
             </keyseq>
@@ -440,16 +407,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next combo box</gui>
-            <keyseq>
+            <gui>Go to next combo box</gui>: <keyseq>
               <key>C</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of combo boxes</gui>
-            <keyseq>
+            <gui>Display a list of combo boxes</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>C</key>
@@ -463,8 +428,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous entry</gui>
-            <keyseq>
+            <gui>Go to previous entry</gui>: <keyseq>
               <key>Shift</key>
               <key>E</key>
             </keyseq>
@@ -472,16 +436,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next entry</gui>
-            <keyseq>
+            <gui>Go to next entry</gui>: <keyseq>
               <key>E</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of entries</gui>
-            <keyseq>
+            <gui>Display a list of entries</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>E</key>
@@ -495,8 +457,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous form field</gui>
-            <keyseq>
+            <gui>Go to previous form field</gui>: <keyseq>
               <key>Shift</key>
               <key>F</key>
             </keyseq>
@@ -504,16 +465,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next form field</gui>
-            <keyseq>
+            <gui>Go to next form field</gui>: <keyseq>
               <key>F</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of form fields</gui>
-            <keyseq>
+            <gui>Display a list of form fields</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>F</key>
@@ -527,19 +486,29 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous internal frame</gui>
-            Unbound by default.
+            <gui>Go to previous internal frame</gui>: Unbound by
+            default.
+          </p>
+          <p>
+            An internal frame is a document embedded within another page.
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to next internal frame</gui> Unbound by default.
+            <gui>Go to next internal frame</gui>: Unbound by
+            default.
+          </p>
+          <p>
+            An internal frame is a document embedded within another page.
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of internal frames</gui>
-            Unbound by default.
+            <gui>Display a list of internal frames</gui>: Unbound by
+            default.
+          </p>
+          <p>
+            An internal frame is a document embedded within another page.
           </p>
         </item>
       </list>
@@ -549,8 +518,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous image</gui>
-            <keyseq>
+            <gui>Go to previous image</gui>: <keyseq>
               <key>Shift</key>
               <key>G</key>
             </keyseq>
@@ -558,16 +526,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next image</gui>
-            <keyseq>
+            <gui>Go to next image</gui>: <keyseq>
               <key>G</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of images</gui>
-            <keyseq>
+            <gui>Display a list of images</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>G</key>
@@ -581,8 +547,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous landmark</gui>
-            <keyseq>
+            <gui>Go to previous landmark</gui>: <keyseq>
               <key>Shift</key>
               <key>M</key>
             </keyseq>
@@ -590,16 +555,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next landmark</gui>
-            <keyseq>
+            <gui>Go to next landmark</gui>: <keyseq>
               <key>M</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of landmarks</gui>
-            <keyseq>
+            <gui>Display a list of landmarks</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>M</key>
@@ -613,8 +576,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous list</gui>
-            <keyseq>
+            <gui>Go to previous list</gui>: <keyseq>
               <key>Shift</key>
               <key>L</key>
             </keyseq>
@@ -622,16 +584,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next list</gui>
-            <keyseq>
+            <gui>Go to next list</gui>: <keyseq>
               <key>L</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of lists</gui>
-            <keyseq>
+            <gui>Display a list of lists</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>L</key>
@@ -645,8 +605,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous list item</gui>
-            <keyseq>
+            <gui>Go to previous list item</gui>: <keyseq>
               <key>Shift</key>
               <key>I</key>
             </keyseq>
@@ -654,16 +613,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next list item</gui>
-            <keyseq>
+            <gui>Go to next list item</gui>: <keyseq>
               <key>I</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of list items</gui>
-            <keyseq>
+            <gui>Display a list of list items</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>I</key>
@@ -677,19 +634,20 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous math expression</gui>
-            Unbound by default.
+            <gui>Go to previous math expression</gui>: Unbound by
+            default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to next math expression</gui> Unbound by default.
+            <gui>Go to next math expression</gui>: Unbound by
+            default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of math expressions</gui>
-            Unbound by default.
+            <gui>Display a list of math expressions</gui>: Unbound by
+            default.
           </p>
         </item>
       </list>
@@ -699,8 +657,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous paragraph</gui>
-            <keyseq>
+            <gui>Go to previous paragraph</gui>: <keyseq>
               <key>Shift</key>
               <key>P</key>
             </keyseq>
@@ -708,16 +665,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next paragraph</gui>
-            <keyseq>
+            <gui>Go to next paragraph</gui>: <keyseq>
               <key>P</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of paragraphs</gui>
-            <keyseq>
+            <gui>Display a list of paragraphs</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>P</key>
@@ -731,8 +686,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous radio button</gui>
-            <keyseq>
+            <gui>Go to previous radio button</gui>: <keyseq>
               <key>Shift</key>
               <key>R</key>
             </keyseq>
@@ -740,16 +694,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next radio button</gui>
-            <keyseq>
+            <gui>Go to next radio button</gui>: <keyseq>
               <key>R</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of radio buttons</gui>
-            <keyseq>
+            <gui>Display a list of radio buttons</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>R</key>
@@ -763,8 +715,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous table</gui>
-            <keyseq>
+            <gui>Go to previous table</gui>: <keyseq>
               <key>Shift</key>
               <key>T</key>
             </keyseq>
@@ -772,16 +723,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next table</gui>
-            <keyseq>
+            <gui>Go to next table</gui>: <keyseq>
               <key>T</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of tables</gui>
-            <keyseq>
+            <gui>Display a list of tables</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>T</key>
@@ -795,8 +744,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous link</gui>
-            <keyseq>
+            <gui>Go to previous link</gui>: <keyseq>
               <key>Shift</key>
               <key>K</key>
             </keyseq>
@@ -804,16 +752,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next link</gui>
-            <keyseq>
+            <gui>Go to next link</gui>: <keyseq>
               <key>K</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of links</gui>
-            <keyseq>
+            <gui>Display a list of links</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>K</key>
@@ -827,8 +773,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous unvisited link</gui>
-            <keyseq>
+            <gui>Go to previous unvisited link</gui>: <keyseq>
               <key>Shift</key>
               <key>U</key>
             </keyseq>
@@ -836,16 +781,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next unvisited link</gui>
-            <keyseq>
+            <gui>Go to next unvisited link</gui>: <keyseq>
               <key>U</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of unvisited links</gui>
-            <keyseq>
+            <gui>Display a list of unvisited links</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>U</key>
@@ -859,8 +802,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous visited link</gui>
-            <keyseq>
+            <gui>Go to previous visited link</gui>: <keyseq>
               <key>Shift</key>
               <key>V</key>
             </keyseq>
@@ -868,16 +810,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next visited link</gui>
-            <keyseq>
+            <gui>Go to next visited link</gui>: <keyseq>
               <key>V</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of visited links</gui>
-            <keyseq>
+            <gui>Display a list of visited links</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>V</key>
@@ -891,8 +831,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous large object</gui>
-            <keyseq>
+            <gui>Go to previous large object</gui>: <keyseq>
               <key>Shift</key>
               <key>O</key>
             </keyseq>
@@ -900,16 +839,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next large object</gui>
-            <keyseq>
+            <gui>Go to next large object</gui>: <keyseq>
               <key>O</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of large objects</gui>
-            <keyseq>
+            <gui>Display a list of large objects</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>O</key>
@@ -923,8 +860,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous clickable</gui>
-            <keyseq>
+            <gui>Go to previous clickable</gui>: <keyseq>
               <key>Shift</key>
               <key>A</key>
             </keyseq>
@@ -932,16 +868,14 @@
         </item>
         <item>
           <p>
-            <gui>Go to next clickable</gui>
-            <keyseq>
+            <gui>Go to next clickable</gui>: <keyseq>
               <key>A</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of clickables</gui>
-            <keyseq>
+            <gui>Display a list of clickables</gui>: <keyseq>
               <key>Alt</key>
               <key>Shift</key>
               <key>A</key>
@@ -955,8 +889,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous separator</gui>
-            <keyseq>
+            <gui>Go to previous separator</gui>: <keyseq>
               <key>Shift</key>
               <key>S</key>
             </keyseq>
@@ -964,8 +897,7 @@
         </item>
         <item>
           <p>
-            <gui>Go to next separator</gui>
-            <keyseq>
+            <gui>Go to next separator</gui>: <keyseq>
               <key>S</key>
             </keyseq>
           </p>
@@ -977,16 +909,14 @@
       <list>
         <item>
           <p>
-            <gui>Go to end of container</gui>
-            <keyseq>
+            <gui>Go to end of container</gui>: <keyseq>
               <key>Comma</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to start of container</gui>
-            <keyseq>
+            <gui>Go to start of container</gui>: <keyseq>
               <key>Shift</key>
               <key>Comma</key>
             </keyseq>

@@ -104,9 +104,8 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             label=guilabels.SAY_ALL_UP_AND_DOWN_ARROW,
                             kind="switch",
                             summary=(
-                                "Allows Up Arrow and Down Arrow to move within the document "
-                                "during Say All so you can re-hear recent content or skip "
-                                "ahead without restarting Say All."
+                                "Controls whether Up Arrow and Down Arrow rewind and "
+                                "fast-forward during Say All instead of interrupting it."
                             ),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_REWIND_AND_FAST_FORWARD,
@@ -115,9 +114,9 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             label=guilabels.SAY_ALL_STRUCTURAL_NAVIGATION,
                             kind="switch",
                             summary=(
-                                "Allows structural navigation commands, such as heading and "
-                                "paragraph navigation, to move backward and forward during "
-                                "Say All."
+                                "Controls whether structural navigation is available during Say "
+                                "All. Moving to another heading or other document element "
+                                "continues presentation from there."
                             ),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_STRUCTURAL_NAVIGATION,
@@ -145,9 +144,11 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         PreferenceControlDoc(
                             label=guilabels.TEXT_ATTRIBUTE_CHANGES,
                             kind="choice",
+                            target="say-all.text-attribute-changes",
                             summary=(
-                                "Controls when Orca announces text formatting changes during "
-                                "Say All."
+                                "Controls automatic announcements of formatting changes during "
+                                "Say All, independently of announcements during navigation and "
+                                "the attribute list used by the explicit formatting command."
                             ),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,

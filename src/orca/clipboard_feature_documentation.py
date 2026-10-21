@@ -33,7 +33,7 @@ def get_feature_documentation() -> FeaturePageDoc:
         title="Clipboard",
         link_title="Clipboard",
         description="Present the contents of the system clipboard.",
-        guide_xref="index#information",
+        guide_xref="index#interaction",
         target="clipboard.feature",
         sections=(
             FeatureSectionDoc(

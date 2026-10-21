@@ -93,7 +93,9 @@ class ProfilePreferencesGrid(  # pylint: disable=too-many-instance-attributes
                             label=guilabels.PROFILE_CREATE_NEW,
                             summary=(
                                 "Creates a profile from the current profile's saved settings "
-                                "and switches to it."
+                                "and switches to it. Type a unique name and confirm. Apply "
+                                "recent edits first if you want them included: unsaved changes "
+                                "are not copied and are discarded if you continue."
                             ),
                             placement="header",
                         ),
@@ -101,11 +103,20 @@ class ProfilePreferencesGrid(  # pylint: disable=too-many-instance-attributes
                     item_actions=(
                         PreferenceActionDoc(
                             label=guilabels.MENU_RENAME,
-                            summary=("Changes the selected profile's name."),
+                            summary=(
+                                "Changes the selected profile's name. Use Tab to reach the "
+                                "button, enter a new name, and confirm it in the rename dialog. "
+                                "Then apply or save the change in the Preferences window. The "
+                                "default profile cannot be renamed."
+                            ),
                         ),
                         PreferenceActionDoc(
                             label=guilabels.MENU_REMOVE_PROFILE,
-                            summary=("Deletes the selected profile and its saved settings."),
+                            summary=(
+                                "Deletes the selected profile and its saved settings "
+                                "immediately after confirmation. If it is active, Orca switches "
+                                "to the default profile. The default profile cannot be removed."
+                            ),
                         ),
                     ),
                 ),

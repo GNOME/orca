@@ -26,7 +26,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
-from .help_metadata import CommandGroupDoc
+from .help_metadata import CommandDoc, CommandGroupDoc
 
 if TYPE_CHECKING:
     from .flat_review_finder import FlatReviewFinder
@@ -36,6 +36,33 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for find commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "findHandler",
+                details=(
+                    "Opens a dialog where you can enter text to search for, start from the "
+                    "current location or the top of the window, match case, match whole words, "
+                    "search backward, and wrap around. Search text is interpreted as a regular "
+                    "expression; characters such as a period or an asterisk have special "
+                    "meanings. Use a backslash before a special character to match it "
+                    "literally."
+                ),
+            ),
+            CommandDoc(
+                "findNextHandler",
+                details=(
+                    "Moves to the next match without reopening the dialog. If you have not "
+                    "searched yet, opens the search dialog."
+                ),
+            ),
+            CommandDoc(
+                "findPreviousHandler",
+                details=(
+                    "Moves to the previous match without reopening the dialog. If you have not "
+                    "searched yet, opens the search dialog."
+                ),
+            ),
+        ),
         summary="Search visible contents in a window and move flat review to a match.",
         see_also=("reviewing.orca-find",),
     )

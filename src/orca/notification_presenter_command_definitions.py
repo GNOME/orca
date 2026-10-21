@@ -27,9 +27,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import cmdnames
+from . import cmdnames, guilabels
 from .command import Command, KeyboardCommand
-from .help_metadata import CommandGroupDoc
+from .help_metadata import CommandDoc, CommandGroupDoc
 
 if TYPE_CHECKING:
     from .notification_presenter import NotificationPresenter
@@ -39,6 +39,30 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for notification commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "show_notification_list",
+                details=(
+                    "Opens a list of recent messages, newest first, alongside how long ago "
+                    "each was received. Use Up Arrow and Down Arrow to move through the "
+                    f'messages. Use "{guilabels.BTN_CLEAR}" to remove the notification '
+                    "history and close the list. "
+                    f'Use "{guilabels.BTN_CLOSE}" to dismiss the list without clearing it.'
+                ),
+            ),
+            CommandDoc(
+                "present_last_notification",
+                details=("Presents the most recent message and how long ago it was received."),
+            ),
+            CommandDoc(
+                "present_previous_notification",
+                details=("Presents the previous message and how long ago it was received."),
+            ),
+            CommandDoc(
+                "present_next_notification",
+                details=("Presents the next message and how long ago it was received."),
+            ),
+        ),
         summary="Review messages received from the desktop.",
         see_also=("reviewing.notifications",),
     )

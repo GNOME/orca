@@ -26,7 +26,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
-from .help_metadata import CommandGroupDoc
+from .help_metadata import CommandDoc, CommandGroupDoc
 
 if TYPE_CHECKING:
     from .screen_reader_manager import ScreenReaderManager
@@ -36,6 +36,16 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for screen reader management commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "shutdownHandler",
+                details=(
+                    "Quits an Orca instance started as a regular application. For a "
+                    "systemd-managed instance, use the desktop's screen reader controls "
+                    "instead; quitting the application can cause the service to restart it."
+                ),
+            ),
+        ),
         summary=(
             "These commands open Orca preferences or control the screen reader application itself."
         ),

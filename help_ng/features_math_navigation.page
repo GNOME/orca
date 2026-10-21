@@ -2,10 +2,10 @@
 <page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" id="features_math_navigation">
   <info>
     <link type="guide" xref="index#reading" />
-    <title type="sort">13. Math navigation</title>
+    <title type="sort">15. Math navigation</title>
     <title type="link">Math navigation</title>
     <desc>
-      Read and explore mathematical expressions.
+      Explore mathematical expressions using MathCAT.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -21,34 +21,13 @@
     <media type="image" width="40px" height="40px" its:translate="no" src="figures/orca-logo.svg" /> Math navigation
   </title>
   <p>
-    Explore mathematical expressions and their component parts.
+    Explore mathematical expressions.
   </p>
   <p>
-    Math navigation requires MathCAT, a library for presenting mathematical expressions. To
-    start, move to an expression, such as an equation, fraction, or formula, and press <keyseq>
-      <key>Orca Modifier</key>
-      <key>Alt</key>
-      <key>M</key>
-    </keyseq>. Press <key>Escape</key> to leave math navigation.
-  </p>
-  <p>
-    An expression contains related parts, such as a fraction's numerator and denominator.
-    Movement commands explore these parts; zooming in explores smaller parts and zooming out
-    returns to larger structures.
-  </p>
-  <p>
-    The Navigation mode setting selects granularity: Enhanced for meaningful subexpressions,
-    Simple for smaller pieces, and Character for individual characters. The granularity commands
-    switch among these modes while you explore. Read commands speak the selected part; Describe
-    commands give an outline of its structure. Speech mode chooses which of these presentations
-    follows a move. In a matrix, cells are the entries arranged in rows and columns.
-  </p>
-  <p>
-    The Where am I commands in math navigation describe your location within the expression,
-    rather than your location in the application.
-  </p>
-  <p>
-    You can set numbered place markers to return to, read, or describe parts of an expression.
+    Math navigation requires MathCAT, a library for presenting mathematical expressions. An
+    expression contains related parts, such as a fraction's numerator and denominator. In a
+    matrix, cells are entries arranged in rows and columns. The commands below let you explore
+    an expression's structure and your location within it.
   </p>
   <section id="settings-math-navigation">
     <title>Settings</title>
@@ -187,20 +166,25 @@
       <list>
         <item>
           <p>
-            <gui>Enter math navigation mode</gui>
-            <keyseq>
+            <gui>Enter math navigation mode</gui>: <keyseq>
               <key>Orca Modifier</key>
               <key>Alt</key>
               <key>M</key>
             </keyseq>
           </p>
+          <p>
+            Starts math navigation at the current expression. First move to an expression, such
+            as an equation, fraction, or formula.
+          </p>
         </item>
         <item>
           <p>
-            <gui>Exit math navigation mode</gui>
-            <keyseq>
+            <gui>Exit math navigation mode</gui>: <keyseq>
               <key>Escape</key>
             </keyseq>
+          </p>
+          <p>
+            Leaves math navigation.
           </p>
         </item>
       </list>
@@ -210,50 +194,50 @@
       <list>
         <item>
           <p>
-            <gui>Move to next item</gui>
-            <keyseq>
+            <gui>Move to next item</gui>: <keyseq>
               <key>Right Arrow</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Move to previous item</gui>
-            <keyseq>
+            <gui>Move to previous item</gui>: <keyseq>
               <key>Left Arrow</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Zoom in</gui>
-            <keyseq>
+            <gui>Zoom in</gui>: <keyseq>
+              <key>Down Arrow</key>
+            </keyseq>
+          </p>
+          <p>
+            Explores smaller parts of the expression.
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Zoom out</gui>: <keyseq>
+              <key>Up Arrow</key>
+            </keyseq>
+          </p>
+          <p>
+            Returns to larger structures within the expression.
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Zoom in completely</gui>: <keyseq>
+              <key>Ctrl</key>
+              <key>Shift</key>
               <key>Down Arrow</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Zoom out</gui>
-            <keyseq>
-              <key>Up Arrow</key>
-            </keyseq>
-          </p>
-        </item>
-        <item>
-          <p>
-            <gui>Zoom in completely</gui>
-            <keyseq>
-              <key>Ctrl</key>
-              <key>Shift</key>
-              <key>Down Arrow</key>
-            </keyseq>
-          </p>
-        </item>
-        <item>
-          <p>
-            <gui>Zoom out completely</gui>
-            <keyseq>
+            <gui>Zoom out completely</gui>: <keyseq>
               <key>Ctrl</key>
               <key>Shift</key>
               <key>Up Arrow</key>
@@ -262,24 +246,21 @@
         </item>
         <item>
           <p>
-            <gui>Move to start</gui>
-            <keyseq>
+            <gui>Move to start</gui>: <keyseq>
               <key>Home</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Move to end</gui>
-            <keyseq>
+            <gui>Move to end</gui>: <keyseq>
               <key>End</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Move to line start</gui>
-            <keyseq>
+            <gui>Move to line start</gui>: <keyseq>
               <key>Ctrl</key>
               <key>Home</key>
             </keyseq>
@@ -287,8 +268,7 @@
         </item>
         <item>
           <p>
-            <gui>Move to line end</gui>
-            <keyseq>
+            <gui>Move to line end</gui>: <keyseq>
               <key>Ctrl</key>
               <key>End</key>
             </keyseq>
@@ -296,8 +276,7 @@
         </item>
         <item>
           <p>
-            <gui>Move to column start</gui>
-            <keyseq>
+            <gui>Move to column start</gui>: <keyseq>
               <key>Shift</key>
               <key>Home</key>
             </keyseq>
@@ -305,8 +284,7 @@
         </item>
         <item>
           <p>
-            <gui>Move to column end</gui>
-            <keyseq>
+            <gui>Move to column end</gui>: <keyseq>
               <key>Shift</key>
               <key>End</key>
             </keyseq>
@@ -314,8 +292,7 @@
         </item>
         <item>
           <p>
-            <gui>Move to previous cell</gui>
-            <keyseq>
+            <gui>Move to previous cell</gui>: <keyseq>
               <key>Ctrl</key>
               <key>Left Arrow</key>
             </keyseq>
@@ -323,8 +300,7 @@
         </item>
         <item>
           <p>
-            <gui>Move to next cell</gui>
-            <keyseq>
+            <gui>Move to next cell</gui>: <keyseq>
               <key>Ctrl</key>
               <key>Right Arrow</key>
             </keyseq>
@@ -332,8 +308,7 @@
         </item>
         <item>
           <p>
-            <gui>Move up one cell</gui>
-            <keyseq>
+            <gui>Move up one cell</gui>: <keyseq>
               <key>Ctrl</key>
               <key>Up Arrow</key>
             </keyseq>
@@ -341,8 +316,7 @@
         </item>
         <item>
           <p>
-            <gui>Move down one cell</gui>
-            <keyseq>
+            <gui>Move down one cell</gui>: <keyseq>
               <key>Ctrl</key>
               <key>Down Arrow</key>
             </keyseq>
@@ -350,16 +324,14 @@
         </item>
         <item>
           <p>
-            <gui>Return to last position</gui>
-            <keyseq>
+            <gui>Return to last position</gui>: <keyseq>
               <key>Backspace</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Increase navigation granularity</gui>
-            <keyseq>
+            <gui>Increase navigation granularity</gui>: <keyseq>
               <key>Shift</key>
               <key>Up Arrow</key>
             </keyseq>
@@ -367,8 +339,7 @@
         </item>
         <item>
           <p>
-            <gui>Decrease navigation granularity</gui>
-            <keyseq>
+            <gui>Decrease navigation granularity</gui>: <keyseq>
               <key>Shift</key>
               <key>Down Arrow</key>
             </keyseq>
@@ -381,88 +352,88 @@
       <list>
         <item>
           <p>
-            <gui>Go to place marker</gui>: Uses place marker
-            0. <keyseq>
+            <gui>Go to place marker</gui>: Returns to place
+            marker 0. <keyseq>
               <key>0</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to place marker</gui>: Uses place marker
-            1. <keyseq>
+            <gui>Go to place marker</gui>: Returns to place
+            marker 1. <keyseq>
               <key>1</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to place marker</gui>: Uses place marker
-            2. <keyseq>
+            <gui>Go to place marker</gui>: Returns to place
+            marker 2. <keyseq>
               <key>2</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to place marker</gui>: Uses place marker
-            3. <keyseq>
+            <gui>Go to place marker</gui>: Returns to place
+            marker 3. <keyseq>
               <key>3</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to place marker</gui>: Uses place marker
-            4. <keyseq>
+            <gui>Go to place marker</gui>: Returns to place
+            marker 4. <keyseq>
               <key>4</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to place marker</gui>: Uses place marker
-            5. <keyseq>
+            <gui>Go to place marker</gui>: Returns to place
+            marker 5. <keyseq>
               <key>5</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to place marker</gui>: Uses place marker
-            6. <keyseq>
+            <gui>Go to place marker</gui>: Returns to place
+            marker 6. <keyseq>
               <key>6</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to place marker</gui>: Uses place marker
-            7. <keyseq>
+            <gui>Go to place marker</gui>: Returns to place
+            marker 7. <keyseq>
               <key>7</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to place marker</gui>: Uses place marker
-            8. <keyseq>
+            <gui>Go to place marker</gui>: Returns to place
+            marker 8. <keyseq>
               <key>8</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to place marker</gui>: Uses place marker
-            9. <keyseq>
+            <gui>Go to place marker</gui>: Returns to place
+            marker 9. <keyseq>
               <key>9</key>
             </keyseq>
           </p>
         </item>
         <item>
           <p>
-            <gui>Set place marker</gui>: Uses place marker
-            0. <keyseq>
+            <gui>Set place marker</gui>: Sets place marker
+            0 at the current part of the expression. <keyseq>
               <key>Ctrl</key>
               <key>0</key>
             </keyseq>
@@ -470,8 +441,8 @@
         </item>
         <item>
           <p>
-            <gui>Set place marker</gui>: Uses place marker
-            1. <keyseq>
+            <gui>Set place marker</gui>: Sets place marker
+            1 at the current part of the expression. <keyseq>
               <key>Ctrl</key>
               <key>1</key>
             </keyseq>
@@ -479,8 +450,8 @@
         </item>
         <item>
           <p>
-            <gui>Set place marker</gui>: Uses place marker
-            2. <keyseq>
+            <gui>Set place marker</gui>: Sets place marker
+            2 at the current part of the expression. <keyseq>
               <key>Ctrl</key>
               <key>2</key>
             </keyseq>
@@ -488,8 +459,8 @@
         </item>
         <item>
           <p>
-            <gui>Set place marker</gui>: Uses place marker
-            3. <keyseq>
+            <gui>Set place marker</gui>: Sets place marker
+            3 at the current part of the expression. <keyseq>
               <key>Ctrl</key>
               <key>3</key>
             </keyseq>
@@ -497,8 +468,8 @@
         </item>
         <item>
           <p>
-            <gui>Set place marker</gui>: Uses place marker
-            4. <keyseq>
+            <gui>Set place marker</gui>: Sets place marker
+            4 at the current part of the expression. <keyseq>
               <key>Ctrl</key>
               <key>4</key>
             </keyseq>
@@ -506,8 +477,8 @@
         </item>
         <item>
           <p>
-            <gui>Set place marker</gui>: Uses place marker
-            5. <keyseq>
+            <gui>Set place marker</gui>: Sets place marker
+            5 at the current part of the expression. <keyseq>
               <key>Ctrl</key>
               <key>5</key>
             </keyseq>
@@ -515,8 +486,8 @@
         </item>
         <item>
           <p>
-            <gui>Set place marker</gui>: Uses place marker
-            6. <keyseq>
+            <gui>Set place marker</gui>: Sets place marker
+            6 at the current part of the expression. <keyseq>
               <key>Ctrl</key>
               <key>6</key>
             </keyseq>
@@ -524,8 +495,8 @@
         </item>
         <item>
           <p>
-            <gui>Set place marker</gui>: Uses place marker
-            7. <keyseq>
+            <gui>Set place marker</gui>: Sets place marker
+            7 at the current part of the expression. <keyseq>
               <key>Ctrl</key>
               <key>7</key>
             </keyseq>
@@ -533,8 +504,8 @@
         </item>
         <item>
           <p>
-            <gui>Set place marker</gui>: Uses place marker
-            8. <keyseq>
+            <gui>Set place marker</gui>: Sets place marker
+            8 at the current part of the expression. <keyseq>
               <key>Ctrl</key>
               <key>8</key>
             </keyseq>
@@ -542,8 +513,8 @@
         </item>
         <item>
           <p>
-            <gui>Set place marker</gui>: Uses place marker
-            9. <keyseq>
+            <gui>Set place marker</gui>: Sets place marker
+            9 at the current part of the expression. <keyseq>
               <key>Ctrl</key>
               <key>9</key>
             </keyseq>
@@ -551,8 +522,8 @@
         </item>
         <item>
           <p>
-            <gui>Read place marker</gui>: Uses place marker
-            0. <keyseq>
+            <gui>Read place marker</gui>: Speaks the part of
+            the expression at place marker 0. <keyseq>
               <key>Shift</key>
               <key>0</key>
             </keyseq>
@@ -560,8 +531,8 @@
         </item>
         <item>
           <p>
-            <gui>Read place marker</gui>: Uses place marker
-            1. <keyseq>
+            <gui>Read place marker</gui>: Speaks the part of
+            the expression at place marker 1. <keyseq>
               <key>Shift</key>
               <key>1</key>
             </keyseq>
@@ -569,8 +540,8 @@
         </item>
         <item>
           <p>
-            <gui>Read place marker</gui>: Uses place marker
-            2. <keyseq>
+            <gui>Read place marker</gui>: Speaks the part of
+            the expression at place marker 2. <keyseq>
               <key>Shift</key>
               <key>2</key>
             </keyseq>
@@ -578,8 +549,8 @@
         </item>
         <item>
           <p>
-            <gui>Read place marker</gui>: Uses place marker
-            3. <keyseq>
+            <gui>Read place marker</gui>: Speaks the part of
+            the expression at place marker 3. <keyseq>
               <key>Shift</key>
               <key>3</key>
             </keyseq>
@@ -587,8 +558,8 @@
         </item>
         <item>
           <p>
-            <gui>Read place marker</gui>: Uses place marker
-            4. <keyseq>
+            <gui>Read place marker</gui>: Speaks the part of
+            the expression at place marker 4. <keyseq>
               <key>Shift</key>
               <key>4</key>
             </keyseq>
@@ -596,8 +567,8 @@
         </item>
         <item>
           <p>
-            <gui>Read place marker</gui>: Uses place marker
-            5. <keyseq>
+            <gui>Read place marker</gui>: Speaks the part of
+            the expression at place marker 5. <keyseq>
               <key>Shift</key>
               <key>5</key>
             </keyseq>
@@ -605,8 +576,8 @@
         </item>
         <item>
           <p>
-            <gui>Read place marker</gui>: Uses place marker
-            6. <keyseq>
+            <gui>Read place marker</gui>: Speaks the part of
+            the expression at place marker 6. <keyseq>
               <key>Shift</key>
               <key>6</key>
             </keyseq>
@@ -614,8 +585,8 @@
         </item>
         <item>
           <p>
-            <gui>Read place marker</gui>: Uses place marker
-            7. <keyseq>
+            <gui>Read place marker</gui>: Speaks the part of
+            the expression at place marker 7. <keyseq>
               <key>Shift</key>
               <key>7</key>
             </keyseq>
@@ -623,8 +594,8 @@
         </item>
         <item>
           <p>
-            <gui>Read place marker</gui>: Uses place marker
-            8. <keyseq>
+            <gui>Read place marker</gui>: Speaks the part of
+            the expression at place marker 8. <keyseq>
               <key>Shift</key>
               <key>8</key>
             </keyseq>
@@ -632,8 +603,8 @@
         </item>
         <item>
           <p>
-            <gui>Read place marker</gui>: Uses place marker
-            9. <keyseq>
+            <gui>Read place marker</gui>: Speaks the part of
+            the expression at place marker 9. <keyseq>
               <key>Shift</key>
               <key>9</key>
             </keyseq>
@@ -641,8 +612,8 @@
         </item>
         <item>
           <p>
-            <gui>Describe place marker</gui>: Uses place marker
-            0. <keyseq>
+            <gui>Describe place marker</gui>: Describes the
+            structure at place marker 0. <keyseq>
               <key>Ctrl</key>
               <key>Shift</key>
               <key>0</key>
@@ -651,8 +622,8 @@
         </item>
         <item>
           <p>
-            <gui>Describe place marker</gui>: Uses place marker
-            1. <keyseq>
+            <gui>Describe place marker</gui>: Describes the
+            structure at place marker 1. <keyseq>
               <key>Ctrl</key>
               <key>Shift</key>
               <key>1</key>
@@ -661,8 +632,8 @@
         </item>
         <item>
           <p>
-            <gui>Describe place marker</gui>: Uses place marker
-            2. <keyseq>
+            <gui>Describe place marker</gui>: Describes the
+            structure at place marker 2. <keyseq>
               <key>Ctrl</key>
               <key>Shift</key>
               <key>2</key>
@@ -671,8 +642,8 @@
         </item>
         <item>
           <p>
-            <gui>Describe place marker</gui>: Uses place marker
-            3. <keyseq>
+            <gui>Describe place marker</gui>: Describes the
+            structure at place marker 3. <keyseq>
               <key>Ctrl</key>
               <key>Shift</key>
               <key>3</key>
@@ -681,8 +652,8 @@
         </item>
         <item>
           <p>
-            <gui>Describe place marker</gui>: Uses place marker
-            4. <keyseq>
+            <gui>Describe place marker</gui>: Describes the
+            structure at place marker 4. <keyseq>
               <key>Ctrl</key>
               <key>Shift</key>
               <key>4</key>
@@ -691,8 +662,8 @@
         </item>
         <item>
           <p>
-            <gui>Describe place marker</gui>: Uses place marker
-            5. <keyseq>
+            <gui>Describe place marker</gui>: Describes the
+            structure at place marker 5. <keyseq>
               <key>Ctrl</key>
               <key>Shift</key>
               <key>5</key>
@@ -701,8 +672,8 @@
         </item>
         <item>
           <p>
-            <gui>Describe place marker</gui>: Uses place marker
-            6. <keyseq>
+            <gui>Describe place marker</gui>: Describes the
+            structure at place marker 6. <keyseq>
               <key>Ctrl</key>
               <key>Shift</key>
               <key>6</key>
@@ -711,8 +682,8 @@
         </item>
         <item>
           <p>
-            <gui>Describe place marker</gui>: Uses place marker
-            7. <keyseq>
+            <gui>Describe place marker</gui>: Describes the
+            structure at place marker 7. <keyseq>
               <key>Ctrl</key>
               <key>Shift</key>
               <key>7</key>
@@ -721,8 +692,8 @@
         </item>
         <item>
           <p>
-            <gui>Describe place marker</gui>: Uses place marker
-            8. <keyseq>
+            <gui>Describe place marker</gui>: Describes the
+            structure at place marker 8. <keyseq>
               <key>Ctrl</key>
               <key>Shift</key>
               <key>8</key>
@@ -731,8 +702,8 @@
         </item>
         <item>
           <p>
-            <gui>Describe place marker</gui>: Uses place marker
-            9. <keyseq>
+            <gui>Describe place marker</gui>: Describes the
+            structure at place marker 9. <keyseq>
               <key>Ctrl</key>
               <key>Shift</key>
               <key>9</key>
@@ -746,91 +717,118 @@
       <list>
         <item>
           <p>
-            <gui>Toggle speech mode</gui>
-            <keyseq>
+            <gui>Toggle speech mode</gui>: <keyseq>
               <key>Shift</key>
               <key>Space</key>
             </keyseq>
           </p>
+          <p>
+            Chooses whether moving through the expression speaks the selected part or describes
+            its structure.
+          </p>
         </item>
         <item>
           <p>
-            <gui>Read previous item</gui>
-            <keyseq>
+            <gui>Read previous item</gui>: <keyseq>
               <key>Shift</key>
               <key>Left Arrow</key>
             </keyseq>
           </p>
+          <p>
+            Speaks the selected part of the expression.
+          </p>
         </item>
         <item>
           <p>
-            <gui>Read next item</gui>
-            <keyseq>
+            <gui>Read next item</gui>: <keyseq>
               <key>Shift</key>
               <key>Right Arrow</key>
             </keyseq>
           </p>
-        </item>
-        <item>
           <p>
-            <gui>Read current item</gui>
-            <keyseq>
-              <key>Space</key>
-            </keyseq>
+            Speaks the selected part of the expression.
           </p>
         </item>
         <item>
           <p>
-            <gui>Read current cell</gui>
-            <keyseq>
+            <gui>Read current item</gui>: <keyseq>
+              <key>Space</key>
+            </keyseq>
+          </p>
+          <p>
+            Speaks the selected part of the expression.
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Read current cell</gui>: <keyseq>
               <key>Ctrl</key>
               <key>Space</key>
             </keyseq>
           </p>
+          <p>
+            Speaks the selected part of the expression.
+          </p>
         </item>
         <item>
           <p>
-            <gui>Describe previous item</gui>
-            <keyseq>
+            <gui>Describe previous item</gui>: <keyseq>
               <key>Ctrl</key>
               <key>Shift</key>
               <key>Left Arrow</key>
             </keyseq>
           </p>
+          <p>
+            Gives an outline of the selected part's structure.
+          </p>
         </item>
         <item>
           <p>
-            <gui>Describe next item</gui>
-            <keyseq>
+            <gui>Describe next item</gui>: <keyseq>
               <key>Ctrl</key>
               <key>Shift</key>
               <key>Right Arrow</key>
             </keyseq>
           </p>
+          <p>
+            Gives an outline of the selected part's structure.
+          </p>
         </item>
         <item>
           <p>
-            <gui>Describe current item</gui>
-            <keyseq>
+            <gui>Describe current item</gui>: <keyseq>
               <key>Ctrl</key>
               <key>Shift</key>
               <key>Space</key>
             </keyseq>
           </p>
-        </item>
-        <item>
           <p>
-            <gui>Where am I</gui> Unbound by default.
+            Gives an outline of the selected part's structure.
           </p>
         </item>
         <item>
           <p>
-            <gui>Where am I (detailed)</gui> Unbound by default.
+            <gui>Where am I</gui>: Unbound by default.
+          </p>
+          <p>
+            Describes your location within the expression, rather than your location in the
+            application.
           </p>
         </item>
         <item>
           <p>
-            <gui>Copy to clipboard</gui> Unbound by default.
+            <gui>Where am I (detailed)</gui>: Unbound by
+            default.
+          </p>
+          <p>
+            Describes your location within the expression, rather than your location in the
+            application.
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Copy to clipboard</gui>: Unbound by
+            default.
           </p>
         </item>
       </list>

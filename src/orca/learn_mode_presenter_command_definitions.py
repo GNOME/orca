@@ -26,7 +26,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
-from .help_metadata import CommandGroupDoc
+from .help_metadata import CommandDoc, CommandGroupDoc
 
 if TYPE_CHECKING:
     from .learn_mode_presenter import LearnModePresenter
@@ -36,6 +36,16 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for learn mode commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "enterLearnModeHandler",
+                details=(
+                    "Enters learn mode. Press F1 to leave learn mode and open Orca help. Press "
+                    "F2 to leave learn mode and show Orca shortcuts. Press Escape to exit "
+                    "without opening another window."
+                ),
+            ),
+        ),
         summary="Explore Orca shortcuts without performing their commands.",
     )
 

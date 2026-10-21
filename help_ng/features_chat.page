@@ -2,10 +2,10 @@
 <page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" id="features_chat">
   <info>
     <link type="guide" xref="index#interaction" />
-    <title type="sort">42. Chat</title>
+    <title type="sort">45. Chat</title>
     <title type="link">Chat</title>
     <desc>
-      Configure how Orca presents messages and participants in supported chat applications.
+      Follow incoming chat messages and review recent messages.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -16,15 +16,29 @@
         Creative Commons Share Alike 3.0
       </p>
     </license>
-    <title type="link" role="preferences">Chat</title>
   </info>
   <title>
     <media type="image" width="40px" height="40px" its:translate="no" src="figures/orca-logo.svg" /> Chat
   </title>
   <p>
     Orca can announce incoming messages and review recent messages in supported chat
-    applications. These applications and settings may refer to conversations as rooms or
-    channels.
+    applications. The chat-specific settings and commands on this page primarily apply to
+    traditional chat applications, such as graphical IRC clients.
+  </p>
+  <p>
+    Many newer communication applications present messages through standard interface controls,
+    such as GTK4 lists, or web content in Electron applications. Orca presents that content
+    using its general application and web support. Message presentation in these applications
+    depends on their accessibility support, and the chat-specific settings and commands on this
+    page may not apply.
+  </p>
+  <p>
+    These features depend on accessibility information from the application or its toolkit that
+    lets Orca recognize messages, their senders, and the conversations they belong to. Orca
+    currently recognizes these parts of the interface in some chat applications. If the chat
+    features do not work in your application, its interface may not yet be recognized, even if
+    other parts of the application work well with Orca. Adding support may require changes in
+    Orca, the application or its toolkit, or both.
   </p>
   <section id="settings-chat">
     <title>Settings</title>
@@ -107,30 +121,32 @@
     <list>
       <item>
         <p>
-          <gui>Present next chat room message</gui>
-          Unbound by default.
+          <gui>Present next chat room message</gui>: Unbound by
+          default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Present previous chat room message</gui>
-          Unbound by default.
+          <gui>Present previous chat room message</gui>: Unbound by
+          default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Toggle chat room specific message histories</gui>
-          Unbound by default.
+          <gui>Toggle chat room specific message histories</gui>: Unbound by
+          default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Toggle room name presentation</gui> Unbound by default.
+          <gui>Toggle room name presentation</gui>: Unbound by
+          default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Toggle typing announcements</gui> Unbound by default.
+          <gui>Toggle typing announcements</gui>: Unbound by
+          default.
         </p>
       </item>
     </list>

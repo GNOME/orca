@@ -26,10 +26,7 @@ from typing import TYPE_CHECKING
 
 from . import braille, cmdnames, debug
 from .command import BrailleCommand, Command, KeyboardCommand
-from .help_metadata import (
-    CommandGroupDoc,
-    CommandSectionDoc,
-)
+from .help_metadata import CommandDoc, CommandGroupDoc, CommandSectionDoc
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -43,11 +40,46 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for braille commands."""
 
     return CommandGroupDoc(
+        see_also=("clipboard.feature",),
+        commands=(
+            CommandDoc(
+                "processRoutingKeyHandler",
+                details=(
+                    "Moves the caret to the character at the selected braille cell or activates "
+                    "the item at that cell, depending on the application's accessibility "
+                    "support. See [[reviewing.mouse-review]] for clicking and its limitations "
+                    "on Wayland. If a flash message is displayed, pressing a routing key "
+                    "dismisses that message instead."
+                ),
+            ),
+            CommandDoc(
+                "processBrailleCutBeginHandler",
+                details=(
+                    "Marks the start of text to copy. Use the command to mark the end of the text "
+                    "to complete the selection and copy it to the clipboard."
+                ),
+            ),
+            CommandDoc(
+                "processBrailleCutLineHandler",
+                details=(
+                    "Marks the end of text to copy after its start has been marked. Orca "
+                    "selects the text and copies it to the clipboard. Paste it using the "
+                    "destination application's usual paste command. See [[clipboard.feature]] "
+                    "for clipboard requirements on Wayland."
+                ),
+            ),
+        ),
         summary="Control braille output, including panning.",
         sections=(
             CommandSectionDoc(
                 title="Panning and routing",
                 target="braille.commands.panning-and-routing",
+                instructions=(
+                    "The commands below control the braille reading location and interact with "
+                    "displayed content. Standard keyboard bindings can be changed in Commands "
+                    "preferences. Braille display bindings depend on the display and BRLTTY "
+                    "configuration and cannot currently be rebound in Orca."
+                ),
                 command_names=(
                     "panBrailleLeftHandler",
                     "panBrailleRightHandler",

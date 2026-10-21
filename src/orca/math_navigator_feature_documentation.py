@@ -22,8 +22,7 @@
 
 from __future__ import annotations
 
-from . import guilabels
-from .help_metadata import CommandShortcutDoc, FeaturePageDoc, FeatureSectionDoc
+from .help_metadata import FeaturePageDoc, FeatureSectionDoc
 
 
 def get_feature_documentation() -> FeaturePageDoc:
@@ -33,39 +32,22 @@ def get_feature_documentation() -> FeaturePageDoc:
         page_id="features_math_navigation",
         title="Math navigation",
         link_title="Math navigation",
-        description="Read and explore mathematical expressions.",
+        description="Explore mathematical expressions using MathCAT.",
         guide_xref="index#reading",
         target="math-navigation.feature",
         sections=(
             FeatureSectionDoc(
                 title="Math navigation",
-                intro="Explore mathematical expressions and their component parts.",
+                intro="Explore mathematical expressions.",
                 details=(
                     "Math navigation requires MathCAT, a library for presenting mathematical "
-                    "expressions. To start, move to an expression, such as an equation, "
-                    "fraction, or formula, and press Orca Modifier+Alt+M. "
-                    "Press Escape to leave math navigation.\n\n"
-                    "An expression contains related parts, such as a fraction's numerator "
-                    "and denominator. Movement commands explore these parts; zooming in "
-                    "explores smaller parts and zooming out returns to larger structures.\n\n"
-                    f"The {guilabels.MATH_NAV_MODE.removesuffix(':')} setting selects "
-                    f"granularity: {guilabels.MATH_NAV_MODE_ENHANCED} for "
-                    f"meaningful subexpressions, {guilabels.MATH_NAV_MODE_SIMPLE} "
-                    f"for smaller pieces, and {guilabels.MATH_NAV_MODE_CHARACTER} "
-                    "for individual characters. The granularity commands switch among "
-                    "these modes while you explore. Read commands speak the selected part; "
-                    "Describe commands give an outline of its structure. Speech mode "
-                    "chooses which of these presentations follows a move. In a matrix, "
-                    "cells are the entries arranged in rows and "
-                    "columns.\n\n"
-                    "The Where am I commands in math navigation describe your location "
-                    "within the expression, rather than your location in the application.\n\n"
-                    "You can set numbered place markers to return to, read, or describe "
-                    "parts of an expression."
+                    "expressions. An expression contains related parts, such as a fraction's "
+                    "numerator and denominator. In a matrix, cells are entries arranged in rows "
+                    "and columns. The commands below let you explore an expression's structure "
+                    "and your location within it."
                 ),
                 preference_panels=("math_presenter.math-presentation",),
                 command_groups=("commands.math-navigation",),
-                shortcuts=(CommandShortcutDoc("Orca Modifier+Alt+M", "math_enter"),),
             ),
         ),
     )

@@ -2,11 +2,10 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_speech_and_voices_language_switching">
   <info>
     <link type="guide" xref="features_speech_and_voices_guide" />
-    <title type="sort">32. Language switching</title>
+    <title type="sort">27. Language switching</title>
     <title type="link">Language switching</title>
     <desc>
-      Language switching can automatically change voices for document content and/or
-      user-interface elements when spoken content has language information.
+      Language switching lets you change the voice used for different languages.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -20,40 +19,83 @@
   </info>
   <title>Language switching</title>
   <p>
-    Language switching can automatically change voices for document content and/or
-    user-interface elements when spoken content has language information. You can also use
-    commands to switch manually to a configured voice set.
+    Language switching lets you change the voice used for different languages. Orca can switch
+    automatically based on language information provided by the application, or you can switch
+    manually using keyboard commands.
   </p>
   <p>
-    The Global voice set normally applies. When language switching is enabled, Orca can use a
-    matching language-specific voice set. If Limit switching to configured voices is enabled,
-    Orca switches only to languages for which you have configured a voice set. Language
-    switching settings are part of Global Voice Settings preferences, the shared speech-behavior
-    settings rather than a voice set. With that limit off, Orca can use any language supported
-    by the synthesizer, even without a matching voice set. Selecting a language-specific voice
-    set manually suspends automatic language switching until you return to the Global voice set.
+    Manual language selection takes precedence over automatic switching. Returning to the global
+    voice set restores automatic switching. The settings and commands below control these
+    options; see "<link xref="features_speech_and_voices_voice_sets">Voice sets</link>" to configure the
+    voices themselves.
   </p>
-  <p>
-    See also:
-  </p>
-  <list>
-    <item>
-      <p>
-        <link xref="features_speech_and_voices_global_voice_settings#settings-global-voice-settings">Global Voice Settings preferences</link>: Configure when
-        Orca switches voices based on language.
-      </p>
-    </item>
-    <item>
-      <p>
-        <link xref="features_speech_and_voices_voice_sets#settings-voice-sets">Voice Sets preferences</link>: Create
-        language-specific voice sets.
-      </p>
-    </item>
-    <item>
-      <p>
-        <link xref="features_speech_and_voices_voice_sets#commands-voice-sets">Voice set commands</link>: Switch voice sets
-        manually.
-      </p>
-    </item>
-  </list>
+  <section id="settings-language-switching">
+    <title>Settings</title>
+    <p>
+      <em style="strong">Preferences location:</em>
+      <gui>Speech</gui> category, <gui>Global Voice Settings</gui> group.
+    </p>
+    <p>
+      <em style="strong">Available settings:</em>
+    </p>
+    <list>
+      <item>
+        <p>
+          <gui>Language Switching</gui>: Controls when Orca
+          switches voices based on language.
+        </p>
+        <list>
+          <item>
+            <p>
+              <gui>Document content</gui>: Controls automatic
+              language switching for document content. For example, disable it in global
+              preferences but enable it in application preferences for one or more web browsers.
+              Other applications continue to use the global setting unless they have their own
+              override. See "<link xref="preferences_guide">Preferences</link>" for opening global
+              and application preferences and removing overrides. Default: on.
+            </p>
+          </item>
+          <item>
+            <p>
+              <gui>UI elements</gui>: Automatically
+              switch voice based on UI element language. Default: off.
+            </p>
+          </item>
+          <item>
+            <p>
+              <gui>Limit switching to configured voices</gui>: Limits automatic
+              switching to languages for which you have configured a voice set. With this limit
+              off, Orca can use any language supported by the synthesizer, even without a
+              matching voice set. Default: off.
+            </p>
+          </item>
+        </list>
+      </item>
+    </list>
+  </section>
+  <section id="commands-voice-sets">
+    <title>Commands</title>
+    <p>
+      <em style="strong">Preferences location:</em>
+      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Speech and verbosity</gui> group.
+    </p>
+    <list>
+      <item>
+        <p>
+          <gui>Cycle to the next voice set</gui>: Unbound by
+          default.
+        </p>
+        <p>
+          Cycles through configured voice sets. Selecting a language-specific voice set manually
+          suspends automatic language switching until you return to the global voice set.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Switch voice to: Global</gui>: Unbound by
+          default.
+        </p>
+      </item>
+    </list>
+  </section>
 </page>

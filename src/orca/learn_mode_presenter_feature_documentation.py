@@ -43,11 +43,6 @@ def get_feature_documentation() -> FeaturePageDoc:
                     "commands. Press a key or key combination, and Orca presents the "
                     "associated command description in speech and braille, if one is assigned."
                 ),
-                details=(
-                    "Press F1 to leave learn mode and open Orca help. Press F2 to leave learn "
-                    "mode and show Orca shortcuts. Press Escape to exit learn mode without "
-                    "opening another window."
-                ),
                 command_groups=("commands.learn-mode",),
             ),
         ),

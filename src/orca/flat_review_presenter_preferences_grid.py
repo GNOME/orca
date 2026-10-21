@@ -64,7 +64,9 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     label=guilabels.FLAT_REVIEW_FOLLOW_FOCUS,
                     kind="choice",
                     summary=(
-                        "Controls when the flat review location moves to follow the focus or caret."
+                        "Controls when the flat review location moves to follow the focus "
+                        "or caret. Using application navigation keys resumes presentation "
+                        "of the application; where flat review resumes depends on this setting."
                     ),
                     schema="flat-review",
                     key=flat_review_presenter.FlatReviewPresenter.KEY_FOCUS_TRACKING,
@@ -73,21 +75,27 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             label=guilabels.FLAT_REVIEW_FOLLOW_ALWAYS,
                             value="on",
                             summary=(
-                                "Flat review moves whenever the focus or caret location changes."
+                                "Return to the focus or caret when you resume flat review "
+                                "after interacting with the application. Unrelated terminal "
+                                "output does not pull review away from its location."
                             ),
                         ),
                         PreferenceValueDoc(
                             label=guilabels.FLAT_REVIEW_FOLLOW_AUTOMATICALLY,
                             value="auto",
                             summary=(
-                                "Orca decides when moving flat review to the focus or caret "
-                                "location is useful."
+                                "Follow selected changes, such as moving focus to another "
+                                "object or navigating to another line, while retaining the "
+                                "review location through other changes."
                             ),
                         ),
                         PreferenceValueDoc(
                             label=guilabels.FLAT_REVIEW_FOLLOW_NEVER,
                             value="off",
-                            summary="Flat review stays where you last moved it.",
+                            summary=(
+                                "Keep the review location independent of focus and caret "
+                                "changes, as long as the reviewed content remains available."
+                            ),
                         ),
                     ),
                 ),
@@ -95,7 +103,9 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     label=guilabels.FLAT_REVIEW_SPEAK_UPDATES,
                     kind="switch",
                     summary=(
-                        "Controls whether Orca speaks content changes at the flat review location."
+                        "Controls whether Orca speaks changes to the line, word, or character "
+                        "you last reviewed while you are using flat review. This is independent "
+                        "of whether the review location follows focus and caret changes."
                     ),
                     schema="flat-review",
                     key=flat_review_presenter.FlatReviewPresenter.KEY_SPEAK_UPDATES,
@@ -105,7 +115,10 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     kind="switch",
                     summary=(
                         "Controls whether Orca refreshes braille when content changes at "
-                        "the flat review location."
+                        "the flat review location while you are using flat review. This is "
+                        "independent of focus and caret tracking and of spoken updates. For "
+                        "example, you can stay on a changing terminal line and have Orca "
+                        "update braille without speaking each change."
                     ),
                     schema="flat-review",
                     key=flat_review_presenter.FlatReviewPresenter.KEY_DISPLAY_UPDATES,

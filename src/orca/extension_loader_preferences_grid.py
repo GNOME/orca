@@ -47,6 +47,7 @@ from . import (
     presentation_manager,
 )
 from .help_metadata import (
+    PreferenceActionDoc,
     PreferenceCategoryDoc,
     PreferenceControlDoc,
     PreferencePanelDoc,
@@ -76,10 +77,57 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             link_summary="Use these settings to approve and enable user extensions.",
             controls=(
                 PreferenceControlDoc(
+                    item_actions=(
+                        PreferenceActionDoc(
+                            label=guilabels.EXTENSIONS_APPROVE,
+                            summary=(
+                                "Approves the extension for loading after you inspect its "
+                                "information. Changing its contents, including translations in "
+                                "a package, invalidates approval."
+                            ),
+                        ),
+                        PreferenceActionDoc(
+                            label=guilabels.EXTENSIONS_REAPPROVE,
+                            summary=(
+                                "Approves a changed extension after you inspect the changes. "
+                                "Reapproving a disabled extension leaves it disabled."
+                            ),
+                        ),
+                        PreferenceActionDoc(
+                            label=guilabels.EXTENSIONS_REVOKE,
+                            summary=(
+                                "Revokes approval and prevents the extension from loading. "
+                                "Approval changes made here take effect without restarting "
+                                "Orca."
+                            ),
+                        ),
+                        PreferenceActionDoc(
+                            label=guilabels.EXTENSIONS_DELETE,
+                            summary="Removes the extension file or package after confirmation.",
+                        ),
+                        PreferenceActionDoc(
+                            label=guilabels.EXTENSIONS_INFO_BUTTON,
+                            summary=(
+                                "Shows extension information, including shortcut conflicts "
+                                f'under "{guilabels.EXTENSIONS_INFO_STATUS}".'
+                            ),
+                        ),
+                        PreferenceActionDoc(
+                            label=guilabels.EXTENSIONS_SETTINGS_BUTTON,
+                            summary=(
+                                "Opens preferences provided by the extension. In Orca's "
+                                "standard extension settings dialog, choosing "
+                                f'"{guilabels.BTN_OK}" stages your changes. Apply or save '
+                                "the main Preferences window to save them."
+                            ),
+                        ),
+                    ),
                     label=guilabels.USER_EXTENSIONS,
                     kind="list",
                     summary=(
-                        "Lists user extension files and actions for approving or revoking them."
+                        "Lists installed extensions. The switch beside an approved extension "
+                        "enables or disables it without removing approval. These changes take "
+                        "effect without restarting Orca."
                     ),
                     dynamic_values=True,
                 ),

@@ -53,6 +53,7 @@ class CommandSectionDoc:
     command_names: tuple[str, ...] = field(default_factory=tuple)
     command_prefixes: tuple[str, ...] = field(default_factory=tuple)
     since: str = ""
+    instructions: str = ""
 
 
 @dataclass(frozen=True)
@@ -101,6 +102,7 @@ class FeatureSectionDoc:
     command_groups: tuple[str, ...] = field(default_factory=tuple)
     preference_categories: tuple[str, ...] = field(default_factory=tuple)
     preference_panels: tuple[str, ...] = field(default_factory=tuple)
+    preference_controls: tuple[str, ...] = field(default_factory=tuple)
     after_commands: str = ""
     shortcuts: tuple[CommandShortcutDoc, ...] = field(default_factory=tuple)
     topic_id: str = ""

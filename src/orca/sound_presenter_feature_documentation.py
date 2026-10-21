@@ -30,20 +30,16 @@ def get_feature_documentation() -> FeaturePageDoc:
         page_id="features_sound",
         title="Sound",
         link_title="Sound",
-        description="Non-speech audio cues and progress-bar beeps.",
+        description="Audible progress-bar updates.",
         guide_xref="index#output",
         target="sound.feature",
         sections=(
             FeatureSectionDoc(
                 title="Sound",
                 intro=(
-                    "Orca can use non-speech audio cues and beeps to indicate progress-bar changes."
-                ),
-                details=(
-                    "Sound icons are short audio cues for events such as an error. "
-                    "Their files are loaded from the sounds directory in your Orca "
-                    "user-data directory, normally `~/.local/share/orca/sounds`.\n\n"
-                    "Progress-bar beeps rise in pitch as progress increases."
+                    "Orca can use non-speech audio cues and beeps to indicate progress-bar "
+                    "changes. Progress-bar beeps rise in pitch as progress increases. "
+                    "Additional sound features are planned for an upcoming release."
                 ),
                 preference_categories=("sound",),
                 links=(

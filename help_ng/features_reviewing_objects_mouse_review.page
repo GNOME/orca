@@ -2,11 +2,10 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_reviewing_objects_mouse_review">
   <info>
     <link type="guide" xref="index#reviewing" />
-    <title type="sort">19. Mouse review</title>
-    <title type="link">Mouse review</title>
+    <title type="sort">21. Mouse review and clicking</title>
+    <title type="link">Mouse review and clicking</title>
     <desc>
-      Mouse review presents the object under the pointer. Configure this behavior and
-      mouse-triggered tooltips.
+      Mouse review presents accessible objects under the mouse pointer as you move it.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -17,30 +16,18 @@
         Creative Commons Share Alike 3.0
       </p>
     </license>
-    <title type="link" role="preferences">Mouse</title>
   </info>
-  <title>Mouse review</title>
+  <title>Mouse review and clicking</title>
   <p>
     Mouse review presents accessible objects under the mouse pointer as you move it. Unlike flat
     review, it is not limited to the active window.
   </p>
   <p>
-    Mouse review is disabled by default. To enable it, turn on Speak object under mouse in Mouse
-    preferences.
+    Orca also provides pointer-routing and clicking commands. Mouse review, pointer routing, and
+    simulated clicks may not work as expected, or at all, on Wayland. Accessible actions can
+    still work when supported by the application or toolkit.
   </p>
-  <p>
-    The Toggle mouse review mode command works whether or not you have enabled mouse review in
-    preferences, so you can turn mouse review on only when you need it.
-  </p>
-  <p>
-    The pointer-routing and click commands act on the flat review location when flat review is
-    active, or on the focused object otherwise.
-  </p>
-  <p>
-    Mouse review, pointer routing, and simulated clicks depend on support from your desktop.
-    They may not work on Wayland.
-  </p>
-  <section id="settings-mouse-review">
+  <section id="settings-mouse-review-and-clicking">
     <title>Settings</title>
     <p>
       <em style="strong">Preferences location:</em>
@@ -94,6 +81,13 @@
             </p>
           </item>
         </list>
+        <p>
+          Acts on the flat review location when flat review is active, or on the focused object
+          otherwise. Orca first tries suitable accessible actions exposed by the object through
+          its application or toolkit. If no suitable action succeeds, Orca tries to simulate a
+          mouse click at the object's location. Simulated clicks do not currently work on
+          Wayland.
+        </p>
       </item>
       <item>
         <p>
@@ -116,6 +110,13 @@
             </p>
           </item>
         </list>
+        <p>
+          Acts on the flat review location when flat review is active, or on the focused object
+          otherwise. Orca first tries suitable accessible actions exposed by the object through
+          its application or toolkit. If no suitable action succeeds, Orca tries to simulate a
+          mouse click at the object's location. Simulated clicks do not currently work on
+          Wayland.
+        </p>
       </item>
       <item>
         <p>
@@ -139,25 +140,19 @@
             </p>
           </item>
         </list>
-      </item>
-      <item>
         <p>
-          <gui>Toggle mouse review mode</gui> Unbound by default.
+          Routes the pointer to the flat review location when flat review is active, or to the
+          focused object otherwise.
         </p>
       </item>
-    </list>
-  </section>
-  <section id="mouse-review-related">
-    <title>Related topics</title>
-    <p>
-      See also:
-    </p>
-    <list>
       <item>
         <p>
-          <link xref="features_reviewing_objects_flat_review">Flat review</link>: Flat review lets
-          you examine the visible contents of the active window independently of focus and the
-          caret.
+          <gui>Toggle mouse review mode</gui>: Unbound by
+          default.
+        </p>
+        <p>
+          Turns mouse review on or off for the current session, whether or not it is enabled in
+          preferences.
         </p>
       </item>
     </list>

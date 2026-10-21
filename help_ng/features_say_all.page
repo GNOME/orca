@@ -2,11 +2,10 @@
 <page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" id="features_say_all">
   <info>
     <link type="guide" xref="index#reading" />
-    <title type="sort">14. Say All</title>
+    <title type="sort">08. Say All</title>
     <title type="link">Say All</title>
     <desc>
-      Say All reads continuously from your current location. Configure reading behavior and the
-      information presented.
+      Read document content continuously from your current location.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -17,18 +16,16 @@
         Creative Commons Share Alike 3.0
       </p>
     </license>
-    <title type="link" role="preferences">Say All</title>
   </info>
   <title>
     <media type="image" width="40px" height="40px" its:translate="no" src="figures/orca-logo.svg" /> Say All
   </title>
   <p>
-    Say All reads continuously from your current location.
+    Say All speaks document content continuously from your current location.
   </p>
   <p>
-    Press a key to interrupt continuous reading. If enabled in Say All preferences, <key>Up Arrow</key> and <key>Down Arrow</key> rewind and fast-forward instead.
-    You can also enable structural navigation during Say All, so moving to another heading or
-    other document element continues reading from there.
+    The settings below control continuous presentation and navigation during Say All. For
+    presenting the visible contents of a window or dialog, see "<link xref="features_reviewing_objects_flat_review">Flat review</link>".
   </p>
   <section id="settings-say-all">
     <title>Settings</title>
@@ -75,16 +72,16 @@
         <list>
           <item>
             <p>
-              <gui>Up and down arrow</gui>: Allows Up Arrow
-              and Down Arrow to move within the document during Say All so you can re-hear
-              recent content or skip ahead without restarting Say All. Default: off.
+              <gui>Up and down arrow</gui>: Controls whether
+              Up Arrow and Down Arrow rewind and fast-forward during Say All instead of
+              interrupting it. Default: off.
             </p>
           </item>
           <item>
             <p>
-              <gui>Structural navigation</gui>: Allows structural
-              navigation commands, such as heading and paragraph navigation, to move backward
-              and forward during Say All. Default: off.
+              <gui>Structural navigation</gui>: Controls whether
+              structural navigation is available during Say All. Moving to another heading or
+              other document element continues presentation from there. Default: off.
             </p>
           </item>
         </list>
@@ -101,33 +98,6 @@
               Orca announces tracked changes such as insertions, deletions, highlights, and
               suggestions. Default: on.
             </p>
-          </item>
-          <item>
-            <p>
-              <gui>Text attribute changes</gui>: Controls when Orca
-              announces text formatting changes during Say All. Choices: Off, Editable text
-              only, Always.
-            </p>
-            <list>
-              <item>
-                <p>
-                  <gui>Off (default)</gui>: Does not announce
-                  formatting changes.
-                </p>
-              </item>
-              <item>
-                <p>
-                  <gui>Editable text only</gui>: Announces
-                  formatting changes only in editable text.
-                </p>
-              </item>
-              <item>
-                <p>
-                  <gui>Always</gui>: Always announces
-                  formatting changes.
-                </p>
-              </item>
-            </list>
           </item>
         </list>
       </item>
@@ -170,13 +140,8 @@
           <item>
             <p>
               <gui>Headers and footers</gui>: Controls whether
-              Orca announces headers and footers. Default: on.
+              Orca announces headers and footers. Default: on. Available in Orca 52 and later.
             </p>
-            <note>
-              <p>
-                Available in Orca 52 and later.
-              </p>
-            </note>
           </item>
           <item>
             <p>
@@ -216,8 +181,7 @@
     <list>
       <item>
         <p>
-          <gui>Speak entire document</gui>: Starts reading
-          continuously from the current location.
+          <gui>Speak entire document</gui>
         </p>
         <list>
           <item>
@@ -236,6 +200,24 @@
             </p>
           </item>
         </list>
+        <p>
+          Starts continuous presentation from the current location. Press a key to interrupt it;
+          enabled navigation options can instead move within the content.
+        </p>
+      </item>
+    </list>
+  </section>
+  <section id="say-all-related">
+    <title>Related topics</title>
+    <p>
+      See also:
+    </p>
+    <list>
+      <item>
+        <p>
+          <link xref="features_text_attributes">Text attributes</link>: Examine text
+          formatting in speech and braille.
+        </p>
       </item>
     </list>
   </section>

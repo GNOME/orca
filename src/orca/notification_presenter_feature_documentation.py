@@ -22,7 +22,6 @@
 
 from __future__ import annotations
 
-from . import guilabels
 from .help_metadata import FeaturePageDoc, FeatureSectionDoc
 
 
@@ -34,40 +33,22 @@ def get_feature_documentation() -> FeaturePageDoc:
         title="Notifications",
         link_title="Notifications",
         description="Review recent notification messages.",
-        guide_xref="index#information",
+        guide_xref="index#interaction",
         target="reviewing.notifications",
-        intro=(
-            "Notifications are brief messages from applications or the desktop, such as "
-            "new-message alerts or low-battery warnings. Orca keeps recent notifications "
-            "it receives so you can review an announcement you missed or interrupted."
-        ),
         sections=(
             FeatureSectionDoc(
-                title="Reviewing messages",
+                title="Notifications",
                 intro=(
-                    "Use the last notification command to return to the most recent "
-                    "message. The previous and next commands move through older and newer "
-                    "messages. Each command also reports how long ago the message was "
-                    "received."
+                    "Notifications are brief messages from applications or the desktop, such as "
+                    "new-message alerts or low-battery warnings. Orca keeps recent "
+                    "notifications it receives so you can review an announcement you missed or "
+                    "interrupted. This history is cleared when Orca restarts."
                 ),
                 command_names=(
                     "present_last_notification",
                     "present_previous_notification",
                     "present_next_notification",
                     "show_notification_list",
-                ),
-            ),
-            FeatureSectionDoc(
-                title="Notification list",
-                intro=(
-                    "The notification messages list shows recent messages, newest first, "
-                    "alongside how long ago each was received. Use Up Arrow and Down Arrow "
-                    "to move through the messages.\n\n"
-                    f"Use {guilabels.BTN_CLEAR} to remove the notification history "
-                    "and close the list. "
-                    f"Use {guilabels.BTN_CLOSE} to dismiss the list without clearing it.\n\n"
-                    "The history contains notifications received by Orca during the "
-                    "current session and is cleared when Orca restarts."
                 ),
             ),
         ),

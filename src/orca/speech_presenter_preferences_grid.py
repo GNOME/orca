@@ -386,16 +386,25 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_MISSPELLED_WORD_INDICATOR,
                             kind="switch",
-                            summary="Controls whether Orca announces the misspelled-word "
-                            "indicator when you move into a misspelled word or type a "
-                            "word that the application marks as misspelled.",
+                            target="speech.misspelled-indicator",
+                            summary=(
+                                "Announces spelling and grammar errors when you move into "
+                                "affected text or when the application marks a word as "
+                                "misspelled while you type. These announcements do not require "
+                                "key echo or word echo."
+                            ),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_MISSPELLED_INDICATOR,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.TEXT_ATTRIBUTE_CHANGES,
                             kind="choice",
-                            summary="Controls when Orca speaks text formatting changes.",
+                            target="speech.text-attribute-changes",
+                            summary=(
+                                "Controls automatic announcements of formatting changes as you "
+                                "navigate. These announcements are independent of the attribute "
+                                "list used by the explicit formatting command."
+                            ),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_TEXT_ATTRIBUTE_CHANGES,
                             values=(
@@ -604,10 +613,6 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             title=guilabels.TABLES,
             panel_id="speech_presenter.tables",
             command_groups=("speech.commands.tables",),
-            instructions=(
-                "You can configure row presentation separately for application tables, "
-                "document tables, and spreadsheets."
-            ),
             schema="speech",
             controls=(
                 PreferenceControlDoc(

@@ -2,11 +2,11 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_braille_flash_messages">
   <info>
     <link type="guide" xref="features_braille_guide" />
-    <title type="sort">24. Flash messages</title>
+    <title type="sort">38. Flash messages</title>
     <title type="link">Flash messages</title>
     <desc>
-      Flash messages temporarily show Orca messages and command feedback in braille, then
-      restore the previous display contents.
+      Flash messages are temporary messages on the braille display that provide feedback from
+      Orca, such as confirmation that a setting has changed.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -20,8 +20,10 @@
   </info>
   <title>Flash messages</title>
   <p>
-    Flash messages temporarily show Orca messages and command feedback in braille, then restore
-    the previous display contents.
+    Flash messages are temporary messages on the braille display that provide feedback from
+    Orca, such as confirmation that a setting has changed. They replace the displayed content
+    without moving focus or the caret. When a message expires, Orca restores the previous
+    display contents.
   </p>
   <section id="settings-flash-messages">
     <title>Settings</title>
@@ -41,17 +43,17 @@
       </item>
       <item>
         <p>
-          <gui>Messages are detailed</gui>: Controls whether
-          Orca shows detailed braille messages when a brief alternative is available. For
-          instance, detailed command feedback might include both the setting name and its new
-          value. Default: on.
+          <gui>Messages are detailed</gui>: Chooses detailed
+          rather than brief messages when both forms are available. For example, detailed
+          feedback can include a setting's name and its new value, while brief feedback gives
+          just the value. Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Messages are persistent</gui>: Controls whether
-          flash messages remain displayed until the display is updated instead of disappearing
-          after the configured duration. Default: off.
+          <gui>Messages are persistent</gui>: Keeps a flash
+          message displayed until another update replaces it, instead of restoring the previous
+          contents after a timeout. Default: off.
         </p>
       </item>
       <item>

@@ -83,8 +83,12 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
                     label=guilabels.TEXT_ATTRIBUTES,
                     kind="table",
                     summary=(
-                        "Lists text attributes and lets you choose whether each one is spoken, "
-                        "marked in braille, both, or neither."
+                        "Lists text attributes and lets you choose whether each is spoken, "
+                        "marked in braille, both, or neither. The choices and presentation "
+                        "order can be customized for individual applications. Speech choices "
+                        "apply to the explicit formatting command, not automatic "
+                        "formatting-change announcements. Enable braille marking for the "
+                        "mistake attribute to mark spelling and grammar errors."
                     ),
                     value_docs=(
                         PreferenceValueDoc(

@@ -39,7 +39,24 @@ def get_documentation() -> CommandGroupDoc:
         commands=(
             CommandDoc(
                 "toggle_live_region_presentation",
-                summary="Toggles whether live region updates are announced.",
+                details=(
+                    "Turns announcements off for the current page. Use it again to restore "
+                    "announcements. It does not change your saved default settings."
+                ),
+            ),
+            CommandDoc(
+                "toggle_live_region_support",
+                details=(
+                    "Turns live region support on or off. When enabled, Orca keeps the last "
+                    "nine live region messages so you can review them later."
+                ),
+            ),
+            CommandDoc(
+                "advance_live_politeness",
+                details=(
+                    "Cycles through off, polite, and assertive politeness levels for the "
+                    "current live region."
+                ),
             ),
         ),
         summary=(

@@ -2,10 +2,10 @@
 <page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" id="features_keyboard_layout">
   <info>
     <link type="guide" xref="index#getting_started" />
-    <title type="sort">03. Keyboard layout and Orca Modifier</title>
+    <title type="sort">05. Keyboard layout and Orca Modifier</title>
     <title type="link">Keyboard layout and Orca Modifier</title>
     <desc>
-      Configure your keyboard layout, Orca Modifier keys, and shortcuts for Orca commands.
+      Choose shortcuts and modifier keys for Orca commands.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -16,16 +16,13 @@
         Creative Commons Share Alike 3.0
       </p>
     </license>
-    <title type="link" role="preferences">Commands</title>
   </info>
   <title>
     <media type="image" width="40px" height="40px" its:translate="no" src="figures/orca-logo.svg" /> Keyboard layout and Orca Modifier
   </title>
   <p>
-    Orca has two keyboard layouts that determine the default shortcuts for some commands, such
-    as flat review, Where Am I, and Say All. Desktop uses numeric keypad keys for some commands.
-    Laptop does not use keypad keys. <key>Num Lock</key> must be off to use Desktop keypad
-    shortcuts. You can use either layout on any computer.
+    Orca has keyboard layouts that determine the default shortcuts for some commands. You can
+    use either layout on any computer.
   </p>
   <p>
     Orca also has its own modifier key, which works like <key>Shift</key>, <key>Ctrl</key>, or <key>Alt</key>: hold it down while pressing another
@@ -33,16 +30,8 @@
     configured for this purpose.
   </p>
   <p>
-    You can choose one or more of the following as <key>Orca Modifier</key> keys: <key>Insert</key>, <key>Keypad Insert</key>, and <key>Caps Lock</key>. Desktop defaults to <key>Insert</key> and <key>Keypad Insert</key>; Laptop defaults to <key>Caps Lock</key>. Each layout has its own
-    modifier-key settings. At least one modifier must remain enabled.
-  </p>
-  <p>
-    Orca takes over the normal behavior of configured modifier keys. Press a configured modifier
-    key twice quickly to perform its usual single-press action.
-  </p>
-  <p>
     In the command lists, press twice or press three times means to press the shortcut that many
-    times quickly. Screen Reader Modifier Keys is the name of the setting for selecting your <key>Orca Modifier</key> keys.
+    times quickly. The settings below configure your layout and modifier keys.
   </p>
   <section id="settings-keyboard-layout-and-orca-modifier">
     <title>Settings</title>
@@ -70,13 +59,30 @@
       <item>
         <p>
           <gui>Keyboard Layout</gui>: Selects the
-          keyboard layout. Choices: Desktop (default), Laptop.
+          keyboard layout. Choices: Desktop, Laptop.
         </p>
+        <list>
+          <item>
+            <p>
+              <gui>Desktop (default)</gui>: Uses numeric
+              keypad keys for some commands. Num Lock must be off to use these keypad shortcuts.
+              The initial Orca Modifier keys are Insert and Keypad Insert.
+            </p>
+          </item>
+          <item>
+            <p>
+              <gui>Laptop</gui>: Does not use numeric
+              keypad keys for commands. The initial Orca Modifier key is Caps Lock.
+            </p>
+          </item>
+        </list>
       </item>
       <item>
         <p>
-          <gui>Screen Reader Modifier Keys</gui>: Selects the
-          modifier keys for the current layout. Enable each desired key using its own switch.
+          <gui>Screen Reader Modifier Keys</gui>: Selects modifier
+          keys for the current layout. Enable each desired key using its switch; at least one
+          must remain enabled. Orca takes over the normal behavior of configured modifier keys.
+          Press a configured modifier twice quickly to perform its usual single-press action.
         </p>
         <list>
           <item>
@@ -107,7 +113,8 @@
     <list>
       <item>
         <p>
-          <gui>Toggle keyboard layout</gui> Unbound by default.
+          <gui>Toggle keyboard layout</gui>: Unbound by
+          default.
         </p>
       </item>
     </list>

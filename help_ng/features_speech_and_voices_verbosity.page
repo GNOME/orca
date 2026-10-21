@@ -2,7 +2,7 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_speech_and_voices_verbosity">
   <info>
     <link type="guide" xref="features_speech_and_voices_guide" />
-    <title type="sort">34. Verbosity</title>
+    <title type="sort">29. Verbosity</title>
     <title type="link">Verbosity</title>
     <desc>
       Use verbosity settings and commands to control how much information Orca includes in
@@ -22,13 +22,6 @@
   <p>
     Use verbosity settings and commands to control how much information Orca includes in spoken
     output.
-  </p>
-  <p>
-    Toggle speech verbosity level switches between brief and verbose object presentation. Other
-    settings control individual details independently.
-  </p>
-  <p>
-    For related settings, see <link xref="features_text_attributes#settings-checking-formatting">Text Attributes preferences</link>.
   </p>
   <section id="settings-verbosity">
     <title>Settings</title>
@@ -109,16 +102,10 @@
           </item>
           <item>
             <p>
-              <gui>Misspelled-word indicator</gui>: Controls whether
-              Orca announces the misspelled-word indicator when you move into a misspelled word
-              or type a word that the application marks as misspelled. Default: on.
-            </p>
-          </item>
-          <item>
-            <p>
-              <gui>Text attribute changes</gui>: Controls when Orca
-              speaks text formatting changes. Choices: Off (default), Editable text only,
-              Always.
+              <gui>Misspelled-word indicator</gui>: Announces spelling
+              and grammar errors when you move into affected text or when the application marks
+              a word as misspelled while you type. These announcements do not require key echo
+              or word echo. Default: on.
             </p>
           </item>
           <item>
@@ -138,35 +125,31 @@
       </item>
     </list>
   </section>
-  <section id="verbosity-commands">
+  <section id="commands-verbosity">
     <title>Commands</title>
     <p>
       <em style="strong">Preferences location:</em>
       <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Speech and verbosity</gui> group.
     </p>
-    <section id="commands-verbosity-and-details">
-      <title>Verbosity and details</title>
-      <list>
-        <item>
-          <p>
-            <gui>Toggle speech verbosity level</gui>
-            <keyseq>
-              <key>Orca Modifier</key>
-              <key>V</key>
-            </keyseq>
-          </p>
-        </item>
-      </list>
-    </section>
-    <section id="commands-indentation">
-      <title>Indentation</title>
-      <list>
-        <item>
-          <p>
-            <gui>Toggle spoken indentation</gui> Unbound by default.
-          </p>
-        </item>
-      </list>
-    </section>
+    <list>
+      <item>
+        <p>
+          <gui>Toggle speech verbosity level</gui>: <keyseq>
+            <key>Orca Modifier</key>
+            <key>V</key>
+          </keyseq>
+        </p>
+        <p>
+          Switches between brief and verbose object presentation. Other verbosity settings
+          control individual details independently.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Toggle spoken indentation</gui>: Unbound by
+          default.
+        </p>
+      </item>
+    </list>
   </section>
 </page>

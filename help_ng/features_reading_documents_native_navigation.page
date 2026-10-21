@@ -2,7 +2,7 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_reading_documents_native_navigation">
   <info>
     <link type="guide" xref="index#reading" />
-    <title type="sort">10. Native navigation</title>
+    <title type="sort">16. Native navigation</title>
     <title type="link">Native navigation</title>
     <desc>
       Native navigation refers to keyboard input handled by the application rather than Orca.
@@ -25,6 +25,13 @@
       <key>Tab</key>
     </keyseq>, <key>Page Up</key>, <key>Page Down</key>, <key>Enter</key>, and <key>Space</key>.
   </p>
+  <p>
+    To search text in a document or web page, use the application's search feature. Its search
+    can include text that is not currently visible. The application controls the search and
+    navigation to matches; Orca's presentation depends on the accessibility information it
+    provides. The settings below control presentation of supported application search results.
+    For searching visible window contents with flat review, see "<link xref="features_reviewing_objects_orca_find">Orca Find</link>".
+  </p>
   <section id="settings-native-navigation">
     <title>Settings</title>
     <p>
@@ -35,20 +42,6 @@
       <em style="strong">Available settings:</em>
     </p>
     <list>
-      <item>
-        <p>
-          <gui>Automatic focus mode</gui>: Controls whether
-          Orca switches to focus mode when native navigation, such as Tab or Shift+Tab, lands on
-          an interactive widget. Default: on.
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Automatic sticky focus mode for web applications</gui>: Controls whether
-          Orca detects web applications and web-based desktop apps and stays in focus mode.
-          Default: on.
-        </p>
-      </item>
       <item>
         <p>
           <gui>Find Options</gui>: Controls what Orca
@@ -98,6 +91,20 @@
             </p>
           </item>
         </list>
+      </item>
+    </list>
+  </section>
+  <section id="native-navigation-related">
+    <title>Related topics</title>
+    <p>
+      See also:
+    </p>
+    <list>
+      <item>
+        <p>
+          <link xref="features_reading_documents_browse_mode_and_focus_mode">Browse mode and focus mode</link>: Navigate document
+          content and interact with controls.
+        </p>
       </item>
     </list>
   </section>

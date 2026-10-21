@@ -26,7 +26,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
-from .help_metadata import CommandGroupDoc
+from .help_metadata import CommandDoc, CommandGroupDoc, CommandSectionDoc
 
 if TYPE_CHECKING:
     from .caret_navigator import CaretNavigator
@@ -36,9 +36,29 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for caret navigation commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "toggle_enabled",
+                details=(
+                    "Turns Orca's caret navigation on or off in text objects where browse mode "
+                    "is not supported. This changes the current session across applications; it "
+                    "does not save a preference."
+                ),
+            ),
+        ),
         target="documents.caret-navigation.commands",
         summary=("Move through text by character, word, and line."),
         see_also=("documents.mode-commands",),
+        sections=(
+            CommandSectionDoc(
+                title="Navigation",
+                command_prefixes=("toggle_", "next_", "previous_", "start_", "end_"),
+            ),
+            CommandSectionDoc(
+                title="Selection",
+                command_prefixes=("select_",),
+            ),
+        ),
     )
 
 

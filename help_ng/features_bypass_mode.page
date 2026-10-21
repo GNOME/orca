@@ -2,7 +2,7 @@
 <page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="topic" id="features_bypass_mode">
   <info>
     <link type="guide" xref="index#interaction" />
-    <title type="sort">41. Bypass mode</title>
+    <title type="sort">43. Bypass mode</title>
     <title type="link">Bypass mode</title>
     <desc>
       Pass keys to applications without Orca handling commands.
@@ -23,10 +23,6 @@
   <p>
     Bypass mode stops Orca from handling commands and lets the application receive them instead.
   </p>
-  <p>
-    Toggle bypass mode off to resume using Orca commands. Switching to another application also
-    ends bypass mode. While bypass mode is active, keys normally used as <key>Orca Modifier</key> keys are passed through too.
-  </p>
   <section id="commands-bypass-mode">
     <title>Commands</title>
     <p>
@@ -36,11 +32,15 @@
     <list>
       <item>
         <p>
-          <gui>Toggle all Orca command keys</gui>
-          <keyseq>
+          <gui>Toggle all Orca command keys</gui>: <keyseq>
             <key>Alt</key>
             <key>Backspace</key>
           </keyseq>
+        </p>
+        <p>
+          Turns bypass mode on or off. Switching to another application also ends bypass mode.
+          While it is active, keys normally used as <key>Orca Modifier</key> keys are passed through
+          to the application too.
         </p>
       </item>
     </list>

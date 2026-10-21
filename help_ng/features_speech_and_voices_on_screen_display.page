@@ -2,10 +2,11 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_speech_and_voices_on_screen_display">
   <info>
     <link type="guide" xref="features_speech_and_voices_guide" />
-    <title type="sort">38. On-screen speech display</title>
+    <title type="sort">33. On-screen speech display</title>
     <title type="link">On-screen speech display</title>
     <desc>
-      The on-screen speech display shows the text Orca is speaking.
+      The on-screen speech display shows Orca's speech output and provides a history of recent
+      speech.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -19,7 +20,13 @@
   </info>
   <title>On-screen speech display</title>
   <p>
-    The on-screen speech display shows the text Orca is speaking.
+    The on-screen speech display shows Orca's speech output and provides a history of recent
+    speech.
+  </p>
+  <p>
+    Application developers can use the window to examine Orca's speech output visually while
+    testing their applications. It also provides a history of recent speech for review and
+    copying.
   </p>
   <section id="settings-on-screen-speech-display">
     <title>Settings</title>
@@ -60,12 +67,19 @@
     <list>
       <item>
         <p>
-          <gui>Toggle the on-screen speech display on and off</gui>
-          <keyseq>
+          <gui>Toggle the on-screen speech display on and off</gui>: <keyseq>
             <key>Orca Modifier</key>
             <key>Shift</key>
             <key>D</key>
           </keyseq>
+        </p>
+        <p>
+          Opens or closes the speech display. It includes recent speech even if the window was
+          closed at the time. Select text and use <keyseq>
+            <key>Ctrl</key>
+            <key>C</key>
+          </keyseq>
+          to copy it for pasting into another application.
         </p>
       </item>
     </list>

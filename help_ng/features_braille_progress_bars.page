@@ -2,10 +2,11 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_braille_progress_bars">
   <info>
     <link type="guide" xref="features_braille_guide" />
-    <title type="sort">25. Progress bars</title>
+    <title type="sort">39. Progress bars</title>
     <title type="link">Progress bars</title>
     <desc>
-      Follow progress-bar updates on your braille display.
+      Orca can show progress-bar updates on your braille display so you can track tasks such as
+      downloads or file transfers.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -19,7 +20,8 @@
   </info>
   <title>Progress bars</title>
   <p>
-    Follow progress-bar updates on your braille display.
+    Orca can show progress-bar updates on your braille display so you can track tasks such as
+    downloads or file transfers.
   </p>
   <section id="settings-progress-bars">
     <title>Settings</title>
@@ -86,8 +88,8 @@
       </item>
       <item>
         <p>
-          <link xref="features_sound">Sound</link>: Non-speech audio
-          cues and progress-bar beeps.
+          <link xref="features_sound">Sound</link>: Audible
+          progress-bar updates.
         </p>
       </item>
     </list>

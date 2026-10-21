@@ -42,14 +42,10 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                 ),
                 details=(
                     "Applications provide objects in a hierarchy: a parent contains child "
-                    "objects, and children with the same parent are siblings. For example, "
-                    "a toolbar can contain several buttons.\n\n"
-                    "Object navigation uses a separate navigator focus. You can move to the "
-                    "parent, first child, next sibling, or previous sibling of the object "
-                    "with navigator focus, and you can click the object with navigator focus.\n\n"
-                    "Simplified object navigation hides some layout-only objects to make the "
-                    "hierarchy easier to explore. You can toggle simplified navigation on and "
-                    "off."
+                    "objects, and children with the same parent are siblings. For example, a "
+                    "toolbar can contain several buttons. Object navigation uses a separate "
+                    "navigator focus; the commands below explore and interact with the object "
+                    "at that location."
                 ),
                 settings_and_commands=(
                     FeatureLinkDoc(

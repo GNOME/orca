@@ -2,11 +2,11 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_speech_and_voices_container_announcements">
   <info>
     <link type="guide" xref="features_speech_and_voices_guide" />
-    <title type="sort">37. Container announcements</title>
+    <title type="sort">32. Container announcements</title>
     <title type="link">Container announcements</title>
     <desc>
-      Orca can identify containers, such as lists, articles, and tables, as you navigate
-      document and web content.
+      Orca can identify document structure and marked-up content, including lists, articles,
+      tables, code, and tracked changes.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -20,13 +20,11 @@
   </info>
   <title>Container announcements</title>
   <p>
-    Orca can identify containers, such as lists, articles, and tables, as you navigate document
-    and web content.
+    Orca can identify document structure and marked-up content, including lists, articles,
+    tables, code, and tracked changes.
   </p>
   <p>
-    This preferences group also includes announcements for tracked changes such as insertions
-    and deletions; these are changes to content rather than containers. Say All has separate
-    announcement settings for continuous reading.
+    Say All has separate announcement settings for continuous reading.
   </p>
   <section id="settings-container-announcements">
     <title>Settings</title>
@@ -77,13 +75,8 @@
           <item>
             <p>
               <gui>Headers and footers</gui>: Controls whether
-              Orca announces headers and footers. Default: on.
+              Orca announces headers and footers. Default: on. Available in Orca 52 and later.
             </p>
-            <note>
-              <p>
-                Available in Orca 52 and later.
-              </p>
-            </note>
           </item>
           <item>
             <p>
@@ -129,8 +122,8 @@
     <list>
       <item>
         <p>
-          <link xref="features_say_all">Say All</link>: Read continuously
-          from your current location.
+          <link xref="features_say_all">Say All</link>: Read document
+          content continuously from your current location.
         </p>
       </item>
     </list>

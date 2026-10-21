@@ -44,6 +44,7 @@ import itertools
 import json
 import re
 import shutil
+import subprocess
 import sys
 import textwrap
 import traceback
@@ -84,6 +85,8 @@ _PREFERENCE_FIELDS = {
 }
 
 if TYPE_CHECKING:
+    from collections.abc import Iterator
+
     from orca.help_metadata import (
         CommandGroupDoc as SourceCommandGroupDoc,
     )
@@ -200,6 +203,7 @@ class PanelDoc:
     command_groups: tuple[str, ...] = ()
     command_names: tuple[str, ...] = ()
     since: str = ""
+    selected_targets: tuple[str, ...] = ()
 
 
 @dataclass
@@ -243,6 +247,7 @@ class CollectedCommandGroupDoc:
     source_file: str = ""
     source_line: int = 0
     since: str = ""
+    instructions: str = ""
 
 
 @dataclass
@@ -262,6 +267,7 @@ class FeatureCommandContext:
     preference_links: PreferenceCommandLinks = field(default_factory=PreferenceCommandLinks)
     preference_categories: dict[str, PageDoc] = field(default_factory=dict)
     preference_panels: dict[str, tuple[PageDoc, PanelDoc]] = field(default_factory=dict)
+    placed_preference_controls: set[str] = field(default_factory=set)
     shared_command_location: bool = False
 
 
@@ -1309,7 +1315,7 @@ def collect_command_groups(src_dir: Path) -> list[CollectedCommandGroupDoc]:
 
 @contextlib.contextmanager
 def _fake_feature_documentation_modules(
-    labels: dict[str, str], command_names: dict[str, str]
+    labels: dict[str, str], command_names: dict[str, str], properties: dict[str, Any]
 ) -> Any:
     """Provides the shared metadata schema without runtime feature imports."""
 
@@ -1319,6 +1325,7 @@ def _fake_feature_documentation_modules(
             "orca.help_metadata": _HELP_METADATA,
             "orca.guilabels": _source_module("orca.guilabels", labels),
             "orca.cmdnames": _source_module("orca.cmdnames", command_names),
+            "orca.object_properties": _source_module("orca.object_properties", properties),
         }
     ):
         yield
@@ -1328,6 +1335,7 @@ def _execute_feature_documentation_module(
     path: Path,
     labels: dict[str, str],
     command_names: dict[str, str],
+    properties: dict[str, Any] | None = None,
 ) -> FeatureDocumentationDoc | FeaturePageDoc | None:
     """Executes one feature-documentation module in a fake Orca package."""
 
@@ -1336,7 +1344,9 @@ def _execute_feature_documentation_module(
         "__file__": str(path),
         "__package__": "orca",
     }
-    with _fake_feature_documentation_modules(labels, command_names):
+    if properties is None:
+        properties = _collect_object_properties(path.parent / "object_properties.py")
+    with _fake_feature_documentation_modules(labels, command_names, properties):
         # pylint: disable-next=exec-used
         exec(compile(path.read_text(encoding="utf-8"), str(path), "exec"), namespace)  # noqa: S102
         if "get_feature_documentation" not in namespace:
@@ -1348,6 +1358,20 @@ def _execute_feature_documentation_module(
     raise ValueError(f"Invalid feature metadata from {path}")
 
 
+def _collect_object_properties(path: Path) -> dict[str, Any]:
+    """Extracts presentation strings and indicator lists without runtime translations."""
+
+    properties: dict[str, Any] = {}
+    evaluator = SourceEvaluator(labels={}, class_constants={}, module_constants=properties)
+    for node in ast.parse(path.read_text(encoding="utf-8")).body:
+        if not isinstance(node, ast.Assign) or len(node.targets) != 1:
+            continue
+        target = node.targets[0]
+        if isinstance(target, ast.Name):
+            properties[target.id] = evaluator.eval(node.value)
+    return properties
+
+
 def collect_feature_documentation(
     src_dir: Path,
 ) -> tuple[list[FeaturePageDoc], dict[str, FeatureSectionDoc]]:
@@ -1357,9 +1381,12 @@ def collect_feature_documentation(
     sections: dict[str, FeatureSectionDoc] = {}
     labels = _collect_labels(src_dir)
     command_names = _collect_command_names(src_dir)
+    properties = _collect_object_properties(src_dir / "orca" / "object_properties.py")
     for path in sorted((src_dir / "orca").glob("*_feature_documentation.py")):
         try:
-            feature_doc = _execute_feature_documentation_module(path, labels, command_names)
+            feature_doc = _execute_feature_documentation_module(
+                path, labels, command_names, properties
+            )
         except (OSError, SyntaxError, AttributeError, TypeError, ValueError) as error:
             raise ValueError(f"Cannot collect documentation from {path}: {error}") from error
         if isinstance(feature_doc, FeaturePageDoc):
@@ -1596,6 +1623,11 @@ def _add_since_notice(parent: ET.Element, since: str) -> None:
         return
     if not isinstance(since, str) or not re.fullmatch(r"[0-9]+", since):
         raise ValueError(f"Invalid Orca introduction release: {since!r}")
+    if parent.tag == f"{{{MALLARD_NS}}}p":
+        _append_text(
+            parent, parent[-1] if len(parent) else None, f" Available in Orca {since} and later."
+        )
+        return
     note = _append_child(parent, "note")
     _append_child(note, "p", f"Available in Orca {since} and later.")
 
@@ -1626,7 +1658,7 @@ def _add_value_descriptions(parent: ET.Element, control: ControlDoc) -> None:
         gui = _append_child(p, "gui", label)
         if value_doc.summary:
             gui.tail = _gui_description_tail(label, _sentence(value_doc.summary))
-        _add_since_notice(item, value_doc.since)
+        _add_since_notice(p, value_doc.since)
 
 
 def _gui_description_tail(label: str, description: str) -> str:
@@ -1693,7 +1725,9 @@ _KEY_SEQUENCE_PATTERN = re.compile(
     rf"({_KEY_LABEL_PATTERN})(?:\+({_KEY_LABEL_PATTERN}))*)"
     r"(?![\w+])"
 )
-_INLINE_PROSE_PATTERN = re.compile(r"`(?P<code>[^`\n]+)`|" + _KEY_SEQUENCE_PATTERN.pattern)
+_INLINE_PROSE_PATTERN = re.compile(
+    r'`(?P<code>[^`\n]+)`|(?P<quoted>"[^"\n]+")|' + _KEY_SEQUENCE_PATTERN.pattern
+)
 
 
 def _append_text(parent: ET.Element, child: ET.Element | None, text: str) -> None:
@@ -1727,6 +1761,8 @@ def _append_paragraph_with_inline_markup(parent: ET.Element, text: str) -> ET.El
         _append_text(p, child, text[last_index : match.start()])
         if match.group("code") is not None:
             child = _append_child(p, "code", match.group("code"))
+        elif match.group("quoted") is not None:
+            _append_text(p, child, match.group("quoted"))
         else:
             child = _append_inline_key_markup(p, match.group(0))
         last_index = match.end()
@@ -1771,7 +1807,7 @@ def _add_control_item(
     else:
         gui.tail = ""
 
-    _add_since_notice(item, control.since)
+    _add_since_notice(p, control.since)
     _add_value_descriptions(item, control)
     _add_action_descriptions(item, control)
     if control.controls:
@@ -1902,18 +1938,6 @@ def _panel_section_ids(panels: list[PanelDoc]) -> dict[str, str]:
     return {panel.title: _unique_id(_id_fragment(panel.title), seen_ids) for panel in panels}
 
 
-def _add_preferences_guide_links(page: ET.Element, title: str) -> None:
-    """Adds the generated settings-page directory to the preferences topic."""
-
-    page.set("type", "guide")
-    section = _append_child(page, "section")
-    section.set("id", "settings-categories")
-    _append_child(section, "title", title)
-    links = _append_child(section, "links")
-    links.set("type", "topic")
-    links.set("style", "2column")
-
-
 def _build_help_index_page(metadata: dict[str, Any]) -> ET.ElementTree:
     """Builds the main help guide from navigation metadata."""
 
@@ -1943,7 +1967,6 @@ def _build_help_index_page(metadata: dict[str, Any]) -> ET.ElementTree:
     for section_doc in metadata["sections"]:
         section = _append_child(page, "section")
         section.set("id", section_doc["id"])
-        section.set("style", "2column")
         _append_child(section, "title", section_doc["title"])
     return ET.ElementTree(page)
 
@@ -2048,11 +2071,9 @@ def _click_count_text(click_count: int) -> str:
     """Returns human text for a multi-click keybinding."""
 
     if click_count == 2:
-        return " (press twice)"
+        return " (press twice quickly)"
     if click_count == 3:
-        return " (press three times)"
-    if click_count > 1:
-        return f" (press {click_count} times)"
+        return " (press three times quickly)"
     return ""
 
 
@@ -2096,9 +2117,15 @@ def _add_command_item(parent: ET.Element, command: CollectedCommandDoc) -> ET.El
 
         item = _append_child(parent, "item")
         p = _append_child(item, "p")
-        gui = _append_child(p, "gui", command.label)
-        gui.tail = f": {', '.join(command.braille_bindings)}"
-        _add_since_notice(item, command.since)
+        _append_child(p, "gui", command.label)
+        _add_since_notice(p, command.since)
+        binding_list = _append_child(item, "list")
+        binding_item = _append_child(binding_list, "item")
+        _append_child(binding_item, "p", f"Braille: {', '.join(command.braille_bindings)}")
+        if command.summary:
+            _add_text_paragraphs(item, command.summary)
+        if command.details:
+            _add_text_paragraphs(item, command.details)
         return item
 
     if command.command_type != "keyboard":
@@ -2110,26 +2137,38 @@ def _add_command_item(parent: ET.Element, command: CollectedCommandDoc) -> ET.El
     details = []
     if command.summary:
         details.append(_sentence(command.summary))
-    if command.details:
-        details.append(_sentence(command.details))
     gui.tail = _gui_description_tail(command.label, " ".join(details)) if details else ""
-    _add_since_notice(item, command.since)
 
     desktop = command.desktop_keybinding
     laptop = command.laptop_keybinding
-    if desktop is None and laptop is None:
+    if not details and _keybindings_equal(desktop, laptop) and not command.braille_bindings:
+        gui.tail = _gui_description_tail(command.label, "").rstrip()
+    _add_since_notice(p, command.since)
+    if desktop is None and laptop is None and not command.braille_bindings:
         gui.tail = f"{gui.tail} Unbound by default."
+        if command.details:
+            _add_text_paragraphs(item, command.details)
         return item
 
-    if _keybindings_equal(desktop, laptop):
+    if _keybindings_equal(desktop, laptop) and not command.braille_bindings:
         assert desktop is not None
         gui.tail = f"{gui.tail} "
         _append_keyseq(p, desktop)
+        if command.details:
+            _add_text_paragraphs(item, command.details)
         return item
 
     binding_list = _append_child(item, "list")
-    _add_command_binding_item(binding_list, "Desktop", desktop)
-    _add_command_binding_item(binding_list, "Laptop", laptop)
+    if _keybindings_equal(desktop, laptop):
+        _add_command_binding_item(binding_list, "Keyboard", desktop)
+    else:
+        _add_command_binding_item(binding_list, "Desktop", desktop)
+        _add_command_binding_item(binding_list, "Laptop", laptop)
+    if command.braille_bindings:
+        binding_item = _append_child(binding_list, "item")
+        _append_child(binding_item, "p", f"Braille: {', '.join(command.braille_bindings)}")
+    if command.details:
+        _add_text_paragraphs(item, command.details)
     return item
 
 
@@ -2201,6 +2240,7 @@ def _command_content_registry(
             selected.title = section.title
             selected.sections = ()
             selected.summary = section.summary
+            selected.instructions = section.instructions
             selected.since = section.since or group.since
             section_id = _id_fragment(section.title)
             for alias in (section.target, f"{aliases[1]}.{section_id}", f"{page_id}#{section_id}"):
@@ -2348,25 +2388,22 @@ def _add_reference_sentence(
         link.tail = "." if index == len(links) - 1 else ", "
 
 
-def _add_command_type_lists(parent: ET.Element, commands: list[CollectedCommandDoc]) -> None:
-    """Keeps keyboard and braille-display bindings distinct within a shared command topic."""
+def _combine_command_bindings(commands: list[CollectedCommandDoc]) -> list[CollectedCommandDoc]:
+    """Combines keyboard and braille bindings for the same command without changing metadata."""
 
-    mixed = len({command.command_type for command in commands}) > 1
-    for command_type, title in (
-        ("keyboard", "Standard keyboard commands"),
-        ("braille", "Braille display commands"),
-    ):
-        selected = [command for command in commands if command.command_type == command_type]
-        if not selected:
+    braille = {command.name: command for command in commands if command.command_type == "braille"}
+    if not braille:
+        return commands
+    keyboard = {command.name for command in commands if command.command_type == "keyboard"}
+    result = []
+    for command in commands:
+        if command.command_type == "braille" and command.name in keyboard:
             continue
-        container = parent
-        if mixed:
-            container = _append_child(parent, "section")
-            container.set("id", f"{parent.attrib['id']}-{command_type}")
-            _append_child(container, "title", title)
-        command_list = _append_child(container, "list")
-        for command in selected:
-            _add_command_item(command_list, command)
+        if command.command_type == "keyboard" and command.name in braille:
+            result.append(replace(command, braille_bindings=braille[command.name].braille_bindings))
+        else:
+            result.append(command)
+    return result
 
 
 def _add_feature_command_group(
@@ -2381,14 +2418,19 @@ def _add_feature_command_group(
 
     if not commands:
         return
+    commands = _combine_command_bindings(commands)
     section = _append_child(parent, "section")
     section.set("id", _id_fragment(f"commands-{group.title}"))
     _append_child(section, "title", title)
     _add_since_notice(section, group.since)
     if preferences_page and show_location:
         _add_command_preferences_location(section, commands, preferences_page)
+    if group.instructions:
+        _add_text_paragraphs(section, group.instructions)
     if not group.sections:
-        _add_command_type_lists(section, commands)
+        command_list = _append_child(section, "list")
+        for command in commands:
+            _add_command_item(command_list, command)
         return
 
     section_commands: list[list[CollectedCommandDoc]] = [[] for _ in group.sections]
@@ -2415,9 +2457,44 @@ def _add_feature_command_group(
             _append_child(container, "title", subsection.title)
         if subsection.since != group.since:
             _add_since_notice(container, subsection.since)
+        if subsection.instructions:
+            _add_text_paragraphs(container, subsection.instructions)
         command_list = _append_child(container, "list")
         for command in selected:
             _add_command_item(command_list, command)
+
+
+def _walk_preference_controls(controls: list[ControlDoc]) -> Iterator[ControlDoc]:
+    """Yields controls and nested controls in documentation order."""
+
+    for control in controls:
+        yield control
+        yield from _walk_preference_controls(control.controls)
+
+
+def _omit_placed_controls(controls: list[ControlDoc], targets: set[str]) -> list[ControlDoc]:
+    """Removes controls documented elsewhere, retaining their remaining siblings."""
+
+    result: list[ControlDoc] | None = None
+    for index, control in enumerate(controls):
+        replacement = control
+        if control.target in targets:
+            if result is None:
+                result = controls[:index]
+            continue
+        if control.controls:
+            children = _omit_placed_controls(control.controls, targets)
+            if not children:
+                if result is None:
+                    result = controls[:index]
+                continue
+            if children is not control.controls:
+                replacement = replace(control, controls=children)
+                if result is None:
+                    result = controls[:index]
+        if result is not None:
+            result.append(replacement)
+    return controls if result is None else result
 
 
 def _section_preference_panels(
@@ -2425,9 +2502,11 @@ def _section_preference_panels(
     pages: dict[str, PageDoc],
     panels: dict[str, tuple[PageDoc, PanelDoc]],
 ) -> list[tuple[PageDoc, PanelDoc]]:
-    """Resolves category and individual-panel references without copying settings metadata."""
+    """Resolves category, panel, and control references against settings metadata."""
 
-    if not section.preference_categories and not section.preference_panels:
+    if not (
+        section.preference_categories or section.preference_panels or section.preference_controls
+    ):
         return []
     selected: list[tuple[PageDoc, PanelDoc]] = []
     for category in section.preference_categories:
@@ -2438,6 +2517,35 @@ def _section_preference_panels(
         if panel_id not in panels:
             raise ValueError(f"Unknown feature preference panel: {panel_id!r}")
         selected.append(panels[panel_id])
+    if section.preference_controls:
+        controls_by_target = {}
+        for page, panel in panels.values():
+            for control in _walk_preference_controls(panel.controls):
+                if not control.target:
+                    continue
+                if control.target in controls_by_target:
+                    raise ValueError(f"Duplicate preference control target: {control.target!r}")
+                controls_by_target[control.target] = (page, panel, control)
+        selected_by_panel: dict[str, tuple[PageDoc, PanelDoc]] = {}
+        for target in section.preference_controls:
+            if target not in controls_by_target:
+                raise ValueError(f"Unknown feature preference control: {target!r}")
+            page, panel, control = controls_by_target[target]
+            if panel.panel_id not in selected_by_panel:
+                selected_by_panel[panel.panel_id] = (
+                    page,
+                    replace(
+                        panel,
+                        controls=[],
+                        instructions="",
+                        command_groups=(),
+                        command_names=(),
+                    ),
+                )
+            subset = selected_by_panel[panel.panel_id][1]
+            subset.controls.append(control)
+            subset.selected_targets += (target,)
+        selected.extend(selected_by_panel.values())
     return selected
 
 
@@ -2485,10 +2593,11 @@ def _feature_preference_placements(
         for section, page_id in sections:
             selected = _section_preference_panels(section, categories, panels)
             for _category, panel in selected:
-                if panel.panel_id in placements:
-                    raise ValueError(f"Duplicate feature preference panel: {panel.panel_id!r}")
                 anchor = _settings_anchor(section, panel if len(selected) > 1 else None)
-                placements[panel.panel_id] = f"{page_id}#{anchor}"
+                for target in panel.selected_targets or (panel.panel_id,):
+                    if target in placements:
+                        raise ValueError(f"Duplicate feature preference placement: {target!r}")
+                    placements[target] = f"{page_id}#{anchor}"
         if feature.preference_category:
             if feature.preference_category not in categories:
                 raise ValueError(
@@ -2502,7 +2611,7 @@ def _feature_preference_placements(
                         continue
                     if panel.panel_id in placements:
                         raise ValueError(f"Duplicate feature preference panel: {panel.panel_id!r}")
-                    placements[panel.panel_id] = feature.page_id
+                    placements[panel.panel_id] = _feature_page_xref(feature)
     return placements
 
 
@@ -2525,7 +2634,7 @@ def _preference_target_registry(
     if feature_pages is not None and missing:
         raise ValueError(f"Preference panels without a feature topic: {sorted(missing)}")
     guides = {
-        page.preference_category: page.page_id
+        page.preference_category: _feature_page_xref(page)
         for page in feature_pages or []
         if page.preference_category
     }
@@ -2562,6 +2671,9 @@ def _preference_target_registry(
                 targets[panel.target] = panel_xref
             targets[f"{page_target}.{_id_fragment(panel.title)}"] = panel_xref
             targets[f"{page_target}.{panel.panel_id.rsplit('.', 1)[-1]}"] = panel_xref
+            for control in _walk_preference_controls(panel.controls):
+                if control.target:
+                    targets[control.target] = placements.get(control.target, panel_xref)
     return targets
 
 
@@ -2591,6 +2703,11 @@ def _preference_link_text_registry(page_docs: list[PageDoc]) -> dict[str, LinkTe
                 link_text[panel.target] = panel_text
             link_text[f"{page_target}.{_id_fragment(panel.title)}"] = panel_text
             link_text[f"{page_target}.{panel.panel_id.rsplit('.', 1)[-1]}"] = panel_text
+            for control in _walk_preference_controls(panel.controls):
+                if control.target:
+                    link_text[control.target] = LinkTextDoc(
+                        _preferences_link_title(control.label), control.summary
+                    )
     return link_text
 
 
@@ -2650,6 +2767,14 @@ def _feature_section_page_id(page_doc: FeaturePageDoc, section_doc: FeatureSecti
     return f"{page_doc.page_id.removesuffix('_guide')}_{section_doc.topic_id}"
 
 
+def _feature_page_xref(page_doc: FeaturePageDoc) -> str:
+    """Uses the parent guide when a feature's intermediate guide is omitted."""
+
+    if not page_doc.generate_guide and page_doc.sections_as_pages:
+        return page_doc.topics_guide_xref
+    return page_doc.page_id
+
+
 def _feature_target_registry(
     page_docs: list[FeaturePageDoc],
     reusable_sections: dict[str, FeatureSectionDoc],
@@ -2658,9 +2783,7 @@ def _feature_target_registry(
 
     targets: dict[str, str] = {}
     for page_doc in page_docs:
-        destination = page_doc.page_id
-        if not page_doc.generate_guide and page_doc.sections_as_pages:
-            destination = page_doc.topics_guide_xref
+        destination = _feature_page_xref(page_doc)
         targets[page_doc.page_id] = destination
         if page_doc.target:
             targets[page_doc.target] = destination
@@ -2716,13 +2839,17 @@ def _add_feature_links(
     for link_doc in links:
         if link_doc.target.startswith(("preferences_", "features_", "commands_")):
             raise ValueError(f"Use a logical help target instead of a page id: {link_doc.target!r}")
-        if link_doc.target not in targets or link_doc.target not in link_text:
+        external = link_doc.target.startswith(("https://", "http://"))
+        if external:
+            defaults = LinkTextDoc(link_doc.target, "")
+        elif link_doc.target not in targets or link_doc.target not in link_text:
             raise ValueError(f"Unknown help link target: {link_doc.target!r}")
-        defaults = link_text[link_doc.target]
+        else:
+            defaults = link_text[link_doc.target]
         item = _append_child(list_el, "item")
         p = _append_child(item, "p")
         link = _append_child(p, "link", link_doc.label or defaults.label)
-        link.set("xref", targets.get(link_doc.target, link_doc.target))
+        link.set("href" if external else "xref", targets.get(link_doc.target, link_doc.target))
         summary = link_doc.summary or defaults.summary
         if summary:
             link.tail = f": {_sentence(summary)}"
@@ -2744,7 +2871,7 @@ def _feature_prose(
         desktop = command.desktop_keybinding
         laptop = command.laptop_keybinding
         if desktop is None and laptop is None:
-            replacement = f"the unbound {command.label} command"
+            replacement = f'the unbound "{command.label}" command'
         elif desktop == laptop:
             assert desktop is not None
             replacement = "+".join(_keybinding_parts(desktop)) + _click_count_text(
@@ -2807,6 +2934,11 @@ def _add_feature_preferences(
     _append_child(settings, "title", "Settings")
     seen_categories = set()
     for preference_page, panel in selected:
+        contents = panel
+        if context.placed_preference_controls and not panel.selected_targets:
+            controls = _omit_placed_controls(panel.controls, context.placed_preference_controls)
+            if controls is not panel.controls:
+                contents = replace(panel, controls=controls)
         container = settings
         if len(selected) > 1:
             container = _append_child(settings, "section")
@@ -2824,7 +2956,7 @@ def _add_feature_preferences(
             path,
             global_only=not category.application_preferences,
         )
-        _add_panel_contents(container, panel, show_availability=False)
+        _add_panel_contents(container, contents, show_availability=False)
 
 
 def _add_named_feature_commands(
@@ -2976,6 +3108,7 @@ def _add_feature_section_contents(
         or section_doc.command_names
         or section_doc.preference_categories
         or section_doc.preference_panels
+        or section_doc.preference_controls
     ) and related_links:
         links_parent = _append_child(parent, "section")
         links_parent.set("id", _id_fragment(f"{section_doc.title}-related"))
@@ -3038,7 +3171,6 @@ def _add_feature_guide_links(
 
     links = _append_child(parent, "links")
     links.set("type", "topic")
-    links.set("style", "2column")
     if page_doc.topics_title:
         _append_child(links, "title", page_doc.topics_title)
     info = parent.find(f"{{{MALLARD_NS}}}info")
@@ -3157,7 +3289,7 @@ def _build_feature_page(
         )
 
     if _page_filename(page_doc.page_id) == PREFERENCES_PAGE:
-        _add_preferences_guide_links(page, page_doc.topics_title)
+        page.set("type", "guide")
     return ET.ElementTree(page)
 
 
@@ -3219,6 +3351,9 @@ def build_feature_pages(
             for page in preference_pages or []
             for panel in page.panels
         },
+        placed_preference_controls={
+            target for section in explicit_sections for target in section.preference_controls
+        },
     )
     pages: dict[str, ET.ElementTree] = {}
     for page_doc in page_docs:
@@ -3249,49 +3384,99 @@ def build_feature_pages(
                 commands_by_name,
                 command_context,
             )
-    _add_preferences_directory(pages, preference_pages or [], targets)
+    for tree in pages.values():
+        _resolve_prose_topic_links(tree.getroot(), targets, link_text)
     return {filename: _serialize(tree) for filename, tree in pages.items()}
 
 
-def _add_preferences_directory(
-    pages: dict[str, ET.ElementTree], preferences: list[PageDoc], targets: dict[str, str]
+_PROSE_TOPIC_PATTERN = re.compile(r"\[\[([^\[\]\n]+)\]\]")
+
+
+def _resolve_prose_topic_links(
+    root: ET.Element,
+    targets: dict[str, str],
+    link_text: dict[str, LinkTextDoc],
 ) -> None:
-    """Links whole feature pages from Preferences, keeping backlinks out of settings sections."""
+    """Links prose topic references and removes duplicate related-topic entries."""
 
-    if PREFERENCES_PAGE not in pages or not preferences:
-        return
+    destinations: set[str] = set()
+    related_lists: list[tuple[ET.Element | None, ET.Element, ET.Element, ET.Element]] = []
 
-    def tree(filename: str) -> ET.Element:
-        root = pages[filename].getroot()
-        assert root is not None
-        return root
+    def title(target: str) -> str:
+        if target.startswith(("preferences_", "features_", "commands_")):
+            raise ValueError(f"Use a logical help target instead of a page id: {target!r}")
+        if target not in targets or target not in link_text:
+            raise ValueError(f"Unknown prose topic target: {target!r}")
+        return link_text[target].label
 
-    preferences_root = tree(PREFERENCES_PAGE)
-    preferences_root.set("version", "1.1")
-    directory = preferences_root.find(f"{{{MALLARD_NS}}}section[@id='settings-categories']")
-    assert directory is not None
-    info = ET.Element(f"{{{MALLARD_NS}}}info")
-    directory.insert(0, info)
-    groups = []
-    for preference in preferences:
-        destination = targets[preference.page_id].split("#", 1)[0]
-        if destination == preference.page_id:
+    def expand(element: ET.Element, attribute: str, linkify: bool) -> list[ET.Element] | None:
+        text = getattr(element, attribute)
+        if not text or "[[" not in text:
+            return None
+        parts = _PROSE_TOPIC_PATTERN.split(text)
+        prefix = parts[0]
+        links: list[ET.Element] = []
+        for index in range(1, len(parts), 2):
+            target, tail = parts[index : index + 2]
+            label = title(target)
+            if not linkify:
+                prefix += f'"{label}"{tail}'
+                continue
+            if links:
+                links[-1].tail = (links[-1].tail or "") + '"'
+            else:
+                prefix += '"'
+            link = ET.Element(f"{{{MALLARD_NS}}}link", xref=targets[target])
+            link.text = label
+            link.tail = f'"{tail}'
+            links.append(link)
+            destinations.add(targets[target].split("#", 1)[0])
+        setattr(element, attribute, prefix)
+        return links or None
+
+    def walk(element: ET.Element, parent: ET.Element | None = None, linkify: bool = True) -> None:
+        tag = element.tag.rsplit("}", 1)[-1]
+        if tag == "code":
+            return
+        linkify = linkify and tag not in {"desc", "title", "link"}
+        children = expand(element, "text", linkify)
+        previous = None
+        for index, child in enumerate(element):
+            if (
+                child.tag == f"{{{MALLARD_NS}}}list"
+                and previous is not None
+                and previous.tag == f"{{{MALLARD_NS}}}p"
+                and previous.text == "See also:"
+            ):
+                related_lists.append((parent, element, previous, child))
+            walk(child, element, linkify)
+            added = expand(child, "tail", linkify)
+            if children is not None:
+                children.append(child)
+            elif added:
+                children = element[: index + 1]
+            if added:
+                assert children is not None
+                children.extend(added)
+            previous = child
+        if children is not None:
+            element[:] = children
+
+    walk(root)
+    for outer, parent, heading, related in related_lists:
+        kept = []
+        for item in related:
+            link = item.find(f"{{{MALLARD_NS}}}p/{{{MALLARD_NS}}}link")
+            if link is None or link.get("xref", "").split("#", 1)[0] not in destinations:
+                kept.append(item)
+        if len(kept) != len(related):
+            related[:] = kept
+        if len(related):
             continue
-        category = _target_page_id(preference.page_id, PREFERENCES_PAGE_PREFIX)
-        groups.append(category)
-        link = _append_child(info, "link")
-        link.attrib.update(type="topic", xref=destination, group=category)
-        destination_info = tree(_page_filename(destination)).find(f"{{{MALLARD_NS}}}info")
-        assert destination_info is not None
-        title = _append_child(destination_info, "title", preference.link_title)
-        title.attrib.update(type="link", role="preferences")
-        description = destination_info.find(f"{{{MALLARD_NS}}}desc")
-        assert description is not None
-        description.text = preference.description
-    links = directory.find(f"{{{MALLARD_NS}}}links")
-    assert links is not None
-    links.set("groups", " ".join(groups))
-    links.set("role", "preferences")
+        parent.remove(heading)
+        parent.remove(related)
+        if outer is not None and len(parent) == 1 and parent[0].tag == f"{{{MALLARD_NS}}}title":
+            outer.remove(parent)
 
 
 def _wrap_paragraph_text(text: str, indent: str, width: int = 100, prefix_len: int = 0) -> str:
@@ -3333,7 +3518,7 @@ def _wrap_tail_after_inline(text: str, indent: str, prefix_len: int, width: int)
 
     trailing = text[len(text.rstrip()) :]
     content = text.strip()
-    if content[0] in ",.;:!?)":
+    if content[0] in ',.;:!?)"':
         return _wrap_paragraph_text(text, indent, width, prefix_len=prefix_len)
     if len(indent) + prefix_len + len(content.split(maxsplit=1)[0]) > width:
         if content.startswith(": "):
@@ -3466,7 +3651,7 @@ def _diff(expected: str, actual: str, path: Path) -> str:
 
 
 def validate_generated_pages(pages: dict[str, str]) -> None:
-    """Rejects broken cross-references, invalid item anchors, and unnamed sections."""
+    """Rejects invalid structure, broken references, and multiple parent guides."""
 
     roots = {
         name.removesuffix(".page"): ET.fromstring(content)  # noqa: S314 - generated, trusted XML
@@ -3502,6 +3687,26 @@ def validate_generated_pages(pages: dict[str, str]) -> None:
             destination = destination or page_id
             if destination not in roots or (fragment and fragment not in anchors[destination]):
                 raise ValueError(f"Broken help reference in {page_id}: {xref}")
+
+    parents: dict[str, set[str]] = {}
+    for page_id, root in roots.items():
+        for node in root.iter():
+            if node.tag not in {f"{{{MALLARD_NS}}}page", f"{{{MALLARD_NS}}}section"}:
+                continue
+            source = page_id if node is root else f"{page_id}#{node.get('id')}"
+            for link in node.findall(f"{{{MALLARD_NS}}}info/{{{MALLARD_NS}}}link"):
+                xref = link.get("xref", "")
+                if not xref:
+                    continue
+                if xref.startswith("#"):
+                    xref = page_id + xref
+                if link.get("type") == "guide":
+                    parents.setdefault(source, set()).add(xref)
+                elif link.get("type") == "topic":
+                    parents.setdefault(xref, set()).add(source)
+    for topic, guides in parents.items():
+        if len(guides) > 1:
+            raise ValueError(f"Multiple parent guides for {topic}: {', '.join(sorted(guides))}")
 
 
 RegistryValue = TypeVar("RegistryValue")
@@ -3539,12 +3744,21 @@ def main() -> int:
         default=str(repo_root / "help_ng" / "generated_help_metadata.json"),
         help="Path to generated-help prose metadata.",
     )
-    parser.add_argument(
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument(
         "--check",
         action="store_true",
         help="Check that generated files match committed files.",
     )
+    mode.add_argument(
+        "--html",
+        action="store_true",
+        help="Also render HTML into an html subdirectory of the output (requires yelp-build).",
+    )
     args = parser.parse_args()
+    yelp_build = shutil.which("yelp-build") if args.html else None
+    if args.html and yelp_build is None:
+        parser.error("--html requires yelp-build; install yelp-tools.")
 
     src_dir = Path(args.src_dir)
     output_dir = Path(args.output_dir)
@@ -3619,11 +3833,34 @@ def main() -> int:
         figures = metadata_path.parent / "figures"
         if figures.resolve() != (output_dir / "figures").resolve():
             shutil.copytree(figures, output_dir / "figures", dirs_exist_ok=True)
+        if yelp_build:
+            html_dir = output_dir / "html"
+            html_dir.mkdir(parents=True, exist_ok=True)
+            subprocess.run(  # noqa: S603
+                [
+                    yelp_build,
+                    "html",
+                    "-x",
+                    str(repo_root / "help_ng" / "help_html.xsl"),
+                    "-o",
+                    str(html_dir.resolve()),
+                    str(output_dir.resolve()),
+                ],
+                check=True,
+            )
+    except subprocess.CalledProcessError as error:
+        print(f"Error rendering HTML documentation: {error}", file=sys.stderr)
+        return 1
     except OSError as error:
         print(f"Error writing generated help documentation: {error}", file=sys.stderr)
         return 1
 
     print(f"Documentation written to {output_dir}", file=sys.stderr)
+    if args.html:
+        print(
+            f"Open {(output_dir / 'html' / 'index.html').resolve()} in your browser.",
+            file=sys.stderr,
+        )
     return 0
 
 

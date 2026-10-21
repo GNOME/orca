@@ -22,7 +22,6 @@
 
 from __future__ import annotations
 
-from . import cmdnames
 from .help_metadata import FeaturePageDoc, FeatureSectionDoc
 
 
@@ -33,7 +32,7 @@ def get_feature_documentation() -> FeaturePageDoc:
         page_id="features_typing_echo",
         title="Echo",
         link_title="Echo",
-        description="Configure what you hear while typing.",
+        description="Spoken feedback for keys you press and text you enter.",
         guide_xref="index#output",
         target="typing-echo.feature",
         sections=(
@@ -41,14 +40,10 @@ def get_feature_documentation() -> FeaturePageDoc:
                 title="Echo",
                 preference_categories=("echo",),
                 details=(
-                    "Key echo announces the keys you press. You can choose which types of "
-                    "keys are spoken.\n\n"
-                    "Typing echo announces text inserted into an editable field. You can "
-                    "hear individual characters, completed words, or completed sentences. "
-                    "You can enable both key echo and character echo without hearing the "
-                    "same character twice.\n\n"
-                    f"{cmdnames.CYCLE_KEY_ECHO} switches among key echo, word echo, "
-                    "sentence echo, key and word echo, word and sentence echo, and off."
+                    "Key echo provides feedback about keys you press; typing echo provides "
+                    "feedback about text entered in an editable field or terminal. The settings "
+                    "below describe the available feedback and how the different forms of echo "
+                    "interact."
                 ),
                 command_groups=("commands.echo",),
             ),

@@ -5,10 +5,11 @@
     <title type="link">Orca Screen Reader</title>
     <title type="link" role="trail">Orca Screen Reader</title>
     <desc>
-      Orca is a free, open source, extensible screen reader that provides access to the
-      graphical desktop through speech and refreshable braille. It works with applications that
-      provide accessibility information through the Assistive Technology Service Provider
-      Interface (AT-SPI).
+      Orca is a free, open source, flexible, and extensible screen reader that provides access
+      to the graphical desktop through customizable combinations of speech and braille. Orca
+      works with applications and toolkits that support the Assistive Technology Service
+      Provider Interface (AT-SPI). While Orca is part of the GNOME Project, it can be used in
+      any accessible desktop environment.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -24,10 +25,11 @@
     <media type="image" width="40px" height="40px" its:translate="no" src="figures/orca-logo.svg" /> Orca Screen Reader
   </title>
   <p>
-    Orca is a free, open source, extensible screen reader that provides access to the graphical
-    desktop through speech and refreshable braille. It works with applications that provide
-    accessibility information through the Assistive Technology Service Provider Interface
-    (AT-SPI).
+    Orca is a free, open source, flexible, and extensible screen reader that provides access to
+    the graphical desktop through customizable combinations of speech and braille. Orca works
+    with applications and toolkits that support the Assistive Technology Service Provider
+    Interface (AT-SPI). While Orca is part of the GNOME Project, it can be used in any
+    accessible desktop environment.
   </p>
   <note style="important">
     <title>Before you begin</title>
@@ -36,25 +38,22 @@
       environment, read that documentation first.
     </p>
   </note>
-  <section id="getting_started" style="2column">
+  <section id="getting_started">
     <title>Getting started</title>
   </section>
-  <section id="reading" style="2column">
-    <title>Reading documents and web pages</title>
-  </section>
-  <section id="reviewing" style="2column">
-    <title>Reviewing and exploring objects</title>
-  </section>
-  <section id="output" style="2column">
+  <section id="output">
     <title>Output and presentation</title>
   </section>
-  <section id="interaction" style="2column">
-    <title>Interacting with applications</title>
+  <section id="reviewing">
+    <title>Reviewing and interacting with objects</title>
   </section>
-  <section id="information" style="2column">
-    <title>System information</title>
+  <section id="reading">
+    <title>Reading documents and web pages</title>
   </section>
-  <section id="troubleshooting" style="2column">
+  <section id="interaction">
+    <title>Interacting with applications and the desktop environment</title>
+  </section>
+  <section id="troubleshooting">
     <title>Troubleshooting</title>
   </section>
 </page>

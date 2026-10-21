@@ -2,7 +2,7 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_reviewing_objects_object_navigation">
   <info>
     <link type="guide" xref="index#reviewing" />
-    <title type="sort">18. Object navigation</title>
+    <title type="sort">20. Object navigation</title>
     <title type="link">Object navigation</title>
     <desc>
       Object navigation lets you move through the accessible object hierarchy without moving
@@ -26,15 +26,8 @@
   <p>
     Applications provide objects in a hierarchy: a parent contains child objects, and children
     with the same parent are siblings. For example, a toolbar can contain several buttons.
-  </p>
-  <p>
-    Object navigation uses a separate navigator focus. You can move to the parent, first child,
-    next sibling, or previous sibling of the object with navigator focus, and you can click the
-    object with navigator focus.
-  </p>
-  <p>
-    Simplified object navigation hides some layout-only objects to make the hierarchy easier to
-    explore. You can toggle simplified navigation on and off.
+    Object navigation uses a separate navigator focus; the commands below explore and interact
+    with the object at that location.
   </p>
   <section id="commands-object-navigation">
     <title>Commands</title>
@@ -45,18 +38,23 @@
     <list>
       <item>
         <p>
-          <gui>Click on the object with navigator focus.</gui>
-          <keyseq>
+          <gui>Click on the object with navigator focus.</gui>: <keyseq>
             <key>Orca Modifier</key>
             <key>Ctrl</key>
             <key>Enter</key>
           </keyseq>
         </p>
+        <p>
+          Acts on the object with navigator focus. Orca first tries suitable accessible actions
+          exposed by the object through its application or toolkit. If no suitable action
+          succeeds, Orca tries to simulate a mouse click at the object's location. This fallback
+          does not currently work on Wayland. Accessible actions can still work on Wayland when
+          supported by the application or toolkit.
+        </p>
       </item>
       <item>
         <p>
-          <gui>Go to the first child of the object with navigator focus.</gui>
-          <keyseq>
+          <gui>Go to the first child of the object with navigator focus.</gui>: <keyseq>
             <key>Orca Modifier</key>
             <key>Ctrl</key>
             <key>Down Arrow</key>
@@ -65,8 +63,7 @@
       </item>
       <item>
         <p>
-          <gui>Go to the next sibling of the object with navigator focus.</gui>
-          <keyseq>
+          <gui>Go to the next sibling of the object with navigator focus.</gui>: <keyseq>
             <key>Orca Modifier</key>
             <key>Ctrl</key>
             <key>Right Arrow</key>
@@ -75,8 +72,7 @@
       </item>
       <item>
         <p>
-          <gui>Go to the parent of the object with navigator focus.</gui>
-          <keyseq>
+          <gui>Go to the parent of the object with navigator focus.</gui>: <keyseq>
             <key>Orca Modifier</key>
             <key>Ctrl</key>
             <key>Up Arrow</key>
@@ -85,8 +81,7 @@
       </item>
       <item>
         <p>
-          <gui>Go to the previous sibling of the object with navigator focus.</gui>
-          <keyseq>
+          <gui>Go to the previous sibling of the object with navigator focus.</gui>: <keyseq>
             <key>Orca Modifier</key>
             <key>Ctrl</key>
             <key>Left Arrow</key>
@@ -95,12 +90,15 @@
       </item>
       <item>
         <p>
-          <gui>Toggle simplified object navigation.</gui>
-          <keyseq>
+          <gui>Toggle simplified object navigation.</gui>: <keyseq>
             <key>Orca Modifier</key>
             <key>Ctrl</key>
             <key>S</key>
           </keyseq>
+        </p>
+        <p>
+          Turns simplified object navigation on or off. Simplified navigation hides some
+          layout-only objects to make the hierarchy easier to explore.
         </p>
       </item>
     </list>

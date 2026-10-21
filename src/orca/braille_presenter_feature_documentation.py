@@ -22,7 +22,7 @@
 
 from __future__ import annotations
 
-from . import cmdnames, guilabels
+from . import object_properties
 from .help_metadata import FeatureLinkDoc, FeaturePageDoc, FeatureSectionDoc
 
 
@@ -33,58 +33,74 @@ def get_feature_documentation() -> FeaturePageDoc:
         page_id="features_braille_guide",
         title="Braille",
         link_title="Braille",
-        description="Read and control braille output.",
+        description="Braille presentation of on-screen content and Orca messages.",
         guide_xref="index#output",
         target="braille.feature",
         sections_as_pages=True,
         preference_category="braille",
-        intro=(
-            "These topics describe braille output, display settings, temporary messages, "
-            "and the on-screen braille display."
-        ),
         sections=(
             FeatureSectionDoc(
                 title="Braille output",
                 topic_id="output",
                 target="braille.output.feature",
                 preference_panels=("braille_presenter.braille",),
-                intro=(
-                    "Read content with a refreshable braille display and control its reading "
-                    "location."
-                ),
                 details=(
                     "Braille displays communicate with Orca through BRLTTY, a service that "
-                    "connects braille displays to applications. Configure your display in "
-                    "BRLTTY before enabling braille output.\n\n"
-                    "You can pan the braille display, return to the current location, route "
-                    "the cursor, or mark text for copying. Standard keyboard bindings can "
-                    f"be changed in {guilabels.COMMANDS} preferences. "
-                    "Braille display bindings depend on "
-                    "the display and BRLTTY configuration and cannot be rebound in Orca.\n\n"
-                    "Cursor routing moves the caret to the character at a selected braille "
-                    "cell or activates the item at that cell. To copy text, use "
-                    f"{cmdnames.BRAILLE_CUT_BEGIN} at its start and {cmdnames.BRAILLE_CUT_LINE} "
-                    "at its end. Orca selects the text and copies "
-                    "it to the clipboard; paste it using the destination application's "
-                    "usual paste command."
+                    "connects braille displays to applications. Depending on your display and "
+                    "system setup, you may need to configure your display in BRLTTY. You may "
+                    "also need to start BRLTTY before running Orca if your system does not "
+                    "start it automatically. Orca does not start BRLTTY itself.\n\n"
+                    "Orca uses the following indicators to show the state of controls "
+                    "in braille:\n\n"
+                    f"- Check boxes: `{object_properties.CHECK_BOX_INDICATORS_BRAILLE[0]}` "
+                    f"for unchecked, `{object_properties.CHECK_BOX_INDICATORS_BRAILLE[1]}` "
+                    f"for checked, and `{object_properties.CHECK_BOX_INDICATORS_BRAILLE[2]}` "
+                    "for partially checked.\n"
+                    f"- Radio buttons: `{object_properties.RADIO_BUTTON_INDICATORS_BRAILLE[0]}` "
+                    f"for unselected and `{object_properties.RADIO_BUTTON_INDICATORS_BRAILLE[1]}` "
+                    "for selected.\n"
+                    f"- Switches: `{object_properties.SWITCH_INDICATORS_BRAILLE[0]}` "
+                    f"for off and `{object_properties.SWITCH_INDICATORS_BRAILLE[1]}` for on.\n"
+                    f"- Toggle buttons: `{object_properties.TOGGLE_BUTTON_INDICATORS_BRAILLE[0]}` "
+                    "for not pressed and "
+                    f"`{object_properties.TOGGLE_BUTTON_INDICATORS_BRAILLE[1]}` "
+                    "for pressed.\n"
+                    f"- Read-only text: `{object_properties.STATE_READ_ONLY_BRAILLE}` "
+                    "indicates that the text cannot be edited.\n\n"
+                    "Orca can also mark links, selected text, and text attributes by raising "
+                    "dots beneath the affected characters, similar to underlining. See "
+                    "[[braille.display-settings.feature]] to configure these indicators, "
+                    "and [[text-attributes.feature]] to choose which text attributes are marked."
                 ),
                 command_groups=("braille.commands.panning-and-routing",),
             ),
             FeatureSectionDoc(
                 title="Verbosity",
                 topic_id="verbosity",
-                intro="Configure how much object information you read in braille.",
+                intro="Configure how much object information is displayed in braille.",
                 preference_panels=("braille_presenter.verbosity",),
             ),
             FeatureSectionDoc(
                 title="Display settings",
                 topic_id="display_settings",
-                intro="Configure braille wrapping, contraction, and indicator dots.",
-                details=(
-                    "You can toggle contracted braille using a standard keyboard or a "
-                    "braille display. See Braille output for how their bindings are configured."
+                target="braille.display-settings.feature",
+                intro=(
+                    "Braille display settings control how text fits on your display and how "
+                    "additional information is marked."
                 ),
-                links=(FeatureLinkDoc("braille.output.feature"),),
+                details=(
+                    "Contracted braille uses abbreviations for words and groups of letters, "
+                    "allowing more text to fit on the display. Orca uses liblouis translation "
+                    "tables to determine the symbols and contractions for your language.\n"
+                    "\n"
+                    "Indicator dots mark information such as links and selected text without "
+                    "adding words to the display. See [[text-attributes.feature]] to choose "
+                    "which text attributes are marked."
+                ),
+                links=(
+                    FeatureLinkDoc("braille.output.feature"),
+                    FeatureLinkDoc("text-attributes.feature"),
+                ),
                 preference_panels=("braille_presenter.display-settings",),
                 command_groups=("braille.commands.contraction",),
             ),
@@ -92,8 +108,11 @@ def get_feature_documentation() -> FeaturePageDoc:
                 title="Flash messages",
                 topic_id="flash_messages",
                 intro=(
-                    "Flash messages temporarily show Orca messages and command feedback in "
-                    "braille, then restore the previous display contents."
+                    "Flash messages are temporary messages on the braille display that "
+                    "provide feedback from Orca, such as confirmation that a setting has "
+                    "changed. They replace the displayed content without moving focus or "
+                    "the caret. When a message expires, Orca restores the previous display "
+                    "contents."
                 ),
                 preference_panels=("braille_presenter.flash-messages",),
             ),
@@ -101,7 +120,10 @@ def get_feature_documentation() -> FeaturePageDoc:
                 title="Progress bars",
                 topic_id="progress_bars",
                 target="braille.progress-bars.feature",
-                intro="Follow progress-bar updates on your braille display.",
+                intro=(
+                    "Orca can show progress-bar updates on your braille display so you can "
+                    "track tasks such as downloads or file transfers."
+                ),
                 preference_panels=("braille_presenter.progress-bars",),
                 links=(
                     FeatureLinkDoc("speech.progress-bars.feature", "Speech progress bars"),

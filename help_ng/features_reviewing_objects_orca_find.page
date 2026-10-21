@@ -2,7 +2,7 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_reviewing_objects_orca_find">
   <info>
     <link type="guide" xref="index#reviewing" />
-    <title type="sort">17. Orca Find</title>
+    <title type="sort">19. Orca Find</title>
     <title type="link">Orca Find</title>
     <desc>
       Orca Find searches visible contents in the active window.
@@ -23,18 +23,9 @@
     activates flat review and moves the review location to the matching item or text.
   </p>
   <p>
-    The Find dialog lets you enter text to search for, choose whether to start from the current
-    location or the top of the window, match case, match whole words, search backward, and wrap
-    around. After you perform a search, use the Find commands to move to the next or previous
-    match without reopening the dialog.
-  </p>
-  <p>
-    If you have not searched yet, Find Next and Find Previous open the dialog. Search text is
-    interpreted as a regular expression; characters such as a period or an asterisk have special
-    meanings. Use a backslash before a special character to match it literally.
-  </p>
-  <p>
-    Finding a match does not move application focus or reposition the caret.
+    Finding a match does not move application focus or reposition the caret. To search document
+    content beyond the visible portion, use the application's search feature. See "<link xref="features_reading_documents_native_navigation">Native navigation</link>" for application
+    search and Orca's presentation of its results.
   </p>
   <section id="commands-find">
     <title>Commands</title>
@@ -64,6 +55,13 @@
             </p>
           </item>
         </list>
+        <p>
+          Opens a dialog where you can enter text to search for, start from the current location
+          or the top of the window, match case, match whole words, search backward, and wrap
+          around. Search text is interpreted as a regular expression; characters such as a
+          period or an asterisk have special meanings. Use a backslash before a special
+          character to match it literally.
+        </p>
       </item>
       <item>
         <p>
@@ -87,6 +85,10 @@
             </p>
           </item>
         </list>
+        <p>
+          Moves to the next match without reopening the dialog. If you have not searched yet,
+          opens the search dialog.
+        </p>
       </item>
       <item>
         <p>
@@ -112,6 +114,10 @@
             </p>
           </item>
         </list>
+        <p>
+          Moves to the previous match without reopening the dialog. If you have not searched
+          yet, opens the search dialog.
+        </p>
       </item>
     </list>
   </section>

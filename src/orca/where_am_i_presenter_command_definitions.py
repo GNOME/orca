@@ -26,7 +26,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
-from .help_metadata import CommandGroupDoc
+from .help_metadata import CommandDoc, CommandGroupDoc
 
 if TYPE_CHECKING:
     from .where_am_i_presenter import WhereAmIPresenter
@@ -36,6 +36,49 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for Where Am I commands."""
 
     return CommandGroupDoc(
+        commands=(
+            CommandDoc(
+                "whereAmIBasicHandler",
+                details=(
+                    "Repeats information about the current item. The information depends on the "
+                    "type of object and your current location."
+                ),
+            ),
+            CommandDoc(
+                "whereAmIDetailedHandler",
+                details=(
+                    "Can add information about containing groups and other details. The "
+                    "information depends on the type of object and your current location. Some "
+                    "objects provide the same information for basic and detailed presentation."
+                ),
+            ),
+            CommandDoc(
+                "whereAmISelectionHandler",
+                details=(
+                    "Presents selected text or selected objects, such as files or spreadsheet "
+                    "cells."
+                ),
+            ),
+            CommandDoc(
+                "readCharAttributesHandler",
+                details=(
+                    "Presents the configured attributes for the current character, omitting "
+                    "attributes whose values are treated as defaults. Uses the character at the "
+                    "flat review location when flat review is active, or at the text caret "
+                    "otherwise. If no formatting information is available, Orca tells you."
+                ),
+            ),
+            CommandDoc(
+                "show_character_attributes",
+                details=(
+                    "Opens a window showing all available attributes for the current character, "
+                    "including those not enabled for speech. You can inspect and copy the details. "
+                    "Press Escape to close the window. Uses the character at the flat review "
+                    "location when flat review is active, or at the text caret otherwise. If no "
+                    "formatting information is available, Orca tells you."
+                ),
+            ),
+        ),
         summary="Present information about the current location.",
         see_also=("reviewing.where-am-i", "text-attributes.feature"),
     )

@@ -2,10 +2,11 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="features_braille_output">
   <info>
     <link type="guide" xref="features_braille_guide" />
-    <title type="sort">21. Braille output</title>
+    <title type="sort">35. Braille output</title>
     <title type="link">Braille output</title>
     <desc>
-      Read content with a refreshable braille display and control its reading location.
+      Braille displays communicate with Orca through BRLTTY, a service that connects braille
+      displays to applications.
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -19,23 +20,47 @@
   </info>
   <title>Braille output</title>
   <p>
-    Read content with a refreshable braille display and control its reading location.
-  </p>
-  <p>
     Braille displays communicate with Orca through BRLTTY, a service that connects braille
-    displays to applications. Configure your display in BRLTTY before enabling braille output.
+    displays to applications. Depending on your display and system setup, you may need to
+    configure your display in BRLTTY. You may also need to start BRLTTY before running Orca if
+    your system does not start it automatically. Orca does not start BRLTTY itself.
   </p>
   <p>
-    You can pan the braille display, return to the current location, route the cursor, or mark
-    text for copying. Standard keyboard bindings can be changed in Commands preferences. Braille
-    display bindings depend on the display and BRLTTY configuration and cannot be rebound in
-    Orca.
+    Orca uses the following indicators to show the state of controls in braille:
   </p>
+  <list>
+    <item>
+      <p>
+        Check boxes: <code>&lt; &gt;</code> for unchecked, <code>&lt;x&gt;</code> for checked, and <code>&lt;-&gt;</code> for partially checked.
+      </p>
+    </item>
+    <item>
+      <p>
+        Radio buttons: <code>&amp; y</code> for unselected and <code>&amp;=y</code> for selected.
+      </p>
+    </item>
+    <item>
+      <p>
+        Switches: <code>&amp; y</code> for off and <code>&amp;=y</code> for on.
+      </p>
+    </item>
+    <item>
+      <p>
+        Toggle buttons: <code>&amp; y</code> for not pressed and <code>&amp;=y</code> for pressed.
+      </p>
+    </item>
+    <item>
+      <p>
+        Read-only text: <code>rdonly</code> indicates that the text cannot
+        be edited.
+      </p>
+    </item>
+  </list>
   <p>
-    Cursor routing moves the caret to the character at a selected braille cell or activates the
-    item at that cell. To copy text, use Cut Begin at its start and Cut Line at its end. Orca
-    selects the text and copies it to the clipboard; paste it using the destination
-    application's usual paste command.
+    Orca can also mark links, selected text, and text attributes by raising dots beneath the
+    affected characters, similar to underlining. See "<link xref="features_braille_display_settings">Display settings</link>" to configure these
+    indicators, and "<link xref="features_text_attributes">Text attributes</link>" to choose which
+    text attributes are marked.
   </p>
   <section id="settings-braille-output">
     <title>Settings</title>
@@ -58,57 +83,111 @@
       <em style="strong">Preferences location:</em>
       <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Braille</gui> group.
     </p>
-    <section id="commands-panning-and-routing-keyboard">
-      <title>Standard keyboard commands</title>
-      <list>
-        <item>
-          <p>
-            <gui>Pan the braille display to the left</gui>
-            Unbound by default.
-          </p>
-        </item>
-        <item>
-          <p>
-            <gui>Pan the braille display to the right</gui>
-            Unbound by default.
-          </p>
-        </item>
-      </list>
-    </section>
-    <section id="commands-panning-and-routing-braille">
-      <title>Braille display commands</title>
-      <list>
-        <item>
-          <p>
-            <gui>Pan the braille display to the left</gui>: Line Left
-          </p>
-        </item>
-        <item>
-          <p>
-            <gui>Pan the braille display to the right</gui>: Line Right
-          </p>
-        </item>
-        <item>
-          <p>
-            <gui>Return to object with keyboard focus</gui>: Cursor Position
-          </p>
-        </item>
-        <item>
-          <p>
-            <gui>Process a cursor routing key</gui>: Cursor Routing
-          </p>
-        </item>
-        <item>
-          <p>
-            <gui>Mark the beginning of a text selection</gui>: Cut Begin
-          </p>
-        </item>
-        <item>
-          <p>
-            <gui>Mark the end of a text selection</gui>: Cut Line
-          </p>
-        </item>
-      </list>
-    </section>
+    <p>
+      The commands below control the braille reading location and interact with displayed
+      content. Standard keyboard bindings can be changed in Commands preferences. Braille
+      display bindings depend on the display and BRLTTY configuration and cannot currently be
+      rebound in Orca.
+    </p>
+    <list>
+      <item>
+        <p>
+          <gui>Pan the braille display to the left</gui>
+        </p>
+        <list>
+          <item>
+            <p>
+              Keyboard: unbound by default.
+            </p>
+          </item>
+          <item>
+            <p>
+              Braille: Line Left
+            </p>
+          </item>
+        </list>
+      </item>
+      <item>
+        <p>
+          <gui>Pan the braille display to the right</gui>
+        </p>
+        <list>
+          <item>
+            <p>
+              Keyboard: unbound by default.
+            </p>
+          </item>
+          <item>
+            <p>
+              Braille: Line Right
+            </p>
+          </item>
+        </list>
+      </item>
+      <item>
+        <p>
+          <gui>Return to object with keyboard focus</gui>
+        </p>
+        <list>
+          <item>
+            <p>
+              Braille: Cursor Position
+            </p>
+          </item>
+        </list>
+      </item>
+      <item>
+        <p>
+          <gui>Process a cursor routing key</gui>
+        </p>
+        <list>
+          <item>
+            <p>
+              Braille: Cursor Routing
+            </p>
+          </item>
+        </list>
+        <p>
+          Moves the caret to the character at the selected braille cell or activates the item at
+          that cell, depending on the application's accessibility support. See "<link xref="features_reviewing_objects_mouse_review">Mouse review and clicking</link>" for clicking and
+          its limitations on Wayland. If a flash message is displayed, pressing a routing key
+          dismisses that message instead.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Mark the beginning of a text selection</gui>
+        </p>
+        <list>
+          <item>
+            <p>
+              Braille: Cut Begin
+            </p>
+          </item>
+        </list>
+        <p>
+          Marks the start of text to copy. Use the command to mark the end of the text to
+          complete the selection and copy it to the clipboard.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Mark the end of a text selection</gui>
+        </p>
+        <list>
+          <item>
+            <p>
+              Braille: Cut Line
+            </p>
+          </item>
+        </list>
+        <p>
+          Marks the end of text to copy after its start has been marked. Orca selects the text
+          and copies it to the clipboard. Paste it using the destination application's usual
+          paste command. See "<link xref="features_clipboard">Clipboard</link>" for clipboard
+          requirements on Wayland.
+        </p>
+      </item>
+    </list>
   </section>
 </page>

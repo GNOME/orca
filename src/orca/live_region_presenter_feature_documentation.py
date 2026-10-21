@@ -22,7 +22,6 @@
 
 from __future__ import annotations
 
-from . import cmdnames
 from .help_metadata import FeatureDocumentationDoc, FeatureSectionDoc
 
 
@@ -42,23 +41,11 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                     "as stock tickers, weather updates, chat messages, or alerts."
                 ),
                 details=(
-                    f"The {cmdnames.LIVE_REGIONS_MONITOR} command turns live region support "
-                    "on or off. "
-                    "When enabled, Orca keeps the last nine live region messages so you can "
-                    "review them later.\n\n"
                     "Live regions have a politeness level that suggests when assistive "
-                    "technologies should present updates. Off requests no announcements, "
-                    "polite requests announcements when other speech has finished, and "
-                    "assertive requests immediate announcements. "
-                    f"{cmdnames.LIVE_REGIONS_ADVANCE_POLITENESS} cycles through these levels "
-                    "for the current live "
-                    "region.\n\n"
-                    f"{cmdnames.LIVE_REGIONS_ARE_ANNOUNCED} turns announcements "
-                    "off for the current page. Use it again to restore announcements. It "
-                    "does not change your saved default settings.\n\n"
-                    "Structural navigation "
-                    "commands can move to the next or previous live region, or to the live "
-                    "region that most recently made an announcement."
+                    "technologies should present updates. Off requests no announcements, polite "
+                    "requests announcements when other speech has finished, and assertive "
+                    "requests immediate announcements. The commands below control presentation "
+                    "and navigation."
                 ),
             ),
         ),
