@@ -39,6 +39,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
 from . import (
+    braille,
     braille_presenter,
     dbus_service,
     debug,
@@ -715,6 +716,17 @@ class EventManager:
     def _enqueue_object_event(self, e: Atspi.Event) -> None:
         """Callback for Atspi object events."""
 
+        if e.type.startswith(
+            (
+                "object:text-changed",
+                "object:text-attributes-changed",
+                "object:children-changed",
+                "object:state-changed:defunct",
+                "object:state-changed:focused",
+            )
+        ):
+            braille.clear_cache()
+
         if e.type.startswith(("object:text-changed:insert", "object:text-changed:delete")):
             generator.Generator.clear_cached_text(e.source)
 
@@ -816,6 +828,8 @@ class EventManager:
                 self._gidle_id = GLib.idle_add(self._dequeue_object_event)
             raise
 
+        if not rerun:
+            braille.clear_cache()
         return rerun
 
     def register_listener(self, event_type: str) -> None:
