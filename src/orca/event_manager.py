@@ -435,6 +435,10 @@ class EventManager:
         """Returns True if the event is spam, or None if inconclusive."""
 
         event_type = event.type
+        # Let the queue discard older busy events in favor of the latest state.
+        if event_type == "object:state-changed:busy":
+            return None
+
         last_app, last_time = self._event_history.get(event_type, (None, 0))
         app = AXUtilities.get_application(event.source)
         ignore = last_app == hash(app) and time.time() - last_time < 0.1
