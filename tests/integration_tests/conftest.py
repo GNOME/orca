@@ -137,6 +137,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_menubar,
     _web_missing_cells,
     _web_mixed_line_heights,
+    _web_mixed_lists,
     _web_multi_line_content,
     _web_multithumb_slider,
     _web_native_text_selection,

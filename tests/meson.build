@@ -232,6 +232,7 @@ orca_integration_tests = {
     'integration_tests/test_web_wrapped_link.py',
     'integration_tests/test_web_link_starts_line.py',
     'integration_tests/test_web_lists.py',
+    'integration_tests/test_web_mixed_lists.py',
     'integration_tests/test_web_list_replacement.py',
     'integration_tests/test_web_math.py',
     'integration_tests/test_web_temporary_aria_hidden.py',

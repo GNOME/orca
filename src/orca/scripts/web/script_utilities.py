@@ -2092,9 +2092,9 @@ class Utilities(script_utilities.Utilities):
             else:
 
                 def pred1(x):
-                    return x is not None and AXObject.get_role(x) not in valid_roles
+                    return x is not None and AXObject.get_role(x) in valid_roles
 
-                rv = bool(list(AXObject.iter_children(obj, pred1)))
+                rv = next(AXObject.iter_children(obj, pred1), None) is None
 
         if not rv:
             parent = AXObject.get_parent(obj)
@@ -2102,9 +2102,9 @@ class Utilities(script_utilities.Utilities):
             if valid_roles:
 
                 def pred2(x):
-                    return x is not None and AXObject.get_role(x) not in valid_roles
+                    return x is not None and AXObject.get_role(x) in valid_roles
 
-                rv = bool(list(AXObject.iter_children(parent, pred2)))
+                rv = next(AXObject.iter_children(parent, pred2), None) is None
 
         self._cache.set_for_object(namespace, obj, rv)
         return rv
