@@ -18,6 +18,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from . import helpers
+from .harness import keyboard
 from .terminal_helpers import settle, type_text
 
 if TYPE_CHECKING:
@@ -65,3 +66,23 @@ def test_scrolled_command_output_is_spoken(gtk3_terminal_shell: NativeAppSession
     # visible remainder is spoken.
     type_text("seq 20\n")
     assert helpers.speech(session) == ["14\n15\n16\n17\n18\n19\n20\n$ \n"]
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("final_text", ["after1", "done"], ids=["overwrite", "shorten"])
+def test_braille_shows_final_output_after_a_burst(
+    gtk3_terminal_shell: NativeAppSession, final_text: str
+) -> None:
+    """Tests that braille gets the final overwrite even when no more output follows."""
+
+    session = gtk3_terminal_shell
+    settle(session)
+    type_text(f"sleep .3; printf before; sleep .05; printf '\\r{final_text}\\033[K'; read")
+    settle(session)
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+
+    # The command waits for input, so no later prompt can trigger another refresh.
+    _spoken, brailled = helpers.capture(session, wait_async=True, quiescence=0.4, overall=2.0)
+    assert brailled[-1] == helpers.BrailleLine(
+        len(final_text) + 1, final_text, final_text, "\x00" * len(final_text)
+    )

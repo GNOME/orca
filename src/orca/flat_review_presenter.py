@@ -119,6 +119,8 @@ class FlatReviewPresenter(Extension):
         self._pending_caret_moved: Atspi.Event | None = None
         self._pending_text_inserted: Atspi.Event | None = None
         self._idle_id: int = 0
+        self._braille_timer_id: int = 0
+        self._last_braille_update: float = 0.0
         self._region_changed_listener_registered: bool = False
         super().__init__()
 
@@ -454,6 +456,7 @@ class FlatReviewPresenter(Extension):
 
         self._last_input_event = None
         self._context = None
+        self._cancel_braille_update()
         self._context_input_event = None
         self._deregister_event_listeners()
         self._sync_region_changed_listener()
@@ -494,6 +497,7 @@ class FlatReviewPresenter(Extension):
 
         if mode == ActivePresentationMode.FLAT_REVIEW:
             return
+        self._cancel_braille_update()
         if self.get_focus_tracking() != FocusTracking.ON.value:
             return
 
@@ -1275,12 +1279,45 @@ class FlatReviewPresenter(Extension):
 
         self._update_braille(script)
 
-    def _update_braille(self, script: default.Script) -> None:
+    def _cancel_braille_update(self) -> None:
+        """Cancels a pending background refresh."""
+
+        if self._braille_timer_id:
+            GLib.source_remove(self._braille_timer_id)
+            self._braille_timer_id = 0
+
+    def _flush_deferred_braille(self, script: default.Script) -> bool:
+        """Refreshes the current review position if it still owns braille output."""
+
+        self._braille_timer_id = 0
+        if (
+            self._context is not None
+            and self.is_active()
+            and self.last_input_event_was_review_command()
+            and self.get_displays_updates()
+            and script == script_manager.get_manager().get_active_script()
+        ):
+            self._update_braille(script)
+        return GLib.SOURCE_REMOVE
+
+    def _update_braille(self, script: default.Script, is_live_update: bool = False) -> None:
         """Obtains the braille regions for the current flat review line and displays them."""
 
         if not braille_presenter.get_presenter().use_braille():
             return
 
+        if is_live_update:
+            remaining = script.get_braille_update_interval() - (
+                time.monotonic() - self._last_braille_update
+            )
+            if remaining > 0:
+                if not self._braille_timer_id:
+                    self._braille_timer_id = GLib.timeout_add(
+                        max(1, int(remaining * 1000) + 1), self._flush_deferred_braille, script
+                    )
+                return
+        self._cancel_braille_update()
+        self._last_braille_update = time.monotonic()
         self._context = self.get_or_create_context(script)
         regions, focused_region = self._context.get_current_braille_regions()
         if not regions:
@@ -1307,13 +1344,13 @@ class FlatReviewPresenter(Extension):
     def _present_review_update(self, script: default.Script) -> None:
         """Presents the current review unit when it changes via a live update."""
 
-        self._context = self.get_or_create_context(script)
         if self.get_displays_updates():
-            self._update_braille(script)
+            self._update_braille(script, is_live_update=True)
 
         if not self.get_speaks_updates():
             return
 
+        self._context = self.get_or_create_context(script)
         if self._last_presented_unit == flat_review.Context.WORD:
             current = self._context.get_current_word_string()
         elif self._last_presented_unit == flat_review.Context.CHAR:
@@ -1334,6 +1371,7 @@ class FlatReviewPresenter(Extension):
     ) -> bool:
         """Pans the braille display left."""
 
+        self._cancel_braille_update()
         self._context = self.get_or_create_context(script, is_panning=True)
         self._last_input_event = event
 
@@ -1376,6 +1414,7 @@ class FlatReviewPresenter(Extension):
     ) -> bool:
         """Pans the braille display right."""
 
+        self._cancel_braille_update()
         self._context = self.get_or_create_context(script, is_panning=True)
         self._last_input_event = event
 

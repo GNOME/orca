@@ -175,6 +175,7 @@ orca_integration_tests = {
     'integration_tests/test_terminal_flat_review.py',
     'integration_tests/test_terminal_focus.py',
     'integration_tests/test_terminal_live_updates.py',
+    'integration_tests/test_terminal_braille_updates.py',
     'integration_tests/test_terminal_navigation.py',
     'integration_tests/test_terminal_output.py',
     'integration_tests/test_terminal_say_all.py',

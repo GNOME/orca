@@ -245,6 +245,11 @@ class Script:
     def deactivate(self) -> None:
         """Called when this script is deactivated."""
 
+    def get_braille_update_interval(self) -> float:
+        """Returns the minimum interval in seconds between background braille updates."""
+
+        return 0.0
+
     def _on_active_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:active accessibility events."""
         return True

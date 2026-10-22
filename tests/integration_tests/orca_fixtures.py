@@ -51,6 +51,7 @@ from .apps import (
     gtk3_redundant_names,
     gtk3_terminal,
     gtk3_terminal_focus,
+    gtk3_terminal_updates,
     gtk3_text_view,
     gtk3_toolbar,
     gtk3_tree_view,
@@ -183,6 +184,7 @@ def _atril(tmp_path_factory: pytest.TempPathFactory) -> Iterator[AtrilSession]:
 
 
 _gtk3_terminal_focus = _make_native_app_fixture(gtk3_terminal_focus, scope="function")
+_gtk3_terminal_updates = _make_native_app_fixture(gtk3_terminal_updates, scope="function")
 
 
 _gtk3_text_view = _make_native_app_fixture(
