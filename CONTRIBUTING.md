@@ -47,8 +47,9 @@ there is no need to also provide a unit test.
 
 Note that Orca's integration test suite is still growing. If adding integration test
 coverage cannot be done due to the current lack of the necessary app needed to reproduce
-the bug, please check with the maintainers regarding how to proceed. See tests/README.md
-for the current state and documentation related to Orca's tests.
+the bug, please check with the maintainers regarding how to proceed. See
+[tests/README.md](tests/README.md) for the current state and documentation related to
+Orca's tests.
 
 Be sure that the issue you are addressing is still reproducible in Orca's main branch.
 If you have identified a bug in an earlier version of Orca and have a proposed fix
@@ -80,4 +81,4 @@ XXX issue #1234 (where XXX is "Closes" or "See")
 
 Orca v51 and later support User Extensions. User Extensions make it possible for you
 to develop and share features which may fall beyond the scope of Orca itself. See
-docs/user-extensions.md for more information.
+[docs/user-extensions.md](docs/user-extensions.md) for more information.
