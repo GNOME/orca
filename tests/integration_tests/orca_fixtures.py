@@ -805,6 +805,9 @@ _web_editable_embedded = _make_web_fixture("web_editable_embedded.html")
 _web_editable_embedded_selection = _make_web_fixture("web_editable_embedded_selection.html")
 _web_editable_focus = _make_web_fixture("web_editable_focus.html")
 _web_contenteditable_replacement = _make_web_fixture("web_contenteditable_replacement.html")
+_web_contenteditable_replacement_button = _make_web_fixture(
+    "web_contenteditable_replacement_button.html"
+)
 _web_emoji_offset_skew = _make_web_fixture("web_emoji_offset_skew.html")
 _web_long_line = _make_web_fixture("web_long_line.html")
 _web_math = _make_web_fixture("web_math.html")

@@ -88,6 +88,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_code_block_multiline,
     _web_colored_blocks,
     _web_contenteditable_replacement,
+    _web_contenteditable_replacement_button,
     _web_contracted_braille,
     _web_cssed_brokenness,
     _web_custom_wrappers,

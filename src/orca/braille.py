@@ -1472,6 +1472,7 @@ class Text(_AccessibleTextRegion):
         self._indicate_links = indicate_links
         self.accessible = accessible
         self._eol = eol
+        self._source_line = ""
         string = ""
         self.caret_offset = 0
         self.line_offset = 0
@@ -1486,6 +1487,7 @@ class Text(_AccessibleTextRegion):
                 self.accessible,
                 self.caret_offset,
             )[0:2]
+            self._source_line = string
             if end_offset is not None and end_offset > self.line_offset + len(string):
                 # This can happen with CSSed-offscreen text in which the reported lines contain
                 # single characters or words.
@@ -1530,18 +1532,17 @@ class Text(_AccessibleTextRegion):
         )
 
     def reposition_cursor(self) -> bool:
-        """Update caret/cursor when the caret moves within the same line."""
+        """Update caret/cursor when the caret moves within an unchanged line."""
 
         if not _STATE.region_with_focus:
             return False
 
         string, line_offset = AXText.get_line_at_offset(self.accessible)[0:2]
-        caret_offset = AXText.get_caret_offset(self.accessible)
-        cursor_offset = min(caret_offset - line_offset, len(string))
-
-        if line_offset != self.line_offset:
+        if line_offset != self.line_offset or string != self._source_line:
             return False
 
+        caret_offset = AXText.get_caret_offset(self.accessible)
+        cursor_offset = min(caret_offset - line_offset, len(string))
         self.caret_offset = caret_offset
         self.line_offset = line_offset
 

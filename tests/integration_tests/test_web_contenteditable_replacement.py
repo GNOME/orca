@@ -28,9 +28,9 @@ import pytest
 
 from . import helpers
 from .harness import keyboard
+from .helpers import BrailleLine
 
 if TYPE_CHECKING:
-    from .helpers import BrailleLine
     from .orca_fixtures import BrowserSession
 
 
@@ -69,3 +69,24 @@ def test_replaced_lines_down_and_up(web_contenteditable_replacement: BrowserSess
         # Normal capture drops interrupted speech, which can hide duplicate announcements.
         assert session.reader.wait_for_speech("").text == line
         assert helpers.speech(session, wait_async=True) == []
+
+
+@pytest.mark.native_app
+def test_replaced_lines_down_and_up_braille(
+    web_contenteditable_replacement: BrowserSession,
+) -> None:
+    """Tests that braille displays replacement text in both directions."""
+
+    session = web_contenteditable_replacement
+    _reload(session)
+
+    lines = ["Line two.", "Line three.", "Line two.", "Line one."]
+    brailled_lines = []
+    for key in (keyboard.KEYSYM_DOWN, keyboard.KEYSYM_DOWN, keyboard.KEYSYM_UP, keyboard.KEYSYM_UP):
+        keyboard.tap_key(key)
+        _spoken, brailled = helpers.capture(session, wait_async=True)
+        brailled_lines.append(brailled[-1] if brailled else None)
+
+    assert brailled_lines == [
+        BrailleLine(1, f"{line} $l", f"{line} $l", "\x00" * (len(line) + 3)) for line in lines
+    ]

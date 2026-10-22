@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Contenteditable Replacement Button ready</title>
+</head>
+<body>
+<button id="start">Start</button>
+<div id="editor" contenteditable="true"><span id="line">Line one.</span></div>
+<script>
+const lines = ['Line one.', 'Line two.', 'Line three.'];
+const editor = document.getElementById('editor');
+let index = 0;
+
+editor.addEventListener('keydown', (event) => {
+	if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp')
+		return;
+	event.preventDefault();
+	index = Math.max(0, Math.min(lines.length - 1, index + (event.key === 'ArrowDown' ? 1 : -1)));
+	setTimeout(() => {
+		editor.innerHTML = '<span id="line">' + lines[index] + '</span>';
+		window.getSelection().collapse(editor.firstChild.firstChild, 0);
+	}, 60);
+});
+
+document.getElementById('start').focus();
+</script>
+</body>
+</html>
