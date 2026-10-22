@@ -1294,12 +1294,18 @@ class _AccessibleTextRegion(Region):
     ) -> list[int]:
         """Adds hyperlink indicators to the source-character mask."""
 
+        if not string_length:
+            return region_mask
+
+        region_start = self.line_offset + self._start_offset
         links = AXUtilities.get_all_links(self.accessible)
         for link in links:
-            start_offset = AXHypertext.get_link_start_offset(link)
             end_offset = AXHypertext.get_link_end_offset(link)
-            mask_start = max(start_offset - self.line_offset - self._start_offset, 0)
-            mask_end = min(end_offset - self.line_offset - self._start_offset, string_length)
+            if end_offset <= region_start:
+                continue
+            start_offset = AXHypertext.get_link_start_offset(link)
+            mask_start = max(start_offset - region_start, 0)
+            mask_end = min(end_offset - region_start, string_length)
             if mask_start < mask_end:
                 link_text = self._raw_line[mask_start:mask_end]
                 tokens = [
