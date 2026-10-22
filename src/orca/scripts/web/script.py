@@ -884,9 +884,28 @@ class Script(default.Script):
         }
         if (
             reason in selection_reasons
-            and text_selection_manager.get_manager().get_current_selection_command(document)
+            and (
+                command := text_selection_manager.get_manager().get_current_selection_command(
+                    document
+                )
+            )
             is not None
         ):
+            # Clearing a selection can produce only a caret event.
+            if (
+                command.get_selection_anchor() is None
+                and AXUtilities.get_cached_selected_text(event.source)[0]
+            ):
+                if command.should_notify_user():
+                    text_selection_presenter.get_presenter().present_text_selection_change(
+                        self, event.source
+                    )
+                else:
+                    text_selection_manager.get_manager().update_state_for_unpresentable_selection_change(
+                        event.source
+                    )
+                self.update_braille(event.source)
+                return True
             msg = "WEB: Ignoring caret-moved event caused by Orca's text selection"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True

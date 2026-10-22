@@ -1270,6 +1270,11 @@ class FlatReviewPresenter(Extension):
             return True
         return AXEventSynthesizer.route_to_object(obj)
 
+    def refresh_braille(self, script: default.Script) -> None:
+        """Regenerates braille at the current flat review position."""
+
+        self._update_braille(script)
+
     def _update_braille(self, script: default.Script) -> None:
         """Obtains the braille regions for the current flat review line and displays them."""
 

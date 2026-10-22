@@ -3231,7 +3231,13 @@ class Utilities(script_utilities.Utilities):
             obj = focused_event.source
             tokens = ["WEB: Recovering removed focus using focused object", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            focus_manager.get_manager().set_locus_of_focus(event, obj)
+            # Native caret navigation presents the replacement through its caret event.
+            notify = not (
+                obj == event.source
+                and input_event_manager.get_manager().last_event_was_caret_navigation()
+                and AXUtilities.is_editable(obj)
+            )
+            focus_manager.get_manager().set_locus_of_focus(event, obj, notify)
             return True
 
         if event.detail1 == -1:

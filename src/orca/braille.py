@@ -355,6 +355,8 @@ class _BrailleState:
     default_contraction_table: str | None = None
     pending_key_ranges: list[int] = field(default_factory=list)
     monitor_callback: MonitorCallback | None = None
+    display_ready_callback: Callable[[], None] | None = None
+    presentation_enabled_callback: Callable[[], bool] | None = None
     enable_braille: bool = True
     enable_contracted_braille: bool = False
     contraction_table: str = ""
@@ -380,6 +382,18 @@ def set_monitor_callback(callback: MonitorCallback | None) -> None:
     """Sets the callback for updating the braille monitor display."""
 
     _STATE.monitor_callback = callback
+
+
+def set_display_ready_callback(callback: Callable[[], None] | None) -> None:
+    """Sets the callback invoked when a braille display becomes ready."""
+
+    _STATE.display_ready_callback = callback
+
+
+def set_presentation_enabled_callback(callback: Callable[[], bool] | None) -> None:
+    """Sets the callback deciding whether braille presentation is needed."""
+
+    _STATE.presentation_enabled_callback = callback
 
 
 def set_enable_braille(value: bool) -> None:
@@ -703,7 +717,10 @@ def _update_brlapi_display_size(size: tuple[int, int]) -> bool:
     _STATE.display_size = [size[0], 1]
     _STATE.brlapi_ready = True
     _cancel_brlapi_display_size_poll()
-    refresh(True)
+    if _STATE.display_ready_callback is not None:
+        _STATE.display_ready_callback()
+    else:
+        refresh(True)
     return False
 
 
@@ -908,7 +925,10 @@ def _finish_brlapi_connection(
 
     if not _STATE.lines:
         _clear()
-    refresh(True)
+    if _STATE.brlapi_ready and _STATE.display_ready_callback is not None:
+        _STATE.display_ready_callback()
+    else:
+        refresh(True)
 
     msg = "BRAILLE: Initialized"
     debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -2101,13 +2121,13 @@ def _prepare_refresh(stop_flash: bool) -> bool:
     if stop_flash:
         kill_flash(restore_saved=False)
 
-    from . import braille_presenter  # pylint: disable=import-outside-toplevel
-
-    braille_enabled = braille_presenter.get_presenter().use_braille()
+    braille_enabled = _STATE.enable_braille or _STATE.monitor_cell_count > 0
+    if _STATE.presentation_enabled_callback is not None:
+        braille_enabled = _STATE.presentation_enabled_callback()
 
     # TODO - JD: This should be taken care of in orca.py.
     if not braille_enabled:
-        if _STATE.brlapi_running:
+        if _STATE.brlapi_running and not _STATE.enable_braille:
             msg = "BRAILLE: FIXME - Braille disabled, but not properly shut down."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             shutdown()

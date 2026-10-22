@@ -239,15 +239,32 @@ class TestBraillePresenter:
         assert presenter.get_end_of_line_indicator_is_enabled() is True
 
     def test_use_braille(self, test_context: OrcaTestContext):
-        """Test use_braille method."""
+        """Generate braille only when an enabled output has a consumer."""
 
-        self._setup_dependencies(test_context)
+        mocks = self._setup_dependencies(test_context)
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
+        device = mocks["orca.braille"].has_braille_device
+        device.return_value = True
+        recorder = test_context.patch_object(
+            presenter._output_recorder, "is_open", return_value=False
+        )
+        loader = mocks["orca.extension_loader"].get_loader.return_value
 
         presenter.set_monitor_is_enabled(False)
         assert presenter.use_braille() is True
+
+        device.return_value = False
+        assert presenter.use_braille() is False
+
+        recorder.return_value = True
+        assert presenter.use_braille() is True
+        recorder.return_value = False
+
+        loader.iter_braille_output_handlers.return_value = [test_context.Mock()]
+        assert presenter.use_braille() is True
+        loader.iter_braille_output_handlers.return_value = []
 
         presenter.set_braille_is_enabled(False)
         presenter.set_monitor_is_enabled(True)

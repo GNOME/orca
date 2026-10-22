@@ -293,10 +293,10 @@ class TestBrailleLineRanges:
         """_prepare_refresh should shut down and reset state when braille is disabled."""
 
         self._setup_dependencies(test_context)
-        from orca import braille, braille_presenter
+        from orca import braille
 
-        mock_presenter = braille_presenter.get_presenter.return_value  # type: ignore[attr-defined] # pylint: disable=no-member
-        mock_presenter.use_braille.return_value = False
+        braille.set_enable_braille(False)
+        braille.set_presentation_enabled_callback(lambda: False)
         braille._STATE.brlapi_running = True
         braille._STATE.last_text_info = braille._TextInfo(object(), 1, 2, 3)
         braille.shutdown = test_context.Mock()
@@ -304,6 +304,24 @@ class TestBrailleLineRanges:
         assert braille._prepare_refresh(stop_flash=False) is False
         braille.shutdown.assert_called_once()
         assert braille._STATE.last_text_info == braille._empty_text_info()
+
+    def test_prepare_refresh_waiting_for_display_keeps_connection(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Skipping presentation must keep an enabled connection awaiting its display."""
+
+        self._setup_dependencies(test_context)
+        from orca import braille
+
+        braille.set_enable_braille(True)
+        braille.set_presentation_enabled_callback(lambda: False)
+        braille._STATE.brlapi_running = True
+        braille._STATE.brlapi_ready = False
+        braille.shutdown = test_context.Mock()
+
+        assert braille._prepare_refresh(stop_flash=False) is False
+        braille.shutdown.assert_not_called()
+        assert braille._STATE.brlapi_running is True
 
     def test_prepare_refresh_empty_lines_clears_braille(
         self,

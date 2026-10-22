@@ -499,7 +499,7 @@ class StateZone(Zone):
         if script is None:
             return None
 
-        result = script.get_braille_generator().get_state_indicator(self._obj)
+        result = braille_presenter.get_presenter().generate_state_indicator(script, self._obj)
         if result and result[0]:
             if isinstance(result[0], str):
                 return braille.ReviewComponent(self._obj, result[0], 0, self)

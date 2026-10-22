@@ -266,6 +266,11 @@ def test_selection_without_notifying_the_user(
     assert brailled[-1] == BrailleLine(22, _HEADING, _HEADING, "\xc0" * 21 + "\x00" * 3)
     assert say_selection(session) == ["Selected text is:  Structural navigation"]
 
+    spoken, brailled = select_without_notifying(session, START_OF_LINE)
+    assert spoken == []
+    assert brailled[-1] == BrailleLine(1, _HEADING, _HEADING, "\x00" * 24)
+    assert say_selection(session) == ["No selected text."]
+
 
 @requires_browser_version("chromium", 153)
 @pytest.mark.native_app

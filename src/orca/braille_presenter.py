@@ -49,11 +49,12 @@ from . import (
     messages,
     output_recorder,
     presentation_manager,
+    script_manager,
 )
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .braille_generator import BrailleGeneratorContext
-from .enums import BraillePanDirection, CaretSetReason, PresentationReason
+from .enums import ActivePresentationMode, BraillePanDirection, CaretSetReason, PresentationReason
 from .extension import BrailleOutput, BrailleOutputResult, Extension
 from .orca_platform import tablesdir  # pylint: disable=import-error
 
@@ -468,11 +469,18 @@ class BraillePresenter(Extension):
         self.set_flash_message_duration(duration_ms)
 
     def use_braille(self) -> bool:
-        """Returns whether braille is to be used."""
+        """Returns whether enabled braille has a consumer for generated output."""
 
-        result = self.get_braille_is_enabled() or self.get_monitor_is_enabled()
+        result = self.get_monitor_is_enabled() or (
+            self.get_braille_is_enabled()
+            and (
+                braille.has_braille_device()
+                or self._output_recorder.is_open()
+                or bool(extension_loader.get_loader().iter_braille_output_handlers())
+            )
+        )
         if not result:
-            msg = "BRAILLE PRESENTER: Braille is disabled."
+            msg = "BRAILLE PRESENTER: Braille presentation is not needed."
             debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
@@ -732,6 +740,12 @@ class BraillePresenter(Extension):
         result, focused_region = generator.generate_braille(obj, context)
         if result:
             self.present_regions(list(result), focused_region)
+
+    def generate_state_indicator(self, script: default.Script, obj: Atspi.Accessible) -> list:
+        """Generates braille for an object's state with the current settings."""
+
+        context = self._build_generator_context()
+        return script.get_braille_generator().generate_state_indicator(obj, context)
 
     def _process_braille_output(
         self,
@@ -1707,6 +1721,42 @@ class BraillePresenter(Extension):
 
         braille.refresh(pan_to_cursor=pan_to_cursor)
 
+    def present_current_context(self) -> None:
+        """Regenerates current braille when a display becomes ready."""
+
+        if not self.use_braille():
+            return
+
+        script = script_manager.get_manager().get_active_script()
+        if script is None:
+            braille.clear_display()
+            return
+
+        manager = focus_manager.get_manager()
+        mode, obj = manager.get_active_mode_and_object_of_interest()
+        if mode == ActivePresentationMode.FLAT_REVIEW:
+            flat_review_presenter.get_presenter().refresh_braille(script)
+            return
+
+        offset = None
+        if mode in (
+            ActivePresentationMode.CARET_TRACKING,
+            ActivePresentationMode.CARET_NAVIGATOR,
+            ActivePresentationMode.STRUCTURAL_NAVIGATOR,
+            ActivePresentationMode.TABLE_NAVIGATOR,
+        ):
+            caret_obj, caret_offset = script.utilities.get_caret_context(search_if_needed=False)
+            if caret_obj is not None:
+                obj, offset = caret_obj, caret_offset
+        elif mode == ActivePresentationMode.FOCUS_TRACKING or obj is None:
+            obj = manager.get_locus_of_focus()
+
+        if obj is None:
+            braille.clear_display()
+            return
+
+        script.update_braille(obj, offset=offset)
+
     def pan_to_beginning(self) -> None:
         """Pans the braille display all the way to the beginning of the line."""
 
@@ -1823,6 +1873,8 @@ class BraillePresenter(Extension):
         """Initializes braille if enabled."""
 
         braille.set_monitor_callback(self.update_monitor)
+        braille.set_display_ready_callback(self.present_current_context)
+        braille.set_presentation_enabled_callback(self.use_braille)
         if not self.get_braille_is_enabled():
             return
 

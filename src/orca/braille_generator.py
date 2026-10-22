@@ -117,6 +117,14 @@ class BrailleGenerator(generator.Generator):
         self._context = context
         return self._generate_braille(obj, role=role, include_context=include_context)
 
+    def generate_state_indicator(
+        self, obj: Atspi.Accessible, context: BrailleGeneratorContext
+    ) -> list[Any]:
+        """Generates an object's state indicator using the supplied context."""
+
+        self._context = context
+        return self.get_state_indicator(obj)
+
     def _generate_braille(
         self,
         obj: Atspi.Accessible,
