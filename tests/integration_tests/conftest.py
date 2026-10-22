@@ -163,6 +163,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_structural_navigation,
     _web_switch,
     _web_table_block_cells,
+    _web_table_label_inference,
     _web_tables,
     _web_tabs,
     _web_temporary_aria_hidden,

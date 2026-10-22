@@ -574,9 +574,17 @@ class LabelInference:
     ) -> tuple[str | None, list[Atspi.Accessible]]:
         """Attempts to infer the label from the first row of a table-like grid."""
 
+        if colindex < 0:
+            return None, []
+
         columns = AXTable.get_column_count(grid)
-        first_row = [AXTable.get_cell_at(grid, 0, i) for i in range(columns)]
-        if not first_row or list(filter(self._is_widget, first_row)) or colindex < 0:
+        first_row = []
+        for i in range(columns):
+            cell = AXTable.get_cell_at(grid, 0, i)
+            if self._is_widget(cell):
+                return None, []
+            first_row.append(cell)
+        if not first_row:
             return None, []
 
         def is_match(x: Atspi.Accessible) -> bool:
@@ -585,8 +593,8 @@ class LabelInference:
             return not AXUtilities.have_same_role(AXObject.get_child(x, 0), obj)
 
         rows = AXTable.get_row_count(grid)
-        cells = [AXTable.get_cell_at(grid, i, colindex) for i in range(1, rows)]
-        if list(filter(is_match, cells)):
+        cells = (AXTable.get_cell_at(grid, i, colindex) for i in range(1, rows))
+        if any(is_match(cell) for cell in cells):
             return None, []
 
         label, sources = self._create_label_from_contents(first_row[colindex])

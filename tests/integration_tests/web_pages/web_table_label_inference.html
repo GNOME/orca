@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Table label inference ready</title>
+</head>
+<body>
+<h1>Table label inference</h1>
+<h2>Matching controls</h2>
+<table role="table">
+<tr><td>Other</td><td>Account</td></tr>
+<tr><td><input tabindex="-1"></td><td><input tabindex="-1" value="Earlier" spellcheck="false"></td></tr>
+<tr><td><input tabindex="-1"></td><td><input value="Current" spellcheck="false"></td></tr>
+</table>
+<h2>Editable header</h2>
+<table role="table">
+<tr><td contenteditable="true" tabindex="-1">Editable header</td><td>Rejected header</td></tr>
+<tr><td><input tabindex="-1"></td><td><input tabindex="-1" value="Earlier" spellcheck="false"></td></tr>
+<tr><td><input tabindex="-1"></td><td><input value="Editable" spellcheck="false"></td></tr>
+</table>
+<h2>Early mismatch</h2>
+<table role="table">
+<tr><td>Early header</td></tr>
+<tr><td><input type="checkbox" tabindex="-1"></td></tr>
+<tr><td><input value="Early" spellcheck="false"></td></tr>
+</table>
+<h2>Late mismatch</h2>
+<table role="table">
+<tr><td>Late header</td></tr>
+<tr><td><input tabindex="-1" value="Earlier" spellcheck="false"></td></tr>
+<tr><td><input value="Late" spellcheck="false"></td></tr>
+<tr><td><input type="checkbox" tabindex="-1"></td></tr>
+</table>
+</body>
+</html>
