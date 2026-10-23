@@ -328,7 +328,7 @@ class AXUtilitiesEvent:
         return not AXUtilitiesEvent._did_line_change(obj)
 
     @staticmethod
-    def _is_terminal_line_navigation_repaint(event: Atspi.Event) -> bool:
+    def _is_terminal_scrolling_repaint(event: Atspi.Event) -> bool:
         prior = AXUtilitiesEvent._LAST_TERMINAL_LINE_NAVIGATION_DELETION
         if prior is None:
             return False
@@ -345,7 +345,7 @@ class AXUtilitiesEvent:
         if min(len(deleted_lines), len(inserted_lines)) < 4:
             return False
 
-        # Terminal repaint text can have clipped edge lines. Compare the deleted
+        # Scrolling repaint text can have clipped edge lines. Compare the deleted
         # lines without their edges with the inserted lines shifted one row in either
         # direction. In tiny terminals, an expiring TUI status line can be another
         # edge row, leaving only the inner two shifted rows to compare.
@@ -846,8 +846,8 @@ class AXUtilitiesEvent:
                 and mgr.last_event_was_up_or_down()
                 and mgr.last_event_was_line_navigation()
             ):
-                if AXUtilitiesEvent._is_terminal_line_navigation_repaint(event):
-                    return TextEventReason.TERMINAL_LINE_NAVIGATION_REPAINT
+                if AXUtilitiesEvent._is_terminal_scrolling_repaint(event):
+                    return TextEventReason.TERMINAL_SCROLLING_REPAINT
                 # VTE can draw the row scrolled into view as a separate insertion after the
                 # repaint. If the repaint handling already presented exactly that line, saying
                 # it again is noise.

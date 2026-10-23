@@ -173,10 +173,10 @@ class Script(default.Script):
 
         typing_echo_presenter.get_presenter().echo_delayed_terminal_press(self, event)
 
-        if (
-            AXUtilities.get_text_event_reason(event) == TextEventReason.AUTO_INSERTION_UNPRESENTABLE
-            or not self.utilities.treat_event_as_command(event)
-        ):
+        if AXUtilities.get_text_event_reason(event) in (
+            TextEventReason.AUTO_INSERTION_UNPRESENTABLE,
+            TextEventReason.TERMINAL_SCROLLING_REPAINT,
+        ) or not self.utilities.treat_event_as_command(event):
             msg = "TERMINAL: Passing along event to default script."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return super()._on_text_inserted(event)

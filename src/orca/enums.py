@@ -145,6 +145,7 @@ class TextEventReason(Enum):
     SPIN_BUTTON_VALUE_CHANGE = auto()
     SYSTEM_UPDATE = auto()
     TERMINAL_LINE_NAVIGATION_REPAINT = auto()
+    TERMINAL_SCROLLING_REPAINT = auto()
     TYPING = auto()
     TYPING_ECHOABLE = auto()
     UI_UPDATE = auto()

@@ -125,7 +125,8 @@ def test_flat_review_location_survives_terminal_live_update(
         session.orca.call("CommandManager", "ToggleKeyboardLayout", False)
     assert not session.orca.get("CommandManager", "KeyboardLayoutIsDesktop")
     session.orca.set("FlatReviewPresenter", "FocusTracking", 2)
-    helpers.toggle_flat_review(session)
+    session.orca.press_orca_key(keyboard.KEYSYM_P)
+    helpers.capture(session)
     try:
         session.orca.press_orca_key(keyboard.KEYSYM_U)
         spoken, brailled = helpers.capture(session)
@@ -140,7 +141,8 @@ def test_flat_review_location_survives_terminal_live_update(
             [helpers.BrailleLine(1, "anchor $l", "anchor $l", "\x00" * 9)],
         )
     finally:
-        helpers.toggle_flat_review(session)
+        session.orca.press_orca_key(keyboard.KEYSYM_P)
+        helpers.capture(session)
         session.orca.set("FlatReviewPresenter", "FocusTracking", 1)
         if original_layout:
             session.orca.call("CommandManager", "ToggleKeyboardLayout", False)

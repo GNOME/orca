@@ -871,15 +871,26 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if reason == TextEventReason.TERMINAL_LINE_NAVIGATION_REPAINT:
+        if reason in (
+            TextEventReason.TERMINAL_LINE_NAVIGATION_REPAINT,
+            TextEventReason.TERMINAL_SCROLLING_REPAINT,
+        ):
             msg = "DEFAULT: Presenting line due to terminal line-navigation repaint"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             offset = AXText.get_caret_offset(event.source)
+            manager = input_event_manager.get_manager()
+            presentation_offset = offset
+            if (
+                reason == TextEventReason.TERMINAL_SCROLLING_REPAINT
+                and not event.detail1 <= offset < event.detail1 + event.detail2
+            ):
+                # Pagers can leave the caret on a status line outside the scrolling content.
+                presentation_offset = event.detail1
+                if manager.last_event_was_down():
+                    presentation_offset += event.detail2 - 1
             self.update_braille(event.source)
-            self.say_line(event.source, offset)
-            AXUtilitiesEvent.save_terminal_line_navigation_repaint_line(
-                event, input_event_manager.get_manager()
-            )
+            self.say_line(event.source, presentation_offset)
+            AXUtilitiesEvent.save_terminal_line_navigation_repaint_line(event, manager)
             focus_manager.get_manager().set_last_cursor_position(event.source, offset)
             self.utilities.set_caret_context(event.source, offset)
             return True

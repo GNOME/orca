@@ -71,6 +71,11 @@ def _assert_single_spoken_line(
 
 
 @pytest.mark.native_app
+@pytest.mark.skipif(
+    terminal.selected_toolkit() == "gtk4",
+    reason="GTK4 VTE intermittently exposes stale text: "
+    "https://gitlab.gnome.org/GNOME/vte/-/work_items/2972",
+)
 def test_nano_line_navigation_repaint_speaks_each_line_once(
     terminal_nano: NativeAppSession,
 ) -> None:
@@ -90,6 +95,11 @@ def test_nano_line_navigation_repaint_speaks_each_line_once(
 
 
 @pytest.mark.native_app
+@pytest.mark.skipif(
+    terminal.selected_toolkit() == "gtk4",
+    reason="GTK4 VTE intermittently exposes stale text: "
+    "https://gitlab.gnome.org/GNOME/vte/-/work_items/2972",
+)
 def test_vim_line_navigation_speaks_only_the_current_line(
     terminal_vim_scroll: NativeAppSession,
 ) -> None:
@@ -111,6 +121,11 @@ def test_vim_line_navigation_speaks_only_the_current_line(
 
 
 @pytest.mark.native_app
+@pytest.mark.skipif(
+    terminal.selected_toolkit() == "gtk4",
+    reason="GTK4 VTE intermittently exposes stale text: "
+    "https://gitlab.gnome.org/GNOME/vte/-/work_items/2972",
+)
 def test_vim_line_navigation_from_bottom_row_omits_the_ruler(
     terminal_vim_bottom: NativeAppSession,
 ) -> None:
