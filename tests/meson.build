@@ -181,6 +181,7 @@ orca_integration_tests = {
     'integration_tests/test_terminal_output.py',
     'integration_tests/test_terminal_pager.py',
     'integration_tests/test_terminal_say_all.py',
+    'integration_tests/test_terminal_trailing_deletion.py',
     'integration_tests/test_terminal_typing.py',
   ],
   'web': [

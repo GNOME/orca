@@ -51,6 +51,7 @@ from .apps import (
     gtk3_redundant_names,
     gtk3_terminal,
     gtk3_terminal_focus,
+    gtk3_terminal_trailing_deletion,
     gtk3_terminal_updates,
     gtk3_text_view,
     gtk3_toolbar,
@@ -201,6 +202,7 @@ def _make_terminal_widget_fixture(app: ModuleType) -> Callable[..., Iterator[Nat
 
 _terminal_focus = _make_terminal_widget_fixture(gtk3_terminal_focus)
 _terminal_updates = _make_terminal_widget_fixture(gtk3_terminal_updates)
+_terminal_trailing_deletion = _make_terminal_widget_fixture(gtk3_terminal_trailing_deletion)
 
 
 _gtk3_text_view = _make_native_app_fixture(

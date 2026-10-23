@@ -56,8 +56,7 @@ class Script(default.Script):
     """Script for terminal support."""
 
     utilities: Utilities
-    # Minimum seconds between background braille refreshes, including flat review.
-    # Recent input and direct navigation or focus updates bypass the interval.
+    # Minimum interval for background braille updates without recent input.
     _BRAILLE_UPDATE_INTERVAL = 0.2
 
     def __init__(self, app: Atspi.Accessible) -> None:
@@ -154,6 +153,10 @@ class Script(default.Script):
 
         event = self._text_event
         if event is not None and event.source == obj and offset is None:
+            queued = self._get_queued_event(event.type)
+            if queued is not None and queued != event and queued.source == obj:
+                self._cancel_braille_update()
+                return
             remaining = self.get_braille_update_interval() - (
                 time.monotonic() - self._last_braille_update
             )
@@ -163,6 +166,8 @@ class Script(default.Script):
                     self._braille_timer_id = GLib.timeout_add(
                         max(1, int(remaining * 1000) + 1), self._flush_deferred_braille
                     )
+                    tokens = ["TERMINAL: Scheduled deferred braille refresh for", event]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return
         self._cancel_braille_update()
         self._last_braille_update = time.monotonic()

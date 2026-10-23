@@ -65,6 +65,7 @@ from .orca_fixtures import (  # noqa: F401
     _terminal_pager,
     _terminal_review_update,
     _terminal_shell,
+    _terminal_trailing_deletion,
     _terminal_updates,
     _terminal_vim,
     _terminal_vim_bottom,
