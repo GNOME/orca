@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from . import helpers
+from .apps import terminal
 from .terminal_helpers import WIDE_PROMPT_INPUT, WIDE_PROMPT_LINE, settle, type_text
 
 if TYPE_CHECKING:
@@ -67,6 +68,11 @@ def test_pan_braille_across_terminal_line(terminal_shell: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
+@pytest.mark.skipif(
+    terminal.selected_toolkit() == "gtk4",
+    reason="GTK4 VTE intermittently exposes stale text: "
+    "https://gitlab.gnome.org/GNOME/vte/-/work_items/2972",
+)
 def test_pan_braille_left_crosses_wide_line_in_pager(
     terminal_wide_pager: NativeAppSession,
 ) -> None:
