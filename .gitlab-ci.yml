@@ -134,7 +134,7 @@ integration-tests-base:
   extends: .integration-tests
   allow_failure: false
   script:
-    - meson test -C "${MESON_BUILD_DIR}" --suite core --suite gtk3 --suite gtk3-terminal --num-processes 1 --timeout-multiplier 2 --print-errorlogs
+    - meson test -C "${MESON_BUILD_DIR}" --suite core --suite gtk3 --suite gtk3-terminal --suite gtk4-terminal --num-processes 1 --timeout-multiplier 2 --print-errorlogs
 
 integration-tests-chromium:
   extends: .integration-tests

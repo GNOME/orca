@@ -21,6 +21,8 @@ launch Orca need an installed build of the version being tested.
 * The DejaVu Serif, DejaVu Sans, and DejaVu Sans Mono fonts for consistent line wrapping
 * VTE 2.91 (GTK3), including its typelib, Python curses, xterm terminfo, bash, less, nano, vim,
   and `seq` (from coreutils), for the terminal tests
+* GTK4 and VTE 3.91 typelibs for the GTK4 terminal tests. The scrolling test currently
+  requires unreleased VTE 0.85.0 or later; VTE 0.84.1 emits incomplete insertion events.
 * liblouis's Python bindings and en-us-g1/en-us-g2 tables for the braille tests. Its pkg-config
   metadata must be available when building Orca so it can locate the tables (in Fedora and
   openSUSE, install `liblouis-devel`).
@@ -51,10 +53,11 @@ Orca's tests are grouped into the following named suites:
     * "document": document viewers and editors (currently Atril)
     * "gtk3": non-terminal GTK3 UI tests
     * "gtk3-terminal": for terminal applications using VTE for GTK3
+    * "gtk4-terminal": the same terminal tests using VTE for GTK4
     * "chromium": for web content using Chrome (beta preferred) or Chromium
     * "gecko": for web content using Firefox (Nightly preferred)
 
-Note that coverage for GTK4 and Qt, along with additional applications, is in
+Note that coverage for additional GTK4 widgets and Qt, along with additional applications, is in
 progress.
 
 ```bash

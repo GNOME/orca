@@ -7,6 +7,16 @@
 # modify it under the terms of the GNU Lesser General Public
 # License as published by the Free Software Foundation; either
 # version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., Franklin Street, Fifth Floor,
+# Boston MA  02110-1301 USA.
 
 """Integration tests for braille updates during continuous terminal output."""
 
@@ -27,10 +37,10 @@ if TYPE_CHECKING:
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("navigate", [False, True], ids=["live-updates", "review-command"])
-def test_flat_review_updates(gtk3_terminal_updates: NativeAppSession, navigate: bool) -> None:
+def test_flat_review_updates(terminal_updates: NativeAppSession, navigate: bool) -> None:
     """Limits background updates without losing the final text or the review position."""
 
-    session = gtk3_terminal_updates
+    session = terminal_updates
     settle(session)
     session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
     helpers.toggle_flat_review(session)

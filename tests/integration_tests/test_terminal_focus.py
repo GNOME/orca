@@ -37,12 +37,12 @@ if TYPE_CHECKING:
 @pytest.mark.native_app
 @pytest.mark.parametrize("remove_previous", [False, True], ids=["retained", "removed"])
 def test_say_all_after_terminal_focus_change(
-    gtk3_terminal_focus: NativeAppSession,
+    terminal_focus: NativeAppSession,
     remove_previous: bool,
 ) -> None:
     """Tests that Say All uses the newly focused terminal's caret offset."""
 
-    session = gtk3_terminal_focus
+    session = terminal_focus
     settle(session)
     session.orca.set("SayAllPresenter", "Style", "line")
     session.orca.press_orca_key(keyboard.KEYSYM_F12)

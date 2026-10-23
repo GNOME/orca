@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from . import helpers
+from .apps import terminal
 from .harness import keyboard
 from .terminal_helpers import settle
 
@@ -35,14 +36,29 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.native_app
-@pytest.mark.parametrize("run_say_all", [False, True], ids=["fresh", "after-say-all"])
+@pytest.mark.parametrize(
+    "run_say_all",
+    [
+        pytest.param(False, id="fresh"),
+        pytest.param(
+            True,
+            id="after-say-all",
+            marks=pytest.mark.xfail(
+                terminal.selected_toolkit() == "gtk4",
+                reason="GTK4 VTE exposes stale text: https://gitlab.gnome.org/GNOME/vte/-/work_items/2972",
+                raises=AssertionError,
+                strict=True,
+            ),
+        ),
+    ],
+)
 def test_say_all_after_vim_page_forward(
-    gtk3_terminal_vim_pages: NativeAppSession,
+    terminal_vim_pages: NativeAppSession,
     run_say_all: bool,
 ) -> None:
     """Tests that Say All starts at the current caret after Vim redraws a page."""
 
-    session = gtk3_terminal_vim_pages
+    session = terminal_vim_pages
     settle(session)
     session.orca.set("SayAllPresenter", "Style", "line")
     if run_say_all:

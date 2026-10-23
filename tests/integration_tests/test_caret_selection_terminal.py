@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import terminal
 from .caret_selection_helpers import (
     END_OF_LINE,
     NEXT_CHARACTER,
@@ -41,6 +42,11 @@ from .terminal_helpers import settle
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
+
+pytestmark = pytest.mark.skipif(
+    terminal.selected_toolkit() == "gtk4",
+    reason="GTK4 VTE cannot set text selections: https://gitlab.gnome.org/GNOME/vte/-/work_items/2973",
+)
 
 _ORCA_CONTROLS = "The screen reader is controlling the caret."
 _APP_CONTROLS = "The application is controlling the caret."
@@ -63,10 +69,10 @@ def _move_to_the_second_line(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_selection_by_character(gtk3_terminal_pager: NativeAppSession) -> None:
+def test_selection_by_character(terminal_pager: NativeAppSession) -> None:
     """Tests selection by character."""
 
-    session = gtk3_terminal_pager
+    session = terminal_pager
     settle(session)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
@@ -95,10 +101,10 @@ def test_selection_by_character(gtk3_terminal_pager: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_selection_by_word_and_line(gtk3_terminal_pager: NativeAppSession) -> None:
+def test_selection_by_word_and_line(terminal_pager: NativeAppSession) -> None:
     """Tests selection by word and by line."""
 
-    session = gtk3_terminal_pager
+    session = terminal_pager
     settle(session)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
@@ -130,10 +136,10 @@ def test_selection_by_word_and_line(gtk3_terminal_pager: NativeAppSession) -> No
 
 
 @pytest.mark.native_app
-def test_selection_removed_by_caret_navigation(gtk3_terminal_pager: NativeAppSession) -> None:
+def test_selection_removed_by_caret_navigation(terminal_pager: NativeAppSession) -> None:
     """Tests removing a selection with the caret navigation commands."""
 
-    session = gtk3_terminal_pager
+    session = terminal_pager
     settle(session)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)

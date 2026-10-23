@@ -7,6 +7,16 @@
 # modify it under the terms of the GNU Lesser General Public
 # License as published by the Free Software Foundation; either
 # version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., Franklin Street, Fifth Floor,
+# Boston MA  02110-1301 USA.
 
 """Integration tests for flat review in terminals."""
 
@@ -17,6 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from . import helpers
+from .apps import terminal
 from .harness import keyboard
 from .terminal_helpers import bound_command, settle, type_text
 
@@ -35,10 +46,15 @@ def _review_top_line(session: NativeAppSession) -> tuple[list[str], list[helpers
 
 
 @pytest.mark.native_app
-def test_flat_review_reflects_new_page(gtk3_terminal_pager: NativeAppSession) -> None:
+@pytest.mark.skipif(
+    terminal.selected_toolkit() == "gtk4",
+    reason="GTK4 VTE intermittently exposes stale text: "
+    "https://gitlab.gnome.org/GNOME/vte/-/work_items/2972",
+)
+def test_flat_review_reflects_new_page(terminal_pager: NativeAppSession) -> None:
     """Tests that reviewing the page's top line shows the new page after paging, not stale text."""
 
-    session = gtk3_terminal_pager
+    session = terminal_pager
     settle(session)
     keyboard.tap_key(keyboard.KEYSYM_PAGE_DOWN)
     keyboard.tap_key(keyboard.KEYSYM_PAGE_DOWN)  # to the last page (lines 14-20)
@@ -70,10 +86,10 @@ def test_flat_review_reflects_new_page(gtk3_terminal_pager: NativeAppSession) ->
 
 
 @pytest.mark.native_app
-def test_move_focus_to_review_location_unchanged(gtk3_terminal_shell: NativeAppSession) -> None:
+def test_move_focus_to_review_location_unchanged(terminal_shell: NativeAppSession) -> None:
     """Tests that move-focus-to-review fails when the terminal won't let us set the caret."""
 
-    session = gtk3_terminal_shell
+    session = terminal_shell
     settle(session)
 
     type_text("echo aaa bbb ccc\n")
@@ -96,10 +112,16 @@ def test_move_focus_to_review_location_unchanged(gtk3_terminal_shell: NativeAppS
 
 
 @pytest.mark.native_app
-def test_review_line_that_shrinks(gtk3_terminal_shell: NativeAppSession) -> None:
+@pytest.mark.xfail(
+    terminal.selected_toolkit() == "gtk4",
+    reason="GTK4 VTE exposes stale text: https://gitlab.gnome.org/GNOME/vte/-/work_items/2972",
+    raises=AssertionError,
+    strict=True,
+)
+def test_review_line_that_shrinks(terminal_shell: NativeAppSession) -> None:
     """Tests reviewing a line word by word, then after it is overwritten with shorter text."""
 
-    session = gtk3_terminal_shell
+    session = terminal_shell
     settle(session)
     type_text(
         "clear; printf 'alpha bravo charlie delta echo\\n'; read; clear; printf 'alpha bravo\\n'"

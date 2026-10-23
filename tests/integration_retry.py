@@ -97,6 +97,9 @@ def _run(test_file: str, directory: Path, pytest_args: list[str]) -> int:
 
     directory.mkdir(parents=True, exist_ok=True)
     name = Path(test_file).stem
+    for argument in pytest_args:
+        if argument.startswith("--terminal-toolkit="):
+            name += "_" + argument.split("=", 1)[1]
     first_log = directory / f"{name}.first.log"
     retry_log = directory / f"{name}.retry.log"
     summary = directory / f"{name}.summary"

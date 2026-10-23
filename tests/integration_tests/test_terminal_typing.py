@@ -7,6 +7,16 @@
 # modify it under the terms of the GNU Lesser General Public
 # License as published by the Free Software Foundation; either
 # version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., Franklin Street, Fifth Floor,
+# Boston MA  02110-1301 USA.
 
 """Integration tests for typing and editing in terminals."""
 
@@ -34,10 +44,10 @@ def _enable_key_echo(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_typed_characters_are_echoed(gtk3_terminal_shell: NativeAppSession) -> None:
+def test_typed_characters_are_echoed(terminal_shell: NativeAppSession) -> None:
     """Tests that key echo speaks each character as it is typed at the prompt."""
 
-    session = gtk3_terminal_shell
+    session = terminal_shell
     _enable_key_echo(session)
     settle(session)
 
@@ -60,10 +70,10 @@ def test_typed_characters_are_echoed(gtk3_terminal_shell: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
-def test_backspace_and_delete_at_the_prompt(gtk3_terminal_shell: NativeAppSession) -> None:
+def test_backspace_and_delete_at_the_prompt(terminal_shell: NativeAppSession) -> None:
     """Tests Backspace and Delete at the bash prompt with key echo on."""
 
-    session = gtk3_terminal_shell
+    session = terminal_shell
     _enable_key_echo(session)
     settle(session)
 
@@ -88,10 +98,10 @@ def test_backspace_and_delete_at_the_prompt(gtk3_terminal_shell: NativeAppSessio
 
 
 @pytest.mark.native_app
-def test_key_echo_while_typing_in_vim(gtk3_terminal_vim: NativeAppSession) -> None:
+def test_key_echo_while_typing_in_vim(terminal_vim: NativeAppSession) -> None:
     """Tests that key echo speaks each character typed in Vim, which redraws as you type."""
 
-    session = gtk3_terminal_vim
+    session = terminal_vim
     _enable_key_echo(session)
     session.reader.drain(quiescence_timeout=0.6, overall_timeout=6.0)
     session.reader.reset()
@@ -107,10 +117,10 @@ def test_key_echo_while_typing_in_vim(gtk3_terminal_vim: NativeAppSession) -> No
 
 
 @pytest.mark.native_app
-def test_ctrl_backspace_at_the_prompt(gtk3_terminal_shell: NativeAppSession) -> None:
+def test_ctrl_backspace_at_the_prompt(terminal_shell: NativeAppSession) -> None:
     """Tests that Ctrl+BackSpace at the bash prompt deletes a single character."""
 
-    session = gtk3_terminal_shell
+    session = terminal_shell
     _enable_key_echo(session)
     settle(session)
 
@@ -119,3 +129,21 @@ def test_ctrl_backspace_at_the_prompt(gtk3_terminal_shell: NativeAppSession) -> 
     session.reader.reset()
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_BACKSPACE)
     assert helpers.speech(session) == ["r"]
+
+
+@pytest.mark.native_app
+def test_caret_movement_at_the_prompt(terminal_shell: NativeAppSession) -> None:
+    """Checks speech and braille cursor movement in both directions."""
+
+    session = terminal_shell
+    settle(session)
+    type_text("ab")
+    settle(session)
+    for key, expected, cursor in (
+        (keyboard.KEYSYM_LEFT, "b", 4),
+        (keyboard.KEYSYM_RIGHT, "blank", 5),
+    ):
+        keyboard.tap_key(key)
+        spoken, brailled = helpers.capture(session)
+        assert spoken == [expected]
+        assert brailled[-1] == helpers.BrailleLine(cursor, "$ ab", "$ ab", "\x00" * 4)

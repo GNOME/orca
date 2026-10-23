@@ -7,6 +7,16 @@
 # modify it under the terms of the GNU Lesser General Public
 # License as published by the Free Software Foundation; either
 # version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., Franklin Street, Fifth Floor,
+# Boston MA  02110-1301 USA.
 
 """Integration tests for terminal content changing in place during flat review."""
 
@@ -37,10 +47,10 @@ def _navigate_to_c1_line(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_flat_review_speaks_live_update(gtk3_terminal_flatrev: NativeAppSession) -> None:
+def test_flat_review_speaks_live_update(terminal_flatrev: NativeAppSession) -> None:
     """Tests that a terminal line changing in place is spoken when SpeaksUpdates is on."""
 
-    session = gtk3_terminal_flatrev
+    session = terminal_flatrev
     settle(session)
 
     type_text("bash t.sh")
@@ -68,11 +78,11 @@ def test_flat_review_speaks_live_update(gtk3_terminal_flatrev: NativeAppSession)
 
 @pytest.mark.native_app
 def test_flat_review_silent_live_update_when_disabled(
-    gtk3_terminal_flatrev: NativeAppSession,
+    terminal_flatrev: NativeAppSession,
 ) -> None:
     """Tests that a terminal line changing in place is not spoken when SpeaksUpdates is off."""
 
-    session = gtk3_terminal_flatrev
+    session = terminal_flatrev
     settle(session)
 
     type_text("bash t.sh")
@@ -98,11 +108,11 @@ def test_flat_review_silent_live_update_when_disabled(
 
 @pytest.mark.native_app
 def test_flat_review_location_survives_terminal_live_update(
-    gtk3_terminal_review_update: NativeAppSession,
+    terminal_review_update: NativeAppSession,
 ) -> None:
     """Tests that a terminal update does not undo a preceding flat-review command."""
 
-    session = gtk3_terminal_review_update
+    session = terminal_review_update
     settle(session)
 
     type_text("bash review.sh")

@@ -169,7 +169,7 @@ orca_integration_tests = {
     'integration_tests/test_gtk_text_view_emoji.py',
     'integration_tests/test_repeated_symbols_text_view.py',
   ],
-  'gtk3-terminal': [
+  'terminal': [
     'integration_tests/test_caret_selection_terminal.py',
     'integration_tests/test_terminal_braille.py',
     'integration_tests/test_terminal_flat_review.py',
@@ -325,16 +325,31 @@ test_timeouts = {
 }
 
 foreach group, test_files : orca_integration_tests
-  foreach variant : group == 'web' ? ['chromium', 'gecko'] : [group]
-    user_agent_args = group == 'web' ? ['--user-agent=' + variant] : []
+  variants = [group]
+  if group == 'web'
+    variants = ['chromium', 'gecko']
+  elif group == 'terminal'
+    variants = ['gtk3-terminal', 'gtk4-terminal']
+  endif
+  foreach variant : variants
+    app_args = []
+    suffix = ''
+    if group == 'web'
+      app_args = ['--user-agent=' + variant]
+      suffix = variant == 'gecko' ? '_gecko' : ''
+    elif group == 'terminal'
+      toolkit = variant.split('-')[0]
+      app_args = ['--terminal-toolkit=' + toolkit]
+      suffix = toolkit == 'gtk4' ? '_gtk4' : ''
+    endif
     foreach test_file : test_files
       test_name = test_file.split('/')[-1].split('.')[0]
       is_gsettings = test_name == 'test_gsettings'
       test_timeout = test_timeouts.get(test_name, 120)
       test(
-        variant == 'gecko' ? test_name + '_gecko' : test_name,
+        test_name + suffix,
         is_gsettings ? python : integration_wrapper,
-        args: is_gsettings ? ['-m', 'tests.integration_retry', files(test_file)] : [files(test_file)] + user_agent_args,
+        args: is_gsettings ? ['-m', 'tests.integration_retry', files(test_file)] : [files(test_file)] + app_args,
         env: test_env,
         suite: ['integration', variant],
         timeout: test_timeout,

@@ -6,7 +6,7 @@ include:
 
 variables:
   # Bump the tag when changing image contents or dependency checks.
-  BASE_TAG: "2026-10-18.1-main"
+  BASE_TAG: "2026-10-22.1-main"
   FDO_UPSTREAM_REPO: "gnome/orca"
 
 .orca_opensuse_tumbleweed_x86_64:
@@ -70,7 +70,9 @@ opensuse-container@x86_64:
       python3-simplejson
       python3-speechd
       terminfo-base
+      typelib-1_0-Gtk-4_0
       typelib-1_0-Vte-2_91
+      typelib-1_0-Vte-3_91
       vim
       xvfb-run
       yelp-devel

@@ -59,6 +59,7 @@ from .apps import (
     gtk3_two_entries,
     gtk3_two_windows,
     gtk3_widget_notebook,
+    terminal,
 )
 from .harness import keyboard, sandbox
 from .harness.orca_session import OrcaSession
@@ -183,8 +184,23 @@ def _atril(tmp_path_factory: pytest.TempPathFactory) -> Iterator[AtrilSession]:
         yield AtrilSession(session.orca, session.reader, tuple(pages))
 
 
-_gtk3_terminal_focus = _make_native_app_fixture(gtk3_terminal_focus, scope="function")
-_gtk3_terminal_updates = _make_native_app_fixture(gtk3_terminal_updates, scope="function")
+def _make_terminal_widget_fixture(app: ModuleType) -> Callable[..., Iterator[NativeAppSession]]:
+    suffix = app.__name__.split("gtk3_terminal", 1)[1]
+
+    @pytest.fixture(scope="function", name=f"terminal{suffix}")
+    def fixture(tmp_path_factory: pytest.TempPathFactory) -> Iterator[NativeAppSession]:
+        _require_terminal_typelib()
+        yield from _run_native_app(
+            tmp_path_factory,
+            terminal.app_module(suffix),
+            ready_predicate=_name_equals(app.APP_TITLE),
+        )
+
+    return fixture
+
+
+_terminal_focus = _make_terminal_widget_fixture(gtk3_terminal_focus)
+_terminal_updates = _make_terminal_widget_fixture(gtk3_terminal_updates)
 
 
 _gtk3_text_view = _make_native_app_fixture(
@@ -340,43 +356,43 @@ def _make_terminal_fixture(
     return fixture
 
 
-_gtk3_terminal_shell = _make_terminal_fixture(
-    "gtk3_terminal_shell", binary_names=("bash",), args=("--norc", "--noprofile")
+_terminal_shell = _make_terminal_fixture(
+    "terminal_shell", binary_names=("bash",), args=("--norc", "--noprofile")
 )
 _LIVE_UPDATE_HOLD = 3.0 * _TIMEOUT_SCALE
-_gtk3_terminal_flatrev = _make_terminal_fixture(
-    "gtk3_terminal_flatrev",
+_terminal_flatrev = _make_terminal_fixture(
+    "terminal_flatrev",
     binary_names=("bash",),
     args=("--norc", "--noprofile"),
     files={"t.sh": f"printf c1; sleep {_LIVE_UPDATE_HOLD:g}; printf '\\rc2'; echo\n"},
 )
-_gtk3_terminal_review_update = _make_terminal_fixture(
-    "gtk3_terminal_review_update",
+_terminal_review_update = _make_terminal_fixture(
+    "terminal_review_update",
     binary_names=("bash",),
     args=("--norc", "--noprofile"),
     files={
         "review.sh": (f"printf 'anchor\\nc1'; sleep {_LIVE_UPDATE_HOLD:g}; printf '\\rc2'; echo\n"),
     },
 )
-_gtk3_terminal_pager = _make_terminal_fixture(
-    "gtk3_terminal_pager", binary_names=("less",), args=("doc.txt",), files={"doc.txt": _PAGER_DOC}
+_terminal_pager = _make_terminal_fixture(
+    "terminal_pager", binary_names=("less",), args=("doc.txt",), files={"doc.txt": _PAGER_DOC}
 )
-_gtk3_terminal_nano = _make_terminal_fixture(
-    "gtk3_terminal_nano",
+_terminal_nano = _make_terminal_fixture(
+    "terminal_nano",
     binary_names=("nano",),
     args=("-I", "-v", "doc.txt"),
     files={"doc.txt": _NANO_DOC},
 )
 
 _WIDE_PAGER_DOC = "top\nthis line is wider than the display now\nbottom\n"
-_gtk3_terminal_wide_pager = _make_terminal_fixture(
-    "gtk3_terminal_wide_pager",
+_terminal_wide_pager = _make_terminal_fixture(
+    "terminal_wide_pager",
     binary_names=("less",),
     args=("doc.txt",),
     files={"doc.txt": _WIDE_PAGER_DOC},
 )
-_gtk3_terminal_vim = _make_terminal_fixture(
-    "gtk3_terminal_vim",
+_terminal_vim = _make_terminal_fixture(
+    "terminal_vim",
     binary_names=("vim",),
     args=("-u", "NONE", "-i", "NONE", "-n", "-c", "set ruler", "doc.txt"),
     files={"doc.txt": "hello\n"},
@@ -384,15 +400,15 @@ _gtk3_terminal_vim = _make_terminal_fixture(
 
 _VIM_DOC_LINE_COUNT = 20
 _VIM_DOC = "\n".join(f"line {n:02d}" for n in range(1, _VIM_DOC_LINE_COUNT + 1)) + "\n"
-_gtk3_terminal_vim_pages = _make_terminal_fixture(
-    "gtk3_terminal_vim_pages",
+_terminal_vim_pages = _make_terminal_fixture(
+    "terminal_vim_pages",
     binary_names=("vim",),
     args=("-u", "NONE", "-i", "NONE", "-n", "doc.txt"),
     files={"doc.txt": _VIM_DOC},
 )
 # scrolloff forces a scroll on each arrow key; showcmd repaints the pending command area.
-_gtk3_terminal_vim_scroll = _make_terminal_fixture(
-    "gtk3_terminal_vim_scroll",
+_terminal_vim_scroll = _make_terminal_fixture(
+    "terminal_vim_scroll",
     binary_names=("vim",),
     args=("-u", "NONE", "-i", "NONE", "-n", "-c", "set ruler showcmd scrolloff=2", "doc.txt"),
     files={"doc.txt": _VIM_DOC},
@@ -400,8 +416,8 @@ _gtk3_terminal_vim_scroll = _make_terminal_fixture(
 # Without scrolloff the caret sits on the row next to the ruler, so the scroll repaints both.
 # The last two lines are identical so that reversing direction lands on the same text twice.
 _VIM_BOTTOM_DOC = "\n".join(f"line {n:02d}" for n in range(1, 13)) + "\nsame\nsame\n"
-_gtk3_terminal_vim_bottom = _make_terminal_fixture(
-    "gtk3_terminal_vim_bottom",
+_terminal_vim_bottom = _make_terminal_fixture(
+    "terminal_vim_bottom",
     binary_names=("vim",),
     args=("-u", "NONE", "-i", "NONE", "-n", "-c", "set ruler showcmd", "doc.txt"),
     files={"doc.txt": _VIM_BOTTOM_DOC},
@@ -440,6 +456,15 @@ def _terminfo_is_available() -> bool:
     return True
 
 
+def _require_terminal_typelib() -> None:
+    """Skips when the selected VTE toolkit is unavailable."""
+
+    toolkit = terminal.selected_toolkit()
+    version = terminal.TOOLKITS[toolkit]
+    if not has_typelib("Vte", version):
+        pytest.skip(f"VTE {version} ({toolkit}) typelib is not available")
+
+
 def _run_terminal_app(
     tmp_path_factory: pytest.TempPathFactory,
     *,
@@ -449,8 +474,7 @@ def _run_terminal_app(
 ) -> Iterator[NativeAppSession]:
     """Runs a program inside a VTE terminal under its own Orca subprocess."""
 
-    if not has_typelib("Vte", "2.91"):
-        pytest.skip("VTE 2.91 (GTK3) typelib is not available")
+    _require_terminal_typelib()
     if not _terminfo_is_available():
         pytest.skip(f"no terminfo entry for {gtk3_terminal.TERM!r}")
     binary = _resolve_binary(binary_names)
@@ -463,7 +487,8 @@ def _run_terminal_app(
     for filename, content in (files or {}).items():
         (work_dir / filename).write_text(content, encoding="utf-8")
 
-    argv = [sys.executable, "-m", gtk3_terminal.__name__, str(work_dir), binary, *args]
+    # Do not import GTK4 into the GTK3 keyboard driver process.
+    argv = [sys.executable, "-m", terminal.app_module(), str(work_dir), binary, *args]
     yield from _run_app_with_orca(
         sandbox_dir, argv=argv, ready_predicate=_name_equals(gtk3_terminal.APP_TITLE)
     )

@@ -27,6 +27,7 @@ import functools
 import re
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 import gi
@@ -67,6 +68,24 @@ def requires_atril_version(*minimum: int) -> pytest.MarkDecorator:
     """Skips tests which require fixes in a newer Atril release."""
 
     return requires_version("Atril", command_version(("atril", "--version")), *minimum)
+
+
+def requires_vte_version(
+    api_version: str, *minimum: int, when: bool = True
+) -> pytest.MarkDecorator:
+    """Skips tests requiring a newer VTE; query GTK4 separately from the GTK3 driver."""
+
+    command = (
+        sys.executable,
+        "-c",
+        (
+            f"import gi; gi.require_version('Vte', {api_version!r}); "
+            "from gi.repository import Vte; "
+            "print(f'{Vte.get_major_version()}.{Vte.get_minor_version()}.{Vte.get_micro_version()}')"
+        ),
+    )
+    actual = command_version(command) if when else None
+    return requires_version(f"VTE {api_version}", actual, *minimum, when=when)
 
 
 @functools.cache

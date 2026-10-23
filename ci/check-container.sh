@@ -11,7 +11,8 @@ for binary in Xvfb atril chromium firefox bash less nano vim seq gdbus dbus-run-
     rpm -qf --queryformat '%{NAME} %{VERSION}-%{RELEASE}\n' "$(command -v "$binary")"
 done
 rpm -q --queryformat '%{NAME} %{VERSION}-%{RELEASE}\n' dejavu-fonts liblouis-data notification-daemon \
-    terminfo-base typelib-1_0-Gtk-3_0 typelib-1_0-Pango-1_0 typelib-1_0-Vte-2_91
+    terminfo-base typelib-1_0-Gtk-3_0 typelib-1_0-Gtk-4_0 typelib-1_0-Pango-1_0 \
+    typelib-1_0-Vte-2_91 typelib-1_0-Vte-3_91
 test -x /usr/libexec/notification-daemon
 chromium --version
 firefox --version
@@ -55,3 +56,15 @@ for table in ("en-us-g1.ctb", "en-us-g2.ctb"):
 print("liblouis:", louis.version())
 print("Python imports, GI typelibs, font, terminfo, and braille tables: OK")
 PY
+
+# GTK4 and GTK3 cannot be loaded in the same process.
+python3 - <<'PY_GTK4'
+import gi
+
+gi.require_version("Gtk", "4.0")
+gi.require_version("Vte", "3.91")
+from gi.repository import Gtk, Vte
+
+print("GTK4:", Gtk.get_major_version(), Gtk.get_minor_version(), Gtk.get_micro_version())
+print("VTE (GTK4):", Vte.get_major_version(), Vte.get_minor_version(), Vte.get_micro_version())
+PY_GTK4

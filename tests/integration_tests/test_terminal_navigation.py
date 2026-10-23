@@ -7,6 +7,16 @@
 # modify it under the terms of the GNU Lesser General Public
 # License as published by the Free Software Foundation; either
 # version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., Franklin Street, Fifth Floor,
+# Boston MA  02110-1301 USA.
 
 """Integration tests for terminal-hosted pager and editor navigation."""
 
@@ -17,6 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from . import helpers
+from .apps import terminal
 from .harness import keyboard
 from .terminal_helpers import settle, type_text
 
@@ -61,11 +72,11 @@ def _assert_single_spoken_line(
 
 @pytest.mark.native_app
 def test_nano_line_navigation_repaint_speaks_each_line_once(
-    gtk3_terminal_nano: NativeAppSession,
+    terminal_nano: NativeAppSession,
 ) -> None:
     """Tests line navigation through nano repaints speaks the current line exactly once."""
 
-    session = gtk3_terminal_nano
+    session = terminal_nano
     settle(session)
 
     blank_in_previous = False
@@ -80,11 +91,11 @@ def test_nano_line_navigation_repaint_speaks_each_line_once(
 
 @pytest.mark.native_app
 def test_vim_line_navigation_speaks_only_the_current_line(
-    gtk3_terminal_vim_scroll: NativeAppSession,
+    terminal_vim_scroll: NativeAppSession,
 ) -> None:
     """Tests that scrolling line navigation in Vim speaks the caret's line and nothing else."""
 
-    session = gtk3_terminal_vim_scroll
+    session = terminal_vim_scroll
     settle(session)
 
     # Each arrow key repaints Vim's pending command area and ruler, and scrolls a row in.
@@ -101,11 +112,11 @@ def test_vim_line_navigation_speaks_only_the_current_line(
 
 @pytest.mark.native_app
 def test_vim_line_navigation_from_bottom_row_omits_the_ruler(
-    gtk3_terminal_vim_bottom: NativeAppSession,
+    terminal_vim_bottom: NativeAppSession,
 ) -> None:
     """Tests that a scroll which repaints the caret's line and the ruler speaks only the line."""
 
-    session = gtk3_terminal_vim_bottom
+    session = terminal_vim_bottom
     settle(session)
 
     for line in _VIM_BOTTOM_LINES[1:]:
@@ -121,11 +132,11 @@ def test_vim_line_navigation_from_bottom_row_omits_the_ruler(
 
 @pytest.mark.native_app
 def test_shell_history_recall_speaks_the_recalled_command(
-    gtk3_terminal_shell: NativeAppSession,
+    terminal_shell: NativeAppSession,
 ) -> None:
     """Tests that recalling a command from the shell's history speaks what was recalled."""
 
-    session = gtk3_terminal_shell
+    session = terminal_shell
     settle(session)
 
     type_text("echo hi\n")
@@ -137,10 +148,16 @@ def test_shell_history_recall_speaks_the_recalled_command(
 
 
 @pytest.mark.native_app
-def test_pager_navigation_speaks_each_page(gtk3_terminal_pager: NativeAppSession) -> None:
+@pytest.mark.xfail(
+    terminal.selected_toolkit() == "gtk4",
+    reason="GTK4 VTE exposes stale text: https://gitlab.gnome.org/GNOME/vte/-/work_items/2972",
+    raises=AssertionError,
+    strict=True,
+)
+def test_pager_navigation_speaks_each_page(terminal_pager: NativeAppSession) -> None:
     """Tests that paging through Less forward and back speaks each newly shown page."""
 
-    session = gtk3_terminal_pager
+    session = terminal_pager
     settle(session)
 
     # The first page-down leaves the initial filename-status paint behind; discard it
@@ -181,10 +198,17 @@ def test_pager_navigation_speaks_each_page(gtk3_terminal_pager: NativeAppSession
 
 
 @pytest.mark.native_app
-def test_caret_navigation_in_a_pager(gtk3_terminal_pager: NativeAppSession) -> None:
+@pytest.mark.xfail(
+    terminal.selected_toolkit() == "gtk4",
+    reason="GTK4 VTE exposes stale text (https://gitlab.gnome.org/GNOME/vte/-/work_items/2972); "
+    "Orca also mistakes the pager's combined content/status insertion for a repaint",
+    raises=AssertionError,
+    strict=True,
+)
+def test_caret_navigation_in_a_pager(terminal_pager: NativeAppSession) -> None:
     """Tests caret navigation in a pager when Orca controls the caret."""
 
-    session = gtk3_terminal_pager
+    session = terminal_pager
     settle(session)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
@@ -259,10 +283,17 @@ def test_caret_navigation_in_a_pager(gtk3_terminal_pager: NativeAppSession) -> N
 
 
 @pytest.mark.native_app
-def test_caret_navigation_at_the_start_and_end(gtk3_terminal_pager: NativeAppSession) -> None:
+@pytest.mark.xfail(
+    terminal.selected_toolkit() == "gtk4",
+    reason="GTK4 VTE returns multiple lines at the end offset: "
+    "https://gitlab.gnome.org/GNOME/vte/-/work_items/2974",
+    raises=AssertionError,
+    strict=True,
+)
+def test_caret_navigation_at_the_start_and_end(terminal_pager: NativeAppSession) -> None:
     """Tests caret navigation at the start and end of a terminal."""
 
-    session = gtk3_terminal_pager
+    session = terminal_pager
     settle(session)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)

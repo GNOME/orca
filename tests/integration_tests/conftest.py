@@ -28,7 +28,7 @@ from typing import TYPE_CHECKING
 
 os.environ["GSETTINGS_BACKEND"] = "memory"
 
-from .apps import browser
+from .apps import browser, terminal
 from .dbus_fixtures import (  # noqa: F401
     _bus,
     _dbus_service_proxy,
@@ -46,18 +46,6 @@ from .orca_fixtures import (  # noqa: F401
     _gtk3_announcement,
     _gtk3_multi_select_list,
     _gtk3_redundant_names,
-    _gtk3_terminal_flatrev,
-    _gtk3_terminal_focus,
-    _gtk3_terminal_nano,
-    _gtk3_terminal_pager,
-    _gtk3_terminal_review_update,
-    _gtk3_terminal_shell,
-    _gtk3_terminal_updates,
-    _gtk3_terminal_vim,
-    _gtk3_terminal_vim_bottom,
-    _gtk3_terminal_vim_pages,
-    _gtk3_terminal_vim_scroll,
-    _gtk3_terminal_wide_pager,
     _gtk3_text_view,
     _gtk3_text_view_blank_line,
     _gtk3_text_view_emoji,
@@ -71,6 +59,18 @@ from .orca_fixtures import (  # noqa: F401
     _gtk3_widget_notebook,
     _notification_daemon,
     _orca,
+    _terminal_flatrev,
+    _terminal_focus,
+    _terminal_nano,
+    _terminal_pager,
+    _terminal_review_update,
+    _terminal_shell,
+    _terminal_updates,
+    _terminal_vim,
+    _terminal_vim_bottom,
+    _terminal_vim_pages,
+    _terminal_vim_scroll,
+    _terminal_wide_pager,
     _web_accordion,
     _web_alert,
     _web_app_nested_documents,
@@ -189,15 +189,17 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../src"))
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
-    """Registers the user agent supplied by the Meson suite."""
+    """Registers the application choices supplied by the Meson suite."""
 
     parser.addoption("--user-agent", choices=tuple(browser.USER_AGENTS))
+    parser.addoption("--terminal-toolkit", choices=tuple(terminal.TOOLKITS))
 
 
 def pytest_configure(config: pytest.Config) -> None:
-    """Configures the suite's browser and registers custom markers."""
+    """Configures the suite's applications and registers custom markers."""
 
     browser.configure(config.getoption("user_agent"))
+    terminal.configure(config.getoption("terminal_toolkit"))
 
     config.addinivalue_line("markers", "dbus: marks tests as D-Bus specific tests")
     config.addinivalue_line("markers", "gsettings: marks tests as GSettings integration tests")

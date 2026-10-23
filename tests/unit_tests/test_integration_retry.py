@@ -14,11 +14,18 @@ _RUNNER = Path(__file__).parents[1] / "integration_retry.py"
 
 
 def _run(
-    tmp_path: Path, source: str, *, retry: bool = True, user_agent: str | None = None
+    tmp_path: Path,
+    source: str,
+    *,
+    retry: bool = True,
+    user_agent: str | None = None,
+    terminal_toolkit: str | None = None,
 ) -> subprocess.CompletedProcess:
     test_file = tmp_path / "test_example.py"
     test_file.write_text(source, encoding="utf-8")
     args = []
+    if terminal_toolkit is not None:
+        args.append(f"--terminal-toolkit={terminal_toolkit}")
     if user_agent is not None:
         args.append(f"--user-agent={user_agent}")
         (tmp_path / "conftest.py").write_text(
@@ -39,7 +46,7 @@ def _run(
     if retry:
         env["ORCA_TEST_RETRY_DIR"] = str(tmp_path / "logs")
     build = tmp_path / "build"
-    build.mkdir()
+    build.mkdir(exist_ok=True)
     return subprocess.run(
         [sys.executable, str(_RUNNER), str(test_file), *args],
         cwd=build,
@@ -211,3 +218,28 @@ def test_example():
             assert log is not None
             assert log.read() == b"retry diagnostics"
         assert str(archive) in (tmp_path / "logs/test_example.summary").read_text()
+
+
+def test_terminal_variants_preserve_each_others_results(tmp_path: Path) -> None:
+    """A passing GTK4 run must not erase a failed GTK3 run of the same file."""
+
+    (tmp_path / "conftest.py").write_text(
+        "from pathlib import Path\n"
+        "def pytest_addoption(parser):\n"
+        "    parser.addoption('--terminal-toolkit')\n"
+        "def pytest_configure(config):\n"
+        "    with Path(__file__).with_name('toolkits').open('a') as log:\n"
+        "        log.write(config.getoption('terminal_toolkit') + '\\n')\n",
+    )
+    source = (
+        "def test_example(request):\n"
+        "    assert request.config.getoption('terminal_toolkit') == 'gtk4'\n"
+    )
+    failed = _run(tmp_path, source, terminal_toolkit="gtk3")
+    assert failed.returncode == 1, failed.stdout + failed.stderr
+    passed = _run(tmp_path, source, terminal_toolkit="gtk4")
+    assert passed.returncode == 0, passed.stdout + passed.stderr
+    assert (tmp_path / "toolkits").read_text().splitlines() == ["gtk3", "gtk3", "gtk4"]
+    assert "FAILED ON RETRY" in (tmp_path / "logs/test_example_gtk3.summary").read_text()
+    assert (tmp_path / "logs/test_example_gtk3.first.log").exists()
+    assert not (tmp_path / "logs/test_example_gtk4.summary").exists()

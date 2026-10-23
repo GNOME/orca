@@ -7,6 +7,16 @@
 # modify it under the terms of the GNU Lesser General Public
 # License as published by the Free Software Foundation; either
 # version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., Franklin Street, Fifth Floor,
+# Boston MA  02110-1301 USA.
 
 """Integration tests for braille panning in terminals."""
 
@@ -24,10 +34,10 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.native_app
-def test_pan_braille_across_terminal_line(gtk3_terminal_shell: NativeAppSession) -> None:
+def test_pan_braille_across_terminal_line(terminal_shell: NativeAppSession) -> None:
     """Tests panning across a prompt line wider than the display, including the edge-walk."""
 
-    session = gtk3_terminal_shell
+    session = terminal_shell
     settle(session)
     type_text(WIDE_PROMPT_INPUT)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
@@ -58,11 +68,11 @@ def test_pan_braille_across_terminal_line(gtk3_terminal_shell: NativeAppSession)
 
 @pytest.mark.native_app
 def test_pan_braille_left_crosses_wide_line_in_pager(
-    gtk3_terminal_wide_pager: NativeAppSession,
+    terminal_wide_pager: NativeAppSession,
 ) -> None:
     """Tests that panning left over a pager line wider than the display reaches the line above."""
 
-    session = gtk3_terminal_wide_pager
+    session = terminal_wide_pager
     settle(session)
     helpers.toggle_flat_review(session)
 
