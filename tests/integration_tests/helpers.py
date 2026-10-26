@@ -29,6 +29,7 @@ import pytest
 
 from orca.output_reader import BrailleRecord, SpeechRecord
 
+from .apps import gtk
 from .apps.browser import BROWSERS
 from .harness import keyboard
 from .version_helpers import firefox_is_older_than_build
@@ -75,6 +76,12 @@ def expected_for_browser(
         if name not in BROWSERS:
             raise ValueError(f"Unknown browser expectation override: {name!r}")
     return overrides.get(session.browser, common)
+
+
+def expected_for_gtk(common: _Expected, *, gtk4: _Expected) -> _Expected:
+    """Selects the exact expectation for the toolkit chosen by Meson."""
+
+    return gtk4 if gtk.is_gtk4() else common
 
 
 PAN_LEFT_COMMAND = "panBrailleLeftHandler"

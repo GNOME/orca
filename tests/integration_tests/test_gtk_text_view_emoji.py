@@ -40,7 +40,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_top
+from .helpers import BrailleLine, capture, expected_for_gtk, move_to_top
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -55,27 +55,30 @@ _FAMILY_LINE = f"Family {_FAMILY} here."
 
 
 @pytest.mark.native_app
-def test_down_arrow_announces_whole_emoji_lines(gtk3_text_view_emoji: NativeAppSession) -> None:
+def test_down_arrow_announces_whole_emoji_lines(gtk_text_view_emoji: NativeAppSession) -> None:
     """Down-arrow presents each line with whole emoji intact."""
 
-    session = gtk3_text_view_emoji
+    session = gtk_text_view_emoji
     move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        [f"{_FLAGS_LINE}\n"],
+        expected_for_gtk([f"{_FLAGS_LINE}\n"], gtk4=[_FLAGS_LINE]),
         [BrailleLine(1, f"{_FLAGS_LINE} $l", f"{_FLAGS_LINE} $l", "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        [f"{_JOINED_LINE}\n"],
+        expected_for_gtk([f"{_JOINED_LINE}\n"], gtk4=[_JOINED_LINE]),
         [BrailleLine(1, f"{_JOINED_LINE} $l", f"{_JOINED_LINE} $l", "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        [f"{_FAMILY_LINE}\n"],
+        expected_for_gtk(
+            [f"{_FAMILY_LINE}\n"],
+            gtk4=[_FAMILY_LINE],
+        ),
         [BrailleLine(1, f"{_FAMILY_LINE} $l", f"{_FAMILY_LINE} $l", "\x00" * 23)],
     )
 
@@ -87,10 +90,10 @@ def test_down_arrow_announces_whole_emoji_lines(gtk3_text_view_emoji: NativeAppS
 
 
 @pytest.mark.native_app
-def test_word_nav_announces_whole_emoji(gtk3_text_view_emoji: NativeAppSession) -> None:
+def test_word_nav_announces_whole_emoji(gtk_text_view_emoji: NativeAppSession) -> None:
     """Ctrl+Right word navigation produces whole emoji as part of each word unit."""
 
-    session = gtk3_text_view_emoji
+    session = gtk_text_view_emoji
     move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -157,10 +160,10 @@ def test_word_nav_announces_whole_emoji(gtk3_text_view_emoji: NativeAppSession) 
 
 
 @pytest.mark.native_app
-def test_char_nav_right_announces_whole_emoji(gtk3_text_view_emoji: NativeAppSession) -> None:
+def test_char_nav_right_announces_whole_emoji(gtk_text_view_emoji: NativeAppSession) -> None:
     """Right-arrow character navigation presents each flag and ZWJ family as a single stop."""
 
-    session = gtk3_text_view_emoji
+    session = gtk_text_view_emoji
 
     _flags_braille = f"{_FLAGS_LINE} $l"
     _joined_braille = f"{_JOINED_LINE} $l"
@@ -479,10 +482,10 @@ def test_char_nav_right_announces_whole_emoji(gtk3_text_view_emoji: NativeAppSes
 
 
 @pytest.mark.native_app
-def test_char_nav_left_announces_whole_emoji(gtk3_text_view_emoji: NativeAppSession) -> None:
+def test_char_nav_left_announces_whole_emoji(gtk_text_view_emoji: NativeAppSession) -> None:
     """Left-arrow character navigation presents each flag and ZWJ family as a single stop."""
 
-    session = gtk3_text_view_emoji
+    session = gtk_text_view_emoji
 
     _flags_braille = f"{_FLAGS_LINE} $l"
     _joined_braille = f"{_JOINED_LINE} $l"

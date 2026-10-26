@@ -28,7 +28,7 @@ from typing import TYPE_CHECKING
 
 os.environ["GSETTINGS_BACKEND"] = "memory"
 
-from .apps import browser, terminal
+from .apps import browser, gtk, terminal
 from .dbus_fixtures import (  # noqa: F401
     _bus,
     _dbus_service_proxy,
@@ -43,20 +43,23 @@ from .gsettings_fixtures import (  # noqa: F401
 )
 from .orca_fixtures import (  # noqa: F401
     _atril,
-    _gtk3_announcement,
-    _gtk3_multi_select_list,
-    _gtk3_redundant_names,
-    _gtk3_text_view,
-    _gtk3_text_view_blank_line,
-    _gtk3_text_view_emoji,
-    _gtk3_text_view_repeated_symbols,
-    _gtk3_text_view_word_boundaries,
-    _gtk3_toolbar,
-    _gtk3_tree_view,
-    _gtk3_tri_state_checkbox,
-    _gtk3_two_entries,
-    _gtk3_two_windows,
-    _gtk3_widget_notebook,
+    _gtk_announcement,
+    _gtk_buttons,
+    _gtk_drop_down,
+    _gtk_multi_select_list,
+    _gtk_redundant_names,
+    _gtk_text_view,
+    _gtk_text_view_blank_line,
+    _gtk_text_view_emoji,
+    _gtk_text_view_repeated_symbols,
+    _gtk_text_view_selection,
+    _gtk_text_view_word_boundaries,
+    _gtk_toolbar,
+    _gtk_tree_view,
+    _gtk_tri_state_checkbox,
+    _gtk_two_entries,
+    _gtk_two_windows,
+    _gtk_widget_notebook,
     _notification_daemon,
     _orca,
     _terminal_flatrev,
@@ -194,6 +197,7 @@ def pytest_addoption(parser: pytest.Parser) -> None:
 
     parser.addoption("--user-agent", choices=tuple(browser.USER_AGENTS))
     parser.addoption("--terminal-toolkit", choices=tuple(terminal.TOOLKITS))
+    parser.addoption("--gtk-toolkit", choices=tuple(gtk.TOOLKITS))
 
 
 def pytest_configure(config: pytest.Config) -> None:
@@ -201,6 +205,7 @@ def pytest_configure(config: pytest.Config) -> None:
 
     browser.configure(config.getoption("user_agent"))
     terminal.configure(config.getoption("terminal_toolkit"))
+    gtk.configure(config.getoption("gtk_toolkit"))
 
     config.addinivalue_line("markers", "dbus: marks tests as D-Bus specific tests")
     config.addinivalue_line("markers", "gsettings: marks tests as GSettings integration tests")

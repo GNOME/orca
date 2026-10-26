@@ -136,38 +136,41 @@ orca_integration_tests = {
     'integration_tests/test_caret_selection_atril_unvisited_page.py',
     'integration_tests/test_say_all_atril.py',
   ],
-  'gtk3': [
-    'integration_tests/test_caret_navigation.py',
-    'integration_tests/test_caret_navigation_orca_controlled.py',
-    'integration_tests/test_caret_navigation_orca_controlled_blank_line.py',
-    'integration_tests/test_caret_navigation_word_boundaries.py',
-    'integration_tests/test_say_all_text_view.py',
-    'integration_tests/test_caret_selection_text_view.py',
-    'integration_tests/test_clipboard.py',
-    'integration_tests/test_gui_announcement.py',
-    'integration_tests/test_gui_braille_selection.py',
-    'integration_tests/test_gui_entry_caret_navigation.py',
-    'integration_tests/test_flat_review_textview.py',
-    'integration_tests/test_flat_review_focus_tracking.py',
-    'integration_tests/test_flat_review_window_change.py',
-    'integration_tests/test_flat_review_move_commands.py',
-    'integration_tests/test_flat_review_treeview.py',
-    'integration_tests/test_flat_review_commands.py',
-    'integration_tests/test_gui_multi_select_list.py',
-    'integration_tests/test_gui_tree_view.py',
-    'integration_tests/test_gui_tri_state_checkbox.py',
-    'integration_tests/test_gui_widget_notebook.py',
-    'integration_tests/test_gui_spinbutton.py',
-    'integration_tests/test_gui_redundant_names.py',
-    'integration_tests/test_gui_toolbar.py',
-    'integration_tests/test_gui_braille_panning.py',
-    'integration_tests/test_sleep_mode.py',
-    'integration_tests/test_speech_presenter_commands.py',
-    'integration_tests/test_braille_presenter_commands.py',
-    'integration_tests/test_notifications.py',
-    'integration_tests/test_typing_echo.py',
+  'gtk': [
+    'integration_tests/test_gtk_caret_navigation.py',
+    'integration_tests/test_gtk_caret_navigation_orca_controlled.py',
+    'integration_tests/test_gtk_caret_navigation_orca_controlled_blank_line.py',
+    'integration_tests/test_gtk_caret_navigation_word_boundaries.py',
+    'integration_tests/test_gtk_say_all_text_view.py',
+    'integration_tests/test_gtk_caret_selection_text_view.py',
+    'integration_tests/test_gtk_clipboard.py',
+    'integration_tests/test_gtk_announcement.py',
+    'integration_tests/test_gtk_braille_selection.py',
+    'integration_tests/test_gtk_entry_caret_navigation.py',
+    'integration_tests/test_gtk_flat_review_text_view.py',
+    'integration_tests/test_gtk_flat_review_focus_tracking.py',
+    'integration_tests/test_gtk_flat_review_window_change.py',
+    'integration_tests/test_gtk_flat_review_move_commands.py',
+    'integration_tests/test_gtk_flat_review_tree_view.py',
+    'integration_tests/test_gtk_flat_review_commands.py',
+    'integration_tests/test_gtk_multi_select_list.py',
+    'integration_tests/test_gtk_tree_view.py',
+    'integration_tests/test_gtk_tri_state_checkbox.py',
+    'integration_tests/test_gtk_widget_notebook.py',
+    'integration_tests/test_gtk_spinbutton.py',
+    'integration_tests/test_gtk_redundant_names.py',
+    'integration_tests/test_gtk_toolbar.py',
+    'integration_tests/test_gtk_braille_panning.py',
+    'integration_tests/test_gtk_sleep_mode.py',
+    'integration_tests/test_gtk_speech_presenter_commands.py',
+    'integration_tests/test_gtk_braille_presenter_commands.py',
+    'integration_tests/test_gtk_notifications.py',
+    'integration_tests/test_gtk_typing_echo.py',
     'integration_tests/test_gtk_text_view_emoji.py',
-    'integration_tests/test_repeated_symbols_text_view.py',
+    'integration_tests/test_gtk_repeated_symbols_text_view.py',
+    'integration_tests/test_gtk_button_name_change.py',
+    'integration_tests/test_gtk_buttons.py',
+    'integration_tests/test_gtk_drop_down.py',
   ],
   'terminal': [
     'integration_tests/test_caret_selection_terminal.py',
@@ -318,7 +321,7 @@ integration_wrapper = configure_file(
 test_timeouts = {
   'test_gsettings': 30,
   'test_web_word_boundaries': 180,
-  'test_caret_navigation_word_boundaries': 180,
+  'test_gtk_caret_navigation_word_boundaries': 180,
   'test_web_form_fields_navigation': 180,
   'test_web_text_attributes': 300,
   # Thorough character-nav coverage exceeds the shared 120s cap; give it room.
@@ -333,6 +336,8 @@ foreach group, test_files : orca_integration_tests
     variants = ['chromium', 'gecko']
   elif group == 'terminal'
     variants = ['gtk3-terminal', 'gtk4-terminal']
+  elif group == 'gtk'
+    variants = ['gtk3', 'gtk4']
   endif
   foreach variant : variants
     app_args = []
@@ -344,6 +349,9 @@ foreach group, test_files : orca_integration_tests
       toolkit = variant.split('-')[0]
       app_args = ['--terminal-toolkit=' + toolkit]
       suffix = toolkit == 'gtk4' ? '_gtk4' : ''
+    elif group == 'gtk'
+      app_args = ['--gtk-toolkit=' + variant]
+      suffix = variant == 'gtk4' ? '_gtk4' : ''
     endif
     foreach test_file : test_files
       test_name = test_file.split('/')[-1].split('.')[0]

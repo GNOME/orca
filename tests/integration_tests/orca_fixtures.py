@@ -46,7 +46,9 @@ from orca.output_reader import OutputReader
 from .apps import (
     atril,
     browser,
+    gtk,
     gtk3_announcement,
+    gtk3_buttons,
     gtk3_multi_select_list,
     gtk3_redundant_names,
     gtk3_terminal,
@@ -126,14 +128,26 @@ def _make_native_app_fixture(
     name: str | None = None,
     required_font: str | None = None,
 ) -> Callable[..., Iterator[NativeAppSession]]:
-    @pytest.fixture(scope=scope, name=name or app.__name__.rsplit(".", 1)[-1])
+    @pytest.fixture(
+        scope=scope, name=name or app.__name__.rsplit(".", 1)[-1].replace("gtk3_", "gtk_", 1)
+    )
     def fixture(tmp_path_factory: pytest.TempPathFactory) -> Iterator[NativeAppSession]:
+        app_module = app.__name__
+        if gtk.is_gtk4():
+            if app in (gtk3_tree_view, gtk3_multi_select_list):
+                pytest.skip(
+                    "GTK4 TreeView accessibility: "
+                    "https://gitlab.gnome.org/GNOME/gtk/-/work_items/4274"
+                )
+            if not has_typelib("Gtk", "4.0"):
+                pytest.skip("GTK 4.0 typelib is not available")
+            app_module = gtk.app_module(app.__name__.rsplit("gtk3_", 1)[1])
         if required_font is not None and not _font_is_installed(required_font):
             pytest.skip(f"Font not installed: {required_font}")
 
         yield from _run_native_app(
             tmp_path_factory,
-            app.__name__,
+            app_module,
             ready_predicate=_name_equals(app.APP_TITLE),
             lines=lines,
         )
@@ -185,6 +199,19 @@ def _atril(tmp_path_factory: pytest.TempPathFactory) -> Iterator[AtrilSession]:
         yield AtrilSession(session.orca, session.reader, tuple(pages))
 
 
+@pytest.fixture(scope="session", name="gtk_drop_down")
+def _gtk_drop_down(tmp_path_factory: pytest.TempPathFactory) -> Iterator[NativeAppSession]:
+    """Runs the GTK4 DropDown app."""
+
+    if not has_typelib("Gtk", "4.0"):
+        pytest.skip("GTK 4.0 typelib is not available")
+    yield from _run_native_app(
+        tmp_path_factory,
+        "tests.integration_tests.apps.gtk4_drop_down",
+        ready_predicate=_name_equals("OrcaDropDown"),
+    )
+
+
 def _make_terminal_widget_fixture(app: ModuleType) -> Callable[..., Iterator[NativeAppSession]]:
     suffix = app.__name__.split("gtk3_terminal", 1)[1]
 
@@ -205,20 +232,29 @@ _terminal_updates = _make_terminal_widget_fixture(gtk3_terminal_updates)
 _terminal_trailing_deletion = _make_terminal_widget_fixture(gtk3_terminal_trailing_deletion)
 
 
-_gtk3_text_view = _make_native_app_fixture(
+_TEXT_VIEW_LINES = (
+    "Line one.",
+    "Line two has additional words to make it long enough that the text view wraps it.",
+    "Line three.",
+    "Line four also has extra words to push it past the wrap boundary in the view.",
+    "Last line.",
+)
+_gtk_text_view = _make_native_app_fixture(
     gtk3_text_view,
-    lines=(
-        "Line one.",
-        "Line two has additional words to make it long enough that the text view wraps it.",
-        "Line three.",
-        "Line four also has extra words to push it past the wrap boundary in the view.",
-        "Last line.",
-    ),
+    lines=_TEXT_VIEW_LINES,
     required_font=gtk3_text_view.FONT_FAMILY,
 )
-_gtk3_text_view_blank_line = _make_native_app_fixture(
+# Selection scenarios must not inherit stale selection/caret state from a previous case.
+_gtk_text_view_selection = _make_native_app_fixture(
     gtk3_text_view,
-    name="gtk3_text_view_blank_line",
+    name="gtk_text_view_selection",
+    scope="function",
+    lines=_TEXT_VIEW_LINES,
+    required_font=gtk3_text_view.FONT_FAMILY,
+)
+_gtk_text_view_blank_line = _make_native_app_fixture(
+    gtk3_text_view,
+    name="gtk_text_view_blank_line",
     scope="function",
     required_font=gtk3_text_view.FONT_FAMILY,
     lines=(
@@ -228,9 +264,9 @@ _gtk3_text_view_blank_line = _make_native_app_fixture(
         "",
     ),
 )
-_gtk3_text_view_word_boundaries = _make_native_app_fixture(
+_gtk_text_view_word_boundaries = _make_native_app_fixture(
     gtk3_text_view,
-    name="gtk3_text_view_word_boundaries",
+    name="gtk_text_view_word_boundaries",
     required_font=gtk3_text_view.FONT_FAMILY,
     lines=(
         "Start doesn't end",
@@ -251,9 +287,9 @@ _gtk3_text_view_word_boundaries = _make_native_app_fixture(
         "doesn't",
     ),
 )
-_gtk3_text_view_emoji = _make_native_app_fixture(
+_gtk_text_view_emoji = _make_native_app_fixture(
     gtk3_text_view,
-    name="gtk3_text_view_emoji",
+    name="gtk_text_view_emoji",
     required_font=gtk3_text_view.FONT_FAMILY,
     lines=(
         "Start.",
@@ -263,21 +299,22 @@ _gtk3_text_view_emoji = _make_native_app_fixture(
         "End.",
     ),
 )
-_gtk3_text_view_repeated_symbols = _make_native_app_fixture(
+_gtk_text_view_repeated_symbols = _make_native_app_fixture(
     gtk3_text_view,
-    name="gtk3_text_view_repeated_symbols",
+    name="gtk_text_view_repeated_symbols",
     required_font=gtk3_text_view.FONT_FAMILY,
     lines=("Start.", "🎵" * 10, "🎵\ufeff" * 10, "End."),
 )
-_gtk3_announcement = _make_native_app_fixture(gtk3_announcement, scope="function")
-_gtk3_multi_select_list = _make_native_app_fixture(gtk3_multi_select_list, scope="function")
-_gtk3_tree_view = _make_native_app_fixture(gtk3_tree_view, scope="function")
-_gtk3_tri_state_checkbox = _make_native_app_fixture(gtk3_tri_state_checkbox, scope="function")
-_gtk3_two_entries = _make_native_app_fixture(gtk3_two_entries, scope="function")
-_gtk3_two_windows = _make_native_app_fixture(gtk3_two_windows, scope="function")
-_gtk3_widget_notebook = _make_native_app_fixture(gtk3_widget_notebook)
-_gtk3_toolbar = _make_native_app_fixture(gtk3_toolbar, scope="function")
-_gtk3_redundant_names = _make_native_app_fixture(gtk3_redundant_names, scope="function")
+_gtk_announcement = _make_native_app_fixture(gtk3_announcement, scope="function")
+_gtk_buttons = _make_native_app_fixture(gtk3_buttons)
+_gtk_multi_select_list = _make_native_app_fixture(gtk3_multi_select_list, scope="function")
+_gtk_tree_view = _make_native_app_fixture(gtk3_tree_view, scope="function")
+_gtk_tri_state_checkbox = _make_native_app_fixture(gtk3_tri_state_checkbox, scope="function")
+_gtk_two_entries = _make_native_app_fixture(gtk3_two_entries, scope="function")
+_gtk_two_windows = _make_native_app_fixture(gtk3_two_windows, scope="function")
+_gtk_widget_notebook = _make_native_app_fixture(gtk3_widget_notebook)
+_gtk_toolbar = _make_native_app_fixture(gtk3_toolbar, scope="function")
+_gtk_redundant_names = _make_native_app_fixture(gtk3_redundant_names, scope="function")
 
 _NOTIFICATION_DAEMON = Path("/usr/libexec/notification-daemon")
 
@@ -295,7 +332,10 @@ def _notification_daemon(tmp_path_factory: pytest.TempPathFactory) -> Iterator[N
     process = subprocess.Popen([_NOTIFICATION_DAEMON], env=sandbox.build_sandbox_env(sandbox_dir))
     try:
         _wait_for_bus_name(process, "org.freedesktop.Notifications")
-        argv = [sys.executable, "-m", gtk3_two_entries.__name__]
+        if gtk.is_gtk4() and not has_typelib("Gtk", "4.0"):
+            pytest.skip("GTK 4.0 typelib is not available")
+        app_module = gtk.app_module("two_entries") if gtk.is_gtk4() else gtk3_two_entries.__name__
+        argv = [sys.executable, "-m", app_module]
         yield from _run_app_with_orca(
             sandbox_dir, argv=argv, ready_predicate=_name_equals(gtk3_two_entries.APP_TITLE)
         )

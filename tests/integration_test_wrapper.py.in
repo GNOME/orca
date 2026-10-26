@@ -371,6 +371,7 @@ def main() -> int:
     parser.add_argument("test_file")
     parser.add_argument("--user-agent", choices=("chromium", "gecko"))
     parser.add_argument("--terminal-toolkit", choices=("gtk3", "gtk4"))
+    parser.add_argument("--gtk-toolkit", choices=("gtk3", "gtk4"))
     parser.add_argument(_SANDBOX_READY_FLAG, action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
     test_args = [args.test_file]
@@ -378,6 +379,8 @@ def main() -> int:
         test_args.append(f"--user-agent={args.user_agent}")
     if args.terminal_toolkit is not None:
         test_args.append(f"--terminal-toolkit={args.terminal_toolkit}")
+    if args.gtk_toolkit is not None:
+        test_args.append(f"--gtk-toolkit={args.gtk_toolkit}")
 
     searched = ", ".join(_ATSPI_DIRECTORIES)
     if shutil.which("Xvfb") is None:

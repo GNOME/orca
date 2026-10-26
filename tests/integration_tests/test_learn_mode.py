@@ -33,10 +33,10 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.native_app
-def test_learn_mode_announces_orca_t_binding(gtk3_text_view: NativeAppSession) -> None:
+def test_learn_mode_announces_orca_t_binding(gtk_text_view: NativeAppSession) -> None:
     """Orca+H enters learn mode, Orca+T announces its binding, Escape exits."""
 
-    session = gtk3_text_view
+    session = gtk_text_view
     session.reader.reset()
 
     session.orca.press_orca_key(keyboard.KEYSYM_H)

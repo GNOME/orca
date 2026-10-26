@@ -4,34 +4,30 @@
 
 The unit tests need:
 
-* [pytest](https://pytest.org)
-* [pytest-mock](https://pytest-mock.readthedocs.io/) - Mock plugin for pytest
+* [pytest](https://pytest.org).
+* [pytest-mock](https://pytest-mock.readthedocs.io/).
 
-The integration tests additionally need the following, on top of what Orca itself requires.
-Some missing dependencies cause skips; others cause import or setup failures. Tests which
-launch Orca need an installed build of the version being tested.
+The integration tests additionally need the following dependencies. Some missing dependencies
+cause skips; others cause import or setup failures. Tests which launch Orca need an installed
+build of the version being tested.
 
-* Xvfb
-* `dbus-run-session`, `gdbus`, and `dbus-update-activation-environment`
-* AT-SPI's `at-spi-bus-launcher` and `at-spi2-registryd`
-* `pgrep` (from procps) and `fusermount` (for sandbox FUSE cleanup)
-* Python GObject introspection and Cairo bindings, with the AT-SPI, GTK3, and PangoCairo typelibs
-* `glib-compile-schemas` for the GSettings tests
-* `notification-daemon` and `notify-send` (from libnotify) for the notification tests.
-* The DejaVu Serif, DejaVu Sans, and DejaVu Sans Mono fonts for consistent line wrapping
-* VTE 2.91 (GTK3), including its typelib, Python curses, xterm terminfo, bash, less, nano, vim,
-  and `seq` (from coreutils), for the terminal tests
-* GTK4 and VTE 3.91 typelibs for the GTK4 terminal tests. The scrolling test currently
-  requires unreleased VTE 0.85.0 or later; VTE 0.84.1 emits incomplete insertion events.
-* liblouis's Python bindings and en-us-g1/en-us-g2 tables for the braille tests. Its pkg-config
-  metadata must be available when building Orca so it can locate the tables (in Fedora and
-  openSUSE, install `liblouis-devel`).
-* MathCAT enabled in the installed Orca build for the math tests.
-* Chrome (beta preferred) or Chromium for the web tests.
-* Firefox (Nightly preferred) for the Firefox tests.
-* Atril for PDF navigation and selection tests. Tests that depend
-  on its selection fixes require 1.28.7 or later.
-* `python-xlib` for window setup when running tests with Firefox or Atril.
+* Xvfb and `python-xlib`.
+* `pgrep` (from procps) and `fusermount`.
+* The DejaVu Serif, DejaVu Sans, and DejaVu Sans Mono fonts, and the PangoCairo typelib.
+* `dbus-run-session`, `gdbus`, and `dbus-update-activation-environment`.
+* Python GObject introspection bindings (PyGObject).
+* AT-SPI, including its typelib, `at-spi-bus-launcher`, and `at-spi2-registryd`.
+* `glib-compile-schemas`.
+* liblouis's Python bindings, en-us-g1/en-us-g2 tables, and build-time pkg-config
+  metadata (`liblouis-devel` on Fedora and openSUSE).
+* MathCAT enabled in the installed Orca build.
+* GTK3 and GTK4, including their typelibs.
+* Terminal support: Python `curses`, xterm terminfo, and VTE with its GTK3 (2.91)
+  and GTK4 (3.91) typelibs.
+* Terminal applications: `bash`, `less`, `nano`, `vim`, and `seq` (from coreutils).
+* Web browsers: Chrome (beta preferred) or Chromium, and Firefox (Nightly preferred).
+* Document viewers: Atril.
+* Notifications: `notification-daemon` and `notify-send` (from libnotify).
 
 ## Running Tests
 
@@ -52,13 +48,13 @@ Orca's tests are grouped into the following named suites:
     * "core": infrastructure such as GSettings, D-Bus support, and browser smoke tests
     * "document": document viewers and editors (currently Atril)
     * "gtk3": non-terminal GTK3 UI tests
+    * "gtk4": non-terminal GTK4 UI tests
     * "gtk3-terminal": for terminal applications using VTE for GTK3
     * "gtk4-terminal": the same terminal tests using VTE for GTK4
     * "chromium": for web content using Chrome (beta preferred) or Chromium
     * "gecko": for web content using Firefox (Nightly preferred)
 
-Note that coverage for additional GTK4 widgets and Qt, along with additional applications, is in
-progress.
+Note that coverage for Qt, along with additional applications, is in progress.
 
 ```bash
 meson test -C _build
@@ -147,7 +143,7 @@ with it.
 
 Add each new test file to the appropriate group in `orca_integration_tests`
 in `tests/meson.build`. Files in the `web` group run in both Chromium and
-Firefox.
+Firefox. Files in the `gtk` and `terminal` groups run in both GTK3 and GTK4.
 
 Adding tests to an already registered file requires no Meson changes.
 
@@ -156,7 +152,7 @@ Adding tests to an already registered file requires no Meson changes.
 Build and install the version of Orca being tested, then run the affected
 tests with Meson. For example:
 
-    meson test -C _build --suite gtk3 test_caret_navigation
+    meson test -C _build --suite gtk3 test_gtk_caret_navigation
     meson test -C _build --suite chromium test_web_code_block
     meson test -C _build --suite gecko test_web_code_block_gecko
 
