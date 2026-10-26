@@ -229,11 +229,10 @@ def _activate_services():
         )
 
         focused_object = focus_manager.get_manager().find_focused_object()
-        if focused_object:
-            focus_manager.get_manager().set_locus_of_focus(None, focused_object)
-
         script = script_manager.get_manager().get_script(app, focused_object or window)
         script_manager.get_manager().set_active_script(script, "Launching.")
+        if focused_object:
+            focus_manager.get_manager().set_locus_of_focus(None, focused_object)
 
     clipboard.get_presenter().activate()
     Gdk.notify_startup_complete()  # pylint: disable=no-value-for-parameter

@@ -37,10 +37,6 @@ pytestmark = pytest.mark.skipif(not gtk.is_gtk4(), reason="GtkDropDown does not 
 
 
 @pytest.mark.native_app
-@pytest.mark.skipif(
-    gtk.is_gtk4(),
-    reason="On hold: Orca must activate the app script before setting its initial locus of focus",
-)
 def test_where_am_i_reports_initial_selection(gtk_drop_down: NativeAppSession) -> None:
     """Tests starting Orca with the drop-down focused, before any focus event."""
 
