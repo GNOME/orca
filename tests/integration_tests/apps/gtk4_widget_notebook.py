@@ -64,7 +64,8 @@ class _Widgets:
         self.quantity_spin = Gtk.SpinButton.new_with_range(0, 100, 1)
         self.quantity_spin.update_property([Gtk.AccessibleProperty.LABEL], ["Quantity"])
         self.color_combo = Gtk.DropDown.new_from_strings(["Red", "Green", "Blue"])
-        self.color_combo.update_property([Gtk.AccessibleProperty.LABEL], ["Color"])
+        color_label = Gtk.Label.new_with_mnemonic("_Color")
+        color_label.set_mnemonic_widget(self.color_combo)
         self.city_entry = Gtk.Entry()
         self.city_entry.update_property([Gtk.AccessibleProperty.LABEL], ["City"])
         self.website_link = Gtk.LinkButton.new_with_label("https://example.com", "Website")
@@ -85,6 +86,7 @@ class _Widgets:
             self.bold_toggle,
             self.enabled_check,
             self.quantity_spin,
+            color_label,
             self.color_combo,
             self.city_entry,
             self.website_link,

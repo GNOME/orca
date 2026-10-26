@@ -100,13 +100,12 @@ def _press(session: NativeAppSession, keysym: int) -> tuple[list[str], list[help
         pytest.param(
             4,
             (
-                ["Color combo box Red"],
+                helpers.expected_for_gtk(
+                    ["Color combo box Red"], gtk4=["Color combo box Red", "opens popup"]
+                ),
                 [helpers.BrailleLine(7, "Color Red combo box", "Color Red combo box", "\x00" * 19)],
             ),
             id="color",
-            marks=pytest.mark.skipif(
-                gtk.is_gtk4(), reason="DropDown coverage is on hold pending production fixes"
-            ),
         ),
         pytest.param(
             5,
