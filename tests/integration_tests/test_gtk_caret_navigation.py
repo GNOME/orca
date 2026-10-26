@@ -29,12 +29,14 @@ import pytest
 from .apps import gtk
 from .harness import keyboard
 from .helpers import BrailleLine, capture, expected_for_gtk, move_to_top
+from .version_helpers import requires_gtk_version
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_caret_navigation_presentation(gtk_text_view: NativeAppSession) -> None:
     """Orca's announcements as the caret moves via arrows, word/line jumps, buffer endpoints."""
 
@@ -114,6 +116,7 @@ def test_caret_navigation_presentation(gtk_text_view: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_caret_selection_presentation(gtk_text_view: NativeAppSession) -> None:
     """Orca's announcements as selection changes by line, word, char, jumps, and select-all."""
 
@@ -355,6 +358,7 @@ def test_selection_by_line_down_then_up(gtk_text_view: NativeAppSession) -> None
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_selection_by_word_and_character(gtk_text_view: NativeAppSession) -> None:
     """Tests selection by word and by character."""
 

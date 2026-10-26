@@ -39,8 +39,10 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import gtk
 from .harness import keyboard
 from .helpers import BrailleLine, capture, expected_for_gtk, move_to_top
+from .version_helpers import requires_gtk_version
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -55,6 +57,7 @@ _FAMILY_LINE = f"Family {_FAMILY} here."
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_down_arrow_announces_whole_emoji_lines(gtk_text_view_emoji: NativeAppSession) -> None:
     """Down-arrow presents each line with whole emoji intact."""
 
@@ -90,6 +93,7 @@ def test_down_arrow_announces_whole_emoji_lines(gtk_text_view_emoji: NativeAppSe
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_word_nav_announces_whole_emoji(gtk_text_view_emoji: NativeAppSession) -> None:
     """Ctrl+Right word navigation produces whole emoji as part of each word unit."""
 
@@ -160,6 +164,7 @@ def test_word_nav_announces_whole_emoji(gtk_text_view_emoji: NativeAppSession) -
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_char_nav_right_announces_whole_emoji(gtk_text_view_emoji: NativeAppSession) -> None:
     """Right-arrow character navigation presents each flag and ZWJ family as a single stop."""
 
@@ -482,6 +487,7 @@ def test_char_nav_right_announces_whole_emoji(gtk_text_view_emoji: NativeAppSess
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_char_nav_left_announces_whole_emoji(gtk_text_view_emoji: NativeAppSession) -> None:
     """Left-arrow character navigation presents each flag and ZWJ family as a single stop."""
 

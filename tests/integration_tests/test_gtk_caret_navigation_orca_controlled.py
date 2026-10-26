@@ -29,6 +29,7 @@ import pytest
 from .apps import gtk
 from .harness import keyboard
 from .helpers import BrailleLine, capture, expected_for_gtk, move_to_top, speech
+from .version_helpers import requires_gtk_version
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -75,6 +76,7 @@ def test_toggling_caret_control(gtk_text_view: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_caret_navigation_by_character_word_and_line(gtk_text_view: NativeAppSession) -> None:
     """Tests caret navigation by character, by word, and by line."""
 
@@ -141,6 +143,7 @@ def test_caret_navigation_by_character_word_and_line(gtk_text_view: NativeAppSes
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_caret_navigation_at_the_start_and_end(gtk_text_view: NativeAppSession) -> None:
     """Tests caret navigation at the start and end of the text."""
 
@@ -189,6 +192,7 @@ def test_caret_navigation_at_the_start_and_end(gtk_text_view: NativeAppSession) 
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_selection_with_shift_plus_arrows(gtk_text_view: NativeAppSession) -> None:
     """Tests selection with shift plus the arrow keys."""
 
@@ -229,6 +233,7 @@ def test_selection_with_shift_plus_arrows(gtk_text_view: NativeAppSession) -> No
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_say_all_and_where_am_i(gtk_text_view: NativeAppSession) -> None:
     """Tests say all and where am I."""
 

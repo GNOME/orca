@@ -26,8 +26,10 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from .apps import gtk
 from .harness import keyboard
 from .helpers import BrailleLine, capture
+from .version_helpers import requires_gtk_version
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -39,6 +41,7 @@ _SPOKEN = "Line two has additional words to make it long enough that "
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_word_wrap_ends_visible_window_at_word_boundary(gtk_text_view: NativeAppSession) -> None:
     """Tests that braille word wrap ends the visible window at a word boundary."""
 

@@ -29,6 +29,7 @@ import pytest
 from . import helpers
 from .apps import gtk
 from .harness import keyboard
+from .version_helpers import requires_gtk_version
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -47,6 +48,7 @@ def _reset(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_pan_braille_reveals_ancestry(gtk_text_view: NativeAppSession) -> None:
     """Tests that pan-left brings the off-web ancestry prefix into the visible window."""
 
@@ -138,6 +140,7 @@ def _pan_line_two_off_caret(session: NativeAppSession, right_key: str) -> None:
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_navigate_by_character_snaps_braille_back(gtk_text_view: NativeAppSession) -> None:
     """Tests that navigating by character pulls a panned-away window back onto the caret."""
 
@@ -157,6 +160,7 @@ def test_navigate_by_character_snaps_braille_back(gtk_text_view: NativeAppSessio
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_navigate_by_word_snaps_braille_back(gtk_text_view: NativeAppSession) -> None:
     """Tests that navigating by word pulls a panned-away window back onto the caret."""
 
@@ -176,6 +180,7 @@ def test_navigate_by_word_snaps_braille_back(gtk_text_view: NativeAppSession) ->
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_navigate_by_line_snaps_braille_back(gtk_text_view: NativeAppSession) -> None:
     """Tests that navigating by line pulls a panned-away window back onto the caret."""
 

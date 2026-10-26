@@ -27,7 +27,9 @@ from typing import TYPE_CHECKING
 import pytest
 
 from . import helpers
+from .apps import gtk
 from .harness import keyboard
+from .version_helpers import requires_gtk_version
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -176,6 +178,7 @@ def test_character_echo_with_key_echo_on(gtk_text_view: NativeAppSession) -> Non
 
 
 @pytest.mark.native_app
+@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_backspace_and_delete_in_text_view(gtk_text_view: NativeAppSession) -> None:
     """Tests Backspace and Delete in a text view with key echo on."""
 

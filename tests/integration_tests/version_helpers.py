@@ -70,6 +70,24 @@ def requires_atril_version(*minimum: int) -> pytest.MarkDecorator:
     return requires_version("Atril", command_version(("atril", "--version")), *minimum)
 
 
+def requires_gtk_version(
+    api_version: str, *minimum: int, when: bool = True
+) -> pytest.MarkDecorator:
+    """Skips tests requiring newer GTK; query separately from the GTK3 driver."""
+
+    command = (
+        sys.executable,
+        "-c",
+        (
+            f"import gi; gi.require_version('Gtk', {api_version!r}); "
+            "from gi.repository import Gtk; "
+            "print(f'{Gtk.get_major_version()}.{Gtk.get_minor_version()}.{Gtk.get_micro_version()}')"
+        ),
+    )
+    actual = command_version(command) if when else None
+    return requires_version("GTK", actual, *minimum, when=when)
+
+
 def requires_vte_version(
     api_version: str, *minimum: int, when: bool = True
 ) -> pytest.MarkDecorator:
