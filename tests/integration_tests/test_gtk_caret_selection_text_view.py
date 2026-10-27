@@ -49,6 +49,7 @@ from .helpers import (
     move_to_top,
     say_selection,
 )
+from .version_helpers import gtk_version, version_at_least
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -102,9 +103,9 @@ def _move_into_line_two(session: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.xfail(
-    gtk.is_gtk4(),
+    gtk.is_gtk4() and version_at_least(gtk_version("4.0"), 4, 23, 1),
     reason=(
-        "GTK4 TextView omits text-selection-changed when the selection is cleared: "
+        "GTK 4.23.1 and later omit TextView text-selection-changed when the selection is cleared: "
         "https://gitlab.gnome.org/GNOME/gtk/-/work_items/8506"
     ),
     strict=True,

@@ -67,6 +67,7 @@ class EventPriority(enum.IntEnum):
     HIGHER = enum.auto()
     HIGH = enum.auto()
     MEDIUM_HIGH = enum.auto()
+    MEDIUM = enum.auto()
     NORMAL = enum.auto()
     LOWER = enum.auto()
     LOW = enum.auto()
@@ -232,6 +233,9 @@ class EventManager:
             priority = EventPriority.LOW
         elif event_type.startswith("object:text-changed"):
             priority = self._get_text_changed_priority(event)
+        elif event_type.startswith("object:text-selection-changed"):
+            # Present selection changes before caret events update the selection cache.
+            priority = EventPriority.MEDIUM
         elif event_type.startswith("object:property-change:accessible-description"):
             priority = EventPriority.LOWER
         else:

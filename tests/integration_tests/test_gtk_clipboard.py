@@ -26,7 +26,6 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from .apps import gtk
 from .harness import keyboard
 from .helpers import capture, speech
 
@@ -40,10 +39,6 @@ def _discard_output(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.skipif(
-    gtk.is_gtk4(),
-    reason="On hold: Orca clears its selection cache before handling GTK4's paste selection event",
-)
 def test_copy_and_paste(gtk_two_entries: NativeAppSession) -> None:
     """Tests copying, presenting the clipboard, and pasting into another entry."""
 
