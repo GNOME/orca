@@ -101,9 +101,14 @@ def _move_into_line_two(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.skipif(
+@pytest.mark.xfail(
     gtk.is_gtk4(),
-    reason="On hold: Orca's selection-clear handling does not refresh braille with GTK4",
+    reason=(
+        "GTK4 TextView omits text-selection-changed when the selection is cleared: "
+        "https://gitlab.gnome.org/GNOME/gtk/-/work_items/8506"
+    ),
+    strict=True,
+    raises=AssertionError,
 )
 def test_selection_by_character(gtk_text_view_selection: NativeAppSession) -> None:
     """Tests selection by character."""

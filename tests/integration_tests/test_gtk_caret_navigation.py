@@ -265,9 +265,14 @@ def _move_to_line_three(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.skipif(
+@pytest.mark.xfail(
     gtk.is_gtk4(),
-    reason="On hold: Orca's selection-clear fallback does not refresh braille with GTK4",
+    reason=(
+        "GTK4 TextView omits text-selection-changed when the selection is cleared: "
+        "https://gitlab.gnome.org/GNOME/gtk/-/work_items/8506"
+    ),
+    strict=True,
+    raises=AssertionError,
 )
 def test_selection_by_line_down_then_up(gtk_text_view: NativeAppSession) -> None:
     """Tests selection by line down and then up."""
@@ -481,7 +486,9 @@ def test_say_selected_text_when_nothing_is_selected(gtk_text_view: NativeAppSess
 @pytest.mark.xfail(
     gtk.is_gtk4(),
     reason=(
-        "GTK4 TextView omits selection-changed and caret-moved events when replacing selected text"
+        "GTK4 TextView omits selection-changed when replacing selected text "
+        "(https://gitlab.gnome.org/GNOME/gtk/-/work_items/8506). Caret-moved is also missing "
+        "(https://gitlab.gnome.org/GNOME/gtk/-/work_items/7461)."
     ),
     strict=True,
     raises=AssertionError,

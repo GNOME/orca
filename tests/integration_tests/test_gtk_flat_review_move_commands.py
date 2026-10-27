@@ -67,7 +67,11 @@ def _review_first_entry_then_focus_second(session: NativeAppSession) -> None:
 @pytest.mark.native_app
 @pytest.mark.xfail(
     gtk.is_gtk4(),
-    reason="GTK4 entries omit SINGLE_LINE and do not implement AT-SPI text range extents",
+    reason=(
+        "GTK4 entries omit SINGLE_LINE (https://gitlab.gnome.org/GNOME/gtk/-/work_items/8507)"
+        " and do not implement AT-SPI text range extents"
+        " (https://gitlab.gnome.org/GNOME/gtk/-/work_items/8508)"
+    ),
     strict=True,
     raises=AssertionError,
 )
@@ -97,7 +101,11 @@ def test_move_review_to_focus(gtk_two_entries: NativeAppSession) -> None:
 @pytest.mark.native_app
 @pytest.mark.xfail(
     gtk.is_gtk4(),
-    reason="GTK4 entries omit SINGLE_LINE and do not implement AT-SPI text range extents",
+    reason=(
+        "GTK4 entries omit SINGLE_LINE (https://gitlab.gnome.org/GNOME/gtk/-/work_items/8507)"
+        " and do not implement AT-SPI text range extents"
+        " (https://gitlab.gnome.org/GNOME/gtk/-/work_items/8508)"
+    ),
     strict=True,
     raises=AssertionError,
 )

@@ -125,7 +125,11 @@ def test_focus_tracking_auto_keeps_review_on_window_change(
 @pytest.mark.native_app
 @pytest.mark.xfail(
     gtk.is_gtk4(),
-    reason="GTK4 entries omit SINGLE_LINE and do not implement AT-SPI text range extents",
+    reason=(
+        "GTK4 entries omit SINGLE_LINE (https://gitlab.gnome.org/GNOME/gtk/-/work_items/8507)"
+        " and do not implement AT-SPI text range extents"
+        " (https://gitlab.gnome.org/GNOME/gtk/-/work_items/8508)"
+    ),
     raises=AssertionError,
     strict=True,
 )

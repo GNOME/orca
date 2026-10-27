@@ -316,7 +316,10 @@ def test_toggling_layout_mode(gtk_text_view: NativeAppSession) -> None:
 @pytest.mark.native_app
 @pytest.mark.xfail(
     gtk.is_gtk4(),
-    reason="GTK4 TextView omits caret-moved events when typing or deleting text",
+    reason=(
+        "GTK4 TextView omits caret-moved events when typing or deleting text: "
+        "https://gitlab.gnome.org/GNOME/gtk/-/work_items/7461"
+    ),
     strict=True,
     raises=AssertionError,
 )

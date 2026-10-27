@@ -53,7 +53,11 @@ def _review_first_entry_then_tab_to_second(session: NativeAppSession) -> None:
 @pytest.mark.native_app
 @pytest.mark.xfail(
     gtk.is_gtk4(),
-    reason="GTK4 entries omit SINGLE_LINE and do not implement AT-SPI text range extents",
+    reason=(
+        "GTK4 entries omit SINGLE_LINE (https://gitlab.gnome.org/GNOME/gtk/-/work_items/8507)"
+        " and do not implement AT-SPI text range extents"
+        " (https://gitlab.gnome.org/GNOME/gtk/-/work_items/8508)"
+    ),
     strict=True,
     raises=AssertionError,
 )
@@ -79,7 +83,11 @@ def test_focus_tracking_off_keeps_review_on_unfocused_object(
 @pytest.mark.native_app
 @pytest.mark.xfail(
     gtk.is_gtk4(),
-    reason="GTK4 entries omit SINGLE_LINE and do not implement AT-SPI text range extents",
+    reason=(
+        "GTK4 entries omit SINGLE_LINE (https://gitlab.gnome.org/GNOME/gtk/-/work_items/8507)"
+        " and do not implement AT-SPI text range extents"
+        " (https://gitlab.gnome.org/GNOME/gtk/-/work_items/8508)"
+    ),
     strict=True,
     raises=AssertionError,
 )
@@ -112,7 +120,11 @@ def test_focus_tracking_auto_follows_focus_to_new_object(
 @pytest.mark.native_app
 @pytest.mark.xfail(
     gtk.is_gtk4(),
-    reason="GTK4 entries omit SINGLE_LINE and do not implement AT-SPI text range extents",
+    reason=(
+        "GTK4 entries omit SINGLE_LINE (https://gitlab.gnome.org/GNOME/gtk/-/work_items/8507)"
+        " and do not implement AT-SPI text range extents"
+        " (https://gitlab.gnome.org/GNOME/gtk/-/work_items/8508)"
+    ),
     strict=True,
     raises=AssertionError,
 )
