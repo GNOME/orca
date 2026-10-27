@@ -338,9 +338,15 @@ def test_selection_backward_from_the_caret(gtk_text_view_selection: NativeAppSes
 
 
 @pytest.mark.native_app
-@pytest.mark.skipif(
+@pytest.mark.xfail(
     gtk.is_gtk4(),
-    reason="On hold: line selection extends too far with GTK4; bug attribution unresolved",
+    reason=(
+        "GTK4 TextView line ranges do not extend to the beginning of the next line, "
+        "so Orca treats the newline offset as a line boundary and selects to the next line's end: "
+        "https://gitlab.gnome.org/GNOME/gtk/-/work_items/8510"
+    ),
+    strict=True,
+    raises=AssertionError,
 )
 def test_selection_without_notifying_the_user(gtk_text_view_selection: NativeAppSession) -> None:
     """Tests selection which the caller asked Orca not to present."""

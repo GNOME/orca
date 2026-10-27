@@ -79,7 +79,11 @@ def test_pan_braille_reveals_ancestry(gtk_text_view: NativeAppSession) -> None:
 @pytest.mark.native_app
 @pytest.mark.xfail(
     gtk.is_gtk4(),
-    reason="GTK4 braille panning stops at the paragraph boundary instead of reaching the next line",
+    reason=(
+        "GTK4 TextView line ranges do not extend to the beginning of the next line, "
+        "so braille panning stops at the paragraph boundary instead of reaching the next line: "
+        "https://gitlab.gnome.org/GNOME/gtk/-/work_items/8510"
+    ),
     strict=True,
     raises=AssertionError,
 )
