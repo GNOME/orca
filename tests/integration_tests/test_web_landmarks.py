@@ -257,7 +257,7 @@ def test_flat_review_entry_inside_label(web_landmarks: BrowserSession, text: str
 def test_flat_review_omits_document_navigation_context(
     web_landmarks: BrowserSession, layout: bool
 ) -> None:
-    """Flat review omits ancestor transitions while preserving the reviewed object's role."""
+    """Flat review presents text without heading roles or ancestor transitions."""
 
     session = web_landmarks
     helpers.reset_web_state(session)
@@ -271,8 +271,7 @@ def test_flat_review_omits_document_navigation_context(
         for text in ("Main content", "Body paragraph."):
             keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
             spoken, brailled = helpers.capture(session)
-            expected_speech = "Main content heading 1" if text == "Main content" else text
-            assert " ".join(spoken) == expected_speech
+            assert " ".join(spoken) == text
             assert brailled[-1] == BrailleLine(
                 1, text + " $l", text + " $l", "\x00" * (len(text) + 3)
             )
