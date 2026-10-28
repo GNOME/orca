@@ -89,6 +89,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_blockquote_line_breaks,
     _web_canvas_fallback,
     _web_caret_context,
+    _web_click_actions,
     _web_code_block,
     _web_code_block_multiline,
     _web_colored_blocks,

@@ -265,6 +265,7 @@ orca_integration_tests = {
     'integration_tests/test_web_radio_button_lines.py',
     'integration_tests/test_web_blockquote_line_breaks.py',
     'integration_tests/test_web_flex_header.py',
+    'integration_tests/test_web_click_actions.py',
     'integration_tests/test_web_colored_blocks.py',
     'integration_tests/test_web_caret_context.py',
     'integration_tests/test_web_pain_slider.py',

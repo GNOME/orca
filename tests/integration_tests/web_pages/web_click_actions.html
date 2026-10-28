@@ -1,0 +1,44 @@
+<!doctype html>
+<!--
+Orca
+
+Copyright 2026 Igalia, S.L.
+Author: Joanmarie Diggs <jdiggs@igalia.com>
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the
+Free Software Foundation, Inc., Franklin Street, Fifth Floor,
+Boston MA  02110-1301 USA.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Click Actions ready</title>
+<style>
+  /* Physical clicks must not hide missing accessibility actions. */
+  .action { pointer-events: none; }
+</style>
+</head>
+<body>
+<h1>Click actions</h1>
+<p onclick="document.getElementById('result').textContent = 'Direct review activated.'">Direct review action</p>
+<div onclick="document.getElementById('result').textContent = 'Inherited review activated.'">
+  <p>Inherited review action</p>
+</div>
+<p class="action" onclick="document.getElementById('result').textContent = 'Direct activated.'">Direct action</p>
+<div class="action" onclick="document.getElementById('result').textContent = 'Inherited activated.'">
+  <p>Inherited action</p>
+</div>
+<p id="result">Nothing activated.</p>
+</body>
+</html>

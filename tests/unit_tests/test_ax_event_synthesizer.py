@@ -406,7 +406,7 @@ class TestAXEventSynthesizer:
         ax_utilities_action_mock.do_named_action.return_value = False
         result = AXEventSynthesizer.try_all_clickable_actions(mock_accessible)
         assert result is False
-        assert ax_utilities_action_mock.do_named_action.call_count == 5
+        assert ax_utilities_action_mock.do_named_action.call_count == 6
 
     def test_get_synthesizer_returns_singleton(self, test_context: OrcaTestContext) -> None:
         """Test get_synthesizer returns the singleton instance."""

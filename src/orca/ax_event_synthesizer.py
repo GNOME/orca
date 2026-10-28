@@ -460,7 +460,7 @@ class AXEventSynthesizer:
     def try_all_clickable_actions(obj: Atspi.Accessible) -> bool:
         """Attempts to perform a click-like action if one is available."""
 
-        actions = ["click", "press", "jump", "open", "activate"]
+        actions = ["click", "press", "jump", "open", "activate", "click-ancestor"]
         for action in actions:
             if AXUtilitiesAction.do_named_action(obj, action):
                 tokens = ["AXEventSynthesizer: '", action, "' on", obj, "performed successfully"]
