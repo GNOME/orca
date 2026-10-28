@@ -181,15 +181,10 @@ def test_flat_review_by_line_and_character(web_landmarks: BrowserSession) -> Non
             [BrailleLine(1, "Secondary Help $l", "Secondary Help $l", "\x00" * 17)],
         )
 
-        # Firefox retains the label's trailing space in flat-review braille.
         keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
-        assert helpers.capture(session) == helpers.expected_for_browser(
-            session,
-            (["Search"], [BrailleLine(1, "Search $l", "Search $l", "\x00" * 9)]),
-            firefox=(
-                ["Search", "entry"],
-                [BrailleLine(1, "Search  $l", "Search  $l", "\x00" * 10)],
-            ),
+        assert helpers.capture(session) == (
+            ["Search entry"],
+            [BrailleLine(1, "Search entry $l", "Search entry $l", "\x00" * 15)],
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_HOME)
@@ -205,6 +200,56 @@ def test_flat_review_by_line_and_character(web_landmarks: BrowserSession) -> Non
         )
     finally:
         helpers.toggle_flat_review(session)
+
+
+def _set_search_text(session: BrowserSession, text: str) -> None:
+    """Sets the contents of the entry nested inside the Search label."""
+
+    helpers.reset_web_state(session)
+    for _ in range(3):
+        helpers.tab_and_swallow_presentation(session)
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], ord("a"))
+    keyboard.tap_key(keyboard.KEYSYM_BACKSPACE)
+    for char in text:
+        keyboard.tap_key(ord(char))
+    helpers.capture(session)
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("text", ["", "query"], ids=["empty", "populated"])
+def test_flat_review_entry_inside_label(web_landmarks: BrowserSession, text: str) -> None:
+    """Tests line, word, and character review of an entry nested inside its label."""
+
+    session = web_landmarks
+    _set_search_text(session, text)
+    helpers.reset_web_state(session)
+    helpers.toggle_flat_review(session)
+    reviewed = text or "Search entry"
+    full = f"{reviewed} $l"
+    line = BrailleLine(1, full, full, "\x00" * len(full))
+    try:
+        for _ in range(2):
+            keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
+            helpers.capture(session)
+
+        keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
+        spoken, brailled = helpers.capture(session)
+        assert brailled == [line]
+        assert spoken == [reviewed]
+
+        keyboard.tap_key(keyboard.KEYSYM_KP_BEGIN)
+        assert helpers.capture(session) == ([text or "Search "], [line])
+
+        keyboard.tap_key(keyboard.KEYSYM_KP_DOWN)
+        assert helpers.capture(session) == ([reviewed[0]], [line])
+
+        keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
+        helpers.capture(session)
+        keyboard.tap_key(keyboard.KEYSYM_KP_HOME)
+        assert helpers.capture(session) == ([reviewed], [line])
+    finally:
+        helpers.toggle_flat_review(session)
+        _set_search_text(session, "")
 
 
 @pytest.mark.native_app

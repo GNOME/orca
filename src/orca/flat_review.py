@@ -785,9 +785,19 @@ class Context:
                 zones.append(ValueZone(obj, rect))
             else:
                 string = ""
-                if not AXUtilities.is_table_row(obj):
+                role = AXObject.get_role(obj)
+                if not AXUtilities.is_table_row(obj, role):
                     string = self._script.get_speech_generator().get_name(obj, in_flat_review=True)
-                if not string:
+                if role in (
+                    Atspi.Role.ENTRY,
+                    Atspi.Role.TEXT,
+                    Atspi.Role.PASSWORD_TEXT,
+                ):
+                    role_name = self._script.get_speech_generator().get_localized_role_name(
+                        obj, role=role
+                    )
+                    string = f"{string} {role_name}".strip()
+                elif not string:
                     string = self._script.get_speech_generator().get_role_name(obj)
                 if string:
                     zones.append(Zone(obj, string, rect))

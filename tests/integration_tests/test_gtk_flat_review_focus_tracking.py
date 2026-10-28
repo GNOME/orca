@@ -51,6 +51,25 @@ def _review_first_entry_then_tab_to_second(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+def test_empty_entry_includes_role(gtk_two_entries: NativeAppSession) -> None:
+    """Tests role fallback when reviewing an unnamed empty entry."""
+
+    session = gtk_two_entries
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
+    keyboard.tap_key(keyboard.KEYSYM_BACKSPACE)
+    capture(session)
+    toggle_flat_review(session)
+    try:
+        keyboard.tap_key(keyboard.KEYSYM_KP_UP)
+        assert capture(session) == (
+            ["text"],
+            [BrailleLine(1, "text $l", "text $l", "\x00" * 7)],
+        )
+    finally:
+        toggle_flat_review(session)
+
+
+@pytest.mark.native_app
 @pytest.mark.xfail(
     gtk.is_gtk4(),
     reason=(

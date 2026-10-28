@@ -1667,7 +1667,14 @@ class AXUtilities:
             return not AXUtilitiesState.is_expanded(obj)
 
         if AXObject.get_name(obj):
-            return AXUtilitiesRole.is_link(obj, role) or AXUtilitiesRole.is_label(obj, role)
+            if AXUtilitiesRole.is_link(obj, role):
+                return True
+            if AXUtilitiesRole.is_label(obj, role):
+                if AXObject.get_child_count(obj):
+                    labelled = AXUtilitiesRelation.get_is_label_for(obj)
+                    if AXUtilitiesObject.label_is_ancestor_of_labelled(obj, labelled):
+                        return False
+                return True
 
         return False
 

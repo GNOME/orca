@@ -58,6 +58,27 @@ def _press(session: NativeAppSession, keysym: int) -> tuple[list[str], list[help
 
 
 @pytest.mark.native_app
+def test_flat_review_empty_named_entry_includes_role(gtk_widget_notebook: NativeAppSession) -> None:
+    """Tests that an empty named entry includes its role in flat review."""
+
+    session = gtk_widget_notebook
+    _prepare(session)
+    _tab_to(session, 5)
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
+    keyboard.tap_key(keyboard.KEYSYM_BACKSPACE)
+    helpers.capture(session)
+    helpers.toggle_flat_review(session)
+    try:
+        assert _press(session, keyboard.KEYSYM_KP_UP) == (
+            ["City text"],
+            [helpers.BrailleLine(1, "City text $l", "City text $l", "\x00" * 12)],
+        )
+    finally:
+        helpers.toggle_flat_review(session)
+        _prepare(session)
+
+
+@pytest.mark.native_app
 @pytest.mark.parametrize(
     "count, expected",
     [
