@@ -984,13 +984,13 @@ class Context:
         return ""
 
     def get_current_line_start_offset(self) -> int | None:
-        """Returns the current line's start offset, or None if the line spans multiple zones."""
+        """Returns a text offset only when the current line consists of a single TextZone."""
 
         zone = self._get_current_zone()
         if zone is None or zone.line is None:
             return None
         zones = zone.line.get_zones()
-        if len(zones) != 1:
+        if len(zones) != 1 or not isinstance(zones[0], TextZone):
             return None
         return zones[0].get_start_offset()
 

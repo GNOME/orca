@@ -129,3 +129,25 @@ def test_flat_review_horizontal_links(web_inline_list_wrap: BrowserSession) -> N
     finally:
         helpers.toggle_flat_review(session)
         session.orca.set("FlatReviewPresenter", "FocusTracking", tracking)
+
+
+@pytest.mark.native_app
+def test_flat_review_line_speech_matches_reviewed_text(
+    web_inline_list_wrap: BrowserSession,
+) -> None:
+    """Tests that line speech uses the reviewed text rather than expanding into other objects."""
+
+    session = web_inline_list_wrap
+    helpers.reset_web_state(session)
+    tracking = session.orca.get("FlatReviewPresenter", "FocusTracking")
+    session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
+    helpers.toggle_flat_review(session)
+    try:
+        for command in ["GoNextLine"] * 3 + ["GoPreviousLine"] * 3:
+            session.orca.call("FlatReviewPresenter", command, True)
+            spoken, brailled = helpers.capture(session)
+            assert brailled
+            assert "".join(spoken) == brailled[-1].full.removesuffix(" $l")
+    finally:
+        helpers.toggle_flat_review(session)
+        session.orca.set("FlatReviewPresenter", "FocusTracking", tracking)

@@ -26,6 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from orca.output_reader import BrailleRecord, SpeechRecord
+
 from . import helpers
 from .harness import keyboard
 from .helpers import BrailleLine, capture, toggle_flat_review
@@ -197,3 +199,63 @@ def test_review_links_in_list_items(web_flat_review: BrowserSession) -> None:
     finally:
         toggle_flat_review(session)
         session.orca.set("FlatReviewPresenter", "FocusTracking", tracking)
+
+
+@pytest.mark.native_app
+def test_review_named_group(web_flat_review: BrowserSession) -> None:
+    """Tests that reviewing a group's name does not speak its child text instead."""
+
+    session = web_flat_review
+    helpers.reset_web_state(session)
+    keyboard.tap_key(keyboard.KEYSYM_4)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+    tracking = session.orca.get("FlatReviewPresenter", "FocusTracking")
+    session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
+    toggle_flat_review(session)
+    try:
+        for command, text in (
+            ("GoNextLine", "Review group"),
+            ("GoNextLine", "Group contents"),
+            ("GoPreviousLine", "Review group"),
+            ("GoPreviousLine", "Named region"),
+        ):
+            spoken, brailled = _command(session, command)
+            assert spoken == [text]
+            assert brailled[-1] == _line(f"{text} $l", 1)
+    finally:
+        toggle_flat_review(session)
+        session.orca.set("FlatReviewPresenter", "FocusTracking", tracking)
+
+
+@pytest.mark.native_app
+def test_review_line_switches_languages(web_flat_review: BrowserSession) -> None:
+    """Tests language switching within a single flat-review text line."""
+
+    session = web_flat_review
+    helpers.reset_web_state(session)
+    switching = session.orca.get("SpeechManager", "AutoLanguageSwitching")
+    session.orca.set("SpeechManager", "AutoLanguageSwitching", True)
+    keyboard.tap_key(keyboard.KEYSYM_5)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+    tracking = session.orca.get("FlatReviewPresenter", "FocusTracking")
+    session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
+    toggle_flat_review(session)
+    try:
+        for command in ("GoNextLine", "PresentLine"):
+            session.orca.call("FlatReviewPresenter", command, True)
+            records = session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+            spoken = [(r.text, r.language) for r in records if isinstance(r, SpeechRecord)]
+            assert spoken == [("Hello ", "en"), ("bonjour", "fr")]
+            brailled = [r for r in records if isinstance(r, BrailleRecord)]
+            assert brailled[-1].full == "Hello bonjour $l"
+            assert brailled[-1].visible == "Hello bonjour $l"
+            assert brailled[-1].cursor_cell == 1
+            assert brailled[-1].mask == "\x00" * len("Hello bonjour $l")
+    finally:
+        toggle_flat_review(session)
+        session.orca.set("FlatReviewPresenter", "FocusTracking", tracking)
+        session.orca.set("SpeechManager", "AutoLanguageSwitching", switching)

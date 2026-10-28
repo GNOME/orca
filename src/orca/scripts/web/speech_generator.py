@@ -895,6 +895,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     ) -> list[Any]:
         """Generates speech for a web document line via DOM-walking contents."""
 
+        if context.active_mode == ActivePresentationMode.FLAT_REVIEW:
+            return super().generate_line(obj, start_offset, end_offset, line, context)
+
         if not self._script.utilities.in_document_content(obj):
             return super().generate_line(obj, start_offset, end_offset, line, context)
 
