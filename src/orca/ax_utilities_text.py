@@ -1603,8 +1603,10 @@ class AXUtilitiesText:
         return not AXText.get_all_text(obj).strip()
 
     @staticmethod
-    def has_presentable_text(obj: Atspi.Accessible) -> bool:
-        """Returns True if obj has presentable text."""
+    def has_presentable_text(
+        obj: Atspi.Accessible, *, include_punctuation_and_symbols: bool = False
+    ) -> bool:
+        """Returns True if obj has presentable text, optionally counting punctuation and symbols."""
 
         if not AXObject.supports_text(obj):
             return False
@@ -1613,4 +1615,5 @@ class AXUtilitiesText:
         if not text:
             return AXUtilitiesRole.is_paragraph(obj)
 
-        return bool(re.search(r"\w+", text))
+        pattern = r"[^\s\ufffc]" if include_punctuation_and_symbols else r"\w+"
+        return bool(re.search(pattern, text))

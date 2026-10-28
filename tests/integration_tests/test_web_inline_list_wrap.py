@@ -28,6 +28,7 @@ import pytest
 
 from . import helpers
 from .harness import keyboard
+from .helpers import BrailleLine
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -75,3 +76,56 @@ def test_line_down_past_wrapped_inline_list(web_inline_list_wrap: BrowserSession
         spoken, braille = helpers.capture(session)
         assert spoken == expected_speech
         assert [line.full for line in braille] == [expected_line]
+
+
+@pytest.mark.native_app
+def test_flat_review_horizontal_links(web_inline_list_wrap: BrowserSession) -> None:
+    """Tests flat review of a horizontal list of links separated by punctuation."""
+
+    session = web_inline_list_wrap
+    helpers.reset_web_state(session)
+    keyboard.tap_key(keyboard.KEYSYM_2)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+    tracking = session.orca.get("FlatReviewPresenter", "FocusTracking")
+    session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
+    helpers.toggle_flat_review(session)
+
+    text = 'Home  \u00b7 News  \u00b7 " Help "'
+    full = f"{text} $l"
+    try:
+        for command, line in (
+            ("GoNextLine", text),
+            ("GoNextLine", "After the links."),
+            ("GoPreviousLine", text),
+        ):
+            session.orca.call("FlatReviewPresenter", command, True)
+            spoken, brailled = helpers.capture(session)
+            assert spoken == [line]
+            expected = f"{line} $l"
+            assert brailled[-1] == BrailleLine(1, expected, expected, "\x00" * len(expected))
+
+        for command, word, visible, cursor in (
+            ("GoStartOfLine", "H", full, 1),
+            ("PresentItem", "Home", full, 1),
+            ("GoNextItem", "\u00b7", ' \u00b7 News  \u00b7 " Help " $l', 2),
+            ("GoNextItem", "News", 'News  \u00b7 " Help " $l', 1),
+            ("GoNextItem", "\u00b7", ' \u00b7 " Help " $l', 2),
+            ("GoNextItem", '"', '" Help " $l', 1),
+            ("GoNextItem", "Help", 'Help " $l', 1),
+            ("GoNextItem", '"', '" $l', 1),
+            ("GoPreviousItem", "Help", 'Help " $l', 4),
+            ("GoPreviousItem", '"', '" Help " $l', 1),
+            ("GoPreviousItem", "\u00b7", ' \u00b7 " Help " $l', 2),
+            ("GoPreviousItem", "News", 'News  \u00b7 " Help " $l', 4),
+            ("GoPreviousItem", "\u00b7", ' \u00b7 News  \u00b7 " Help " $l', 2),
+            ("GoPreviousItem", "Home", full, 4),
+        ):
+            session.orca.call("FlatReviewPresenter", command, True)
+            spoken, brailled = helpers.capture(session)
+            assert spoken == [word]
+            assert brailled[-1] == BrailleLine(cursor, full, visible, "\x00" * len(full))
+    finally:
+        helpers.toggle_flat_review(session)
+        session.orca.set("FlatReviewPresenter", "FocusTracking", tracking)

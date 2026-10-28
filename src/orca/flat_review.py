@@ -738,7 +738,8 @@ class Context:
     def _get_zones_from_text(self, obj: Atspi.Accessible, cliprect: Atspi.Rect) -> list[TextZone]:
         """Returns a list of TextZones for the given object."""
 
-        if not AXUtilities.has_presentable_text(obj):
+        # List markers and other punctuation need text zones, not a name containing child text.
+        if not AXUtilities.has_presentable_text(obj, include_punctuation_and_symbols=True):
             return []
 
         zones: list[TextZone] = []

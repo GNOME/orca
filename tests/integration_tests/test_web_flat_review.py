@@ -158,3 +158,42 @@ def test_review_lines_in_nested_tables(web_flat_review: BrowserSession) -> None:
     finally:
         toggle_flat_review(session)
         session.orca.set("FlatReviewPresenter", "FocusTracking", tracking)
+
+
+@pytest.mark.native_app
+def test_review_links_in_list_items(web_flat_review: BrowserSession) -> None:
+    """Tests that flat review presents each list marker and link only once."""
+
+    session = web_flat_review
+    helpers.reset_web_state(session)
+    keyboard.tap_key(keyboard.KEYSYM_3)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+    tracking = session.orca.get("FlatReviewPresenter", "FocusTracking")
+    session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
+    toggle_flat_review(session)
+
+    try:
+        for command, text in (
+            ("GoNextLine", "\u2022  Get Involved"),
+            ("GoNextLine", "\u2022  Source Code"),
+            ("GoPreviousLine", "\u2022  Get Involved"),
+        ):
+            spoken, brailled = _command(session, command)
+            assert spoken == [text]
+            assert brailled[-1] == _line(f"{text} $l", 1)
+
+        full = "\u2022  Get Involved $l"
+        assert _command(session, "GoStartOfLine") == (["\u2022"], [_line(full, 1)])
+        for command, word, cursor in (
+            ("GoNextItem", "Get ", 1),
+            ("GoNextItem", "Involved", 5),
+            ("GoPreviousItem", "Get ", 1),
+        ):
+            spoken, brailled = _command(session, command)
+            assert spoken == [word]
+            assert brailled[-1] == BrailleLine(cursor, full, "Get Involved $l", "\x00" * len(full))
+    finally:
+        toggle_flat_review(session)
+        session.orca.set("FlatReviewPresenter", "FocusTracking", tracking)
