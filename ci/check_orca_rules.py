@@ -3,7 +3,8 @@
 
 # Each rule is a Rule subclass with a check() which takes a parsed file and yields the line and
 # what is wrong with it. Rule also provides the tree walking a rule is likely to want. A line
-# which has to break a rule can say so with a comment naming that rule:
+# which has to break a rule can say so with a comment naming that rule, unless the rule sets
+# ALLOWS_EXCEPTIONS to False:
 #
 #     the_awkward_line()  # orca-rules: the-name-of-the-rule
 
@@ -11,7 +12,7 @@ import ast
 import pathlib
 import sys
 from collections.abc import Iterator
-from typing import NamedTuple
+from typing import ClassVar, NamedTuple
 
 Assignments = dict[str, list[tuple[int, ast.AST | None]]]
 
@@ -30,11 +31,19 @@ class Problem(NamedTuple):
 class Rule:
     """Base class for rules Orca's code is expected to follow."""
 
+    ALLOWS_EXCEPTIONS: ClassVar[bool] = True
+
     @staticmethod
     def check(tree: ast.Module) -> Iterator[tuple[int, str]]:
         """Yields the line and the description, for each break of this rule."""
 
         raise NotImplementedError
+
+    @staticmethod
+    def problems_in(_path: str, breaks: list[tuple[int, str]]) -> list[tuple[int, str]]:
+        """Returns the line and the description of each break in this file to report."""
+
+        return breaks
 
     @staticmethod
     def scopes(tree: ast.Module) -> Iterator[ast.AST]:
@@ -375,6 +384,70 @@ class PrintTokensItems(Rule):
         return False
 
 
+class ImportsOutsideTopLevel(Rule):
+    """Requires every import to be at the top level of the module."""
+
+    ALLOWS_EXCEPTIONS = False
+
+    # The imports which were inside functions or classes when this rule was added. A file may not
+    # have more than its count. When one of them is moved, its file's count has to be lowered.
+    REMAINING: ClassVar[dict[str, int]] = {
+        "src/orca/ax_object.py": 1,
+        "src/orca/ax_utilities_event.py": 6,
+        "src/orca/ax_utilities_hypertext.py": 1,
+        "src/orca/braille_presenter.py": 1,
+        "src/orca/chat_presenter.py": 1,
+        "src/orca/command_manager.py": 2,
+        "src/orca/dbus_service.py": 15,
+        "src/orca/document_presenter.py": 1,
+        "src/orca/flat_review_presenter.py": 1,
+        "src/orca/input_event.py": 2,
+        "src/orca/math_presenter.py": 1,
+        "src/orca/mouse_presenter.py": 1,
+        "src/orca/profile_manager.py": 1,
+        "src/orca/pronunciation_dictionary_manager.py": 1,
+        "src/orca/say_all_presenter.py": 1,
+        "src/orca/screen_reader_manager.py": 1,
+        "src/orca/sleep_mode_manager.py": 1,
+        "src/orca/sound_presenter.py": 1,
+        "src/orca/speech_manager.py": 2,
+        "src/orca/speech_presenter.py": 2,
+        "src/orca/spellcheck_presenter.py": 1,
+        "src/orca/system_information_presenter.py": 1,
+        "src/orca/text_attribute_manager.py": 1,
+        "src/orca/typing_echo_presenter.py": 1,
+    }
+
+    @staticmethod
+    def check(tree: ast.Module) -> Iterator[tuple[int, str]]:
+        """Reports each import inside a function or class."""
+
+        for scope in Rule.scopes(tree):
+            if scope is tree:
+                continue
+            for node in Rule.nodes_in(scope):
+                if isinstance(node, (ast.Import, ast.ImportFrom)):
+                    yield node.lineno, "import inside a function or class; move it to the top"
+
+    @staticmethod
+    def problems_in(path: str, breaks: list[tuple[int, str]]) -> list[tuple[int, str]]:
+        """Returns the breaks to report, given the number this file is still allowed."""
+
+        allowed = ImportsOutsideTopLevel.REMAINING.get(pathlib.Path(path).as_posix(), 0)
+        if len(breaks) > allowed:
+            return [
+                (line, f"{description} (this file is allowed {allowed})")
+                for line, description in breaks
+            ]
+        if len(breaks) < allowed:
+            description = (
+                f"has {len(breaks)} imports inside a function or class but is allowed "
+                f"{allowed}; lower its count in ci/check_orca_rules.py"
+            )
+            return [(1, description)]
+        return []
+
+
 class Checker:
     """Runs every rule over the files it is given."""
 
@@ -383,6 +456,7 @@ class Checker:
         """Returns all the rules to be checked."""
 
         return {
+            "imports-outside-top-level": ImportsOutsideTopLevel,
             "print-message-arguments": PrintMessageArguments,
             "print-tokens-items": PrintTokensItems,
         }
@@ -394,12 +468,16 @@ class Checker:
         with open(path, encoding="utf-8") as handle:
             source = handle.read()
         lines = source.splitlines()
-        found = {
-            Problem(line, name, description)
-            for name, rule in Checker.rules().items()
-            for line, description in rule.check(ast.parse(source))
-            if not Checker._is_allowed(lines, line, name)
-        }
+        tree = ast.parse(source)
+        found = set()
+        for name, rule in Checker.rules().items():
+            breaks = [
+                (line, description)
+                for line, description in rule.check(tree)
+                if not (rule.ALLOWS_EXCEPTIONS and Checker._is_allowed(lines, line, name))
+            ]
+            for line, description in rule.problems_in(path, breaks):
+                found.add(Problem(line, name, description))
         return sorted(found)
 
     @staticmethod
