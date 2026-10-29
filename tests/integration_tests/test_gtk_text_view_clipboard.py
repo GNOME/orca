@@ -29,17 +29,13 @@ import pytest
 from .apps import gtk
 from .harness import keyboard
 from .helpers import BrailleLine, capture, move_to_top, speech
-from .version_helpers import gtk_version, version_at_least
+from .version_helpers import requires_gtk_version
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
 
 _UNDO_REDO = pytest.mark.skipif(
     not gtk.is_gtk4(), reason="GTK3 TextViews have no built-in undo/redo"
-)
-
-_GTK4_OMITS_SELECTION_CHANGED_EVENT_ON_CLEAR = gtk.is_gtk4() and version_at_least(
-    gtk_version("4.0"), 4, 23, 1
 )
 
 _SELECTION_CLEAR = pytest.mark.skipif(
@@ -118,8 +114,7 @@ def test_paste(gtk_text_view_selection: NativeAppSession, replace_selection: boo
         capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_V)
     spoken = ["Pasted contents from clipboard."]
-    # GTK 4.23.1 and later omit the event.
-    if replace_selection and not _GTK4_OMITS_SELECTION_CHANGED_EVENT_ON_CLEAR:
+    if replace_selection and not gtk.is_gtk4():
         spoken.append("Text unselected.")
     text = "Line Line." if replace_selection else "Line one.Line"
     _assert_text(session, spoken, text, 10 if replace_selection else 14)
@@ -238,7 +233,14 @@ def test_undo_redo_replacement(gtk_text_view_selection: NativeAppSession) -> Non
 
 @pytest.mark.native_app
 @_UNDO_REDO
-@pytest.mark.parametrize("edit", ["cut", "paste", "replacement"])
+@pytest.mark.parametrize(
+    "edit",
+    [
+        "cut",
+        "paste",
+        pytest.param("replacement", marks=requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())),
+    ],
+)
 def test_undo_restores_selection(gtk_text_view_selection: NativeAppSession, edit: str) -> None:
     """Tests restoring the text and selection removed by a cut, paste, or typed replacement."""
 

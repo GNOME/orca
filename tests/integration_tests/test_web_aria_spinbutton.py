@@ -121,6 +121,9 @@ def test_rating_focus_and_arrow(web_aria_spinbutton: BrowserSession) -> None:
             helpers.BrailleLine(8, "Rating 75 $l", "Rating 75 $l", "\x00" * 12),
             helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10),
         ],
+    ), (
+        "Late output after the failed capture: "
+        f"{helpers.capture(session, wait_async=True, overall=3.0)!r}"
     )
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert helpers.capture(session) == (

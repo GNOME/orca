@@ -168,4 +168,7 @@ def test_say_all_headers_and_footers(
             "After articles.",
         ]
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-    assert helpers.speech(session) == _expected_speech(session, expected, enabled)
+    assert helpers.speech(session) == _expected_speech(session, expected, enabled), (
+        "Late output after the failed capture: "
+        f"{helpers.capture(session, wait_async=True, overall=3.0)!r}"
+    )

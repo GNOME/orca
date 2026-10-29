@@ -140,6 +140,8 @@ integration-tests-chromium:
   extends: .integration-tests
   allow_failure: false
   timeout: 2h
+  variables:
+    ORCA_BUILD_MATHCAT: "true"
   script:
     - chromium --version
     - meson test -C "${MESON_BUILD_DIR}" --suite chromium --num-processes 1 --timeout-multiplier 2 --print-errorlogs
@@ -150,6 +152,8 @@ integration-tests-firefox:
     - when: manual
   allow_failure: true
   timeout: 2h
+  variables:
+    ORCA_BUILD_MATHCAT: "true"
   script:
     - firefox --full-version
     - meson test -C "${MESON_BUILD_DIR}" --suite gecko --num-processes 1 --timeout-multiplier 2 --print-errorlogs

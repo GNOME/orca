@@ -813,6 +813,11 @@ def test_position_in_set_when_arrowing_a_combo_box(web_form_fields: BrowserSessi
     assert helpers.capture(session) == (
         ["Banana", "2 of 3"],
         [helpers.BrailleLine(7, "Fruit Banana combo box", "Fruit Banana combo box", "\x00" * 22)],
+    ), (
+        "Late output after the failed capture: "
+        f"{helpers.capture(session, wait_async=True, overall=3.0)!r}"
+        if session.browser == "chromium"
+        else ""
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)

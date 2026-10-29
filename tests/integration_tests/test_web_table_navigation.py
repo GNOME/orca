@@ -1088,6 +1088,9 @@ def test_dynamic_row_headers(web_tables: BrowserSession) -> None:
                 BrailleLine(1, "", "", None),
                 BrailleLine(0, "Row 3, column 2.", "Row 3, column 2.", "\x00" * 16),
             ],
+        ), (
+            "Late output after the failed capture: "
+            f"{capture(session, wait_async=True, overall=3.0)!r}"
         )
     finally:
         session.orca.call("TableNavigator", "ClearDynamicRowHeadersColumn", False)
