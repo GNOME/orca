@@ -36,6 +36,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
+from . import debug
 from .ax_action import AXAction
 from .ax_object import AXObject
 from .ax_utilities_application import AXUtilitiesApplication
@@ -316,3 +317,6 @@ class AXUtilitiesDebugging:
         if any_data:
             string += f"\nEVENT ANY DATA:\n{any_data}\n"
         return string
+
+
+debug.set_token_formatter(AXUtilitiesDebugging.as_string)

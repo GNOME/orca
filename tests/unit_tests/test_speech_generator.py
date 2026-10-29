@@ -420,7 +420,7 @@ class TestGeneratorContentSubjectBinding:
 
         modules = test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
         from orca.generator import Generator, GeneratorMode
-        from orca.speech_generator import SpeechGeneratorContext
+        from orca.generator_context import SpeechGeneratorContext
 
         label = test_context.Mock()
         control = test_context.Mock()
@@ -445,8 +445,8 @@ class TestGeneratorContentSubjectBinding:
         """The slice's string/offset/position are returned for its subject and no other object."""
 
         test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
-        from orca.generator import ContentItem, ContentPosition
-        from orca.speech_generator import SpeechGenerator, SpeechGeneratorContext
+        from orca.generator_context import ContentItem, ContentPosition, SpeechGeneratorContext
+        from orca.speech_generator import SpeechGenerator
 
         subject = test_context.Mock()
         other = test_context.Mock()
@@ -476,7 +476,8 @@ class TestGeneratorRoleSubjectBinding:
         """resolved_role is returned for its subject; other objects get their own role."""
 
         essential_modules = test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
-        from orca.speech_generator import SpeechGenerator, SpeechGeneratorContext
+        from orca.generator_context import SpeechGeneratorContext
+        from orca.speech_generator import SpeechGenerator
 
         essential_modules["orca.ax_object"].AXObject.get_role = test_context.Mock(
             return_value="heading"
@@ -505,7 +506,8 @@ class TestGeneratorCellsToPresent:
     ) -> tuple[Any, dict[str, MagicMock]]:
         essential_modules = test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
         from orca.enums import PresentationReason
-        from orca.speech_generator import SpeechGenerator, SpeechGeneratorContext
+        from orca.generator_context import SpeechGeneratorContext
+        from orca.speech_generator import SpeechGenerator
 
         script = test_context.Mock()
         script.utilities.should_read_full_row = test_context.Mock(return_value=full_row)
@@ -551,7 +553,8 @@ class TestGeneratorCombineCellResults:
     ) -> tuple[Any, list[bool], dict[str, MagicMock]]:
         essential_modules = test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
         from orca.enums import PresentationReason
-        from orca.speech_generator import SpeechGenerator, SpeechGeneratorContext
+        from orca.generator_context import SpeechGeneratorContext
+        from orca.speech_generator import SpeechGenerator
 
         essential_modules["orca.ax_utilities"].AXUtilities.find_ancestor = test_context.Mock(
             return_value=None

@@ -806,8 +806,10 @@ class Script(script.Script):
         if error := speech_pres.get_error_description(event.source, start):
             presentation_manager.get_manager().speak_message(error)
 
+        use_color_names = speech_manager.get_manager().get_use_color_names()
         for attr, _old_value, new_value in changes:
-            presentation_manager.get_manager().speak_message(attr.get_change_description(new_value))
+            description = attr.get_change_description(new_value, use_color_names)
+            presentation_manager.get_manager().speak_message(description)
 
         return True
 

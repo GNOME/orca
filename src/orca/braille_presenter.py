@@ -53,9 +53,9 @@ from . import (
 )
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .braille_generator import BrailleGeneratorContext
 from .enums import ActivePresentationMode, BraillePanDirection, CaretSetReason, PresentationReason
 from .extension import BrailleOutput, BrailleOutputResult, Extension
+from .generator_context import BrailleGeneratorContext
 from .orca_platform import tablesdir  # pylint: disable=import-error
 
 try:

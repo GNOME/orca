@@ -26,6 +26,7 @@ import re
 import sys
 import threading
 import traceback
+from collections.abc import Callable
 from datetime import datetime, timezone
 from typing import Any, TextIO
 
@@ -42,6 +43,38 @@ debugFile: TextIO | None = None
 # pylint: enable=invalid-name
 
 _printing = threading.local()
+
+
+class _TokenFormatter:
+    """Holds the function used to turn tokens into human-consumable strings."""
+
+    def __init__(self) -> None:
+        self._formatter: Callable[[Any], str] = str
+
+    def get_formatter(self) -> Callable[[Any], str]:
+        """Returns the function used to turn tokens into human-consumable strings."""
+
+        return self._formatter
+
+    def set_formatter(self, formatter: Callable[[Any], str]) -> None:
+        """Sets the function used to turn tokens into human-consumable strings."""
+
+        self._formatter = formatter
+
+
+_token_formatter = _TokenFormatter()
+
+
+def set_token_formatter(formatter: Callable[[Any], str]) -> None:
+    """Sets the function used to turn tokens into human-consumable strings."""
+
+    _token_formatter.set_formatter(formatter)
+
+
+def token_as_string(token: Any) -> str:
+    """Returns token as a human-consumable string."""
+
+    return _token_formatter.get_formatter()(token)
 
 
 def print_exception(level: int) -> None:
@@ -63,11 +96,7 @@ def print_tokens(
     if level < debugLevel:
         return
 
-    # Avoid importing AXObject through AXUtilitiesDebugging before AXCacheManager initializes.
-    # pylint: disable=import-outside-toplevel
-    from .ax_utilities_debugging import AXUtilitiesDebugging
-
-    text = _join_tokens([AXUtilitiesDebugging.as_string(token) for token in tokens])
+    text = _join_tokens([token_as_string(token) for token in tokens])
     _print_text(level, text, timestamp, stack)
 
 
@@ -108,10 +137,6 @@ def shutdown() -> None:
 
 
 def _stack_as_string(max_frames: int = 4) -> str:
-    # Avoid importing AXObject through AXUtilitiesDebugging before AXCacheManager initializes.
-    # pylint: disable=import-outside-toplevel
-    from .ax_utilities_debugging import AXUtilitiesDebugging
-
     callers = []
     current_module = inspect.getmodule(inspect.currentframe())
     stack = inspect.stack()
@@ -129,7 +154,7 @@ def _stack_as_string(max_frames: int = 4) -> str:
             break
 
     callers.reverse()
-    return " > ".join(map(AXUtilitiesDebugging.as_string, callers))
+    return " > ".join(map(token_as_string, callers))
 
 
 def _print_text(level: int, text: str = "", timestamp: bool = False, stack: bool = False) -> None:

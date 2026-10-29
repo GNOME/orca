@@ -34,7 +34,7 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
-    from orca.braille_generator import BrailleGeneratorContext
+    from orca.generator_context import BrailleGeneratorContext
 
     from . import script
 

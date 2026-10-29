@@ -151,7 +151,7 @@ class AXTextAttribute(enum.Enum):
         name = self.value[0]
         return text_attribute_names.attribute_names.get(name, name)
 
-    def get_localized_value(self, value) -> str:
+    def get_localized_value(self, value, use_color_names: bool) -> str:
         """Returns the localized value of the attribute."""
 
         if value is None:
@@ -164,7 +164,7 @@ class AXTextAttribute(enum.Enum):
             return messages.pixel_count(int(value))
 
         if self in [AXTextAttribute.BG_COLOR, AXTextAttribute.FG_COLOR]:
-            return colornames.get_presentable_color_name(value)
+            return colornames.get_presentable_color_name(value, use_color_names)
 
         # TODO - JD: Is this still needed?
         value = value.replace("-moz", "")
@@ -200,7 +200,7 @@ class AXTextAttribute(enum.Enum):
 
         return False
 
-    def get_change_description(self, new_value: str | None) -> str:
+    def get_change_description(self, new_value: str | None, use_color_names: bool) -> str:
         """Returns a localized description for announcing a change."""
 
         if self == AXTextAttribute.WEIGHT:
@@ -211,9 +211,9 @@ class AXTextAttribute(enum.Enum):
             return messages.TEXT_ATTRIBUTE_OFF % messages.BOLD
 
         if self == AXTextAttribute.STYLE:
-            localized_italic = self.get_localized_value("italic")
+            localized_italic = self.get_localized_value("italic", use_color_names)
             if new_value in ("italic", "oblique"):
-                return self.get_localized_value(new_value)
+                return self.get_localized_value(new_value, use_color_names)
             return messages.TEXT_ATTRIBUTE_OFF % localized_italic
 
         if self in (AXTextAttribute.UNDERLINE, AXTextAttribute.STRIKETHROUGH):
@@ -221,7 +221,8 @@ class AXTextAttribute(enum.Enum):
                 return messages.TEXT_ATTRIBUTE_OFF % self.get_localized_name()
             if new_value in ("single", "solid", "true"):
                 return self.get_localized_name()
-            return f"{self.get_localized_name()}: {self.get_localized_value(new_value)}"
+            localized = self.get_localized_value(new_value, use_color_names)
+            return f"{self.get_localized_name()}: {localized}"
 
         if self == AXTextAttribute.MARK:
             if self.value_is_default(new_value):
@@ -238,15 +239,18 @@ class AXTextAttribute(enum.Enum):
         if self in (AXTextAttribute.TEXT_POSITION, AXTextAttribute.VERTICAL_ALIGN):
             if self.value_is_default(new_value):
                 return messages.TEXT_ATTRIBUTE_OFF % self.get_localized_name()
-            localized = self.get_localized_value(new_value)
+            localized = self.get_localized_value(new_value, use_color_names)
             # TODO - JD: LO reports percentages instead of "super"/"sub".
             if localized == new_value and new_value and new_value.endswith("%"):
                 value = new_value.removesuffix("%")
                 with contextlib.suppress(ValueError):
-                    localized = self.get_localized_value("super" if float(value) > 0 else "sub")
+                    localized = self.get_localized_value(
+                        "super" if float(value) > 0 else "sub", use_color_names
+                    )
             return localized
 
-        return f"{self.get_localized_name()}: {self.get_localized_value(new_value)}"
+        localized = self.get_localized_value(new_value, use_color_names)
+        return f"{self.get_localized_name()}: {localized}"
 
 
 class AXText:

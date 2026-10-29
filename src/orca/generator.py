@@ -26,7 +26,7 @@
 from __future__ import annotations
 
 import time
-from dataclasses import dataclass, field, replace
+from dataclasses import replace
 from difflib import SequenceMatcher
 from enum import Enum
 from typing import TYPE_CHECKING, Any
@@ -42,6 +42,7 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 from .enums import ActivePresentationMode, PresentationReason
+from .generator_context import ContentItem, ContentPosition, GeneratorContext
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Hashable
@@ -55,48 +56,6 @@ class GeneratorMode(Enum):
     SPEECH = "speech"
     BRAILLE = "braille"
     SOUND = "sound"
-
-
-@dataclass(frozen=True)
-class ContentItem:
-    """The slice of an object's content being presented (one entry in a contents batch)."""
-
-    start_offset: int
-    end_offset: int
-    string: str
-    caret_offset: int | None = None
-
-
-@dataclass(frozen=True)
-class ContentPosition:
-    """An item's position within a batch of contents presented together."""
-
-    index: int = 0
-    total: int = 1
-    last_for_object: bool = True
-
-
-@dataclass(frozen=True)
-class GeneratorContext:
-    """Base settings context shared by all generators."""
-
-    enabled: bool
-    verbose: bool
-    focus: Atspi.Accessible | None
-    in_focus_mode: bool
-    active_mode: ActivePresentationMode | None
-    reason: PresentationReason
-    prior_obj: Atspi.Accessible | None
-    offset: int | None
-    leaving: bool
-    ancestor_of: Atspi.Accessible | None
-    content_item: ContentItem | None
-    content_position: ContentPosition | None
-    content_subject: Atspi.Accessible | None
-    resolved_role: Atspi.Role | str | None
-    role_subject: Atspi.Accessible | None
-    include_context: bool
-    presented_names: set[Atspi.Accessible] | None = field(default=None, kw_only=True)
 
 
 class _GeneratorCache:

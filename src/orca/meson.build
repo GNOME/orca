@@ -130,6 +130,7 @@ lib_sources = [
   'flat_review_presenter_preferences_grid.py',
   'focus_manager.py',
   'generator.py',
+  'generator_context.py',
   'gsettings_registry.py',
   'guilabels.py',
   'help_metadata.py',

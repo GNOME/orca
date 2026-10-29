@@ -25,7 +25,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import replace
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -47,21 +47,11 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .braille_rolenames import short_role_names
 from .enums import PresentationReason
-from .generator import ContentItem, ContentPosition, GeneratorContext, GeneratorMode
+from .generator import GeneratorMode
+from .generator_context import BrailleGeneratorContext, ContentItem, ContentPosition
 
 if TYPE_CHECKING:
     from . import script
-
-
-@dataclass(frozen=True)
-class BrailleGeneratorContext(GeneratorContext):
-    """Settings context for braille generators."""
-
-    full_rolenames: bool
-    display_ancestors: bool
-    end_of_line_indicator: bool
-    present_mnemonics: bool
-    indicate_links: bool
 
 
 class Space:

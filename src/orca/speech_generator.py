@@ -34,7 +34,7 @@ import re
 import urllib.error
 import urllib.parse
 import urllib.request
-from dataclasses import dataclass, replace
+from dataclasses import replace
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -61,56 +61,14 @@ from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 from .enums import ActivePresentationMode, PresentationReason, VoiceType
-from .generator import GeneratorContext, GeneratorMode
+from .generator import GeneratorMode
 from .speechserver import VoiceFamily
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
     from . import script
-
-
-@dataclass(frozen=True)
-class SpeechGeneratorContext(GeneratorContext):
-    """Settings context for speech generators."""
-
-    next_content_subject: Atspi.Accessible | None
-    in_preferences_window: bool
-    auto_language_switching_content: bool
-    auto_language_switching_ui: bool
-    only_switch_configured_languages: bool
-    voice_set_languages: tuple[str, ...]
-    insert_pauses_between_utterances: bool
-    punctuation_level: str
-    voices: dict[str, ACSS]
-    speech_server: speechserver.SpeechServer | None
-    only_displayed_text: bool
-    speak_description: bool
-    speak_tutorial_messages: bool
-    speak_position_in_set: bool
-    speak_widget_mnemonic: bool
-    speak_blank_lines: bool
-    speak_indentation: bool
-    announce_cell_headers: bool
-    announce_cell_coordinates: bool
-    announce_spreadsheet_cell_coordinates: bool
-    announce_article: bool
-    announce_blockquote: bool
-    announce_code_block: bool
-    announce_document: bool
-    announce_form: bool
-    announce_grouping: bool
-    announce_inline_code: bool
-    announce_header_and_footer: bool
-    announce_landmark: bool
-    announce_list: bool
-    announce_table: bool
-    announce_tracked_changes: bool
-    text_attribute_change_mode: int
-    speak_misspelled_indicator: bool
-    language: str
-    dialect: str
-    eliminate_pauses: bool
+    from .generator_context import SpeechGeneratorContext
 
 
 class Pause:
@@ -4380,7 +4338,9 @@ class SpeechGenerator(generator.Generator):
             if attr is None or attr not in allowed or attr in seen:
                 continue
             seen.add(attr)
-            if desc := attr.get_change_description(curr_attrs.get(key)):
+            if desc := attr.get_change_description(
+                curr_attrs.get(key), self._context.use_color_names
+            ):
                 descriptions.append(desc)
 
         return descriptions

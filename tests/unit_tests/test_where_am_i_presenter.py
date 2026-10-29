@@ -403,7 +403,7 @@ class TestWhereAmIPresenter:
             attr = test_context.Mock()
             attr.get_attribute_name.return_value = name
             attr.get_localized_name.return_value = localized_name
-            attr.get_localized_value.side_effect = lambda value: value
+            attr.get_localized_value.side_effect = lambda value, _use_color_names: value
             return attr
 
         attr_map = {

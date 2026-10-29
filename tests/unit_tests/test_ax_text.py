@@ -81,7 +81,9 @@ class TestAXTextAttribute:
         )
         colornames_mock.normalize_rgb_string = test_context.Mock(side_effect=lambda color: color)
         colornames_mock.get_presentable_color_name = test_context.Mock(
-            side_effect=lambda color: colornames_mock.COLOR_NAMES.get(color, color),
+            side_effect=lambda color, _use_color_names: colornames_mock.COLOR_NAMES.get(
+                color, color
+            ),
         )
 
         debug_mock = essential_modules["orca.debug"]
@@ -288,7 +290,7 @@ class TestAXTextAttribute:
         from orca.ax_text import AXTextAttribute
 
         attribute = getattr(AXTextAttribute, case["attribute_name"])
-        result = attribute.get_localized_value(case["input_value"])
+        result = attribute.get_localized_value(case["input_value"], True)
         assert result == case["expected_result"]
 
     @pytest.mark.parametrize(
@@ -371,7 +373,9 @@ class TestAXText:
         )
         colornames_mock.normalize_rgb_string = test_context.Mock(side_effect=lambda color: color)
         colornames_mock.get_presentable_color_name = test_context.Mock(
-            side_effect=lambda color: colornames_mock.COLOR_NAMES.get(color, color),
+            side_effect=lambda color, _use_color_names: colornames_mock.COLOR_NAMES.get(
+                color, color
+            ),
         )
 
         debug_mock = essential_modules["orca.debug"]

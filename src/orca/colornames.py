@@ -646,12 +646,9 @@ def normalize_rgb_string(rgb_string):
     return f"{red} {green} {blue}"
 
 
-def get_presentable_color_name(value):
+def get_presentable_color_name(value, use_color_names):
     """Returns a presentable color name based on the user's settings."""
 
-    # pylint: disable=import-outside-toplevel
-    from . import speech_manager
-
-    if speech_manager.get_manager().get_use_color_names():
+    if use_color_names:
         return rgb_string_to_color_name(value)
     return normalize_rgb_string(value)

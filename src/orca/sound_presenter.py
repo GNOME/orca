@@ -37,7 +37,7 @@ from . import (
     sound,
 )
 from .enums import PresentationReason
-from .generator import GeneratorContext
+from .generator_context import GeneratorContext
 
 if TYPE_CHECKING:
     from collections.abc import Callable

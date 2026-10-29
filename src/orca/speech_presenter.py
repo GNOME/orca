@@ -65,6 +65,7 @@ from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
 from .enums import PresentationReason, VoiceType
 from .extension import Extension, SpeechOutput, SpeechOutputResult
+from .generator_context import ContentPosition, SpeechGeneratorContext
 from .speechserver import VoiceFamily
 from .text_attribute_manager import TextAttributeChangeMode
 
@@ -75,7 +76,6 @@ if TYPE_CHECKING:
 
     from .command import Command
     from .dbus_service import UInt32
-    from .speech_generator import SpeechGeneratorContext
     from .speech_presenter_preferences_grid import SpeechPreferencesGrid
 
     gi.require_version("Atspi", "2.0")
@@ -1680,12 +1680,13 @@ class SpeechPresenter(Extension):
         if not self.should_speak_text_attribute_changes(obj):
             return
 
+        use_color_names = speech_manager.get_manager().get_use_color_names()
         for attr, _old, new in AXUtilities.get_text_attribute_changes(obj, offset):
             if attr == AXTextAttribute.INVALID:
                 continue
             if attr == AXTextAttribute.LANGUAGE and self._language_switch_is_active(new):
                 continue
-            if desc := attr.get_change_description(new):
+            if desc := attr.get_change_description(new, use_color_names):
                 self.speak_message(desc)
 
     def _language_switch_is_active(self, language_value: str | None) -> bool:
@@ -2357,13 +2358,6 @@ class SpeechPresenter(Extension):
     ) -> SpeechGeneratorContext:
         """Builds the settings context for speech generators."""
 
-        from .generator import (  # pylint: disable=import-outside-toplevel
-            ContentPosition,
-        )
-        from .speech_generator import (  # pylint: disable=import-outside-toplevel
-            SpeechGeneratorContext,
-        )
-
         mgr = focus_manager.get_manager()
         in_say_all = mgr.in_say_all()
         if in_say_all:
@@ -2436,6 +2430,7 @@ class SpeechPresenter(Extension):
             if self._text_attribute_change_mode_override is not None
             else p.get_text_attribute_change_mode().value,
             speak_misspelled_indicator=self.get_speak_misspelled_indicator(),
+            use_color_names=speech_mgr.get_use_color_names(),
             language="",
             dialect="",
             eliminate_pauses=eliminate_pauses,

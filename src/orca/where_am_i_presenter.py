@@ -41,6 +41,7 @@ from . import (
     math_presenter,
     messages,
     presentation_manager,
+    speech_manager,
     spellcheck_presenter,
     text_attribute_manager,
     text_selection_presenter,
@@ -106,7 +107,8 @@ class WhereAmIPresenter(Extension):
             return ""
 
         localized_key = ax_text_attribute.get_localized_name()
-        localized_value = ax_text_attribute.get_localized_value(value)
+        use_color_names = speech_manager.get_manager().get_use_color_names()
+        localized_value = ax_text_attribute.get_localized_value(value, use_color_names)
         return f"{localized_key}: {localized_value}"
 
     def _get_all_available_text_attributes(self, attrs: dict[str, str]) -> list[str]:
@@ -114,6 +116,7 @@ class WhereAmIPresenter(Extension):
 
         result = []
         seen = set()
+        use_color_names = speech_manager.get_manager().get_use_color_names()
         for key, value in attrs.items():
             ax_text_attribute = AXTextAttribute.from_string(key)
             sort_key = ax_text_attribute.get_localized_name() if ax_text_attribute else key
@@ -124,7 +127,7 @@ class WhereAmIPresenter(Extension):
 
             if ax_text_attribute is not None:
                 localized_key = ax_text_attribute.get_localized_name()
-                localized_value = ax_text_attribute.get_localized_value(value)
+                localized_value = ax_text_attribute.get_localized_value(value, use_color_names)
                 description = f"{localized_key}: {localized_value}"
             else:
                 description = f"{key}: {value}"

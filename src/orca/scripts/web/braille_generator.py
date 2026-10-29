@@ -36,10 +36,10 @@ from gi.repository import Atspi
 from orca import braille, braille_generator, debug, messages, object_properties
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
-from orca.generator import ContentItem, ContentPosition
+from orca.generator_context import ContentItem, ContentPosition
 
 if TYPE_CHECKING:
-    from orca.braille_generator import BrailleGeneratorContext
+    from orca.generator_context import BrailleGeneratorContext
 
     from . import script
 

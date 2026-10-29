@@ -52,10 +52,10 @@ from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.enums import ActivePresentationMode, PresentationReason, VoiceType
-from orca.generator import ContentItem, ContentPosition
+from orca.generator_context import ContentItem, ContentPosition
 
 if TYPE_CHECKING:
-    from orca.speech_generator import SpeechGeneratorContext
+    from orca.generator_context import SpeechGeneratorContext
 
     from . import script
 
