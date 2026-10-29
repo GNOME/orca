@@ -26,12 +26,17 @@ issue will perform their own analysis regardless of whether you provide one or n
 ## Submitting Merge Requests
 
 For non-trivial bug fixes and feature contributions, please file an issue first.
-This helps the maintainers better understand your proposed change. Merge Requests
+This helps the maintainers better understand your proposed change. Merge requests
 for non-trivial changes that are submitted without an issue may be ignored or closed
 by the maintainers.
 
+Please keep in mind that while Orca is the screen reader of all desktop environments,
+it is part of the GNOME project. As such, merge requests for new features that do not
+work in Wayland will not be accepted.
+
 Be prepared to explain your changes yourself. Do not submit changes that you do not
-fully understand.
+fully understand. If you cannot be certain that your contribution complies with Orca's
+license (LGPL 2.1 or later), it should not be submitted.
 
 Smaller changes are highly preferred. The bigger the change, the longer it will take
 the maintainers to review it.
@@ -64,6 +69,12 @@ can install it via `pip`. Run `pre-commit install` after installing the package.
 The hooks run automatically when you commit, and some modify files. If the pre-commit
 hooks prevent your commit from succeeding, read the output, address any failures that
 the hooks didn't address automatically, and retry the commit.
+
+Merge requests must be submitted as drafts unless and until they are ready for
+maintainer review. Do not mark a merge request as ready for review until you have
+reviewed and tested your changes, completed the applicable checks described above,
+and are prepared to address technical questions about your implementation. A change
+appearing to work as intended does not necessarily mean it is ready for review.
 
 Commit messages should be in the following format:
 
