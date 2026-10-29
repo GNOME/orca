@@ -814,6 +814,7 @@ class TestBraillePresenter:
 
         braille_monitor_mock.BrailleMonitor.assert_called_once_with(
             40,
+            on_cell_click=unittest.mock.ANY,
             on_close=unittest.mock.ANY,
             foreground=unittest.mock.ANY,
             background=unittest.mock.ANY,
@@ -839,6 +840,7 @@ class TestBraillePresenter:
 
         braille_monitor_mock.BrailleMonitor.assert_called_once_with(
             20,
+            on_cell_click=unittest.mock.ANY,
             on_close=unittest.mock.ANY,
             foreground=unittest.mock.ANY,
             background=unittest.mock.ANY,
@@ -862,6 +864,7 @@ class TestBraillePresenter:
 
         braille_monitor_mock.BrailleMonitor.assert_called_once_with(
             40,
+            on_cell_click=unittest.mock.ANY,
             on_close=unittest.mock.ANY,
             foreground=unittest.mock.ANY,
             background=unittest.mock.ANY,

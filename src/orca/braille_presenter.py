@@ -1834,6 +1834,7 @@ class BraillePresenter(Extension):
         if self._monitor is None:
             self._monitor = braille_monitor.BrailleMonitor(
                 cell_count,
+                on_cell_click=self._route_to_monitor_cell,
                 on_close=lambda: self.set_monitor_is_enabled(False),
                 foreground=self.get_monitor_foreground(),
                 background=self.get_monitor_background(),
@@ -1867,6 +1868,22 @@ class BraillePresenter(Extension):
             return "".join(chr(0x2800 | (ord(c) & 0xFF)) for c in dots_str)
         except Exception:  # pylint: disable=broad-except
             return text
+
+    def _route_to_monitor_cell(self, position: int) -> None:
+        """Routes to position, as if the routing key above that cell had been pressed."""
+
+        if braille.BRLAPI_KEY_CMD_ROUTE is None:
+            return
+
+        script = script_manager.get_manager().get_active_script()
+        if script is None:
+            return
+
+        fake_key_press = {}
+        fake_key_press["command"] = braille.BRLAPI_KEY_CMD_ROUTE
+        fake_key_press["argument"] = position
+        event = input_event.BrailleEvent(fake_key_press)
+        self.process_routing_key(script, event)
 
     def destroy_monitor(self) -> None:
         """Destroys the braille monitor widget if it exists."""

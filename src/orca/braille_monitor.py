@@ -25,18 +25,13 @@ from __future__ import annotations
 import os
 from typing import TYPE_CHECKING
 
-try:
-    from brlapi import KEY_CMD_ROUTE
-except ImportError:
-    KEY_CMD_ROUTE = None
-
 import gi
 
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, Gtk
 
-from . import guilabels, script_manager
+from . import guilabels
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -97,17 +92,17 @@ class BrailleCell(Gtk.Button):
     MARKUP_BRAILLE = "<tt><span size='xx-large'><b>%s</b></span></tt>"
     MARKUP_CURSOR_CELL = "<u>%s</u>"
 
-    def __init__(self, position: int) -> None:
+    def __init__(self, position: int, on_click: Callable[[int], None]) -> None:
         """Create a new BrailleCell.
 
         Arguments:
         - position: The location of the cell with respect to the monitor.
+        - on_click: Called with the position when the cell is clicked.
         """
 
         super().__init__()
         self.get_style_context().add_class("braille-cell")
         self.set_size_request(36, 52)
-        self._position = position
         self._displayed_char = Gtk.Label()
         self._displayed_char.set_valign(Gtk.Align.END)
         self._dot7 = BrailleDot(7)
@@ -119,26 +114,7 @@ class BrailleCell(Gtk.Button):
         grid.attach(self._dot8, 1, 3, 1, 1)
         self.add(grid)  # pylint: disable=no-member
 
-        self.connect("clicked", self._on_cell_clicked)
-
-    def _on_cell_clicked(self, _widget: Gtk.Button) -> None:
-        """Callback for the 'clicked' signal on the push button."""
-
-        if KEY_CMD_ROUTE is None:
-            return
-
-        script = script_manager.get_manager().get_active_script()
-        if script is None:
-            return
-
-        # pylint: disable=import-outside-toplevel
-        from . import braille_presenter, input_event
-
-        fake_key_press = {}
-        fake_key_press["command"] = KEY_CMD_ROUTE
-        fake_key_press["argument"] = self._position
-        event = input_event.BrailleEvent(fake_key_press)
-        braille_presenter.get_presenter().process_routing_key(script, event)
+        self.connect("clicked", lambda _button: on_click(position))
 
     def clear(self) -> None:
         """Clears the braille cell."""
@@ -184,6 +160,8 @@ class BrailleMonitor(Gtk.Window):
     def __init__(
         self,
         num_cells: int = 32,
+        *,
+        on_cell_click: Callable[[int], None],
         on_close: Callable[[], None] | None = None,
         foreground: str = "#000000",
         background: str = "#ffffff",
@@ -223,7 +201,7 @@ class BrailleMonitor(Gtk.Window):
 
         self.cells: list[BrailleCell] = []
         for i in range(num_cells):
-            cell = BrailleCell(i)
+            cell = BrailleCell(i, on_cell_click)
             cell_box.attach(cell, i, 0, 1, 1)
             self.cells.append(cell)
 
