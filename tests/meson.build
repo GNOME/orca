@@ -144,6 +144,7 @@ orca_integration_tests = {
     'integration_tests/test_gtk_say_all_text_view.py',
     'integration_tests/test_gtk_caret_selection_text_view.py',
     'integration_tests/test_gtk_clipboard.py',
+    'integration_tests/test_gtk_text_view_clipboard.py',
     'integration_tests/test_gtk_announcement.py',
     'integration_tests/test_gtk_braille_selection.py',
     'integration_tests/test_gtk_entry_caret_navigation.py',
@@ -283,6 +284,7 @@ orca_integration_tests = {
     'integration_tests/test_web_plain_text.py',
     'integration_tests/test_web_option_removal.py',
     'integration_tests/test_web_editing.py',
+    'integration_tests/test_web_clipboard.py',
     'integration_tests/test_web_editable_boundaries.py',
     'integration_tests/test_web_editable_embedded.py',
     'integration_tests/test_web_editable_embedded_selection.py',
@@ -320,6 +322,7 @@ integration_wrapper = configure_file(
 )
 
 test_timeouts = {
+  'test_web_clipboard': 180,
   'test_gsettings': 30,
   'test_web_word_boundaries': 180,
   'test_gtk_caret_navigation_word_boundaries': 180,
