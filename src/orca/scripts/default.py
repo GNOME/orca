@@ -478,12 +478,6 @@ class Script(script.Script):
 
         obj, previous_offset = manager.get_last_cursor_position()
         if previous_offset == event.detail1 and obj == event.source:
-            if text_selection_presenter.get_presenter().selection_removal_was_presented(
-                event.source
-            ):
-                msg = "DEFAULT: Selection removal already presented for this input"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return True
             navigation_reasons = {
                 TextEventReason.NAVIGATION_BY_WORD,
                 TextEventReason.NAVIGATION_BY_CHARACTER,
@@ -501,7 +495,9 @@ class Script(script.Script):
             msg = "DEFAULT: Position matches but proceeding due to navigation reason"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             # Don't interrupt selection speech when handling the accompanying caret event.
-            if not AXUtilities.has_selected_text(event.source):
+            if not text_selection_presenter.get_presenter().selection_removal_was_presented(
+                event.source
+            ) and not AXUtilities.has_selected_text(event.source):
                 presentation_manager.get_manager().interrupt_presentation()
 
         offset = AXText.get_caret_offset(event.source)

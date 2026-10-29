@@ -216,7 +216,11 @@ def test_editable_selection_midstring_extend_and_unselect(
     keyboard.tap_key(keyboard.KEYSYM_LEFT if collapse_to_start else keyboard.KEYSYM_RIGHT)
     _assert_selection(
         session,
-        speech=["Text unselected.", " "] if collapse_to_start else ["Text unselected."],
+        speech=["Text unselected.", " "]
+        if collapse_to_start
+        else helpers.expected_for_browser(
+            session, ["Text unselected."], firefox=["Text unselected.", "blank"]
+        ),
         line=helpers.BrailleLine(
             1 if collapse_to_start else 32,
             _FULL_CONTRACTED,
