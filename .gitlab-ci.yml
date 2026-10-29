@@ -160,9 +160,7 @@ integration-tests-firefox:
 
 integration-tests-document:
   extends: .integration-tests
-  rules:
-    - when: manual
-  allow_failure: true
+  allow_failure: false
   script:
     - atril --version
     - meson test -C "${MESON_BUILD_DIR}" --suite document --num-processes 1 --timeout-multiplier 2 --print-errorlogs
@@ -189,7 +187,7 @@ linters:
     - python ci/check_orca_rules.py || status=1
     - mypy src/orca || status=1
     - exit $status
-  allow_failure: true
+  allow_failure: false
 
 # Auto-format code with ruff and commit back to the branch.
 # Only runs on merge requests from branches in this project (not forks),
