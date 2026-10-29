@@ -58,6 +58,11 @@ from .enums import ActivePresentationMode, BraillePanDirection, CaretSetReason, 
 from .extension import BrailleOutput, BrailleOutputResult, Extension
 from .orca_platform import tablesdir  # pylint: disable=import-error
 
+try:
+    import louis as LOUIS
+except (ImportError, OSError):
+    LOUIS = None
+
 if TYPE_CHECKING:
     from collections.abc import Callable
 
@@ -1847,9 +1852,10 @@ class BraillePresenter(Extension):
         then converts to Unicode braille characters (U+2800 block).
         """
 
-        try:
-            import louis  # pylint: disable=import-outside-toplevel
+        if LOUIS is None:
+            return text
 
+        try:
             table = (
                 self.get_contraction_table_path()
                 if self.get_contracted_braille_is_enabled()
@@ -1857,7 +1863,7 @@ class BraillePresenter(Extension):
             )
             if not table:
                 table = "en-us-comp8.ctb"
-            dots_str = louis.charToDots([table], text)
+            dots_str = LOUIS.charToDots([table], text)
             return "".join(chr(0x2800 | (ord(c) & 0xFF)) for c in dots_str)
         except Exception:  # pylint: disable=broad-except
             return text

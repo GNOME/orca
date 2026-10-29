@@ -40,7 +40,7 @@ gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atk, Gdk, GLib, Gtk  # pylint: disable=no-name-in-module
 
-from . import orca_gui_helpers
+from . import gsettings_registry, orca_gui_helpers
 from .help_metadata import PreferencePanelDoc
 
 if TYPE_CHECKING:
@@ -1471,7 +1471,6 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
 
         if not profile or not self._gsettings_schema:
             return
-        from . import gsettings_registry  # pylint: disable=import-outside-toplevel
 
         skip_defaults = not app_name and profile == "default"
         gsettings_registry.get_registry().save_schema(

@@ -38,6 +38,7 @@ from . import (
     presentation_manager,
     script_manager,
 )
+from .ax_object import AXObject
 from .help_metadata import (
     PreferenceActionDoc,
     PreferenceCategoryDoc,
@@ -507,8 +508,6 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
             profile = registry.get_active_profile()
             app_name = ""
             if self._script and self._script.app:
-                from .ax_object import AXObject  # pylint: disable=import-outside-toplevel
-
                 app_name = AXObject.get_name(self._script.app)
 
             pronunciation_dict = registry.layered_lookup(

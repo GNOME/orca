@@ -51,7 +51,9 @@ from . import (
     messages,
     mouse_presenter,
     orca_modifier_manager,
+    preferences_window,
     presentation_manager,
+    screen_reader_manager,
     script_manager,
     systemd,
 )
@@ -134,9 +136,6 @@ def shutdown(_event=None, _signum=None):
 
     presentation_manager.get_manager().shutdown_presenters()
 
-    # pylint: disable-next=import-outside-toplevel
-    from . import preferences_window
-
     preferences_window.close_preferences_gui_for_shutdown()
 
     ax_device_manager.get_manager().deactivate()
@@ -169,8 +168,6 @@ def _setup_signal_handlers():
     def _glib_show_preferences_handler():
         msg = "ORCA: GLib handler received show-preferences signal"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        from . import screen_reader_manager  # pylint: disable=import-outside-toplevel
-
         screen_reader_manager.get_manager().show_preferences_gui()
         return GLib.SOURCE_CONTINUE
 

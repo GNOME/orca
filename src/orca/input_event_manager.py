@@ -37,7 +37,15 @@ import orca
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import ax_device_manager, dbus_service, debug, focus_manager, input_event, script_manager
+from . import (
+    ax_device_manager,
+    command_manager,
+    dbus_service,
+    debug,
+    focus_manager,
+    input_event,
+    script_manager,
+)
 from .ax_utilities import AXUtilities
 
 _DOUBLE_CLICK_TIMEOUT: float = 0.05 if dbus_service.get_testing_secret() else 0.5
@@ -221,9 +229,6 @@ class InputEventManager:
         # have single-click bindings.
         if event.is_orca_modifier():
             return last_count + 1
-
-        # pylint: disable-next=import-outside-toplevel
-        from . import command_manager
 
         has_multi_click = command_manager.get_manager().has_multi_click_bindings(
             event.id,
