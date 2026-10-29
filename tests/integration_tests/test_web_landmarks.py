@@ -216,6 +216,7 @@ def _set_search_text(session: BrowserSession, text: str) -> None:
 
 
 @pytest.mark.native_app
+@helpers.skip_firefox_caret_tab()
 @pytest.mark.parametrize("text", ["", "query"], ids=["empty", "populated"])
 def test_flat_review_entry_inside_label(web_landmarks: BrowserSession, text: str) -> None:
     """Tests line, word, and character review of an entry nested inside its label."""

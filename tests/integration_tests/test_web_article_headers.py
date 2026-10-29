@@ -100,7 +100,9 @@ def _line_speech(index: int, context: list[str]) -> list[str]:
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("enabled", [True, False])
-@pytest.mark.parametrize("navigation", ["line", "tab"])
+@pytest.mark.parametrize(
+    "navigation", ["line", pytest.param("tab", marks=helpers.skip_firefox_caret_tab())]
+)
 def test_navigate_headers_and_footers(
     web_article_headers: BrowserSession, enabled: bool, navigation: str
 ) -> None:
