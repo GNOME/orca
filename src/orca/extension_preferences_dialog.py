@@ -28,6 +28,7 @@ from typing import TYPE_CHECKING, Any
 import gi
 
 gi.require_version("Atk", "1.0")
+gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atk, Gdk, Gtk  # pylint: disable=no-name-in-module
 
