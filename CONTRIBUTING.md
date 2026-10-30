@@ -23,6 +23,12 @@ issue you are reporting.
 It is not necessary to provide detailed analysis. The developers working on your
 issue will perform their own analysis regardless of whether you provide one or not.
 
+## Writing a User Extension
+
+Orca v51 and later support User Extensions. User Extensions make it possible for you
+to develop features and share them with others. For more information see
+[docs/user-extensions.md](docs/user-extensions.md).
+
 ## Submitting Merge Requests
 
 For non-trivial bug fixes and feature contributions, please file an issue first.
@@ -70,9 +76,9 @@ The hooks run automatically when you commit, and some modify files. If the pre-c
 hooks prevent your commit from succeeding, read the output, address any failures that
 the hooks didn't address automatically, and retry the commit.
 
-Merge requests must be submitted as drafts unless and until they are ready for
-maintainer review. Do not mark a merge request as ready for review until you have
-reviewed and tested your changes, completed the applicable checks described above,
+Merge requests should be submitted as drafts unless and until they are ready for
+maintainer review. Please do not mark a merge request as ready for review until you
+have reviewed and tested your changes, completed the applicable checks described above,
 and are prepared to address technical questions about your implementation. A change
 appearing to work as intended does not necessarily mean it is ready for review.
 
@@ -87,9 +93,3 @@ should be contained in the issue you filed for the change.
 
 XXX issue #1234 (where XXX is "Closes" or "See")
 ```
-
-## Consider Writing a User Extension
-
-Orca v51 and later support User Extensions. User Extensions make it possible for you
-to develop and share features which may fall beyond the scope of Orca itself. See
-[docs/user-extensions.md](docs/user-extensions.md) for more information.
