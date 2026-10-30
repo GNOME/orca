@@ -64,6 +64,7 @@ class TestLearnModePresenter:
             "orca.command_manager",
             "orca.braille_presenter",
             "orca.presentation_manager",
+            "orca.typing_echo_presenter",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 

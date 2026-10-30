@@ -679,12 +679,6 @@ class KeyboardEvent(InputEvent):
         if self.is_pressed_key():
             presentation_manager.get_manager().interrupt_presentation()
 
-        # pylint: disable-next=import-outside-toplevel
-        from . import learn_mode_presenter
-
-        if learn_mode_presenter.get_presenter().is_active():
-            return
-
         if script_manager.get_manager().is_sleep_mode_active():
             return
 

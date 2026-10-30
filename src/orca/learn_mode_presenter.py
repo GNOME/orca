@@ -42,6 +42,7 @@ from . import (
     messages,
     orca_gui_helpers,
     presentation_manager,
+    typing_echo_presenter,
 )
 from .extension import Extension
 
@@ -89,6 +90,7 @@ class LearnModePresenter(Extension):
         msg = "LEARN MODE PRESENTER: Is now active"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_active = True
+        typing_echo_presenter.get_presenter().suspend_key_echo(True, "Entering learn mode")
         command_manager.get_manager().set_modal_handler(self)
         return True
 
@@ -111,6 +113,7 @@ class LearnModePresenter(Extension):
         msg = "LEARN MODE PRESENTER: Is now inactive"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_active = False
+        typing_echo_presenter.get_presenter().suspend_key_echo(False, "Exiting learn mode")
         command_manager.get_manager().clear_modal_handler(self)
         return True
 

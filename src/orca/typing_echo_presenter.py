@@ -96,6 +96,7 @@ class TypingEchoPresenter(Extension):
     def __init__(self) -> None:
         self._delayed_terminal_press: input_event.KeyboardEvent | None = None
         self._present_locking_keys: bool | None = None
+        self._key_echo_suspended: bool = False
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
@@ -815,8 +816,20 @@ class TypingEchoPresenter(Extension):
             presentation_manager.get_manager().present_key_event(self._delayed_terminal_press)
             self._delayed_terminal_press = None
 
+    def suspend_key_echo(self, suspended: bool, reason: str = "") -> None:
+        """Suspends key echo independent of the key echo settings."""
+
+        tokens = ["TYPING ECHO PRESENTER: Key echo suspended:", suspended]
+        if reason:
+            tokens += [":", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        self._key_echo_suspended = suspended
+
     def echo_keyboard_event(self, event: input_event.KeyboardEvent) -> None:
         """Presents the KeyboardEvent event."""
+
+        if self._key_echo_suspended:
+            return
 
         if not event.is_pressed_key():
             presentation_manager.get_manager().clear_command_announcement()
