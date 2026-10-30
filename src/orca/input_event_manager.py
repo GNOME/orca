@@ -32,10 +32,10 @@ import time
 
 import gi
 
-import orca
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
+
+import orca
 
 from . import (
     ax_device_manager,
@@ -82,18 +82,17 @@ class InputEventManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._paused = pause
 
-    def process_braille_event(self, event: Atspi.Event) -> bool:
+    def process_braille_event(self, event: Atspi.Event) -> None:
         """Processes this Braille event."""
 
         braille_event = input_event.BrailleEvent(event)
-        result = braille_event.process()
+        braille_event.process()
         if isinstance(self._last_input_event, input_event.BrailleEvent):
             self._previous_braille_event = self._last_input_event
         else:
             self._previous_braille_event = None
         self._last_input_event = braille_event
         self._last_non_modifier_key_event = None
-        return result
 
     def process_mouse_button_event(self, event: Atspi.Event) -> None:
         """Processes this Mouse event."""

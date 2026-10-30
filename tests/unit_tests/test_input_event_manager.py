@@ -303,8 +303,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         mock_event = test_context.Mock()
-        result = input_event_manager.process_braille_event(mock_event)
-        assert result is True
+        input_event_manager.process_braille_event(mock_event)
         assert isinstance(
             input_event_manager._last_input_event,
             essential_modules["orca.input_event"].BrailleEvent,

@@ -344,7 +344,7 @@ class _BrailleState:
     region_with_focus: Region | None = None
     last_text_info: _TextInfo = field(default_factory=lambda: _TextInfo(None, 0, 0, 0))
     viewport: list[int] = field(default_factory=lambda: [0, 0])
-    callback: Callable[[Any], bool] | None = None
+    callback: Callable[[Any], None] | None = None
     end_is_showing: bool = False
     beginning_is_showing: bool = False
     cursor_cell: int = 0
@@ -2753,21 +2753,17 @@ def process_routing_key(event: BrailleEvent) -> bool:
     return True
 
 
-def _process_braille_event(event: Any) -> bool:
+def _process_braille_event(event: Any) -> None:
     """Processes a BrailleEvent, calling the callback if it exists."""
 
     tokens = ["BRAILLE: Processing event", event]
     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-    consumed = False
     if _STATE.callback:
         try:
-            consumed = _STATE.callback(event)
+            _STATE.callback(event)
         except CALLBACK_ERRORS as error:
             tokens = ["WARNING: Could not process braille event:", error]
             debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
-            consumed = False
-
-    return consumed
 
 
 def _brlapi_key_reader(_source: Any, _condition: Any) -> bool:
@@ -2892,7 +2888,7 @@ def set_brlapi_priority(level: int = BRLAPI_PRIORITY_DEFAULT) -> None:
     )
 
 
-def init(callback: Callable[[Any], bool] | None = None) -> bool:
+def init(callback: Callable[[Any], None] | None = None) -> bool:
     """Initialize braille and start an asynchronous BrlAPI connection."""
 
     if not _STATE.enable_braille:

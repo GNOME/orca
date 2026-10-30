@@ -33,8 +33,6 @@ from typing import TYPE_CHECKING
 
 import gi
 
-import orca
-
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import (
@@ -42,6 +40,8 @@ from gi.repository import (
     Gdk,  # pylint: disable=no-name-in-module
     GLib,
 )
+
+import orca
 
 from . import (
     command_manager,
@@ -806,47 +806,44 @@ class BrailleEvent(InputEvent):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return command
 
-    def process(self):
+    def process(self) -> None:
         """Processes this event."""
 
         tokens = ["\nvvvvv PROCESS", self, "vvvvv"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
         start_time = time.time()
-        result = self._process()
+        self._process()
         tokens = ["TOTAL PROCESSING TIME:", round(time.time() - start_time, 4)]
         debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
         tokens = ["^^^^^ PROCESS", self, "^^^^^"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, False)
-        return result
 
-    def _process(self):
-        # pylint: disable-next=import-outside-toplevel
-        from . import learn_mode_presenter
-
-        presenter = learn_mode_presenter.get_presenter()
+    def _process(self) -> None:
+        if self._script is None:
+            tokens = ["BRAILLE EVENT: No active script for", self]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return
 
         command = self.get_command()
         if not command:
-            if presenter.is_active():
-                tokens = ["BRAILLE EVENT: No command, but in learn mode", self]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return True
-
             tokens = ["BRAILLE EVENT: No command found for", self]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
+            return
 
         tokens = ["BRAILLE EVENT: Command is:", command]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        # pylint: disable-next=import-outside-toplevel
+        from . import learn_mode_presenter
+
+        presenter = learn_mode_presenter.get_presenter()
         if presenter.is_active():
             if presenter.handle_braille_event(self._script, self, command):
-                return True
+                return
 
         command.execute(self._script, self)
-        return True
 
 
 class MouseButtonEvent(InputEvent):
