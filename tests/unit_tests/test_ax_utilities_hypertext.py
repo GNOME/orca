@@ -551,6 +551,77 @@ class TestAXUtilitiesHypertext:
 
         assert AXUtilitiesHypertext.expand_eocs(obj) == ""
 
+    def test_expand_eocs_replaces_embedded_math_with_provider_text(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test embedded math is replaced with the text from the math text provider."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import (
+            AXObject,
+            AXText,
+            AXUtilitiesHypertext,
+            AXUtilitiesRole,
+        )
+
+        parent = test_context.Mock(spec=Atspi.Accessible)
+        math = test_context.Mock(spec=Atspi.Accessible)
+        provider = test_context.Mock()
+        provider.expand_embedded_math.return_value = "the fraction"
+        test_context.patch_object(AXObject, "get_child_count", return_value=1)
+        test_context.patch_object(AXText, "get_substring", return_value="The answer is ￼")
+        test_context.patch_object(AXUtilitiesHypertext, "find_child_at_offset", return_value=math)
+        AXUtilitiesRole.is_math.side_effect = lambda obj: obj == math
+
+        assert AXUtilitiesHypertext.set_math_text_provider(provider)
+        assert AXUtilitiesHypertext.expand_eocs(parent) == "The answer is the fraction"
+        provider.expand_embedded_math.assert_called_once_with(math)
+        assert AXUtilitiesHypertext.clear_math_text_provider(provider)
+
+    def test_expand_eocs_without_math_text_provider(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test embedded math is replaced with nothing when there is no math text provider."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import (
+            AXObject,
+            AXText,
+            AXUtilitiesHypertext,
+            AXUtilitiesRole,
+        )
+
+        parent = test_context.Mock(spec=Atspi.Accessible)
+        math = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXObject, "get_child_count", return_value=1)
+        test_context.patch_object(AXText, "get_substring", return_value="The answer is ￼")
+        test_context.patch_object(AXUtilitiesHypertext, "find_child_at_offset", return_value=math)
+        AXUtilitiesRole.is_math.side_effect = lambda obj: obj == math
+
+        assert AXUtilitiesHypertext.get_math_text_provider() is None
+        assert AXUtilitiesHypertext.expand_eocs(parent) == "The answer is "
+
+    def test_expand_eocs_does_not_ask_provider_for_childless_math(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test math without children is not given to the math text provider."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_hypertext import AXObject, AXUtilitiesHypertext, AXUtilitiesRole
+
+        math = test_context.Mock(spec=Atspi.Accessible)
+        provider = test_context.Mock()
+        test_context.patch_object(AXObject, "get_child_count", return_value=0)
+        AXUtilitiesRole.is_math.return_value = True
+
+        assert AXUtilitiesHypertext.set_math_text_provider(provider)
+        assert AXUtilitiesHypertext.expand_eocs(math) == ""
+        provider.expand_embedded_math.assert_not_called()
+        assert AXUtilitiesHypertext.clear_math_text_provider(provider)
+
     @pytest.mark.parametrize(
         "parent_offset,child_offset,expected_result",
         [

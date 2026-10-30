@@ -394,7 +394,6 @@ class ImportsOutsideTopLevel(Rule):
     REMAINING: ClassVar[dict[str, int]] = {
         "src/orca/ax_object.py": 1,
         "src/orca/ax_utilities_event.py": 6,
-        "src/orca/ax_utilities_hypertext.py": 1,
         "src/orca/command_manager.py": 2,
         "src/orca/dbus_service.py": 15,
         "src/orca/document_presenter.py": 1,

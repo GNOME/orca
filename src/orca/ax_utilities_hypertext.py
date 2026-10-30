@@ -25,7 +25,7 @@ from __future__ import annotations
 import os
 import re
 from dataclasses import dataclass
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar, Protocol
 from urllib.parse import urlparse
 
 from . import debug
@@ -56,8 +56,51 @@ class CaretPolicy:
     is_text_block_element: Callable[[Atspi.Accessible], bool]
 
 
+class MathTextProvider(Protocol):
+    """Something that can provide the text for embedded math objects, e.g. the math presenter."""
+
+    def expand_embedded_math(self, obj: Atspi.Accessible) -> str:
+        """Returns the expanded text for an embedded math object."""
+
+
 class AXUtilitiesHypertext:
     """Hypertext and hyperlink utilities."""
+
+    _math_text_provider: ClassVar[MathTextProvider | None] = None
+
+    @staticmethod
+    def set_math_text_provider(provider: MathTextProvider) -> bool:
+        """Sets the math text provider. Returns True if the request was accepted."""
+
+        if AXUtilitiesHypertext._math_text_provider not in (None, provider):
+            msg = "AXUtilitiesHypertext: Refusing to replace active math text provider."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        AXUtilitiesHypertext._math_text_provider = provider
+        msg = "AXUtilitiesHypertext: Math text provider is now set."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return True
+
+    @staticmethod
+    def clear_math_text_provider(provider: MathTextProvider) -> bool:
+        """Clears the math text provider if provider owns it."""
+
+        if AXUtilitiesHypertext._math_text_provider is not provider:
+            msg = "AXUtilitiesHypertext: Refusing to clear math text provider owned by another."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        AXUtilitiesHypertext._math_text_provider = None
+        msg = "AXUtilitiesHypertext: Math text provider is now cleared."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return True
+
+    @staticmethod
+    def get_math_text_provider() -> MathTextProvider | None:
+        """Returns the math text provider, if any."""
+
+        return AXUtilitiesHypertext._math_text_provider
 
     @staticmethod
     def _is_separate_text_element(obj: Atspi.Accessible) -> bool:
@@ -307,10 +350,9 @@ class AXUtilitiesHypertext:
         if AXUtilitiesRole.is_math(obj):
             if not AXObject.get_child_count(obj):
                 return ""
-            # pylint: disable-next=import-outside-toplevel
-            from . import math_presenter
-
-            return math_presenter.get_presenter().expand_embedded_math(obj)
+            if (provider := AXUtilitiesHypertext._math_text_provider) is None:
+                return ""
+            return provider.expand_embedded_math(obj)
 
         if AXUtilitiesRole.is_grid(obj):
             if unexpanded_objects is not None:

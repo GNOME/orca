@@ -36,6 +36,7 @@ from . import (  # pylint: disable=no-name-in-module
     language_utilities,
     orca_platform,
 )
+from .ax_utilities import AXUtilities
 from .ax_utilities_math import AXUtilitiesMath
 from .extension import Extension
 from .math_presenter_preferences_grid import MathPreferencesGrid
@@ -647,6 +648,7 @@ class MathPresenter(Extension):
 
 
 _presenter: MathPresenter = MathPresenter()
+AXUtilities.set_math_text_provider(_presenter)
 
 
 def get_presenter() -> MathPresenter:

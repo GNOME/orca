@@ -36,7 +36,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from .ax_text import AXTextAttribute
-from .ax_utilities_hypertext import CaretPolicy
+from .ax_utilities_hypertext import CaretPolicy, MathTextProvider
 from .ax_utilities_text import LastCaretSet
 from .enums import CaretSetReason, TextEventReason, TextUnit
 
@@ -307,6 +307,12 @@ class AXUtilities:
         unexpanded_objects: list[Atspi.Accessible] | None = None,
         include_whole_objects: bool = False,
     ) -> str: ...
+    @staticmethod
+    def set_math_text_provider(provider: MathTextProvider) -> bool: ...
+    @staticmethod
+    def clear_math_text_provider(provider: MathTextProvider) -> bool: ...
+    @staticmethod
+    def get_math_text_provider() -> MathTextProvider | None: ...
     @staticmethod
     def can_expand_embedded_object_as_text(
         obj: Atspi.Accessible | None, *, include_whole_objects: bool = False
