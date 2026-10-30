@@ -818,13 +818,14 @@ class BrailleEvent(InputEvent):
         tokens = ["BRAILLE EVENT: Command is:", command]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        # pylint: disable-next=import-outside-toplevel
-        from . import learn_mode_presenter
-
-        presenter = learn_mode_presenter.get_presenter()
-        if presenter.is_active():
-            if presenter.handle_braille_event(self._script, self, command):
-                return
+        modal_handler = command_manager.get_manager().get_modal_braille_handler()
+        if modal_handler is not None and modal_handler.will_handle_braille_event(
+            self._script, self, command
+        ):
+            tokens = ["BRAILLE EVENT: Modal handler claimed the event", self]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            modal_handler.handle_braille_event(self._script, self, command)
+            return
 
         command.execute(self._script, self)
 

@@ -82,6 +82,26 @@ class ModalInputHandler(Protocol):
         """Handles a claimed event (runs deferred)."""
 
 
+class ModalBrailleHandler(Protocol):
+    """Something that can claim braille events while active, e.g. learn mode."""
+
+    def will_handle_braille_event(
+        self,
+        script: default.Script,
+        event: input_event.BrailleEvent,
+        command: BrailleCommand,
+    ) -> bool:
+        """Returns True to claim the event; False lets it pass through."""
+
+    def handle_braille_event(
+        self,
+        script: default.Script,
+        event: input_event.BrailleEvent,
+        command: BrailleCommand,
+    ) -> bool:
+        """Handles a claimed event."""
+
+
 # pylint: disable-next=too-many-instance-attributes
 @gsettings_registry.get_registry().gsettings_enum(
     "org.gnome.Orca.KeyboardLayout",
@@ -123,6 +143,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         self._exclusive_groups: list[set[str]] = []
         self._numlock_on: bool = False
         self._modal_handler: ModalInputHandler | None = None
+        self._modal_braille_handler: ModalBrailleHandler | None = None
         self._user_extensions: weakref.WeakSet[object] = weakref.WeakSet()
         self._user_extension_command_names: dict[str, str] = {}
         self._user_extension_binding_conflicts: dict[str, set[str]] = {}
@@ -365,6 +386,34 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             self._update_numlock_grabs()
         return True
 
+    def set_modal_braille_handler(self, handler: ModalBrailleHandler) -> bool:
+        """Sets the modal braille handler. Returns True if the request was accepted."""
+
+        if self._modal_braille_handler not in (None, handler):
+            msg = "COMMAND MANAGER: Refusing to replace active modal braille handler."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        self._modal_braille_handler = handler
+        msg = "COMMAND MANAGER: Modal braille handler is now set."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return True
+
+    def clear_modal_braille_handler(self, handler: ModalBrailleHandler) -> bool:
+        """Clears the modal braille handler if handler owns it."""
+
+        if self._modal_braille_handler is not handler:
+            msg = (
+                "COMMAND MANAGER: Refusing to clear modal braille handler owned by another handler."
+            )
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        self._modal_braille_handler = None
+        msg = "COMMAND MANAGER: Modal braille handler is now cleared."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return True
+
     def _can_replace_modal_handler(self, handler: ModalInputHandler) -> bool:
         """Returns True if the requested modal handler change is allowed."""
 
@@ -401,6 +450,11 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         """Returns the active modal key handler, if any."""
 
         return self._modal_handler
+
+    def get_modal_braille_handler(self) -> ModalBrailleHandler | None:
+        """Returns the active modal braille handler, if any."""
+
+        return self._modal_braille_handler
 
     def handle_numlock_toggled(self, numlock_on: bool) -> None:
         """Handles NumLock state changes by updating grabs for keypad commands."""

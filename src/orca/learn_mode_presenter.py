@@ -92,6 +92,7 @@ class LearnModePresenter(Extension):
         self._is_active = True
         typing_echo_presenter.get_presenter().suspend_key_echo(True, "Entering learn mode")
         command_manager.get_manager().set_modal_handler(self)
+        command_manager.get_manager().set_modal_braille_handler(self)
         return True
 
     def quit(
@@ -115,6 +116,7 @@ class LearnModePresenter(Extension):
         self._is_active = False
         typing_echo_presenter.get_presenter().suspend_key_echo(False, "Exiting learn mode")
         command_manager.get_manager().clear_modal_handler(self)
+        command_manager.get_manager().clear_modal_braille_handler(self)
         return True
 
     def will_handle_event(  # pylint: disable=unused-argument
@@ -163,16 +165,23 @@ class LearnModePresenter(Extension):
 
         return True
 
+    def will_handle_braille_event(  # pylint: disable=unused-argument
+        self,
+        script: default.Script,
+        event: input_event.BrailleEvent,
+        command: BrailleCommand,
+    ) -> bool:
+        """Returns True; learn mode claims every braille event while active."""
+
+        return True
+
     def handle_braille_event(
         self,
         script: default.Script,
         event: input_event.BrailleEvent,
-        command: BrailleCommand | None,
+        command: BrailleCommand,
     ) -> bool:
-        """Handles braille event in learn mode. Returns True if command should not execute."""
-
-        if command is None:
-            return True
+        """Handles the braille event in learn mode."""
 
         manager = presentation_manager.get_manager()
         if command.executes_in_learn_mode() and manager.is_flash_message_displayed():

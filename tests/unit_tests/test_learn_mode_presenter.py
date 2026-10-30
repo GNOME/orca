@@ -301,6 +301,7 @@ class TestLearnModePresenter:
         device_manager.grab_keyboard.assert_called_with("Entering learn mode")
         cmd_manager = essential_modules["orca.command_manager"].get_manager.return_value
         cmd_manager.set_modal_handler.assert_called_with(presenter)
+        cmd_manager.set_modal_braille_handler.assert_called_with(presenter)
 
     @pytest.mark.parametrize(
         "is_active,script_provided,script_manager_returns_none,expected_debug_called",
@@ -593,19 +594,6 @@ class TestLearnModePresenter:
         mock_quit.assert_called_with(script, event)
         gi_repository = essential_modules["gi.repository"]
         gi_repository.Gtk.show_uri.assert_called()
-
-    def test_handle_braille_event_no_command(self, test_context: OrcaTestContext) -> None:
-        """Test handle_braille_event with no command returns True (don't execute)."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.learn_mode_presenter import LearnModePresenter
-
-        presenter = LearnModePresenter()
-        script_manager = essential_modules["orca.script_manager"]
-        script = script_manager.get_manager.return_value.get_active_script.return_value
-        event = test_context.Mock()
-        result = presenter.handle_braille_event(script, event, None)
-        assert result is True
 
     def test_handle_braille_event_with_command(self, test_context: OrcaTestContext) -> None:
         """Test handle_braille_event presents description and returns True."""

@@ -398,7 +398,6 @@ class ImportsOutsideTopLevel(Rule):
         "src/orca/command_manager.py": 2,
         "src/orca/dbus_service.py": 15,
         "src/orca/document_presenter.py": 1,
-        "src/orca/input_event.py": 1,
         "src/orca/pronunciation_dictionary_manager.py": 1,
         "src/orca/screen_reader_manager.py": 1,
         "src/orca/speech_presenter.py": 2,
