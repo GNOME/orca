@@ -274,6 +274,8 @@ class TestPresentationManager:
 
         manager = get_manager()
         mock_event = test_context.Mock()
+        script_manager = essential_modules["orca.script_manager"].get_manager()
+        script_manager.is_sleep_mode_active.return_value = False
 
         manager.present_keyboard_event(mock_event)
 

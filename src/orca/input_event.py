@@ -672,18 +672,6 @@ class KeyboardEvent(InputEvent):
 
         raise PermissionError(f"Unauthorized setter of input event property: {method_name}")
 
-    def _present(self) -> None:
-        if not self._script:
-            return
-
-        if self.is_pressed_key():
-            presentation_manager.get_manager().interrupt_presentation()
-
-        if script_manager.get_manager().is_sleep_mode_active():
-            return
-
-        presentation_manager.get_manager().present_keyboard_event(self)
-
     def process(self) -> None:
         """Processes this input event."""
 
@@ -744,7 +732,8 @@ class KeyboardEvent(InputEvent):
             if numlock_on is not None:
                 command_manager.get_manager().handle_numlock_toggled(numlock_on)
 
-        self._present()
+        if self._script:
+            presentation_manager.get_manager().present_keyboard_event(self)
 
         if self.is_pressed_key() and self._handler:
             # Execute commands before processing queued accessibility events.

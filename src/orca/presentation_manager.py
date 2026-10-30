@@ -255,6 +255,12 @@ class PresentationManager:
     def present_keyboard_event(self, event: KeyboardEvent) -> None:
         """Presents the KeyboardEvent event."""
 
+        if event.is_pressed_key():
+            self.interrupt_presentation()
+
+        if script_manager.get_manager().is_sleep_mode_active():
+            return
+
         typing_echo_presenter.get_presenter().echo_keyboard_event(event)
 
     def present_key_event(self, event: KeyboardEvent) -> None:
