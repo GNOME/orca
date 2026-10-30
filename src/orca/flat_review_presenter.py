@@ -27,7 +27,6 @@
 from __future__ import annotations
 
 import time
-from enum import Enum
 from typing import TYPE_CHECKING
 
 import gi
@@ -60,24 +59,13 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .enums import ActivePresentationMode, CaretSetReason, TextEventReason
 from .extension import Extension
+from .flat_review_presenter_preferences_grid import FlatReviewPreferencesGrid
+from .flat_review_presenter_settings import FlatReviewSettings, FocusTracking
 
 if TYPE_CHECKING:
     from .command import Command
     from .dbus_service import UInt32
-    from .flat_review_presenter_preferences_grid import FlatReviewPreferencesGrid
     from .scripts import default
-
-
-@gsettings_registry.get_registry().gsettings_enum(
-    "org.gnome.Orca.FocusTracking",
-    values={"off": 0, "auto": 1, "on": 2},
-)
-class FocusTracking(Enum):
-    """How closely flat review follows the focus/caret location."""
-
-    OFF = 0
-    AUTO = 1
-    ON = 2
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.FlatReview", name="flat-review")
@@ -85,10 +73,6 @@ class FlatReviewPresenter(Extension):
     """Provides access to on-screen objects via flat-review."""
 
     _SCHEMA = "flat-review"
-    KEY_DISPLAY_UPDATES = "display-updates"
-    KEY_FOCUS_TRACKING = "focus-tracking"
-    KEY_RESTRICTED = "restricted"
-    KEY_SPEAK_UPDATES = "speak-updates"
 
     def _get_setting(self, key: str, default: bool) -> bool:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -1584,13 +1568,10 @@ class FlatReviewPresenter(Extension):
     def create_preferences_grid(self) -> FlatReviewPreferencesGrid:
         """Returns the GtkGrid containing the Flat Review preferences UI."""
 
-        # pylint: disable-next=import-outside-toplevel
-        from .flat_review_presenter_preferences_grid import FlatReviewPreferencesGrid
-
         return FlatReviewPreferencesGrid(self)
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_RESTRICTED,
+        key=FlatReviewSettings.KEY_RESTRICTED,
         schema="flat-review",
         gtype="b",
         default=False,
@@ -1601,7 +1582,7 @@ class FlatReviewPresenter(Extension):
     def get_is_restricted(self) -> bool:
         """Returns whether flat review is restricted to the current object."""
 
-        return self._get_setting(self.KEY_RESTRICTED, False)
+        return self._get_setting(FlatReviewSettings.KEY_RESTRICTED, False)
 
     @dbus_service.setter
     def set_is_restricted(self, value: bool) -> bool:
@@ -1610,12 +1591,12 @@ class FlatReviewPresenter(Extension):
         tokens = ["FLAT REVIEW PRESENTER: Setting is-restricted to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_RESTRICTED, value
+            self._SCHEMA, FlatReviewSettings.KEY_RESTRICTED, value
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SPEAK_UPDATES,
+        key=FlatReviewSettings.KEY_SPEAK_UPDATES,
         schema="flat-review",
         gtype="b",
         default=False,
@@ -1625,7 +1606,7 @@ class FlatReviewPresenter(Extension):
     def get_speaks_updates(self) -> bool:
         """Returns whether changes at the review location are spoken automatically."""
 
-        return self._get_setting(self.KEY_SPEAK_UPDATES, False)
+        return self._get_setting(FlatReviewSettings.KEY_SPEAK_UPDATES, False)
 
     @dbus_service.setter
     def set_speaks_updates(self, value: bool) -> bool:
@@ -1634,12 +1615,12 @@ class FlatReviewPresenter(Extension):
         tokens = ["FLAT REVIEW PRESENTER: Setting speak-updates to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_SPEAK_UPDATES, value
+            self._SCHEMA, FlatReviewSettings.KEY_SPEAK_UPDATES, value
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_DISPLAY_UPDATES,
+        key=FlatReviewSettings.KEY_DISPLAY_UPDATES,
         schema="flat-review",
         gtype="b",
         default=True,
@@ -1649,7 +1630,7 @@ class FlatReviewPresenter(Extension):
     def get_displays_updates(self) -> bool:
         """Returns whether changes at the review location refresh braille automatically."""
 
-        return self._get_setting(self.KEY_DISPLAY_UPDATES, True)
+        return self._get_setting(FlatReviewSettings.KEY_DISPLAY_UPDATES, True)
 
     @dbus_service.setter
     def set_displays_updates(self, value: bool) -> bool:
@@ -1658,12 +1639,12 @@ class FlatReviewPresenter(Extension):
         tokens = ["FLAT REVIEW PRESENTER: Setting display-updates to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_DISPLAY_UPDATES, value
+            self._SCHEMA, FlatReviewSettings.KEY_DISPLAY_UPDATES, value
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_FOCUS_TRACKING,
+        key=FlatReviewSettings.KEY_FOCUS_TRACKING,
         schema="flat-review",
         genum="org.gnome.Orca.FocusTracking",
         default="auto",
@@ -1675,7 +1656,7 @@ class FlatReviewPresenter(Extension):
 
         nick = gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            self.KEY_FOCUS_TRACKING,
+            FlatReviewSettings.KEY_FOCUS_TRACKING,
             "",
             genum="org.gnome.Orca.FocusTracking",
             default="auto",
@@ -1693,7 +1674,7 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         mode = FocusTracking(value)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_FOCUS_TRACKING, mode.name.lower()
+            self._SCHEMA, FlatReviewSettings.KEY_FOCUS_TRACKING, mode.name.lower()
         )
         return True
 

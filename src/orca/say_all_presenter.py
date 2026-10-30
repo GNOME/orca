@@ -30,7 +30,6 @@
 from __future__ import annotations
 
 import unicodedata
-from enum import Enum
 from typing import TYPE_CHECKING, Any
 
 from . import (
@@ -57,6 +56,8 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .enums import ActivePresentationMode, CaretSetReason
 from .extension import Extension
+from .say_all_presenter_preferences_grid import SayAllPreferencesGrid
+from .say_all_presenter_settings import SayAllSettings, SayAllStyle
 
 if TYPE_CHECKING:
     from collections.abc import Generator
@@ -67,25 +68,7 @@ if TYPE_CHECKING:
     from gi.repository import Atspi
 
     from .command import Command
-    from .say_all_presenter_preferences_grid import SayAllPreferencesGrid
     from .scripts import default
-
-
-@gsettings_registry.get_registry().gsettings_enum(
-    "org.gnome.Orca.SayAllStyle",
-    values={"line": 0, "sentence": 1},
-)
-class SayAllStyle(Enum):
-    """Style enumeration with int values from settings."""
-
-    SENTENCE = 1
-    LINE = 0
-
-    @property
-    def string_name(self) -> str:
-        """Returns the lowercase string name for this enum value."""
-
-        return self.name.lower()
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.SayAll", name="say-all")
@@ -93,23 +76,6 @@ class SayAllPresenter(Extension):
     """Module for commands related to the current accessible object."""
 
     _SCHEMA = "say-all"
-    KEY_ANNOUNCE_ARTICLE = "announce-article"
-    KEY_ANNOUNCE_BLOCKQUOTE = "announce-blockquote"
-    KEY_ANNOUNCE_CODE_BLOCK = "announce-code-block"
-    KEY_ANNOUNCE_DOCUMENT = "announce-document"
-    KEY_ANNOUNCE_FORM = "announce-form"
-    KEY_ANNOUNCE_GROUPING = "announce-grouping"
-    KEY_ANNOUNCE_HEADER_AND_FOOTER = "announce-header-and-footer"
-    KEY_ANNOUNCE_INLINE_CODE = "announce-inline-code"
-    KEY_ANNOUNCE_LANDMARK = "announce-landmark"
-    KEY_ANNOUNCE_LIST = "announce-list"
-    KEY_ANNOUNCE_TABLE = "announce-table"
-    KEY_ANNOUNCE_TRACKED_CHANGES = "announce-tracked-changes"
-    KEY_ONLY_SPEAK_DISPLAYED_TEXT = "only-speak-displayed-text"
-    KEY_REWIND_AND_FAST_FORWARD = "rewind-and-fast-forward"
-    KEY_TEXT_ATTRIBUTE_CHANGE_MODE = "text-attribute-change-mode"
-    KEY_STRUCTURAL_NAVIGATION = "structural-navigation"
-    KEY_STYLE = "style"
 
     def _get_setting(self, key: str, default: bool) -> bool:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -138,9 +104,6 @@ class SayAllPresenter(Extension):
     def create_preferences_grid(self) -> SayAllPreferencesGrid:
         """Returns the GtkGrid containing the Say All preferences UI."""
 
-        # pylint: disable-next=import-outside-toplevel
-        from .say_all_presenter_preferences_grid import SayAllPreferencesGrid
-
         return SayAllPreferencesGrid(self)
 
     def get_style_as_int(self) -> int:
@@ -156,7 +119,7 @@ class SayAllPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         style_name = SayAllStyle(value).string_name
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_STYLE, style_name
+            self._SCHEMA, SayAllSettings.KEY_STYLE, style_name
         )
         return True
 
@@ -682,7 +645,7 @@ class SayAllPresenter(Extension):
         self._script.utilities.set_caret_context(context.obj, context.current_offset)
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ANNOUNCE_ARTICLE,
+        key=SayAllSettings.KEY_ANNOUNCE_ARTICLE,
         schema="say-all",
         gtype="b",
         default=True,
@@ -692,7 +655,7 @@ class SayAllPresenter(Extension):
     def get_announce_article(self) -> bool:
         """Returns whether articles are announced when entered."""
 
-        return self._get_setting(self.KEY_ANNOUNCE_ARTICLE, True)
+        return self._get_setting(SayAllSettings.KEY_ANNOUNCE_ARTICLE, True)
 
     @dbus_service.setter
     def set_announce_article(self, value: bool) -> bool:
@@ -702,13 +665,13 @@ class SayAllPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_ANNOUNCE_ARTICLE,
+            SayAllSettings.KEY_ANNOUNCE_ARTICLE,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ANNOUNCE_BLOCKQUOTE,
+        key=SayAllSettings.KEY_ANNOUNCE_BLOCKQUOTE,
         schema="say-all",
         gtype="b",
         default=True,
@@ -719,7 +682,7 @@ class SayAllPresenter(Extension):
     def get_announce_blockquote(self) -> bool:
         """Returns whether blockquotes are announced when entered."""
 
-        return self._get_setting(self.KEY_ANNOUNCE_BLOCKQUOTE, True)
+        return self._get_setting(SayAllSettings.KEY_ANNOUNCE_BLOCKQUOTE, True)
 
     @dbus_service.setter
     def set_announce_blockquote(self, value: bool) -> bool:
@@ -729,13 +692,13 @@ class SayAllPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_ANNOUNCE_BLOCKQUOTE,
+            SayAllSettings.KEY_ANNOUNCE_BLOCKQUOTE,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ANNOUNCE_CODE_BLOCK,
+        key=SayAllSettings.KEY_ANNOUNCE_CODE_BLOCK,
         schema="say-all",
         gtype="b",
         default=True,
@@ -745,7 +708,7 @@ class SayAllPresenter(Extension):
     def get_announce_code_block(self) -> bool:
         """Returns whether code blocks are announced when entered."""
 
-        return self._get_setting(self.KEY_ANNOUNCE_CODE_BLOCK, True)
+        return self._get_setting(SayAllSettings.KEY_ANNOUNCE_CODE_BLOCK, True)
 
     @dbus_service.setter
     def set_announce_code_block(self, value: bool) -> bool:
@@ -755,13 +718,13 @@ class SayAllPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_ANNOUNCE_CODE_BLOCK,
+            SayAllSettings.KEY_ANNOUNCE_CODE_BLOCK,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ANNOUNCE_DOCUMENT,
+        key=SayAllSettings.KEY_ANNOUNCE_DOCUMENT,
         schema="say-all",
         gtype="b",
         default=True,
@@ -771,7 +734,7 @@ class SayAllPresenter(Extension):
     def get_announce_document(self) -> bool:
         """Returns whether embedded documents are announced when entered and left."""
 
-        return self._get_setting(self.KEY_ANNOUNCE_DOCUMENT, True)
+        return self._get_setting(SayAllSettings.KEY_ANNOUNCE_DOCUMENT, True)
 
     @dbus_service.setter
     def set_announce_document(self, value: bool) -> bool:
@@ -781,13 +744,13 @@ class SayAllPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_ANNOUNCE_DOCUMENT,
+            SayAllSettings.KEY_ANNOUNCE_DOCUMENT,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ANNOUNCE_FORM,
+        key=SayAllSettings.KEY_ANNOUNCE_FORM,
         schema="say-all",
         gtype="b",
         default=True,
@@ -798,7 +761,7 @@ class SayAllPresenter(Extension):
     def get_announce_form(self) -> bool:
         """Returns whether non-landmark forms are announced when entered."""
 
-        return self._get_setting(self.KEY_ANNOUNCE_FORM, True)
+        return self._get_setting(SayAllSettings.KEY_ANNOUNCE_FORM, True)
 
     @dbus_service.setter
     def set_announce_form(self, value: bool) -> bool:
@@ -807,12 +770,12 @@ class SayAllPresenter(Extension):
         tokens = ["SAY ALL PRESENTER: Setting announce forms to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_ANNOUNCE_FORM, value
+            self._SCHEMA, SayAllSettings.KEY_ANNOUNCE_FORM, value
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ANNOUNCE_GROUPING,
+        key=SayAllSettings.KEY_ANNOUNCE_GROUPING,
         schema="say-all",
         gtype="b",
         default=True,
@@ -823,7 +786,7 @@ class SayAllPresenter(Extension):
     def get_announce_grouping(self) -> bool:
         """Returns whether groupings are announced when entered."""
 
-        return self._get_setting(self.KEY_ANNOUNCE_GROUPING, True)
+        return self._get_setting(SayAllSettings.KEY_ANNOUNCE_GROUPING, True)
 
     @dbus_service.setter
     def set_announce_grouping(self, value: bool) -> bool:
@@ -833,13 +796,13 @@ class SayAllPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_ANNOUNCE_GROUPING,
+            SayAllSettings.KEY_ANNOUNCE_GROUPING,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ANNOUNCE_HEADER_AND_FOOTER,
+        key=SayAllSettings.KEY_ANNOUNCE_HEADER_AND_FOOTER,
         schema="say-all",
         gtype="b",
         default=True,
@@ -852,14 +815,14 @@ class SayAllPresenter(Extension):
     def get_announce_header_and_footer(self) -> bool:
         """Returns whether headers and footers are announced when entered."""
 
-        return self._get_setting(self.KEY_ANNOUNCE_HEADER_AND_FOOTER, True)
+        return self._get_setting(SayAllSettings.KEY_ANNOUNCE_HEADER_AND_FOOTER, True)
 
     def get_header_and_footer_available(self) -> bool:
         """Returns whether header and footer announcements have an explicit value."""
 
         return (
             gsettings_registry.get_registry().layered_lookup(
-                self._SCHEMA, self.KEY_ANNOUNCE_HEADER_AND_FOOTER, "b"
+                self._SCHEMA, SayAllSettings.KEY_ANNOUNCE_HEADER_AND_FOOTER, "b"
             )
             is not None
         )
@@ -872,12 +835,12 @@ class SayAllPresenter(Extension):
         tokens = ["SAY ALL PRESENTER: Setting announce headers and footers to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_ANNOUNCE_HEADER_AND_FOOTER, value
+            self._SCHEMA, SayAllSettings.KEY_ANNOUNCE_HEADER_AND_FOOTER, value
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ANNOUNCE_INLINE_CODE,
+        key=SayAllSettings.KEY_ANNOUNCE_INLINE_CODE,
         schema="say-all",
         gtype="b",
         default=False,
@@ -890,14 +853,14 @@ class SayAllPresenter(Extension):
     def get_announce_inline_code(self) -> bool:
         """Returns whether inline code boundaries are announced."""
 
-        return self._get_setting(self.KEY_ANNOUNCE_INLINE_CODE, False)
+        return self._get_setting(SayAllSettings.KEY_ANNOUNCE_INLINE_CODE, False)
 
     def get_inline_code_available(self) -> bool:
         """Returns whether inline code announcements have an explicit value."""
 
         return (
             gsettings_registry.get_registry().layered_lookup(
-                self._SCHEMA, self.KEY_ANNOUNCE_INLINE_CODE, "b"
+                self._SCHEMA, SayAllSettings.KEY_ANNOUNCE_INLINE_CODE, "b"
             )
             is not None
         )
@@ -910,12 +873,12 @@ class SayAllPresenter(Extension):
         tokens = ["SAY ALL PRESENTER: Setting announce inline code to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_ANNOUNCE_INLINE_CODE, value
+            self._SCHEMA, SayAllSettings.KEY_ANNOUNCE_INLINE_CODE, value
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ANNOUNCE_LANDMARK,
+        key=SayAllSettings.KEY_ANNOUNCE_LANDMARK,
         schema="say-all",
         gtype="b",
         default=True,
@@ -926,7 +889,7 @@ class SayAllPresenter(Extension):
     def get_announce_landmark(self) -> bool:
         """Returns whether landmarks are announced when entered."""
 
-        return self._get_setting(self.KEY_ANNOUNCE_LANDMARK, True)
+        return self._get_setting(SayAllSettings.KEY_ANNOUNCE_LANDMARK, True)
 
     @dbus_service.setter
     def set_announce_landmark(self, value: bool) -> bool:
@@ -936,13 +899,13 @@ class SayAllPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_ANNOUNCE_LANDMARK,
+            SayAllSettings.KEY_ANNOUNCE_LANDMARK,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ANNOUNCE_LIST,
+        key=SayAllSettings.KEY_ANNOUNCE_LIST,
         schema="say-all",
         gtype="b",
         default=True,
@@ -953,7 +916,7 @@ class SayAllPresenter(Extension):
     def get_announce_list(self) -> bool:
         """Returns whether lists are announced when entered."""
 
-        return self._get_setting(self.KEY_ANNOUNCE_LIST, True)
+        return self._get_setting(SayAllSettings.KEY_ANNOUNCE_LIST, True)
 
     @dbus_service.setter
     def set_announce_list(self, value: bool) -> bool:
@@ -962,12 +925,12 @@ class SayAllPresenter(Extension):
         tokens = ["SAY ALL PRESENTER: Setting announce lists to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_ANNOUNCE_LIST, value
+            self._SCHEMA, SayAllSettings.KEY_ANNOUNCE_LIST, value
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ANNOUNCE_TABLE,
+        key=SayAllSettings.KEY_ANNOUNCE_TABLE,
         schema="say-all",
         gtype="b",
         default=True,
@@ -978,7 +941,7 @@ class SayAllPresenter(Extension):
     def get_announce_table(self) -> bool:
         """Returns whether tables are announced when entered."""
 
-        return self._get_setting(self.KEY_ANNOUNCE_TABLE, True)
+        return self._get_setting(SayAllSettings.KEY_ANNOUNCE_TABLE, True)
 
     @dbus_service.setter
     def set_announce_table(self, value: bool) -> bool:
@@ -987,12 +950,12 @@ class SayAllPresenter(Extension):
         tokens = ["SAY ALL PRESENTER: Setting announce tables to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_ANNOUNCE_TABLE, value
+            self._SCHEMA, SayAllSettings.KEY_ANNOUNCE_TABLE, value
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ANNOUNCE_TRACKED_CHANGES,
+        key=SayAllSettings.KEY_ANNOUNCE_TRACKED_CHANGES,
         schema="say-all",
         gtype="b",
         default=True,
@@ -1002,7 +965,7 @@ class SayAllPresenter(Extension):
     def get_announce_tracked_changes(self) -> bool:
         """Returns whether tracked changes are announced when entered."""
 
-        return self._get_setting(self.KEY_ANNOUNCE_TRACKED_CHANGES, True)
+        return self._get_setting(SayAllSettings.KEY_ANNOUNCE_TRACKED_CHANGES, True)
 
     @dbus_service.setter
     def set_announce_tracked_changes(self, value: bool) -> bool:
@@ -1012,13 +975,13 @@ class SayAllPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_ANNOUNCE_TRACKED_CHANGES,
+            SayAllSettings.KEY_ANNOUNCE_TRACKED_CHANGES,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ONLY_SPEAK_DISPLAYED_TEXT,
+        key=SayAllSettings.KEY_ONLY_SPEAK_DISPLAYED_TEXT,
         schema="say-all",
         gtype="b",
         default=False,
@@ -1028,7 +991,7 @@ class SayAllPresenter(Extension):
     def get_only_speak_displayed_text(self) -> bool:
         """Returns whether Say All only speaks displayed text."""
 
-        return self._get_setting(self.KEY_ONLY_SPEAK_DISPLAYED_TEXT, False)
+        return self._get_setting(SayAllSettings.KEY_ONLY_SPEAK_DISPLAYED_TEXT, False)
 
     @dbus_service.setter
     def set_only_speak_displayed_text(self, value: bool) -> bool:
@@ -1038,13 +1001,13 @@ class SayAllPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_ONLY_SPEAK_DISPLAYED_TEXT,
+            SayAllSettings.KEY_ONLY_SPEAK_DISPLAYED_TEXT,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_STYLE,
+        key=SayAllSettings.KEY_STYLE,
         schema="say-all",
         genum="org.gnome.Orca.SayAllStyle",
         default="sentence",
@@ -1057,7 +1020,7 @@ class SayAllPresenter(Extension):
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            self.KEY_STYLE,
+            SayAllSettings.KEY_STYLE,
             "",
             genum="org.gnome.Orca.SayAllStyle",
             default="sentence",
@@ -1078,13 +1041,13 @@ class SayAllPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_STYLE,
+            SayAllSettings.KEY_STYLE,
             style.string_name,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_STRUCTURAL_NAVIGATION,
+        key=SayAllSettings.KEY_STRUCTURAL_NAVIGATION,
         schema="say-all",
         gtype="b",
         default=False,
@@ -1095,7 +1058,7 @@ class SayAllPresenter(Extension):
     def get_structural_navigation_enabled(self) -> bool:
         """Returns whether structural navigation keys can be used in Say All."""
 
-        return self._get_setting(self.KEY_STRUCTURAL_NAVIGATION, False)
+        return self._get_setting(SayAllSettings.KEY_STRUCTURAL_NAVIGATION, False)
 
     @dbus_service.setter
     def set_structural_navigation_enabled(self, value: bool) -> bool:
@@ -1105,13 +1068,13 @@ class SayAllPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_STRUCTURAL_NAVIGATION,
+            SayAllSettings.KEY_STRUCTURAL_NAVIGATION,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_REWIND_AND_FAST_FORWARD,
+        key=SayAllSettings.KEY_REWIND_AND_FAST_FORWARD,
         schema="say-all",
         gtype="b",
         default=False,
@@ -1122,7 +1085,7 @@ class SayAllPresenter(Extension):
     def get_rewind_and_fast_forward_enabled(self) -> bool:
         """Returns whether Up and Down can be used in Say All."""
 
-        return self._get_setting(self.KEY_REWIND_AND_FAST_FORWARD, False)
+        return self._get_setting(SayAllSettings.KEY_REWIND_AND_FAST_FORWARD, False)
 
     @dbus_service.setter
     def set_rewind_and_fast_forward_enabled(self, value: bool) -> bool:
@@ -1132,13 +1095,13 @@ class SayAllPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_REWIND_AND_FAST_FORWARD,
+            SayAllSettings.KEY_REWIND_AND_FAST_FORWARD,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
+        key=SayAllSettings.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
         schema="say-all",
         genum="org.gnome.Orca.TextAttributeChangeMode",
         default="off",
@@ -1150,7 +1113,7 @@ class SayAllPresenter(Extension):
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            self.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
+            SayAllSettings.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
             "",
             genum="org.gnome.Orca.TextAttributeChangeMode",
             default="off",
@@ -1164,7 +1127,7 @@ class SayAllPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
+            SayAllSettings.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
             value,
         )
         return True

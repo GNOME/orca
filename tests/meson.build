@@ -56,6 +56,7 @@ unit_tests = [
   'unit_tests/test_flat_review_presenter.py',
   'unit_tests/test_focus_manager.py',
   'unit_tests/test_gsettings_registry.py',
+  'unit_tests/test_gsettings_schema_generator.py',
   'unit_tests/test_help_documentation_generator.py',
   'unit_tests/test_input_event.py',
   'unit_tests/test_input_event_manager.py',

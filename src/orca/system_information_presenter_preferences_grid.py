@@ -26,13 +26,14 @@ from __future__ import annotations
 import time
 from typing import TYPE_CHECKING
 
-from . import guilabels, preferences_grid_base, system_information_presenter
+from . import guilabels, preferences_grid_base
 from .help_metadata import (
     PreferenceCategoryDoc,
     PreferenceControlDoc,
     PreferencePanelDoc,
     PreferenceValueDoc,
 )
+from .system_information_presenter_settings import DateFormat, SystemInformationSettings, TimeFormat
 
 if TYPE_CHECKING:
     from .system_information_presenter import SystemInformationPresenter
@@ -77,7 +78,7 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             ),
                             schema="system-information",
                             # pylint: disable-next=line-too-long
-                            key=system_information_presenter.SystemInformationPresenter.KEY_DATE_FORMAT,
+                            key=SystemInformationSettings.KEY_DATE_FORMAT,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.GENERAL_TIME_FORMAT,
@@ -90,7 +91,7 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             ),
                             schema="system-information",
                             # pylint: disable-next=line-too-long
-                            key=system_information_presenter.SystemInformationPresenter.KEY_TIME_FORMAT,
+                            key=SystemInformationSettings.KEY_TIME_FORMAT,
                         ),
                     ),
                 ),
@@ -103,14 +104,14 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
         # Generate display options (strftime examples) and values (format strings)
         date_options = []
         date_values = []
-        for fmt in system_information_presenter.DateFormat:
+        for fmt in DateFormat:
             example = time.strftime(fmt.value, time.localtime())
             date_options.append(example)
             date_values.append(fmt.value)
 
         time_options = []
         time_values = []
-        for time_fmt in system_information_presenter.TimeFormat:
+        for time_fmt in TimeFormat:
             example = time.strftime(time_fmt.value, time.localtime())
             time_options.append(example)
             time_values.append(time_fmt.value)
@@ -122,7 +123,7 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=date_values,
                 getter=presenter._get_date_format_string,
                 setter=presenter._set_date_format_string,
-                prefs_key=system_information_presenter.SystemInformationPresenter.KEY_DATE_FORMAT,
+                prefs_key=SystemInformationSettings.KEY_DATE_FORMAT,
                 member_of=guilabels.TIME_AND_DATE,
             ),
             preferences_grid_base.EnumPreferenceControl(
@@ -131,7 +132,7 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=time_values,
                 getter=presenter._get_time_format_string,
                 setter=presenter._set_time_format_string,
-                prefs_key=system_information_presenter.SystemInformationPresenter.KEY_TIME_FORMAT,
+                prefs_key=SystemInformationSettings.KEY_TIME_FORMAT,
                 member_of=guilabels.TIME_AND_DATE,
             ),
         ]

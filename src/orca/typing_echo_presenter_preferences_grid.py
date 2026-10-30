@@ -24,12 +24,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import guilabels, preferences_grid_base, typing_echo_presenter
+from . import guilabels, preferences_grid_base
 from .help_metadata import (
     PreferenceCategoryDoc,
     PreferenceControlDoc,
     PreferencePanelDoc,
 )
+from .typing_echo_presenter_settings import TypingEchoSettings
 
 if TYPE_CHECKING:
     from .typing_echo_presenter import TypingEchoPresenter
@@ -71,7 +72,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "password, is not echoed."
                     ),
                     schema="typing-echo",
-                    key=typing_echo_presenter.TypingEchoPresenter.KEY_KEY_ECHO,
+                    key=TypingEchoSettings.KEY_KEY_ECHO,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.ECHO_KEYS_TO_ECHO,
@@ -83,14 +84,14 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             kind="switch",
                             summary="Controls whether Orca speaks keys such as A, B, and C.",
                             schema="typing-echo",
-                            key=typing_echo_presenter.TypingEchoPresenter.KEY_ALPHABETIC_KEYS,
+                            key=TypingEchoSettings.KEY_ALPHABETIC_KEYS,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ECHO_NUMERIC_KEYS,
                             kind="switch",
                             summary="Controls whether Orca speaks keys such as 1, 2, and 3.",
                             schema="typing-echo",
-                            key=typing_echo_presenter.TypingEchoPresenter.KEY_NUMERIC_KEYS,
+                            key=TypingEchoSettings.KEY_NUMERIC_KEYS,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ECHO_PUNCTUATION_KEYS,
@@ -100,14 +101,14 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "semicolon, and question mark."
                             ),
                             schema="typing-echo",
-                            key=typing_echo_presenter.TypingEchoPresenter.KEY_PUNCTUATION_KEYS,
+                            key=TypingEchoSettings.KEY_PUNCTUATION_KEYS,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ECHO_SPACE,
                             kind="switch",
                             summary="Controls whether Orca speaks Space when it is pressed.",
                             schema="typing-echo",
-                            key=typing_echo_presenter.TypingEchoPresenter.KEY_SPACE,
+                            key=TypingEchoSettings.KEY_SPACE,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ECHO_MODIFIER_KEYS,
@@ -117,7 +118,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "Ctrl, Alt, and Meta."
                             ),
                             schema="typing-echo",
-                            key=typing_echo_presenter.TypingEchoPresenter.KEY_MODIFIER_KEYS,
+                            key=TypingEchoSettings.KEY_MODIFIER_KEYS,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ECHO_FUNCTION_KEYS,
@@ -126,7 +127,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "Controls whether Orca speaks function keys from F1 through F12."
                             ),
                             schema="typing-echo",
-                            key=typing_echo_presenter.TypingEchoPresenter.KEY_FUNCTION_KEYS,
+                            key=TypingEchoSettings.KEY_FUNCTION_KEYS,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ECHO_ACTION_KEYS,
@@ -136,7 +137,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "Delete, Enter, Escape, Tab, Page Up, and Page Down."
                             ),
                             schema="typing-echo",
-                            key=typing_echo_presenter.TypingEchoPresenter.KEY_ACTION_KEYS,
+                            key=TypingEchoSettings.KEY_ACTION_KEYS,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ECHO_NAVIGATION_KEYS,
@@ -146,7 +147,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "Arrow, Right Arrow, Up Arrow, Down Arrow, Home, and End."
                             ),
                             schema="typing-echo",
-                            key=typing_echo_presenter.TypingEchoPresenter.KEY_NAVIGATION_KEYS,
+                            key=TypingEchoSettings.KEY_NAVIGATION_KEYS,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ECHO_DIACRITICAL_KEYS,
@@ -156,7 +157,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "keys used to add accents to letters."
                             ),
                             schema="typing-echo",
-                            key=typing_echo_presenter.TypingEchoPresenter.KEY_DIACRITICAL_KEYS,
+                            key=TypingEchoSettings.KEY_DIACRITICAL_KEYS,
                         ),
                     ),
                 ),
@@ -182,7 +183,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "outside editable text."
                             ),
                             schema="typing-echo",
-                            key=typing_echo_presenter.TypingEchoPresenter.KEY_CHARACTER_ECHO,
+                            key=TypingEchoSettings.KEY_CHARACTER_ECHO,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ECHO_WORD,
@@ -192,7 +193,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "to have both individual characters and completed words spoken."
                             ),
                             schema="typing-echo",
-                            key=typing_echo_presenter.TypingEchoPresenter.KEY_WORD_ECHO,
+                            key=TypingEchoSettings.KEY_WORD_ECHO,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ECHO_SENTENCE,
@@ -203,7 +204,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "sentences spoken."
                             ),
                             schema="typing-echo",
-                            key=typing_echo_presenter.TypingEchoPresenter.KEY_SENTENCE_ECHO,
+                            key=TypingEchoSettings.KEY_SENTENCE_ECHO,
                         ),
                     ),
                 ),
@@ -215,7 +216,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             label=guilabels.ECHO_ENABLE_KEY_ECHO,
             getter=presenter.get_key_echo_enabled,
             setter=presenter.set_key_echo_enabled,
-            prefs_key=typing_echo_presenter.TypingEchoPresenter.KEY_KEY_ECHO,
+            prefs_key=TypingEchoSettings.KEY_KEY_ECHO,
         )
 
         controls = [
@@ -224,7 +225,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_ALPHABETIC_KEYS,
                 getter=presenter.get_alphabetic_keys_enabled,
                 setter=presenter.set_alphabetic_keys_enabled,
-                prefs_key=typing_echo_presenter.TypingEchoPresenter.KEY_ALPHABETIC_KEYS,
+                prefs_key=TypingEchoSettings.KEY_ALPHABETIC_KEYS,
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -232,7 +233,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_NUMERIC_KEYS,
                 getter=presenter.get_numeric_keys_enabled,
                 setter=presenter.set_numeric_keys_enabled,
-                prefs_key=typing_echo_presenter.TypingEchoPresenter.KEY_NUMERIC_KEYS,
+                prefs_key=TypingEchoSettings.KEY_NUMERIC_KEYS,
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -240,7 +241,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_PUNCTUATION_KEYS,
                 getter=presenter.get_punctuation_keys_enabled,
                 setter=presenter.set_punctuation_keys_enabled,
-                prefs_key=typing_echo_presenter.TypingEchoPresenter.KEY_PUNCTUATION_KEYS,
+                prefs_key=TypingEchoSettings.KEY_PUNCTUATION_KEYS,
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -248,7 +249,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_SPACE,
                 getter=presenter.get_space_enabled,
                 setter=presenter.set_space_enabled,
-                prefs_key=typing_echo_presenter.TypingEchoPresenter.KEY_SPACE,
+                prefs_key=TypingEchoSettings.KEY_SPACE,
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -256,7 +257,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_MODIFIER_KEYS,
                 getter=presenter.get_modifier_keys_enabled,
                 setter=presenter.set_modifier_keys_enabled,
-                prefs_key=typing_echo_presenter.TypingEchoPresenter.KEY_MODIFIER_KEYS,
+                prefs_key=TypingEchoSettings.KEY_MODIFIER_KEYS,
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -264,7 +265,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_FUNCTION_KEYS,
                 getter=presenter.get_function_keys_enabled,
                 setter=presenter.set_function_keys_enabled,
-                prefs_key=typing_echo_presenter.TypingEchoPresenter.KEY_FUNCTION_KEYS,
+                prefs_key=TypingEchoSettings.KEY_FUNCTION_KEYS,
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -272,7 +273,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_ACTION_KEYS,
                 getter=presenter.get_action_keys_enabled,
                 setter=presenter.set_action_keys_enabled,
-                prefs_key=typing_echo_presenter.TypingEchoPresenter.KEY_ACTION_KEYS,
+                prefs_key=TypingEchoSettings.KEY_ACTION_KEYS,
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -280,7 +281,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_NAVIGATION_KEYS,
                 getter=presenter.get_navigation_keys_enabled,
                 setter=presenter.set_navigation_keys_enabled,
-                prefs_key=typing_echo_presenter.TypingEchoPresenter.KEY_NAVIGATION_KEYS,
+                prefs_key=TypingEchoSettings.KEY_NAVIGATION_KEYS,
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -288,7 +289,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_DIACRITICAL_KEYS,
                 getter=presenter.get_diacritical_keys_enabled,
                 setter=presenter.set_diacritical_keys_enabled,
-                prefs_key=typing_echo_presenter.TypingEchoPresenter.KEY_DIACRITICAL_KEYS,
+                prefs_key=TypingEchoSettings.KEY_DIACRITICAL_KEYS,
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -296,21 +297,21 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_CHARACTER,
                 getter=presenter.get_character_echo_enabled,
                 setter=presenter.set_character_echo_enabled,
-                prefs_key=typing_echo_presenter.TypingEchoPresenter.KEY_CHARACTER_ECHO,
+                prefs_key=TypingEchoSettings.KEY_CHARACTER_ECHO,
                 member_of=guilabels.ECHO_TYPING_ECHO,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_WORD,
                 getter=presenter.get_word_echo_enabled,
                 setter=presenter.set_word_echo_enabled,
-                prefs_key=typing_echo_presenter.TypingEchoPresenter.KEY_WORD_ECHO,
+                prefs_key=TypingEchoSettings.KEY_WORD_ECHO,
                 member_of=guilabels.ECHO_TYPING_ECHO,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_SENTENCE,
                 getter=presenter.get_sentence_echo_enabled,
                 setter=presenter.set_sentence_echo_enabled,
-                prefs_key=typing_echo_presenter.TypingEchoPresenter.KEY_SENTENCE_ECHO,
+                prefs_key=TypingEchoSettings.KEY_SENTENCE_ECHO,
                 member_of=guilabels.ECHO_TYPING_ECHO,
             ),
         ]

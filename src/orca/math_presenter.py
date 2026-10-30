@@ -38,6 +38,8 @@ from . import (  # pylint: disable=no-name-in-module
 )
 from .ax_utilities_math import AXUtilitiesMath
 from .extension import Extension
+from .math_presenter_preferences_grid import MathPreferencesGrid
+from .math_presenter_settings import MathSettings
 
 try:
     from . import libmathcat_py  # type: ignore[attr-defined]
@@ -52,8 +54,6 @@ if TYPE_CHECKING:
 
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
-
-    from .math_presenter_preferences_grid import MathPreferencesGrid
 
 
 @gsettings_registry.get_registry().gsettings_enum(
@@ -101,15 +101,6 @@ class MathPresenter(Extension):
     """Provides MathCAT-based math presentation support."""
 
     _SCHEMA = "math-presentation"
-
-    KEY_LANGUAGE = "language"
-    KEY_SPEECH_STYLE = "speech-style"
-    KEY_VERBOSITY = "verbosity"
-    KEY_BRAILLE_CODE = "braille-code"
-    KEY_COPY_FORMAT = "copy-format"
-    KEY_NAV_MODE = "nav-mode"
-    KEY_BRAILLE_NAV_HIGHLIGHT = "braille-nav-highlight"
-    KEY_AUTO_ZOOM_OUT = "auto-zoom-out"
 
     def __init__(self) -> None:
         self._initialized = False
@@ -244,7 +235,7 @@ class MathPresenter(Extension):
         libmathcat_py.SetPreference("AutoZoomOut", str(self.get_auto_zoom_out()).lower())
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_LANGUAGE,
+        key=MathSettings.KEY_LANGUAGE,
         schema="math-presentation",
         gtype="s",
         default="Auto",
@@ -255,7 +246,7 @@ class MathPresenter(Extension):
     def get_language(self) -> str:
         """Returns the current math language setting."""
 
-        return self._get_setting(self.KEY_LANGUAGE, "s", "Auto")
+        return self._get_setting(MathSettings.KEY_LANGUAGE, "s", "Auto")
 
     @dbus_service.setter
     def set_language(self, value: str) -> bool:
@@ -264,7 +255,7 @@ class MathPresenter(Extension):
         tokens = ["MATH PRESENTER: Setting language to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_LANGUAGE, value, "s"
+            self._SCHEMA, MathSettings.KEY_LANGUAGE, value, "s"
         )
         if self._available:
             lang_code = value if value != "Auto" else language_utilities.get_current_language()
@@ -283,7 +274,7 @@ class MathPresenter(Extension):
         return choices
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SPEECH_STYLE,
+        key=MathSettings.KEY_SPEECH_STYLE,
         schema="math-presentation",
         gtype="s",
         default="ClearSpeak",
@@ -294,7 +285,7 @@ class MathPresenter(Extension):
     def get_speech_style(self) -> str:
         """Returns the current math speech style."""
 
-        return self._get_setting(self.KEY_SPEECH_STYLE, "s", "ClearSpeak")
+        return self._get_setting(MathSettings.KEY_SPEECH_STYLE, "s", "ClearSpeak")
 
     @dbus_service.setter
     def set_speech_style(self, value: str) -> bool:
@@ -303,7 +294,7 @@ class MathPresenter(Extension):
         tokens = ["MATH PRESENTER: Setting speech style to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_SPEECH_STYLE, value, "s"
+            self._SCHEMA, MathSettings.KEY_SPEECH_STYLE, value, "s"
         )
         if self._available:
             libmathcat_py.SetPreference("SpeechStyle", value)
@@ -322,7 +313,7 @@ class MathPresenter(Extension):
             return ["ClearSpeak", "SimpleSpeak"]
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_VERBOSITY,
+        key=MathSettings.KEY_VERBOSITY,
         schema="math-presentation",
         gtype="s",
         default="Medium",
@@ -333,7 +324,7 @@ class MathPresenter(Extension):
     def get_verbosity(self) -> str:
         """Returns the current math speech verbosity."""
 
-        return self._get_setting(self.KEY_VERBOSITY, "s", "Medium")
+        return self._get_setting(MathSettings.KEY_VERBOSITY, "s", "Medium")
 
     @dbus_service.setter
     def set_verbosity(self, value: str) -> bool:
@@ -342,14 +333,14 @@ class MathPresenter(Extension):
         tokens = ["MATH PRESENTER: Setting verbosity to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_VERBOSITY, value, "s"
+            self._SCHEMA, MathSettings.KEY_VERBOSITY, value, "s"
         )
         if self._available:
             libmathcat_py.SetPreference("Verbosity", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_BRAILLE_CODE,
+        key=MathSettings.KEY_BRAILLE_CODE,
         schema="math-presentation",
         gtype="s",
         default="Nemeth",
@@ -360,7 +351,7 @@ class MathPresenter(Extension):
     def get_braille_code(self) -> str:
         """Returns the current math braille code."""
 
-        return self._get_setting(self.KEY_BRAILLE_CODE, "s", "Nemeth")
+        return self._get_setting(MathSettings.KEY_BRAILLE_CODE, "s", "Nemeth")
 
     @dbus_service.setter
     def set_braille_code(self, value: str) -> bool:
@@ -369,7 +360,7 @@ class MathPresenter(Extension):
         tokens = ["MATH PRESENTER: Setting braille code to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_BRAILLE_CODE, value, "s"
+            self._SCHEMA, MathSettings.KEY_BRAILLE_CODE, value, "s"
         )
         if self._available:
             libmathcat_py.SetPreference("BrailleCode", value)
@@ -387,7 +378,7 @@ class MathPresenter(Extension):
             return ["Nemeth", "UEB"]
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_COPY_FORMAT,
+        key=MathSettings.KEY_COPY_FORMAT,
         schema="math-presentation",
         genum="org.gnome.Orca.MathCopyFormat",
         default="mathml",
@@ -400,7 +391,7 @@ class MathPresenter(Extension):
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            self.KEY_COPY_FORMAT,
+            MathSettings.KEY_COPY_FORMAT,
             "",
             genum="org.gnome.Orca.MathCopyFormat",
             default="mathml",
@@ -414,13 +405,13 @@ class MathPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_COPY_FORMAT,
+            MathSettings.KEY_COPY_FORMAT,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_NAV_MODE,
+        key=MathSettings.KEY_NAV_MODE,
         schema="math-presentation",
         genum="org.gnome.Orca.MathNavMode",
         default="enhanced",
@@ -433,7 +424,7 @@ class MathPresenter(Extension):
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            self.KEY_NAV_MODE,
+            MathSettings.KEY_NAV_MODE,
             "",
             genum="org.gnome.Orca.MathNavMode",
             default="enhanced",
@@ -447,7 +438,7 @@ class MathPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_NAV_MODE,
+            MathSettings.KEY_NAV_MODE,
             value,
         )
         if self._available:
@@ -456,7 +447,7 @@ class MathPresenter(Extension):
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_BRAILLE_NAV_HIGHLIGHT,
+        key=MathSettings.KEY_BRAILLE_NAV_HIGHLIGHT,
         schema="math-presentation",
         genum="org.gnome.Orca.MathBrailleNavHighlight",
         default="off",
@@ -469,7 +460,7 @@ class MathPresenter(Extension):
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            self.KEY_BRAILLE_NAV_HIGHLIGHT,
+            MathSettings.KEY_BRAILLE_NAV_HIGHLIGHT,
             "",
             genum="org.gnome.Orca.MathBrailleNavHighlight",
             default="off",
@@ -483,7 +474,7 @@ class MathPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_BRAILLE_NAV_HIGHLIGHT,
+            MathSettings.KEY_BRAILLE_NAV_HIGHLIGHT,
             value,
         )
         if self._available:
@@ -497,7 +488,7 @@ class MathPresenter(Extension):
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_AUTO_ZOOM_OUT,
+        key=MathSettings.KEY_AUTO_ZOOM_OUT,
         schema="math-presentation",
         gtype="b",
         default=False,
@@ -510,7 +501,7 @@ class MathPresenter(Extension):
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            self.KEY_AUTO_ZOOM_OUT,
+            MathSettings.KEY_AUTO_ZOOM_OUT,
             "b",
             default=False,
         )
@@ -523,7 +514,7 @@ class MathPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_AUTO_ZOOM_OUT,
+            MathSettings.KEY_AUTO_ZOOM_OUT,
             value,
         )
         if self._available:
@@ -570,9 +561,6 @@ class MathPresenter(Extension):
 
     def create_preferences_grid(self) -> MathPreferencesGrid:
         """Returns the GtkGrid containing the math preferences UI."""
-
-        # pylint: disable-next=import-outside-toplevel
-        from .math_presenter_preferences_grid import MathPreferencesGrid
 
         return MathPreferencesGrid(self)
 

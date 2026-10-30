@@ -48,13 +48,13 @@ from . import (
 from .acss import ACSS
 from .enums import VoiceType
 from .extension import Extension
+from .speech_manager_preferences_grid import VoicesPreferencesGrid, VoiceTypesPreferencesGrid
 from .speechserver import CapitalizationStyle, PunctuationStyle
 
 if TYPE_CHECKING:
     from .command import Command, KeyboardCommand
     from .dbus_service import UInt32
     from .scripts import default
-    from .speech_manager_preferences_grid import VoicesPreferencesGrid, VoiceTypesPreferencesGrid
     from .speechserver import SpeechServer
 
 SPEECH_FACTORY_MODULES: list[str] = ["speechdispatcherfactory", "spiel"]
@@ -2096,18 +2096,12 @@ class SpeechManager(Extension):
     def create_voices_preferences_grid(self, app_name: str = "") -> VoicesPreferencesGrid:
         """Returns the GtkGrid containing the voices preferences UI."""
 
-        # pylint: disable-next=import-outside-toplevel
-        from .speech_manager_preferences_grid import VoicesPreferencesGrid
-
         return VoicesPreferencesGrid(self, app_name=app_name)
 
     def create_voice_types_preferences_grid(
         self, voices_grid: VoicesPreferencesGrid
     ) -> VoiceTypesPreferencesGrid:
         """Returns the GtkGrid containing the voice types preferences UI."""
-
-        # pylint: disable-next=import-outside-toplevel
-        from .speech_manager_preferences_grid import VoiceTypesPreferencesGrid
 
         return VoiceTypesPreferencesGrid(voices_grid)
 

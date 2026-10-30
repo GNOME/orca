@@ -39,13 +39,13 @@ from . import (
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .extension import Extension
+from .sleep_mode_manager_preferences_grid import SleepModePreferencesGrid
 
 if TYPE_CHECKING:
     from gi.repository import Atspi
 
     from .command import Command
     from .scripts import default
-    from .sleep_mode_manager_preferences_grid import SleepModePreferencesGrid
 
 
 @gsettings_registry.get_registry().gsettings_schema(
@@ -154,9 +154,6 @@ class SleepModeManager(Extension):
 
     def create_preferences_grid(self) -> SleepModePreferencesGrid:
         """Returns the preferences grid for sleep mode settings."""
-
-        # pylint: disable-next=import-outside-toplevel
-        from .sleep_mode_manager_preferences_grid import SleepModePreferencesGrid
 
         return SleepModePreferencesGrid(self)
 

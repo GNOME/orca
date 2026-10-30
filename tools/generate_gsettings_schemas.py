@@ -89,10 +89,89 @@ def _collect_class_constants(tree: ast.Module) -> dict[str, Any]:
     return constants
 
 
-def _extract_gsetting_decorators(tree: ast.Module, source_path: str) -> list[dict]:
+def _imported_classes(tree: ast.Module, source_path: Path) -> dict[str, tuple[Path, str]]:
+    """Map each name bound by a top-level 'from .module import Name' to its file and name."""
+
+    imported: dict[str, tuple[Path, str]] = {}
+    for node in tree.body:
+        if not isinstance(node, ast.ImportFrom) or node.level != 1 or not node.module:
+            continue
+        module_path = source_path.parent / f"{node.module}.py"
+        for alias in node.names:
+            imported[alias.asname or alias.name] = (module_path, alias.name)
+    return imported
+
+
+def _names_bound_by(stmt: ast.stmt) -> list[str]:
+    """Return the names a statement directly in a class body binds."""
+
+    if isinstance(stmt, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+        return [stmt.name]
+    if isinstance(stmt, ast.Assign):
+        targets = stmt.targets
+    elif isinstance(stmt, (ast.AnnAssign, ast.AugAssign)):
+        targets = [stmt.target]
+    else:
+        return []
+    return [
+        name.id for target in targets for name in ast.walk(target) if isinstance(name, ast.Name)
+    ]
+
+
+def _resolve_imported_constant(
+    node: ast.Attribute,
+    imported: dict[str, tuple[Path, str]],
+    parsed: dict[Path, ast.Module],
+    source_path: Path,
+) -> Any:
+    """Return the value of ClassName.CONSTANT, with ClassName imported from a sibling module."""
+
+    def unsupported(reason: str) -> ValueError:
+        return ValueError(
+            f"Cannot resolve {ast.unparse(node)} in {source_path}: {reason}. Only "
+            f"ClassName.CONSTANT, with ClassName imported by 'from .module import ClassName' "
+            f"and CONSTANT assigned once to a literal in that class, is supported"
+        )
+
+    if not isinstance(node.value, ast.Name) or node.value.id not in imported:
+        raise unsupported("the class is not imported")
+
+    module_path, class_name = imported[node.value.id]
+    if not module_path.is_file():
+        raise unsupported(f"{module_path.name} is not a sibling file")
+    if module_path not in parsed:
+        parsed[module_path] = ast.parse(module_path.read_text(encoding="utf-8"))
+
+    classes = [
+        stmt
+        for stmt in parsed[module_path].body
+        if isinstance(stmt, ast.ClassDef) and stmt.name == class_name
+    ]
+    if len(classes) != 1:
+        raise unsupported(f"{class_name} is defined {len(classes)} times in {module_path.name}")
+
+    bindings = [stmt for stmt in classes[0].body if node.attr in _names_bound_by(stmt)]
+    if len(bindings) != 1:
+        raise unsupported(f"{node.attr} is bound {len(bindings)} times in {class_name}")
+
+    binding = bindings[0]
+    if (
+        not isinstance(binding, ast.Assign)
+        or len(binding.targets) != 1
+        or not isinstance(binding.targets[0], ast.Name)
+        or not isinstance(binding.value, ast.Constant)
+    ):
+        raise unsupported(f"{node.attr} is not assigned a literal")
+    return binding.value.value
+
+
+def _extract_gsetting_decorators(
+    tree: ast.Module, source_path: Path, parsed: dict[Path, ast.Module]
+) -> list[dict]:
     """Extract @gsetting decorator arguments from a parsed AST."""
 
     class_constants = _collect_class_constants(tree)
+    imported = _imported_classes(tree, source_path)
     settings: list[dict] = []
     for node in ast.walk(tree):
         if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
@@ -117,6 +196,10 @@ def _extract_gsetting_decorators(tree: ast.Module, source_path: str) -> list[dic
                     setting[keyword.arg] = keyword.value.value
                 elif isinstance(keyword.value, ast.Name) and keyword.value.id in class_constants:
                     setting[keyword.arg] = class_constants[keyword.value.id]
+                elif isinstance(keyword.value, ast.Attribute):
+                    setting[keyword.arg] = _resolve_imported_constant(
+                        keyword.value, imported, parsed, source_path
+                    )
                 elif isinstance(keyword.value, ast.Dict):
                     d = {}
                     for k, v in zip(keyword.value.keys, keyword.value.values, strict=True):
@@ -194,6 +277,7 @@ def _discover_schemas(
     all_enums: dict[str, dict[str, int]] = {}
 
     orca_dir = src_dir / "orca"
+    parsed: dict[Path, ast.Module] = {}
     for source_file in sorted(orca_dir.glob("*.py")):
         text = source_file.read_text(encoding="utf-8")
         if "gsetting" not in text:
@@ -209,7 +293,7 @@ def _discover_schemas(
                 )
             schemas[schema_name] = schema_id
 
-        all_settings.extend(_extract_gsetting_decorators(tree, str(source_file)))
+        all_settings.extend(_extract_gsetting_decorators(tree, source_file, parsed))
 
         for enum_id, values in _extract_gsettings_enums(tree).items():
             if enum_id in all_enums and all_enums[enum_id] != values:

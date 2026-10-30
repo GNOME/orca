@@ -24,7 +24,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import flat_review_presenter, guilabels, preferences_grid_base
+from . import guilabels, preferences_grid_base
+from .flat_review_presenter_settings import FlatReviewSettings, FocusTracking
 from .help_metadata import (
     PreferenceCategoryDoc,
     PreferenceControlDoc,
@@ -69,7 +70,7 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "of the application; where flat review resumes depends on this setting."
                     ),
                     schema="flat-review",
-                    key=flat_review_presenter.FlatReviewPresenter.KEY_FOCUS_TRACKING,
+                    key=FlatReviewSettings.KEY_FOCUS_TRACKING,
                     value_docs=(
                         PreferenceValueDoc(
                             label=guilabels.FLAT_REVIEW_FOLLOW_ALWAYS,
@@ -108,7 +109,7 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "of whether the review location follows focus and caret changes."
                     ),
                     schema="flat-review",
-                    key=flat_review_presenter.FlatReviewPresenter.KEY_SPEAK_UPDATES,
+                    key=FlatReviewSettings.KEY_SPEAK_UPDATES,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.FLAT_REVIEW_DISPLAY_UPDATES,
@@ -121,7 +122,7 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "update braille without speaking each change."
                     ),
                     schema="flat-review",
-                    key=flat_review_presenter.FlatReviewPresenter.KEY_DISPLAY_UPDATES,
+                    key=FlatReviewSettings.KEY_DISPLAY_UPDATES,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.FLAT_REVIEW_RESTRICT,
@@ -131,7 +132,7 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "instead of the whole window."
                     ),
                     schema="flat-review",
-                    key=flat_review_presenter.FlatReviewPresenter.KEY_RESTRICTED,
+                    key=FlatReviewSettings.KEY_RESTRICTED,
                 ),
             ),
         )
@@ -146,31 +147,31 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     guilabels.FLAT_REVIEW_FOLLOW_NEVER,
                 ],
                 values=[
-                    flat_review_presenter.FocusTracking.ON.value,
-                    flat_review_presenter.FocusTracking.AUTO.value,
-                    flat_review_presenter.FocusTracking.OFF.value,
+                    FocusTracking.ON.value,
+                    FocusTracking.AUTO.value,
+                    FocusTracking.OFF.value,
                 ],
                 getter=presenter.get_focus_tracking,
                 setter=presenter.set_focus_tracking,
-                prefs_key=flat_review_presenter.FlatReviewPresenter.KEY_FOCUS_TRACKING,
+                prefs_key=FlatReviewSettings.KEY_FOCUS_TRACKING,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.FLAT_REVIEW_SPEAK_UPDATES,
                 getter=presenter.get_speaks_updates,
                 setter=presenter.set_speaks_updates,
-                prefs_key=flat_review_presenter.FlatReviewPresenter.KEY_SPEAK_UPDATES,
+                prefs_key=FlatReviewSettings.KEY_SPEAK_UPDATES,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.FLAT_REVIEW_DISPLAY_UPDATES,
                 getter=presenter.get_displays_updates,
                 setter=presenter.set_displays_updates,
-                prefs_key=flat_review_presenter.FlatReviewPresenter.KEY_DISPLAY_UPDATES,
+                prefs_key=FlatReviewSettings.KEY_DISPLAY_UPDATES,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.FLAT_REVIEW_RESTRICT,
                 getter=presenter.get_is_restricted,
                 setter=presenter.set_is_restricted,
-                prefs_key=flat_review_presenter.FlatReviewPresenter.KEY_RESTRICTED,
+                prefs_key=FlatReviewSettings.KEY_RESTRICTED,
             ),
         ]
         super().__init__(guilabels.FLAT_REVIEW, controls)

@@ -25,12 +25,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import guilabels, preferences_grid_base, spellcheck_presenter
+from . import guilabels, preferences_grid_base
 from .help_metadata import (
     PreferenceCategoryDoc,
     PreferenceControlDoc,
     PreferencePanelDoc,
 )
+from .spellcheck_presenter_settings import SpellCheckSettings
 
 if TYPE_CHECKING:
     from .spellcheck_presenter import SpellCheckPresenter
@@ -66,7 +67,7 @@ class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "Controls whether Orca spells out the current error after speaking it."
                     ),
                     schema="spellcheck",
-                    key=spellcheck_presenter.SpellCheckPresenter.KEY_SPELL_ERROR,
+                    key=SpellCheckSettings.KEY_SPELL_ERROR,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.SPELL_CHECK_SPELL_SUGGESTION,
@@ -75,7 +76,7 @@ class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "Controls whether Orca spells out the current suggestion after speaking it."
                     ),
                     schema="spellcheck",
-                    key=spellcheck_presenter.SpellCheckPresenter.KEY_SPELL_SUGGESTION,
+                    key=SpellCheckSettings.KEY_SPELL_SUGGESTION,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.SPELL_CHECK_PRESENT_CONTEXT,
@@ -85,7 +86,7 @@ class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "mistake occurred."
                     ),
                     schema="spellcheck",
-                    key=spellcheck_presenter.SpellCheckPresenter.KEY_PRESENT_CONTEXT,
+                    key=SpellCheckSettings.KEY_PRESENT_CONTEXT,
                 ),
             ),
         )
@@ -96,19 +97,19 @@ class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.SPELL_CHECK_SPELL_ERROR,
                 getter=presenter.get_spell_error,
                 setter=presenter.set_spell_error,
-                prefs_key=spellcheck_presenter.SpellCheckPresenter.KEY_SPELL_ERROR,
+                prefs_key=SpellCheckSettings.KEY_SPELL_ERROR,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SPELL_CHECK_SPELL_SUGGESTION,
                 getter=presenter.get_spell_suggestion,
                 setter=presenter.set_spell_suggestion,
-                prefs_key=spellcheck_presenter.SpellCheckPresenter.KEY_SPELL_SUGGESTION,
+                prefs_key=SpellCheckSettings.KEY_SPELL_SUGGESTION,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SPELL_CHECK_PRESENT_CONTEXT,
                 getter=presenter.get_present_context,
                 setter=presenter.set_present_context,
-                prefs_key=spellcheck_presenter.SpellCheckPresenter.KEY_PRESENT_CONTEXT,
+                prefs_key=SpellCheckSettings.KEY_PRESENT_CONTEXT,
             ),
         ]
 

@@ -24,13 +24,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import guilabels, preferences_grid_base, say_all_presenter, text_attribute_manager
+from . import guilabels, preferences_grid_base, text_attribute_manager
 from .help_metadata import (
     PreferenceCategoryDoc,
     PreferenceControlDoc,
     PreferencePanelDoc,
     PreferenceValueDoc,
 )
+from .say_all_presenter_settings import SayAllSettings, SayAllStyle
 
 if TYPE_CHECKING:
     from .say_all_presenter import SayAllPresenter
@@ -68,16 +69,16 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "this controls whether it reads by sentence or by line."
                     ),
                     schema="say-all",
-                    key=say_all_presenter.SayAllPresenter.KEY_STYLE,
+                    key=SayAllSettings.KEY_STYLE,
                     value_docs=(
                         PreferenceValueDoc(
                             label=guilabels.SAY_ALL_STYLE_SENTENCE,
-                            value=say_all_presenter.SayAllStyle.SENTENCE.string_name,
+                            value=SayAllStyle.SENTENCE.string_name,
                             summary="Reads a sentence at a time.",
                         ),
                         PreferenceValueDoc(
                             label=guilabels.SAY_ALL_STYLE_LINE,
-                            value=say_all_presenter.SayAllStyle.LINE.string_name,
+                            value=SayAllStyle.LINE.string_name,
                             summary="Reads a line at a time.",
                         ),
                     ),
@@ -90,7 +91,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "and change announcements."
                     ),
                     schema="say-all",
-                    key=say_all_presenter.SayAllPresenter.KEY_ONLY_SPEAK_DISPLAYED_TEXT,
+                    key=SayAllSettings.KEY_ONLY_SPEAK_DISPLAYED_TEXT,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY,
@@ -108,7 +109,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "fast-forward during Say All instead of interrupting it."
                             ),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_REWIND_AND_FAST_FORWARD,
+                            key=SayAllSettings.KEY_REWIND_AND_FAST_FORWARD,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.SAY_ALL_STRUCTURAL_NAVIGATION,
@@ -119,7 +120,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "continues presentation from there."
                             ),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_STRUCTURAL_NAVIGATION,
+                            key=SayAllSettings.KEY_STRUCTURAL_NAVIGATION,
                         ),
                     ),
                 ),
@@ -139,7 +140,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "insertions, deletions, highlights, and suggestions."
                             ),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_TRACKED_CHANGES,
+                            key=SayAllSettings.KEY_ANNOUNCE_TRACKED_CHANGES,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.TEXT_ATTRIBUTE_CHANGES,
@@ -151,7 +152,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "the attribute list used by the explicit formatting command."
                             ),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
+                            key=SayAllSettings.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
                             value_docs=(
                                 PreferenceValueDoc(
                                     label=guilabels.TEXT_ATTRIBUTE_CHANGES_OFF,
@@ -185,21 +186,21 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             kind="switch",
                             summary=("Controls whether Orca announces articles."),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_ARTICLE,
+                            key=SayAllSettings.KEY_ANNOUNCE_ARTICLE,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_BLOCKQUOTES,
                             kind="switch",
                             summary=("Controls whether Orca announces blockquotes."),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_BLOCKQUOTE,
+                            key=SayAllSettings.KEY_ANNOUNCE_BLOCKQUOTE,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_CODE_BLOCKS,
                             kind="switch",
                             summary=("Controls whether Orca announces code blocks."),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_CODE_BLOCK,
+                            key=SayAllSettings.KEY_ANNOUNCE_CODE_BLOCK,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_EMBEDDED_DOCUMENTS,
@@ -209,21 +210,21 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "application."
                             ),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_DOCUMENT,
+                            key=SayAllSettings.KEY_ANNOUNCE_DOCUMENT,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_FORMS,
                             kind="switch",
                             summary=("Controls whether Orca announces forms."),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_FORM,
+                            key=SayAllSettings.KEY_ANNOUNCE_FORM,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_HEADERS_AND_FOOTERS,
                             kind="switch",
                             summary=("Controls whether Orca announces headers and footers."),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_HEADER_AND_FOOTER,
+                            key=SayAllSettings.KEY_ANNOUNCE_HEADER_AND_FOOTER,
                             since="52",
                         ),
                         PreferenceControlDoc(
@@ -231,7 +232,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             kind="switch",
                             summary=("Controls whether Orca announces inline code."),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_INLINE_CODE,
+                            key=SayAllSettings.KEY_ANNOUNCE_INLINE_CODE,
                             since="52",
                         ),
                         PreferenceControlDoc(
@@ -242,28 +243,28 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "of a page such as navigation or main content."
                             ),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_LANDMARK,
+                            key=SayAllSettings.KEY_ANNOUNCE_LANDMARK,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_LISTS,
                             kind="switch",
                             summary=("Controls whether Orca announces lists."),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_LIST,
+                            key=SayAllSettings.KEY_ANNOUNCE_LIST,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_PANELS,
                             kind="switch",
                             summary=("Controls whether Orca announces panels."),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_GROUPING,
+                            key=SayAllSettings.KEY_ANNOUNCE_GROUPING,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_TABLES,
                             kind="switch",
                             summary=("Controls whether Orca announces tables."),
                             schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_TABLE,
+                            key=SayAllSettings.KEY_ANNOUNCE_TABLE,
                         ),
                     ),
                 ),
@@ -275,7 +276,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             label=guilabels.SPEECH_ONLY_SPEAK_DISPLAYED_TEXT,
             getter=presenter.get_only_speak_displayed_text,
             setter=presenter.set_only_speak_displayed_text,
-            prefs_key=say_all_presenter.SayAllPresenter.KEY_ONLY_SPEAK_DISPLAYED_TEXT,
+            prefs_key=SayAllSettings.KEY_ONLY_SPEAK_DISPLAYED_TEXT,
         )
 
         controls: list[preferences_grid_base.ControlType] = [
@@ -283,33 +284,33 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.SAY_ALL_BY,
                 options=[guilabels.SAY_ALL_STYLE_SENTENCE, guilabels.SAY_ALL_STYLE_LINE],
                 values=[
-                    say_all_presenter.SayAllStyle.SENTENCE.value,
-                    say_all_presenter.SayAllStyle.LINE.value,
+                    SayAllStyle.SENTENCE.value,
+                    SayAllStyle.LINE.value,
                 ],
                 getter=presenter.get_style_as_int,
                 setter=presenter.set_style_from_int,
-                prefs_key=say_all_presenter.SayAllPresenter.KEY_STYLE,
+                prefs_key=SayAllSettings.KEY_STYLE,
             ),
             self._only_speak_displayed_control,
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SAY_ALL_UP_AND_DOWN_ARROW,
                 getter=presenter.get_rewind_and_fast_forward_enabled,
                 setter=presenter.set_rewind_and_fast_forward_enabled,
-                prefs_key=say_all_presenter.SayAllPresenter.KEY_REWIND_AND_FAST_FORWARD,
+                prefs_key=SayAllSettings.KEY_REWIND_AND_FAST_FORWARD,
                 member_of=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SAY_ALL_STRUCTURAL_NAVIGATION,
                 getter=presenter.get_structural_navigation_enabled,
                 setter=presenter.set_structural_navigation_enabled,
-                prefs_key=say_all_presenter.SayAllPresenter.KEY_STRUCTURAL_NAVIGATION,
+                prefs_key=SayAllSettings.KEY_STRUCTURAL_NAVIGATION,
                 member_of=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_TRACKED_CHANGES,
                 getter=presenter.get_announce_tracked_changes,
                 setter=presenter.set_announce_tracked_changes,
-                prefs_key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_TRACKED_CHANGES,
+                prefs_key=SayAllSettings.KEY_ANNOUNCE_TRACKED_CHANGES,
                 member_of=guilabels.CHANGE_ANNOUNCEMENTS,
                 determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
@@ -327,7 +328,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 ],
                 getter=presenter.get_text_attribute_change_mode_as_int,
                 setter=presenter.set_text_attribute_change_mode_from_int,
-                prefs_key=say_all_presenter.SayAllPresenter.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
+                prefs_key=SayAllSettings.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
                 member_of=guilabels.CHANGE_ANNOUNCEMENTS,
                 determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
@@ -345,31 +346,31 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         guilabels.ANNOUNCE_ARTICLES,
                         presenter.get_announce_article,
                         presenter.set_announce_article,
-                        say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_ARTICLE,
+                        SayAllSettings.KEY_ANNOUNCE_ARTICLE,
                     ),
                     (
                         guilabels.ANNOUNCE_BLOCKQUOTES,
                         presenter.get_announce_blockquote,
                         presenter.set_announce_blockquote,
-                        say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_BLOCKQUOTE,
+                        SayAllSettings.KEY_ANNOUNCE_BLOCKQUOTE,
                     ),
                     (
                         guilabels.ANNOUNCE_CODE_BLOCKS,
                         presenter.get_announce_code_block,
                         presenter.set_announce_code_block,
-                        say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_CODE_BLOCK,
+                        SayAllSettings.KEY_ANNOUNCE_CODE_BLOCK,
                     ),
                     (
                         guilabels.ANNOUNCE_EMBEDDED_DOCUMENTS,
                         presenter.get_announce_document,
                         presenter.set_announce_document,
-                        say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_DOCUMENT,
+                        SayAllSettings.KEY_ANNOUNCE_DOCUMENT,
                     ),
                     (
                         guilabels.ANNOUNCE_FORMS,
                         presenter.get_announce_form,
                         presenter.set_announce_form,
-                        say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_FORM,
+                        SayAllSettings.KEY_ANNOUNCE_FORM,
                     ),
                     *(
                         (
@@ -377,7 +378,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 guilabels.ANNOUNCE_HEADERS_AND_FOOTERS,
                                 presenter.get_announce_header_and_footer,
                                 presenter.set_announce_header_and_footer,
-                                say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_HEADER_AND_FOOTER,
+                                SayAllSettings.KEY_ANNOUNCE_HEADER_AND_FOOTER,
                             ),
                         )
                         if presenter.get_header_and_footer_available()
@@ -389,7 +390,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 guilabels.ANNOUNCE_INLINE_CODE,
                                 presenter.get_announce_inline_code,
                                 presenter.set_announce_inline_code,
-                                say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_INLINE_CODE,
+                                SayAllSettings.KEY_ANNOUNCE_INLINE_CODE,
                             ),
                         )
                         if presenter.get_inline_code_available()
@@ -399,25 +400,25 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         guilabels.ANNOUNCE_LANDMARKS,
                         presenter.get_announce_landmark,
                         presenter.set_announce_landmark,
-                        say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_LANDMARK,
+                        SayAllSettings.KEY_ANNOUNCE_LANDMARK,
                     ),
                     (
                         guilabels.ANNOUNCE_LISTS,
                         presenter.get_announce_list,
                         presenter.set_announce_list,
-                        say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_LIST,
+                        SayAllSettings.KEY_ANNOUNCE_LIST,
                     ),
                     (
                         guilabels.ANNOUNCE_PANELS,
                         presenter.get_announce_grouping,
                         presenter.set_announce_grouping,
-                        say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_GROUPING,
+                        SayAllSettings.KEY_ANNOUNCE_GROUPING,
                     ),
                     (
                         guilabels.ANNOUNCE_TABLES,
                         presenter.get_announce_table,
                         presenter.set_announce_table,
-                        say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_TABLE,
+                        SayAllSettings.KEY_ANNOUNCE_TABLE,
                     ),
                 ]
             ],

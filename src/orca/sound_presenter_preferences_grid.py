@@ -29,7 +29,6 @@ from . import (
     guilabels,
     orca_gui_helpers,
     preferences_grid_base,
-    sound_presenter,
 )
 from .help_metadata import (
     PreferenceCategoryDoc,
@@ -37,6 +36,7 @@ from .help_metadata import (
     PreferencePanelDoc,
     PreferenceValueDoc,
 )
+from .sound_presenter_settings import ProgressBarVerbosity, SoundSettings
 
 if TYPE_CHECKING:
     import gi
@@ -64,7 +64,7 @@ class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid
                     kind="switch",
                     summary="Controls whether Orca periodically beeps for progress-bar updates.",
                     schema="sound",
-                    key=sound_presenter.SoundPresenter.KEY_BEEP_PROGRESS_BAR_UPDATES,
+                    key=SoundSettings.KEY_BEEP_PROGRESS_BAR_UPDATES,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.GENERAL_FREQUENCY_SECS,
@@ -74,7 +74,7 @@ class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid
                         "progress bar. Zero removes this minimum delay."
                     ),
                     schema="sound",
-                    key=sound_presenter.SoundPresenter.KEY_PROGRESS_BAR_BEEP_INTERVAL,
+                    key=SoundSettings.KEY_PROGRESS_BAR_BEEP_INTERVAL,
                     minimum="0",
                     maximum="100",
                 ),
@@ -83,7 +83,7 @@ class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid
                     kind="choice",
                     summary=("Selects which progress bars provide updates."),
                     schema="sound",
-                    key=sound_presenter.SoundPresenter.KEY_PROGRESS_BAR_BEEP_VERBOSITY,
+                    key=SoundSettings.KEY_PROGRESS_BAR_BEEP_VERBOSITY,
                     value_docs=(
                         PreferenceValueDoc(
                             label=guilabels.PROGRESS_BAR_ALL,
@@ -108,13 +108,13 @@ class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid
                 label=guilabels.GENERAL_BEEP_UPDATES,
                 getter=presenter.get_beep_progress_bar_updates,
                 setter=presenter.set_beep_progress_bar_updates,
-                prefs_key=sound_presenter.SoundPresenter.KEY_BEEP_PROGRESS_BAR_UPDATES,
+                prefs_key=SoundSettings.KEY_BEEP_PROGRESS_BAR_UPDATES,
             ),
             preferences_grid_base.IntRangePreferenceControl(
                 label=guilabels.GENERAL_FREQUENCY_SECS,
                 getter=presenter.get_progress_bar_beep_interval,
                 setter=presenter.set_progress_bar_beep_interval,
-                prefs_key=sound_presenter.SoundPresenter.KEY_PROGRESS_BAR_BEEP_INTERVAL,
+                prefs_key=SoundSettings.KEY_PROGRESS_BAR_BEEP_INTERVAL,
                 minimum=0,
                 maximum=100,
             ),
@@ -122,16 +122,16 @@ class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid
                 label=guilabels.GENERAL_APPLIES_TO,
                 getter=presenter.get_progress_bar_beep_verbosity,
                 setter=presenter.set_progress_bar_beep_verbosity,
-                prefs_key=sound_presenter.SoundPresenter.KEY_PROGRESS_BAR_BEEP_VERBOSITY,
+                prefs_key=SoundSettings.KEY_PROGRESS_BAR_BEEP_VERBOSITY,
                 options=[
                     guilabels.PROGRESS_BAR_ALL,
                     guilabels.PROGRESS_BAR_APPLICATION,
                     guilabels.PROGRESS_BAR_WINDOW,
                 ],
                 values=[
-                    sound_presenter.ProgressBarVerbosity.ALL.value,
-                    sound_presenter.ProgressBarVerbosity.APPLICATION.value,
-                    sound_presenter.ProgressBarVerbosity.WINDOW.value,
+                    ProgressBarVerbosity.ALL.value,
+                    ProgressBarVerbosity.APPLICATION.value,
+                    ProgressBarVerbosity.WINDOW.value,
                 ],
             ),
         ]
@@ -166,14 +166,14 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     kind="switch",
                     summary="Turns sound output on or off.",
                     schema="sound",
-                    key=sound_presenter.SoundPresenter.KEY_ENABLED,
+                    key=SoundSettings.KEY_ENABLED,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.SOUND_VOLUME,
                     kind="number",
                     summary="Sets the volume for Orca sounds.",
                     schema="sound",
-                    key=sound_presenter.SoundPresenter.KEY_VOLUME,
+                    key=SoundSettings.KEY_VOLUME,
                     minimum="0.0",
                     maximum="1.0",
                 ),

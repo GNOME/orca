@@ -23,7 +23,6 @@ from __future__ import annotations
 
 from collections import deque
 from dataclasses import dataclass
-from enum import Enum
 from typing import TYPE_CHECKING
 
 from . import (
@@ -43,6 +42,8 @@ from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .chat_presenter_preferences_grid import ChatPreferencesGrid
+from .chat_presenter_settings import ChatMessageVerbosity, ChatSettings
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -50,29 +51,9 @@ if TYPE_CHECKING:
 
     from gi.repository import Atspi
 
-    from .chat_presenter_preferences_grid import ChatPreferencesGrid
     from .command import Command
     from .dbus_service import UInt32
     from .scripts import default
-
-
-@gsettings_registry.get_registry().gsettings_enum(
-    "org.gnome.Orca.ChatMessageVerbosity",
-    values={"all": 0, "all-if-focused": 1, "focused-channel": 2, "active-channel": 3},
-)
-class ChatMessageVerbosity(Enum):
-    """Chat message verbosity level enumeration."""
-
-    ALL_ANY_APP = 0
-    ALL_ACTIVE_APP = 1
-    CURRENT_ACTIVE_APP = 2
-    CURRENT_ANY_APP = 3
-
-    @property
-    def string_name(self) -> str:
-        """Returns the lowercase string name for this enum value."""
-
-        return self.name.lower().replace("_", "-")
 
 
 class Conversation:
@@ -365,11 +346,6 @@ class ChatPresenter(Extension):
     """Presenter for chat preferences and commands."""
 
     _SCHEMA = "chat"
-    KEY_SPEAK_ROOM_NAME = "speak-room-name"
-    KEY_SPEAK_ROOM_NAME_LAST = "speak-room-name-last"
-    KEY_ANNOUNCE_BUDDY_TYPING = "announce-buddy-typing"
-    KEY_ROOM_HISTORIES = "room-histories"
-    KEY_MESSAGE_VERBOSITY = "message-verbosity"
 
     def _get_setting(self, key: str, default: bool) -> bool:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -388,9 +364,6 @@ class ChatPresenter(Extension):
 
     def create_preferences_grid(self) -> ChatPreferencesGrid:
         """Create and return the chat preferences grid."""
-
-        # pylint: disable-next=import-outside-toplevel
-        from .chat_presenter_preferences_grid import ChatPreferencesGrid
 
         return ChatPreferencesGrid(self)
 
@@ -605,7 +578,7 @@ class ChatPresenter(Extension):
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SPEAK_ROOM_NAME,
+        key=ChatSettings.KEY_SPEAK_ROOM_NAME,
         schema="chat",
         gtype="b",
         default=False,
@@ -619,7 +592,7 @@ class ChatPresenter(Extension):
         app_name = AXObject.get_name(app) if app else None
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            self.KEY_SPEAK_ROOM_NAME,
+            ChatSettings.KEY_SPEAK_ROOM_NAME,
             "b",
             app_name=app_name,
             default=False,
@@ -630,12 +603,12 @@ class ChatPresenter(Extension):
         """Sets whether to speak the chat room name."""
 
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_SPEAK_ROOM_NAME, value
+            self._SCHEMA, ChatSettings.KEY_SPEAK_ROOM_NAME, value
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ANNOUNCE_BUDDY_TYPING,
+        key=ChatSettings.KEY_ANNOUNCE_BUDDY_TYPING,
         schema="chat",
         gtype="b",
         default=False,
@@ -646,7 +619,7 @@ class ChatPresenter(Extension):
     def get_announce_buddy_typing(self) -> bool:
         """Returns whether to announce when buddies are typing."""
 
-        return self._get_setting(self.KEY_ANNOUNCE_BUDDY_TYPING, False)
+        return self._get_setting(ChatSettings.KEY_ANNOUNCE_BUDDY_TYPING, False)
 
     @dbus_service.setter
     def set_announce_buddy_typing(self, value: bool) -> bool:
@@ -654,13 +627,13 @@ class ChatPresenter(Extension):
 
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_ANNOUNCE_BUDDY_TYPING,
+            ChatSettings.KEY_ANNOUNCE_BUDDY_TYPING,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ROOM_HISTORIES,
+        key=ChatSettings.KEY_ROOM_HISTORIES,
         schema="chat",
         gtype="b",
         default=False,
@@ -671,19 +644,19 @@ class ChatPresenter(Extension):
     def get_room_histories(self) -> bool:
         """Returns whether to provide chat room specific message histories."""
 
-        return self._get_setting(self.KEY_ROOM_HISTORIES, False)
+        return self._get_setting(ChatSettings.KEY_ROOM_HISTORIES, False)
 
     @dbus_service.setter
     def set_room_histories(self, value: bool) -> bool:
         """Sets whether to provide chat room specific message histories."""
 
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_ROOM_HISTORIES, value
+            self._SCHEMA, ChatSettings.KEY_ROOM_HISTORIES, value
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_MESSAGE_VERBOSITY,
+        key=ChatSettings.KEY_MESSAGE_VERBOSITY,
         schema="chat",
         genum="org.gnome.Orca.ChatMessageVerbosity",
         default="all",
@@ -697,7 +670,7 @@ class ChatPresenter(Extension):
         app_name = AXObject.get_name(app) if app else None
         nick = gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            self.KEY_MESSAGE_VERBOSITY,
+            ChatSettings.KEY_MESSAGE_VERBOSITY,
             "",
             genum="org.gnome.Orca.ChatMessageVerbosity",
             app_name=app_name,
@@ -716,13 +689,13 @@ class ChatPresenter(Extension):
 
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_MESSAGE_VERBOSITY,
+            ChatSettings.KEY_MESSAGE_VERBOSITY,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SPEAK_ROOM_NAME_LAST,
+        key=ChatSettings.KEY_SPEAK_ROOM_NAME_LAST,
         schema="chat",
         gtype="b",
         default=False,
@@ -733,7 +706,7 @@ class ChatPresenter(Extension):
     def get_speak_room_name_last(self) -> bool:
         """Returns whether to speak the chat room name after the message."""
 
-        return self._get_setting(self.KEY_SPEAK_ROOM_NAME_LAST, False)
+        return self._get_setting(ChatSettings.KEY_SPEAK_ROOM_NAME_LAST, False)
 
     @dbus_service.setter
     def set_speak_room_name_last(self, value: bool) -> bool:
@@ -741,7 +714,7 @@ class ChatPresenter(Extension):
 
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_SPEAK_ROOM_NAME_LAST,
+            ChatSettings.KEY_SPEAK_ROOM_NAME_LAST,
             value,
         )
         return True

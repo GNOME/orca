@@ -24,12 +24,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import guilabels, math_presenter, preferences_grid_base
+from . import guilabels, preferences_grid_base
 from .help_metadata import (
     PreferenceControlDoc,
     PreferencePanelDoc,
     PreferenceValueDoc,
 )
+from .math_presenter_settings import MathSettings
 
 if TYPE_CHECKING:
     from .math_presenter import MathPresenter
@@ -55,7 +56,7 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     kind="choice",
                     summary="Selects the language Orca uses for math presentation.",
                     schema="math-presentation",
-                    key=math_presenter.MathPresenter.KEY_LANGUAGE,
+                    key=MathSettings.KEY_LANGUAGE,
                     dynamic_values=True,
                 ),
                 PreferenceControlDoc(
@@ -63,7 +64,7 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     kind="choice",
                     summary="Selects the style Orca uses when speaking math.",
                     schema="math-presentation",
-                    key=math_presenter.MathPresenter.KEY_SPEECH_STYLE,
+                    key=MathSettings.KEY_SPEECH_STYLE,
                     dynamic_values=True,
                 ),
                 PreferenceControlDoc(
@@ -71,7 +72,7 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     kind="choice",
                     summary="Selects how much detail Orca speaks for math.",
                     schema="math-presentation",
-                    key=math_presenter.MathPresenter.KEY_VERBOSITY,
+                    key=MathSettings.KEY_VERBOSITY,
                     value_docs=(
                         PreferenceValueDoc(
                             label=guilabels.MATH_VERBOSITY_TERSE,
@@ -95,7 +96,7 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     kind="choice",
                     summary=("Selects the braille code Orca uses for mathematical expressions."),
                     schema="math-presentation",
-                    key=math_presenter.MathPresenter.KEY_BRAILLE_CODE,
+                    key=MathSettings.KEY_BRAILLE_CODE,
                     dynamic_values=True,
                 ),
                 PreferenceControlDoc(
@@ -103,7 +104,7 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     kind="choice",
                     summary="Selects the format used when copying math content.",
                     schema="math-presentation",
-                    key=math_presenter.MathPresenter.KEY_COPY_FORMAT,
+                    key=MathSettings.KEY_COPY_FORMAT,
                     values=("MathML", "LaTeX", "ASCIIMath", guilabels.SPEECH),
                 ),
                 PreferenceControlDoc(
@@ -111,7 +112,7 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     kind="choice",
                     summary="Selects how Orca moves through math during navigation.",
                     schema="math-presentation",
-                    key=math_presenter.MathPresenter.KEY_NAV_MODE,
+                    key=MathSettings.KEY_NAV_MODE,
                     value_docs=(
                         PreferenceValueDoc(
                             label=guilabels.MATH_NAV_MODE_ENHANCED,
@@ -135,7 +136,7 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     kind="choice",
                     summary=("Selects how Orca marks the current math position in braille."),
                     schema="math-presentation",
-                    key=math_presenter.MathPresenter.KEY_BRAILLE_NAV_HIGHLIGHT,
+                    key=MathSettings.KEY_BRAILLE_NAV_HIGHLIGHT,
                     value_docs=(
                         PreferenceValueDoc(
                             label=guilabels.MATH_BRAILLE_HIGHLIGHT_NONE,
@@ -167,7 +168,7 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "structure when you navigate past its edge."
                     ),
                     schema="math-presentation",
-                    key=math_presenter.MathPresenter.KEY_AUTO_ZOOM_OUT,
+                    key=MathSettings.KEY_AUTO_ZOOM_OUT,
                 ),
             ),
         )
@@ -189,7 +190,7 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=languages,
                 getter=presenter.get_language,
                 setter=presenter.set_language,
-                prefs_key=math_presenter.MathPresenter.KEY_LANGUAGE,
+                prefs_key=MathSettings.KEY_LANGUAGE,
             ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.MATH_SPEECH_STYLE,
@@ -197,7 +198,7 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=speech_styles,
                 getter=presenter.get_speech_style,
                 setter=presenter.set_speech_style,
-                prefs_key=math_presenter.MathPresenter.KEY_SPEECH_STYLE,
+                prefs_key=MathSettings.KEY_SPEECH_STYLE,
             ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.VERBOSITY,
@@ -205,7 +206,7 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=verbosity_values,
                 getter=presenter.get_verbosity,
                 setter=presenter.set_verbosity,
-                prefs_key=math_presenter.MathPresenter.KEY_VERBOSITY,
+                prefs_key=MathSettings.KEY_VERBOSITY,
             ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.MATH_BRAILLE_CODE,
@@ -213,7 +214,7 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=braille_codes,
                 getter=presenter.get_braille_code,
                 setter=presenter.set_braille_code,
-                prefs_key=math_presenter.MathPresenter.KEY_BRAILLE_CODE,
+                prefs_key=MathSettings.KEY_BRAILLE_CODE,
             ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.MATH_COPY_FORMAT,
@@ -221,7 +222,7 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=["mathml", "latex", "asciimath", "speech"],
                 getter=presenter.get_copy_format,
                 setter=presenter.set_copy_format,
-                prefs_key=math_presenter.MathPresenter.KEY_COPY_FORMAT,
+                prefs_key=MathSettings.KEY_COPY_FORMAT,
             ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.MATH_NAV_MODE,
@@ -233,7 +234,7 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=["enhanced", "simple", "character"],
                 getter=presenter.get_nav_mode,
                 setter=presenter.set_nav_mode,
-                prefs_key=math_presenter.MathPresenter.KEY_NAV_MODE,
+                prefs_key=MathSettings.KEY_NAV_MODE,
             ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.MATH_BRAILLE_NAV_HIGHLIGHT,
@@ -246,13 +247,13 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=["off", "first-char", "end-points", "all"],
                 getter=presenter.get_braille_nav_highlight,
                 setter=presenter.set_braille_nav_highlight,
-                prefs_key=math_presenter.MathPresenter.KEY_BRAILLE_NAV_HIGHLIGHT,
+                prefs_key=MathSettings.KEY_BRAILLE_NAV_HIGHLIGHT,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.MATH_AUTO_ZOOM_OUT,
                 getter=presenter.get_auto_zoom_out,
                 setter=presenter.set_auto_zoom_out,
-                prefs_key=math_presenter.MathPresenter.KEY_AUTO_ZOOM_OUT,
+                prefs_key=MathSettings.KEY_AUTO_ZOOM_OUT,
             ),
         ]
         super().__init__(guilabels.MATH_PRESENTATION, controls)

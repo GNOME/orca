@@ -48,9 +48,11 @@ from orca.ax_object import AXObject
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
+from .spellcheck_presenter_preferences_grid import SpellCheckPreferencesGrid
+from .spellcheck_presenter_settings import SpellCheckSettings
+
 if TYPE_CHECKING:
     from .scripts import default
-    from .spellcheck_presenter_preferences_grid import SpellCheckPreferencesGrid
 
 
 @dataclass
@@ -86,9 +88,6 @@ class SpellCheckPresenter:
     """Singleton presenter for spell check support and preferences."""
 
     _SCHEMA = "spellcheck"
-    KEY_SPELL_ERROR = "spell-error"
-    KEY_SPELL_SUGGESTION = "spell-suggestion"
-    KEY_PRESENT_CONTEXT = "present-context"
 
     def _get_setting(self, key: str, default: bool) -> bool:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -112,7 +111,7 @@ class SpellCheckPresenter:
         controller.register_decorated_module("SpellCheckPresenter", self)
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SPELL_ERROR,
+        key=SpellCheckSettings.KEY_SPELL_ERROR,
         schema="spellcheck",
         gtype="b",
         default=True,
@@ -123,7 +122,7 @@ class SpellCheckPresenter:
     def get_spell_error(self) -> bool:
         """Returns whether misspelled word should be spelled."""
 
-        return self._get_setting(self.KEY_SPELL_ERROR, True)
+        return self._get_setting(SpellCheckSettings.KEY_SPELL_ERROR, True)
 
     @dbus_service.setter
     def set_spell_error(self, value: bool) -> bool:
@@ -135,12 +134,12 @@ class SpellCheckPresenter:
         tokens = ["SPELLCHECK PRESENTER: Setting spell error to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_SPELL_ERROR, value
+            self._SCHEMA, SpellCheckSettings.KEY_SPELL_ERROR, value
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SPELL_SUGGESTION,
+        key=SpellCheckSettings.KEY_SPELL_SUGGESTION,
         schema="spellcheck",
         gtype="b",
         default=True,
@@ -151,7 +150,7 @@ class SpellCheckPresenter:
     def get_spell_suggestion(self) -> bool:
         """Returns whether the suggested correction should be spelled."""
 
-        return self._get_setting(self.KEY_SPELL_SUGGESTION, True)
+        return self._get_setting(SpellCheckSettings.KEY_SPELL_SUGGESTION, True)
 
     @dbus_service.setter
     def set_spell_suggestion(self, value: bool) -> bool:
@@ -163,12 +162,12 @@ class SpellCheckPresenter:
         tokens = ["SPELLCHECK PRESENTER: Setting spell suggestion to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_SPELL_SUGGESTION, value
+            self._SCHEMA, SpellCheckSettings.KEY_SPELL_SUGGESTION, value
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_PRESENT_CONTEXT,
+        key=SpellCheckSettings.KEY_PRESENT_CONTEXT,
         schema="spellcheck",
         gtype="b",
         default=True,
@@ -179,7 +178,7 @@ class SpellCheckPresenter:
     def get_present_context(self) -> bool:
         """Returns whether to present the context/surrounding sentence."""
 
-        return self._get_setting(self.KEY_PRESENT_CONTEXT, True)
+        return self._get_setting(SpellCheckSettings.KEY_PRESENT_CONTEXT, True)
 
     @dbus_service.setter
     def set_present_context(self, value: bool) -> bool:
@@ -191,15 +190,12 @@ class SpellCheckPresenter:
         tokens = ["SPELLCHECK PRESENTER: Setting present context to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_PRESENT_CONTEXT, value
+            self._SCHEMA, SpellCheckSettings.KEY_PRESENT_CONTEXT, value
         )
         return True
 
     def create_preferences_grid(self) -> SpellCheckPreferencesGrid:
         """Create and return the spell check preferences grid."""
-
-        # pylint: disable-next=import-outside-toplevel
-        from .spellcheck_presenter_preferences_grid import SpellCheckPreferencesGrid
 
         return SpellCheckPreferencesGrid(self)
 

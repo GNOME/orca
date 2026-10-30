@@ -23,7 +23,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import chat_presenter, guilabels, preferences_grid_base
+from . import guilabels, preferences_grid_base
+from .chat_presenter_settings import ChatMessageVerbosity, ChatSettings
 from .help_metadata import (
     PreferenceCategoryDoc,
     PreferenceControlDoc,
@@ -67,7 +68,7 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "messages, unless the message came from the focused conversation."
                     ),
                     schema="chat",
-                    key=chat_presenter.ChatPresenter.KEY_SPEAK_ROOM_NAME,
+                    key=ChatSettings.KEY_SPEAK_ROOM_NAME,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.CHAT_SPEAK_ROOM_NAME_LAST,
@@ -77,7 +78,7 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "instead of before it."
                     ),
                     schema="chat",
-                    key=chat_presenter.ChatPresenter.KEY_SPEAK_ROOM_NAME_LAST,
+                    key=ChatSettings.KEY_SPEAK_ROOM_NAME_LAST,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.CHAT_ANNOUNCE_BUDDY_TYPING,
@@ -87,7 +88,7 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "the chat application provides that information."
                     ),
                     schema="chat",
-                    key=chat_presenter.ChatPresenter.KEY_ANNOUNCE_BUDDY_TYPING,
+                    key=ChatSettings.KEY_ANNOUNCE_BUDDY_TYPING,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.CHAT_SEPARATE_MESSAGE_HISTORIES,
@@ -97,14 +98,14 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "each conversation."
                     ),
                     schema="chat",
-                    key=chat_presenter.ChatPresenter.KEY_ROOM_HISTORIES,
+                    key=ChatSettings.KEY_ROOM_HISTORIES,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.CHAT_SPEAK_MESSAGES_FROM,
                     kind="choice",
                     summary="Controls which incoming chat messages Orca speaks automatically.",
                     schema="chat",
-                    key=chat_presenter.ChatPresenter.KEY_MESSAGE_VERBOSITY,
+                    key=ChatSettings.KEY_MESSAGE_VERBOSITY,
                     value_docs=(
                         PreferenceValueDoc(
                             label=guilabels.CHAT_SPEAK_MESSAGES_ALL,
@@ -151,10 +152,10 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             guilabels.CHAT_SPEAK_MESSAGES_ACTIVE,
         ]
         values = [
-            chat_presenter.ChatMessageVerbosity.ALL_ANY_APP.value,
-            chat_presenter.ChatMessageVerbosity.CURRENT_ANY_APP.value,
-            chat_presenter.ChatMessageVerbosity.ALL_ACTIVE_APP.value,
-            chat_presenter.ChatMessageVerbosity.CURRENT_ACTIVE_APP.value,
+            ChatMessageVerbosity.ALL_ANY_APP.value,
+            ChatMessageVerbosity.CURRENT_ANY_APP.value,
+            ChatMessageVerbosity.ALL_ACTIVE_APP.value,
+            ChatMessageVerbosity.CURRENT_ACTIVE_APP.value,
         ]
 
         controls: list[
@@ -165,26 +166,26 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.CHAT_SPEAK_ROOM_NAME,
                 getter=presenter.get_speak_room_name,
                 setter=presenter.set_speak_room_name,
-                prefs_key=chat_presenter.ChatPresenter.KEY_SPEAK_ROOM_NAME,
+                prefs_key=ChatSettings.KEY_SPEAK_ROOM_NAME,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CHAT_SPEAK_ROOM_NAME_LAST,
                 getter=presenter.get_speak_room_name_last,
                 setter=presenter.set_speak_room_name_last,
-                prefs_key=chat_presenter.ChatPresenter.KEY_SPEAK_ROOM_NAME_LAST,
+                prefs_key=ChatSettings.KEY_SPEAK_ROOM_NAME_LAST,
                 determine_sensitivity=presenter.get_speak_room_name,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CHAT_ANNOUNCE_BUDDY_TYPING,
                 getter=presenter.get_announce_buddy_typing,
                 setter=presenter.set_announce_buddy_typing,
-                prefs_key=chat_presenter.ChatPresenter.KEY_ANNOUNCE_BUDDY_TYPING,
+                prefs_key=ChatSettings.KEY_ANNOUNCE_BUDDY_TYPING,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CHAT_SEPARATE_MESSAGE_HISTORIES,
                 getter=presenter.get_room_histories,
                 setter=presenter.set_room_histories,
-                prefs_key=chat_presenter.ChatPresenter.KEY_ROOM_HISTORIES,
+                prefs_key=ChatSettings.KEY_ROOM_HISTORIES,
             ),
             preferences_grid_base.SelectionPreferenceControl(
                 label=guilabels.CHAT_SPEAK_MESSAGES_FROM,
@@ -192,7 +193,7 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=values,
                 getter=presenter.get_message_verbosity,
                 setter=presenter.set_message_verbosity,
-                prefs_key=chat_presenter.ChatPresenter.KEY_MESSAGE_VERBOSITY,
+                prefs_key=ChatSettings.KEY_MESSAGE_VERBOSITY,
             ),
         ]
 

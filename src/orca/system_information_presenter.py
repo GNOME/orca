@@ -26,7 +26,6 @@
 from __future__ import annotations
 
 import time
-from enum import Enum
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -55,59 +54,15 @@ from . import (
     system_information_presenter_command_definitions,
 )
 from .extension import Extension
+from .system_information_presenter_preferences_grid import TimeAndDatePreferencesGrid
+from .system_information_presenter_settings import DateFormat, SystemInformationSettings, TimeFormat
 
 if TYPE_CHECKING:
     from .command import Command
 
 
-class DateFormat(Enum):
-    """Date format enumeration with format strings."""
-
-    LOCALE = "%x"
-    NUMBERS_DM = "%d/%m"
-    NUMBERS_MD = "%m/%d"
-    NUMBERS_DMY = "%d/%m/%Y"
-    NUMBERS_MDY = "%m/%d/%Y"
-    NUMBERS_YMD = "%Y/%m/%d"
-    FULL_DM = "%A, %-d %B"
-    FULL_MD = "%A, %B %-d"
-    FULL_DMY = "%A, %-d %B, %Y"
-    FULL_MDY = "%A, %B %-d, %Y"
-    FULL_YMD = "%Y. %B %-d, %A"
-    ABBREVIATED_DM = "%a, %-d %b"
-    ABBREVIATED_MD = "%a, %b %-d"
-    ABBREVIATED_DMY = "%a, %-d %b, %Y"
-    ABBREVIATED_MDY = "%a, %b %-d, %Y"
-    ABBREVIATED_YMD = "%Y. %b %-d, %a"
-
-    @property
-    def string_name(self) -> str:
-        """Returns the lowercase string name for this enum value."""
-
-        return self.name.lower()
-
-
-class TimeFormat(Enum):
-    """Time format enumeration with format strings."""
-
-    LOCALE = "%X"
-    TWELVE_HM = "%I:%M %p"
-    TWELVE_HMS = "%I:%M:%S %p"
-    TWENTYFOUR_HM = "%H:%M"
-    TWENTYFOUR_HMS = "%H:%M:%S"
-    TWENTYFOUR_HM_WITH_WORDS = messages.TIME_FORMAT_24_HM_WITH_WORDS
-    TWENTYFOUR_HMS_WITH_WORDS = messages.TIME_FORMAT_24_HMS_WITH_WORDS
-
-    @property
-    def string_name(self) -> str:
-        """Returns the lowercase string name for this enum value."""
-
-        return self.name.lower()
-
-
 if TYPE_CHECKING:
     from .scripts import default
-    from .system_information_presenter_preferences_grid import TimeAndDatePreferencesGrid
 
 
 @gsettings_registry.get_registry().gsettings_schema(
@@ -118,8 +73,6 @@ class SystemInformationPresenter(Extension):
     """Provides commands to present system information."""
 
     _SCHEMA = "system-information"
-    KEY_DATE_FORMAT = "date-format"
-    KEY_TIME_FORMAT = "time-format"
 
     def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -139,26 +92,23 @@ class SystemInformationPresenter(Extension):
     def create_time_and_date_preferences_grid(self) -> TimeAndDatePreferencesGrid:
         """Returns the GtkGrid containing the time and date preferences UI."""
 
-        # pylint: disable-next=import-outside-toplevel
-        from .system_information_presenter_preferences_grid import TimeAndDatePreferencesGrid
-
         return TimeAndDatePreferencesGrid(self)
 
     def _get_date_format_string(self) -> str:
         """Returns the current date format string for internal use."""
 
-        return self._get_setting(self.KEY_DATE_FORMAT, "s", "%x")
+        return self._get_setting(SystemInformationSettings.KEY_DATE_FORMAT, "s", "%x")
 
     def _get_time_format_string(self) -> str:
         """Returns the current time format string for internal use."""
 
-        return self._get_setting(self.KEY_TIME_FORMAT, "s", "%X")
+        return self._get_setting(SystemInformationSettings.KEY_TIME_FORMAT, "s", "%X")
 
     def _set_date_format_string(self, value: str) -> bool:
         """Sets the date format string directly for internal use."""
 
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_DATE_FORMAT, value
+            self._SCHEMA, SystemInformationSettings.KEY_DATE_FORMAT, value
         )
         return True
 
@@ -166,12 +116,12 @@ class SystemInformationPresenter(Extension):
         """Sets the time format string directly for internal use."""
 
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_TIME_FORMAT, value
+            self._SCHEMA, SystemInformationSettings.KEY_TIME_FORMAT, value
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_DATE_FORMAT,
+        key=SystemInformationSettings.KEY_DATE_FORMAT,
         schema="system-information",
         gtype="s",
         default="%x",
@@ -202,7 +152,7 @@ class SystemInformationPresenter(Extension):
         tokens = ["SYSTEM INFORMATION PRESENTER: Setting date format to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_DATE_FORMAT, fmt.value
+            self._SCHEMA, SystemInformationSettings.KEY_DATE_FORMAT, fmt.value
         )
         return True
 
@@ -213,7 +163,7 @@ class SystemInformationPresenter(Extension):
         return [fmt.string_name for fmt in DateFormat]
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_TIME_FORMAT,
+        key=SystemInformationSettings.KEY_TIME_FORMAT,
         schema="system-information",
         gtype="s",
         default="%X",
@@ -244,7 +194,7 @@ class SystemInformationPresenter(Extension):
         tokens = ["SYSTEM INFORMATION PRESENTER: Setting time format to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_TIME_FORMAT, fmt.value
+            self._SCHEMA, SystemInformationSettings.KEY_TIME_FORMAT, fmt.value
         )
         return True
 

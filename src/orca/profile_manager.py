@@ -44,12 +44,12 @@ from . import (
     profile_manager_command_definitions,
 )
 from .extension import Extension
+from .profile_manager_preferences_grid import ProfilePreferencesGrid
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
     from .command import Command
-    from .profile_manager_preferences_grid import ProfilePreferencesGrid
     from .scripts import default
 
 
@@ -362,9 +362,6 @@ class ProfileManager(Extension):
         unsaved_changes_checker: Callable[[], bool] | None = None,
     ) -> ProfilePreferencesGrid:
         """Returns the GtkGrid containing the profile management UI."""
-
-        # pylint: disable-next=import-outside-toplevel
-        from .profile_manager_preferences_grid import ProfilePreferencesGrid
 
         grid = ProfilePreferencesGrid(
             self,

@@ -894,6 +894,7 @@ class TestCaretNavigator:
 
         modules = self._setup_dependencies(test_context)
         modules["orca.guilabels"].CARET_SELECTION_INFO = "Selection info"
+        import orca
         from orca import caret_navigator, gsettings_registry
 
         navigator = caret_navigator.CaretNavigator()
@@ -912,6 +913,7 @@ class TestCaretNavigator:
         grid_base.AutoPreferencesGrid = type("Grid", (), {"__init__": initialize_grid})
         grid_base.BooleanPreferenceControl.side_effect = SimpleNamespace
         test_context.patch_module("orca.preferences_grid_base", grid_base)
+        test_context.patch_object(orca, "preferences_grid_base", new=grid_base, create=True)
         for module in (
             "document_presenter",
             "math_presenter",
