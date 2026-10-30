@@ -840,6 +840,10 @@ class Utilities(script_utilities.Utilities):
         ) or document_presenter.get_presenter().browse_mode_is_sticky(self._script.app):
             return True
 
+        if AXUtilities.is_math(obj):
+            return False
+
+        # TODO - JD: Is this still needed?
         if AXUtilities.is_live_region(obj):
             return True
 
@@ -859,7 +863,6 @@ class Utilities(script_utilities.Utilities):
                 Atspi.Role.LIST_BOX,
                 Atspi.Role.TABLE,
                 Atspi.Role.TABLE_ROW,
-                Atspi.Role.MATH,
             ]
             role = AXObject.get_role(obj)
             if rv and role in not_text_roles:

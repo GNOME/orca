@@ -155,3 +155,24 @@ def test_math_navigation_activation_and_restart(web_math: BrowserSession) -> Non
     assert speech(session) == ["A fraction on its own line:"]
     session.orca.press_orca_key(keyboard.KEYSYM_M, extra_modifiers=[keyboard.KEYSYM_ALT_L])
     assert speech(session) == ["Not in math."]
+
+
+@pytest.mark.native_app
+def test_say_all_over_math(web_math: BrowserSession) -> None:
+    """Tests Say All over math."""
+
+    session = web_math
+    move_to_top(session)
+    speech(session)
+    keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
+    assert speech(session) == [
+        "Text before the math.",
+        "A fraction surrounded by text: ",
+        _FRACTION,
+        " is a lovely thing!",
+        "A fraction on its own line:",
+        _FRACTION,
+        "Text after the math.",
+        "A fraction in a live region: ",
+        _FRACTION,
+    ]
