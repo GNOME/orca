@@ -406,16 +406,27 @@ class AXObject:
 
     @staticmethod
     def _has_document_spreadsheet(obj: Atspi.Accessible) -> bool:
-        # To avoid circular import. pylint: disable=import-outside-toplevel
-        from .ax_collection import AXCollection
-
-        rule = AXCollection.create_match_rule(roles=[Atspi.Role.DOCUMENT_SPREADSHEET])
-        if rule is None:
-            return False
-
         frame = AXObject._find_ancestor_with_role(obj, Atspi.Role.FRAME)
         if frame is None:
             return False
+
+        try:
+            rule = Atspi.MatchRule.new(
+                Atspi.StateSet(),
+                Atspi.CollectionMatchType.ALL,
+                {},
+                Atspi.CollectionMatchType.ALL,
+                [Atspi.Role.DOCUMENT_SPREADSHEET],
+                Atspi.CollectionMatchType.ALL,
+                [],
+                Atspi.CollectionMatchType.ALL,
+                False,
+            )
+        except GLib.GError as error:
+            tokens = ["AXObject: Exception creating match rule:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
         return bool(
             Atspi.Collection.get_matches(frame, rule, Atspi.CollectionSortOrder.CANONICAL, 1, True),
         )

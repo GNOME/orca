@@ -2433,20 +2433,6 @@ class TestAXObject:
         if case["expects_handle_error"]:
             handle_error_mock.assert_called_once()
 
-    def test_has_document_spreadsheet_import_path(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject._has_document_spreadsheet import path."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_ax_collection = test_context.Mock()
-        mock_ax_collection.AXCollection = test_context.Mock()
-        mock_ax_collection.AXCollection.create_match_rule = test_context.Mock(return_value=None)
-        sys.modules["orca.ax_collection"] = mock_ax_collection
-        result = AXObject._has_document_spreadsheet(mock_accessible)
-        assert result is False
-
     def test_has_document_spreadsheet_no_frame_path(self, test_context: OrcaTestContext) -> None:
         """Test AXObject._has_document_spreadsheet no frame path."""
 
@@ -2454,12 +2440,6 @@ class TestAXObject:
         from orca.ax_object import AXObject
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_ax_collection = test_context.Mock()
-        mock_ax_collection.AXCollection = test_context.Mock()
-        mock_ax_collection.AXCollection.create_match_rule = test_context.Mock(
-            return_value="mock_rule",
-        )
-        sys.modules["orca.ax_collection"] = mock_ax_collection
         test_context.patch_object(AXObject, "_find_ancestor_with_role", return_value=None)
         result = AXObject._has_document_spreadsheet(mock_accessible)
         assert result is False
@@ -2475,12 +2455,6 @@ class TestAXObject:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         mock_frame = test_context.Mock(spec=Atspi.Accessible)
-        mock_ax_collection = test_context.Mock()
-        mock_ax_collection.AXCollection = test_context.Mock()
-        mock_ax_collection.AXCollection.create_match_rule = test_context.Mock(
-            return_value="mock_rule",
-        )
-        sys.modules["orca.ax_collection"] = mock_ax_collection
         test_context.patch_object(AXObject, "_find_ancestor_with_role", return_value=mock_frame)
         sys.modules["gi.repository"].Atspi.Collection.get_matches = test_context.Mock(
             return_value=["match1"],

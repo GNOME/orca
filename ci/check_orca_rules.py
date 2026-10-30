@@ -392,7 +392,6 @@ class ImportsOutsideTopLevel(Rule):
     # The imports which were inside functions or classes when this rule was added. A file may not
     # have more than its count. When one of them is moved, its file's count has to be lowered.
     REMAINING: ClassVar[dict[str, int]] = {
-        "src/orca/ax_object.py": 1,
         "src/orca/ax_utilities_event.py": 6,
         "src/orca/command_manager.py": 2,
         "src/orca/dbus_service.py": 15,
