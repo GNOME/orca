@@ -314,6 +314,11 @@ class ScriptManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._active_script
 
+    def is_sleep_mode_active(self) -> bool:
+        """Returns True if the active script is a sleep mode script."""
+
+        return isinstance(self._active_script, sleepmode.Script)
+
     def get_active_script_app(self) -> Atspi.Accessible | None:
         """Returns the app associated with the active script."""
 
