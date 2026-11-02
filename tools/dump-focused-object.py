@@ -60,6 +60,18 @@ def as_string(obj):
     )
 
 
+def get_role(obj):
+    """Get the role of an accessible object."""
+
+    return safe_call(lambda: Atspi.Accessible.get_role(obj), default=None)
+
+
+def get_parent(obj):
+    """Get the parent of an accessible object."""
+
+    return safe_call(lambda: Atspi.Accessible.get_parent(obj), default=None)
+
+
 def get_name(obj):
     """Get the name of an accessible object."""
 
@@ -93,20 +105,23 @@ def _name_or_description_from(obj, getter, relation_type):
 
 
 def make_event_handler(dump_ancestry):
-    """Returns a focus event handler that optionally dumps the ancestry."""
+    """Returns an event handler that optionally dumps the ancestry."""
 
     def on_event(e):
         if not e.detail1:
             return
 
-        print(f"\n{as_string(e.source)} is now focused")
+        print(f"\n{as_string(e.source)} is now {e.type.split(':')[-1]}")
         if dump_ancestry:
             ancestors = []
             parent = e.source
             while parent:
-                grandparent = Atspi.Accessible.get_parent(parent)
+                grandparent = get_parent(parent)
                 ancestors.append(as_string(parent))
-                if Atspi.Accessible.get_role(parent) == Atspi.Role.APPLICATION:
+                if get_role(parent) == Atspi.Role.APPLICATION:
+                    break
+                if grandparent is None:
+                    print("ERROR: Could not reach application from focused object.")
                     break
                 parent = grandparent
 
@@ -116,7 +131,7 @@ def make_event_handler(dump_ancestry):
                 print(f"{' ' * indent}--> {ancestor}")
                 indent += 2
 
-        if Atspi.Accessible.get_role(e.source) == Atspi.Role.TERMINAL:
+        if get_role(e.source) == Atspi.Role.TERMINAL:
             print("Exiting.")
             Atspi.event_quit()
 
@@ -124,7 +139,7 @@ def make_event_handler(dump_ancestry):
 
 
 def main():
-    """Starts the focus dumper and waits for events."""
+    """Starts the event dumper and waits for events."""
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -137,13 +152,14 @@ def main():
 
     listener = Atspi.EventListener.new(make_event_handler(args.ancestry))
     listener.register("object:state-changed:focused")
+    listener.register("object:state-changed:selected")
 
     def on_sigint():
         Atspi.event_quit()
         return GLib.SOURCE_REMOVE
 
     GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, on_sigint)
-    print("Listening for focus events. Press Ctrl+C or focus the terminal to exit.")
+    print("Listening for events. Press Ctrl+C or focus the terminal to exit.")
     Atspi.event_main()
 
 
