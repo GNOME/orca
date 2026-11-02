@@ -1,4 +1,4 @@
-"""Runs integration tests with one CI-only retry for assertion failures."""
+"""Runs integration tests with one CI-only retry for assertion and indexing failures."""
 
 from __future__ import annotations
 
@@ -16,24 +16,24 @@ if TYPE_CHECKING:
 
 
 class AttemptReport:
-    """Records assertion failures separately from errors and expected failures."""
+    """Records retryable failures separately from other errors and expected failures."""
 
     def __init__(self, path: Path) -> None:
         self.path = path
         self.failed: list[str] = []
         self.passed: list[str] = []
-        self.assertions: set[str] = set()
+        self.retryable: set[str] = set()
         self.blocked = False
 
     def pytest_runtest_makereport(self, item: pytest.Item, call: pytest.CallInfo) -> None:
-        """Identifies assertion failures in the test body."""
+        """Identifies assertion and indexing failures in the test body."""
 
         if (
             call.when == "call"
             and call.excinfo is not None
-            and call.excinfo.errisinstance(AssertionError)
+            and call.excinfo.errisinstance((AssertionError, IndexError))
         ):
-            self.assertions.add(item.nodeid)
+            self.retryable.add(item.nodeid)
 
     def pytest_runtest_logreport(self, report: pytest.TestReport) -> None:
         """Records the final result after pytest's xfail handling."""
@@ -41,7 +41,7 @@ class AttemptReport:
         if report.failed:
             if (
                 report.when == "call"
-                and report.nodeid in self.assertions
+                and report.nodeid in self.retryable
                 and not hasattr(report, "wasxfail")
             ):
                 self.failed.append(report.nodeid)
@@ -93,7 +93,7 @@ def _attempt(
 
 
 def _run(test_file: str, directory: Path, pytest_args: list[str]) -> int:
-    """Retries only failed assertions, after the first pytest session has ended."""
+    """Retries eligible test failures once, after the first pytest session has ended."""
 
     directory.mkdir(parents=True, exist_ok=True)
     name = Path(test_file).stem

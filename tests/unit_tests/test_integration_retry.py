@@ -112,6 +112,32 @@ def test_example(value):
     assert summary == "PASSED ON RETRY: test_example.py::test_example[fails.once]\n"
 
 
+@pytest.mark.parametrize("recovers", [False, True])
+def test_empty_braille_is_retried(tmp_path: Path, recovers: bool) -> None:
+    """Missing braille output gets one retry and must be present for that retry to pass."""
+
+    result = _run(
+        tmp_path,
+        f"""
+from pathlib import Path
+marker = Path(__file__).with_suffix(".attempts")
+def test_example():
+    previous = marker.exists()
+    with marker.open("a") as log:
+        log.write("called\\n")
+    brailled = ["expected output"] if previous and {recovers!r} else []
+    assert brailled[-1] == "expected output"
+""",
+    )
+    assert result.returncode == (0 if recovers else 1), result.stdout + result.stderr
+    assert (tmp_path / "test_example.attempts").read_text() == "called\ncalled\n"
+    assert "IndexError" in (tmp_path / "logs/test_example.first.log").read_text()
+    outcome = "PASSED" if recovers else "FAILED"
+    assert (tmp_path / "logs/test_example.summary").read_text() == (
+        f"{outcome} ON RETRY: test_example.py::test_example\n"
+    )
+
+
 @pytest.mark.parametrize("second", ["assert False", "pytest.skip('unavailable')"])
 def test_retry_must_pass(tmp_path: Path, second: str) -> None:
     """A second failure or skip cannot turn the first failure into a pass."""
@@ -140,6 +166,14 @@ def test_example():
     "source",
     [
         "def test_example():\n    raise RuntimeError('broken infrastructure')\n",
+        (
+            "import pytest\n@pytest.fixture\ndef broken():\n    return [][0]\n"
+            "def test_example(broken):\n    pass\n"
+        ),
+        (
+            "import pytest\n@pytest.fixture\ndef broken():\n    yield\n    [][0]\n"
+            "def test_example(broken):\n    assert False\n"
+        ),
         (
             "import pytest\n@pytest.fixture\ndef broken():\n    assert False\n"
             "def test_example(broken):\n    pass\n"
@@ -187,7 +221,9 @@ def test_local_failure_is_not_retried(tmp_path: Path) -> None:
     assert not (tmp_path / "logs").exists()
 
 
-@pytest.mark.parametrize("second", ["pass", "assert False", "raise RuntimeError('retry error')"])
+@pytest.mark.parametrize(
+    "second", ["pass", "assert False", "[][0]", "raise RuntimeError('retry error')"]
+)
 def test_debug_logs_are_kept_only_for_failed_retries(tmp_path: Path, second: str) -> None:
     """Only retries receive a debug directory, archived on failure and cleaned on success."""
 
