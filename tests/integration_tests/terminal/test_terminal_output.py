@@ -83,6 +83,92 @@ def test_scrolled_command_output_is_spoken(terminal_shell: NativeAppSession) -> 
 
 
 @pytest.mark.native_app
+@requires_vte_version("3.91", 0, 85, 0, when=terminal.selected_toolkit() == "gtk4")
+def test_output_after_several_commands(terminal_shell: NativeAppSession) -> None:
+    """Tests that successive commands speak their own output as the terminal starts scrolling."""
+
+    session = terminal_shell
+    settle(session)
+
+    for word in ("alpha", "bravo", "charlie", "delta"):
+        type_text(f"echo {word}")
+        settle(session)
+        keyboard.tap_key(keyboard.KEYSYM_RETURN)
+        spoken, brailled = helpers.capture(session)
+        assert "".join(spoken).strip("\n") == f"{word}\n$ "
+        assert brailled[-1] == helpers.BrailleLine(3, "$ ", "$ ", "\x00" * 2)
+
+
+@pytest.mark.native_app
+@requires_vte_version("3.91", 0, 85, 0, when=terminal.selected_toolkit() == "gtk4")
+def test_new_output_after_long_command(terminal_shell: NativeAppSession) -> None:
+    """Tests that new command output is complete and does not repeat previous output."""
+
+    if shutil.which("seq") is None:
+        pytest.skip("seq is not available")
+
+    session = terminal_shell
+    settle(session)
+    # Unequal old and new line lengths expose incorrect scrolling insertion offsets.
+    type_text("seq 100000000000000 100000000000020\n")
+    settle(session)
+
+    for word in ("fresh", "current"):
+        type_text(f"echo {word}")
+        settle(session)
+        keyboard.tap_key(keyboard.KEYSYM_RETURN)
+        spoken, brailled = helpers.capture(session)
+        assert "".join(spoken).strip("\n") == f"{word}\n$ "
+        assert brailled[-1] == helpers.BrailleLine(3, "$ ", "$ ", "\x00" * 2)
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("long_output", [False, True], ids=["several-commands", "long-output"])
+def test_flat_review_after_shell_output(
+    terminal_shell: NativeAppSession, long_output: bool
+) -> None:
+    """Tests line boundaries in both directions after several commands or one long output."""
+
+    if long_output:
+        if shutil.which("seq") is None:
+            pytest.skip("seq is not available")
+        commands = ("seq 20",)
+        lines = [str(n) for n in range(14, 21)] + ["$ "]
+    else:
+        commands = ("echo alpha", "echo bravo", "echo charlie", "echo delta")
+        lines = [
+            "alpha",
+            "$ echo bravo",
+            "bravo",
+            "$ echo charlie",
+            "charlie",
+            "$ echo delta",
+            "delta",
+            "$ ",
+        ]
+
+    session = terminal_shell
+    settle(session)
+    for command in commands:
+        type_text(command + "\n")
+        settle(session)
+
+    steps = [("GoHome", lines[0])]
+    steps.extend(("GoNextLine", line) for line in lines[1:])
+    steps.extend(("GoPreviousLine", line) for line in reversed(lines[:-1]))
+    helpers.toggle_flat_review(session)
+    try:
+        for command, line in steps:
+            session.orca.call("FlatReviewPresenter", command, True)
+            spoken, brailled = helpers.capture(session)
+            assert spoken == [line + "\n"]
+            full = line + " $l"
+            assert brailled[-1] == helpers.BrailleLine(1, full, full, "\x00" * len(full))
+    finally:
+        helpers.toggle_flat_review(session)
+
+
+@pytest.mark.native_app
 @pytest.mark.parametrize("final_text", ["after1", "done"], ids=["overwrite", "shorten"])
 def test_braille_shows_final_output_after_a_burst(
     terminal_shell: NativeAppSession, final_text: str
