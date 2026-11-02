@@ -605,14 +605,18 @@ class CaretNavigator(Extension):
         if obj is None:
             return None, -1
 
-        # Chromium includes static text leaf nodes which we ignore; use the navigable parent.
-        obj_in_document = (
-            root_in_document if obj == root else script.utilities.in_document_content(obj)
-        )
-        if obj_in_document and not AXUtilities.is_web_element(obj):
-            parent = AXObject.get_parent(obj)
-            if AXUtilities.is_web_element(parent):
-                obj = parent
+        if AXUtilities.is_presentational_child(obj):
+            pred = AXUtilities.children_are_presentational
+            obj = AXUtilities.find_outermost_ancestor_inclusive(obj, pred)
+        else:
+            # Chromium includes static text leaf nodes which we ignore; use the navigable parent.
+            obj_in_document = (
+                root_in_document if obj == root else script.utilities.in_document_content(obj)
+            )
+            if obj_in_document and not AXUtilities.is_web_element(obj):
+                parent = AXObject.get_parent(obj)
+                if AXUtilities.is_web_element(parent):
+                    obj = parent
 
         offset = max(0, AXText.get_character_count(obj) - 1)
         while obj:

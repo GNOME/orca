@@ -995,6 +995,7 @@ class TestCaretNavigator:
             side_effect=lambda obj: obj == "paragraph",
         )
         get_parent = test_context.patch_object(AXObject, "get_parent", return_value="paragraph")
+        test_context.patch_object(AXUtilities, "is_presentational_child", return_value=False)
         test_context.patch_object(AXText, "get_character_count", return_value=10)
 
         assert navigator._get_end_of_file(mock_script) == ("paragraph", 9)
@@ -1032,6 +1033,7 @@ class TestCaretNavigator:
             "get_parent",
             return_value="document",
         )
+        test_context.patch_object(AXUtilities, "is_presentational_child", return_value=False)
         test_context.patch_object(AXText, "get_character_count", return_value=51)
 
         assert navigator._get_end_of_file(mock_script) == ("page 2", 51)

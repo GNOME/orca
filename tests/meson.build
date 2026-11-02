@@ -245,6 +245,8 @@ orca_integration_tests = {
     'integration_tests/test_web_mixed_lists.py',
     'integration_tests/test_web_list_replacement.py',
     'integration_tests/test_web_math.py',
+    'integration_tests/test_web_math_document_edges.py',
+    'integration_tests/test_web_button_image.py',
     'integration_tests/test_web_temporary_aria_hidden.py',
     'integration_tests/test_web_menu_button.py',
     'integration_tests/test_web_menubar.py',

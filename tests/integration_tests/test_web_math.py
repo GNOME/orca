@@ -22,33 +22,21 @@
 
 from __future__ import annotations
 
-import glob
-import os
-import shutil
 from typing import TYPE_CHECKING
 
 import pytest
 
 from .apps import browser
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_top, speech
+from .helpers import BrailleLine, capture, mathcat_is_installed, move_to_top, speech
 from .version_helpers import firefox_is_nightly
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
 
 
-def _mathcat_available() -> bool:
-    binary = os.environ.get("ORCA_TEST_BINARY") or shutil.which("orca") or ""
-    if not binary:
-        return False
-    prefix = os.path.dirname(os.path.dirname(os.path.realpath(binary)))
-    pattern = os.path.join(prefix, "lib*", "python*", "*-packages", "orca", "libmathcat_py*")
-    return bool(glob.glob(pattern))
-
-
 pytestmark = pytest.mark.skipif(
-    not _mathcat_available(), reason="MathCAT (libmathcat_py) is not installed"
+    not mathcat_is_installed(), reason="MathCAT (libmathcat_py) is not installed"
 )
 
 _FRACTION = "the fraction with numerator; x plus 1; and denominator y minus 2"

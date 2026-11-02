@@ -23,6 +23,9 @@
 from __future__ import annotations
 
 import contextlib
+import glob
+import os
+import shutil
 from typing import TYPE_CHECKING, NamedTuple, TypeVar
 
 import pytest
@@ -82,6 +85,17 @@ def expected_for_gtk(common: _Expected, *, gtk4: _Expected) -> _Expected:
     """Selects the exact expectation for the toolkit chosen by Meson."""
 
     return gtk4 if gtk.is_gtk4() else common
+
+
+def mathcat_is_installed() -> bool:
+    """Returns whether the Orca under test was built with MathCAT."""
+
+    binary = os.environ.get("ORCA_TEST_BINARY") or shutil.which("orca") or ""
+    if not binary:
+        return False
+    prefix = os.path.dirname(os.path.dirname(os.path.realpath(binary)))
+    pattern = os.path.join(prefix, "lib*", "python*", "*-packages", "orca", "libmathcat_py*")
+    return bool(glob.glob(pattern))
 
 
 PAN_LEFT_COMMAND = "panBrailleLeftHandler"

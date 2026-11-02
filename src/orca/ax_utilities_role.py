@@ -116,6 +116,8 @@ class AXUtilitiesRole:
             Atspi.Role.CHECK_MENU_ITEM,
             Atspi.Role.IMAGE,
             Atspi.Role.LEVEL_BAR,
+            # Included so that MathCAT can handle it.
+            Atspi.Role.MATH,
             Atspi.Role.PAGE_TAB,
             Atspi.Role.PROGRESS_BAR,
             Atspi.Role.RADIO_BUTTON,
