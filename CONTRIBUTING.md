@@ -1,12 +1,13 @@
 # Contributing to Orca
 
-## Filing Issues
+## Asking Questions and Filing Issues
 
-[Issues](https://gitlab.gnome.org/GNOME/orca/-/work_items) should always be filed
-for bug reports and proposed features. Please do not use the issue tracker for
-support questions. If you need help or have questions about Orca, the [Orca mailing list](https://www.freelists.org/list/orca) is a great place to ask.
+[Issues](https://gitlab.gnome.org/GNOME/orca/-/work_items) should NOT be filed for
+support questions. If you need help or have questions about Orca, the
+[Orca mailing list](https://www.freelists.org/list/orca) is a great place to ask.
+Members of the community sometimes also report bugs or request features on the list.
 
-When filing an issue, please provide the following:
+When reporting an issue on the list or in GitLab, please provide the following:
 
 * Version details:
    * Output of `orca -v`

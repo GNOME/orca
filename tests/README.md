@@ -69,21 +69,27 @@ Downstream distributions may wish to run the small `core` suite to check basic
 environment readiness. Failures in this suite can identify a dependency or
 accessibility configuration problem that may need to be addressed downstream.
 Such issues should be investigated before concluding the failure is a bug in Orca
-or in its test harness.
-
-For example, browser accessibility may require `ACCESSIBILITY_ENABLED=1` (Chromium)
-or `GNOME_ACCESSIBILITY=1` (Firefox) for the browser to show up in the AT-SPI
-application registry. If AT-SPI doesn't know an application exists, Orca cannot
-provide access to it. For this reason, the `core` suite's browser smoke tests
-include coverage for the browser being launched without the variables set in
-the environment to help identify this need.
+or in its test harness. For example, browser accessibility may require
+`ACCESSIBILITY_ENABLED=1` (Chromium) or `GNOME_ACCESSIBILITY=1` (Firefox) for the
+browser to show up in the AT-SPI application registry. If AT-SPI doesn't know an
+application exists, Orca cannot provide access to it. For this reason, the `core`
+suite's browser smoke tests include coverage for the browser being launched without
+the variables set in the environment to help identify this need.
 
 The other integration-test suites are mainly intended for maintainer use for the
-purpose of preventing regressions in Orca. Documenting all expected dependencies
-and versions and ensuring compatibility with additional distros are still pending.
-At the present time Fedora and openSUSE are officially supported. If all of the
-integration tests pass (modulo flakes) on a distro not listed as supported, please
-let us know so that we can add it to a "known to work on" list.
+purpose of preventing regressions in Orca. At the present time, the current stable
+versions of Fedora and openSUSE are officially supported. This is because the
+primary maintainer uses the former and CI uses the latter. Tests are expected to pass
+in other environments, but may fail due to something totally unrelated to accessibility,
+such as a different toolkit theme and/or font changing where a line wraps. Eliminating
+all such possible variants, and documenting all expected dependencies, versions, and
+configurations which may impact test results are still pending. In the meantime, such
+a failure should not be taken to mean there is anything wrong with that environment or
+Orca; just that something is different. Similarly, not being "officially supported"
+should not be taken to mean anything other than the fact that the maintainers have
+finite time and resources. If all of the integration tests pass (modulo flakes) on a
+distro not listed as supported, please let us know so that we can add it to a
+"known to work on" list.
 
 The integration tests cannot run while Orca is already active on the user's
 session because each test launches and drives its own Orca. It was decided
