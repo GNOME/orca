@@ -1,0 +1,103 @@
+# Orca
+#
+# Copyright 2026 Igalia, S.L.
+# Author: Joanmarie Diggs <jdiggs@igalia.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., Franklin Street, Fifth Floor,
+# Boston MA  02110-1301 USA.
+
+"""Tests layout-mode line assembly for landmarks and links sharing a visual row."""
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+import pytest
+
+from tests.integration_tests.harness import keyboard
+from tests.integration_tests.helpers import BrailleLine, capture, move_to_top, speech
+
+if TYPE_CHECKING:
+    from tests.integration_tests.orca_fixtures import BrowserSession
+
+
+@pytest.mark.native_app
+def test_line_assembly_inline_landmarks_and_links(web_inline_landmarks: BrowserSession) -> None:
+    """Tests that landmarks and banner/skip links sharing a row stay on separate lines."""
+
+    session = web_inline_landmarks
+    move_to_top(session)
+
+    # The banner link and the adjacent non-banner link render side by side, but
+    # their differing banner ancestry keeps them on separate lines.
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["leaving banner.", "Catalog", "link"]
+
+    # Two ordinary links on one row do group onto a single line, proving the
+    # splits here are the landmark/link rules and not blanket per-object lines.
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["Alpha", "link", "Beta", "link"]
+
+    # Two navigation landmarks side by side are never merged onto one line.
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["navigation", "Primary Primary nav"]
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["navigation", "Secondary Secondary nav"]
+
+    # Two links at the same position (the dynamic skip-link pattern) stay separate.
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["Skip to content", "link"]
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["Skip to navigation", "link"]
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["Tail paragraph."]
+
+
+@pytest.mark.native_app
+def test_banner_link_is_its_own_line(web_inline_landmarks: BrowserSession) -> None:
+    """Tests that the banner link forms its own line above its non-banner neighbor."""
+
+    session = web_inline_landmarks
+    move_to_top(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["leaving banner.", "Catalog", "link"]
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    assert speech(session) == ["banner", "Home", "link"]
+
+
+@pytest.mark.native_app
+def test_where_am_i_stops_at_landmark_boundary(web_inline_landmarks: BrowserSession) -> None:
+    """Tests that Where Am I on a nav landmark omits the adjacent landmark's contents."""
+
+    session = web_inline_landmarks
+    move_to_top(session)
+
+    # Land on the Primary nav landmark, whose look-right neighbor is the
+    # Secondary nav landmark on the same visual row.
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["navigation", "Primary Primary nav"]
+
+    # Basic Where Am I reports only the Primary landmark's text; the landmark
+    # boundary guard keeps "Secondary nav" out of the assembled contents.
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
+    spoken, brailled = capture(session)
+    assert spoken == ["Primary nav"]
+    assert brailled[-1] == BrailleLine(
+        1, "Primary Primary nav navigation", "Primary Primary nav navigation", "\x00" * 30
+    )

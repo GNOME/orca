@@ -1,0 +1,320 @@
+# Orca
+#
+# Copyright 2026 Igalia, S.L.
+# Author: Joanmarie Diggs <jdiggs@igalia.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., Franklin Street, Fifth Floor,
+# Boston MA  02110-1301 USA.
+
+"""Tests text selection in web content when Orca controls the caret."""
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+import pytest
+
+from tests.integration_tests.apps import browser
+from tests.integration_tests.caret_selection_helpers import (
+    END_OF_LINE,
+    NEXT_CHARACTER,
+    NEXT_LINE,
+    NEXT_WORD,
+    PREVIOUS_CHARACTER,
+    PREVIOUS_LINE,
+    PREVIOUS_WORD,
+    START_OF_LINE,
+    select,
+    select_without_notifying,
+)
+from tests.integration_tests.harness import keyboard
+from tests.integration_tests.helpers import BrailleLine, capture, reset_web_state, say_selection
+from tests.integration_tests.version_helpers import requires_browser_version
+
+if TYPE_CHECKING:
+    from tests.integration_tests.orca_fixtures import BrowserSession
+
+_HEADING = "Structural navigation h1"
+_PARAGRAPH = "Intro paragraph."
+_QUOTE = "Quoted text. block quote"
+
+
+@requires_browser_version("chromium", 153)
+@pytest.mark.native_app
+def test_selection_by_character(web_structural_navigation: BrowserSession) -> None:
+    """Tests selection by character."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+
+    spoken, brailled = select(session, NEXT_CHARACTER)
+    assert spoken == ["S", "selected"]
+    assert brailled == BrailleLine(2, _HEADING, _HEADING, "\xc0" + "\x00" * 23)
+
+    spoken, brailled = select(session, NEXT_CHARACTER)
+    assert spoken == ["t", "selected"]
+    assert brailled == BrailleLine(3, _HEADING, _HEADING, "\xc0" * 2 + "\x00" * 22)
+
+    spoken, brailled = select(session, NEXT_CHARACTER)
+    assert spoken == ["r", "selected"]
+    assert brailled == BrailleLine(4, _HEADING, _HEADING, "\xc0" * 3 + "\x00" * 21)
+    assert say_selection(session) == ["Selected text is:  Str"]
+
+    spoken, brailled = select(session, PREVIOUS_CHARACTER)
+    assert spoken == ["r", "unselected"]
+    assert brailled == BrailleLine(3, _HEADING, _HEADING, "\xc0" * 2 + "\x00" * 22)
+
+    spoken, brailled = select(session, PREVIOUS_CHARACTER)
+    assert spoken == ["t", "unselected"]
+    assert brailled == BrailleLine(2, _HEADING, _HEADING, "\xc0" + "\x00" * 23)
+    assert say_selection(session) == ["Selected text is:  S"]
+
+    spoken, brailled = select(session, PREVIOUS_CHARACTER)
+    assert spoken == ["S", "unselected"]
+    assert brailled == BrailleLine(1, _HEADING, _HEADING, "\x00" * 24)
+    assert say_selection(session) == ["No selected text."]
+
+
+@requires_browser_version("chromium", 153)
+@pytest.mark.native_app
+def test_selection_by_word(web_structural_navigation: BrowserSession) -> None:
+    """Tests selection by word."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+
+    spoken, brailled = select(session, NEXT_WORD)
+    assert spoken == ["Structural", "selected"]
+    assert brailled == BrailleLine(11, _HEADING, _HEADING, "\xc0" * 10 + "\x00" * 14)
+
+    spoken, brailled = select(session, NEXT_WORD)
+    assert spoken == ["navigation", "selected"]
+    assert brailled == BrailleLine(22, _HEADING, _HEADING, "\xc0" * 21 + "\x00" * 3)
+    assert say_selection(session) == ["Selected text is:  Structural navigation"]
+
+    spoken, brailled = select(session, PREVIOUS_WORD)
+    assert spoken == ["navigation", "unselected"]
+    assert brailled == BrailleLine(12, _HEADING, _HEADING, "\xc0" * 11 + "\x00" * 13)
+    assert say_selection(session) == ["Selected text is:  Structural "]
+
+
+@requires_browser_version("chromium", 153)
+@pytest.mark.native_app
+def test_selection_to_the_line_boundaries(web_structural_navigation: BrowserSession) -> None:
+    """Tests selection to the end and to the start of the line."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+
+    spoken, brailled = select(session, NEXT_WORD)
+    assert spoken == ["Structural", "selected"]
+    assert brailled == BrailleLine(11, _HEADING, _HEADING, "\xc0" * 10 + "\x00" * 14)
+
+    spoken, brailled = select(session, END_OF_LINE)
+    assert spoken == ["navigation", "selected"]
+    assert brailled == BrailleLine(22, _HEADING, _HEADING, "\xc0" * 21 + "\x00" * 3)
+    assert say_selection(session) == ["Selected text is:  Structural navigation"]
+
+    spoken, brailled = select(session, START_OF_LINE)
+    assert spoken == ["Structural navigation", "unselected"]
+    assert brailled == BrailleLine(1, _HEADING, _HEADING, "\x00" * 24)
+    assert say_selection(session) == ["No selected text."]
+
+
+@requires_browser_version("chromium", 153)
+@pytest.mark.native_app
+def test_selection_in_a_paragraph(web_structural_navigation: BrowserSession) -> None:
+    """Tests selection in a paragraph below the heading."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    spoken, brailled = capture(session)
+    assert spoken == [_PARAGRAPH]
+    assert brailled[-1] == BrailleLine(1, _PARAGRAPH, _PARAGRAPH, "\x00" * 16)
+
+    spoken, brailled = select(session, NEXT_CHARACTER)
+    assert spoken == ["I", "selected"]
+    assert brailled == BrailleLine(2, _PARAGRAPH, _PARAGRAPH, "\xc0" + "\x00" * 15)
+
+    spoken, brailled = select(session, NEXT_CHARACTER)
+    assert spoken == ["n", "selected"]
+    assert brailled == BrailleLine(3, _PARAGRAPH, _PARAGRAPH, "\xc0" * 2 + "\x00" * 14)
+    assert say_selection(session) == ["Selected text is:  In"]
+
+    spoken, brailled = select(session, END_OF_LINE)
+    assert spoken == ["tro paragraph.", "selected"]
+    assert brailled == BrailleLine(17, _PARAGRAPH, _PARAGRAPH, "\xc0" * 16)
+    assert say_selection(session) == ["Selected text is:  Intro paragraph."]
+
+
+@requires_browser_version("chromium", 153)
+@pytest.mark.native_app
+def test_selection_retains_anchor_at_paragraph_start(
+    web_structural_navigation: BrowserSession,
+) -> None:
+    """Tests that an empty selection in the new focus does not discard the anchor."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+
+    spoken, brailled = select(session, NEXT_LINE)
+    assert spoken == ["Structural navigation", "selected"]
+    assert brailled == BrailleLine(1, _PARAGRAPH, _PARAGRAPH, "\x00" * 16)
+
+    # The paragraph has no selected text, but the heading must remain selected.
+    for _ in range(2):
+        session.orca.select_with_caret_navigator(START_OF_LINE)
+        assert capture(session)[0] == []
+    assert say_selection(session) == ["Selected text is:  Structural navigation"]
+
+    spoken, brailled = select(session, NEXT_WORD)
+    assert spoken == ["Intro", "selected"]
+    assert brailled == BrailleLine(6, _PARAGRAPH, _PARAGRAPH, "\xc0" * 5 + "\x00" * 11)
+    assert say_selection(session) == ["Selected text is:  Structural navigation Intro"]
+
+
+@requires_browser_version("chromium", 153)
+@pytest.mark.native_app
+@pytest.mark.parametrize(
+    "reverse",
+    [
+        pytest.param(False, id="forward"),
+        pytest.param(
+            True,
+            id="reverse",
+            marks=pytest.mark.xfail(
+                browser.selected_browser() == "firefox",
+                reason=(
+                    "Firefox reads object-local selection indices "
+                    "but modifies document-wide indices"
+                ),
+                raises=AssertionError,
+                strict=True,
+            ),
+        ),
+    ],
+)
+def test_selection_across_objects(web_structural_navigation: BrowserSession, reverse: bool) -> None:
+    """Tests selection which spans more than one text object."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+
+    spoken, brailled = select(session, END_OF_LINE)
+    assert spoken == ["Structural navigation", "selected"]
+    assert brailled == BrailleLine(22, _HEADING, _HEADING, "\xc0" * 21 + "\x00" * 3)
+
+    spoken, brailled = select(session, NEXT_LINE)
+    assert spoken == [_PARAGRAPH, "selected"]
+    assert brailled == BrailleLine(17, _PARAGRAPH, _PARAGRAPH, "\xc0" * 16)
+    assert say_selection(session) == ["Selected text is:  Structural navigation Intro paragraph."]
+
+    spoken, brailled = select(session, NEXT_LINE)
+    assert spoken == ["Quoted text.", "selected"]
+    assert brailled == BrailleLine(13, _QUOTE, _QUOTE, "\xc0" * 12 + "\x00" * 12)
+    assert say_selection(session) == [
+        "Selected text is:  Structural navigation Intro paragraph. Quoted text."
+    ]
+
+    if not reverse:
+        return
+
+    spoken, brailled = select(session, PREVIOUS_LINE)
+    assert spoken == ["Quoted text.", "unselected"]
+    assert brailled == BrailleLine(1, _QUOTE, _QUOTE, "\x00" * 24)
+    assert say_selection(session) == ["Selected text is:  Structural navigation Intro paragraph."]
+
+    spoken, brailled = select(session, NEXT_WORD)
+    assert spoken == ["Quoted", "selected"]
+    assert brailled == BrailleLine(7, _QUOTE, _QUOTE, "\xc0" * 6 + "\x00" * 18)
+    assert say_selection(session) == [
+        "Selected text is:  Structural navigation Intro paragraph. Quoted"
+    ]
+
+
+@requires_browser_version("chromium", 153)
+@pytest.mark.native_app
+def test_selection_without_notifying_the_user(
+    web_structural_navigation: BrowserSession,
+) -> None:
+    """Tests selection which the caller asked Orca not to present."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+
+    spoken, brailled = select_without_notifying(session, NEXT_WORD)
+    assert spoken == []
+    assert brailled[-1] == BrailleLine(11, _HEADING, _HEADING, "\xc0" * 10 + "\x00" * 14)
+    assert say_selection(session) == ["Selected text is:  Structural"]
+
+    spoken, brailled = select_without_notifying(session, NEXT_WORD)
+    assert spoken == []
+    assert brailled[-1] == BrailleLine(22, _HEADING, _HEADING, "\xc0" * 21 + "\x00" * 3)
+    assert say_selection(session) == ["Selected text is:  Structural navigation"]
+
+    spoken, brailled = select_without_notifying(session, START_OF_LINE)
+    assert spoken == []
+    assert brailled[-1] == BrailleLine(1, _HEADING, _HEADING, "\x00" * 24)
+    assert say_selection(session) == ["No selected text."]
+
+
+@requires_browser_version("chromium", 153)
+@pytest.mark.native_app
+def test_selection_removed_by_caret_navigation(
+    web_structural_navigation: BrowserSession,
+) -> None:
+    """Tests removing a selection with the caret navigation commands."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+
+    spoken, brailled = select(session, NEXT_WORD)
+    assert spoken == ["Structural", "selected"]
+    assert brailled == BrailleLine(11, _HEADING, _HEADING, "\xc0" * 10 + "\x00" * 14)
+
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    spoken, brailled = capture(session)
+    assert spoken == ["Text unselected.", " "]
+    assert brailled[-1] == BrailleLine(11, _HEADING, _HEADING, "\x00" * 24)
+    assert say_selection(session) == ["No selected text."]
+
+    spoken, brailled = select(session, NEXT_WORD)
+    assert spoken == ["navigation", "selected"]
+    assert brailled == BrailleLine(22, _HEADING, _HEADING, "\x00" * 10 + "\xc0" * 11 + "\x00" * 3)
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    spoken, brailled = capture(session)
+    assert spoken == ["Text unselected.", _PARAGRAPH]
+    assert brailled[-1] == BrailleLine(1, _PARAGRAPH, _PARAGRAPH, "\x00" * 16)
+    assert say_selection(session) == ["No selected text."]
+
+    reset_web_state(session)
+    spoken, _brailled = select(session, NEXT_WORD)
+    assert spoken == ["Structural", "selected"]
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+    spoken, _brailled = capture(session)
+    assert spoken == ["Text unselected.", "navigation"]
+    assert say_selection(session) == ["No selected text."]
+
+    spoken, _brailled = select(session, PREVIOUS_WORD)
+    assert spoken == ["navigation", "selected"]
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
+    spoken, _brailled = capture(session)
+    assert spoken == ["Text unselected.", "Structural "]
+    assert say_selection(session) == ["No selected text."]

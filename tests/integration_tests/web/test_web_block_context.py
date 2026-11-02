@@ -1,0 +1,160 @@
+# Orca
+#
+# Copyright 2026 Igalia, S.L.
+# Author: Joanmarie Diggs <jdiggs@igalia.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., Franklin Street, Fifth Floor,
+# Boston MA  02110-1301 USA.
+
+"""Tests line grouping for same-row siblings: block content stays separate, inline flexes merge."""
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+import pytest
+
+from tests.integration_tests.harness import keyboard
+from tests.integration_tests.helpers import (
+    BrailleLine,
+    capture,
+    move_to_bottom,
+    move_to_top,
+    reset_web_state,
+)
+
+if TYPE_CHECKING:
+    from tests.integration_tests.orca_fixtures import BrowserSession
+
+
+_LINES = [
+    (["• Bread"], "• Bread"),
+    (["leaving list.", "Cheese"], "Cheese"),
+    (["code", "Code one"], "Code one $l"),
+    (["Code two"], "Code two $l"),
+    (["leaving code.", "After code"], "After code"),
+    (
+        ["banner", "Home", "image link", "Shop by category", "button"],
+        "Home image Shop by category button",
+    ),
+    (
+        [
+            "leaving banner.",
+            "navigation",
+            "Categories",
+            "List with 3 items",
+            "Motors",
+            "link",
+            "Expand: Motors",
+            "button",
+            "Electronics",
+            "link",
+            "Expand: Electronics",
+            "button",
+            "Collectibles",
+            "link",
+            "Expand: Collectibles",
+            "button",
+        ],
+        (
+            "Motors Expand: Motors button Electronics Expand: Electronics button "
+            "Collectibles Expand: Collectibles button"
+        ),
+    ),
+    (["leaving list.", "leaving navigation.", "The end."], "The end."),
+]
+
+
+@pytest.mark.native_app
+def test_block_context_boundaries_stay_on_separate_lines(
+    web_block_context: BrowserSession,
+) -> None:
+    """Tests block content stays separate while flex rows of an image link and toggles group."""
+
+    session = web_block_context
+    reset_web_state(session)
+    move_to_top(session)
+    for expected_speech, expected_line in _LINES:
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        spoken, braille = capture(session)
+        assert spoken == expected_speech
+        assert [line.full for line in braille] == [expected_line]
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("heading_count", [1, 2], ids=["clip", "clip-path"])
+@pytest.mark.parametrize(
+    "direction", [keyboard.KEYSYM_UP, keyboard.KEYSYM_DOWN], ids=["up", "down"]
+)
+def test_clipped_buttons_share_line_with_links(
+    web_block_context: BrowserSession, heading_count: int, direction: int
+) -> None:
+    """Tests clipped buttons remain on their links' line in both directions."""
+
+    session = web_block_context
+    reset_web_state(session)
+    move_to_top(session)
+    for _ in range(heading_count + (direction == keyboard.KEYSYM_UP)):
+        keyboard.tap_key(keyboard.KEYSYM_H)
+        capture(session)
+    if direction == keyboard.KEYSYM_UP:
+        keyboard.tap_key(keyboard.KEYSYM_UP)
+        capture(session)
+
+    keyboard.tap_key(direction)
+    spoken, braille = capture(session)
+    expected = ["List with 3 items"]
+    for name in ("Motors", "Electronics", "Collectibles"):
+        expected.extend([name, "link", f"Expand: {name}", "button"])
+    assert spoken == expected
+    assert braille[-1].full == (
+        "Motors Expand: Motors button Electronics Expand: Electronics button "
+        "Collectibles Expand: Collectibles button"
+    )
+
+    keyboard.tap_key(direction)
+    spoken, _ = capture(session)
+    heading = "Clipped buttons" if heading_count == 1 else "Clip-path buttons"
+    expected = (
+        ["leaving list.", heading, "heading 2"]
+        if direction == keyboard.KEYSYM_UP
+        else ["leaving list.", f"After {heading.lower()}."]
+    )
+    assert spoken == expected
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize(
+    "direction", [keyboard.KEYSYM_UP, keyboard.KEYSYM_DOWN], ids=["up", "down"]
+)
+def test_landmark_whitespace_does_not_add_role(
+    web_block_context: BrowserSession, direction: int
+) -> None:
+    """Tests whitespace between controls does not add the landmark role to braille."""
+
+    session = web_block_context
+    reset_web_state(session)
+    move_to_bottom(session)
+    capture(session)
+    if direction == keyboard.KEYSYM_DOWN:
+        for _ in range(2):
+            keyboard.tap_key(keyboard.KEYSYM_UP)
+            capture(session)
+
+    keyboard.tap_key(direction)
+    spoken, braille = capture(session)
+    assert spoken == ["banner", "First", "link", "Next", "button"]
+    line = "First\u00a0Next button"
+    assert braille[-1] == BrailleLine(1, line, line, "\xc0" * 5 + "\x00" * 12)

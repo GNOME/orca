@@ -1,6 +1,7 @@
 debug.out
 *.out
 core
+!tests/integration_tests/core/
 bld
 *~
 patch.*

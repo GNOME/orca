@@ -1,0 +1,106 @@
+# Orca
+#
+# Copyright 2026 Igalia, S.L.
+# Author: Joanmarie Diggs <jdiggs@igalia.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., Franklin Street, Fifth Floor,
+# Boston MA  02110-1301 USA.
+
+"""Tests line reading of emoji text and inline links in an attributed-string block."""
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+import pytest
+
+from tests.integration_tests.harness import keyboard
+from tests.integration_tests.helpers import BrailleLine, capture, expected_for_browser, move_to_top
+
+if TYPE_CHECKING:
+    from tests.integration_tests.orca_fixtures import BrowserSession
+
+
+@pytest.mark.native_app
+def test_line_reading_emoji_text_and_inline_links(web_emoji_links: BrowserSession) -> None:
+    """Tests that emoji-led text lines are read, not dropped as blank, amid inline links."""
+
+    session = web_emoji_links
+    move_to_top(session)
+
+    # Firefox pads non-BMP characters with U+FEFF to retain UTF-16 offsets in ATK text.
+    # The padding affects braille offsets; speech during character navigation is unchanged.
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["🎧 Streaming links:"],
+        [
+            expected_for_browser(
+                session,
+                BrailleLine(1, "🎧 Streaming links:", "🎧 Streaming links:", "\x00" * 18),
+                firefox=BrailleLine(
+                    1, "🎧\ufeff Streaming links:", "🎧\ufeff Streaming links:", "\x00" * 19
+                ),
+            )
+        ],
+    )
+
+    # The trailing newline rides along in braille but is filtered from speech.
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["https://push.fm/link/htlecq2o", "link"],
+        [
+            BrailleLine(
+                1,
+                "https://push.fm/link/htlecq2o ",
+                "https://push.fm/link/htlecq2o ",
+                "\xc0" * 29 + "\x00",
+            )
+        ],
+    )
+
+    for _ in range(2):
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        assert capture(session) == (["blank"], [BrailleLine(1, "", "", None)])
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    text = "🎵 Follow me on Spotify to get notified whenever I release something!"
+    assert capture(session) == (
+        [text + ""],
+        [
+            expected_for_browser(
+                session,
+                BrailleLine(1, text, "🎵 Follow me on Spotify to get no", "\x00" * len(text)),
+                firefox=BrailleLine(
+                    1,
+                    "🎵\ufeff" + text[1:],
+                    "🎵\ufeff Follow me on Spotify to get n",
+                    "\x00" * (len(text) + 1),
+                ),
+            )
+        ],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["https://open.spotify.com/artist/0kXCd..", "link", "."],
+        [
+            BrailleLine(
+                1,
+                "https://open.spotify.com/artist/0kXCd.. .",
+                "https://open.spotify.com/artist/",
+                "\xc0" * 39 + "\x00\x00",
+            )
+        ],
+    )

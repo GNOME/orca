@@ -47,10 +47,13 @@ Orca's tests are grouped into the following named suites:
 * "integration": the superset of the following:
     * "core": infrastructure such as GSettings, D-Bus support, and browser smoke tests
     * "document": document viewers and editors (currently Atril)
+    * "gtk": all non-terminal GTK tests (both GTK3 and GTK4)
     * "gtk3": non-terminal GTK3 UI tests
     * "gtk4": non-terminal GTK4 UI tests
+    * "terminal": all VTE terminal tests (both GTK3 and GTK4)
     * "gtk3-terminal": for terminal applications using VTE for GTK3
     * "gtk4-terminal": the same terminal tests using VTE for GTK4
+    * "web": all web-content tests (both Chromium and Firefox)
     * "chromium": for web content using Chrome (beta preferred) or Chromium
     * "gecko": for web content using Firefox (Nightly preferred)
 
@@ -59,6 +62,7 @@ Note that coverage for Qt, along with additional applications, is in progress.
 ```bash
 meson test -C _build
 meson test -C _build --suite <suite name>
+meson test -C _build --list --suite <suite name> # List tests without running them
 ```
 
 Downstream distributions may wish to run the small `core` suite to check basic
@@ -91,7 +95,7 @@ session, you can still run the tests by signing in as a second local user
 Most integration tests cover user interactions with applications and toolkits
 by simulating keystrokes, waiting for Orca's response, and checking the resulting
 speech and braille output. Running these tests therefore takes a fair amount of
-time. There are currently over 275 Meson test runs containing over 1,500 test
+time. There are currently over 350 Meson test runs containing over 2,000 test
 cases, many involving numerous simulated keystrokes. CI divides the suites into
 separate container jobs that can run in parallel. Local runs do not require
 containers, and application tests run sequentially by default. A full local run
@@ -119,9 +123,18 @@ native navigation and Orca commands.
 
 ### 1. Choose a Test File and Content
 
-Look for a related test in `tests/integration_tests/` and extend it when
-practical. Otherwise, create a file named `test_[feature].py`, following
-similar existing tests.
+Look for a related test in the appropriate directory under
+`tests/integration_tests/` and extend it when practical:
+
+* `core/`: infrastructure and browser accessibility smoke tests
+* `gtk/`: widget tests shared between GTK3 and GTK4
+* `terminal/`: terminal tests shared between GTK3 VTE and GTK4 VTE
+* `atril/`: document navigation, selection, and reading in Atril
+* `web/`: web-content tests shared between Chromium and Firefox
+
+Otherwise, create a file named `test_[feature].py` in that directory,
+following similar existing tests. Suite selection determines the toolkit
+or browser; each shared test has a single source file.
 
 Reuse the existing test applications in `tests/integration_tests/apps/`
 and fixtures in `tests/integration_tests/orca_fixtures.py` when practical.
