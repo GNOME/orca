@@ -27,7 +27,14 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import expected_for_browser, reset_web_state, speech, xfail_firefox_caret_tab
+from .helpers import (
+    BrailleLine,
+    capture,
+    expected_for_browser,
+    reset_web_state,
+    speech,
+    xfail_firefox_caret_tab,
+)
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -58,6 +65,7 @@ def test_field_state_announcements_on_focus(web_field_states: BrowserSession) ->
     assert _tab(session) == [
         "More options",
         expected_for_browser(session, "toggle button collapsed", firefox="collapsed button"),
+        "Browse mode",
     ]
 
 
@@ -78,3 +86,82 @@ def test_disclosure_expand_and_collapse(web_field_states: BrowserSession) -> Non
     assert speech(session) == ["expanded"]
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     assert speech(session) == ["collapsed"]
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("automatic_focus_mode", [False, True])
+def test_reading_native_disclosure_content(
+    web_field_states: BrowserSession, automatic_focus_mode: bool
+) -> None:
+    """Tests that expanding native details leaves its content readable in browse mode."""
+
+    session = web_field_states
+    session.orca.set("DocumentPresenter", "SayAllOnLoad", False)
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_R)
+    session.reader.drain(quiescence_timeout=0.5, overall_timeout=3.0)
+    session.reader.reset()
+    reset_web_state(session)
+    session.orca.set("StructuralNavigator", "TriggersFocusMode", automatic_focus_mode)
+    session.orca.set("CaretNavigator", "TriggersFocusMode", automatic_focus_mode)
+
+    collapsed = expected_for_browser(
+        session,
+        BrailleLine(
+            1,
+            "& y More options collapsed toggle button",
+            "& y More options collapsed toggl",
+            "\x00" * 40,
+        ),
+        firefox=BrailleLine(
+            1, "More options collapsed button", "More options collapsed button", "\x00" * 29
+        ),
+    )
+    expanded = expected_for_browser(
+        session,
+        BrailleLine(
+            1,
+            "& y More options expanded toggle button",
+            "& y More options expanded toggle",
+            "\x00" * 39,
+        ),
+        firefox=BrailleLine(
+            1, "More options expanded button", "More options expanded button", "\x00" * 28
+        ),
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_B)
+    spoken, brailled = capture(session)
+    assert spoken == [
+        "b",
+        "More options",
+        expected_for_browser(session, "toggle button collapsed", firefox="collapsed button"),
+    ]
+    assert brailled[-1] == collapsed
+    assert not session.orca.get("DocumentPresenter", "InFocusMode")
+
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    spoken, brailled = capture(session)
+    assert spoken == ["expanded"]
+    assert brailled[-1] == expanded
+    assert not session.orca.get("DocumentPresenter", "InFocusMode")
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    spoken, brailled = capture(session)
+    assert spoken == ["Extra content."]
+    assert brailled[-1] == BrailleLine(1, "Extra content.", "Extra content.", "\x00" * 14)
+    assert not session.orca.get("DocumentPresenter", "InFocusMode")
+
+    keyboard.tap_key(keyboard.KEYSYM_UP)
+    spoken, brailled = capture(session)
+    assert spoken == [
+        "More options",
+        expected_for_browser(session, "toggle button expanded", firefox="expanded button"),
+    ]
+    assert brailled[-1] == expanded
+    assert not session.orca.get("DocumentPresenter", "InFocusMode")
+
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    spoken, brailled = capture(session)
+    assert spoken == ["collapsed"]
+    assert brailled[-1] == collapsed
+    assert not session.orca.get("DocumentPresenter", "InFocusMode")

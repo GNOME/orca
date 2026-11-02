@@ -416,6 +416,7 @@ class DocumentPresenter(Extension):
         if (
             AXUtilities.is_expandable(obj)
             and AXUtilities.is_focusable(obj)
+            and AXObject.get_attribute(obj, "tag") != "summary"
             and not AXUtilities.is_link(obj)
         ):
             return True, "it's expandable and focusable"
