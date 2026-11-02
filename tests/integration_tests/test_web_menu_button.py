@@ -34,6 +34,32 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.native_app
+def test_structural_navigation_then_focus_mode(web_menu_button: BrowserSession) -> None:
+    """A menu button reached with B must be ready for interaction in focus mode."""
+
+    session = web_menu_button
+    reset_web_state(session)
+    keyboard.tap_key(keyboard.KEYSYM_B)
+    spoken, brailled = capture(session)
+    assert spoken == ["b", "Tools", "collapsed button", "opens menu"]
+    assert brailled[-1] == BrailleLine(
+        1, "Tools collapsed button", "Tools collapsed button", "\x00" * 22
+    )
+
+    session.orca.press_orca_key(keyboard.KEYSYM_A)
+    spoken, _brailled = capture(session)
+    assert spoken == ["Focus mode"]
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    spoken, brailled = capture(session)
+    assert spoken == ["Tools", "menu", "Rename"]
+    assert brailled[-1] == BrailleLine(1, "Rename", "Rename", "\x00" * 6)
+
+    keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
+    spoken, _brailled = capture(session)
+    assert spoken == ["Tools", "collapsed button", "opens menu"]
+
+
+@pytest.mark.native_app
 def test_opening_and_closing_menu_button_menus(web_menu_button: BrowserSession) -> None:
     """Tests opening a menu button's menu, arrowing through it, and closing it."""
 

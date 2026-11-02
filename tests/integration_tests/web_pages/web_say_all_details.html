@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Say All Details ready</title>
+</head>
+<body>
+<label><input id="expand-on-focus" type="checkbox" autocomplete="off" checked>Expand on focus</label>
+<h1>Reading start</h1>
+<p>Before details.</p>
+<details id="details">
+<summary id="summary">More options</summary>
+<p>Extra content.</p>
+</details>
+<p>After details.</p>
+<script>
+document.getElementById('summary').addEventListener('focus', () => {
+  if (document.getElementById('expand-on-focus').checked) {
+    document.getElementById('details').open = true;
+  }
+});
+</script>
+</body>
+</html>

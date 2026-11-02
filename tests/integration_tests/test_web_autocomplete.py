@@ -28,7 +28,14 @@ import pytest
 
 from .apps import browser
 from .harness import keyboard
-from .helpers import expected_for_browser, reset_web_state, speech, xfail_firefox_caret_tab
+from .helpers import (
+    BrailleLine,
+    capture,
+    expected_for_browser,
+    reset_web_state,
+    speech,
+    xfail_firefox_caret_tab,
+)
 
 if TYPE_CHECKING:
     from .orca_fixtures import BrowserSession
@@ -37,6 +44,32 @@ if TYPE_CHECKING:
 def _popup_description(session: BrowserSession) -> str:
     # Firefox exposes HAS_POPUP without a type; Chromium exposes haspopup=listbox.
     return expected_for_browser(session, "opens listbox", firefox="opens popup")
+
+
+@pytest.mark.native_app
+def test_structural_navigation_then_typing(web_autocomplete: BrowserSession) -> None:
+    """A popup entry reached structurally must accept typing after entering focus mode."""
+
+    session = web_autocomplete
+    reset_web_state(session)
+    keyboard.tap_key(keyboard.KEYSYM_C)
+    assert speech(session) == ["c", "Fruit", "editable combo box", _popup_description(session)]
+
+    session.orca.press_orca_key(keyboard.KEYSYM_A)
+    assert speech(session) == ["Focus mode"]
+    for key in "kiwi":
+        keyboard.tap_key(ord(key))
+    speech(session)
+    keyboard.tap_key(keyboard.KEYSYM_HOME)
+    speech(session)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
+    spoken, brailled = capture(session)
+    assert spoken == ["kiwi", "selected"]
+    assert brailled[-1] == BrailleLine(
+        11, "Fruit kiwi $l", "Fruit kiwi $l", "\x00" * 6 + "\xc0" * 4 + "\x00" * 3
+    )
+    keyboard.tap_key(keyboard.KEYSYM_DELETE)
+    speech(session)
 
 
 @pytest.mark.native_app

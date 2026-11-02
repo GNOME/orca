@@ -164,6 +164,8 @@ from .orca_fixtures import (  # noqa: F401
     _web_redundant_content,
     _web_region_headings,
     _web_removed_child_recovery,
+    _web_say_all_details,
+    _web_say_all_expansion,
     _web_selection,
     _web_sister_projects,
     _web_sister_projects_2,

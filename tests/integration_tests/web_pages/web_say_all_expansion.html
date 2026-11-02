@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Say All Expansion ready</title>
+<style>
+.citation, .citation > span { display: inline-flex; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<label><input id="open-on-focus" type="checkbox" autocomplete="off" checked>Open preview on focus</label>
+<h1>Reading start</h1>
+<p>Start reading here. The source is
+<span id="citation" class="citation" role="button" tabindex="0"
+      aria-label="Source documentation" aria-haspopup="dialog"
+      aria-expanded="false" aria-controls="preview"><span>S</span><span>Source documentation</span></span>.</p>
+<p>This paragraph follows the citation. Say All should read this sentence.</p>
+<div id="preview" role="dialog" aria-label="Source preview" hidden>
+<p>Preview content.</p>
+</div>
+<script>
+const citation = document.getElementById('citation');
+citation.addEventListener('focus', () => {
+  if (document.getElementById('open-on-focus').checked) {
+    document.getElementById('preview').hidden = false;
+    citation.setAttribute('aria-expanded', 'true');
+  }
+});
+</script>
+</body>
+</html>

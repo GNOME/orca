@@ -164,10 +164,12 @@ class Utilities:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return results
 
-    def grab_focus_when_setting_caret(self, obj: Atspi.Accessible) -> bool:
+    def grab_focus_when_setting_caret(
+        self, obj: Atspi.Accessible, state_set: Atspi.StateSet | None = None
+    ) -> bool:
         """Returns true if we should grab focus when setting the caret."""
 
-        return AXUtilities.is_focusable(obj)
+        return AXUtilities.is_focusable(obj, state_set)
 
     def grab_focus_before_routing(self, obj: Atspi.Accessible) -> bool:
         """Returns true if we should grab focus before routing the cursor."""
