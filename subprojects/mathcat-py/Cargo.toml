@@ -17,7 +17,7 @@ version = "0.27"
 features = ["extension-module", "abi3"]
 
 [build-dependencies]
-zip = { version = "8.5", default-features = false, features = ["bzip2"] }
+zip = { version = "9.0", default-features = false, features = ["bzip2"] }
 mathcat = {version = "=0.7.6-rc.3", features = ["include-zip"]}
 
 [profile.release]
