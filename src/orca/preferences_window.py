@@ -789,6 +789,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
         OrcaSetupGUI.WINDOW = None
+        for grid in self._page_to_grid.values():
+            grid.on_window_closed()
 
         msg = "PREFERENCES WINDOW: Window destruction complete"
         debug.print_message(debug.LEVEL_ALL, msg, True)

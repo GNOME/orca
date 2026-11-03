@@ -289,6 +289,13 @@ class PreferencesGridBase(Gtk.Grid):
     def on_becoming_visible(self) -> None:
         """Called when this grid becomes the visible panel in the main stack."""
 
+    def on_window_closed(self) -> None:
+        """Called when the preferences window is closed."""
+
+        if self._multipage_categories:
+            for _label, _page_id, grid in self._multipage_categories:
+                grid.on_window_closed()
+
     def set_focus_sidebar_callback(self, callback: Callable[[], None]) -> None:
         """Set the callback to focus the sidebar navigation list."""
 

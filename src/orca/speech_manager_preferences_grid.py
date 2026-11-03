@@ -291,6 +291,11 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._populate_speech_systems()
         self.refresh()
 
+    def on_window_closed(self) -> None:
+        """Clears the speech settings staged while the preferences window was open."""
+
+        self._manager.clear_staged_settings()
+
     def _build(self) -> None:
         """Create the Gtk widgets composing the grid."""
 
@@ -775,14 +780,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         tree_iter = model.get_iter(active)
         synth_name = model.get_value(tree_iter, 0)
 
-        # Without the override, update_synthesizer() on script activation reverts
+        # Without staging, update_synthesizer() on script activation reverts
         # the live module to the dconf value before the user has clicked save.
-        gsettings_registry.get_registry().set_runtime_value(
-            self._manager.SPEECH_SCHEMA,
-            self._manager.KEY_SYNTHESIZER,
-            synth_name,
-        )
-        self._manager.set_current_synthesizer(synth_name)
+        self._manager.stage_synthesizer(synth_name)
 
         self._voice_families = self._manager.get_voice_families()
         self._families_sorted = False

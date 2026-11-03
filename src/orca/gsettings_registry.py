@@ -207,6 +207,7 @@ class GSettingsRegistry:
         self._schemas: dict[str, str] = {}
         self._handles: dict[str, GSettingsSchemaHandle] = {}
         self._runtime_values: dict[tuple[str, str, str | None, str], Any] = {}
+        self._staged_values: dict[tuple[str, str, str | None, str], Any] = {}
         self._ignore_runtime: bool = False
         self._cache = _GSettingsRegistryCache()
         self._profile_change_observers: list[Callable[[str], None]] = []
@@ -313,8 +314,14 @@ class GSettingsRegistry:
                     return val
 
         if not self._ignore_runtime:
-            runtime = self._runtime_values.get((schema, key, voice_type, PRIMARY_VOICE_SET))
-            if runtime is not None:
+            rt_key = (schema, key, voice_type, PRIMARY_VOICE_SET)
+            if rt_key in self._staged_values:
+                staged = self._staged_values[rt_key]
+                if staged is not None:
+                    _log_registry(schema, key, "staged value = ", staged)
+                    self._cache.set_value(cache_key, staged)
+                    return staged
+            elif (runtime := self._runtime_values.get(rt_key)) is not None:
                 _log_registry(schema, key, "runtime override = ", runtime)
                 self._cache.set_value(cache_key, runtime)
                 return runtime
@@ -408,9 +415,11 @@ class GSettingsRegistry:
         *,
         voice_set: str = PRIMARY_VOICE_SET,
     ) -> None:
-        """Stores a runtime value override."""
+        """Stores a runtime value override, replacing any staged value for the same setting."""
 
-        self._runtime_values[(schema, key, voice_type, voice_set)] = value
+        rt_key = (schema, key, voice_type, voice_set)
+        self._runtime_values[rt_key] = value
+        self._staged_values.pop(rt_key, None)
         self.clear_value_cache()
 
     def get_runtime_value(
@@ -436,16 +445,39 @@ class GSettingsRegistry:
         *,
         voice_set: str = PRIMARY_VOICE_SET,
     ) -> None:
-        """Removes a single runtime value override."""
+        """Removes a single runtime value override, along with any staged value for it."""
 
-        self._runtime_values.pop((schema, key, voice_type, voice_set), None)
+        rt_key = (schema, key, voice_type, voice_set)
+        self._runtime_values.pop(rt_key, None)
+        self._staged_values.pop(rt_key, None)
         self.clear_value_cache()
 
     def clear_runtime_values(self) -> None:
-        """Clears all runtime value overrides."""
+        """Clears all runtime value overrides and staged values."""
 
         self._runtime_values.clear()
+        self._staged_values.clear()
         self.clear_value_cache()
+
+    def set_staged_value(
+        self,
+        schema: str,
+        key: str,
+        value: Any,
+        voice_type: str | None = None,
+    ) -> None:
+        """Stages a value which takes precedence over runtime values; None stages it as not set."""
+
+        self._staged_values[(schema, key, voice_type, PRIMARY_VOICE_SET)] = value
+        self.clear_value_cache()
+
+    def clear_staged_values(self) -> set[str]:
+        """Clears all staged values, returning the schemas they belonged to."""
+
+        schemas = {schema for schema, _key, _voice_type, _voice_set in self._staged_values}
+        self._staged_values.clear()
+        self.clear_value_cache()
+        return schemas
 
     def set_dict(
         self,

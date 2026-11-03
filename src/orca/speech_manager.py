@@ -203,38 +203,44 @@ class SpeechManager(Extension):
             if value := family.get(family_key):
                 registry.set_runtime_value(self._VOICE_SCHEMA, key, value, voice_type=voice_type)
 
-    def _set_runtime_voice(self, voice_type: str, voice: ACSS) -> None:
-        """Overrides the runtime voice for voice_type, clearing any previous override."""
+    def _stage_voice(self, voice_type: str, voice: ACSS) -> None:
+        """Stages voice for voice_type; properties voice lacks are staged as not set."""
 
         registry = gsettings_registry.get_registry()
-        prosody = (
-            (ACSS.RATE, self.KEY_RATE),
-            (ACSS.AVERAGE_PITCH, self.KEY_PITCH),
-            (ACSS.PITCH_RANGE, self.KEY_PITCH_RANGE),
-            (ACSS.GAIN, self.KEY_VOLUME),
-        )
-        for _attr, key in ((None, self.KEY_ESTABLISHED), *prosody):
-            registry.remove_runtime_value(self._VOICE_SCHEMA, key, voice_type=voice_type)
         # A non-default voice type is only used if it is established; mirror that here so the
         # generator applies it rather than falling back to the default voice.
-        registry.set_runtime_value(
+        registry.set_staged_value(
             self._VOICE_SCHEMA,
             self.KEY_ESTABLISHED,
             bool(voice.get("established")),
             voice_type=voice_type,
         )
-        for acss_key, key in prosody:
-            if acss_key in voice:
-                registry.set_runtime_value(
-                    self._VOICE_SCHEMA, key, voice[acss_key], voice_type=voice_type
-                )
-        self._set_runtime_voice_family(voice_type, voice.get(ACSS.FAMILY, {}))
+        for acss_key, key in (
+            (ACSS.RATE, self.KEY_RATE),
+            (ACSS.AVERAGE_PITCH, self.KEY_PITCH),
+            (ACSS.PITCH_RANGE, self.KEY_PITCH_RANGE),
+            (ACSS.GAIN, self.KEY_VOLUME),
+        ):
+            registry.set_staged_value(
+                self._VOICE_SCHEMA, key, voice.get(acss_key), voice_type=voice_type
+            )
+        family = voice.get(ACSS.FAMILY, {})
+        for family_key, key in (
+            (speechserver.VoiceFamily.NAME, self.KEY_FAMILY_NAME),
+            (speechserver.VoiceFamily.LANG, self.KEY_FAMILY_LANG),
+            (speechserver.VoiceFamily.DIALECT, self.KEY_FAMILY_DIALECT),
+            (speechserver.VoiceFamily.GENDER, self.KEY_FAMILY_GENDER),
+            (speechserver.VoiceFamily.VARIANT, self.KEY_FAMILY_VARIANT),
+        ):
+            registry.set_staged_value(
+                self._VOICE_SCHEMA, key, family.get(family_key) or None, voice_type=voice_type
+            )
 
     def apply_live_voice(self, voice: ACSS) -> None:
         """Auditions voice as the live default voice, bypassing voice-set rerouting."""
 
         self._auditioning_voice = True
-        self._set_runtime_voice(VoiceType.DEFAULT, voice)
+        self._stage_voice(VoiceType.DEFAULT, voice)
         if (server := self.get_server()) is not None:
             server.set_default_voice(voice)
             server.clear_cached_voice_properties()
@@ -244,9 +250,29 @@ class SpeechManager(Extension):
 
         self._auditioning_voice = False
         for voice_type, voice in voices.items():
-            self._set_runtime_voice(voice_type, voice)
+            self._stage_voice(voice_type, voice)
         if (server := self.get_server()) is not None:
             server.set_default_voice(voices.get(VoiceType.DEFAULT, ACSS({})))
+            server.clear_cached_voice_properties()
+
+    def stage_synthesizer(self, value: str) -> bool:
+        """Stages the synthesizer and makes it the current one."""
+
+        gsettings_registry.get_registry().set_staged_value(
+            self.SPEECH_SCHEMA, self.KEY_SYNTHESIZER, value
+        )
+        return self.set_current_synthesizer(value)
+
+    def clear_staged_settings(self) -> None:
+        """Clears the staged synthesizer and voices, returning to the settings beneath them."""
+
+        schemas = gsettings_registry.get_registry().clear_staged_values()
+        tokens = ["SPEECH MANAGER: Cleared staged values for", sorted(schemas), "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if self.SPEECH_SCHEMA in schemas:
+            self.update_synthesizer()
+        if self._VOICE_SCHEMA in schemas and (server := self.get_server()) is not None:
+            server.set_default_voice(self.get_voice_properties())
             server.clear_cached_voice_properties()
 
     @staticmethod
