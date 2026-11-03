@@ -598,11 +598,18 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         registry = gsettings_registry.get_registry()
         registry.set_ignore_runtime(True)
-        for grid in self._page_to_grid.values():
-            if grid is self.profiles_grid and not include_profiles:
-                continue
-            grid.reload()
-        registry.set_ignore_runtime(False)
+        active_app = registry.get_active_app()
+        if self._app_name:
+            registry.set_active_app(self._app_name)
+        try:
+            for grid in self._page_to_grid.values():
+                if grid is self.profiles_grid and not include_profiles:
+                    continue
+                grid.reload()
+        finally:
+            if self._app_name:
+                registry.set_active_app(active_app)
+            registry.set_ignore_runtime(False)
 
     def apply_button_clicked(self, _widget: Gtk.Button) -> None:
         """Handle Apply button click to save and apply preferences."""
