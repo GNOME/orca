@@ -33,8 +33,8 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import (
-    clipboard_command_definitions,
     clipboard_manager,
+    clipboard_presenter_command_definitions,
     dbus_service,
     debug,
     guilabels,
@@ -64,7 +64,7 @@ class ClipboardPresenter(Extension):
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
-        return clipboard_command_definitions.get_commands(self)
+        return clipboard_presenter_command_definitions.get_commands(self)
 
     @dbus_service.command
     def present_clipboard_contents(

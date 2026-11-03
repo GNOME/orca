@@ -971,7 +971,7 @@ class TestCommandRegistry:
 
         self._setup_dependencies(test_context)
         from orca import command_manager
-        from orca.clipboard import get_presenter
+        from orca.clipboard_presenter import get_presenter
 
         presenter = get_presenter()
         presenter.set_up_commands()

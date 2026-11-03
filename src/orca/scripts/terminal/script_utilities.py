@@ -25,7 +25,7 @@ from __future__ import annotations
 import re
 from typing import TYPE_CHECKING
 
-from orca import clipboard, debug, focus_manager, input_event_manager, script_utilities
+from orca import clipboard_presenter, debug, focus_manager, input_event_manager, script_utilities
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.enums import TextEventReason
@@ -57,7 +57,7 @@ class Utilities(script_utilities.Utilities):
         if AXUtilities.get_text_event_reason(event) == TextEventReason.AUTO_INSERTION_PRESENTABLE:
             return event.any_data
 
-        if clipboard.get_presenter().is_clipboard_text_changed_event(event):
+        if clipboard_presenter.get_presenter().is_clipboard_text_changed_event(event):
             return event.any_data
 
         start, end = event.detail1, event.detail1 + len(event.any_data)

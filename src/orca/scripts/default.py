@@ -39,7 +39,7 @@ from orca import (
     bypass_mode_manager,
     caret_navigator,
     chat_presenter,
-    clipboard,
+    clipboard_presenter,
     command_manager,
     debug,
     debugging_tools_manager,
@@ -109,7 +109,7 @@ class Script(script.Script):
         builtins = [
             (braille_presenter.get_presenter, guilabels.BRAILLE),
             (notification_presenter.get_presenter, guilabels.KB_GROUP_NOTIFICATIONS),
-            (clipboard.get_presenter, guilabels.KB_GROUP_CLIPBOARD),
+            (clipboard_presenter.get_presenter, guilabels.KB_GROUP_CLIPBOARD),
             (say_all_presenter.get_presenter, guilabels.GENERAL_SAY_ALL),
             (typing_echo_presenter.get_presenter, guilabels.ECHO),
             (speech_manager.get_manager, guilabels.KB_GROUP_SPEECH_VERBOSITY),

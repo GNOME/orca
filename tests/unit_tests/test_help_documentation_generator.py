@@ -1419,7 +1419,7 @@ def test_since_metadata_generates_availability_notices(
     shutil.copytree(
         _ROOT / "src/orca", source / "orca", ignore=shutil.ignore_patterns("__pycache__")
     )
-    clipboard = source / "orca/clipboard_command_definitions.py"
+    clipboard = source / "orca/clipboard_presenter_command_definitions.py"
     original = clipboard.read_text()
     clipboard.write_text(
         original.replace(

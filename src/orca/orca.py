@@ -40,7 +40,7 @@ from gi.repository import (
 
 from . import (
     ax_device_manager,
-    clipboard,
+    clipboard_presenter,
     command_manager,
     dbus_service,
     debug,
@@ -131,7 +131,7 @@ def shutdown(_event=None, _signum=None):
     event_manager.get_manager().deactivate()
 
     # TODO - JD: This ultimately belongs in an extension manager.
-    clipboard.get_presenter().deactivate()
+    clipboard_presenter.get_presenter().deactivate()
     mouse_presenter.get_presenter().deactivate()
 
     presentation_manager.get_manager().shutdown_presenters()
@@ -231,7 +231,7 @@ def _activate_services():
         if focused_object:
             focus_manager.get_manager().set_locus_of_focus(None, focused_object)
 
-    clipboard.get_presenter().activate()
+    clipboard_presenter.get_presenter().activate()
     Gdk.notify_startup_complete()  # pylint: disable=no-value-for-parameter
     systemd.get_manager().notify_ready()
     extension_loader.get_loader().notify_user_extensions_ready()

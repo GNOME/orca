@@ -30,7 +30,7 @@ from .command import Command, KeyboardCommand
 from .help_metadata import CommandGroupDoc
 
 if TYPE_CHECKING:
-    from .clipboard import ClipboardPresenter
+    from .clipboard_presenter import ClipboardPresenter
 
 
 def get_documentation() -> CommandGroupDoc:
