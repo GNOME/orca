@@ -168,7 +168,13 @@ def _setup_signal_handlers():
     def _glib_show_preferences_handler():
         msg = "ORCA: GLib handler received show-preferences signal"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        screen_reader_manager.get_manager().show_preferences_gui()
+
+        # Showing a window on Wayland must wait until GDK has handled its pending events.
+        def show_preferences():
+            screen_reader_manager.get_manager().show_preferences_gui()
+            return GLib.SOURCE_REMOVE
+
+        GLib.idle_add(show_preferences)
         return GLib.SOURCE_CONTINUE
 
     for signum, handler in (
