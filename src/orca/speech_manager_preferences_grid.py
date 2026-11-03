@@ -275,6 +275,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._voices: dict[str, ACSS] = {}
         for vt in VoiceType:
             self._voices[vt] = manager.get_voice_properties(vt, app_name=self._app_name)
+        self._changed_voice_types: set[str] = set()
 
         self._voice_families: list[speechserver.VoiceFamily] = []
 
@@ -287,21 +288,14 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self._families_sorted: bool = False
 
-        self._stage_app_settings()
         self._build()
         self._populate_speech_systems()
         self.refresh()
 
-    def _stage_app_settings(self) -> None:
-        """Stages the app's saved speech settings when these are app-specific preferences."""
-
-        if self._app_name:
-            self._manager.stage_settings_for_app(self._app_name, self._voices)
-
     def on_window_closed(self) -> None:
-        """Clears the speech settings staged while the preferences window was open."""
+        """Updates the speech server to the settings that apply once the window is closed."""
 
-        self._manager.clear_staged_settings()
+        self._manager.restore_live_settings()
 
     def _build(self) -> None:
         """Create the Gtk widgets composing the grid."""
@@ -477,8 +471,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         app = self._app_name
         for vt in VoiceType:
             self._voices[vt] = self._manager.get_voice_properties(vt, app_name=app)
+        self._changed_voice_types.clear()
 
-        self._stage_app_settings()
         self._voice_families = self._manager.get_voice_families()
         self._families_sorted = False
 
@@ -607,7 +601,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             tree_iter = model.get_iter_first()
             if tree_iter:
                 self._manager.set_current_server(model.get_value(tree_iter, 0))
-                self._stage_app_settings()
 
         self._initializing = False
         self._populate_speech_synthesizers()
@@ -785,9 +778,14 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         tree_iter = model.get_iter(active)
         synth_name = model.get_value(tree_iter, 0)
 
-        # Without staging, update_synthesizer() on script activation reverts
+        # Without the override, script activation reverts
         # the live module to the dconf value before the user has clicked save.
-        self._manager.stage_synthesizer(synth_name)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._manager.SPEECH_SCHEMA,
+            self._manager.KEY_SYNTHESIZER,
+            synth_name,
+        )
+        self._manager.set_current_synthesizer(synth_name)
 
         self._voice_families = self._manager.get_voice_families()
         self._families_sorted = False
@@ -802,6 +800,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 del voice_acss[ACSS.FAMILY]
             if default_family is not None:
                 voice_acss[ACSS.FAMILY] = default_family
+            self._changed_voice_types.add(voice_type)
 
         self._has_unsaved_changes = True
 
@@ -816,12 +815,13 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         configured = ACSS(voice)
         configured["established"] = True
         self._voices[voice_type] = configured
+        self._changed_voice_types.add(voice_type)
         self._has_unsaved_changes = True
 
-    def get_all_voices(self) -> dict[str, ACSS]:
-        """Returns copies of the staged primary voices keyed by voice type."""
+    def get_changed_voices(self) -> dict[str, ACSS]:
+        """Returns copies of the primary voices changed but not yet saved, keyed by voice type."""
 
-        return {voice_type: ACSS(voice) for voice_type, voice in self._voices.items()}
+        return {vt: ACSS(self._voices[vt]) for vt in self._changed_voice_types}
 
     def get_voice_families(self) -> list[speechserver.VoiceFamily]:
         """Returns the full list of voice families from the current synthesizer."""
@@ -1430,10 +1430,10 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 else:
                     self._staged_configs.setdefault(voice_set, {})[voice_type] = ACSS(props)
                     self._has_unsaved_changes = True
-            # Make the staged global voices live (each by type), replacing the audition
-            # override. So an OK'd default/system/etc. voice stays in effect; a set's voice
+            # Make the changed global voices live (each by type), replacing the audition
+            # override; unchanged voice types go back to their saved values. A set's voice
             # was staged separately and only applies when that set is active.
-            self._manager.restore_live_voices(self._voices_grid.get_all_voices())
+            self._manager.restore_live_voices(self._voices_grid.get_changed_voices())
             dlg.destroy()
 
         def on_parent_destroy(*_args: Any) -> None:

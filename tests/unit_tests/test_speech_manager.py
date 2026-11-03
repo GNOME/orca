@@ -948,7 +948,6 @@ class TestSpeechManager:
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
-        test_context.patch_object(manager, "_sync_runtime_value_to_all_voice_types")
 
         result = manager.set_rate(75)
         assert result is True
@@ -961,7 +960,6 @@ class TestSpeechManager:
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
-        test_context.patch_object(manager, "_sync_runtime_value_to_all_voice_types")
 
         result = manager.set_volume(8.0)
         assert result is True
@@ -974,7 +972,6 @@ class TestSpeechManager:
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
-        test_context.patch_object(manager, "_sync_runtime_value_to_all_voice_types")
 
         result = manager.set_pitch_range(7.0)
         assert result is True

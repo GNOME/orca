@@ -299,10 +299,7 @@ class Script(script.Script):
         tokens = ["DEFAULT: Activating script for", self.app]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if not focus_manager.get_manager().is_in_preferences_window():
-            speech_manager.get_manager().update_punctuation_level()
-            speech_manager.get_manager().update_capitalization_style()
-            speech_manager.get_manager().update_synthesizer()
+        speech_manager.get_manager().update_server_settings()
 
         presenter = document_presenter.get_presenter()
         if presenter.has_state_for_app(self.app):

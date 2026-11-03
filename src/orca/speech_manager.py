@@ -203,98 +203,104 @@ class SpeechManager(Extension):
             if value := family.get(family_key):
                 registry.set_runtime_value(self._VOICE_SCHEMA, key, value, voice_type=voice_type)
 
-    def _stage_voice(self, voice_type: str, voice: ACSS) -> None:
-        """Stages voice for voice_type; properties voice lacks are staged as not set."""
+    def _set_runtime_voice(self, voice_type: str, voice: ACSS) -> None:
+        """Overrides the runtime voice for voice_type, clearing any previous override."""
 
         registry = gsettings_registry.get_registry()
+        prosody = (
+            (ACSS.RATE, self.KEY_RATE),
+            (ACSS.AVERAGE_PITCH, self.KEY_PITCH),
+            (ACSS.PITCH_RANGE, self.KEY_PITCH_RANGE),
+            (ACSS.GAIN, self.KEY_VOLUME),
+        )
+        for _attr, key in ((None, self.KEY_ESTABLISHED), *prosody):
+            registry.remove_runtime_value(self._VOICE_SCHEMA, key, voice_type=voice_type)
         # A non-default voice type is only used if it is established; mirror that here so the
         # generator applies it rather than falling back to the default voice.
-        registry.set_staged_value(
+        registry.set_runtime_value(
             self._VOICE_SCHEMA,
             self.KEY_ESTABLISHED,
             bool(voice.get("established")),
             voice_type=voice_type,
         )
-        for acss_key, key in (
-            (ACSS.RATE, self.KEY_RATE),
-            (ACSS.AVERAGE_PITCH, self.KEY_PITCH),
-            (ACSS.PITCH_RANGE, self.KEY_PITCH_RANGE),
-            (ACSS.GAIN, self.KEY_VOLUME),
-        ):
-            registry.set_staged_value(
-                self._VOICE_SCHEMA, key, voice.get(acss_key), voice_type=voice_type
-            )
-        family = voice.get(ACSS.FAMILY, {})
-        for family_key, key in (
-            (speechserver.VoiceFamily.NAME, self.KEY_FAMILY_NAME),
-            (speechserver.VoiceFamily.LANG, self.KEY_FAMILY_LANG),
-            (speechserver.VoiceFamily.DIALECT, self.KEY_FAMILY_DIALECT),
-            (speechserver.VoiceFamily.GENDER, self.KEY_FAMILY_GENDER),
-            (speechserver.VoiceFamily.VARIANT, self.KEY_FAMILY_VARIANT),
-        ):
-            registry.set_staged_value(
-                self._VOICE_SCHEMA, key, family.get(family_key) or None, voice_type=voice_type
-            )
+        for acss_key, key in prosody:
+            if acss_key in voice:
+                registry.set_runtime_value(
+                    self._VOICE_SCHEMA, key, voice[acss_key], voice_type=voice_type
+                )
+        self._set_runtime_voice_family(voice_type, voice.get(ACSS.FAMILY, {}))
 
     def apply_live_voice(self, voice: ACSS) -> None:
         """Auditions voice as the live default voice, bypassing voice-set rerouting."""
 
         self._auditioning_voice = True
-        self._stage_voice(VoiceType.DEFAULT, voice)
+        self._set_runtime_voice(VoiceType.DEFAULT, voice)
         if (server := self.get_server()) is not None:
             server.set_default_voice(voice)
             server.clear_cached_voice_properties()
 
     def restore_live_voices(self, voices: dict[str, ACSS]) -> None:
-        """Makes each staged voice live by voice type and resumes normal voice-set processing."""
+        """Makes each changed voice live, returns the others to their saved values."""
 
         self._auditioning_voice = False
-        for voice_type, voice in voices.items():
-            self._stage_voice(voice_type, voice)
+        for voice_type in VoiceType:
+            if voice_type in voices:
+                self._set_runtime_voice(voice_type, voices[voice_type])
+            else:
+                self._remove_runtime_voice(voice_type)
         if (server := self.get_server()) is not None:
-            server.set_default_voice(voices.get(VoiceType.DEFAULT, ACSS({})))
+            server.set_default_voice(voices.get(VoiceType.DEFAULT) or self.get_voice_properties())
             server.clear_cached_voice_properties()
 
-    def stage_synthesizer(self, value: str) -> bool:
-        """Stages the synthesizer and makes it the current one."""
-
-        gsettings_registry.get_registry().set_staged_value(
-            self.SPEECH_SCHEMA, self.KEY_SYNTHESIZER, value
-        )
-        return self.set_current_synthesizer(value)
-
-    def stage_settings_for_app(self, app_name: str, voices: dict[str, ACSS]) -> None:
-        """Stages app_name's saved speech settings so its preferences window speaks with them."""
+    def _remove_runtime_voice(self, voice_type: str) -> None:
+        """Removes the runtime voice overrides for voice_type."""
 
         registry = gsettings_registry.get_registry()
-        punctuation = self.get_punctuation_level(app_name=app_name)
-        capitalization = self.get_capitalization_style(app_name=app_name)
-        registry.set_staged_value(self.SPEECH_SCHEMA, self.KEY_PUNCTUATION_LEVEL, punctuation)
-        registry.set_staged_value(self.SPEECH_SCHEMA, self.KEY_CAPITALIZATION_STYLE, capitalization)
-        if synthesizer := self.get_synthesizer(app_name=app_name):
-            self.stage_synthesizer(synthesizer)
-        self.restore_live_voices(voices)
-        if (server := self.get_server()) is not None:
-            server.update_punctuation_level(PunctuationStyle[punctuation.upper()])
-            server.update_capitalization_style(capitalization)
+        for key in (
+            self.KEY_ESTABLISHED,
+            self.KEY_RATE,
+            self.KEY_PITCH,
+            self.KEY_PITCH_RANGE,
+            self.KEY_VOLUME,
+            self.KEY_FAMILY_NAME,
+            self.KEY_FAMILY_LANG,
+            self.KEY_FAMILY_DIALECT,
+            self.KEY_FAMILY_GENDER,
+            self.KEY_FAMILY_VARIANT,
+        ):
+            registry.remove_runtime_value(self._VOICE_SCHEMA, key, voice_type=voice_type)
 
-    def clear_staged_settings(self) -> None:
-        """Clears the staged speech settings, returning to the settings beneath them."""
+    def update_server_settings(self) -> None:
+        """Updates the punctuation, capitalization, and synthesizer on the speech server."""
 
-        settings = gsettings_registry.get_registry().clear_staged_values()
-        tokens = ["SPEECH MANAGER: Cleared staged values for", sorted(settings), "."]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        if (self.SPEECH_SCHEMA, self.KEY_SYNTHESIZER) in settings:
-            self.update_synthesizer()
+        server = self._get_server()
+        if server is None:
+            msg = "SPEECH MANAGER: Cannot get speech server."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        self._apply_settings_to_server(server)
+
+    def restore_live_settings(self) -> None:
+        """Updates the speech server to the current settings, without a responsiveness check."""
+
         if (server := self.get_server()) is None:
             return
-        if (self.SPEECH_SCHEMA, self.KEY_PUNCTUATION_LEVEL) in settings:
-            server.update_punctuation_level(PunctuationStyle[self.get_punctuation_level().upper()])
-        if (self.SPEECH_SCHEMA, self.KEY_CAPITALIZATION_STYLE) in settings:
-            server.update_capitalization_style(self.get_capitalization_style())
-        if any(schema == self._VOICE_SCHEMA for schema, _key in settings):
-            server.set_default_voice(self.get_voice_properties())
-            server.clear_cached_voice_properties()
+
+        self._apply_settings_to_server(server)
+        server.set_default_voice(self.get_voice_properties())
+        server.clear_cached_voice_properties()
+
+    def _apply_settings_to_server(self, server: SpeechServer) -> None:
+        """Applies the punctuation, capitalization, and synthesizer settings to server."""
+
+        server.update_punctuation_level(PunctuationStyle[self.get_punctuation_level().upper()])
+        server.update_capitalization_style(self.get_capitalization_style())
+        synthesizer = self.get_synthesizer()
+        if synthesizer and synthesizer != (active := server.get_output_module()):
+            tokens = ["SPEECH MANAGER: Updating synthesizer from", active, "to", synthesizer, "."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            server.set_output_module(synthesizer)
 
     @staticmethod
     def apply_voice_overrides(base: ACSS, override: ACSS) -> ACSS:
@@ -1124,17 +1130,20 @@ class SpeechManager(Extension):
             self._VOICE_SCHEMA,
             key,
             "i" if key == self.KEY_RATE else "d",
+            voice_type=VoiceType.DEFAULT,
             default=default,
         )
 
     def _set_active_voice_value(self, key: str, value: Any) -> None:
         """Sets a temporary voice property for the selected voice set."""
 
+        if self._active_voice_set == gsettings_registry.PRIMARY_VOICE_SET:
+            self._sync_runtime_value_to_all_voice_types(key, value)
+            return
+
         gsettings_registry.get_registry().set_runtime_value(
             self._VOICE_SCHEMA, key, value, voice_set=self._active_voice_set
         )
-        if self._active_voice_set == gsettings_registry.PRIMARY_VOICE_SET:
-            self._sync_runtime_value_to_all_voice_types(key, value)
 
     def _sync_runtime_value_to_all_voice_types(self, key: str, value: Any) -> None:
         """Sets a runtime value override for all voice types."""

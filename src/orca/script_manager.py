@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import contextlib
 import importlib
+import os
 
 import gi
 
@@ -349,7 +350,13 @@ class ScriptManager:
             command_manager.get_manager().check_keyboard_settings()
             return
 
-        gsettings_registry.get_registry().set_active_app(new_script.app_name)
+        registry = gsettings_registry.get_registry()
+        is_orca = (
+            registry.get_configured_app() is not None
+            and new_script.app is not None
+            and AXUtilities.get_process_id(new_script.app) == os.getpid()
+        )
+        registry.set_active_app(new_script.app_name, is_orca)
 
         tokens = ["SCRIPT MANAGER: Setting active script to", new_script, "reason:", reason]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

@@ -534,6 +534,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             return
 
         OrcaSetupGUI.WINDOW = self
+        if self._app_name:
+            gsettings_registry.get_registry().set_configured_app(self._app_name)
 
         accel_group = Gtk.AccelGroup()
         OrcaSetupGUI.WINDOW.add_accel_group(accel_group)
@@ -598,17 +600,12 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         registry = gsettings_registry.get_registry()
         registry.set_ignore_runtime(True)
-        active_app = registry.get_active_app()
-        if self._app_name:
-            registry.set_active_app(self._app_name)
         try:
             for grid in self._page_to_grid.values():
                 if grid is self.profiles_grid and not include_profiles:
                     continue
                 grid.reload()
         finally:
-            if self._app_name:
-                registry.set_active_app(active_app)
             registry.set_ignore_runtime(False)
 
     def apply_button_clicked(self, _widget: Gtk.Button) -> None:
@@ -629,9 +626,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             if grid is not self.profiles_grid:
                 grid.save_settings(self._profile_name, save_app)
 
-        if self._app_name:
-            gsettings_registry.get_registry().clear_runtime_values()
-
+        gsettings_registry.get_registry().clear_runtime_values()
         orca.load_user_settings(self.script, skip_reload_message=True)
 
         # Speak the settings reloaded message after a delay to ensure speech has fully started.
@@ -799,6 +794,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
         OrcaSetupGUI.WINDOW = None
+        gsettings_registry.get_registry().set_configured_app(None)
         for grid in self._page_to_grid.values():
             grid.on_window_closed()
 

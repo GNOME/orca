@@ -200,6 +200,8 @@ class GSettingsRegistry:
 
     def __init__(self) -> None:
         self._app_name: str | None = None
+        self._active_app_is_orca: bool = False
+        self._configured_app: str | None = None
         self._profile: str = "default"
         self._descriptors: dict[tuple[str, str], SettingDescriptor] = {}
         self._mappings: dict[str, list[SettingsMapping]] = {}
@@ -207,7 +209,6 @@ class GSettingsRegistry:
         self._schemas: dict[str, str] = {}
         self._handles: dict[str, GSettingsSchemaHandle] = {}
         self._runtime_values: dict[tuple[str, str, str | None, str], Any] = {}
-        self._staged_values: dict[tuple[str, str, str | None, str], Any] = {}
         self._ignore_runtime: bool = False
         self._cache = _GSettingsRegistryCache()
         self._profile_change_observers: list[Callable[[str], None]] = []
@@ -274,7 +275,7 @@ class GSettingsRegistry:
         """Returns a setting value via layered GSettings lookup, default, or None."""
 
         profile = self.get_active_profile()
-        effective_app = app_name if app_name is not None else (self._app_name or "")
+        effective_app = app_name if app_name is not None else (self.get_active_app() or "")
         cache_key = LookupCacheKey(
             schema,
             key,
@@ -314,14 +315,8 @@ class GSettingsRegistry:
                     return val
 
         if not self._ignore_runtime:
-            rt_key = (schema, key, voice_type, PRIMARY_VOICE_SET)
-            if rt_key in self._staged_values:
-                staged = self._staged_values[rt_key]
-                if staged is not None:
-                    _log_registry(schema, key, "staged value = ", staged)
-                    self._cache.set_value(cache_key, staged)
-                    return staged
-            elif (runtime := self._runtime_values.get(rt_key)) is not None:
+            runtime = self._runtime_values.get((schema, key, voice_type, PRIMARY_VOICE_SET))
+            if runtime is not None:
                 _log_registry(schema, key, "runtime override = ", runtime)
                 self._cache.set_value(cache_key, runtime)
                 return runtime
@@ -415,11 +410,9 @@ class GSettingsRegistry:
         *,
         voice_set: str = PRIMARY_VOICE_SET,
     ) -> None:
-        """Stores a runtime value override, replacing any staged value for the same setting."""
+        """Stores a runtime value override."""
 
-        rt_key = (schema, key, voice_type, voice_set)
-        self._runtime_values[rt_key] = value
-        self._staged_values.pop(rt_key, None)
+        self._runtime_values[(schema, key, voice_type, voice_set)] = value
         self.clear_value_cache()
 
     def get_runtime_value(
@@ -445,39 +438,16 @@ class GSettingsRegistry:
         *,
         voice_set: str = PRIMARY_VOICE_SET,
     ) -> None:
-        """Removes a single runtime value override, along with any staged value for it."""
+        """Removes a single runtime value override."""
 
-        rt_key = (schema, key, voice_type, voice_set)
-        self._runtime_values.pop(rt_key, None)
-        self._staged_values.pop(rt_key, None)
+        self._runtime_values.pop((schema, key, voice_type, voice_set), None)
         self.clear_value_cache()
 
     def clear_runtime_values(self) -> None:
-        """Clears all runtime value overrides and staged values."""
+        """Clears all runtime value overrides."""
 
         self._runtime_values.clear()
-        self._staged_values.clear()
         self.clear_value_cache()
-
-    def set_staged_value(
-        self,
-        schema: str,
-        key: str,
-        value: Any,
-        voice_type: str | None = None,
-    ) -> None:
-        """Stages a value which takes precedence over runtime values; None stages it as not set."""
-
-        self._staged_values[(schema, key, voice_type, PRIMARY_VOICE_SET)] = value
-        self.clear_value_cache()
-
-    def clear_staged_values(self) -> set[tuple[str, str]]:
-        """Clears all staged values, returning the (schema, key) pairs that were staged."""
-
-        settings = {(schema, key) for schema, key, _voice_type, _voice_set in self._staged_values}
-        self._staged_values.clear()
-        self.clear_value_cache()
-        return settings
 
     def set_dict(
         self,
@@ -561,11 +531,23 @@ class GSettingsRegistry:
             return {}
         return user_value.unpack()
 
-    def set_active_app(self, app_name: str | None) -> None:
+    def set_active_app(self, app_name: str | None, is_orca: bool = False) -> None:
         """Sets the active app name for GSettings lookups."""
 
         self._app_name = app_name or None
+        self._active_app_is_orca = is_orca
         self.clear_value_cache()
+
+    def set_configured_app(self, app_name: str | None) -> None:
+        """Sets the app whose preferences window is open, used while Orca's own window is active."""
+
+        self._configured_app = app_name or None
+        self.clear_value_cache()
+
+    def get_configured_app(self) -> str | None:
+        """Returns the app whose preferences window is open."""
+
+        return self._configured_app
 
     def add_profile_change_observer(self, observer: Callable[[str], None]) -> None:
         """Registers a callback invoked with the new profile name after the profile changes."""
@@ -583,6 +565,8 @@ class GSettingsRegistry:
     def get_active_app(self) -> str | None:
         """Returns the active app name for GSettings lookups."""
 
+        if self._configured_app and (self._active_app_is_orca or self._app_name is None):
+            return self._configured_app
         return self._app_name
 
     def get_active_profile(self) -> str:
