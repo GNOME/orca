@@ -95,7 +95,8 @@ def test_output_after_several_commands(terminal_shell: NativeAppSession) -> None
         settle(session)
         keyboard.tap_key(keyboard.KEYSYM_RETURN)
         spoken, brailled = helpers.capture(session)
-        assert "".join(spoken).strip("\n") == f"{word}\n$ "
+        lines = [line for chunk in spoken for line in chunk.splitlines() if line]
+        assert lines == [word, "$ "]
         assert brailled[-1] == helpers.BrailleLine(3, "$ ", "$ ", "\x00" * 2)
 
 
@@ -118,7 +119,8 @@ def test_new_output_after_long_command(terminal_shell: NativeAppSession) -> None
         settle(session)
         keyboard.tap_key(keyboard.KEYSYM_RETURN)
         spoken, brailled = helpers.capture(session)
-        assert "".join(spoken).strip("\n") == f"{word}\n$ "
+        lines = [line for chunk in spoken for line in chunk.splitlines() if line]
+        assert lines == [word, "$ "]
         assert brailled[-1] == helpers.BrailleLine(3, "$ ", "$ ", "\x00" * 2)
 
 
@@ -198,5 +200,6 @@ def test_terminal_dimensions(terminal_shell: NativeAppSession) -> None:
     settle(session)
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     spoken, brailled = helpers.capture(session)
-    assert "".join(spoken) == "8 40\n$ "
+    lines = [line for chunk in spoken for line in chunk.splitlines() if line]
+    assert lines == ["8 40", "$ "]
     assert brailled[-1] == helpers.BrailleLine(3, "$ ", "$ ", "\x00" * 2)

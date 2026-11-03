@@ -30,6 +30,7 @@
 
 from __future__ import annotations
 
+import sys
 from typing import TYPE_CHECKING
 from unittest.mock import Mock
 
@@ -318,6 +319,47 @@ class TestTypingEchoPresenter:
 
         presenter = TypingEchoPresenter()
         return presenter
+
+    @pytest.mark.parametrize("command", ["undo", "redo", "paste"])
+    def test_command_announcement_survives_key_release(
+        self, test_context: OrcaTestContext, command: str
+    ) -> None:
+        """Keep one announcement when key release separates a command's text events."""
+
+        presenter = self._setup_presenter(test_context)
+        test_context.monkeypatch.delitem(sys.modules, "orca.presentation_manager")
+
+        from orca import presentation_manager, typing_echo_presenter
+        from orca.presentation_manager import PresentationManager
+
+        manager = PresentationManager()
+        test_context.patch_object(
+            typing_echo_presenter.presentation_manager, "get_manager", return_value=manager
+        )
+        input_manager = test_context.Mock(
+            last_event_was_undo=lambda: command == "undo",
+            last_event_was_redo=lambda: command == "redo",
+            last_event_was_paste=lambda: command == "paste",
+        )
+        test_context.patch_object(
+            presentation_manager.input_event_manager, "get_manager", return_value=input_manager
+        )
+        present = test_context.patch_object(manager, "present_message")
+        test_context.patch_object(presenter, "should_echo_keyboard_event", return_value=False)
+        event = test_context.Mock()
+
+        event.is_pressed_key.return_value = True
+        presenter.echo_keyboard_event(event)
+        manager.present_command_announcement()
+        event.is_pressed_key.return_value = False
+        presenter.echo_keyboard_event(event)
+        manager.present_command_announcement()
+        assert present.call_count == 1
+
+        event.is_pressed_key.return_value = True
+        presenter.echo_keyboard_event(event)
+        manager.present_command_announcement()
+        assert present.call_count == 2
 
     @pytest.mark.parametrize(
         "getter_name,setter_name,setting_key,test_value",

@@ -465,7 +465,7 @@ class AXUtilitiesEvent:
     def _is_terminal_escape_sequence(string: str) -> bool:
         """Returns True if string is an escape sequence the terminal displayed as literal text."""
 
-        return bool(re.fullmatch(r"\s*ESC\[[\d;]*[A-Za-z~]?\s*", string))
+        return bool(re.fullmatch(r"\s*ESC\[[\d;]*[A-Za-z~]?\s*|\^\[O[A-D]\s*", string))
 
     @staticmethod
     def _is_spin_button_descendant(obj: Atspi.Accessible) -> bool:

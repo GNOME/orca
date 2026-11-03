@@ -832,9 +832,9 @@ class TypingEchoPresenter(Extension):
             return
 
         if not event.is_pressed_key():
-            presentation_manager.get_manager().clear_command_announcement()
             return
 
+        presentation_manager.get_manager().clear_command_announcement()
         self._delayed_terminal_press = None
         if not self.should_echo_keyboard_event(event):
             return
