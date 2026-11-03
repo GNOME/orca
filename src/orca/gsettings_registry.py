@@ -471,13 +471,13 @@ class GSettingsRegistry:
         self._staged_values[(schema, key, voice_type, PRIMARY_VOICE_SET)] = value
         self.clear_value_cache()
 
-    def clear_staged_values(self) -> set[str]:
-        """Clears all staged values, returning the schemas they belonged to."""
+    def clear_staged_values(self) -> set[tuple[str, str]]:
+        """Clears all staged values, returning the (schema, key) pairs that were staged."""
 
-        schemas = {schema for schema, _key, _voice_type, _voice_set in self._staged_values}
+        settings = {(schema, key) for schema, key, _voice_type, _voice_set in self._staged_values}
         self._staged_values.clear()
         self.clear_value_cache()
-        return schemas
+        return settings
 
     def set_dict(
         self,

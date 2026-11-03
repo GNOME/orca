@@ -287,9 +287,16 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self._families_sorted: bool = False
 
+        self._stage_app_settings()
         self._build()
         self._populate_speech_systems()
         self.refresh()
+
+    def _stage_app_settings(self) -> None:
+        """Stages the app's saved speech settings when these are app-specific preferences."""
+
+        if self._app_name:
+            self._manager.stage_settings_for_app(self._app_name, self._voices)
 
     def on_window_closed(self) -> None:
         """Clears the speech settings staged while the preferences window was open."""
@@ -471,6 +478,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         for vt in VoiceType:
             self._voices[vt] = self._manager.get_voice_properties(vt, app_name=app)
 
+        self._stage_app_settings()
         self._voice_families = self._manager.get_voice_families()
         self._families_sorted = False
 
@@ -587,22 +595,19 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         current = self._manager.get_current_server()
         found = False
-        selected_server = None
         for i, row in enumerate(model):
             if row[0] == current:
                 self._speech_systems_combo.set_active(i)
-                selected_server = current
                 found = True
                 break
 
+        # Switching restarts speech, so only do it when the current server isn't listed.
         if not found and len(model) > 0:
             self._speech_systems_combo.set_active(0)
             tree_iter = model.get_iter_first()
             if tree_iter:
-                selected_server = model.get_value(tree_iter, 0)
-
-        if selected_server:
-            self._manager.set_current_server(selected_server)
+                self._manager.set_current_server(model.get_value(tree_iter, 0))
+                self._stage_app_settings()
 
         self._initializing = False
         self._populate_speech_synthesizers()

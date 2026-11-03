@@ -263,15 +263,36 @@ class SpeechManager(Extension):
         )
         return self.set_current_synthesizer(value)
 
-    def clear_staged_settings(self) -> None:
-        """Clears the staged synthesizer and voices, returning to the settings beneath them."""
+    def stage_settings_for_app(self, app_name: str, voices: dict[str, ACSS]) -> None:
+        """Stages app_name's saved speech settings so its preferences window speaks with them."""
 
-        schemas = gsettings_registry.get_registry().clear_staged_values()
-        tokens = ["SPEECH MANAGER: Cleared staged values for", sorted(schemas), "."]
+        registry = gsettings_registry.get_registry()
+        punctuation = self.get_punctuation_level(app_name=app_name)
+        capitalization = self.get_capitalization_style(app_name=app_name)
+        registry.set_staged_value(self.SPEECH_SCHEMA, self.KEY_PUNCTUATION_LEVEL, punctuation)
+        registry.set_staged_value(self.SPEECH_SCHEMA, self.KEY_CAPITALIZATION_STYLE, capitalization)
+        if synthesizer := self.get_synthesizer(app_name=app_name):
+            self.stage_synthesizer(synthesizer)
+        self.restore_live_voices(voices)
+        if (server := self.get_server()) is not None:
+            server.update_punctuation_level(PunctuationStyle[punctuation.upper()])
+            server.update_capitalization_style(capitalization)
+
+    def clear_staged_settings(self) -> None:
+        """Clears the staged speech settings, returning to the settings beneath them."""
+
+        settings = gsettings_registry.get_registry().clear_staged_values()
+        tokens = ["SPEECH MANAGER: Cleared staged values for", sorted(settings), "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        if self.SPEECH_SCHEMA in schemas:
+        if (self.SPEECH_SCHEMA, self.KEY_SYNTHESIZER) in settings:
             self.update_synthesizer()
-        if self._VOICE_SCHEMA in schemas and (server := self.get_server()) is not None:
+        if (server := self.get_server()) is None:
+            return
+        if (self.SPEECH_SCHEMA, self.KEY_PUNCTUATION_LEVEL) in settings:
+            server.update_punctuation_level(PunctuationStyle[self.get_punctuation_level().upper()])
+        if (self.SPEECH_SCHEMA, self.KEY_CAPITALIZATION_STYLE) in settings:
+            server.update_capitalization_style(self.get_capitalization_style())
+        if any(schema == self._VOICE_SCHEMA for schema, _key in settings):
             server.set_default_voice(self.get_voice_properties())
             server.clear_cached_voice_properties()
 
