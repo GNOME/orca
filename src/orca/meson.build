@@ -104,6 +104,7 @@ lib_sources = [
   'chat_presenter_settings.py',
   'clipboard.py',
   'clipboard_command_definitions.py',
+  'clipboard_manager.py',
   'cmdnames.py',
   'colornames.py',
   'command.py',

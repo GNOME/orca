@@ -46,6 +46,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
 from . import (  # pylint: disable=no-name-in-module
+    clipboard_manager,
     debug,
     orca_platform,
 )
@@ -965,17 +966,13 @@ class OrcaRemoteController:
     def set_clipboard_text_internal(self, text: str) -> bool:
         """Attempts to set the clipboard contents without a D-Bus round-trip."""
 
-        from . import clipboard  # pylint: disable=import-outside-toplevel
-
-        clipboard.get_presenter().set_text(text)
+        clipboard_manager.get_manager().set_text(text)
         return True
 
     def append_clipboard_text_internal(self, text: str, separator: str = "\n") -> bool:
         """Attempts to append text to the clipboard contents without a D-Bus round-trip."""
 
-        from . import clipboard  # pylint: disable=import-outside-toplevel
-
-        clipboard.get_presenter().append_text(text, separator)
+        clipboard_manager.get_manager().append_text(text, separator)
         return True
 
     def get_active_window_internal(self) -> typing.Optional[Atspi.Accessible]:  # noqa: UP045

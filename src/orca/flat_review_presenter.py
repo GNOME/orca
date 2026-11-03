@@ -38,7 +38,7 @@ from gi.repository import Atspi, GLib, Gtk  # pylint: disable=no-name-in-module
 from . import (
     braille,
     braille_presenter,
-    clipboard,
+    clipboard_manager,
     dbus_service,
     debug,
     flat_review,
@@ -1529,7 +1529,7 @@ class FlatReviewPresenter(Extension):
                 presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_NOT_IN)
             return True
 
-        clipboard.get_presenter().set_text(self._current_contents.rstrip("\n"))
+        clipboard_manager.get_manager().set_text(self._current_contents.rstrip("\n"))
         if notify_user:
             presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_COPIED)
         self._last_input_event = event
@@ -1559,7 +1559,7 @@ class FlatReviewPresenter(Extension):
                 presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_NOT_IN)
             return True
 
-        clipboard.get_presenter().append_text(self._current_contents.rstrip("\n"))
+        clipboard_manager.get_manager().append_text(self._current_contents.rstrip("\n"))
         if notify_user:
             presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_APPENDED)
         self._last_input_event = event

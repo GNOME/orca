@@ -34,7 +34,7 @@ from . import (
     braille_monitor,
     braille_presenter_command_definitions,
     brltablenames,
-    clipboard,
+    clipboard_manager,
     dbus_service,
     debug,
     document_presenter,
@@ -310,7 +310,7 @@ class BraillePresenter(Extension):
 
         AXUtilities.set_selected_text(caret_context.accessible, start_offset, end_offset)
         text = AXUtilities.get_selected_text(caret_context.accessible)[0]
-        clipboard.get_presenter().set_text(text)
+        clipboard_manager.get_manager().set_text(text)
         return True
 
     @dbus_service.command

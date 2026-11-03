@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 
 from . import (
     braille,
-    clipboard,
+    clipboard_manager,
     command_manager,
     dbus_service,
     debug,
@@ -235,7 +235,7 @@ class MathNavigator(Extension):
         if not content:
             return False
 
-        clipboard.get_presenter().set_text(content)
+        clipboard_manager.get_manager().set_text(content)
         return True
 
     @dbus_service.parameterized_command
