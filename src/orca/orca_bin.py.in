@@ -27,6 +27,8 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
+import io
 import os
 import signal
 import subprocess
@@ -56,21 +58,28 @@ if os.path.isdir(_share_dir):
     if _share_dir not in _xdg.split(":"):
         os.environ["XDG_DATA_DIRS"] = f"{_share_dir}:{_xdg}"
 
-# Do not import Orca here. It is imported in main(). The reason why is that
-# start-up failures due to imports in orca.py are not getting output, making
-# them challenging to debug when they cannot be reproduced locally.
-
 import importlib
 import importlib.util
+import traceback
 from gi.repository import GLib
 
 from orca import debug
-from orca import debugging_tools_manager
-from orca import extension_loader
-from orca import gsettings_registry
 from orca import messages
-from orca import screen_reader_manager
-from orca import speech_manager
+
+# Start-up failures due to imports are saved and reported by main(), so that they get into
+# the debug file and can be debugged when they cannot be reproduced locally.
+_IMPORT_FAILURE = ""
+try:
+    from orca import debugging_tools_manager
+    from orca import extension_loader
+    from orca import gsettings_registry
+    from orca import orca
+    from orca import screen_reader_manager
+    from orca import speech_manager
+except Exception:  # pylint: disable=broad-exception-caught
+    _IMPORT_FAILURE = traceback.format_exc().rstrip()
+
+DEBUG_FILE_NAME_FORMAT = "debug-%Y-%m-%d-%H:%M:%S.out"
 
 class ListApps(argparse.Action):
     """Action to list all the running accessible applications."""
@@ -165,7 +174,7 @@ class Parser(argparse.ArgumentParser):
         if opts.debug_file:
             opts.debug = True
         elif opts.debug:
-            opts.debug_file = time.strftime("debug-%Y-%m-%d-%H:%M:%S.out")
+            opts.debug_file = time.strftime(DEBUG_FILE_NAME_FORMAT)
 
         return opts, invalid
 
@@ -319,25 +328,50 @@ def _get_speech_server_factory_names() -> list[str]:
 
     return names
 
+def _open_debug_file(path: str) -> None:
+    """Opens path for debug output and enables full debugging."""
+
+    debug.debugLevel = debug.LEVEL_ALL
+    # Line-buffered to reduce loss of debug output on abnormal exit.
+    # pylint: disable=consider-using-with
+    debug.debugFile = open(
+        path,
+        "w",
+        encoding="utf-8",
+        buffering=1,
+        opener=lambda path, flags: os.open(path, flags, 0o600),
+    )
+
+def _report_import_failure() -> int:
+    """Reports the saved import failure on stderr and, if requested, in the debug file."""
+
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("--debug-file", action="store")
+    parser.add_argument("--debug", action="store_true")
+    path = ""
+    with contextlib.suppress(SystemExit), contextlib.redirect_stderr(io.StringIO()):
+        args, _unknown = parser.parse_known_args()
+        path = args.debug_file or (time.strftime(DEBUG_FILE_NAME_FORMAT) if args.debug else "")
+
+    if path:
+        with contextlib.suppress(OSError):
+            _open_debug_file(path)
+
+    debug.print_message(debug.LEVEL_SEVERE, f"ERROR: Could not import Orca:\n{_IMPORT_FAILURE}")
+    return 1
+
 def main() -> int:
     """Launches Orca."""
 
     set_process_name("orca")
+    if _IMPORT_FAILURE:
+        return _report_import_failure()
 
     parser = Parser()
     args, _invalid = parser.parse_known_args()
 
     if args.debug:
-        debug.debugLevel = debug.LEVEL_ALL
-        # Line-buffered to reduce loss of debug output on abnormal exit.
-        # pylint: disable=consider-using-with
-        debug.debugFile = open(
-            args.debug_file,
-            "w",
-            encoding="utf-8",
-            buffering=1,
-            opener=lambda path, flags: os.open(path, flags, 0o600),
-        )
+        _open_debug_file(args.debug_file)
 
     if args.replace:
         cleanup(signal.SIGKILL)
@@ -394,7 +428,6 @@ def main() -> int:
         print(messages.CLI_OTHER_ORCAS_ERROR)
         return 1
 
-    from orca import orca  # pylint: disable=import-outside-toplevel
     debug.print_message(debug.LEVEL_INFO, "INFO: About to launch Orca.", True)
     return orca.main()
 
