@@ -629,6 +629,9 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             if grid is not self.profiles_grid:
                 grid.save_settings(self._profile_name, save_app)
 
+        if self._app_name:
+            gsettings_registry.get_registry().clear_runtime_values()
+
         orca.load_user_settings(self.script, skip_reload_message=True)
 
         # Speak the settings reloaded message after a delay to ensure speech has fully started.
