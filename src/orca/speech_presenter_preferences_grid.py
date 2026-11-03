@@ -1108,7 +1108,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             if acss_key not in voice_data:
                 continue
             value = voice_data[acss_key]
-            profile_value = self._get_effective_voice_value(
+            profile_value = self._get_effective_profile_value(
                 gs_key,
                 profile_voice_gs,
                 default_voice_gs,
@@ -1135,7 +1135,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 val = family.get(json_field)
                 if val is None or not str(val):
                     continue
-                profile_val = self._get_effective_voice_value(
+                profile_val = self._get_effective_profile_value(
                     gs_key,
                     profile_voice_gs,
                     default_voice_gs,
@@ -1147,13 +1147,13 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     voice_gs.set_string(gs_key, str(val))
 
     @staticmethod
-    def _get_effective_voice_value(
+    def _get_effective_profile_value(
         gs_key: str,
         profile_gs: Gio.Settings,
         default_gs: Gio.Settings | None,
         fallback: Any,
     ) -> Any:
-        """Returns the effective profile voice value, checking default profile if needed."""
+        """Returns the effective profile value, checking default profile if needed."""
 
         if (val := profile_gs.get_user_value(gs_key)) is not None:
             return val.unpack()
@@ -1214,8 +1214,15 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     self._save_voice(voice_gs, voice_data, skip)
 
             if app_name and app_synth is not None:
-                profile_synth = registry.layered_lookup("speech", "synthesizer", "s")
-                if speech_gs := registry.get_settings("speech", p, "speech", app_name):
+                speech_gs = registry.get_settings("speech", p, "speech", app_name)
+                profile_speech_gs = registry.get_settings("speech", p, "speech")
+                if speech_gs is not None and profile_speech_gs is not None:
+                    default_speech_gs = None
+                    if p != "default":
+                        default_speech_gs = registry.get_settings("speech", "default", "speech")
+                    profile_synth = self._get_effective_profile_value(
+                        "synthesizer", profile_speech_gs, default_speech_gs, ""
+                    )
                     if app_synth != profile_synth:
                         speech_gs.set_string("synthesizer", app_synth)
                         speech_gs.set_string("speech-server", app_server or "")
