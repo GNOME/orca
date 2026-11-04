@@ -27,6 +27,7 @@ build of the version being tested.
 * Terminal applications: `bash`, `less`, `nano`, `vim`, and `seq` (from coreutils).
 * Web browsers: Chrome (beta preferred) or Chromium, and Firefox (Nightly preferred).
 * Document viewers: Atril.
+* File managers: Caja, Dolphin, and Nautilus.
 * Notifications: `notification-daemon` and `notify-send` (from libnotify).
 
 ## Running Tests
@@ -46,6 +47,10 @@ Orca's tests are grouped into the following named suites:
 * "unit": the only suite run by default with `meson test`
 * "integration": the superset of the following:
     * "core": infrastructure such as GSettings, D-Bus support, and browser smoke tests
+    * "file-manager": file managers (Caja, Dolphin, and Nautilus)
+    * "caja": Caja file-manager tests
+    * "dolphin": Dolphin file-manager tests
+    * "nautilus": Nautilus file-manager tests
     * "document": document viewers and editors (currently Atril)
     * "gtk": all non-terminal GTK tests (both GTK3 and GTK4)
     * "gtk3": non-terminal GTK3 UI tests
@@ -135,7 +140,8 @@ Look for a related test in the appropriate directory under
 * `core/`: infrastructure and browser accessibility smoke tests
 * `gtk/`: widget tests shared between GTK3 and GTK4
 * `terminal/`: terminal tests shared between GTK3 VTE and GTK4 VTE
-* `atril/`: document navigation, selection, and reading in Atril
+* `atril/`: PDF-content tests in Atril
+* `file_manager/`: file-manager tests for Caja, Nautilus, and Dolphin
 * `web/`: web-content tests shared between Chromium and Firefox
 
 Otherwise, create a file named `test_[feature].py` in that directory,

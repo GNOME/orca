@@ -156,6 +156,15 @@ integration-tests-firefox:
     - firefox --full-version
     - meson test -C "${MESON_BUILD_DIR}" --suite gecko --num-processes 1 --timeout-multiplier 2 --print-errorlogs
 
+integration-tests-file-manager:
+  extends: .integration-tests
+  allow_failure: false
+  script:
+    - rpm -q caja dolphin nautilus
+    # Nautilus refuses to run as root.
+    - chown -R nobody "${MESON_BUILD_DIR}"
+    - runuser -u nobody -- env PATH="$PATH" meson test -C "${MESON_BUILD_DIR}" --suite file-manager --num-processes 1 --timeout-multiplier 2 --print-errorlogs
+
 integration-tests-document:
   extends: .integration-tests
   allow_failure: false

@@ -43,6 +43,8 @@ from .gsettings_fixtures import (  # noqa: F401
 )
 from .orca_fixtures import (  # noqa: F401
     _atril,
+    _caja,
+    _dolphin,
     _gtk_announcement,
     _gtk_buttons,
     _gtk_drop_down,
@@ -60,6 +62,7 @@ from .orca_fixtures import (  # noqa: F401
     _gtk_two_entries,
     _gtk_two_windows,
     _gtk_widget_notebook,
+    _nautilus,
     _notification_daemon,
     _orca,
     _terminal_flatrev,

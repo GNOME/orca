@@ -46,6 +46,7 @@ from orca.output_reader import OutputReader
 from .apps import (
     atril,
     browser,
+    file_manager,
     gtk,
     gtk3_announcement,
     gtk3_buttons,
@@ -83,6 +84,13 @@ class NativeAppSession:
 
     orca: OrcaSession
     reader: OutputReader
+
+
+@dataclass
+class FileManagerSession(NativeAppSession):
+    """A file-manager session and its configured view."""
+
+    view: str
 
 
 @dataclass
@@ -153,6 +161,75 @@ def _make_native_app_fixture(
         )
 
     return fixture
+
+
+def _run_file_manager(
+    name: str,
+    tmp_path_factory: pytest.TempPathFactory,
+    request: pytest.FixtureRequest,
+) -> Iterator[FileManagerSession]:
+    """Opens a private file tree in the requested application and view."""
+
+    binary = shutil.which(name)
+    if binary is None:
+        pytest.skip(f"{name} is not installed")
+    sandbox_dir = tmp_path_factory.mktemp(name)
+    folder = sandbox_dir / "Test Files"
+    file_manager.create_tree(folder)
+
+    def ready(app: Atspi.Accessible) -> bool:
+        pending = [app]
+        while pending:
+            obj = pending.pop()
+            obj.clear_cache()
+            if obj.get_name().startswith("alpha.txt"):
+                return True
+            pending.extend(
+                child
+                for i in range(obj.get_child_count())
+                if (child := obj.get_child_at_index(i)) is not None
+            )
+        return False
+
+    view = getattr(request, "param", "icon")
+    argv = [sys.executable, "-m", f"tests.integration_tests.apps.{name}", binary, str(folder), view]
+    for session in _run_app_with_orca(
+        sandbox_dir,
+        argv=argv,
+        ready_predicate=ready,
+        prepare_window=file_manager.prepare_window,
+    ):
+        yield FileManagerSession(session.orca, session.reader, view)
+
+
+@pytest.fixture(name="caja")
+def _caja(
+    tmp_path_factory: pytest.TempPathFactory,
+    request: pytest.FixtureRequest,
+) -> Iterator[FileManagerSession]:
+    """Runs Caja on a private file tree."""
+
+    yield from _run_file_manager("caja", tmp_path_factory, request)
+
+
+@pytest.fixture(name="nautilus")
+def _nautilus(
+    tmp_path_factory: pytest.TempPathFactory,
+    request: pytest.FixtureRequest,
+) -> Iterator[FileManagerSession]:
+    """Runs Nautilus on a private file tree."""
+
+    yield from _run_file_manager("nautilus", tmp_path_factory, request)
+
+
+@pytest.fixture(name="dolphin")
+def _dolphin(
+    tmp_path_factory: pytest.TempPathFactory,
+    request: pytest.FixtureRequest,
+) -> Iterator[FileManagerSession]:
+    """Runs Dolphin on a private file tree."""
+
+    yield from _run_file_manager("dolphin", tmp_path_factory, request)
 
 
 @pytest.fixture(scope="session", name="atril")

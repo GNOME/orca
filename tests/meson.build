@@ -127,6 +127,9 @@ orca_integration_tests = {
     'integration_tests/core/test_gsettings.py',
     'integration_tests/core/test_learn_mode.py',
   ],
+  'caja': ['integration_tests/file_manager/test_caja.py'],
+  'dolphin': ['integration_tests/file_manager/test_dolphin.py'],
+  'nautilus': ['integration_tests/file_manager/test_nautilus.py'],
   'document': [
     'integration_tests/atril/test_atril_native_navigation.py',
     'integration_tests/atril/test_atril_native_selection.py',
@@ -327,6 +330,9 @@ integration_wrapper = configure_file(
 )
 
 test_timeouts = {
+  'test_caja': 300,
+  'test_dolphin': 300,
+  'test_nautilus': 300,
   'test_web_clipboard': 180,
   'test_gsettings': 30,
   'test_web_word_boundaries': 180,
@@ -363,6 +369,9 @@ foreach group, test_files : orca_integration_tests
       suffix = variant == 'gtk4' ? '_gtk4' : ''
     endif
     suites = ['integration', variant]
+    if group in ['caja', 'dolphin', 'nautilus']
+      suites += ['file-manager']
+    endif
     if group != variant
       suites += [group]
     endif
