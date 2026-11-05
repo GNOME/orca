@@ -498,7 +498,11 @@ class WhereAmIPresenter(Extension):
             return text_selection_presenter.get_presenter().present_selected_text(script, obj)
 
         selected_count = AXUtilities.selected_child_count(container)
-        child_count = AXUtilities.selectable_child_count(container)
+        child_count = -1
+        if AXUtilities.is_table_row(obj) and obj != container:
+            child_count = AXUtilities.get_set_size(obj)
+        if child_count < 0:
+            child_count = AXUtilities.selectable_child_count(container)
         presentation_manager.get_manager().present_message(
             messages.selected_items_count(selected_count, child_count),
         )
@@ -506,8 +510,16 @@ class WhereAmIPresenter(Extension):
             return True
 
         selected_items = AXUtilities.selected_children(container)
-        item_names = ",".join(map(AXObject.get_name, selected_items))
-        presentation_manager.get_manager().speak_message(item_names)
+        item_names = []
+        for item in selected_items:
+            name = AXObject.get_name(item)
+            if not name:
+                descendant = AXUtilities.active_descendant(item)
+                if descendant != item:
+                    name = AXObject.get_name(descendant)
+                name = name or AXText.get_all_text(descendant)
+            item_names.append(name)
+        presentation_manager.get_manager().speak_message(",".join(item_names))
         return True
 
     def _do_where_am_i(

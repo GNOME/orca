@@ -110,16 +110,16 @@ class AXUtilitiesSelection:
                 )
             return AXUtilitiesSelection.get_selected_children(container)
 
-        children = set()
+        children: dict[Atspi.Accessible, None] = {}
         for i in range(count):
             child = AXSelection.get_selected_child(obj, i)
             if child is not None:
-                children.add(child)
+                children[child] = None
 
         if obj in children:
             tokens = ["AXUtilitiesSelection:", obj, "claims to be its own selected child"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            children.remove(obj)
+            del children[obj]
 
         result = list(children)
         if len(result) != count:
@@ -153,10 +153,12 @@ class AXUtilitiesSelection:
         rolemap = {
             Atspi.Role.CANVAS: [Atspi.Role.LAYERED_PANE],
             Atspi.Role.ICON: [Atspi.Role.LAYERED_PANE],
-            Atspi.Role.LIST_ITEM: [Atspi.Role.LIST_BOX],
+            Atspi.Role.LIST_ITEM: [Atspi.Role.LIST_BOX, Atspi.Role.LIST],
             Atspi.Role.TREE_ITEM: [Atspi.Role.TREE, Atspi.Role.TREE_TABLE],
             Atspi.Role.TABLE_CELL: [Atspi.Role.TABLE, Atspi.Role.TREE_TABLE],
-            Atspi.Role.TABLE_ROW: [Atspi.Role.TABLE, Atspi.Role.TREE_TABLE],
+            # Nautilus's GtkColumnView puts table rows in an intermediate list
+            # whose parent is a tree table. The list implements Selection.
+            Atspi.Role.TABLE_ROW: [Atspi.Role.TABLE, Atspi.Role.TREE_TABLE, Atspi.Role.LIST],
         }
 
         matching_roles = rolemap.get(AXObject.get_role(obj))
@@ -175,7 +177,9 @@ class AXUtilitiesSelection:
         if not AXObject.supports_selection(obj):
             return 0
 
-        if AXObject.supports_table(obj):
+        # A row of icons in Dolphin can contain several files. Count list items
+        # rather than rows to get the total number of files and folders.
+        if not AXUtilitiesRole.is_list(obj) and AXObject.supports_table(obj):
             rows = AXTable.get_row_count(obj)
             return max(0, rows)
 
@@ -201,7 +205,9 @@ class AXUtilitiesSelection:
     def selected_child_count(obj: Atspi.Accessible) -> int:
         """Returns the number of selected children in obj."""
 
-        if AXObject.supports_table(obj):
+        # Count selected list items, not layout rows. Dolphin's Table returns zero
+        # selected rows even when its Selection interface reports selected items.
+        if not AXUtilitiesRole.is_list(obj) and AXObject.supports_table(obj):
             return AXTable.get_selected_row_count(obj)
         return AXSelection.get_selected_child_count(obj)
 

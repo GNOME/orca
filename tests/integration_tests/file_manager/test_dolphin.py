@@ -188,6 +188,35 @@ def test_range_selection(dolphin: FileManagerSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("dolphin", ["icon", "list"], indirect=True)
+@pytest.mark.xfail(
+    strict=True,
+    raises=AssertionError,
+    reason="Dolphin returns null selected children: https://bugs.kde.org/show_bug.cgi?id=528369",
+)
+def test_selection_reporting(dolphin: FileManagerSession) -> None:
+    """Reports selected files in folder order as the selection shrinks and grows."""
+
+    session = dolphin
+    _start_at_first_file(session)
+    forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
+    backward = keyboard.KEYSYM_LEFT if session.view == "icon" else keyboard.KEYSYM_UP
+    for _ in range(2):
+        keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], forward)
+        capture(session)
+    names = ["01 Empty", "02 Nested", "03 Scrolling"]
+    for key, count in ((None, 3), (backward, 2), (forward, 3)):
+        if key is not None:
+            keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], key)
+            capture(session)
+        session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
+        spoken, brailled = capture(session)
+        message = f"{count} of 14 items selected"
+        assert spoken == [message, ",".join(names[:count])]
+        assert brailled and brailled[-1] == BrailleLine(0, message, message, "\x00" * len(message))
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("dolphin", ["icon", "list"], indirect=True)
 def test_braille_panning(dolphin: FileManagerSession) -> None:
     """Checks speech and braille when panning a long filename forward and back."""
 

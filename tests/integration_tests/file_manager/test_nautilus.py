@@ -178,26 +178,41 @@ def test_range_selection(nautilus: FileManagerSession) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.parametrize("nautilus", ["icon"], indirect=True)
+@pytest.mark.parametrize(
+    "nautilus",
+    [
+        "icon",
+        pytest.param(
+            "list",
+            marks=pytest.mark.xfail(
+                strict=False,
+                raises=AssertionError,
+                reason="Intermittent missing name: https://gitlab.gnome.org/GNOME/gtk/-/work_items/8530",
+            ),
+        ),
+    ],
+    indirect=True,
+)
 def test_selection_reporting(nautilus: FileManagerSession) -> None:
-    """Reports both the selected count and the selected filenames."""
+    """Reports selected files in folder order as the selection shrinks and grows."""
 
     session = nautilus
     start_at_first_file(session)
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
+    backward = keyboard.KEYSYM_LEFT if session.view == "icon" else keyboard.KEYSYM_UP
     for _ in range(2):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], forward)
         capture(session)
-    session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
-    spoken, brailled = capture(session)
-    message = "3 of 14 items selected"
-    assert spoken and spoken[0] == message
-    assert brailled and brailled[-1] == BrailleLine(0, message, message, "\x00" * len(message))
-    assert sorted(spoken[1].split(",")) == [
-        "01 Empty. Folder",
-        "02 Nested. Folder",
-        "03 Scrolling. Folder",
-    ]
+    names = ["01 Empty. Folder", "02 Nested. Folder", "03 Scrolling. Folder"]
+    for key, count in ((None, 3), (backward, 2), (forward, 3)):
+        if key is not None:
+            keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], key)
+            capture(session)
+        session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
+        spoken, brailled = capture(session)
+        message = f"{count} of 14 items selected"
+        assert spoken == [message, ",".join(names[:count])]
+        assert brailled and brailled[-1] == BrailleLine(0, message, message, "\x00" * len(message))
 
 
 @pytest.mark.native_app

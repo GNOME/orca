@@ -34,6 +34,10 @@ def main() -> None:
 
     os.environ["GSETTINGS_BACKEND"] = "keyfile"
     binary, folder, view = sys.argv[1:]
+    columns = ["name"]
+    if view == "list-multiple-columns":
+        view = "list"
+        columns.extend(["size", "type"])
     settings = Gio.Settings.new("org.mate.caja.preferences")
     settings.set_string("default-folder-viewer", view + "-view")
     settings.set_string("default-sort-order", "name")
@@ -50,8 +54,8 @@ def main() -> None:
     icons.set_strv("captions", ["none", "none", "none"])
     listing = Gio.Settings.new("org.mate.caja.list-view")
     listing.set_string("default-zoom-level", "standard")
-    listing.set_strv("default-visible-columns", ["name"])
-    listing.set_strv("default-column-order", ["name"])
+    listing.set_strv("default-visible-columns", columns)
+    listing.set_strv("default-column-order", columns)
     Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
     os.execv(binary, [binary, "--no-desktop", "--browser", folder])  # noqa: S606
 

@@ -190,22 +190,34 @@ def test_range_selection(caja: FileManagerSession) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.parametrize("caja", ["icon"], indirect=True)
+@pytest.mark.parametrize("caja", ["icon", "list", "list-multiple-columns"], indirect=True)
 def test_selection_reporting(caja: FileManagerSession) -> None:
-    """Reports both the selected count and the selected filenames."""
+    """Reports selected files and visible columns in folder order."""
 
     session = caja
     start_at_first_file(session)
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
+    backward = keyboard.KEYSYM_LEFT if session.view == "icon" else keyboard.KEYSYM_UP
     for _ in range(2):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], forward)
         capture(session)
-    session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
-    spoken, brailled = capture(session)
-    message = "3 of 14 items selected"
-    assert spoken and spoken[0] == message
-    assert brailled and brailled[-1] == BrailleLine(0, message, message, "\x00" * len(message))
-    assert sorted(spoken[1].split(",")) == ["01 Empty", "02 Nested", "03 Scrolling"]
+    if session.view == "list-multiple-columns":
+        rows = [
+            "01 Empty,0 items,Folder",
+            "02 Nested,2 items,Folder",
+            "03 Scrolling,60 items,Folder",
+        ]
+    else:
+        rows = ["01 Empty", "02 Nested", "03 Scrolling"]
+    for key, count in ((None, 3), (backward, 2), (forward, 3)):
+        if key is not None:
+            keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], key)
+            capture(session)
+        session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
+        spoken, brailled = capture(session)
+        message = f"{count} of 14 items selected"
+        assert spoken == [message, ",".join(rows[:count])]
+        assert brailled and brailled[-1] == BrailleLine(0, message, message, "\x00" * len(message))
 
 
 @pytest.mark.native_app
@@ -289,7 +301,7 @@ def test_where_am_i(caja: FileManagerSession) -> None:
             "03 Scrolling Folder",
             "3 of 14 items selected on 3 of 14",
         ]
-        assert sorted(spoken[3:]) == ["01 Empty", "02 Nested", "03 Scrolling"]
+        assert spoken[3:] == ["01 Empty", "02 Nested", "03 Scrolling"]
     else:
         assert spoken == [
             "Name 03 Scrolling collapsed",

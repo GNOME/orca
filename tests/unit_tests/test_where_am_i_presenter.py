@@ -786,6 +786,7 @@ class TestWhereAmIPresenter:
         selected_items = [test_context.Mock(), test_context.Mock()]
         mock_script = test_context.Mock()
         deps["orca.ax_utilities"].AXUtilities.get_selection_container.return_value = container
+        deps["orca.ax_utilities"].AXUtilities.is_table_row.return_value = False
         deps["orca.ax_utilities"].AXUtilities.selected_child_count.return_value = 2
         deps["orca.ax_utilities"].AXUtilities.selectable_child_count.return_value = 5
         deps["orca.ax_utilities"].AXUtilities.selected_children.return_value = selected_items
