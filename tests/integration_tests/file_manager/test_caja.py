@@ -76,7 +76,7 @@ def _assert_item(
 def _assert_return(session: FileManagerSession, name: str) -> None:
     spoken, brailled = capture(session, quiescence=0.5)
     if session.view == "icon":
-        assert spoken == ["page tab", "Icon View", name + " Folder"]
+        assert spoken == [name + " Folder"]
         assert brailled[-1] == _item_braille(session, name)
     else:
         assert spoken == ["Test Files"]
@@ -377,5 +377,5 @@ def test_return_to_parent(caja: FileManagerSession) -> None:
     capture(session, quiescence=0.5)
     keyboard.press_chord([keyboard.KEYSYM_ALT_L], keyboard.KEYSYM_UP)
     spoken, brailled = capture(session)
-    assert spoken == ["page tab", "Icon View", "Child Folder"]
+    assert spoken == ["Child Folder"]
     assert brailled[-1] == _item_braille(session, "Child", "02 Nested")

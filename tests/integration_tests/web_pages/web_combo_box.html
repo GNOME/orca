@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Combo Boxes ready</title>
+</head>
+<body>
+<h1>Combo boxes</h1>
+<button>Start</button>
+<p id="fruit-label">Fruit</p>
+<div id="fruit" role="combobox" tabindex="0" aria-labelledby="fruit-label"
+     aria-controls="fruit-list" aria-expanded="false" aria-haspopup="listbox">Apple</div>
+<ul id="fruit-list" role="listbox" aria-labelledby="fruit-label" hidden>
+  <li id="apple" role="option" aria-selected="true">Apple</li>
+  <li id="banana" role="option" aria-selected="false">Banana</li>
+  <li id="cherry" role="option" aria-selected="false">Cherry</li>
+</ul>
+
+<p><label for="city">City</label>
+<input id="city" role="combobox" aria-controls="city-list" aria-expanded="false"
+       aria-autocomplete="list" aria-haspopup="listbox" value="London" spellcheck="false"></p>
+<ul id="city-list" role="listbox" aria-label="City" hidden>
+  <li id="london" role="option" aria-selected="true">London</li>
+  <li id="paris" role="option" aria-selected="false">Paris</li>
+  <li id="rome" role="option" aria-selected="false">Rome</li>
+</ul>
+<button>After</button>
+<script>
+const combos = ["fruit", "city"].map(id => {
+  const element = document.getElementById(id);
+  const list = document.getElementById(id + "-list");
+  const options = Array.from(list.children);
+  let index = 0;
+
+  function select(next) {
+    index = next;
+    options.forEach((option, i) => option.setAttribute("aria-selected", i === index));
+    if (element.tagName === "INPUT") element.value = options[index].textContent;
+    else element.textContent = options[index].textContent;
+    if (!list.hidden) element.setAttribute("aria-activedescendant", options[index].id);
+  }
+
+  function expand(open) {
+    list.hidden = !open;
+    element.setAttribute("aria-expanded", open);
+    if (open) element.setAttribute("aria-activedescendant", options[index].id);
+    else element.removeAttribute("aria-activedescendant");
+  }
+
+  element.addEventListener("keydown", event => {
+    if (event.key === "ArrowDown") {
+      if (list.hidden) expand(true);
+      else select(Math.min(index + 1, options.length - 1));
+    } else if (event.key === "ArrowUp" && !list.hidden) {
+      select(Math.max(index - 1, 0));
+    } else if ((event.key === "Escape" || event.key === "Enter") && !list.hidden) {
+      expand(false);
+    } else return;
+    event.preventDefault();
+    event.stopPropagation();
+  });
+  return { advance: () => select((index + 1) % options.length) };
+});
+
+// F8 changes Fruit; Shift+F8 changes City.
+document.addEventListener("keydown", event => {
+  if (event.key === "F8" && event.shiftKey) combos[1].advance();
+  else if (event.key === "F8") combos[0].advance();
+  else return;
+  event.preventDefault();
+});
+</script>
+</body>
+</html>

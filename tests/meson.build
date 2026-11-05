@@ -162,6 +162,7 @@ orca_integration_tests = {
     'integration_tests/gtk/test_gtk_tree_view.py',
     'integration_tests/gtk/test_gtk_tri_state_checkbox.py',
     'integration_tests/gtk/test_gtk_widget_notebook.py',
+    'integration_tests/gtk/test_gtk_combo_box.py',
     'integration_tests/gtk/test_gtk_spinbutton.py',
     'integration_tests/gtk/test_gtk_redundant_names.py',
     'integration_tests/gtk/test_gtk_toolbar.py',
@@ -193,6 +194,7 @@ orca_integration_tests = {
     'integration_tests/terminal/test_terminal_typing.py',
   ],
   'web': [
+    'integration_tests/web/test_web_combo_box.py',
     'integration_tests/web/test_web_caret_selection.py',
     'integration_tests/web/test_web_mixed_line_heights.py',
     'integration_tests/web/test_web_navigation.py',
@@ -377,6 +379,9 @@ foreach group, test_files : orca_integration_tests
     endif
     foreach test_file : test_files
       test_name = test_file.split('/')[-1].split('.')[0]
+      if variant == 'gtk4' and test_name == 'test_gtk_combo_box'
+        continue
+      endif
       is_gsettings = test_name == 'test_gsettings'
       test_timeout = test_timeouts.get(test_name, 120)
       test(

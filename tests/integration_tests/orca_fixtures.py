@@ -50,6 +50,7 @@ from .apps import (
     gtk,
     gtk3_announcement,
     gtk3_buttons,
+    gtk3_combo_box,
     gtk3_multi_select_list,
     gtk3_redundant_names,
     gtk3_terminal,
@@ -384,6 +385,7 @@ _gtk_text_view_repeated_symbols = _make_native_app_fixture(
 )
 _gtk_announcement = _make_native_app_fixture(gtk3_announcement, scope="function")
 _gtk_buttons = _make_native_app_fixture(gtk3_buttons)
+_gtk_combo_box = _make_native_app_fixture(gtk3_combo_box, scope="function")
 _gtk_multi_select_list = _make_native_app_fixture(gtk3_multi_select_list, scope="function")
 _gtk_tree_view = _make_native_app_fixture(gtk3_tree_view, scope="function")
 _gtk_tri_state_checkbox = _make_native_app_fixture(gtk3_tri_state_checkbox, scope="function")
@@ -898,6 +900,7 @@ _web_tables = _make_web_fixture("web_tables.html")
 _web_table_block_cells = _make_web_fixture("web_table_block_cells.html")
 _web_grid_selection = _make_web_fixture("web_grid_selection.html")
 _web_grid_named_cells = _make_web_fixture("web_grid_named_cells.html")
+_web_combo_box = _make_web_fixture("web_combo_box.html")
 _web_form_fields = _make_web_fixture("web_form_fields.html")
 _web_form_label = _make_web_fixture("web_form_label.html")
 _web_landmarks = _make_web_fixture("web_landmarks.html")

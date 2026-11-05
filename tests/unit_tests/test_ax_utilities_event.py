@@ -1283,7 +1283,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(
             AXUtilitiesState,
             "is_editable",
-            side_effect=lambda obj: case["is_editable"],
+            return_value=case["is_editable"],
         )
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 

@@ -765,8 +765,10 @@ class AXUtilitiesEvent:
             return TextEventReason.CHILDREN_CHANGE
 
         obj = event.source
-        is_terminal = AXUtilitiesRole.is_terminal(obj)
-        if not (AXUtilitiesState.is_editable(obj) or is_terminal):
+        source_role = AXObject.get_role(obj)
+        is_terminal = AXUtilitiesRole.is_terminal(obj, source_role)
+        source_states = AXObject.get_state_set(obj)
+        if not (AXUtilitiesState.is_editable(obj, source_states) or is_terminal):
             return AXUtilitiesEvent._get_non_editable_reason(mgr)
 
         if is_terminal and AXUtilitiesEvent._is_terminal_escape_sequence(event.any_data):
@@ -798,7 +800,7 @@ class AXUtilitiesEvent:
         # are excluded because Home, End, and Page Up/Down change their value.
         is_document = (
             not is_terminal
-            and not AXUtilitiesState.is_single_line(obj)
+            and not AXUtilitiesState.is_single_line(obj, source_states)
             and not AXUtilitiesEvent._is_spin_button_descendant(obj)
         )
         if is_document and (
@@ -810,7 +812,7 @@ class AXUtilitiesEvent:
             return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
         if mgr.last_event_was_command():
             return TextEventReason.UNSPECIFIED_COMMAND
-        if mgr.last_event_was_space() and not AXUtilitiesRole.is_password_text(obj):
+        if mgr.last_event_was_space() and not AXUtilitiesRole.is_password_text(obj, source_role):
             if event.any_data == "\n":
                 return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
             return TextEventReason.TYPING
@@ -831,7 +833,7 @@ class AXUtilitiesEvent:
             if has_selected:
                 return TextEventReason.AUTO_INSERTION_PRESENTABLE
             presenter = typing_echo_presenter.get_presenter()
-            if AXUtilitiesRole.is_password_text(obj):
+            if AXUtilitiesRole.is_password_text(obj, source_role):
                 echo = presenter.get_key_echo_enabled()
             else:
                 echo = presenter.get_character_echo_enabled()
@@ -865,6 +867,27 @@ class AXUtilitiesEvent:
             return TextEventReason.SELECTED_TEXT_INSERTION
         if AXUtilitiesEvent._is_terminal_being_flat_reviewed(obj):
             return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
+        if (
+            event.detail1 == 0
+            and obj == focus_manager.get_manager().get_locus_of_focus()
+            and AXUtilitiesState.is_single_line(obj, source_states)
+            and AXUtilitiesState.is_showing_and_visible(obj, source_states)
+        ):
+            if (
+                AXUtilitiesRole.is_combo_box(obj, source_role)
+                and AXText.get_character_count(obj) == event.detail2
+            ):
+                return TextEventReason.AUTO_INSERTION_PRESENTABLE
+            parent = AXObject.get_parent(obj)
+            if AXUtilitiesRole.is_combo_box(parent):
+                # Selecting a combo box item can replace its entry without an editing command.
+                selected = AXSelection.get_selected_child(parent, 0)
+                if (
+                    selected is not None
+                    and AXObject.get_name(selected) == event.any_data
+                    and AXText.get_character_count(obj) == event.detail2
+                ):
+                    return TextEventReason.AUTO_INSERTION_PRESENTABLE
         return TextEventReason.UNKNOWN
 
     @staticmethod
@@ -1448,9 +1471,21 @@ class AXUtilitiesEvent:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if AXUtilitiesRole.is_combo_box(event.source) and not AXUtilitiesState.is_expanded(
             event.source, source_states
         ):
+            if not (
+                event.source == focus
+                or AXUtilitiesState.is_focused(event.source, source_states)
+                or AXUtilitiesObject.is_ancestor(focus, event.source)
+            ):
+                msg = (
+                    "AXUtilitiesEvent: Collapsed combo box is unfocused "
+                    "and unrelated to the locus of focus."
+                )
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
             text_input = AXUtilitiesObject.find_descendant(
                 event.source, AXUtilitiesRole.is_text_input
             )
@@ -1458,8 +1493,6 @@ class AXUtilitiesEvent:
                 msg = "AXUtilitiesEvent: Combo box text input is focused; not a user selection."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
 
         mgr = input_event_manager.get_manager()
         if (
