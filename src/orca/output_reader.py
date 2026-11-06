@@ -135,6 +135,9 @@ class OutputReader:
         first_record_timeout *= scale
         records: list[SpeechRecord | BrailleRecord | InterruptRecord] = list(self._pending)
         self._pending.clear()
+        waiting_for_output = not idle_aware and not any(
+            isinstance(record, (SpeechRecord, BrailleRecord)) for record in records
+        )
         # The overall timeout bounds inactivity, not the whole drain: Say All produces
         # records for as long as it runs.
         deadline = time.monotonic() + overall_timeout
@@ -142,7 +145,7 @@ class OutputReader:
             remaining = deadline - time.monotonic()
             if remaining <= 0:
                 return self._honor_interrupts(records)
-            wait = quiescence_timeout if records else first_record_timeout
+            wait = first_record_timeout if waiting_for_output or not records else quiescence_timeout
             try:
                 record = self._queue.get(timeout=min(wait, remaining))
             except queue.Empty:
@@ -153,6 +156,8 @@ class OutputReader:
                         continue
                 return self._honor_interrupts(records)
             records.append(record)
+            if waiting_for_output and not isinstance(record, InterruptRecord):
+                waiting_for_output = False
             deadline = time.monotonic() + overall_timeout
 
     def _await_more_output(self, records: list, remaining: float) -> bool:

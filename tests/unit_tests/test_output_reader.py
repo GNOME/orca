@@ -29,6 +29,8 @@ import json
 import time
 from typing import TYPE_CHECKING
 
+import pytest
+
 if TYPE_CHECKING:
     from pathlib import Path
 
@@ -378,3 +380,47 @@ def test_honor_interrupts_drops_speech_not_braille() -> None:
     assert speech(kept) == ["speech kept"]
     assert braille(kept) == ["braille kept"]
     assert not any(isinstance(record, InterruptRecord) for record in kept)
+
+
+@pytest.mark.parametrize("buffered", [False, True])
+@pytest.mark.parametrize("kind", ["speech", "braille"])
+def test_async_drain_waits_for_output_after_interrupt(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, buffered: bool, kind: str
+) -> None:
+    """Waits for delayed speech or braille when only an interrupt has arrived."""
+
+    import queue
+    from types import SimpleNamespace
+
+    from orca.output_reader import BrailleRecord, InterruptRecord, OutputReader, SpeechRecord
+
+    reader = OutputReader(str(tmp_path / "speech"), str(tmp_path / "braille"))
+    response = (
+        SpeechRecord(text="More")
+        if kind == "speech"
+        else BrailleRecord(cursor_cell=5, full="More pages!", visible="More pages!")
+    )
+    arrivals: list[tuple[float, SpeechRecord | BrailleRecord | InterruptRecord]] = [
+        (0.25, response)
+    ]
+    if buffered:
+        reader._pending.append(InterruptRecord())
+    else:
+        arrivals.insert(0, (0.0, InterruptRecord()))
+    clock = SimpleNamespace(now=0.0)
+
+    def get(timeout: float) -> SpeechRecord | BrailleRecord | InterruptRecord:
+        if arrivals and arrivals[0][0] <= clock.now + timeout:
+            clock.now, record = arrivals.pop(0)
+            return record
+        clock.now += timeout
+        raise queue.Empty
+
+    monkeypatch.setattr(time, "monotonic", lambda: clock.now)
+    monkeypatch.setattr(reader._queue, "get", get)
+    assert reader.drain(
+        quiescence_timeout=0.1,
+        first_record_timeout=1.0,
+        overall_timeout=2.0,
+        idle_aware=False,
+    ) == [response]

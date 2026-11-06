@@ -170,6 +170,8 @@ def assert_navigation(
     brailled: BrailleLine | None,
     offsets: tuple[int, int],
     message: BrailleLine | None = None,
+    *,
+    wait_async: bool = False,
 ) -> None:
     """Checks navigation, presentation, and absence of selection on both cached pages.
 
@@ -178,7 +180,7 @@ def assert_navigation(
     """
 
     keyboard.press_chord(modifiers, key)
-    actual_speech, actual_braille = capture(session)
+    actual_speech, actual_braille = capture(session, wait_async=wait_async)
     actual_offsets = tuple(Atspi.Text.get_caret_offset(page) for page in session.pages)
     assert actual_offsets == offsets, (actual_offsets, offsets)
     assert selected_ranges(session) == ([], [])

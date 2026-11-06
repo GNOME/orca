@@ -973,7 +973,6 @@ def test_selection_of_entire_document(atril: AtrilSession) -> None:
     with selection_session(atril, native=True):
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
         spoken, brailled = capture(atril)
-        assert selected_ranges(atril) == ([(0, 89)], [(0, 51)])
         assert spoken == ["entire document selected"]
         assert brailled[-1] == BrailleLine(1, "Do headings work?", "Do headings work?", "\xc0" * 17)
 

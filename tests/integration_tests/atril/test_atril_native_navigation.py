@@ -91,6 +91,7 @@ def test_lines_across_pages(atril: AtrilSession) -> None:
             ["More pages!\n"],
             BrailleLine(1, "More pages!", "More pages!", "\x00" * 11),
             (-1, 0),
+            wait_async=True,
         )
         assert_navigation(
             atril,
@@ -132,6 +133,7 @@ def test_lines_across_pages(atril: AtrilSession) -> None:
             ["The end."],
             BrailleLine(8, "The end.", "The end.", "\x00" * 8),
             (88, -1),
+            wait_async=True,
         )
         assert_navigation(
             atril,
@@ -513,6 +515,7 @@ def test_characters_across_pages(atril: AtrilSession) -> None:
             ["M"],
             BrailleLine(1, "More pages!", "More pages!", "\x00" * 11),
             (-1, 0),
+            wait_async=True,
         )
         assert_navigation(
             atril,
@@ -554,6 +557,7 @@ def test_characters_across_pages(atril: AtrilSession) -> None:
             None,
             BrailleLine(9, "The end.", "The end.", "\x00" * 8),
             (89, -1),
+            wait_async=True,
         )
 
 
@@ -590,6 +594,7 @@ def test_words_across_pages(atril: AtrilSession) -> None:
             ["More"],
             BrailleLine(5, "More pages!", "More pages!", "\x00" * 11),
             (-1, 4),
+            wait_async=True,
         )
         assert_navigation(
             atril,
@@ -638,6 +643,7 @@ def test_words_across_pages(atril: AtrilSession) -> None:
             ["end."],
             BrailleLine(5, "The end.", "The end.", "\x00" * 8),
             (85, -1),
+            wait_async=True,
         )
         assert_navigation(
             atril,
