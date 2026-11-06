@@ -33,7 +33,7 @@ if TYPE_CHECKING:
 def create_tree(root: Path) -> None:
     """Creates predictable navigation, selection, and scrolling targets."""
 
-    for name in ("01 Empty", "02 Nested/Child", "02 Nested/Sibling", "03 Scrolling"):
+    for name in ("01 Empty", "02 Nested/Child", "02 Nested/Sibling/Child", "03 Scrolling"):
         (root / name).mkdir(parents=True)
     for name in (
         "alpha.txt",

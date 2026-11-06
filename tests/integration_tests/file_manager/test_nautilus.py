@@ -315,7 +315,8 @@ def test_space_behavior(nautilus: FileManagerSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("nautilus", ["icon", "list"], indirect=True)
-def test_return_to_parent(nautilus: FileManagerSession) -> None:
+@pytest.mark.parametrize("parent", ["02 Nested", "Sibling"], ids=["two-items", "one-item"])
+def test_return_to_parent(nautilus: FileManagerSession, parent: str) -> None:
     """Checks the Child folder announcement after returning with Alt+Up."""
 
     session = nautilus
@@ -325,9 +326,70 @@ def test_return_to_parent(nautilus: FileManagerSession) -> None:
     _assert_item(session, "02 Nested")
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     capture(session, quiescence=0.5)
+    if parent == "Sibling":
+        keyboard.tap_key(keyboard.KEYSYM_END)
+        capture(session)
+        keyboard.tap_key(keyboard.KEYSYM_RETURN)
+        capture(session, quiescence=0.5)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
     capture(session)
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     capture(session, quiescence=0.5)
     keyboard.press_chord([keyboard.KEYSYM_ALT_L], keyboard.KEYSYM_UP)
-    _assert_item(session, "Child", folder="02 Nested")
+    _assert_item(session, "Child", folder=parent)
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize(
+    "nautilus",
+    [
+        "icon",
+        # TODO: Investigate the missing Select All announcement in list view.
+        pytest.param(
+            "list",
+            marks=pytest.mark.xfail(
+                reason="Select All is not announced in Nautilus list view",
+                raises=AssertionError,
+                strict=True,
+            ),
+        ),
+    ],
+    indirect=True,
+)
+def test_select_all(nautilus: FileManagerSession) -> None:
+    """Selects all files, toggles one selection, and resumes navigation."""
+
+    session = nautilus
+    start_at_first_file(session)
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
+    _assert_message(session, "all items selected")
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
+    spoken, brailled = capture(session)
+    assert spoken == []
+    if session.view == "icon":
+        assert brailled[-1] == _item_braille(session, "01 Empty")
+    else:
+        assert brailled == []
+    forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], forward)
+    _assert_item(session, "02 Nested")
+    for message in ("unselected", "selected"):
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
+        _assert_message(session, message)
+    keyboard.tap_key(keyboard.KEYSYM_HOME)
+    _assert_item(session, "01 Empty")
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], forward)
+    _assert_item(session, "02 Nested")
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("nautilus", ["icon", "list"], indirect=True)
+def test_range_to_all_files(nautilus: FileManagerSession) -> None:
+    """Selects every file with Shift+End, then shrinks the selection with Shift+Home."""
+
+    session = nautilus
+    start_at_first_file(session)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
+    _assert_item(session, LONG_NAME)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_HOME)
+    _assert_item(session, "01 Empty")

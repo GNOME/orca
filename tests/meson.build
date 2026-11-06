@@ -163,6 +163,7 @@ orca_integration_tests = {
     'integration_tests/gtk/test_gtk_tri_state_checkbox.py',
     'integration_tests/gtk/test_gtk_widget_notebook.py',
     'integration_tests/gtk/test_gtk_combo_box.py',
+    'integration_tests/gtk/test_gtk_entry_completion.py',
     'integration_tests/gtk/test_gtk_spinbutton.py',
     'integration_tests/gtk/test_gtk_redundant_names.py',
     'integration_tests/gtk/test_gtk_toolbar.py',
@@ -379,7 +380,7 @@ foreach group, test_files : orca_integration_tests
     endif
     foreach test_file : test_files
       test_name = test_file.split('/')[-1].split('.')[0]
-      if variant == 'gtk4' and test_name == 'test_gtk_combo_box'
+      if variant == 'gtk4' and test_name in ['test_gtk_combo_box', 'test_gtk_entry_completion']
         continue
       endif
       is_gsettings = test_name == 'test_gsettings'
