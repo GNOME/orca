@@ -103,28 +103,6 @@ class Script(default.Script):
 
         return super()._on_focused_changed(event)
 
-    def _on_selected_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:state-changed:selected accessibility events."""
-
-        # Handle changes within an entry completion popup.
-        if (
-            AXUtilities.is_table_cell(event.source)
-            and AXUtilities.find_ancestor(event.source, AXUtilities.is_window) is not None
-        ):
-            if event.detail1:
-                focus_manager.get_manager().set_locus_of_focus(event, event.source)
-                return True
-            if focus_manager.get_manager().get_locus_of_focus() == event.source:
-                focus_manager.get_manager().set_locus_of_focus(event, None)
-                return True
-
-        if AXUtilities.is_icon_or_canvas(
-            event.source,
-        ) and self.utilities.handle_container_selection_change(AXObject.get_parent(event.source)):
-            return True
-
-        return super()._on_selected_changed(event)
-
     def _on_selection_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:selection-changed accessibility events."""
 
@@ -140,6 +118,7 @@ class Script(default.Script):
             AXUtilities.is_layered_pane(event.source)
             and AXUtilities.selected_child_count(event.source) > 1
         ):
+            self.utilities.handle_container_selection_change(event.source)
             return True
 
         return super()._on_selection_changed(event)

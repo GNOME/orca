@@ -361,21 +361,7 @@ def test_space_behavior(caja: FileManagerSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("caja", ["icon"], indirect=True)
-@pytest.mark.parametrize(
-    "parent",
-    [
-        "02 Nested",
-        pytest.param(
-            "Sibling",
-            marks=pytest.mark.xfail(
-                reason="Caja does not announce the only child after Alt+Up",
-                raises=AssertionError,
-                strict=True,
-            ),
-        ),
-    ],
-    ids=["two-items", "one-item"],
-)
+@pytest.mark.parametrize("parent", ["02 Nested", "Sibling"], ids=["two-items", "one-item"])
 def test_return_to_parent(caja: FileManagerSession, parent: str) -> None:
     """Checks the Child folder announcement after returning with Alt+Up."""
 
@@ -438,6 +424,10 @@ def test_select_all(caja: FileManagerSession) -> None:
     for message in ("unselected", "selected"):
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
         _assert_message(session, message)
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
+    _assert_message(session, "unselected")
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
+    _assert_message(session, "all items selected")
     keyboard.tap_key(keyboard.KEYSYM_HOME)
     _assert_item(session, "01 Empty")
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], forward)
