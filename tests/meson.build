@@ -226,6 +226,7 @@ orca_integration_tests = {
     'integration_tests/web/test_web_nested_blockquotes.py',
     'integration_tests/web/test_web_say_all_details.py',
     'integration_tests/web/test_web_say_all_expansion.py',
+    'integration_tests/web/test_web_say_all_wrapped_text.py',
     'integration_tests/web/test_web_grid_navigation.py',
     'integration_tests/web/test_web_grid_selection.py',
     'integration_tests/web/test_web_headings.py',
