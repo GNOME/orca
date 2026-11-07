@@ -244,6 +244,15 @@ class AXUtilitiesSelection:
     ) -> Atspi.Accessible | None:
         """Returns the selected child of obj that should become the locus of focus, or None."""
 
+        if (
+            focus is not None
+            and AXObject.get_parent(focus) == obj
+            and AXSelection.is_child_selected(obj, AXObject.get_index_in_parent(focus))
+        ):
+            tokens = ["AXUtilitiesSelection: Focus", focus, "is already a selected child"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return None
+
         selected = AXUtilitiesSelection.selected_children(obj)
         if focus in selected:
             tokens = ["AXUtilitiesSelection: Focus", focus, "is already in selected children"]

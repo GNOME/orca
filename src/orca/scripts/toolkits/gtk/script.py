@@ -103,26 +103,6 @@ class Script(default.Script):
 
         return super()._on_focused_changed(event)
 
-    def _on_selection_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:selection-changed accessibility events."""
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if (
-            AXUtilities.is_toggle_button(focus)
-            and AXUtilities.is_combo_box(event.source)
-            and AXUtilities.is_ancestor(focus, event.source)
-        ):
-            return super()._on_selection_changed(event)
-
-        if (
-            AXUtilities.is_layered_pane(event.source)
-            and AXUtilities.selected_child_count(event.source) > 1
-        ):
-            self.utilities.handle_container_selection_change(event.source)
-            return True
-
-        return super()._on_selection_changed(event)
-
     def _on_showing_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:showing accessibility events."""
 

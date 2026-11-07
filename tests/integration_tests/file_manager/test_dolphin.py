@@ -188,6 +188,19 @@ def test_range_selection(dolphin: FileManagerSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("dolphin", ["icon", "list"], indirect=True)
+def test_range_to_all_files(dolphin: FileManagerSession) -> None:
+    """Selects every file with Shift+End, then shrinks the selection with Shift+Home."""
+
+    session = dolphin
+    _start_at_first_file(session)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
+    _assert_item(session, LONG_NAME)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_HOME)
+    _assert_item(session, "01 Empty")
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("dolphin", ["icon", "list"], indirect=True)
 @pytest.mark.xfail(
     strict=True,
     raises=AssertionError,

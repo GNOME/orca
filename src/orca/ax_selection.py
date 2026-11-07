@@ -35,6 +35,24 @@ class AXSelection:
     """Wrapper for the Atspi.Selection interface."""
 
     @staticmethod
+    def is_child_selected(obj: Atspi.Accessible, index: int) -> bool:
+        """Returns whether the child at index in obj is selected."""
+
+        if index < 0 or not AXObject.supports_selection(obj):
+            return False
+
+        try:
+            result = Atspi.Selection.is_child_selected(obj, index)
+        except GLib.GError as error:
+            tokens = ["AXSelection: Exception in is_child_selected:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        tokens = ["AXSelection: Child #", index, "of", obj, "is selected:", result]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return result
+
+    @staticmethod
     def get_selected_child_count(obj: Atspi.Accessible) -> int:
         """Returns the selected child count of obj"""
 

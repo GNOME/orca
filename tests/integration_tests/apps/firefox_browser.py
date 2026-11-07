@@ -56,6 +56,8 @@ def prepare_launch(profile_dir: Path, *, caret_browsing: bool = False) -> tuple[
         "layout.css.devPixelsPerPx": "1.0",
         "ui.textScaleFactor": 100,
         "font.name.serif.x-western": "DejaVu Serif",
+        # Xvfb has no window manager to acknowledge native fullscreen requests.
+        "full-screen-api.ignore-widgets": True,
     }
     (profile_dir / "user.js").write_text(
         "".join(

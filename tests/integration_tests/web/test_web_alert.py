@@ -26,9 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests.apps import browser
 from tests.integration_tests.harness import keyboard
 from tests.integration_tests.helpers import BrailleLine, capture, reset_web_state, speech
+from tests.integration_tests.version_helpers import firefox_is_older_than_build
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -36,9 +36,9 @@ if TYPE_CHECKING:
 
 @pytest.mark.native_app
 @pytest.mark.xfail(
-    browser.selected_browser() == "firefox",
+    firefox_is_older_than_build(161, 20261029094000),
     reason="Gecko maps ARIA alertdialog to AT-SPI DIALOG instead of ALERT: "
-    "https://www.w3.org/TR/core-aam-1.2/#role-map-alertdialog",
+    "https://bugzilla.mozilla.org/show_bug.cgi?id=2086310",
     raises=AssertionError,
     strict=True,
 )
