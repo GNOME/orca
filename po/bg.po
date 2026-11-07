@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-07-20 15:17+0000\n"
-"PO-Revision-Date: 2026-09-05 22:45+0200\n"
+"PO-Revision-Date: 2026-11-07 11:59+0100\n"
 "Last-Translator: twlvnn kraftwerk <kraft_werk@tutanota.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -10358,7 +10358,7 @@ msgstr "Стандартният бутон е %s"
 #: src/orca/messages.py:566
 #, python-format
 msgid "Default button is %s. Grayed"
-msgstr "Стандартният бутон е %s. Посивен"
+msgstr "Стандартният бутон е %s. Неактивен"
 
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box. Orca has
@@ -13987,7 +13987,7 @@ msgstr "непосетена"
 #. insensitive (or grayed out).
 #: src/orca/object_properties.py:557 src/orca/object_properties.py:561
 msgid "grayed"
-msgstr "посивено"
+msgstr "неактивен"
 
 #. Translators: Certain objects (such as form controls on web pages) can have
 #. STATE_EDITABLE set to inform the user that this field can be filled out.
