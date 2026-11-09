@@ -366,20 +366,51 @@ def test_select_all(nautilus: FileManagerSession) -> None:
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
     spoken, brailled = capture(session)
     assert spoken == []
-    if session.view == "icon":
-        assert brailled[-1] == _item_braille(session, "01 Empty")
-    else:
-        assert brailled == []
+    assert brailled[-1] == _item_braille(session, "01 Empty")
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], forward)
     _assert_item(session, "02 Nested")
     for message in ("unselected", "selected"):
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
         _assert_message(session, message)
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
+    _assert_message(session, "unselected")
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
+    _assert_message(session, "all items selected")
     keyboard.tap_key(keyboard.KEYSYM_HOME)
     _assert_item(session, "01 Empty")
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], forward)
     _assert_item(session, "02 Nested")
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("nautilus", ["icon", "list"], indirect=True)
+@pytest.mark.xfail(
+    reason="Select All is not announced in Nautilus folders with offscreen items",
+    raises=AssertionError,
+    strict=True,
+)
+def test_select_all_after_navigation(nautilus: FileManagerSession) -> None:
+    """Announces Select All again after navigation replaces the selection."""
+
+    session = nautilus
+    start_at_first_file(session)
+    forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
+    for _ in range(2):
+        keyboard.tap_key(forward)
+        capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    capture(session, quiescence=1.0, wait_async=True)
+    keyboard.tap_key(keyboard.KEYSYM_HOME)
+    capture(session)
+    backward = keyboard.KEYSYM_LEFT if session.view == "icon" else keyboard.KEYSYM_UP
+    for _ in range(2):
+        keyboard.tap_key(forward)
+        capture(session)
+        keyboard.tap_key(backward)
+        _assert_item(session, "item 01.txt", folder="03 Scrolling")
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
+        _assert_message(session, "all items selected")
 
 
 @pytest.mark.native_app

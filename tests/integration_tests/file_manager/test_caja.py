@@ -58,6 +58,7 @@ def _assert_item(
     *,
     unselected: bool = False,
     folder: str = "Test Files",
+    tree_level: int | None = None,
 ) -> None:
     """Checks the file or folder announcement in speech and braille."""
 
@@ -69,6 +70,8 @@ def _assert_item(
         expected = [name + (" collapsed" if is_folder else "")]
         if unselected:
             expected.append("not selected")
+    if tree_level is not None:
+        expected.append(f"tree level {tree_level}")
     assert spoken == expected
     assert brailled[-1] == _item_braille(session, name, folder)
 
@@ -388,22 +391,7 @@ def test_return_to_parent(caja: FileManagerSession, parent: str) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.parametrize(
-    "caja",
-    [
-        "icon",
-        # TODO: Investigate the missing Select All announcement in list view.
-        pytest.param(
-            "list",
-            marks=pytest.mark.xfail(
-                reason="Select All is not announced in Caja list view",
-                raises=AssertionError,
-                strict=True,
-            ),
-        ),
-    ],
-    indirect=True,
-)
+@pytest.mark.parametrize("caja", ["icon", "list"], indirect=True)
 def test_select_all(caja: FileManagerSession) -> None:
     """Selects all files, toggles one selection, and resumes navigation."""
 
@@ -414,13 +402,11 @@ def test_select_all(caja: FileManagerSession) -> None:
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
     spoken, brailled = capture(session)
     assert spoken == []
-    if session.view == "icon":
-        assert brailled[-1] == _item_braille(session, "01 Empty")
-    else:
-        assert brailled == []
+    assert brailled[-1] == _item_braille(session, "01 Empty")
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
+    tree_level = 1 if session.view == "list" else None
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], forward)
-    _assert_item(session, "02 Nested")
+    _assert_item(session, "02 Nested", tree_level=tree_level)
     for message in ("unselected", "selected"):
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
         _assert_message(session, message)
@@ -429,9 +415,33 @@ def test_select_all(caja: FileManagerSession) -> None:
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
     _assert_message(session, "all items selected")
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    _assert_item(session, "01 Empty")
+    _assert_item(session, "01 Empty", tree_level=tree_level)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], forward)
     _assert_item(session, "02 Nested")
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("caja", ["icon", "list"], indirect=True)
+def test_select_all_after_navigation(caja: FileManagerSession) -> None:
+    """Announces Select All again after navigation replaces the selection."""
+
+    session = caja
+    start_at_first_file(session)
+    forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
+    for _ in range(2):
+        keyboard.tap_key(forward)
+        capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    capture(session, quiescence=1.0, wait_async=True)
+    start_at_first_file(session)
+    backward = keyboard.KEYSYM_LEFT if session.view == "icon" else keyboard.KEYSYM_UP
+    for _ in range(2):
+        keyboard.tap_key(forward)
+        capture(session)
+        keyboard.tap_key(backward)
+        _assert_item(session, "item 01.txt", folder="03 Scrolling")
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
+        _assert_message(session, "all items selected")
 
 
 @pytest.mark.native_app

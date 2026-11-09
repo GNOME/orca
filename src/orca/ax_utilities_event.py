@@ -48,6 +48,7 @@ from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
+from .ax_utilities_selection import AXUtilitiesSelection
 from .ax_utilities_state import AXUtilitiesState
 from .ax_utilities_text import AXUtilitiesText
 from .ax_value import AXValue
@@ -1438,13 +1439,20 @@ class AXUtilitiesEvent:
 
         from . import input_event_manager  # pylint: disable=import-outside-toplevel
 
-        if input_event_manager.get_manager().last_event_was_space():
+        mgr = input_event_manager.get_manager()
+        if mgr.last_event_was_space():
+            # An ignored selection change can invalidate the previous Select All result.
+            AXUtilitiesSelection.set_all_items_selected_state(event.source, False)
             msg = "AXUtilitiesEvent: Selection toggled via space; handled elsewhere."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         source_states = AXObject.get_state_set(event.source)
-        if AXUtilitiesState.manages_descendants(event.source, source_states):
+        if (
+            AXUtilitiesState.manages_descendants(event.source, source_states)
+            and not mgr.last_event_was_select_all()
+        ):
+            AXUtilitiesSelection.set_all_items_selected_state(event.source, False)
             msg = "AXUtilitiesEvent: Source manages descendants; handled elsewhere."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -1494,7 +1502,6 @@ class AXUtilitiesEvent:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
-        mgr = input_event_manager.get_manager()
         if (
             AXUtilitiesState.supports_autocompletion(focus)
             and not mgr.last_event_was_up_or_down()
