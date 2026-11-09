@@ -225,8 +225,18 @@ class AXUtilitiesSelection:
             return False
 
         child_count = AXObject.get_child_count(obj)
-        if child_count == AXSelection.get_selected_child_count(obj):
-            child = AXSelection.get_selected_child(obj, 0)
+        selected_count = AXSelection.get_selected_child_count(obj)
+        child = None
+        if selected_count > child_count:
+            child = AXSelection.get_selected_child(obj, 0, selected_count)
+            set_size = AXObject.get_attribute(child, "setsize", False)
+            if set_size == "-1":
+                return False
+            if set_size.isnumeric():
+                child_count = int(set_size)
+        if child_count == selected_count:
+            if child is None:
+                child = AXSelection.get_selected_child(obj, 0, selected_count)
             if AXObject.get_parent(child) != obj:
                 return False
 

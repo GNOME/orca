@@ -340,23 +340,33 @@ def test_return_to_parent(nautilus: FileManagerSession, parent: str) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.parametrize("nautilus", ["icon", "list"], indirect=True)
+def test_select_all(nautilus: FileManagerSession) -> None:
+    """Announces that all files are selected."""
+
+    session = nautilus
+    start_at_first_file(session)
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
+    _assert_message(session, "all items selected")
+
+
+@pytest.mark.native_app
 @pytest.mark.parametrize(
     "nautilus",
     [
         "icon",
-        # TODO: Investigate the missing Select All announcement in list view.
         pytest.param(
             "list",
             marks=pytest.mark.xfail(
-                reason="Select All is not announced in Nautilus list view",
+                reason="Intermittent missing name: https://gitlab.gnome.org/GNOME/gtk/-/work_items/8530",
                 raises=AssertionError,
-                strict=True,
+                strict=False,
             ),
         ),
     ],
     indirect=True,
 )
-def test_select_all(nautilus: FileManagerSession) -> None:
+def test_repeated_select_all(nautilus: FileManagerSession) -> None:
     """Selects all files, toggles one selection, and resumes navigation."""
 
     session = nautilus
@@ -385,11 +395,6 @@ def test_select_all(nautilus: FileManagerSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("nautilus", ["icon", "list"], indirect=True)
-@pytest.mark.xfail(
-    reason="Select All is not announced in Nautilus folders with offscreen items",
-    raises=AssertionError,
-    strict=True,
-)
 def test_select_all_after_navigation(nautilus: FileManagerSession) -> None:
     """Announces Select All again after navigation replaces the selection."""
 

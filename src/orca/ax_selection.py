@@ -71,10 +71,13 @@ class AXSelection:
         return count
 
     @staticmethod
-    def get_selected_child(obj: Atspi.Accessible, index: int) -> Atspi.Accessible | None:
+    def get_selected_child(
+        obj: Atspi.Accessible, index: int, n_children: int | None = None
+    ) -> Atspi.Accessible | None:
         """Returns the nth selected child of obj."""
 
-        n_children = AXSelection.get_selected_child_count(obj)
+        if n_children is None:
+            n_children = AXSelection.get_selected_child_count(obj)
         if n_children <= 0:
             return None
 
