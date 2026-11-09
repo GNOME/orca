@@ -328,6 +328,45 @@ def test_where_am_i(dolphin: FileManagerSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("dolphin", ["icon", "list"], indirect=True)
+@pytest.mark.xfail(
+    reason=(
+        "Dolphin get_accessible_at_point() returns incorrect results: "
+        "https://bugs.kde.org/show_bug.cgi?id=528589"
+    ),
+    raises=AssertionError,
+    strict=True,
+)
+def test_flat_review(dolphin: FileManagerSession) -> None:
+    """Reviews the focused file's line and moves forward and back."""
+
+    session = dolphin
+    _start_at_first_file(session)
+    first = (
+        "01 Empty 02 Nested 03 Scrolling alpha.txt bravo.txt charlie.txt"
+        if session.view == "icon"
+        else "01 Empty"
+    )
+    second = (
+        "delta.txt echo.txt file with spaces.txt golf.txt hotel.txt india.txt"
+        if session.view == "icon"
+        else "02 Nested"
+    )
+    for key, expected, line, cursor in (
+        (keyboard.KEYSYM_KP_UP, first, first, 1),
+        (keyboard.KEYSYM_KP_RIGHT, "Empty", first, 4),
+        (keyboard.KEYSYM_KP_LEFT, "01", first, 1),
+        (keyboard.KEYSYM_KP_PAGE_UP, second, second, 1),
+        (keyboard.KEYSYM_KP_HOME, first, first, 1),
+    ):
+        keyboard.tap_key(key)
+        spoken, brailled = capture(session)
+        assert "".join(spoken).strip() == expected
+        full = line + " $l"
+        assert brailled[-1] == BrailleLine(cursor, full, full[:32], "\x00" * len(full))
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("dolphin", ["icon", "list"], indirect=True)
 def test_space_behavior(dolphin: FileManagerSession) -> None:
     """Checks Space announcing selection mode enabled and then disabled."""
 
