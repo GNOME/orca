@@ -138,6 +138,32 @@ def test_home_end_and_boundaries(nautilus: FileManagerSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("nautilus", ["icon", "list"], indirect=True)
+def test_scrolling(nautilus: FileManagerSession) -> None:
+    """Checks End, Up, Down, and Home in a folder that requires scrolling."""
+
+    session = nautilus
+    start_at_first_file(session)
+    forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
+    for name in ("02 Nested", "03 Scrolling"):
+        keyboard.tap_key(forward)
+        _assert_item(session, name)
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    capture(session, quiescence=1.0, wait_async=True)
+    keyboard.tap_key(keyboard.KEYSYM_HOME)
+    capture(session)
+    stride = 5 if session.view == "icon" else 1
+    for key, name in (
+        (keyboard.KEYSYM_END, "item 60.txt"),
+        (keyboard.KEYSYM_UP, f"item {60 - stride:02}.txt"),
+        (keyboard.KEYSYM_DOWN, "item 60.txt"),
+        (keyboard.KEYSYM_HOME, "item 01.txt"),
+    ):
+        keyboard.tap_key(key)
+        _assert_item(session, name, folder="03 Scrolling")
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("nautilus", ["icon", "list"], indirect=True)
 def test_control_space_selection(nautilus: FileManagerSession) -> None:
     """Adds a second selection, returns to the first, and removes both selections."""
 

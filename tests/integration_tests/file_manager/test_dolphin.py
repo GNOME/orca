@@ -147,6 +147,40 @@ def test_home_end_and_boundaries(dolphin: FileManagerSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("dolphin", ["icon", "list"], indirect=True)
+@pytest.mark.xfail(
+    reason=(
+        "Dolphin get_child_at_index() intermittently returns the wrong item: "
+        "https://bugs.kde.org/show_bug.cgi?id=528622"
+    ),
+    raises=AssertionError,
+    strict=False,
+)
+def test_scrolling(dolphin: FileManagerSession) -> None:
+    """Checks End, Up, Down, and Home in a folder that requires scrolling."""
+
+    session = dolphin
+    _start_at_first_file(session)
+    forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
+    for name in ("02 Nested", "03 Scrolling"):
+        keyboard.tap_key(forward)
+        _assert_item(session, name)
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    capture(session, quiescence=0.5)
+    keyboard.tap_key(keyboard.KEYSYM_HOME)
+    capture(session)
+    stride = 6 if session.view == "icon" else 1
+    for key, name in (
+        (keyboard.KEYSYM_END, "item 60.txt"),
+        (keyboard.KEYSYM_UP, f"item {60 - stride:02}.txt"),
+        (keyboard.KEYSYM_DOWN, "item 60.txt"),
+        (keyboard.KEYSYM_HOME, "item 01.txt"),
+    ):
+        keyboard.tap_key(key)
+        _assert_item(session, name, folder="03 Scrolling")
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("dolphin", ["icon", "list"], indirect=True)
 def test_control_space_selection(dolphin: FileManagerSession) -> None:
     """Adds a second selection, returns to the first, and removes both selections."""
 
