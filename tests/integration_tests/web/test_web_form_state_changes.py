@@ -70,7 +70,7 @@ def test_tab_navigation_and_state_changes(web_form_fields: BrowserSession) -> No
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert helpers.capture(session) == (
-        ["Search", "editable combo box", "opens listbox"],
+        ["Search", "editable combo box", "foo bar baz", "opens listbox"],
         [helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 

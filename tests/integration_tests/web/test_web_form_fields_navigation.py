@@ -62,7 +62,7 @@ def test_word_navigation_in_editable_combo_box(web_form_fields: BrowserSession) 
     helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert helpers.capture(session) == (
-        ["Search", "editable combo box", "opens listbox"],
+        ["Search", "editable combo box", "foo bar baz", "opens listbox"],
         [helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
@@ -262,7 +262,7 @@ def test_browse_mode_line_navigation(web_form_fields: BrowserSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert _capture_final(session) == (
-        ["Search", "editable combo box", "opens listbox"],
+        ["Search", "editable combo box", "foo bar baz", "opens listbox"],
         helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21),
     )
 

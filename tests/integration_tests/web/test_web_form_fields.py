@@ -60,6 +60,7 @@ def test_say_all_over_form_fields(web_form_fields: BrowserSession) -> None:
         "Second sentence here.",
         "Search",
         "editable combo box",
+        "foo bar baz",
         "opens listbox",
         "Fruit",
         "combo box",
@@ -142,7 +143,7 @@ def test_structural_navigation_by_form_field(web_form_fields: BrowserSession) ->
 
     keyboard.tap_key(keyboard.KEYSYM_F)
     assert helpers.capture(session) == (
-        ["f", "Search", "editable combo box", "opens listbox"],
+        ["f", "Search", "editable combo box", "foo bar baz", "opens listbox"],
         [helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
@@ -342,7 +343,7 @@ def test_structural_navigation_by_entry(web_form_fields: BrowserSession) -> None
 
     keyboard.tap_key(keyboard.KEYSYM_E)
     assert helpers.capture(session) == (
-        ["e", "Search", "editable combo box", "opens listbox"],
+        ["e", "Search", "editable combo box", "foo bar baz", "opens listbox"],
         [helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
@@ -372,7 +373,7 @@ def test_structural_navigation_by_entry(web_form_fields: BrowserSession) -> None
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_E)
     assert helpers.capture(session) == (
-        ["E", "Search", "editable combo box", "opens listbox"],
+        ["E", "Search", "editable combo box", "foo bar baz", "opens listbox"],
         [helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
@@ -643,7 +644,7 @@ def test_structural_navigation_by_combo_box(web_form_fields: BrowserSession) -> 
 
     keyboard.tap_key(keyboard.KEYSYM_C)
     assert helpers.capture(session) == (
-        ["c", "Search", "editable combo box", "opens listbox"],
+        ["c", "Search", "editable combo box", "foo bar baz", "opens listbox"],
         [helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
@@ -674,7 +675,7 @@ def test_structural_navigation_by_combo_box(web_form_fields: BrowserSession) -> 
 
     keyboard.tap_key(keyboard.KEYSYM_C)
     assert helpers.capture(session) == (
-        ["c", "Wrapping to top.", "Search", "editable combo box", "opens listbox"],
+        ["c", "Wrapping to top.", "Search", "editable combo box", "foo bar baz", "opens listbox"],
         [
             helpers.BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
             helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21),
@@ -709,7 +710,7 @@ def test_structural_navigation_by_combo_box(web_form_fields: BrowserSession) -> 
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_C)
     assert helpers.capture(session) == (
-        ["C", "Search", "editable combo box", "opens listbox"],
+        ["C", "Search", "editable combo box", "foo bar baz", "opens listbox"],
         [helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 

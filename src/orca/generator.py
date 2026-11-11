@@ -1702,10 +1702,7 @@ class Generator:
             return attrs.get("valuetext")
 
         if not AXObject.get_child_count(obj):
-            if not AXUtilities.is_editable(obj):
-                text = AXText.get_all_text(obj)
-                return text if text and "\ufffc" not in text else AXObject.get_name(obj)
-            return AXObject.get_name(obj) or AXText.get_all_text(obj)
+            return AXText.get_all_text(obj)
 
         children = list(AXObject.iter_children(obj, AXUtilities.is_text_input))
         if len(children) == 1:
@@ -1716,7 +1713,8 @@ class Generator:
         if len(selected) == 1:
             return AXObject.get_name(selected[0]) or AXText.get_all_text(selected[0])
 
-        return AXObject.get_name(obj) or AXText.get_all_text(obj)
+        # Qt5 exposes the selected item's text as the name, but lacks Selection support.
+        return AXText.get_all_text(obj) or AXObject.get_name(obj)
 
     @log_generator_output
     def _generate_value(self, obj: Atspi.Accessible) -> list[Any]:
