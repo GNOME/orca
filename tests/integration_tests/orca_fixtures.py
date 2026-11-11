@@ -53,6 +53,7 @@ from .apps import (
     gtk3_combo_box,
     gtk3_entry_completion,
     gtk3_multi_select_list,
+    gtk3_note_reader,
     gtk3_redundant_names,
     gtk3_terminal,
     gtk3_terminal_focus,
@@ -388,6 +389,7 @@ _gtk_announcement = _make_native_app_fixture(gtk3_announcement, scope="function"
 _gtk_buttons = _make_native_app_fixture(gtk3_buttons)
 _gtk_combo_box = _make_native_app_fixture(gtk3_combo_box, scope="function")
 _gtk_entry_completion = _make_native_app_fixture(gtk3_entry_completion, scope="function")
+_gtk_note_reader = _make_native_app_fixture(gtk3_note_reader)
 _gtk_multi_select_list = _make_native_app_fixture(gtk3_multi_select_list, scope="function")
 _gtk_tree_view = _make_native_app_fixture(gtk3_tree_view, scope="function")
 _gtk_tri_state_checkbox = _make_native_app_fixture(gtk3_tri_state_checkbox, scope="function")

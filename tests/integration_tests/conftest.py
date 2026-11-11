@@ -51,6 +51,7 @@ from .orca_fixtures import (  # noqa: F401
     _gtk_drop_down,
     _gtk_entry_completion,
     _gtk_multi_select_list,
+    _gtk_note_reader,
     _gtk_redundant_names,
     _gtk_text_view,
     _gtk_text_view_blank_line,

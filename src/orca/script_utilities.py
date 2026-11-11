@@ -488,13 +488,16 @@ class Utilities:
     ) -> tuple[Atspi.Accessible, int]:
         """Returns an (obj, offset) tuple representing the current location."""
 
+        focus = focus_manager.get_manager().get_locus_of_focus()
         obj, offset = self._caret_context
-        if obj is not None:
+        if obj is not None and obj == focus:
             tokens = ["SCRIPT UTILITIES: Returning cached caret context", obj, offset]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return obj, offset
 
-        obj = focus_manager.get_manager().get_locus_of_focus()
+        if obj is not None:
+            self.clear_caret_context()
+        obj = focus
         offset = AXText.get_caret_offset(obj)
         tokens = ["SCRIPT UTILITIES: Returning focus + caret offset", obj, offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

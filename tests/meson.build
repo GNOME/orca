@@ -144,6 +144,7 @@ orca_integration_tests = {
     'integration_tests/gtk/test_gtk_caret_navigation.py',
     'integration_tests/gtk/test_gtk_caret_navigation_orca_controlled.py',
     'integration_tests/gtk/test_gtk_caret_navigation_orca_controlled_blank_line.py',
+    'integration_tests/gtk/test_gtk_caret_navigation_document_windows.py',
     'integration_tests/gtk/test_gtk_caret_navigation_word_boundaries.py',
     'integration_tests/gtk/test_gtk_say_all_text_view.py',
     'integration_tests/gtk/test_gtk_caret_selection_text_view.py',
