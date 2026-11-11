@@ -42,6 +42,7 @@ def _where_am_i(session: BrowserSession) -> tuple[list[str], list[tuple[int, str
 # Keep first: after the later form-field tests, Say All starts mid-document instead of
 # at the top (root cause not yet pinned down).
 @pytest.mark.native_app
+@helpers.xfail_firefox_native_select()
 def test_say_all_over_form_fields(web_form_fields: BrowserSession) -> None:
     """Tests the utterances Say All speaks for a page of form controls, from the top."""
 
@@ -119,6 +120,7 @@ def test_say_all_over_form_fields(web_form_fields: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
+@helpers.xfail_firefox_native_select()
 def test_structural_navigation_by_form_field(web_form_fields: BrowserSession) -> None:
     """Tests structural navigation by form field across every field type."""
 
@@ -636,6 +638,7 @@ def test_structural_navigation_by_button(web_form_fields: BrowserSession) -> Non
 
 
 @pytest.mark.native_app
+@helpers.xfail_firefox_native_select()
 def test_structural_navigation_by_combo_box(web_form_fields: BrowserSession) -> None:
     """Tests structural navigation by combo box across the editable and select variants."""
 
@@ -735,6 +738,7 @@ def test_fieldset_legend_role_only_on_entry(web_form_fields: BrowserSession) -> 
 @pytest.mark.native_app
 # Firefox 156 includes the entry label in Where Am I.
 @pytest.mark.skipif(firefox_is_older_than_build(157, 0), reason="Needs Firefox 157 or later")
+@helpers.xfail_firefox_native_select()
 def test_where_am_i_on_form_controls(web_form_fields: BrowserSession) -> None:
     """Tests Where Am I on entry, combo box, checkbox, radio button, and button."""
 
@@ -801,6 +805,7 @@ def test_where_am_i_on_form_controls(web_form_fields: BrowserSession) -> None:
 # Firefox 156's caret/Tab failure depends on the preceding Where Am I test running.
 @pytest.mark.skipif(firefox_is_older_than_build(157, 0), reason="Needs Firefox 157 or later")
 @helpers.xfail_firefox_caret_tab()
+@helpers.xfail_firefox_native_select()
 def test_position_in_set_when_arrowing_a_combo_box(web_form_fields: BrowserSession) -> None:
     """Tests position in set when arrowing a combo box."""
 

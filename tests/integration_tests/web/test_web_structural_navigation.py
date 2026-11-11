@@ -40,6 +40,7 @@ from tests.integration_tests.helpers import (
     move_to_top,
     reset_web_state,
     speech,
+    xfail_firefox_native_select,
 )
 
 if TYPE_CHECKING:
@@ -73,6 +74,7 @@ def _container_end(session: BrowserSession) -> tuple[list[str], list[BrailleLine
 
 
 @pytest.mark.native_app
+@xfail_firefox_native_select()
 def test_forward_navigation_by_role(web_structural_navigation: BrowserSession) -> None:
     """Tests forward single-key navigation landing on each role in document order."""
 

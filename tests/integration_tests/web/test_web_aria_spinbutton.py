@@ -27,8 +27,8 @@ from typing import TYPE_CHECKING
 import pytest
 
 from tests.integration_tests import helpers
-from tests.integration_tests.apps import browser
 from tests.integration_tests.harness import keyboard
+from tests.integration_tests.version_helpers import firefox_is_older_than_build
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -376,7 +376,7 @@ def test_volume_readonly_input_spinbutton(web_aria_spinbutton: BrowserSession) -
 # Required state mapping: https://www.w3.org/TR/core-aam-1.2/#ariaReadonlyTrue
 @pytest.mark.native_app
 @pytest.mark.xfail(
-    browser.selected_browser() == "firefox",
+    firefox_is_older_than_build(162, 20261110053316),
     reason="Firefox's ATK state mapping does not expose READ_ONLY: "
     "https://bugzilla.mozilla.org/show_bug.cgi?id=1356018",
     raises=AssertionError,
@@ -387,13 +387,15 @@ def test_volume_readonly_braille(web_aria_spinbutton: BrowserSession) -> None:
 
     session = web_aria_spinbutton
     _tab_to_volume(session)
-    helpers.capture(session)
-    keyboard.tap_key(keyboard.KEYSYM_UP)
     _, brailled = helpers.capture(session)
     value_selected = "\x00" * 7 + "\xc0\xc0" + "\x00" * 7
-    assert brailled[-1] == helpers.BrailleLine(
-        10, "Volume 50 rdonly", "Volume 50 rdonly", value_selected
-    )
+    assert brailled == [
+        helpers.BrailleLine(
+            1, "Bump Rating in 1000 ms button", "Bump Rating in 1000 ms button", "\x00" * 29
+        ),
+        helpers.BrailleLine(10, "Volume 50 rdonly", "Volume 50 rdonly", value_selected),
+        helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10),
+    ]
 
 
 def _tab_to_bump_button(session: BrowserSession, *, target_quantity: bool) -> None:

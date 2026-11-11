@@ -27,7 +27,12 @@ from typing import TYPE_CHECKING
 import pytest
 
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import expected_for_browser, reset_web_state, speech
+from tests.integration_tests.helpers import (
+    expected_for_browser,
+    reset_web_state,
+    speech,
+    xfail_firefox_native_select,
+)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -59,6 +64,7 @@ def test_manual_toggle_between_browse_and_focus_mode(
 
 
 @pytest.mark.native_app
+@xfail_firefox_native_select()
 def test_native_navigation_switches_mode_automatically(
     web_structural_navigation: BrowserSession,
 ) -> None:

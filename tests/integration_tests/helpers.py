@@ -32,7 +32,7 @@ import pytest
 
 from orca.output_reader import BrailleRecord, SpeechRecord
 
-from .apps import gtk
+from .apps import browser, gtk
 from .apps.browser import BROWSERS
 from .harness import keyboard
 from .version_helpers import firefox_is_older_than_build
@@ -56,6 +56,19 @@ def xfail_firefox_caret_tab() -> pytest.MarkDecorator:
     return pytest.mark.xfail(
         firefox_is_older_than_build(*_FIREFOX_CARET_TAB_FIXED),
         reason=_FIREFOX_CARET_TAB_REASON,
+        raises=AssertionError,
+        strict=True,
+    )
+
+
+def xfail_firefox_native_select() -> pytest.MarkDecorator:
+    """Marks tests affected by Firefox's missing native select values and events."""
+
+    return pytest.mark.xfail(
+        browser.selected_browser() == "firefox"
+        and not firefox_is_older_than_build(162, 20261110053316),
+        reason="Firefox does not expose native select values or value-change events: "
+        "https://bugzilla.mozilla.org/show_bug.cgi?id=2091657",
         raises=AssertionError,
         strict=True,
     )

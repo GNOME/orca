@@ -168,6 +168,19 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     @log_generator_output
+    def _generate_state_read_only(self, obj: Atspi.Accessible) -> list[Any]:
+        # Gecko exposes READ_ONLY unconditionally for this non-editable content.
+        if AXObject.get_role(obj) in (
+            Atspi.Role.DOCUMENT_WEB,
+            Atspi.Role.DOCUMENT_FRAME,
+            Atspi.Role.LIST,
+            Atspi.Role.DESCRIPTION_LIST,
+            Atspi.Role.DESCRIPTION_TERM,
+        ):
+            return []
+        return super()._generate_state_read_only(obj)
+
+    @log_generator_output
     def _generate_state_has_popup(self, obj: Atspi.Accessible) -> list[Any]:
         # TODO - JD: Can this be merged into the default's
         if self._only_speak_displayed_text():

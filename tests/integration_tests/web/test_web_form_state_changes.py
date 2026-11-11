@@ -34,6 +34,7 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.native_app
+@helpers.xfail_firefox_native_select()
 def test_tab_navigation_and_state_changes(web_form_fields: BrowserSession) -> None:
     """Tests Tab landings (incl. focus-mode entry/exit) and state changes per form control."""
 

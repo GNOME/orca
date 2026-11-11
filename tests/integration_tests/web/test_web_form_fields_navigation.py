@@ -452,6 +452,7 @@ def test_word_navigation_into_text_input(web_form_fields: BrowserSession) -> Non
 
 
 @pytest.mark.native_app
+@helpers.xfail_firefox_native_select()
 def test_character_navigation_left_to_right(web_form_fields: BrowserSession) -> None:
     """Tests Right-arrow character navigation across form controls with focus mode off."""
 
@@ -538,6 +539,7 @@ def test_character_navigation_left_to_right(web_form_fields: BrowserSession) -> 
 
 
 @pytest.mark.native_app
+@helpers.xfail_firefox_native_select()
 def test_character_navigation_right_to_left(web_form_fields: BrowserSession) -> None:
     """Tests Left-arrow character navigation back across form controls with focus mode off."""
 
@@ -620,6 +622,7 @@ def test_character_navigation_right_to_left(web_form_fields: BrowserSession) -> 
 
 
 @pytest.mark.native_app
+@helpers.xfail_firefox_native_select()
 def test_word_navigation_left_to_right(web_form_fields: BrowserSession) -> None:
     """Tests Ctrl+Right word navigation across the form fields."""
 
@@ -733,6 +736,7 @@ def test_word_navigation_left_to_right(web_form_fields: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
+@helpers.xfail_firefox_native_select()
 def test_word_navigation_right_to_left(web_form_fields: BrowserSession) -> None:
     """Tests Ctrl+Left word navigation back across the form fields."""
 

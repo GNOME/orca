@@ -140,6 +140,19 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return result
 
     @log_generator_output
+    def _generate_state_read_only(self, obj: Atspi.Accessible) -> list[Any]:
+        # Gecko exposes READ_ONLY unconditionally for this non-editable content.
+        if AXObject.get_role(obj) in (
+            Atspi.Role.DOCUMENT_WEB,
+            Atspi.Role.DOCUMENT_FRAME,
+            Atspi.Role.LIST,
+            Atspi.Role.DESCRIPTION_LIST,
+            Atspi.Role.DESCRIPTION_TERM,
+        ):
+            return []
+        return super()._generate_state_read_only(obj)
+
+    @log_generator_output
     def _generate_text_substring(self, obj: Atspi.Accessible) -> list[Any]:
         if not self._script.utilities.treat_as_text_object(obj):
             return []
