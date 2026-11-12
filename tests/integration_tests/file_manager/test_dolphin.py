@@ -35,13 +35,17 @@ if TYPE_CHECKING:
 
 
 def _item_braille(
-    session: FileManagerSession, name: str, folder: str = "Test Files"
+    session: FileManagerSession,
+    name: str,
+    folder: str = "Test Files",
+    *,
+    expanded: bool = False,
 ) -> BrailleLine:
     """Builds the expected braille for a file or folder."""
 
     label = name
     if session.view == "list" and name in ("02 Nested", "03 Scrolling"):
-        label += " collapsed"
+        label += " expanded" if expanded else " collapsed"
     full = (
         f"dolphin application {folder} \u2014 Dolphin frame Location View layered pane "
         f"split pane {folder} list {label}"
@@ -82,6 +86,34 @@ def _start_at_first_file(session: FileManagerSession) -> None:
     capture(session)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
     _assert_item(session, "01 Empty")
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("dolphin", ["list"], indirect=True)
+@pytest.mark.parametrize("expanded", [True, False], ids=["expand", "collapse"])
+@pytest.mark.xfail(
+    reason=(
+        "Dolphin does not emit expanded/collapsed-state events: "
+        "https://bugs.kde.org/show_bug.cgi?id=528699"
+    ),
+    raises=AssertionError,
+    strict=True,
+)
+def test_expansion_state(dolphin: FileManagerSession, expanded: bool) -> None:
+    """Announces folder expansion and collapse in speech and braille."""
+
+    session = dolphin
+    _start_at_first_file(session)
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    _assert_item(session, "02 Nested")
+    if not expanded:
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT if expanded else keyboard.KEYSYM_LEFT)
+    spoken, brailled = capture(session)
+    state = "expanded" if expanded else "collapsed"
+    assert spoken == [state]
+    assert brailled and brailled[-1] == _item_braille(session, "02 Nested", expanded=expanded)
 
 
 @pytest.mark.native_app
@@ -200,6 +232,18 @@ def test_control_space_selection(dolphin: FileManagerSession) -> None:
     _assert_item(session, "02 Nested")
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
     _assert_message(session, "unselected")
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("dolphin", ["icon", "list"], indirect=True)
+def test_control_space_single_selection(dolphin: FileManagerSession) -> None:
+    """Unselects and reselects the only selected item."""
+
+    session = dolphin
+    _start_at_first_file(session)
+    for message in ("unselected", "selected"):
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
+        _assert_message(session, message)
 
 
 @pytest.mark.native_app
@@ -418,7 +462,8 @@ def test_space_behavior(dolphin: FileManagerSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("dolphin", ["icon", "list"], indirect=True)
-def test_return_to_parent(dolphin: FileManagerSession) -> None:
+@pytest.mark.parametrize("parent", ["02 Nested", "Sibling"], ids=["two-items", "one-item"])
+def test_return_to_parent(dolphin: FileManagerSession, parent: str) -> None:
     """Checks the Child folder announcement after returning with Alt+Up."""
 
     session = dolphin
@@ -428,11 +473,16 @@ def test_return_to_parent(dolphin: FileManagerSession) -> None:
     _assert_item(session, "02 Nested")
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     capture(session, quiescence=0.5)
+    if parent == "Sibling":
+        keyboard.tap_key(keyboard.KEYSYM_END)
+        capture(session)
+        keyboard.tap_key(keyboard.KEYSYM_RETURN)
+        capture(session, quiescence=0.5)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
     capture(session)
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     capture(session, quiescence=0.5)
     keyboard.press_chord([keyboard.KEYSYM_ALT_L], keyboard.KEYSYM_UP)
     spoken, brailled = capture(session, quiescence=0.5)
-    assert spoken == ["02 Nested \u2014 Dolphin", "Child", ", Folder"]
-    assert brailled[-1] == _item_braille(session, "Child", "02 Nested")
+    assert spoken == [f"{parent} \u2014 Dolphin", "Child", ", Folder"]
+    assert brailled[-1] == _item_braille(session, "Child", parent)

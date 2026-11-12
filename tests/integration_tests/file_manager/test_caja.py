@@ -35,7 +35,11 @@ if TYPE_CHECKING:
 
 
 def _item_braille(
-    session: FileManagerSession, name: str, folder: str = "Test Files"
+    session: FileManagerSession,
+    name: str,
+    folder: str = "Test Files",
+    *,
+    expanded: bool = False,
 ) -> BrailleLine:
     """Builds the expected braille for a file or folder."""
 
@@ -47,7 +51,8 @@ def _item_braille(
             "page tab list page tab Icon View layered pane " + label
         )
     else:
-        label = name + (" collapsed" if is_folder else "") + " TREE LEVEL 1"
+        state = "expanded" if expanded else "collapsed"
+        label = name + (f" {state}" if is_folder else "") + " TREE LEVEL 1"
         full = " Name column header " + label
     return BrailleLine(1, full, label[:32], "\x00" * len(full))
 
@@ -90,6 +95,26 @@ def _assert_message(session: FileManagerSession, message: str) -> None:
     spoken, brailled = capture(session)
     assert spoken == [message]
     assert brailled[-1] == BrailleLine(0, message, message, "\x00" * len(message))
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("caja", ["list"], indirect=True)
+@pytest.mark.parametrize("expanded", [True, False], ids=["expand", "collapse"])
+def test_expansion_state(caja: FileManagerSession, expanded: bool) -> None:
+    """Announces folder expansion and collapse in speech and braille."""
+
+    session = caja
+    start_at_first_file(session)
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    _assert_item(session, "02 Nested")
+    if not expanded:
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT if expanded else keyboard.KEYSYM_LEFT)
+    spoken, brailled = capture(session)
+    state = "expanded" if expanded else "collapsed"
+    assert spoken and spoken[0] == state
+    assert brailled and brailled[-1] == _item_braille(session, "02 Nested", expanded=expanded)
 
 
 @pytest.mark.native_app
@@ -172,6 +197,36 @@ def test_control_space_selection(caja: FileManagerSession) -> None:
     _assert_item(session, "01 Empty")
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
     _assert_message(session, "unselected")
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize(
+    "caja",
+    [
+        pytest.param(
+            "icon",
+            marks=pytest.mark.xfail(
+                reason="Icons lack SELECTED state: https://github.com/mate-desktop/caja/issues/1921",
+                raises=AssertionError,
+                strict=False,
+            ),
+        ),
+        "list",
+    ],
+    indirect=True,
+)
+def test_control_space_single_selection(caja: FileManagerSession) -> None:
+    """Unselects and reselects the only selected item."""
+
+    session = caja
+    start_at_first_file(session)
+    if session.view == "icon":
+        # Caja's first Ctrl+Space establishes keyboard focus without changing selection.
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
+        capture(session)
+    for message in ("unselected", "selected"):
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
+        _assert_message(session, message)
 
 
 @pytest.mark.native_app

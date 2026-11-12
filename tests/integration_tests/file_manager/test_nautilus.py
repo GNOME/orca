@@ -120,7 +120,7 @@ def test_icon_row_boundary(nautilus: FileManagerSession) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.parametrize("nautilus", ["icon"], indirect=True)
+@pytest.mark.parametrize("nautilus", ["icon", "list"], indirect=True)
 def test_home_end_and_boundaries(nautilus: FileManagerSession) -> None:
     """Checks Home and End navigation, and pressing Up on the first item."""
 
@@ -187,6 +187,18 @@ def test_control_space_selection(nautilus: FileManagerSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("nautilus", ["icon", "list"], indirect=True)
+def test_control_space_single_selection(nautilus: FileManagerSession) -> None:
+    """Unselects and reselects the only selected item."""
+
+    session = nautilus
+    start_at_first_file(session)
+    for message in ("unselected", "selected"):
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
+        _assert_message(session, message)
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("nautilus", ["icon", "list"], indirect=True)
 def test_range_selection(nautilus: FileManagerSession) -> None:
     """Checks file announcements as Shift+arrows extend and shrink a selection."""
 
@@ -242,7 +254,7 @@ def test_selection_reporting(nautilus: FileManagerSession) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.parametrize("nautilus", ["icon"], indirect=True)
+@pytest.mark.parametrize("nautilus", ["icon", "list"], indirect=True)
 def test_braille_panning(nautilus: FileManagerSession) -> None:
     """Checks braille while panning a long filename forward and back."""
 
