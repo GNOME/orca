@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-07-20 15:17+0000\n"
-"PO-Revision-Date: 2026-08-25 17:51+0700\n"
+"PO-Revision-Date: 2026-08-28 13:06+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -559,7 +559,7 @@ msgstr "Belarusia, komputer"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:124
 msgid "Belarusian, with capitals"
-msgstr ""
+msgstr "Belarusia, dengan kapital"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -607,7 +607,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:154
 msgid "Tibetan, computer"
-msgstr ""
+msgstr "Tibet, komputer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -965,7 +965,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:406
 msgid "English, U.K., computer"
-msgstr ""
+msgstr "Inggris, U.K., komputer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -974,7 +974,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:412
 msgid "English, U.K., uncontracted"
-msgstr ""
+msgstr "Inggris, U.K., tak terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -983,7 +983,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:418
 msgid "English, U.K., contracted"
-msgstr ""
+msgstr "Inggris, U.K., terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1064,7 +1064,7 @@ msgstr "en-us-comp8"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:472
 msgid "English, U.S., uncontracted"
-msgstr ""
+msgstr "Inggris, A.S., tak terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1073,7 +1073,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:478
 msgid "English, U.S., contracted"
-msgstr ""
+msgstr "Inggris, A.S., terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1084,7 +1084,7 @@ msgstr ""
 #| msgctxt "textattr"
 #| msgid "underline"
 msgid "en-us-interline"
-msgstr ""
+msgstr "en-us-interline"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1103,7 +1103,7 @@ msgstr "en-us-mathtext"
 #: src/orca/brltablenames.py:496
 #| msgid "Hungarian 8 dot computer"
 msgid "English, Canada, computer"
-msgstr ""
+msgstr "Inggris, Kanada, komputer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1142,7 +1142,7 @@ msgstr "Spanyol, komputer"
 #: src/orca/brltablenames.py:520
 #| msgid "Spanish Grade 1"
 msgid "Spanish, uncontracted"
-msgstr ""
+msgstr "Spanyol, tak terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1152,7 +1152,7 @@ msgstr ""
 #: src/orca/brltablenames.py:526
 #| msgid "Spanish Grade 1"
 msgid "Spanish, contracted"
-msgstr ""
+msgstr "Spanyol, terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1162,7 +1162,7 @@ msgstr ""
 #: src/orca/brltablenames.py:532
 #| msgid "Spanish Grade 1"
 msgid "Spanish, Norway"
-msgstr ""
+msgstr "Spanyol, Norwegia"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1200,7 +1200,7 @@ msgstr "Ethiopia"
 #: src/orca/brltablenames.py:556
 #| msgid "Hungarian 8 dot computer"
 msgid "Persian, computer"
-msgstr ""
+msgstr "Persia, komputer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1246,7 +1246,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:586
 msgid "French, uncontracted"
-msgstr ""
+msgstr "Prancis, tak terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1264,7 +1264,7 @@ msgstr "Prancis, komputer"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:598
 msgid "French, contracted"
-msgstr ""
+msgstr "Prancis, terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1273,7 +1273,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:604
 msgid "Irish, uncontracted"
-msgstr ""
+msgstr "Irlandia, tak terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1283,7 +1283,7 @@ msgstr ""
 #: src/orca/brltablenames.py:610
 #| msgid "right control"
 msgid "Irish, contracted"
-msgstr ""
+msgstr "Irlandia, terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1740,7 +1740,7 @@ msgstr "Manipuri"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:910
 msgid "Mongolian, uncontracted"
-msgstr ""
+msgstr "Mongolia, tak terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1749,7 +1749,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:916
 msgid "Mongolian, contracted"
-msgstr ""
+msgstr "Mongolia, terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1803,7 +1803,7 @@ msgstr "Marwari"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:952
 msgid "Burmese, uncontracted"
-msgstr ""
+msgstr "Burma, tak terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1812,7 +1812,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:958
 msgid "Burmese, contracted"
-msgstr ""
+msgstr "Burma, terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1859,7 +1859,7 @@ msgstr ""
 #: src/orca/brltablenames.py:988
 #| msgid "Norwegian Grade 0"
 msgid "Norwegian, computer"
-msgstr ""
+msgstr "Norwegia, komputer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1988,7 +1988,7 @@ msgstr "Pali"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1072
 msgid "Polish, computer"
-msgstr ""
+msgstr "Polandia, komputer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1998,7 +1998,7 @@ msgstr ""
 #: src/orca/brltablenames.py:1078
 #| msgid "Polish Grade 1"
 msgid "Polish"
-msgstr ""
+msgstr "Polandia"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2026,7 +2026,7 @@ msgstr "Portugis, komputer, 8-dot"
 #: src/orca/brltablenames.py:1096
 #| msgid "Portuguese Grade 1"
 msgid "Portuguese, uncontracted"
-msgstr ""
+msgstr "Portugis, tak terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2036,7 +2036,7 @@ msgstr ""
 #: src/orca/brltablenames.py:1102
 #| msgid "Portuguese Grade 1"
 msgid "Portuguese, contracted"
-msgstr ""
+msgstr "Portugis, terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2054,7 +2054,7 @@ msgstr "Punjab"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1114
 msgid "Romanian, uncontracted"
-msgstr ""
+msgstr "Rumania, tak terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2064,7 +2064,7 @@ msgstr ""
 #: src/orca/brltablenames.py:1120
 #| msgid "Hungarian 8 dot computer"
 msgid "Romanian, computer"
-msgstr ""
+msgstr "Rumania, komputer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2093,7 +2093,7 @@ msgstr "Rusia, komputer, 8-dot"
 #| msgctxt "math symbol"
 #| msgid "union with plus"
 msgid "Russian, with capitals"
-msgstr ""
+msgstr "Rusia, dengan kapital"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2111,7 +2111,7 @@ msgstr "Rusia"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1150
 msgid "Russian, contracted"
-msgstr ""
+msgstr "Rusia, terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2120,7 +2120,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1156
 msgid "Kinyarwanda"
-msgstr ""
+msgstr "Kinyarwanda"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2203,7 +2203,7 @@ msgstr "sk-sk"
 #: src/orca/brltablenames.py:1210
 #| msgid "Hungarian 8 dot computer"
 msgid "Slovenian, computer"
-msgstr ""
+msgstr "Slovenia, komputer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2239,7 +2239,7 @@ msgstr "Sami, 8-dot"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1234
 msgid "Sesotho, uncontracted"
-msgstr ""
+msgstr "Sesotho, tak terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -2248,7 +2248,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1240
 msgid "Sesotho, contracted"
-msgstr ""
+msgstr "Sesotho, terkontraksi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -3474,7 +3474,7 @@ msgstr "Tampilkan dialog konfigurasi preferensi aplikasi"
 #. Translators: Orca allows the user to enable/disable spoken indentation.
 #: src/orca/cmdnames.py:518
 msgid "Toggle spoken indentation"
-msgstr ""
+msgstr "Jungkitkan indentasi yang diucapkan"
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -3689,7 +3689,7 @@ msgstr "Jungkitkan riwayat pesan spesifik ruang obrolan"
 #. the command to toggle room name presentation on or off.
 #: src/orca/cmdnames.py:673
 msgid "Toggle room name presentation"
-msgstr ""
+msgstr "Jungkitkan presentasi nama ruang"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
@@ -4471,20 +4471,16 @@ msgstr "Ke dasar kolom"
 #. (https://daisy.github.io/MathCAT). This command enters that mode when
 #. the user is on a math element.
 #: src/orca/cmdnames.py:1183
-#, fuzzy
-#| msgid "Caret navigation"
 msgctxt "mathcat"
 msgid "Enter math navigation mode"
-msgstr "Navigasi karet"
+msgstr "Masuk mode navigasi matematika"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command exits that mode.
 #: src/orca/cmdnames.py:1187
-#, fuzzy
-#| msgid "Caret navigation"
 msgctxt "mathcat"
 msgid "Exit math navigation mode"
-msgstr "Navigasi karet"
+msgstr "Keluar mode navigasi matematika"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command moves to the next sibling
@@ -4618,7 +4614,7 @@ msgstr "Turunkan satu sel"
 #: src/orca/cmdnames.py:1270
 msgctxt "mathcat"
 msgid "Increase navigation granularity"
-msgstr ""
+msgstr "Naikkan granularitas navigasi"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command cycles the navigation
@@ -4626,17 +4622,15 @@ msgstr ""
 #: src/orca/cmdnames.py:1275
 msgctxt "mathcat"
 msgid "Decrease navigation granularity"
-msgstr ""
+msgstr "Turunkan granularitas navigasi"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command toggles whether navigation
 #. reads the math content or describes its structure.
 #: src/orca/cmdnames.py:1280
-#, fuzzy
-#| msgid "Toggle mouse review mode"
 msgctxt "mathcat"
 msgid "Toggle speech mode"
-msgstr "Jungkitkan mode tinjau tetikus"
+msgstr "Jungkitkan mode ucapan"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command speaks the previous math
@@ -4669,7 +4663,7 @@ msgstr "Baca butir kini"
 #: src/orca/cmdnames.py:1300
 msgctxt "mathcat"
 msgid "Read current cell"
-msgstr ""
+msgstr "Baca sel saat ini"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command gives a structural
@@ -4701,17 +4695,15 @@ msgstr "Uraikan butir kini"
 #: src/orca/cmdnames.py:1320
 msgctxt "mathcat"
 msgid "Where am I"
-msgstr ""
+msgstr "Saya di mana"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command announces the user's
 #. full context within the math expression.
 #: src/orca/cmdnames.py:1325
-#, fuzzy
-#| msgid "Messages are _detailed"
 msgctxt "mathcat"
 msgid "Where am I (detailed)"
-msgstr "Pesan bersifat _detail"
+msgstr "Saya di mana (terrinci)"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command returns to the position
@@ -4719,28 +4711,23 @@ msgstr "Pesan bersifat _detail"
 #: src/orca/cmdnames.py:1330
 msgctxt "mathcat"
 msgid "Return to last position"
-msgstr ""
+msgstr "Kembali ke posisi terakhir"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). Place markers are bookmarks within
 #. a math expression, identified by a digit 0-9. This command jumps to one.
 #: src/orca/cmdnames.py:1335
-#, fuzzy
-#| msgid "Go to next landmark"
 msgctxt "mathcat"
 msgid "Go to place marker"
-msgstr "Ke landmark selanjutnya"
+msgstr "Ke penanda tempat"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). Place markers are bookmarks within
 #. a math expression, identified by a digit 0-9. This command sets one.
 #: src/orca/cmdnames.py:1340
-#, fuzzy
-#| msgid "%d landmark"
-#| msgid_plural "%d landmarks"
 msgctxt "mathcat"
 msgid "Set place marker"
-msgstr "%d landmark"
+msgstr "Tata penanda tempat"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). Place markers are bookmarks within
@@ -4748,7 +4735,7 @@ msgstr "%d landmark"
 #: src/orca/cmdnames.py:1345
 msgctxt "mathcat"
 msgid "Read place marker"
-msgstr ""
+msgstr "Baca penanda tempat"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). Place markers are bookmarks within
@@ -4756,7 +4743,7 @@ msgstr ""
 #: src/orca/cmdnames.py:1350
 msgctxt "mathcat"
 msgid "Describe place marker"
-msgstr ""
+msgstr "Uraikan penanda tempat"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command copies the current
@@ -5869,7 +5856,7 @@ msgstr "Blok Kutipan"
 #: src/orca/guilabels.py:53
 msgctxt "Context"
 msgid "Code blocks"
-msgstr ""
+msgstr "Blok kode"
 
 #. Translators: Some users want to hear additional information when entering
 #. different types of content. When enabled, Orca will announce when a document
@@ -5878,7 +5865,7 @@ msgstr ""
 #: src/orca/guilabels.py:59
 msgctxt "Context"
 msgid "Embedded documents"
-msgstr ""
+msgstr "Dokumen tertanam"
 
 #. Translators: Some users want to hear additional information when entering
 #. different types of content. If this checkbox is checked, Orca will announce
@@ -5938,11 +5925,9 @@ msgstr "Tabel"
 #. tracked changes (insertions, deletions, highlights, suggestions) when navigating
 #. through document content containing revision markup.
 #: src/orca/guilabels.py:100
-#, fuzzy
-#| msgid "Save Changes?"
 msgctxt "Context"
 msgid "Tracked changes"
-msgstr "Simpan Perubahan?"
+msgstr "Perubahan terlacak"
 
 #. Translators: This is a shorter version of "Automatic focus mode during caret/structural
 #. navigation" used on sub-pages where the navigation type context is already clear.
@@ -6023,12 +6008,12 @@ msgstr "_Batal"
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:163
 msgid "_Close"
-msgstr ""
+msgstr "_Tutup"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:166
 msgid "_Clear"
-msgstr ""
+msgstr "_Bersihkan"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:169
@@ -6200,7 +6185,7 @@ msgstr "Semua kanal ketika aplikasi sedang aktif"
 #. application currently has focus.
 #: src/orca/guilabels.py:282
 msgid "The active channel when using any application"
-msgstr ""
+msgstr "Kanal aktif ketika memakai sebarang aplikasi"
 
 #. Translators: This is the label of a widget in the preferences dialog. If it is
 #. selected, Orca will speak all new chat messages as they appear if and only if the
@@ -6540,10 +6525,8 @@ msgstr "Navigasi karet"
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to math navigation via MathCAT.
 #: src/orca/guilabels.py:525
-#, fuzzy
-#| msgid "Caret navigation"
 msgid "Math navigation"
-msgstr "Navigasi karet"
+msgstr "Navigasi matematika"
 
 #: src/orca/guilabels.py:530
 msgid ""
@@ -6756,7 +6739,7 @@ msgstr "Tidak dapat menemukan lokasi kini."
 #: src/orca/guilabels.py:679
 msgctxt "flat review focus tracking"
 msgid "Always"
-msgstr ""
+msgstr "Selalu"
 
 #. Translators: This is one of the choices for when flat review should follow
 #. the focus and caret location. "Automatically" means flat review decides on
@@ -6764,7 +6747,7 @@ msgstr ""
 #: src/orca/guilabels.py:684
 msgctxt "flat review focus tracking"
 msgid "Automatically"
-msgstr ""
+msgstr "Secara otomatis"
 
 #. Translators: This is one of the choices for when flat review should follow
 #. the focus and caret location. "Never" means flat review stays where the user
@@ -6772,7 +6755,7 @@ msgstr ""
 #: src/orca/guilabels.py:689
 msgctxt "flat review focus tracking"
 msgid "Never"
-msgstr ""
+msgstr "Tidak pernah"
 
 #. Translators: This is a label for the setting which determines if Orca will
 #. speak the content at the flat review location when that content changes.
@@ -6787,7 +6770,7 @@ msgstr "Ucapkan baris tinjau rata kini"
 #. when that content changes.
 #: src/orca/guilabels.py:698
 msgid "Display changes at review location"
-msgstr ""
+msgstr "Tampilkan perubahan pada lokasi peninjauan"
 
 #. Translators: This is a label for the setting which determines if Orca will
 #. restrict flat review to the current object rather than the whole window.
@@ -6906,7 +6889,7 @@ msgstr "Karakter"
 #: src/orca/guilabels.py:777
 #, python-format
 msgid "Character Formatting for: '%s'"
-msgstr ""
+msgstr "Pemformatan karakter untuk: '%s'"
 
 #. Translators: This is an option in a combo box for how a text attribute should
 #. be presented. If selected, the attribute will not be presented.
@@ -7090,11 +7073,8 @@ msgstr "Fungsikan mu_ndur dan maju cepat dalam Ucapkan Semua"
 #. within the document to re-hear something which was just read or skip past
 #. something of no interest.
 #: src/orca/guilabels.py:910
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "up down arrow"
 msgid "Up and down arrow"
-msgstr "panah naik turun"
+msgstr "Panah naik dan turun"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7102,12 +7082,9 @@ msgstr "panah naik turun"
 #. content deletions, suggestions, and highlights. This is the title for a column
 #. which contains the text of an annotation.
 #: src/orca/guilabels.py:924
-#, fuzzy
-#| msgctxt "role"
-#| msgid "information"
 msgctxt "structural navigation"
 msgid "Annotation"
-msgstr "informasi"
+msgstr "Anotasi"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7263,7 +7240,7 @@ msgstr "Butir Daftar"
 #: src/orca/guilabels.py:1029
 msgctxt "structural navigation"
 msgid "Math Expression"
-msgstr ""
+msgstr "Ekspresi Matematika"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7335,11 +7312,9 @@ msgstr "Nilai"
 #. could with native keyboard navigation. Annotations include content insertions,
 #. content deletions, suggestions, and highlights. This is the title of such a dialog box.
 #: src/orca/guilabels.py:1079
-#, fuzzy
-#| msgid "Actions"
 msgctxt "structural navigation"
 msgid "Annotations"
-msgstr "Aksi"
+msgstr "Anotasi"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7480,11 +7455,9 @@ msgstr "Butir Daftar"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: src/orca/guilabels.py:1170
-#, fuzzy
-#| msgid "Match options:"
 msgctxt "structural navigation"
 msgid "Math Expressions"
-msgstr "Opsi kecocokan:"
+msgstr "Ekspresi Matematika"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7950,7 +7923,7 @@ msgstr "Tak ada profil yang ditemukan."
 #: src/orca/guilabels.py:1502
 msgctxt "user extensions"
 msgid "Approve"
-msgstr ""
+msgstr "Setujui"
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. It is shown when a previously-approved extension has changed on disk and must
@@ -7958,14 +7931,14 @@ msgstr ""
 #: src/orca/guilabels.py:1507
 msgctxt "user extensions"
 msgid "Re-approve"
-msgstr ""
+msgstr "Setujui ulang"
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button removes Orca's approval for the selected user extension.
 #: src/orca/guilabels.py:1511
 msgctxt "user extensions"
 msgid "Revoke"
-msgstr ""
+msgstr "Cabut"
 
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button asks the user to confirm deleting the selected extension
@@ -7983,7 +7956,7 @@ msgstr "Hapus"
 #: src/orca/guilabels.py:1520
 msgctxt "user extensions"
 msgid "Delete user extension?"
-msgstr ""
+msgstr "Hapus ekstensi pengguna?"
 
 #: src/orca/guilabels.py:1527
 #, python-format
@@ -7992,6 +7965,8 @@ msgid ""
 "The following extension will be permanently deleted from your user "
 "extensions folder: %s. Do you want to continue?"
 msgstr ""
+"Ekstensi berikut akan dihapus permanen dari folder ekstensi pengguna Anda: "
+"%s. Anda hendak melanjutkan?"
 
 #. Translators: This message is presented when Orca fails to delete a user
 #. extension file or package directory from ~/.local/share/orca/extensions. The
@@ -8069,7 +8044,7 @@ msgstr "ada"
 #: src/orca/guilabels.py:1574 src/orca/guilabels.py:1610
 msgctxt "user extensions"
 msgid "Name"
-msgstr ""
+msgstr "Nama"
 
 #. Translators: This is a fallback label in the generated settings dialog for a
 #. user extension. It is used for the second field in a dictionary entry editor
@@ -8095,7 +8070,7 @@ msgstr "%d nilai"
 #: src/orca/guilabels.py:1588
 msgctxt "user extensions"
 msgid "Author"
-msgstr ""
+msgstr "Penulis"
 
 #. Translators: This is a label in the user extension information dialog. It
 #. refers to the company, project, or similar entity associated with the
@@ -8132,7 +8107,7 @@ msgstr "Lokasi"
 #: src/orca/guilabels.py:1617
 msgctxt "user extensions"
 msgid "Some commands were unbound due to conflicts."
-msgstr ""
+msgstr "Beberapa perintah tidak diikat karena konflik."
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by whether the extension is approved, not approved, disabled, invalid,
@@ -8149,7 +8124,7 @@ msgstr "Status"
 #: src/orca/guilabels.py:1627
 msgctxt "user extensions"
 msgid "Version"
-msgstr ""
+msgstr "Versi"
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by a URL for the extension or its author.
@@ -8177,7 +8152,7 @@ msgstr "tidak valid"
 #: src/orca/guilabels.py:1641
 msgctxt "user extensions"
 msgid "Approved"
-msgstr ""
+msgstr "Disetujui"
 
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the extension has been
@@ -8208,7 +8183,7 @@ msgstr "Tidak didukung"
 #: src/orca/guilabels.py:1657
 msgctxt "user extensions"
 msgid "Modified; re-approval required"
-msgstr ""
+msgstr "Berubah; perlu persetujuan ulang"
 
 #. Translators: This is the label for a widget in the preferences dialog.
 #: src/orca/guilabels.py:1660
@@ -10449,22 +10424,17 @@ msgstr "Tak ada pesan obrolan"
 #. be said is code or preformatted text, such as content inside an HTML 'pre'
 #. or 'code' element.
 #: src/orca/messages.py:451
-#, fuzzy
-#| msgctxt "content"
-#| msgid "deletion start"
 msgctxt "content"
 msgid "code start"
-msgstr "awal penghapusan"
+msgstr "awal kode"
 
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of code or preformatted text, such as content inside an HTML 'pre'
 #. or 'code' element.
 #: src/orca/messages.py:456
-#, fuzzy
-#| msgid "root end"
 msgctxt "content"
 msgid "code end"
-msgstr "akhir akar"
+msgstr "akhir kode"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is content marked for deletion in a document, such as content which
@@ -10518,12 +10488,9 @@ msgstr "akhir penyorotan"
 #. be said is content marked/highlighted in a document, such as content which
 #. is inside an HTML 'mark' element or which has the CSS custom highlight applied.
 #: src/orca/messages.py:491
-#, fuzzy
-#| msgctxt "content"
-#| msgid "highlight end"
 msgctxt "content"
 msgid "highlighted"
-msgstr "akhir penyorotan"
+msgstr "disorot"
 
 #. Translators: This phrase is spoken to inform the user that the content being
 #. presented is the end of an inline suggestion a document. A "suggestion" is a
@@ -10783,7 +10750,7 @@ msgstr "Tinjau rata dibatasi ke objek saat ini"
 #. focus nor the caret could be moved there.
 #: src/orca/messages.py:677
 msgid "Location unchanged"
-msgstr ""
+msgstr "Lokasi tak berubah"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -10891,10 +10858,9 @@ msgstr "Pengikatan tombol telah dihapus."
 #. that a pronunciation dictionary entry has been deleted. The string substituted
 #. in is the word that was deleted.
 #: src/orca/messages.py:753
-#, fuzzy, python-format
-#| msgid "delete"
+#, python-format
 msgid "%s deleted"
-msgstr "delete"
+msgstr "%s dihapus"
 
 #. Translators: This is a spoken and/or brailled message asking the user to press
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new key binding for an
@@ -11092,9 +11058,6 @@ msgstr "Gaung tombol ditata ke kata dan kalimat."
 #. Translators: This brief message indicates that indentation will not be
 #. spoken.
 #: src/orca/messages.py:918
-#, fuzzy
-#| msgctxt "indentation and justification"
-#| msgid "Disabled"
 msgctxt "indentation"
 msgid "Disabled"
 msgstr "Dinonaktifkan"
@@ -11795,7 +11758,7 @@ msgstr "Status baterai tidak diketahui"
 #. values.
 #: src/orca/messages.py:1385
 msgid "Default character format."
-msgstr ""
+msgstr "Format karakter baku."
 
 #. Translators: This string is used to present the state of a locking key, such
 #. as Caps Lock. If Caps Lock is "off", then letters typed will appear in
@@ -11821,7 +11784,7 @@ msgstr "nyala"
 #. is presented if the modifier key state cannot be obtained from the system.
 #: src/orca/messages.py:1403
 msgid "Modifier key state is not available."
-msgstr ""
+msgstr "Status tombol pengubah tak tersedia."
 
 #. Translators: This is to inform the user of the presence of the red squiggly
 #. line which indicates that a given word is not spelled correctly.
@@ -11950,10 +11913,8 @@ msgstr "Mode objek."
 #. Translators: Orca supports desktop and laptop keyboard layouts. This message
 #. is presented when the user switches to the desktop keyboard layout.
 #: src/orca/messages.py:1507
-#, fuzzy
-#| msgid "_Desktop"
 msgid "Desktop layout."
-msgstr "_Desktop"
+msgstr "Tata letak desktop."
 
 #. Translators: Orca supports desktop and laptop keyboard layouts. This message
 #. is presented when the user switches to the laptop keyboard layout.
@@ -13615,7 +13576,7 @@ msgstr "memiliki detail di %s"
 #: src/orca/object_properties.py:103
 msgctxt "role"
 msgid "code"
-msgstr ""
+msgstr "kode"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
