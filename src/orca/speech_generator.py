@@ -3533,7 +3533,8 @@ class SpeechGenerator(generator.Generator):
 
         if self._is_ancestor():
             result = self._generate_accessible_label_and_name(obj)
-            result += self._generate_accessible_role(obj)
+            if result:
+                result += self._generate_accessible_role(obj)
             return result
 
         result = self._generate_default_prefix(obj)

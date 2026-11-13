@@ -87,7 +87,7 @@ def _assert_return(session: FileManagerSession, name: str) -> None:
         assert spoken == [name + " Folder"]
         assert brailled[-1] == _item_braille(session, name)
     else:
-        assert spoken == ["Test Files", "page tab", name + " collapsed", "tree level 1"]
+        assert spoken == ["Test Files", name + " collapsed", "tree level 1"]
         assert brailled[-1] == _item_braille(session, name)
 
 
@@ -447,7 +447,7 @@ def test_return_to_parent(caja: FileManagerSession, parent: str) -> None:
     if session.view == "icon":
         assert spoken == ["Child Folder"]
     else:
-        assert spoken == [parent, "page tab", "Child collapsed", "tree level 1"]
+        assert spoken == [parent, "Child collapsed", "tree level 1"]
     assert brailled[-1] == _item_braille(session, "Child", parent)
 
 
