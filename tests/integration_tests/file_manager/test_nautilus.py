@@ -120,7 +120,21 @@ def test_icon_row_boundary(nautilus: FileManagerSession) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.parametrize("nautilus", ["icon", "list"], indirect=True)
+@pytest.mark.parametrize(
+    "nautilus",
+    [
+        "icon",
+        pytest.param(
+            "list",
+            marks=pytest.mark.xfail(
+                strict=False,
+                raises=AssertionError,
+                reason="Intermittent missing name: https://gitlab.gnome.org/GNOME/gtk/-/work_items/8530",
+            ),
+        ),
+    ],
+    indirect=True,
+)
 def test_home_end_and_boundaries(nautilus: FileManagerSession) -> None:
     """Checks Home and End navigation, and pressing Up on the first item."""
 
@@ -254,7 +268,21 @@ def test_selection_reporting(nautilus: FileManagerSession) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.parametrize("nautilus", ["icon", "list"], indirect=True)
+@pytest.mark.parametrize(
+    "nautilus",
+    [
+        "icon",
+        pytest.param(
+            "list",
+            marks=pytest.mark.xfail(
+                strict=False,
+                raises=AssertionError,
+                reason="Intermittent missing name: https://gitlab.gnome.org/GNOME/gtk/-/work_items/8530",
+            ),
+        ),
+    ],
+    indirect=True,
+)
 def test_braille_panning(nautilus: FileManagerSession) -> None:
     """Checks braille while panning a long filename forward and back."""
 

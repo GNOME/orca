@@ -87,8 +87,8 @@ def _assert_return(session: FileManagerSession, name: str) -> None:
         assert spoken == [name + " Folder"]
         assert brailled[-1] == _item_braille(session, name)
     else:
-        assert spoken == ["Test Files"]
-        assert brailled[-1] == BrailleLine(0, "Test Files", "Test Files", "\x00" * 10)
+        assert spoken == ["Test Files", "page tab", name + " collapsed", "tree level 1"]
+        assert brailled[-1] == _item_braille(session, name)
 
 
 def _assert_message(session: FileManagerSession, message: str) -> None:
@@ -418,7 +418,7 @@ def test_space_behavior(caja: FileManagerSession) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.parametrize("caja", ["icon"], indirect=True)
+@pytest.mark.parametrize("caja", ["icon", "list"], indirect=True)
 @pytest.mark.parametrize("parent", ["02 Nested", "Sibling"], ids=["two-items", "one-item"])
 def test_return_to_parent(caja: FileManagerSession, parent: str) -> None:
     """Checks the Child folder announcement after returning with Alt+Up."""
@@ -429,19 +429,25 @@ def test_return_to_parent(caja: FileManagerSession, parent: str) -> None:
     keyboard.tap_key(forward)
     _assert_item(session, "02 Nested")
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    capture(session, quiescence=0.5)
+    _assert_message(session, "02 Nested")
     if parent == "Sibling":
+        start_at_first_file(session)
         keyboard.tap_key(keyboard.KEYSYM_END)
         capture(session)
         keyboard.tap_key(keyboard.KEYSYM_RETURN)
-        capture(session, quiescence=0.5)
-    keyboard.tap_key(keyboard.KEYSYM_HOME)
-    capture(session)
+        _assert_message(session, "Sibling")
+    start_at_first_file(session)
+    if parent == "Sibling" and session.view == "list":
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
+        _assert_message(session, "selected")
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    capture(session, quiescence=0.5)
+    _assert_message(session, "Child")
     keyboard.press_chord([keyboard.KEYSYM_ALT_L], keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
-    assert spoken == ["Child Folder"]
+    spoken, brailled = capture(session, quiescence=0.5)
+    if session.view == "icon":
+        assert spoken == ["Child Folder"]
+    else:
+        assert spoken == [parent, "page tab", "Child collapsed", "tree level 1"]
     assert brailled[-1] == _item_braille(session, "Child", parent)
 
 

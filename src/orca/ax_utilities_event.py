@@ -1447,15 +1447,19 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        focus = focus_manager.get_manager().get_locus_of_focus()
         source_states = AXObject.get_state_set(event.source)
         if (
             AXUtilitiesState.manages_descendants(event.source, source_states)
             and not mgr.last_event_was_select_all()
         ):
             AXUtilitiesSelection.set_all_items_selected_state(event.source, False)
-            msg = "AXUtilitiesEvent: Source manages descendants; handled elsewhere."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
+            if not AXUtilitiesState.is_focused(event.source, source_states) or (
+                focus is not None and not AXObject.is_dead(focus)
+            ):
+                msg = "AXUtilitiesEvent: Source manages descendants; handled elsewhere."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
 
         if AXUtilitiesRole.is_menu(event.source):
             if AXUtilitiesState.is_showing_and_visible(event.source, source_states):
@@ -1479,7 +1483,6 @@ class AXUtilitiesEvent:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        focus = focus_manager.get_manager().get_locus_of_focus()
         if AXUtilitiesRole.is_combo_box(event.source) and not AXUtilitiesState.is_expanded(
             event.source, source_states
         ):

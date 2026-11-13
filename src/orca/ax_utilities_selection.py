@@ -224,8 +224,11 @@ class AXUtilitiesSelection:
         if AXUtilitiesRole.is_combo_box(obj) or AXUtilitiesRole.is_menu(obj):
             return False
 
-        child_count = AXObject.get_child_count(obj)
         selected_count = AXSelection.get_selected_child_count(obj)
+        if not selected_count:
+            return False
+
+        child_count = AXObject.get_child_count(obj)
         child = None
         if selected_count > child_count:
             child = AXSelection.get_selected_child(obj, 0, selected_count)

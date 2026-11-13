@@ -107,7 +107,7 @@ class EventManager:
         self._gidle_id: int = 0
         self._gidle_lock = threading.Lock()
         self._listener: Atspi.EventListener = Atspi.EventListener.new(self._enqueue_object_event)
-        self._event_history: dict[str, tuple[int | None, float]] = {}
+        self._event_history: dict[str, tuple[int | None, int | None, float]] = {}
         self._latest_event: dict[tuple[str, int], int] = {}
         dbus_service.get_remote_controller().register_decorated_module("EventManager", self)
         debug.print_message(debug.LEVEL_INFO, "Event manager initialized", True)
@@ -444,10 +444,16 @@ class EventManager:
         if event_type == "object:state-changed:busy":
             return None
 
-        last_app, last_time = self._event_history.get(event_type, (None, 0))
+        last_app_hash, last_source_hash, last_time = self._event_history.get(
+            event_type, (None, None, 0)
+        )
         app = AXUtilities.get_application(event.source)
-        ignore = last_app == hash(app) and time.time() - last_time < 0.1
-        self._event_history[event_type] = hash(app), time.time()
+        app_hash = hash(app)
+        source_hash = hash(event.source)
+        ignore = last_app_hash == app_hash and time.time() - last_time < 0.1
+        if ignore and event_type == "object:selection-changed" and last_source_hash != source_hash:
+            ignore = not AXUtilities.is_focused(event.source)
+        self._event_history[event_type] = app_hash, source_hash, time.time()
         if ignore:
             tokens = [
                 "EVENT_MANAGER: Ignoring",

@@ -710,6 +710,13 @@ class AXUtilities:
     def _is_layout_only_table_cell(obj: Atspi.Accessible) -> tuple[bool, str]:
         """Returns True with reason if this table cell is layout-only."""
 
+        state_set = AXObject.get_state_set(obj)
+        if AXUtilitiesState.is_focusable(obj, state_set):
+            return False, "is focusable"
+        if AXUtilitiesState.is_selectable(obj, state_set):
+            return False, "is selectable"
+        if AXUtilitiesState.is_expandable(obj, state_set):
+            return False, "is expandable"
         if AXUtilitiesRole.is_table_cell(AXObject.get_child(obj, 0)):
             return True, "child of this cell is table cell"
         table = AXUtilitiesTable.get_table(obj)

@@ -1245,7 +1245,11 @@ class TestEventManager:
         # First call should not be ignored
         result1 = manager._ignore(mock_event)
         assert result1 is False
-        assert manager._event_history["object:test-event"] == (12345, 100.0)
+        assert manager._event_history["object:test-event"] == (
+            12345,
+            hash(mock_event.source),
+            100.0,
+        )
 
         # Second call within 0.1s should be ignored
         test_context.patch("time.time", return_value=100.05)
