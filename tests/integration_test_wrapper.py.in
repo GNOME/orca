@@ -370,7 +370,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("test_file")
     parser.add_argument("--user-agent", choices=("chromium", "gecko"))
-    parser.add_argument("--terminal-toolkit", choices=("gtk3", "gtk4"))
+    parser.add_argument("--terminal-toolkit", choices=("gtk3", "gtk4", "konsole"))
     parser.add_argument("--gtk-toolkit", choices=("gtk3", "gtk4"))
     parser.add_argument(_SANDBOX_READY_FLAG, action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()

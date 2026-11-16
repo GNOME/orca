@@ -34,6 +34,16 @@ from tests.integration_tests.terminal_helpers import settle, type_text
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
 
+pytestmark = pytest.mark.xfail(
+    terminal.selected_toolkit() == "konsole",
+    reason=(
+        "Konsole's TerminalDisplayAccessible::characterCount() and cursorPosition() use cell "
+        "offsets inconsistent with inherited textAtOffset()"
+    ),
+    raises=AssertionError,
+    strict=True,
+)
+
 
 _NANO_LINE_COUNT = 30
 _NANO_LINES = frozenset(f"line {number}" for number in range(1, _NANO_LINE_COUNT + 1))

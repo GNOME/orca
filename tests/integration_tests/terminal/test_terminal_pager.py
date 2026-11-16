@@ -34,6 +34,16 @@ from tests.integration_tests.terminal_helpers import settle
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
 
+pytestmark = pytest.mark.xfail(
+    terminal.selected_toolkit() == "konsole",
+    reason=(
+        "Konsole's TerminalDisplayAccessible::cursorPosition() uses cell offsets inconsistent "
+        "with inherited textAtOffset()"
+    ),
+    raises=AssertionError,
+    strict=True,
+)
+
 
 @pytest.mark.native_app
 @pytest.mark.skipif(

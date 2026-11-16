@@ -78,6 +78,15 @@ def test_pan_braille_across_terminal_line(terminal_shell: NativeAppSession) -> N
     reason="GTK4 VTE intermittently exposes stale text: "
     "https://gitlab.gnome.org/GNOME/vte/-/work_items/2972",
 )
+@pytest.mark.xfail(
+    terminal.selected_toolkit() == "konsole",
+    reason=(
+        "Konsole's TerminalDisplayAccessible::characterRect() uses cell offsets inconsistent "
+        "with inherited textAtOffset()"
+    ),
+    raises=AssertionError,
+    strict=True,
+)
 def test_pan_braille_left_crosses_wide_line_in_pager(
     terminal_wide_pager: NativeAppSession,
 ) -> None:

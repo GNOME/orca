@@ -29,16 +29,31 @@ import pytest
 from tests.integration_tests import helpers
 from tests.integration_tests.apps import terminal
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.terminal_helpers import bound_command, settle, type_text
+from tests.integration_tests.terminal_helpers import (
+    bound_command,
+    review_first_line,
+    settle,
+    type_text,
+)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
+
+pytestmark = pytest.mark.xfail(
+    terminal.selected_toolkit() == "konsole",
+    reason=(
+        "Konsole's TerminalDisplayAccessible::characterRect() uses cell offsets inconsistent "
+        "with inherited textAtOffset()"
+    ),
+    raises=AssertionError,
+    strict=True,
+)
 
 
 def _review_top_line(session: NativeAppSession) -> tuple[list[str], list[helpers.BrailleLine]]:
     """Moves flat review to the top of the screen and returns the presentation."""
 
-    session.orca.call("FlatReviewPresenter", "GoHome", True)
+    review_first_line(session)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
     session.orca.call("FlatReviewPresenter", "PresentLine", True)
@@ -86,6 +101,10 @@ def test_flat_review_reflects_new_page(terminal_pager: NativeAppSession) -> None
 
 
 @pytest.mark.native_app
+@pytest.mark.skipif(
+    terminal.selected_toolkit() == "konsole",
+    reason="This test requires a terminal that rejects setting the caret; Konsole supports it.",
+)
 def test_move_focus_to_review_location_unchanged(terminal_shell: NativeAppSession) -> None:
     """Tests that move-focus-to-review fails when the terminal won't let us set the caret."""
 
@@ -98,7 +117,7 @@ def test_move_focus_to_review_location_unchanged(terminal_shell: NativeAppSessio
 
     with bound_command(session, "move_focus_to_review") as key:
         helpers.toggle_flat_review(session)
-        session.orca.call("FlatReviewPresenter", "GoHome", True)
+        review_first_line(session)
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
         session.reader.reset()
         # VTE's GTK3 AtkText.set_caret_offset always returns FALSE, so we cannot set the caret.
@@ -134,7 +153,7 @@ def test_review_line_that_shrinks(terminal_shell: NativeAppSession) -> None:
     visible = "alpha bravo charlie delta echo $"
     helpers.toggle_flat_review(session)
     try:
-        session.orca.call("FlatReviewPresenter", "GoHome", True)
+        review_first_line(session)
         assert helpers.capture(session) == (
             ["alpha bravo charlie delta echo\n"],
             [helpers.BrailleLine(1, full, visible, "\x00" * 33)],
@@ -159,7 +178,7 @@ def test_review_line_that_shrinks(terminal_shell: NativeAppSession) -> None:
         session.reader.drain(quiescence_timeout=0.5, overall_timeout=4.0)
         session.reader.reset()
 
-        session.orca.call("FlatReviewPresenter", "GoHome", True)
+        review_first_line(session)
         assert helpers.capture(session) == (
             ["alpha bravo\n"],
             [helpers.BrailleLine(1, "alpha bravo $l", "alpha bravo $l", "\x00" * 14)],

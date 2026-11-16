@@ -454,6 +454,13 @@ class AXUtilities:
         result = None
         if AXObject.supports_collection(obj):
             result = AXUtilitiesCollection.find_focused_object(obj)
+            while result is not None and (
+                AXUtilities.is_layout_only(result) or AXUtilitiesRole.is_split_pane(result)
+            ):
+                descendant = AXUtilitiesCollection.find_focused_object(result)
+                if descendant is None or descendant == result:
+                    break
+                result = descendant
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 

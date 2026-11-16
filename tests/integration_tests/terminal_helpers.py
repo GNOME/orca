@@ -25,6 +25,7 @@ from __future__ import annotations
 import contextlib
 from typing import TYPE_CHECKING
 
+from .apps import terminal
 from .harness import keyboard
 
 if TYPE_CHECKING:
@@ -70,3 +71,15 @@ def settle(session: NativeAppSession) -> None:
 
     session.reader.drain(quiescence_timeout=0.5, overall_timeout=4.0)
     session.reader.reset()
+
+
+def review_first_line(session: NativeAppSession) -> None:
+    """Moves flat review to the first terminal line."""
+
+    if terminal.selected_toolkit() == "konsole":
+        # Konsole's window title precedes the terminal content.
+        session.orca.press_orca_key(keyboard.KEYSYM_KP_HOME)
+        settle(session)
+        keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
+    else:
+        session.orca.call("FlatReviewPresenter", "GoHome", True)

@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from tests.integration_tests import helpers
+from tests.integration_tests.apps import terminal
 from tests.integration_tests.harness import keyboard
 from tests.integration_tests.terminal_helpers import settle, type_text
 
@@ -44,6 +45,15 @@ def _enable_key_echo(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    terminal.selected_toolkit() == "konsole",
+    reason=(
+        "Konsole's TerminalDisplay::updateImage() reports typed characters as insertions at "
+        "offset 0 with an extra newline"
+    ),
+    raises=AssertionError,
+    strict=True,
+)
 def test_typed_characters_are_echoed(terminal_shell: NativeAppSession) -> None:
     """Tests that key echo speaks each character as it is typed at the prompt."""
 
@@ -70,6 +80,14 @@ def test_typed_characters_are_echoed(terminal_shell: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    terminal.selected_toolkit() == "konsole",
+    reason=(
+        "Konsole's TerminalDisplay::updateImage() emits insertions instead of text-deletion events"
+    ),
+    raises=AssertionError,
+    strict=True,
+)
 def test_backspace_and_delete_at_the_prompt(terminal_shell: NativeAppSession) -> None:
     """Tests Backspace and Delete at the bash prompt with key echo on."""
 
@@ -117,6 +135,14 @@ def test_key_echo_while_typing_in_vim(terminal_vim: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    terminal.selected_toolkit() == "konsole",
+    reason=(
+        "Konsole's TerminalDisplay::updateImage() emits insertions instead of text-deletion events"
+    ),
+    raises=AssertionError,
+    strict=True,
+)
 def test_ctrl_backspace_at_the_prompt(terminal_shell: NativeAppSession) -> None:
     """Tests that Ctrl+BackSpace at the bash prompt deletes a single character."""
 

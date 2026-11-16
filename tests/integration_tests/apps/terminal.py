@@ -20,7 +20,7 @@
 
 """Terminal toolkit selection shared by the integration-test fixtures."""
 
-TOOLKITS = {"gtk3": "2.91", "gtk4": "3.91"}
+TOOLKITS = {"gtk3": "2.91", "gtk4": "3.91", "konsole": None}
 _SELECTED_TOOLKIT: str | None = None
 
 
@@ -35,7 +35,7 @@ def selected_toolkit() -> str:
     """Returns the toolkit selected by the Meson suite."""
 
     if _SELECTED_TOOLKIT is None:
-        raise RuntimeError("Terminal tests require the gtk3-terminal or gtk4-terminal Meson suite")
+        raise RuntimeError("Terminal tests require a terminal Meson suite")
     return _SELECTED_TOOLKIT
 
 

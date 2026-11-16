@@ -1221,6 +1221,7 @@ class TestAXUtilities:
         ].AXUtilitiesCollection.find_focused_object = test_context.Mock(return_value=mock_focused)
         from orca.ax_utilities import AXUtilities
 
+        test_context.patch_object(AXUtilities, "is_layout_only", return_value=False)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         result = AXUtilities.get_focused_object(mock_obj)
         assert result == mock_focused

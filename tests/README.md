@@ -23,7 +23,7 @@ build of the version being tested.
 * MathCAT enabled in the installed Orca build.
 * GTK3 and GTK4, including their typelibs.
 * Terminal support: Python `curses`, xterm terminfo, and VTE with its GTK3 (2.91)
-  and GTK4 (3.91) typelibs.
+  and GTK4 (3.91) typelibs, plus Konsole.
 * Terminal applications: `bash`, `less`, `nano`, `vim`, and `seq` (from coreutils).
 * Web browsers: Chrome (beta preferred) or Chromium, and Firefox (Nightly preferred).
 * Document viewers: Atril.
@@ -55,9 +55,10 @@ Orca's tests are grouped into the following named suites:
     * "gtk": all non-terminal GTK tests (both GTK3 and GTK4)
     * "gtk3": non-terminal GTK3 UI tests
     * "gtk4": non-terminal GTK4 UI tests
-    * "terminal": all VTE terminal tests (both GTK3 and GTK4)
+    * "terminal": all terminal tests (GTK3 VTE, GTK4 VTE, and Konsole)
     * "gtk3-terminal": for terminal applications using VTE for GTK3
     * "gtk4-terminal": the same terminal tests using VTE for GTK4
+    * "konsole-terminal": for terminal applications using Konsole
     * "web": all web-content tests (both Chromium and Firefox)
     * "chromium": for web content using Chrome (beta preferred) or Chromium
     * "gecko": for web content using Firefox (Nightly preferred)
@@ -139,7 +140,7 @@ Look for a related test in the appropriate directory under
 
 * `core/`: infrastructure and browser accessibility smoke tests
 * `gtk/`: widget tests shared between GTK3 and GTK4
-* `terminal/`: terminal tests shared between GTK3 VTE and GTK4 VTE
+* `terminal/`: terminal tests for GTK3 VTE, GTK4 VTE, and Konsole
 * `atril/`: PDF-content tests in Atril
 * `file_manager/`: file-manager tests for Caja, Nautilus, and Dolphin
 * `web/`: web-content tests shared between Chromium and Firefox

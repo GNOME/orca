@@ -355,7 +355,7 @@ foreach group, test_files : orca_integration_tests
   if group == 'web'
     variants = ['chromium', 'gecko']
   elif group == 'terminal'
-    variants = ['gtk3-terminal', 'gtk4-terminal']
+    variants = ['gtk3-terminal', 'gtk4-terminal', 'konsole-terminal']
   elif group == 'gtk'
     variants = ['gtk3', 'gtk4']
   endif
@@ -368,7 +368,7 @@ foreach group, test_files : orca_integration_tests
     elif group == 'terminal'
       toolkit = variant.split('-')[0]
       app_args = ['--terminal-toolkit=' + toolkit]
-      suffix = toolkit == 'gtk4' ? '_gtk4' : ''
+      suffix = toolkit == 'gtk3' ? '' : '_' + toolkit
     elif group == 'gtk'
       app_args = ['--gtk-toolkit=' + variant]
       suffix = variant == 'gtk4' ? '_gtk4' : ''
@@ -383,6 +383,12 @@ foreach group, test_files : orca_integration_tests
     foreach test_file : test_files
       test_name = test_file.split('/')[-1].split('.')[0]
       if variant == 'gtk4' and test_name in ['test_gtk_combo_box', 'test_gtk_entry_completion']
+        continue
+      endif
+      # These fixtures embed VTE widgets.
+      if variant == 'konsole-terminal' and test_name in [
+        'test_terminal_focus', 'test_terminal_braille_updates', 'test_terminal_trailing_deletion',
+      ]
         continue
       endif
       is_gsettings = test_name == 'test_gsettings'

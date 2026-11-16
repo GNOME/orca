@@ -30,7 +30,7 @@ import pytest
 from tests.integration_tests import helpers
 from tests.integration_tests.apps import terminal
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.terminal_helpers import settle, type_text
+from tests.integration_tests.terminal_helpers import review_first_line, settle, type_text
 from tests.integration_tests.version_helpers import requires_vte_version
 
 if TYPE_CHECKING:
@@ -45,9 +45,13 @@ def test_command_output_is_spoken(terminal_shell: NativeAppSession) -> None:
     settle(session)
 
     type_text("echo hi\n")
-    assert helpers.speech(session) in (["hi\n$ "], ["hi", "$ "])
+    assert helpers.speech(session) in (["hi\n$ "], ["hi", "$ "], ["\nhi\n$ \n"])
     type_text("echo hello world\n")
-    assert helpers.speech(session) in (["hello world\n$ "], ["hello world", "$ "])
+    assert helpers.speech(session) in (
+        ["hello world\n$ "],
+        ["hello world", "$ "],
+        ["\nhello world\n$ \n"],
+    )
 
 
 @pytest.mark.native_app
@@ -61,7 +65,7 @@ def test_multiline_command_output_is_spoken(terminal_shell: NativeAppSession) ->
     settle(session)
 
     type_text("seq 3\n")
-    assert helpers.speech(session) in (["1\n2\n3\n$ "], ["1\n2\n3", "$ "])
+    assert helpers.speech(session) in (["1\n2\n3\n$ "], ["1\n2\n3", "$ "], ["\n1\n2\n3\n$ \n"])
 
 
 @pytest.mark.native_app
@@ -84,6 +88,15 @@ def test_scrolled_command_output_is_spoken(terminal_shell: NativeAppSession) -> 
 
 @pytest.mark.native_app
 @requires_vte_version("3.91", 0, 85, 0, when=terminal.selected_toolkit() == "gtk4")
+@pytest.mark.xfail(
+    terminal.selected_toolkit() == "konsole",
+    reason=(
+        "Konsole's TerminalDisplayAccessible::cursorPosition() uses cell offsets inconsistent "
+        "with inherited textAtOffset()"
+    ),
+    raises=AssertionError,
+    strict=True,
+)
 def test_output_after_several_commands(terminal_shell: NativeAppSession) -> None:
     """Tests that successive commands speak their own output as the terminal starts scrolling."""
 
@@ -102,6 +115,15 @@ def test_output_after_several_commands(terminal_shell: NativeAppSession) -> None
 
 @pytest.mark.native_app
 @requires_vte_version("3.91", 0, 85, 0, when=terminal.selected_toolkit() == "gtk4")
+@pytest.mark.xfail(
+    terminal.selected_toolkit() == "konsole",
+    reason=(
+        "Konsole's TerminalDisplay::updateImage() reports repainted text as an insertion at "
+        "offset 0"
+    ),
+    raises=AssertionError,
+    strict=True,
+)
 def test_new_output_after_long_command(terminal_shell: NativeAppSession) -> None:
     """Tests that new command output is complete and does not repeat previous output."""
 
@@ -126,6 +148,15 @@ def test_new_output_after_long_command(terminal_shell: NativeAppSession) -> None
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("long_output", [False, True], ids=["several-commands", "long-output"])
+@pytest.mark.xfail(
+    terminal.selected_toolkit() == "konsole",
+    reason=(
+        "Konsole's TerminalDisplayAccessible::characterRect() uses cell offsets inconsistent "
+        "with inherited textAtOffset()"
+    ),
+    raises=AssertionError,
+    strict=True,
+)
 def test_flat_review_after_shell_output(
     terminal_shell: NativeAppSession, long_output: bool
 ) -> None:
@@ -161,7 +192,10 @@ def test_flat_review_after_shell_output(
     helpers.toggle_flat_review(session)
     try:
         for command, line in steps:
-            session.orca.call("FlatReviewPresenter", command, True)
+            if command == "GoHome":
+                review_first_line(session)
+            else:
+                session.orca.call("FlatReviewPresenter", command, True)
             spoken, brailled = helpers.capture(session)
             assert spoken == [line + "\n"]
             full = line + " $l"
@@ -172,6 +206,15 @@ def test_flat_review_after_shell_output(
 
 @pytest.mark.native_app
 @pytest.mark.parametrize("final_text", ["after1", "done"], ids=["overwrite", "shorten"])
+@pytest.mark.xfail(
+    terminal.selected_toolkit() == "konsole",
+    reason=(
+        "Konsole's TerminalDisplayAccessible::cursorPosition() uses cell offsets inconsistent "
+        "with inherited textAtOffset()"
+    ),
+    raises=AssertionError,
+    strict=True,
+)
 def test_braille_shows_final_output_after_a_burst(
     terminal_shell: NativeAppSession, final_text: str
 ) -> None:
@@ -191,7 +234,26 @@ def test_braille_shows_final_output_after_a_burst(
 
 
 @pytest.mark.native_app
-def test_terminal_dimensions(terminal_shell: NativeAppSession) -> None:
+@pytest.mark.parametrize(
+    "check_braille",
+    [
+        pytest.param(False, id="speech"),
+        pytest.param(
+            True,
+            id="braille",
+            marks=pytest.mark.xfail(
+                terminal.selected_toolkit() == "konsole",
+                reason=(
+                    "Konsole's TerminalDisplayAccessible::cursorPosition() uses cell offsets "
+                    "inconsistent with inherited textAtOffset()"
+                ),
+                raises=AssertionError,
+                strict=True,
+            ),
+        ),
+    ],
+)
+def test_terminal_dimensions(terminal_shell: NativeAppSession, check_braille: bool) -> None:
     """Checks that the program sees the intended terminal grid."""
 
     session = terminal_shell
@@ -200,6 +262,8 @@ def test_terminal_dimensions(terminal_shell: NativeAppSession) -> None:
     settle(session)
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     spoken, brailled = helpers.capture(session)
-    lines = [line for chunk in spoken for line in chunk.splitlines() if line]
-    assert lines == ["8 40", "$ "]
-    assert brailled[-1] == helpers.BrailleLine(3, "$ ", "$ ", "\x00" * 2)
+    if check_braille:
+        assert brailled[-1] == helpers.BrailleLine(3, "$ ", "$ ", "\x00" * 2)
+    else:
+        lines = [line for chunk in spoken for line in chunk.splitlines() if line]
+        assert lines == ["8 40", "$ "]

@@ -43,10 +43,22 @@ from tests.integration_tests.terminal_helpers import settle
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
 
-pytestmark = pytest.mark.skipif(
-    terminal.selected_toolkit() == "gtk4",
-    reason="GTK4 VTE cannot set text selections: https://gitlab.gnome.org/GNOME/vte/-/work_items/2973",
-)
+pytestmark = [
+    pytest.mark.xfail(
+        terminal.selected_toolkit() == "konsole",
+        reason=(
+            "Konsole's TerminalDisplayAccessible::selection() and addSelection() use cell offsets "
+            "inconsistent with inherited textAtOffset()"
+        ),
+        raises=AssertionError,
+        strict=True,
+    ),
+    pytest.mark.skipif(
+        terminal.selected_toolkit() == "gtk4",
+        reason="GTK4 VTE cannot set text selections: "
+        "https://gitlab.gnome.org/GNOME/vte/-/work_items/2973",
+    ),
+]
 
 _ORCA_CONTROLS = "The screen reader is controlling the caret."
 _APP_CONTROLS = "The application is controlling the caret."

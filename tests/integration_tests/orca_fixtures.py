@@ -66,6 +66,7 @@ from .apps import (
     gtk3_two_entries,
     gtk3_two_windows,
     gtk3_widget_notebook,
+    konsole_terminal,
     terminal,
 )
 from .harness import keyboard, sandbox
@@ -297,7 +298,7 @@ def _make_terminal_widget_fixture(app: ModuleType) -> Callable[..., Iterator[Nat
 
     @pytest.fixture(scope="function", name=f"terminal{suffix}")
     def fixture(tmp_path_factory: pytest.TempPathFactory) -> Iterator[NativeAppSession]:
-        _require_terminal_typelib()
+        _require_terminal()
         yield from _run_native_app(
             tmp_path_factory,
             terminal.app_module(suffix),
@@ -581,11 +582,15 @@ def _terminfo_is_available() -> bool:
     return True
 
 
-def _require_terminal_typelib() -> None:
-    """Skips when the selected VTE toolkit is unavailable."""
+def _require_terminal() -> None:
+    """Skips when the selected terminal is unavailable."""
 
     toolkit = terminal.selected_toolkit()
     version = terminal.TOOLKITS[toolkit]
+    if version is None:
+        if shutil.which("konsole") is None:
+            pytest.skip("Konsole is not available")
+        return
     if not has_typelib("Vte", version):
         pytest.skip(f"VTE {version} ({toolkit}) typelib is not available")
 
@@ -597,9 +602,9 @@ def _run_terminal_app(
     args: tuple[str, ...] = (),
     files: dict[str, str] | None = None,
 ) -> Iterator[NativeAppSession]:
-    """Runs a program inside a VTE terminal under its own Orca subprocess."""
+    """Runs a program inside a terminal under its own Orca subprocess."""
 
-    _require_terminal_typelib()
+    _require_terminal()
     if not _terminfo_is_available():
         pytest.skip(f"no terminfo entry for {gtk3_terminal.TERM!r}")
     binary = _resolve_binary(binary_names)
@@ -614,8 +619,12 @@ def _run_terminal_app(
 
     # Do not import GTK4 into the GTK3 keyboard driver process.
     argv = [sys.executable, "-m", terminal.app_module(), str(work_dir), binary, *args]
+    is_konsole = terminal.selected_toolkit() == "konsole"
     yield from _run_app_with_orca(
-        sandbox_dir, argv=argv, ready_predicate=_name_equals(gtk3_terminal.APP_TITLE)
+        sandbox_dir,
+        argv=argv,
+        ready_predicate=None if is_konsole else _name_equals(gtk3_terminal.APP_TITLE),
+        prepare_window=konsole_terminal.prepare_window if is_konsole else None,
     )
 
 

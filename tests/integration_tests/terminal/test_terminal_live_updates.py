@@ -28,17 +28,28 @@ from typing import TYPE_CHECKING
 import pytest
 
 from tests.integration_tests import helpers
+from tests.integration_tests.apps import terminal
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.terminal_helpers import settle, type_text
+from tests.integration_tests.terminal_helpers import review_first_line, settle, type_text
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
+
+pytestmark = pytest.mark.xfail(
+    terminal.selected_toolkit() == "konsole",
+    reason=(
+        "Konsole's TerminalDisplayAccessible::characterRect() uses cell offsets inconsistent "
+        "with inherited textAtOffset()"
+    ),
+    raises=AssertionError,
+    strict=True,
+)
 
 
 def _navigate_to_c1_line(session: NativeAppSession) -> None:
     """Moves flat review to the c1/c2 output line and discards the output."""
 
-    session.orca.call("FlatReviewPresenter", "GoHome", True)
+    review_first_line(session)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
     session.orca.call("FlatReviewPresenter", "GoNextLine", True)
