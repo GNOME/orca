@@ -755,7 +755,7 @@ class TestStructuralNavigator:
         elif element_type == "paragraphs":
             test_context.patch(
                 f"orca.structural_navigator.AXUtilities.{ax_method}",
-                side_effect=lambda root, include_items=False, pred=None: mock_elements,
+                return_value=mock_elements,
             )
         else:
             test_context.patch(
