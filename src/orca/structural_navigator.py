@@ -813,19 +813,26 @@ class StructuralNavigator(Extension):
         row_data_func: Callable,
         notify_user: bool = True,
     ) -> None:
-        dialog_title = f"{dialog_title}: {messages.items_found(len(objects))}"
-        if not objects:
+        if notify_user and len(objects) > 2500:
+            presentation_manager.get_manager().present_message(messages.PAGE_LOADING_START)
+
+        rows = []
+        for obj in objects:
+            data = row_data_func(obj)
+            if data is not None:
+                rows.append((obj, -1, *data))
+        dialog_title = f"{dialog_title}: {messages.items_found(len(rows))}"
+        if not rows:
             if notify_user:
                 presentation_manager.get_manager().present_message(dialog_title)
             return
 
         current_object = script.utilities.get_caret_context()[0]
-        try:
-            index = objects.index(current_object)
-        except ValueError:
-            index = 0
-
-        rows = [(obj, -1, *row_data_func(obj)) for obj in objects]
+        index = 0
+        for i, row in enumerate(rows):
+            if row[0] == current_object:
+                index = i
+                break
         orca_gui_navlist.show_ui(dialog_title, column_headers, rows, index)
 
     def _determine_root_container(self, script: default.Script) -> Atspi.Accessible:
@@ -1972,12 +1979,21 @@ class StructuralNavigator(Extension):
     def list_paragraphs(self, script: default.Script, notify_user: bool = True) -> None:
         """Displays a list of paragraphs."""
 
+        def get_row_data(obj: Atspi.Accessible) -> list[str] | None:
+            text = AXText.get_all_text(obj, length=-1)
+            if "\ufffc" in text:
+                text = AXUtilities.expand_eocs(obj)
+            text = text.strip()
+            if len(text) > 200:
+                text = text[:200] + "..."
+            return [text] if text else None
+
         self._present_object_list(
             script,
             self._get_all_paragraphs(script),
             guilabels.SN_TITLE_PARAGRAPH,
             [guilabels.SN_HEADER_PARAGRAPH],
-            lambda obj: [self._get_item_string(script, obj)],
+            get_row_data,
             notify_user=notify_user,
         )
 

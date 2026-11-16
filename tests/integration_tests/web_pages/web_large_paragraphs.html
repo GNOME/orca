@@ -23,8 +23,18 @@ for (let i = 7; i < 2500; i++) {
     group = document.createElement("div");
     paragraphs.appendChild(group);
   }
-  const paragraph = document.createElement("p");
+  const paragraph = document.createElement(i === 11 ? "h3" : "p");
   paragraph.textContent = "Body paragraph " + i + ".";
+  if (i === 7) {
+    paragraph.textContent = "Long paragraph preview. ".repeat(15);
+  } else if (i === 8 || i === 9) {
+    paragraph.style.whiteSpace = "pre";
+    paragraph.textContent = " ".repeat(240);
+    if (i === 9) paragraph.textContent += "Text after leading spaces.";
+  } else if (i === 10 || i === 11) {
+    paragraph.setAttribute("aria-label", "Author-supplied label");
+    paragraph.textContent = i === 10 ? "Visible paragraph text." : "Visible heading text.";
+  }
   group.appendChild(paragraph);
 }
 function addParagraph() {
