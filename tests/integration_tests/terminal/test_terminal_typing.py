@@ -49,7 +49,7 @@ def _enable_key_echo(session: NativeAppSession) -> None:
     terminal.selected_toolkit() == "konsole",
     reason=(
         "Konsole's TerminalDisplay::updateImage() reports typed characters as insertions at "
-        "offset 0 with an extra newline"
+        "offset 0 with an extra newline (https://bugs.kde.org/show_bug.cgi?id=528940)"
     ),
     raises=AssertionError,
     strict=True,
@@ -84,6 +84,7 @@ def test_typed_characters_are_echoed(terminal_shell: NativeAppSession) -> None:
     terminal.selected_toolkit() == "konsole",
     reason=(
         "Konsole's TerminalDisplay::updateImage() emits insertions instead of text-deletion events"
+        " (https://bugs.kde.org/show_bug.cgi?id=528940)"
     ),
     raises=AssertionError,
     strict=True,
@@ -139,6 +140,7 @@ def test_key_echo_while_typing_in_vim(terminal_vim: NativeAppSession) -> None:
     terminal.selected_toolkit() == "konsole",
     reason=(
         "Konsole's TerminalDisplay::updateImage() emits insertions instead of text-deletion events"
+        " (https://bugs.kde.org/show_bug.cgi?id=528940)"
     ),
     raises=AssertionError,
     strict=True,

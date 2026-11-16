@@ -39,6 +39,9 @@ pytestmark = pytest.mark.xfail(
     reason=(
         "Konsole's TerminalDisplayAccessible::characterCount() and cursorPosition() use cell "
         "offsets inconsistent with inherited textAtOffset()"
+        " (https://bugs.kde.org/show_bug.cgi?id=528946);"
+        " TerminalDisplay::updateImage() reports repaints as insertions"
+        " (https://bugs.kde.org/show_bug.cgi?id=528940)"
     ),
     raises=AssertionError,
     strict=True,

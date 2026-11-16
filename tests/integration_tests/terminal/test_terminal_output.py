@@ -93,6 +93,7 @@ def test_scrolled_command_output_is_spoken(terminal_shell: NativeAppSession) -> 
     reason=(
         "Konsole's TerminalDisplayAccessible::cursorPosition() uses cell offsets inconsistent "
         "with inherited textAtOffset()"
+        " (https://bugs.kde.org/show_bug.cgi?id=528946)"
     ),
     raises=AssertionError,
     strict=True,
@@ -119,7 +120,7 @@ def test_output_after_several_commands(terminal_shell: NativeAppSession) -> None
     terminal.selected_toolkit() == "konsole",
     reason=(
         "Konsole's TerminalDisplay::updateImage() reports repainted text as an insertion at "
-        "offset 0"
+        "offset 0 (https://bugs.kde.org/show_bug.cgi?id=528940)"
     ),
     raises=AssertionError,
     strict=True,
@@ -153,6 +154,7 @@ def test_new_output_after_long_command(terminal_shell: NativeAppSession) -> None
     reason=(
         "Konsole's TerminalDisplayAccessible::characterRect() uses cell offsets inconsistent "
         "with inherited textAtOffset()"
+        " (https://bugs.kde.org/show_bug.cgi?id=528946)"
     ),
     raises=AssertionError,
     strict=True,
@@ -211,6 +213,7 @@ def test_flat_review_after_shell_output(
     reason=(
         "Konsole's TerminalDisplayAccessible::cursorPosition() uses cell offsets inconsistent "
         "with inherited textAtOffset()"
+        " (https://bugs.kde.org/show_bug.cgi?id=528946)"
     ),
     raises=AssertionError,
     strict=True,
@@ -246,6 +249,7 @@ def test_braille_shows_final_output_after_a_burst(
                 reason=(
                     "Konsole's TerminalDisplayAccessible::cursorPosition() uses cell offsets "
                     "inconsistent with inherited textAtOffset()"
+                    " (https://bugs.kde.org/show_bug.cgi?id=528946)"
                 ),
                 raises=AssertionError,
                 strict=True,

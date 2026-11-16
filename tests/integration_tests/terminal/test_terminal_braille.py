@@ -83,6 +83,7 @@ def test_pan_braille_across_terminal_line(terminal_shell: NativeAppSession) -> N
     reason=(
         "Konsole's TerminalDisplayAccessible::characterRect() uses cell offsets inconsistent "
         "with inherited textAtOffset()"
+        " (https://bugs.kde.org/show_bug.cgi?id=528946)"
     ),
     raises=AssertionError,
     strict=True,

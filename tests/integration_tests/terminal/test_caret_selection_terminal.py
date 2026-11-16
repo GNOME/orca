@@ -49,6 +49,8 @@ pytestmark = [
         reason=(
             "Konsole's TerminalDisplayAccessible::selection() and addSelection() use cell offsets "
             "inconsistent with inherited textAtOffset()"
+            " (https://bugs.kde.org/show_bug.cgi?id=528946); text() includes the end offset"
+            " (https://bugs.kde.org/show_bug.cgi?id=528942)"
         ),
         raises=AssertionError,
         strict=True,
