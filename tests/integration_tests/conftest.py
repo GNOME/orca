@@ -139,6 +139,8 @@ from .orca_fixtures import (  # noqa: F401
     _web_label_inference,
     _web_landmarks,
     _web_languages,
+    _web_large_headings,
+    _web_large_paragraphs,
     _web_line_breaks,
     _web_link_starts_line,
     _web_list_replacement,

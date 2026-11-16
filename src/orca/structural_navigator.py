@@ -1944,7 +1944,10 @@ class StructuralNavigator(Extension):
             return has_at_least_three_characters(x)
 
         root = self._determine_root_container(script)
-        return AXUtilities.find_all_paragraphs(root, True, pred=pred)
+        limit = 2500 if self.get_mode(script) == StructuralNavigationMode.DOCUMENT else None
+        return AXUtilities.find_all_paragraphs(
+            root, True, pred=pred, max_matches_for_predicate=limit
+        )
 
     @dbus_service.command
     @navigation_command

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Large Paragraphs</title>
+</head>
+<body>
+<button onclick="addParagraph()">Add one paragraph</button>
+<main id="paragraphs">
+<p>First valid paragraph.</p>
+<p>x</p>
+<p>xy</p>
+<p><a href="#local">Link in short paragraph</a> </p>
+<p>After short paragraphs.</p>
+<p>With <a href="#local">Link in long paragraph</a> and surrounding text.</p>
+<p>Following accepted paragraph.</p>
+</main>
+<script>
+const paragraphs = document.getElementById("paragraphs");
+let group;
+for (let i = 7; i < 2500; i++) {
+  if ((i - 7) % 100 === 0) {
+    group = document.createElement("div");
+    paragraphs.appendChild(group);
+  }
+  const paragraph = document.createElement("p");
+  paragraph.textContent = "Body paragraph " + i + ".";
+  group.appendChild(paragraph);
+}
+function addParagraph() {
+  const paragraph = document.createElement("p");
+  paragraph.textContent = "Added paragraph.";
+  paragraphs.appendChild(paragraph);
+}
+document.title = "Orca Web Large Paragraphs ready";
+</script>
+</body>
+</html>

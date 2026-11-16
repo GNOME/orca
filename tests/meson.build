@@ -231,6 +231,8 @@ orca_integration_tests = {
     'integration_tests/web/test_web_grid_navigation.py',
     'integration_tests/web/test_web_grid_selection.py',
     'integration_tests/web/test_web_headings.py',
+    'integration_tests/web/test_web_large_headings.py',
+    'integration_tests/web/test_web_large_paragraphs.py',
     'integration_tests/web/test_web_structural_navigation.py',
     'integration_tests/web/test_web_field_states.py',
     'integration_tests/web/test_web_flat_review.py',

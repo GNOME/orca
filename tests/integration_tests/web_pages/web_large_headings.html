@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Large Headings</title>
+</head>
+<body>
+<script>
+let group;
+for (let i = 0; i < 3001; i++) {
+  if (i % 100 === 0) {
+    group = document.createElement("div");
+    document.body.appendChild(group);
+  }
+  const levelTwo = document.createElement("h2");
+  levelTwo.textContent = "Level two " + i;
+  group.appendChild(levelTwo);
+  const levelThree = document.createElement("h3");
+  levelThree.textContent = "Level three " + i;
+  group.appendChild(levelThree);
+}
+document.title = "Orca Web Large Headings ready";
+</script>
+</body>
+</html>

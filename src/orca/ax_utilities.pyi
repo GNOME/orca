@@ -1270,6 +1270,8 @@ class AXUtilities:
         root: Atspi.Accessible,
         treat_headings_as_paragraphs: bool = False,
         pred: Callable | None = None,
+        *,
+        max_matches_for_predicate: int | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
     def find_all_push_buttons(

@@ -941,6 +941,8 @@ _web_native_text_selection = _make_web_fixture(
     scope="function",
 )
 _web_headings = _make_web_fixture("web_headings.html")
+_web_large_headings = _make_web_fixture("web_large_headings.html")
+_web_large_paragraphs = _make_web_fixture("web_large_paragraphs.html")
 _web_field_states = _make_web_fixture("web_field_states.html")
 _web_flat_review = _make_web_fixture("web_flat_review.html")
 _web_flat_review_shrink = _make_web_fixture("web_flat_review_shrink.html")

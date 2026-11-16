@@ -658,13 +658,26 @@ class AXUtilitiesCollection:
         root: Atspi.Accessible,
         treat_headings_as_paragraphs: bool = False,
         pred: Callable[[Atspi.Accessible], bool] | None = None,
+        *,
+        max_matches_for_predicate: int | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the paragraph role"""
 
         roles = [Atspi.Role.PARAGRAPH]
         if treat_headings_as_paragraphs:
             roles.append(Atspi.Role.HEADING)
-        return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
+        matches = AXUtilitiesCollection.find_all_with_role(root, roles)
+        if pred is None:
+            return matches
+        if max_matches_for_predicate is not None and len(matches) > max_matches_for_predicate:
+            tokens = [
+                "AXUtilitiesCollection: Skipping paragraph predicate for",
+                len(matches),
+                "matches",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return matches
+        return AXUtilitiesCollection._apply_predicate(matches, pred)
 
     @staticmethod
     def find_all_push_buttons(
