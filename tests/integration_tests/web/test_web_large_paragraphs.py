@@ -37,12 +37,12 @@ if TYPE_CHECKING:
 
 def _next(session: BrowserSession, keysym: int) -> tuple[list[str], list[BrailleLine]]:
     keyboard.tap_key(keysym)
-    return capture(session)
+    return capture(session, overall=10)
 
 
 def _previous(session: BrowserSession, keysym: int) -> tuple[list[str], list[BrailleLine]]:
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keysym)
-    return capture(session)
+    return capture(session, overall=10)
 
 
 def _focus_paragraph_dialog() -> None:
