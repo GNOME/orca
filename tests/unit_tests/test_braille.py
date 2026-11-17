@@ -376,3 +376,83 @@ class TestBrailleLineRanges:
             assert braille._STATE.enable_contracted_braille is True
         finally:
             braille.BRLAPI_KEY_FLG_TOGGLE_ON = original_toggle
+
+    @pytest.mark.parametrize("labelled", [False, True])
+    @pytest.mark.parametrize("contracted", [False, True])
+    @pytest.mark.parametrize("eol", ["", " $l"])
+    def test_selection_mask_with_label(
+        self,
+        test_context: OrcaTestContext,
+        labelled: bool,
+        contracted: bool,
+        eol: str,
+    ) -> None:
+        """Keep selected text cells aligned after a translated label."""
+
+        self._setup_dependencies(test_context)
+        from orca import braille
+
+        braille.AXUtilities.is_whitespace_or_empty.return_value = False
+        braille.AXText.get_selected_ranges.return_value = [(0, 7)]
+        braille._STATE.text_attributes_indicator = 0
+        braille._STATE.link_indicator = 0
+        braille._STATE.selector_indicator = 192
+
+        text = "and the person is good"
+        label = "Name: " if labelled else ""
+        # Liblouis 3.33.0, en-ueb-g2.ctb, translate(label + text): output positions
+        # include the contracted label. Fixed maps keep this unit test independent
+        # of the installed Liblouis tables; the real translation is tested separately.
+        if labelled:
+            translated = ',"n3 & ! p}son is gd'
+            positions = [
+                0,
+                0,
+                0,
+                0,
+                3,
+                4,
+                5,
+                5,
+                5,
+                6,
+                7,
+                7,
+                7,
+                8,
+                9,
+                10,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                18,
+                18,
+                18,
+            ]
+        else:
+            translated = "& ! p}son is gd"
+            positions = [0, 0, 0, 1, 2, 2, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10, 11, 12, 13, 13, 13, 13]
+
+        region = object.__new__(braille._AccessibleTextRegion)
+        region.accessible = test_context.Mock()
+        region._raw_line = label + text
+        region._label = label
+        region.line_offset = 0
+        region._start_offset = 0
+        region._indicate_links = False
+        region._contracted = contracted
+        region._out_position = positions
+        region._eol = eol
+        region.string = (translated if contracted else label + text) + eol
+
+        start = (5 if labelled else 0) if contracted else len(label)
+        count = 3 if contracted else 7
+        expected = "\0" * start + "\xc0" * count
+        expected += "\0" * (len(region.string) - len(expected))
+        assert region.get_attribute_mask() == expected

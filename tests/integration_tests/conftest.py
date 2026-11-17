@@ -147,6 +147,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_inline_list,
     _web_inline_list_wrap,
     _web_label_inference,
+    _web_labelled_braille,
     _web_landmarks,
     _web_languages,
     _web_large_headings,

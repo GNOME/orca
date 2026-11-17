@@ -1424,8 +1424,8 @@ class _AccessibleTextRegion(Region):
             # is counted once.
             contracted_mask = [0] * (len(self.string) - len(self._eol))
             out_position = self._out_position[len(self._label) :]
-            if self._label:
-                out_position = [offset - len(self._label) - 1 for offset in out_position]
+            # Liblouis positions already address the complete contracted line,
+            # including its contracted label. Do not subtract source-label lengths.
             out_len = len(out_position)
             mask_len = len(contracted_mask)
             # out_position[i] is the first output cell for source index i. One source index can
@@ -1442,7 +1442,7 @@ class _AccessibleTextRegion(Region):
 
         # Add empty mask characters for the EOL character as well as for the label.
         region_mask += [0] * len(self._eol)
-        if self._label:
+        if self._label and not self._contracted:
             region_mask = [0] * len(self._label) + region_mask
 
         return "".join(map(chr, region_mask))
