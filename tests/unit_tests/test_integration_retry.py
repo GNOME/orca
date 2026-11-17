@@ -21,6 +21,7 @@ def _run(
     user_agent: str | None = None,
     terminal_toolkit: str | None = None,
     gtk_toolkit: str | None = None,
+    qt_toolkit: str | None = None,
 ) -> subprocess.CompletedProcess:
     test_file = tmp_path / "test_example.py"
     test_file.write_text(source, encoding="utf-8")
@@ -29,6 +30,8 @@ def _run(
         args.append(f"--terminal-toolkit={terminal_toolkit}")
     if gtk_toolkit is not None:
         args.append(f"--gtk-toolkit={gtk_toolkit}")
+    if qt_toolkit is not None:
+        args.append(f"--qt-toolkit={qt_toolkit}")
     if user_agent is not None:
         args.append(f"--user-agent={user_agent}")
         (tmp_path / "conftest.py").write_text(
@@ -259,9 +262,18 @@ def test_example():
         assert str(archive) in (tmp_path / "logs/test_example.summary").read_text()
 
 
-@pytest.mark.parametrize("toolkit_option", ["terminal_toolkit", "gtk_toolkit"])
-def test_toolkit_variants_preserve_each_others_results(tmp_path: Path, toolkit_option: str) -> None:
-    """A passing GTK4 run must not erase a failed GTK3 run of the same file."""
+@pytest.mark.parametrize(
+    ("toolkit_option", "first", "second"),
+    [
+        ("terminal_toolkit", "gtk3", "gtk4"),
+        ("gtk_toolkit", "gtk3", "gtk4"),
+        ("qt_toolkit", "qt5", "qt6"),
+    ],
+)
+def test_toolkit_variants_preserve_each_others_results(
+    tmp_path: Path, toolkit_option: str, first: str, second: str
+) -> None:
+    """A passing toolkit run must not erase another toolkit's failed run."""
 
     (tmp_path / "conftest.py").write_text(
         "from pathlib import Path\n"
@@ -273,13 +285,13 @@ def test_toolkit_variants_preserve_each_others_results(tmp_path: Path, toolkit_o
     )
     source = (
         "def test_example(request):\n"
-        f"    assert request.config.getoption('{toolkit_option}') == 'gtk4'\n"
+        f"    assert request.config.getoption('{toolkit_option}') == {second!r}\n"
     )
-    failed = _run(tmp_path, source, **{toolkit_option: "gtk3"})
+    failed = _run(tmp_path, source, **{toolkit_option: first})
     assert failed.returncode == 1, failed.stdout + failed.stderr
-    passed = _run(tmp_path, source, **{toolkit_option: "gtk4"})
+    passed = _run(tmp_path, source, **{toolkit_option: second})
     assert passed.returncode == 0, passed.stdout + passed.stderr
-    assert (tmp_path / "toolkits").read_text().splitlines() == ["gtk3", "gtk3", "gtk4"]
-    assert "FAILED ON RETRY" in (tmp_path / "logs/test_example_gtk3.summary").read_text()
-    assert (tmp_path / "logs/test_example_gtk3.first.log").exists()
-    assert not (tmp_path / "logs/test_example_gtk4.summary").exists()
+    assert (tmp_path / "toolkits").read_text().splitlines() == [first, first, second]
+    assert "FAILED ON RETRY" in (tmp_path / f"logs/test_example_{first}.summary").read_text()
+    assert (tmp_path / f"logs/test_example_{first}.first.log").exists()
+    assert not (tmp_path / f"logs/test_example_{second}.summary").exists()

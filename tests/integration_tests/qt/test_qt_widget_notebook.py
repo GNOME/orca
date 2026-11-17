@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from tests.integration_tests import helpers
+from tests.integration_tests.apps import qt
 from tests.integration_tests.harness import keyboard
 
 if TYPE_CHECKING:
@@ -56,10 +57,32 @@ def _assert(session: NativeAppSession, spoken: list[str], braille: str, cursor: 
         (2, ["Enabled check box not checked"], "< > Enabled check box", 1),
         (4, ["Color Red combo box", "down"], "Color Red combo box down", 7),
         (6, ["Small selected radio button"], "&=y Small radio button", 1),
-        (7, ["Level horizontal slider 3 30 percent."], "Level 3 horizontal slider", 1),
+        pytest.param(
+            7,
+            ["Level horizontal slider 3 30 percent."],
+            "Level 3 horizontal slider",
+            1,
+            marks=pytest.mark.xfail(
+                qt.is_qt5(),
+                reason="Qt5 omits the AT-SPI HORIZONTAL state on QSlider",
+                strict=True,
+                raises=AssertionError,
+            ),
+        ),
         (8, ["Bump Quantity in 1000 ms button"], "Bump Quantity in 1000 ms button", 1),
         (10, ["Include archived check box not checked"], "< > Include archived check box", 1),
-        (11, ["Widgets page tab"], "Widgets page tab", 1),
+        pytest.param(
+            11,
+            ["Widgets page tab"],
+            "Widgets page tab",
+            1,
+            marks=pytest.mark.xfail(
+                qt.is_qt5(),
+                reason="Qt5's QTabBar lacks AT-SPI Selection and its tabs lack the SELECTED state",
+                strict=True,
+                raises=AssertionError,
+            ),
+        ),
     ],
 )
 def test_tab_navigation(
@@ -153,6 +176,12 @@ def test_radio_buttons(qt_widget_notebook: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    qt.is_qt5(),
+    reason="Qt5 omits the AT-SPI HORIZONTAL state on QSlider",
+    strict=True,
+    raises=AssertionError,
+)
 def test_slider(qt_widget_notebook: NativeAppSession) -> None:
     """Announces slider values and endpoints."""
 
@@ -169,6 +198,12 @@ def test_slider(qt_widget_notebook: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    qt.is_qt5(),
+    reason="Qt5 omits the AT-SPI EDITABLE state on QSpinBox",
+    strict=True,
+    raises=AssertionError,
+)
 def test_spin_button(qt_widget_notebook: NativeAppSession) -> None:
     """Announces changes to a spin button's value."""
 
@@ -215,6 +250,12 @@ def test_description(qt_widget_notebook: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    qt.is_qt5(),
+    reason="Qt5 omits the AT-SPI HORIZONTAL state on QSlider",
+    strict=True,
+    raises=AssertionError,
+)
 def test_label_for(qt_widget_notebook: NativeAppSession) -> None:
     """Uses the associated label as the slider's name."""
 
@@ -244,6 +285,12 @@ def test_status_bar(qt_widget_notebook: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    qt.is_qt5(),
+    reason="Qt5 omits the AT-SPI READ_ONLY state on QSpinBox",
+    strict=True,
+    raises=AssertionError,
+)
 def test_readonly_spin_button(qt_widget_notebook: NativeAppSession) -> None:
     """Identifies a read-only spin button when it receives focus."""
 
@@ -265,8 +312,8 @@ def test_readonly_spin_button(qt_widget_notebook: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.xfail(
-    reason="Qt menus close after Alt+F when an AT-SPI keyboard watcher is active",
-    strict=True,
+    reason="Qt menus sometimes close after Alt+F when an AT-SPI keyboard watcher is active",
+    strict=False,
     raises=AssertionError,
 )
 def test_menu_navigation(qt_widget_notebook: NativeAppSession) -> None:

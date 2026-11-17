@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from tests.integration_tests import helpers
+from tests.integration_tests.apps import qt
 from tests.integration_tests.harness import keyboard
 
 if TYPE_CHECKING:
@@ -58,6 +59,12 @@ def test_unfocused_selection_change(qt_combo_box: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    qt.is_qt5(),
+    reason="Qt5's AT-SPI adaptor lacks Selection on the combo box's list of choices",
+    strict=True,
+    raises=AssertionError,
+)
 def test_selection_change_while_editing(qt_combo_box: NativeAppSession) -> None:
     """Presents the selected item's text when it replaces the focused City entry."""
     session = qt_combo_box

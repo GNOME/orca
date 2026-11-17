@@ -66,7 +66,14 @@ def test_say_all_after_vim_page_forward(
         spoken = helpers.speech(session, quiescence=0.5, overall=10.0)
         assert spoken[:7] == [f"line {number:02d}\n" for number in range(1, 8)]
 
-    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], ord("f"))
+    # Releasing Control before Vim's redraw changes how Orca handles the insertion.
+    # TODO - JD: This is a temporary change for a timing issue related to command identification.
+    keyboard.press_key(keyboard.KEYSYM_CONTROL_L)
+    try:
+        keyboard.tap_key(ord("f"))
+        helpers.capture(session, wait_async=True, quiescence=0.5, overall=4.0)
+    finally:
+        keyboard.release_key(keyboard.KEYSYM_CONTROL_L)
     settle(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
     actual = helpers.speech(session, quiescence=0.5, overall=10.0)

@@ -180,7 +180,7 @@ orca_integration_tests = {
     'integration_tests/gtk/test_gtk_buttons.py',
     'integration_tests/gtk/test_gtk_drop_down.py',
   ],
-  'qt6': [
+  'qt': [
     'integration_tests/qt/test_qt_braille_panning.py',
     'integration_tests/qt/test_qt_clipboard.py',
     'integration_tests/qt/test_qt_combo_box.py',
@@ -375,6 +375,8 @@ foreach group, test_files : orca_integration_tests
     variants = ['gtk3-terminal', 'gtk4-terminal', 'konsole-terminal']
   elif group == 'gtk'
     variants = ['gtk3', 'gtk4']
+  elif group == 'qt'
+    variants = ['qt5', 'qt6']
   endif
   foreach variant : variants
     app_args = []
@@ -389,6 +391,9 @@ foreach group, test_files : orca_integration_tests
     elif group == 'gtk'
       app_args = ['--gtk-toolkit=' + variant]
       suffix = variant == 'gtk4' ? '_gtk4' : ''
+    elif group == 'qt'
+      app_args = ['--qt-toolkit=' + variant]
+      suffix = variant == 'qt5' ? '_qt5' : ''
     endif
     suites = ['integration', variant]
     if group in ['caja', 'dolphin', 'nautilus']

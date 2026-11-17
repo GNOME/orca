@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from tests.integration_tests import helpers
+from tests.integration_tests.apps import qt
 from tests.integration_tests.harness import keyboard
 
 if TYPE_CHECKING:
@@ -87,6 +88,12 @@ def test_list_selection(qt_item_views: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    qt.is_qt5(),
+    reason="Qt5's AT-SPI adaptor lacks Selection on QListWidget",
+    strict=True,
+    raises=AssertionError,
+)
 def test_list_select_all(qt_item_views: NativeAppSession) -> None:
     """Announces that all four list items have been selected."""
 
@@ -100,6 +107,12 @@ def test_list_select_all(qt_item_views: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    qt.is_qt5(),
+    reason="Qt5's AT-SPI adaptor lacks Selection on QListWidget",
+    strict=True,
+    raises=AssertionError,
+)
 def test_present_selected_list_items(qt_item_views: NativeAppSession) -> None:
     """Reports the names of selected list items in their displayed order."""
 
@@ -132,6 +145,12 @@ def test_table_rows(qt_item_views: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    qt.is_qt5(),
+    reason="Qt5's QTableWidget lacks AT-SPI Selection to identify its focused cell",
+    strict=True,
+    raises=AssertionError,
+)
 def test_table_cells(qt_item_views: NativeAppSession) -> None:
     """Reads cell values and column headers when moving horizontally."""
 
@@ -149,6 +168,12 @@ def test_table_cells(qt_item_views: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    qt.is_qt5(),
+    reason="Qt5's QTableWidget lacks AT-SPI Selection to identify its focused cell",
+    strict=True,
+    raises=AssertionError,
+)
 def test_table_cell_reading_mode(qt_item_views: NativeAppSession) -> None:
     """Reads only the focused cell after switching to cell-reading mode."""
 

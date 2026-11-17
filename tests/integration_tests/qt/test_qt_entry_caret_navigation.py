@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests.apps import qt
 from tests.integration_tests.harness import keyboard
 from tests.integration_tests.helpers import BrailleLine, capture
 
@@ -42,6 +43,7 @@ _SECOND_VISIBLE = "Banana bread recipe $l"
 
 @pytest.mark.native_app
 @pytest.mark.xfail(
+    not qt.is_qt5(),
     reason="Qt's QAccessibleLineEdit::scrollToSubstring() moves the caret to the range start",
     strict=True,
     raises=AssertionError,

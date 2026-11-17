@@ -28,7 +28,7 @@ from typing import TYPE_CHECKING
 
 os.environ["GSETTINGS_BACKEND"] = "memory"
 
-from .apps import browser, gtk, terminal
+from .apps import browser, gtk, qt, terminal
 from .dbus_fixtures import (  # noqa: F401
     _bus,
     _dbus_service_proxy,
@@ -223,6 +223,7 @@ def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addoption("--user-agent", choices=tuple(browser.USER_AGENTS))
     parser.addoption("--terminal-toolkit", choices=tuple(terminal.TOOLKITS))
     parser.addoption("--gtk-toolkit", choices=tuple(gtk.TOOLKITS))
+    parser.addoption("--qt-toolkit", choices=tuple(qt.TOOLKITS))
 
 
 def pytest_configure(config: pytest.Config) -> None:
@@ -231,6 +232,7 @@ def pytest_configure(config: pytest.Config) -> None:
     browser.configure(config.getoption("user_agent"))
     terminal.configure(config.getoption("terminal_toolkit"))
     gtk.configure(config.getoption("gtk_toolkit"))
+    qt.configure(config.getoption("qt_toolkit"))
 
     config.addinivalue_line("markers", "dbus: marks tests as D-Bus specific tests")
     config.addinivalue_line("markers", "gsettings: marks tests as GSettings integration tests")

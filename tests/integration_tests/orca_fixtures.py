@@ -68,6 +68,7 @@ from .apps import (
     gtk3_two_windows,
     gtk3_widget_notebook,
     konsole_terminal,
+    qt,
     qt6_combo_box,
     qt6_entry_completion,
     qt6_item_views,
@@ -158,8 +159,10 @@ def _make_native_app_fixture(
     def fixture(tmp_path_factory: pytest.TempPathFactory) -> Iterator[NativeAppSession]:
         app_module = app.__name__
         if app_module.rsplit(".", 1)[-1].startswith("qt6_"):
-            if importlib.util.find_spec("PySide6") is None:
-                pytest.skip("PySide6 is not installed")
+            binding = qt.TOOLKITS[qt.selected_toolkit()]
+            if importlib.util.find_spec(binding) is None:
+                pytest.skip(f"{binding} is not installed")
+            app_module = qt.app_module(app.__name__.rsplit("qt6_", 1)[1])
         elif gtk.is_gtk4():
             if app in (gtk3_tree_view, gtk3_multi_select_list):
                 pytest.skip(

@@ -22,7 +22,7 @@ build of the version being tested.
   metadata (`liblouis-devel` on Fedora and openSUSE).
 * MathCAT enabled in the installed Orca build.
 * GTK3 and GTK4, including their typelibs.
-* Qt6 with PySide6 (the PySide6-Essentials package provides the required modules).
+* Qt5 with PyQt5, and Qt6 with PySide6.
 * Terminal support: Python `curses`, xterm terminfo, and VTE with its GTK3 (2.91)
   and GTK4 (3.91) typelibs, plus Konsole.
 * Terminal applications: `bash`, `less`, `nano`, `vim`, and `seq` (from coreutils).
@@ -56,6 +56,8 @@ Orca's tests are grouped into the following named suites:
     * "gtk": all non-terminal GTK tests (both GTK3 and GTK4)
     * "gtk3": non-terminal GTK3 UI tests
     * "gtk4": non-terminal GTK4 UI tests
+    * "qt": all non-terminal Qt tests (both Qt5 and Qt6)
+    * "qt5": non-terminal Qt5 UI tests
     * "qt6": non-terminal Qt6 UI tests
     * "terminal": all terminal tests (GTK3 VTE, GTK4 VTE, and Konsole)
     * "gtk3-terminal": for terminal applications using VTE for GTK3
@@ -109,11 +111,11 @@ session, you can still run the tests by signing in as a second local user
 Most integration tests cover user interactions with applications and toolkits
 by simulating keystrokes, waiting for Orca's response, and checking the resulting
 speech and braille output. Running these tests therefore takes a fair amount of
-time. There are currently over 350 Meson test runs containing over 2,000 test
+time. There are currently over 400 Meson test runs containing roughly 2,400 test
 cases, many involving numerous simulated keystrokes. CI divides the suites into
 separate container jobs that can run in parallel. Local runs do not require
 containers, and application tests run sequentially by default. A full local run
-can take around 90 minutes, depending on the machine and installed applications.
+can take a couple of hours, depending on the machine and installed applications.
 
 Running tests directly on the local system is supported and tests the installed
 applications and toolkits. Supporting containers for local runs would add setup
@@ -142,7 +144,7 @@ Look for a related test in the appropriate directory under
 
 * `core/`: infrastructure and browser accessibility smoke tests
 * `gtk/`: widget tests shared between GTK3 and GTK4
-* `qt/`: Qt widget tests (currently Qt6)
+* `qt/`: widget tests shared between Qt5 and Qt6
 * `terminal/`: terminal tests for GTK3 VTE, GTK4 VTE, and Konsole
 * `atril/`: PDF-content tests in Atril
 * `file_manager/`: file-manager tests for Caja, Nautilus, and Dolphin
@@ -173,6 +175,7 @@ with it.
 Add each new test file to the appropriate group in `orca_integration_tests`
 in `tests/meson.build`. Files in the `web` group run in both Chromium and
 Firefox. Files in the `gtk` and `terminal` groups run in both GTK3 and GTK4.
+Files in the `qt` group run in both Qt5 and Qt6.
 
 Adding tests to an already registered file requires no Meson changes.
 

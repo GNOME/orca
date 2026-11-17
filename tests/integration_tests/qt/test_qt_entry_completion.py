@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from tests.integration_tests import helpers
+from tests.integration_tests.apps import qt
 from tests.integration_tests.harness import keyboard
 
 if TYPE_CHECKING:
@@ -46,6 +47,12 @@ def _open_completion(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    qt.is_qt5(),
+    reason="Qt5 exposes QCompleter's popup without an accessible parent",
+    strict=True,
+    raises=AssertionError,
+)
 def test_popup_navigation(qt_entry_completion: NativeAppSession) -> None:
     """Navigates suggestions forward and backward."""
 
