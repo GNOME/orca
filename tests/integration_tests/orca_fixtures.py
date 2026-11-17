@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import contextlib
 import curses
+import importlib.util
 import os
 import re
 import shutil
@@ -67,6 +68,15 @@ from .apps import (
     gtk3_two_windows,
     gtk3_widget_notebook,
     konsole_terminal,
+    qt6_combo_box,
+    qt6_entry_completion,
+    qt6_item_views,
+    qt6_plain_text_view,
+    qt6_text_view,
+    qt6_toolbar,
+    qt6_two_entries,
+    qt6_two_windows,
+    qt6_widget_notebook,
     terminal,
 )
 from .harness import keyboard, sandbox
@@ -141,11 +151,16 @@ def _make_native_app_fixture(
     required_font: str | None = None,
 ) -> Callable[..., Iterator[NativeAppSession]]:
     @pytest.fixture(
-        scope=scope, name=name or app.__name__.rsplit(".", 1)[-1].replace("gtk3_", "gtk_", 1)
+        scope=scope,
+        name=name
+        or app.__name__.rsplit(".", 1)[-1].replace("gtk3_", "gtk_", 1).replace("qt6_", "qt_", 1),
     )
     def fixture(tmp_path_factory: pytest.TempPathFactory) -> Iterator[NativeAppSession]:
         app_module = app.__name__
-        if gtk.is_gtk4():
+        if app_module.rsplit(".", 1)[-1].startswith("qt6_"):
+            if importlib.util.find_spec("PySide6") is None:
+                pytest.skip("PySide6 is not installed")
+        elif gtk.is_gtk4():
             if app in (gtk3_tree_view, gtk3_multi_select_list):
                 pytest.skip(
                     "GTK4 TreeView accessibility: "
@@ -399,6 +414,35 @@ _gtk_two_windows = _make_native_app_fixture(gtk3_two_windows, scope="function")
 _gtk_widget_notebook = _make_native_app_fixture(gtk3_widget_notebook)
 _gtk_toolbar = _make_native_app_fixture(gtk3_toolbar, scope="function")
 _gtk_redundant_names = _make_native_app_fixture(gtk3_redundant_names, scope="function")
+
+_qt_two_entries = _make_native_app_fixture(qt6_two_entries, scope="function")
+_qt_text_view = _make_native_app_fixture(
+    qt6_text_view,
+    lines=_TEXT_VIEW_LINES,
+    required_font=qt6_text_view.FONT_FAMILY,
+)
+
+_qt_widget_notebook = _make_native_app_fixture(qt6_widget_notebook)
+_qt_combo_box = _make_native_app_fixture(qt6_combo_box, scope="function")
+_qt_two_windows = _make_native_app_fixture(qt6_two_windows, scope="function")
+
+_qt_item_views = _make_native_app_fixture(qt6_item_views)
+_qt_entry_completion = _make_native_app_fixture(qt6_entry_completion, scope="function")
+_qt_toolbar = _make_native_app_fixture(qt6_toolbar, scope="function")
+_qt_text_view_short = _make_native_app_fixture(
+    qt6_text_view,
+    name="qt_text_view_short",
+    scope="function",
+    lines=("First sentence.", "", "Second sentence.", ""),
+    required_font=qt6_text_view.FONT_FAMILY,
+)
+
+_qt_plain_text_view = _make_native_app_fixture(
+    qt6_plain_text_view,
+    scope="function",
+    lines=("First line.", "Second line.", "Third line."),
+    required_font=qt6_plain_text_view.FONT_FAMILY,
+)
 
 _NOTIFICATION_DAEMON = Path("/usr/libexec/notification-daemon")
 

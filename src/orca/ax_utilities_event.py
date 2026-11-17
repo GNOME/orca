@@ -870,24 +870,27 @@ class AXUtilitiesEvent:
             return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
         if (
             event.detail1 == 0
-            and obj == focus_manager.get_manager().get_locus_of_focus()
-            and AXUtilitiesState.is_single_line(obj, source_states)
+            and not AXUtilitiesState.is_multi_line(obj, source_states)
             and AXUtilitiesState.is_showing_and_visible(obj, source_states)
         ):
+            focus = focus_manager.get_manager().get_locus_of_focus()
             if (
-                AXUtilitiesRole.is_combo_box(obj, source_role)
+                obj == focus
+                and AXUtilitiesRole.is_combo_box(obj, source_role)
                 and AXText.get_character_count(obj) == event.detail2
             ):
                 return TextEventReason.AUTO_INSERTION_PRESENTABLE
             parent = AXObject.get_parent(obj)
-            if AXUtilitiesRole.is_combo_box(parent):
+            if (
+                focus in (obj, parent)
+                and AXUtilitiesRole.is_combo_box(parent)
+                and AXText.get_character_count(obj) == event.detail2
+            ):
                 # Selecting a combo box item can replace its entry without an editing command.
                 selected = AXSelection.get_selected_child(parent, 0)
-                if (
-                    selected is not None
-                    and AXObject.get_name(selected) == event.any_data
-                    and AXText.get_character_count(obj) == event.detail2
-                ):
+                if selected is None:
+                    selected = AXSelection.get_selected_child(AXObject.get_child(parent, 0), 0)
+                if selected is not None and AXObject.get_name(selected) == event.any_data:
                     return TextEventReason.AUTO_INSERTION_PRESENTABLE
         return TextEventReason.UNKNOWN
 
@@ -1502,6 +1505,10 @@ class AXUtilitiesEvent:
             )
             if text_input is not None and AXUtilitiesState.is_focused(text_input):
                 msg = "AXUtilitiesEvent: Combo box text input is focused; not a user selection."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
+            if event.source == focus and mgr.last_event_was_return():
+                msg = "AXUtilitiesEvent: Selection change after collapsing combo box."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 

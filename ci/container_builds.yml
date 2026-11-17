@@ -6,7 +6,7 @@ include:
 
 variables:
   # Bump the tag when changing image contents or dependency checks.
-  BASE_TAG: "2026-11-13.1-main"
+  BASE_TAG: "2026-11-17.1-main"
   FDO_UPSTREAM_REPO: "gnome/orca"
 
 .orca_opensuse_tumbleweed_x86_64:
@@ -23,7 +23,8 @@ opensuse-container@x86_64:
     - .fdo.container-build@opensuse@x86_64
   stage: "container-build"
   variables:
-    FDO_DISTRIBUTION_PACKAGES: >-
+    FDO_DISTRIBUTION_PACKAGES: ""
+    ORCA_DISTRIBUTION_PACKAGES: >-
       atril
       caja
       cargo
@@ -71,6 +72,7 @@ opensuse-container@x86_64:
       python3-lxml
       python3-pip
       python3-psutil
+      python3-pyside6
       python3-simplejson
       python3-speechd
       terminfo-base
@@ -82,4 +84,7 @@ opensuse-container@x86_64:
       yelp-devel
       yelp-tools
     FDO_DISTRIBUTION_EXEC: >-
+      zypper --non-interactive refresh &&
+      zypper --non-interactive dist-upgrade &&
+      zypper --non-interactive install ${ORCA_DISTRIBUTION_PACKAGES} &&
       bash ci/install-python-tools.sh && bash ci/check-container.sh

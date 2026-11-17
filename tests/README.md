@@ -22,6 +22,7 @@ build of the version being tested.
   metadata (`liblouis-devel` on Fedora and openSUSE).
 * MathCAT enabled in the installed Orca build.
 * GTK3 and GTK4, including their typelibs.
+* Qt6 with PySide6 (the PySide6-Essentials package provides the required modules).
 * Terminal support: Python `curses`, xterm terminfo, and VTE with its GTK3 (2.91)
   and GTK4 (3.91) typelibs, plus Konsole.
 * Terminal applications: `bash`, `less`, `nano`, `vim`, and `seq` (from coreutils).
@@ -55,6 +56,7 @@ Orca's tests are grouped into the following named suites:
     * "gtk": all non-terminal GTK tests (both GTK3 and GTK4)
     * "gtk3": non-terminal GTK3 UI tests
     * "gtk4": non-terminal GTK4 UI tests
+    * "qt6": non-terminal Qt6 UI tests
     * "terminal": all terminal tests (GTK3 VTE, GTK4 VTE, and Konsole)
     * "gtk3-terminal": for terminal applications using VTE for GTK3
     * "gtk4-terminal": the same terminal tests using VTE for GTK4
@@ -63,7 +65,7 @@ Orca's tests are grouped into the following named suites:
     * "chromium": for web content using Chrome (beta preferred) or Chromium
     * "gecko": for web content using Firefox (Nightly preferred)
 
-Note that coverage for Qt, along with additional applications, is in progress.
+Coverage for additional widgets and applications is in progress.
 
 ```bash
 meson test -C _build
@@ -140,6 +142,7 @@ Look for a related test in the appropriate directory under
 
 * `core/`: infrastructure and browser accessibility smoke tests
 * `gtk/`: widget tests shared between GTK3 and GTK4
+* `qt/`: Qt widget tests (currently Qt6)
 * `terminal/`: terminal tests for GTK3 VTE, GTK4 VTE, and Konsole
 * `atril/`: PDF-content tests in Atril
 * `file_manager/`: file-manager tests for Caja, Nautilus, and Dolphin
