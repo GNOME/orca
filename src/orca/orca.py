@@ -253,6 +253,8 @@ def main():
     if error is not None:
         return error
 
+    # Defaults in at-spi2-core/atspi/atspi-misc.c: 800 ms per call, 15000 ms for app startup.
+    Atspi.set_timeout(1000, 15000)
     ax_device_manager.get_manager().activate()
     load_user_settings(is_reload=False)
 
