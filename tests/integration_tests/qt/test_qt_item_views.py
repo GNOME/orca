@@ -193,6 +193,60 @@ def test_table_cell_reading_mode(qt_item_views: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.xfail(
+    reason=("Qt does not identify QTreeView's focused cell in a focus or active-descendant event"),
+    strict=True,
+    raises=AssertionError,
+)
+@pytest.mark.parametrize("return_to_tree", [False, True], ids=["entry", "return"])
+@pytest.mark.parametrize("item_count", [1, 2], ids=["one-item", "two-items"])
+def test_tree_focus(qt_item_views: NativeAppSession, return_to_tree: bool, item_count: int) -> None:
+    """Reads the focused tree item on entry and after tabbing away and back."""
+
+    session = qt_item_views
+    _prepare(session, "tree")
+    if item_count == 1:
+        keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
+        helpers.capture(session)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
+    if return_to_tree:
+        helpers.capture(session)
+        keyboard.tap_key(keyboard.KEYSYM_TAB)
+        helpers.capture(session)
+        keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
+    spoken, brailled = helpers.capture(session)
+    assert "Readme.txt" in " ".join(spoken)
+    assert brailled and "Readme.txt" in brailled[-1].full
+
+
+@pytest.mark.native_app
+@pytest.mark.xfail(
+    qt.is_qt5(),
+    reason="Qt5 lacks AT-SPI Selection to identify the selected QTreeView item on focus return",
+    strict=True,
+    raises=AssertionError,
+)
+def test_tree_focus_after_navigation(qt_item_views: NativeAppSession) -> None:
+    """Reads the selected tree item when returning after arrow navigation."""
+
+    session = qt_item_views
+    _prepare(session, "tree")
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
+    helpers.capture(session)
+    for key, name in ((keyboard.KEYSYM_DOWN, "Notes.txt"), (keyboard.KEYSYM_UP, "Readme.txt")):
+        keyboard.tap_key(key)
+        spoken, brailled = helpers.capture(session)
+        assert spoken == [name, "Complete"]
+        assert brailled and name in brailled[-1].full
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    helpers.capture(session)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["Readme.txt"]
+    assert brailled and "Readme.txt" in brailled[-1].full
+
+
+@pytest.mark.native_app
+@pytest.mark.xfail(
     reason="Qt emits no AT-SPI expanded state-change event when a QTreeWidget item expands",
     strict=True,
     raises=AssertionError,

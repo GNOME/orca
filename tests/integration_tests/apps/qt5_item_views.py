@@ -63,6 +63,17 @@ def main():
         table.setItem(row, 3, done)
     table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeMode.Stretch)
     box.addWidget(table)
+    for names in (("Readme.txt",), ("Readme.txt", "Notes.txt")):
+        downloads = QtWidgets.QTreeView()
+        downloads.setAccessibleName("Downloads")
+        downloads.setRootIsDecorated(False)
+        downloads.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
+        model = QtGui.QStandardItemModel(downloads)
+        model.setHorizontalHeaderLabels(["Name", "Status"])
+        for name in names:
+            model.appendRow([QtGui.QStandardItem(name), QtGui.QStandardItem("Complete")])
+        downloads.setModel(model)
+        box.addWidget(downloads)
     tree = QtWidgets.QTreeWidget()
     tree.setHeaderLabel("Projects")
     for name, children in (("Work", ("Report", "Notes")), ("Home", ("Garden", "Kitchen"))):
