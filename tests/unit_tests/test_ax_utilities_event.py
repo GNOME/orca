@@ -236,6 +236,62 @@ class TestAXUtilitiesEvent:
 
         ax_cache_manager.get_manager().clear_cache_now("Unit test.")
 
+    @pytest.mark.parametrize(
+        "parent_is_focus, parent_focused, parent_visible, parent_expanded, parent_role, expected",
+        [
+            (True, True, True, False, Atspi.Role.COMBO_BOX, True),
+            (True, False, True, False, Atspi.Role.COMBO_BOX, True),
+            (False, True, True, False, Atspi.Role.COMBO_BOX, True),
+            (False, False, True, False, Atspi.Role.COMBO_BOX, False),
+            (True, True, False, False, Atspi.Role.COMBO_BOX, False),
+            (True, True, True, True, Atspi.Role.COMBO_BOX, False),
+            (True, True, True, False, Atspi.Role.PUSH_BUTTON, False),
+        ],
+    )
+    def test_selection_change_from_hidden_combo_box_menu(
+        self,
+        test_context,
+        parent_is_focus,
+        parent_focused,
+        parent_visible,
+        parent_expanded,
+        parent_role,
+        expected,
+    ) -> None:
+        """Presents a collapsed combo box's change without requiring visible options."""
+
+        modules = self._setup_dependencies(test_context)
+        from orca.ax_object import AXObject
+        from orca.ax_selection import AXSelection
+        from orca.ax_utilities_event import AXUtilitiesEvent
+
+        menu, parent, child = (test_context.Mock() for _ in range(3))
+        event = test_context.Mock(source=menu)
+        states = {obj: Atspi.StateSet.new([]) for obj in (menu, parent, child)}
+        if parent_focused:
+            states[parent].add(Atspi.StateType.FOCUSED)
+        if parent_visible:
+            states[parent].add(Atspi.StateType.SHOWING)
+            states[parent].add(Atspi.StateType.VISIBLE)
+        if parent_expanded:
+            states[parent].add(Atspi.StateType.EXPANDED)
+        roles = {menu: Atspi.Role.MENU, parent: parent_role, child: Atspi.Role.MENU_ITEM}
+        test_context.patch_object(AXObject, "get_role", side_effect=roles.get)
+        test_context.patch_object(AXObject, "get_parent", return_value=parent)
+        test_context.patch_object(AXObject, "get_state_set", side_effect=states.get)
+        test_context.patch_object(
+            AXObject,
+            "has_state",
+            side_effect=lambda obj, state, state_set=None: states[obj].contains(state),
+        )
+        test_context.patch_object(AXSelection, "get_selected_child", return_value=child)
+        manager = modules["orca.input_event_manager"].get_manager.return_value
+        manager.last_event_was_space.return_value = False
+        focus = modules["orca.focus_manager"].get_manager.return_value
+        focus.get_locus_of_focus.return_value = parent if parent_is_focus else child
+
+        assert AXUtilitiesEvent.is_presentable_selection_change(event) is expected
+
     def test_import_registers_event_cache_namespaces(self, test_context) -> None:
         """Test importing event utilities registers its cache namespaces."""
 

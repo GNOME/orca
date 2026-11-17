@@ -1467,6 +1467,18 @@ class AXUtilitiesEvent:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
+            parent = AXObject.get_parent(event.source)
+            if AXUtilitiesRole.is_combo_box(parent):
+                parent_states = AXObject.get_state_set(parent)
+                if (
+                    not AXUtilitiesState.is_expanded(parent, parent_states)
+                    and AXUtilitiesState.is_showing_and_visible(parent, parent_states)
+                    and (parent == focus or AXUtilitiesState.is_focused(parent, parent_states))
+                ):
+                    msg = "AXUtilitiesEvent: Selection changed in a focused, collapsed combo box."
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                    return True
+
             # This is a sad workaround for GTK2 menu items with submenus losing their showing state
             # when submenu children become selected.
             child = AXSelection.get_selected_child(event.source, 0)
