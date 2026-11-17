@@ -108,8 +108,10 @@ def test_empty_aria_heading_is_a_single_caret_stop(
     session = web_weird_headings
     reset_web_state(session)
     move_to_top(session)
-    for _ in range(heading_number):
+    for _ in range(heading_number - 1):
         keyboard.tap_key(keyboard.KEYSYM_2)
+        speech(session)
+    keyboard.tap_key(keyboard.KEYSYM_2)
     assert speech(session) == ["2", name, "heading 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)

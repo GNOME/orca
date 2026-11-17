@@ -628,6 +628,8 @@ class AXUtilities:
 
         if AXUtilitiesObject.find_ancestor(obj, AXUtilitiesRole.is_desktop_frame) is not None:
             return True, "is inside desktop frame"
+        if not AXObject.supports_selection(obj) and not AXUtilitiesState.is_focusable(obj):
+            return AXUtilities._is_layout_only_panel(obj)
         return False, ""
 
     @staticmethod

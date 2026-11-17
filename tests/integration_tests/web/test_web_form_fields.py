@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from tests.integration_tests import helpers
+from tests.integration_tests.apps import browser
 from tests.integration_tests.harness import keyboard
 from tests.integration_tests.version_helpers import firefox_is_older_than_build
 
@@ -805,7 +806,14 @@ def test_where_am_i_on_form_controls(web_form_fields: BrowserSession) -> None:
 # Firefox 156's caret/Tab failure depends on the preceding Where Am I test running.
 @pytest.mark.skipif(firefox_is_older_than_build(157, 0), reason="Needs Firefox 157 or later")
 @helpers.xfail_firefox_caret_tab()
-@helpers.xfail_firefox_native_select()
+@pytest.mark.xfail(
+    browser.selected_browser() == "firefox"
+    and not firefox_is_older_than_build(162, 20261110053316),
+    reason="Firefox does not expose position and set size for collapsed native select elements: "
+    "https://bugzilla.mozilla.org/show_bug.cgi?id=1732284",
+    raises=AssertionError,
+    strict=True,
+)
 def test_position_in_set_when_arrowing_a_combo_box(web_form_fields: BrowserSession) -> None:
     """Tests position in set when arrowing a combo box."""
 

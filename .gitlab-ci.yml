@@ -134,7 +134,26 @@ integration-tests-base:
   extends: .integration-tests
   allow_failure: false
   script:
-    - meson test -C "${MESON_BUILD_DIR}" --suite core --suite gtk3 --suite gtk4 --suite gtk3-terminal --suite gtk4-terminal --suite konsole-terminal --num-processes 1 --timeout-multiplier 2 --print-errorlogs
+    - python3 -c 'from PySide6.QtCore import qVersion; print("Qt", qVersion())'
+    - |
+      python3 - <<'PY'
+      import gi
+      gi.require_version("Gtk", "3.0")
+      gi.require_version("Vte", "2.91")
+      from gi.repository import Gtk, Vte
+      print("GTK3:", Gtk.get_major_version(), Gtk.get_minor_version(), Gtk.get_micro_version())
+      print("VTE (GTK3):", Vte.get_major_version(), Vte.get_minor_version(), Vte.get_micro_version())
+      PY
+    - |
+      python3 - <<'PY'
+      import gi
+      gi.require_version("Gtk", "4.0")
+      gi.require_version("Vte", "3.91")
+      from gi.repository import Gtk, Vte
+      print("GTK4:", Gtk.get_major_version(), Gtk.get_minor_version(), Gtk.get_micro_version())
+      print("VTE (GTK4):", Vte.get_major_version(), Vte.get_minor_version(), Vte.get_micro_version())
+      PY
+    - meson test -C "${MESON_BUILD_DIR}" --suite core --suite gtk3 --suite gtk4 --suite qt6 --suite gtk3-terminal --suite gtk4-terminal --suite konsole-terminal --num-processes 1 --timeout-multiplier 2 --print-errorlogs
 
 integration-tests-chromium:
   extends: .integration-tests

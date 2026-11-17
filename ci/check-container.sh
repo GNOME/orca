@@ -68,3 +68,9 @@ from gi.repository import Gtk, Vte
 print("GTK4:", Gtk.get_major_version(), Gtk.get_minor_version(), Gtk.get_micro_version())
 print("VTE (GTK4):", Vte.get_major_version(), Vte.get_minor_version(), Vte.get_micro_version())
 PY_GTK4
+
+python3 - <<'PY_QT6'
+from PySide6 import QtCore, QtWidgets
+
+print("Qt6:", QtCore.qVersion())
+PY_QT6

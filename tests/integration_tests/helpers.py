@@ -66,7 +66,8 @@ def xfail_firefox_native_select() -> pytest.MarkDecorator:
 
     return pytest.mark.xfail(
         browser.selected_browser() == "firefox"
-        and not firefox_is_older_than_build(162, 20261110053316),
+        and not firefox_is_older_than_build(162, 20261110053316)
+        and firefox_is_older_than_build(162, 20261116094510),
         reason="Firefox does not expose native select values or value-change events: "
         "https://bugzilla.mozilla.org/show_bug.cgi?id=2091657",
         raises=AssertionError,
