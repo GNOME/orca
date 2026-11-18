@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Gnome Nepali Translation Project\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-10-29 13:57+0000\n"
-"PO-Revision-Date: 2026-11-18 21:01+0545\n"
-"Last-Translator: Shraddha Tiwari <shraddhatiwari6211@gmail.com>\n"
+"PO-Revision-Date: 2026-11-18 22:51+0545\n"
+"Last-Translator: Aaditya Binod Yadav <aadityarayyadav@gmail.com>\n"
 "Language-Team: Nepali Translation Team <chautari@gmail.com>\n"
 "Language: ne\n"
 "MIME-Version: 1.0\n"
@@ -12169,7 +12169,7 @@ msgstr "डेस्कटप"
 #. is presented when the user switches to the laptop keyboard layout.
 #: src/orca/messages.py:1511
 msgid "Laptop layout."
-msgstr ""
+msgstr "ल्यापटप लेआउट।"
 
 #. Translators: This message is presented to the user when the command to move
 #. the mouse pointer to a particular object is believed to have succeeded.
