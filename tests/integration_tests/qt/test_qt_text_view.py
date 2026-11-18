@@ -144,7 +144,10 @@ def test_say_all(qt_text_view_short: NativeAppSession, style: str) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.xfail(
-    reason="Qt's GetStringAtOffset(LINE) omits newlines, leaving blank lines with empty ranges",
+    reason=(
+        "Qt's GetStringAtOffset(LINE) omits newlines, leaving blank lines with empty ranges: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152403"
+    ),
     strict=True,
     raises=AssertionError,
 )

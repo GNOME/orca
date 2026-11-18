@@ -60,7 +60,8 @@ def _review_second_line_then_switch_away_and_back(session: NativeAppSession) -> 
 @pytest.mark.xfail(
     reason=(
         "Qt's GetStringAtOffset(LINE) omits newlines, preventing flat "
-        "review from advancing to the next line"
+        "review from advancing to the next line: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152403"
     ),
     strict=True,
     raises=AssertionError,
@@ -85,7 +86,8 @@ def test_focus_tracking_on_resets_review_on_window_change(
 @pytest.mark.xfail(
     reason=(
         "Qt's GetStringAtOffset(LINE) omits newlines, preventing flat "
-        "review from advancing to the next line"
+        "review from advancing to the next line: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152403"
     ),
     strict=True,
     raises=AssertionError,
@@ -110,7 +112,8 @@ def test_focus_tracking_off_keeps_review_on_window_change(
 @pytest.mark.xfail(
     reason=(
         "Qt's GetStringAtOffset(LINE) omits newlines, preventing flat "
-        "review from advancing to the next line"
+        "review from advancing to the next line: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152403"
     ),
     strict=True,
     raises=AssertionError,

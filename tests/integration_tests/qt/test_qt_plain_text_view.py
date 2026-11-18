@@ -54,7 +54,8 @@ def test_native_line_navigation(qt_plain_text_view: NativeAppSession) -> None:
 @pytest.mark.xfail(
     reason=(
         "QAccessibleTextWidget::characterRect() returns the same y "
-        "coordinate for different QPlainTextEdit paragraphs"
+        "coordinate for different QPlainTextEdit paragraphs: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152402"
     ),
     strict=True,
     raises=AssertionError,
@@ -78,7 +79,8 @@ def test_flat_review_lines(qt_plain_text_view: NativeAppSession) -> None:
 @pytest.mark.xfail(
     reason=(
         "Qt's QWidgetTextControlPrivate::_q_contentsChanged() replaces deleted "
-        "text with spaces in AT-SPI text-change events"
+        "text with spaces in AT-SPI text-change events: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152373"
     ),
     strict=True,
     raises=AssertionError,

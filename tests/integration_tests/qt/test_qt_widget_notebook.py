@@ -115,7 +115,10 @@ def test_button_state_changes(qt_widget_notebook: NativeAppSession, tabs: int) -
 
 @pytest.mark.native_app
 @pytest.mark.xfail(
-    reason="Qt's AT-SPI adaptor omits indeterminate state-change events for QCheckBox",
+    reason=(
+        "Qt's AT-SPI adaptor omits indeterminate state-change events for QCheckBox: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152406"
+    ),
     strict=True,
     raises=AssertionError,
 )

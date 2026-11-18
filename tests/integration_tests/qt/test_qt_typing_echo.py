@@ -163,7 +163,8 @@ def test_character_echo_with_key_echo_on(qt_text_view: NativeAppSession) -> None
 @pytest.mark.xfail(
     reason=(
         "Qt's QWidgetTextControlPrivate::_q_contentsChanged() replaces deleted "
-        "text with spaces in AT-SPI text-change events"
+        "text with spaces in AT-SPI text-change events: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152373"
     ),
     strict=True,
     raises=AssertionError,
@@ -199,7 +200,8 @@ def test_backspace_and_delete_in_text_view(qt_text_view: NativeAppSession) -> No
 @pytest.mark.xfail(
     reason=(
         "Qt's QWidgetTextControlPrivate::_q_contentsChanged() replaces deleted "
-        "text with spaces in AT-SPI text-change events"
+        "text with spaces in AT-SPI text-change events: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152373"
     ),
     strict=True,
     raises=AssertionError,
@@ -227,7 +229,8 @@ def test_ctrl_backspace_in_text_view(qt_text_view: NativeAppSession) -> None:
 @pytest.mark.xfail(
     reason=(
         "Qt's QWidgetTextControlPrivate::_q_contentsChanged() replaces deleted "
-        "text with spaces in AT-SPI text-change events"
+        "text with spaces in AT-SPI text-change events: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152373"
     ),
     strict=True,
     raises=AssertionError,

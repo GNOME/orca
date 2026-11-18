@@ -44,7 +44,10 @@ _SECOND_VISIBLE = "Banana bread recipe $l"
 @pytest.mark.native_app
 @pytest.mark.xfail(
     not qt.is_qt5(),
-    reason="Qt's QAccessibleLineEdit::scrollToSubstring() moves the caret to the range start",
+    reason=(
+        "Qt's QAccessibleLineEdit::scrollToSubstring() moves the caret to the range start: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152397"
+    ),
     strict=True,
     raises=AssertionError,
 )

@@ -141,7 +141,8 @@ def test_paste(qt_two_entries: NativeAppSession, replace_selection: bool) -> Non
 @pytest.mark.xfail(
     reason=(
         "QWidgetLineControl::internalUndo() and internalRedo() change "
-        "text without AT-SPI text-change notifications"
+        "text without AT-SPI text-change notifications: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152372"
     ),
     strict=True,
     raises=AssertionError,
@@ -172,7 +173,8 @@ def test_undo_redo_cut(qt_two_entries: NativeAppSession) -> None:
 @pytest.mark.xfail(
     reason=(
         "QWidgetLineControl::internalUndo() and internalRedo() change "
-        "text without AT-SPI text-change notifications"
+        "text without AT-SPI text-change notifications: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152372"
     ),
     strict=True,
     raises=AssertionError,
@@ -219,7 +221,8 @@ def test_undo_redo_paste(qt_two_entries: NativeAppSession, replace_selection: bo
 @pytest.mark.xfail(
     reason=(
         "QWidgetLineControl::internalUndo() and internalRedo() change "
-        "text without AT-SPI text-change notifications"
+        "text without AT-SPI text-change notifications: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152372"
     ),
     strict=True,
     raises=AssertionError,
@@ -240,7 +243,8 @@ def test_undo_redo_delete(qt_two_entries: NativeAppSession) -> None:
 @pytest.mark.xfail(
     reason=(
         "QWidgetLineControl::internalUndo() and internalRedo() change "
-        "text without AT-SPI text-change notifications"
+        "text without AT-SPI text-change notifications: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152372"
     ),
     strict=True,
     raises=AssertionError,

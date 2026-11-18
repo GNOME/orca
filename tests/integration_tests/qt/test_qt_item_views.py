@@ -247,7 +247,10 @@ def test_tree_focus_after_navigation(qt_item_views: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.xfail(
-    reason="Qt emits no AT-SPI expanded state-change event when a QTreeWidget item expands",
+    reason=(
+        "Qt emits no AT-SPI expanded state-change event when a QTreeWidget item expands: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152408"
+    ),
     strict=True,
     raises=AssertionError,
 )
