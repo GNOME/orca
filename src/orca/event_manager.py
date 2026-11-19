@@ -596,6 +596,7 @@ class EventManager:
                 Atspi.Role.INFO_BAR,
                 Atspi.Role.MENU,
                 Atspi.Role.NOTIFICATION,
+                Atspi.Role.POPUP_MENU,
                 Atspi.Role.STATUS_BAR,
                 Atspi.Role.TOOL_TIP,
             ]

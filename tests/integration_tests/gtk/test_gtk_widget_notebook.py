@@ -344,7 +344,10 @@ def test_context_menu_opening(gtk_widget_notebook: NativeAppSession) -> None:
 @pytest.mark.native_app
 @pytest.mark.xfail(
     gtk.is_gtk4(),
-    reason="Orca repeats the context-menu name when moving between GTK4 menu items",
+    reason=(
+        "GTK4 exposes the context menu's parent with role INVALID: "
+        "https://gitlab.gnome.org/GNOME/gtk/-/work_items/8565"
+    ),
     strict=True,
     raises=AssertionError,
 )
@@ -369,7 +372,7 @@ def test_context_menu_navigation(gtk_widget_notebook: NativeAppSession) -> None:
             text = helpers.expected_for_gtk(
                 f"{name} {mnemonic}", gtk4=f"{name} {mnemonic} (Alt+{mnemonic})"
             )
-            assert brailled[-1] == helpers.BrailleLine(1, text, text, "\x00" * len(text))
+            assert brailled == [helpers.BrailleLine(1, text, text, "\x00" * len(text))]
     finally:
         keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
         helpers.capture(session)
@@ -377,7 +380,12 @@ def test_context_menu_navigation(gtk_widget_notebook: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.xfail(
-    reason="Orca presents a nameless frame when closing a GTK entry's context menu",
+    reason=(
+        "GTK4 exposes the context menu's parent with role INVALID: "
+        "https://gitlab.gnome.org/GNOME/gtk/-/work_items/8565"
+        if gtk.is_gtk4()
+        else "Orca presents a nameless frame when closing a GTK entry's context menu"
+    ),
     strict=True,
     raises=AssertionError,
 )
@@ -394,7 +402,7 @@ def test_context_menu_closing(gtk_widget_notebook: NativeAppSession) -> None:
     assert _press(session, keyboard.KEYSYM_ESCAPE) == (
         helpers.expected_for_gtk(
             ["Widgets page tab", "City text", "Madrid", "selected"],
-            gtk4=["Widgets Page 1 panel", "City text", "Madrid", "selected", "opens popup"],
+            gtk4=["City text", "Madrid", "selected", "opens popup"],
         ),
         [
             helpers.BrailleLine(

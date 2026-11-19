@@ -369,8 +369,8 @@ def test_menu_navigation(qt_widget_notebook: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.xfail(
-    reason="Orca does not present the QLineEdit context menu when it opens",
-    strict=True,
+    reason="Qt emits window:activate for the frame after its context menu opens",
+    strict=False,
     raises=AssertionError,
 )
 def test_context_menu_opening(qt_widget_notebook: NativeAppSession) -> None:
@@ -379,10 +379,11 @@ def test_context_menu_opening(qt_widget_notebook: NativeAppSession) -> None:
     session = qt_widget_notebook
     _prepare(session, 5)
     keyboard.tap_key(keyboard.KEYSYM_MENU)
+    text = "popup menu" if qt.is_qt5() else "OrcaWidgetNotebook popup menu"
     try:
         assert helpers.capture(session, quiescence=0.3) == (
-            ["menu"],
-            [helpers.BrailleLine(1, "menu", "menu", "\x00" * 4)],
+            [text],
+            [helpers.BrailleLine(1, text, text, "\x00" * len(text))],
         )
     finally:
         keyboard.tap_key(keyboard.KEYSYM_ESCAPE)

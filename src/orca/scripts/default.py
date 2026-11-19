@@ -758,21 +758,8 @@ class Script(script.Script):
         """Callback for object:state-changed:showing accessibility events."""
 
         obj = event.source
-        if AXUtilities.is_notification(obj):
-            if not event.detail1:
-                return True
-
-            presentation_manager.get_manager().speak_message(
-                self.get_speech_generator().get_localized_role_name(obj),
-            )
-            msg = self.utilities.get_notification_content(obj)
-            presenter = presentation_manager.get_manager()
-            presenter.speak_accessible_text(obj, msg)
-            presenter.present_braille_message(msg)
-            notification_presenter.get_presenter().save_notification(msg)
-            return True
-
-        if AXUtilities.is_tool_tip(obj):
+        role = AXObject.get_role(obj)
+        if AXUtilities.is_tool_tip(obj, role):
             was_f1 = input_event_manager.get_manager().last_event_was_f1()
             if not was_f1 and not mouse_presenter.get_presenter().get_present_tooltips():
                 return True
@@ -787,6 +774,28 @@ class Script(script.Script):
                 presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
                 self.present_object(obj, prior_obj=event.source)
                 return True
+
+        if not event.detail1:
+            return True
+
+        if AXUtilities.is_notification(obj, role):
+            presentation_manager.get_manager().speak_message(
+                self.get_speech_generator().get_localized_role_name(obj),
+            )
+            notification_content = self.utilities.get_notification_content(obj)
+            presenter = presentation_manager.get_manager()
+            presenter.speak_accessible_text(obj, notification_content)
+            presenter.present_braille_message(notification_content)
+            notification_presenter.get_presenter().save_notification(notification_content)
+            return True
+
+        if AXUtilities.is_popup_menu(obj, role) and AXUtilities.is_application(
+            AXObject.get_parent(obj),
+        ):
+            msg = "DEFAULT: Setting locus of focus to newly-shown popup menu."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            focus_manager.get_manager().set_locus_of_focus(event, obj)
+            return True
 
         return True
 

@@ -1058,12 +1058,12 @@ class AXUtilities:
         obj: Atspi.Accessible,
         inclusive: bool = False,
     ) -> bool:
-        """Returns True if obj has a menu ancestor."""
+        """Returns True if obj has a menu or popup menu ancestor."""
 
         return AXUtilities._is_descendant(
             AXUtilities._CACHE.IS_MENU_DESCENDANT,
             obj,
-            AXUtilitiesRole.is_menu,
+            lambda x: AXObject.get_role(x) in (Atspi.Role.MENU, Atspi.Role.POPUP_MENU),
             inclusive,
         )
 
