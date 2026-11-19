@@ -76,7 +76,10 @@ def test_popup_navigation(qt_entry_completion: NativeAppSession) -> None:
 @pytest.mark.native_app
 @pytest.mark.parametrize("accept", [False, True], ids=["cancel", "accept"])
 @pytest.mark.xfail(
-    reason="Qt does not emit an AT-SPI focus event for the entry when QCompleter's popup closes",
+    reason=(
+        "Qt does not emit an AT-SPI focus event for the entry when QCompleter's popup closes: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152429"
+    ),
     strict=True,
     raises=AssertionError,
 )

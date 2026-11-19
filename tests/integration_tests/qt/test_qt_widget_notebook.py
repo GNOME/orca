@@ -314,17 +314,13 @@ def test_readonly_spin_button(qt_widget_notebook: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.xfail(
-    reason="Qt menus sometimes close after Alt+F when an AT-SPI keyboard watcher is active",
-    strict=False,
-    raises=AssertionError,
-)
 def test_menu_navigation(qt_widget_notebook: NativeAppSession) -> None:
     """Navigates menu items and a submenu using arrow keys."""
 
     session = qt_widget_notebook
     _prepare(session)
-    keyboard.press_chord([keyboard.KEYSYM_ALT_L], ord("f"))
+    # Let Qt process Alt before the shortcut opens the menu.
+    keyboard.press_chord([keyboard.KEYSYM_ALT_L], ord("f"), modifier_delay=0.15)
     spoken, brailled = helpers.capture(session)
     assert "New" in spoken
     assert brailled and "New" in brailled[-1].full

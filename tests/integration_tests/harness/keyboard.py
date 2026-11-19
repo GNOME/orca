@@ -118,7 +118,7 @@ def tap_key(keysym: int, click_count: int = 1) -> None:
         release_key(keysym)
 
 
-def press_chord(modifiers: list[int], keysym: int) -> None:
+def press_chord(modifiers: list[int], keysym: int, *, modifier_delay: float = 0.0) -> None:
     """Holds modifiers, taps keysym, releases the modifiers in reverse order."""
 
     pressed: list[int] = []
@@ -126,6 +126,8 @@ def press_chord(modifiers: list[int], keysym: int) -> None:
         for modifier in modifiers:
             press_key(modifier)
             pressed.append(modifier)
+        if pressed and modifier_delay:
+            time.sleep(modifier_delay)
         tap_key(keysym)
     finally:
         for modifier in reversed(pressed):

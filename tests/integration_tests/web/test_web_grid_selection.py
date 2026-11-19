@@ -31,6 +31,7 @@ from tests.integration_tests.helpers import (
     BrailleLine,
     capture,
     reset_web_state,
+    skip_firefox_caret_tab,
     xfail_firefox_caret_tab,
 )
 
@@ -39,6 +40,7 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.native_app
+@skip_firefox_caret_tab()
 @pytest.mark.parametrize("selected", [False, True], ids=["unselected-row", "selected-row"])
 @pytest.mark.parametrize("read_row", [False, True], ids=["read-cell", "read-row"])
 def test_tab_into_grid_row(
