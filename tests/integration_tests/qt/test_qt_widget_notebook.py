@@ -369,7 +369,10 @@ def test_menu_navigation(qt_widget_notebook: NativeAppSession) -> None:
 
 @pytest.mark.native_app
 @pytest.mark.xfail(
-    reason="Qt emits window:activate for the frame after its context menu opens",
+    reason=(
+        "Qt emits window:activate for the frame after its context menu opens: "
+        "https://qt-project.atlassian.net/browse/QTBUG-152455"
+    ),
     strict=False,
     raises=AssertionError,
 )
