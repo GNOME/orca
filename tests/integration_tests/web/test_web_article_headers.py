@@ -29,6 +29,7 @@ import pytest
 from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
 from tests.integration_tests.helpers import BrailleLine
+from tests.integration_tests.version_helpers import firefox_is_older_than_build
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -86,9 +87,8 @@ def _set_announcements(session: BrowserSession, enabled: bool, *, say_all: bool 
     session.orca.set(other, "AnnounceGrouping", enabled)
 
 
-def _expected_speech(session: BrowserSession, utterances: list[str], enabled: bool) -> list[str]:
-    # Firefox exposes these article children as sections, including when named.
-    if not enabled or helpers.expected_for_browser(session, False, firefox=True):
+def _expected_speech(utterances: list[str], enabled: bool) -> list[str]:
+    if not enabled or firefox_is_older_than_build(162, 20261118215316):
         return [item for item in utterances if item not in ("header", "footer")]
     return utterances
 
@@ -126,7 +126,7 @@ def test_navigate_headers_and_footers(
             text, is_link = _CONTENTS[index]
             mask = ("\xc0" if is_link else "\x00") * len(text)
             assert helpers.capture(session) == (
-                _expected_speech(session, _line_speech(index, context), enabled),
+                _expected_speech(_line_speech(index, context), enabled),
                 [BrailleLine(1, text, text, mask)],
             )
 
@@ -168,7 +168,7 @@ def test_say_all_headers_and_footers(
             "After articles.",
         ]
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-    assert helpers.speech(session) == _expected_speech(session, expected, enabled), (
+    assert helpers.speech(session) == _expected_speech(expected, enabled), (
         "Late output after the failed capture: "
         f"{helpers.capture(session, wait_async=True, overall=3.0)!r}"
     )

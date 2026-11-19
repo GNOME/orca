@@ -377,10 +377,8 @@ class Generator:
     def _is_minimal(self) -> bool:
         """Returns True if only the changed state/value should be presented."""
 
-        return self._get_reason() in (
-            PresentationReason.STATE_CHANGE,
-            PresentationReason.PROGRESS_BAR_UPDATE,
-        )
+        reason = self._get_reason()
+        return reason.is_state_change() or reason == PresentationReason.PROGRESS_BAR_UPDATE
 
     def _is_say_all(self) -> bool:
         """Returns True if this presentation is part of a say-all read."""

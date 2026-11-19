@@ -1867,6 +1867,7 @@ class BrailleGenerator(generator.Generator):
                         self._generate_accessible_label_and_name(obj)
                         + self._generate_state_expanded(obj),
                     ),
+                    indicator=self._as_string(self._generate_state_checked_if_checkable(obj)),
                 ),
             ]
 

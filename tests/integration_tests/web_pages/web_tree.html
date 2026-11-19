@@ -5,40 +5,46 @@
 <title>Orca Web Tree ready</title>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const tree = document.querySelector('[role="tree"]');
-  const all = () => Array.from(tree.querySelectorAll('[role="treeitem"]'));
+  document.querySelectorAll('[role="tree"]').forEach(function (tree) {
+    const all = () => Array.from(tree.querySelectorAll('[role="treeitem"]'));
 
-  function visible() {
-    return all().filter(function (li) {
-      let p = li.parentElement.closest('[role="treeitem"]');
-      while (p) {
-        if (p.getAttribute("aria-expanded") === "false") return false;
-        p = p.parentElement.closest('[role="treeitem"]');
-      }
-      return true;
-    });
-  }
-
-  function focusItem(li) {
-    all().forEach(function (x) { x.tabIndex = -1; });
-    li.tabIndex = 0;
-    li.focus();
-  }
-
-  tree.addEventListener("keydown", function (e) {
-    const vis = visible();
-    const cur = document.activeElement.closest('[role="treeitem"]');
-    const i = vis.indexOf(cur);
-    if (e.key === "ArrowDown" && i < vis.length - 1) { focusItem(vis[i + 1]); e.preventDefault(); }
-    else if (e.key === "ArrowUp" && i > 0) { focusItem(vis[i - 1]); e.preventDefault(); }
-    else if (e.key === "ArrowRight" && cur.getAttribute("aria-expanded") === "false") {
-      cur.setAttribute("aria-expanded", "true"); e.preventDefault();
-    } else if (e.key === "ArrowLeft" && cur.getAttribute("aria-expanded") === "true") {
-      cur.setAttribute("aria-expanded", "false"); e.preventDefault();
+    function visible() {
+      return all().filter(function (li) {
+        let p = li.parentElement.closest('[role="treeitem"]');
+        while (p) {
+          if (p.getAttribute("aria-expanded") === "false") return false;
+          p = p.parentElement.closest('[role="treeitem"]');
+        }
+        return true;
+      });
     }
-  });
 
-  all()[0].tabIndex = 0;
+    function focusItem(li) {
+      all().forEach(function (x) { x.tabIndex = -1; });
+      li.tabIndex = 0;
+      li.focus();
+    }
+
+    tree.addEventListener("keydown", function (e) {
+      const vis = visible();
+      const cur = document.activeElement.closest('[role="treeitem"]');
+      const i = vis.indexOf(cur);
+      if (e.key === "ArrowDown" && i < vis.length - 1) { focusItem(vis[i + 1]); e.preventDefault(); }
+      else if (e.key === "ArrowUp" && i > 0) { focusItem(vis[i - 1]); e.preventDefault(); }
+      else if (e.key === "Home") { focusItem(vis[0]); e.preventDefault(); }
+      else if (e.key === "End") { focusItem(vis[vis.length - 1]); e.preventDefault(); }
+      else if (e.key === "ArrowRight" && cur.getAttribute("aria-expanded") === "false") {
+        cur.setAttribute("aria-expanded", "true"); e.preventDefault();
+      } else if (e.key === "ArrowLeft" && cur.getAttribute("aria-expanded") === "true") {
+        cur.setAttribute("aria-expanded", "false"); e.preventDefault();
+      } else if (e.key === " " && cur.hasAttribute("aria-checked")) {
+        cur.setAttribute("aria-checked", cur.getAttribute("aria-checked") !== "true");
+        e.preventDefault();
+      }
+    });
+
+    all()[0].tabIndex = 0;
+  });
 });
 </script>
 </head>
@@ -57,6 +63,17 @@ document.addEventListener("DOMContentLoaded", function () {
     <span>Vegetables</span>
     <ul role="group">
       <li role="treeitem" aria-level="2" aria-setsize="1" aria-posinset="1"><span>Carrot</span></li>
+    </ul>
+  </li>
+</ul>
+<ul role="tree" aria-label="Packing" style="list-style: none">
+  <li role="treeitem" aria-checked="false" aria-level="1" aria-setsize="4" aria-posinset="1">Notebook</li>
+  <li role="treeitem" aria-checked="true" aria-level="1" aria-setsize="4" aria-posinset="2">Water bottle</li>
+  <li role="treeitem" aria-checked="mixed" aria-level="1" aria-setsize="4" aria-posinset="3">Supplies</li>
+  <li role="treeitem" aria-checked="true" aria-expanded="false" aria-level="1" aria-setsize="4" aria-posinset="4">
+    <span>Bag</span>
+    <ul role="group" style="list-style: none">
+      <li role="treeitem" aria-level="2" aria-setsize="1" aria-posinset="1">Passport</li>
     </ul>
   </li>
 </ul>

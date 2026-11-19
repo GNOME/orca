@@ -85,9 +85,20 @@ class PresentationReason(Enum):
 
     FOCUS_CHANGE = "focus-change"
     STATE_CHANGE = "state-change"
+    CHECKED_STATE_CHANGE = "checked-state-change"
+    EXPANDED_STATE_CHANGE = "expanded-state-change"
     PROGRESS_BAR_UPDATE = "progress-bar-update"
     WHERE_AM_I_BASIC = "where-am-i-basic"
     WHERE_AM_I_DETAILED = "where-am-i-detailed"
+
+    def is_state_change(self) -> bool:
+        """Returns whether this presentation is caused by a state change."""
+
+        return self in (
+            PresentationReason.STATE_CHANGE,
+            PresentationReason.CHECKED_STATE_CHANGE,
+            PresentationReason.EXPANDED_STATE_CHANGE,
+        )
 
 
 class StructuralNavigationMode(Enum):

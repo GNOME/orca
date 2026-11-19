@@ -345,7 +345,7 @@ class Script(default.Script):
                 )
         presenter = presentation_manager.get_manager()
         if generate_braille:
-            if reason == PresentationReason.STATE_CHANGE:
+            if reason is not None and reason.is_state_change():
                 braille_presenter.get_presenter().present_generated_braille(
                     self, obj, prior_obj=prior_obj, reason=reason
                 )

@@ -4224,7 +4224,13 @@ class SpeechGenerator(generator.Generator):
     def _generate_tree_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the tree-item role."""
 
-        if self._is_ancestor() or self._is_minimal():
+        if self._is_ancestor():
+            return self._generate_state_expanded(obj)
+
+        if self._get_reason() == PresentationReason.CHECKED_STATE_CHANGE:
+            return self._generate_state_checked_if_checkable(obj)
+
+        if self._is_minimal():
             return self._generate_state_expanded(obj)
 
         result = self._generate_default_prefix(obj)
@@ -4235,6 +4241,7 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_accessible_label_and_name(
             obj,
         ) or self._generate_text_content(obj)
+        result += self._generate_state_checked_if_checkable(obj)
         result += self._generate_pause(obj)
         result += self._generate_state_expanded(obj)
         if result and not isinstance(result[-1], Pause):

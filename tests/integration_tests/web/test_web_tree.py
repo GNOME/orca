@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Tests navigation, level, and expand/collapse of an ARIA tree in web content."""
+"""Tests ARIA tree presentation and keyboard navigation."""
 
 from __future__ import annotations
 
@@ -27,7 +27,13 @@ from typing import TYPE_CHECKING
 import pytest
 
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import expected_for_browser, reset_web_state, speech
+from tests.integration_tests.helpers import (
+    BrailleLine,
+    capture,
+    expected_for_browser,
+    reset_web_state,
+    speech,
+)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -94,3 +100,98 @@ def test_tree_navigation_level_and_expansion(web_tree: BrowserSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
     assert speech(session) == ["collapsed"]
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize(
+    "index, name, state, indicator",
+    [
+        (0, "Notebook", "not checked", "< >"),
+        (1, "Water bottle", "checked", "<x>"),
+        (2, "Supplies", "partially checked", "<->"),
+    ],
+)
+def test_checkable_tree_item_navigation(
+    web_tree: BrowserSession, index: int, name: str, state: str, indicator: str
+) -> None:
+    """Presents a tree item's checked state when it gains focus."""
+
+    session = web_tree
+    reset_web_state(session)
+    session.orca.set("BraillePresenter", "DisplayAncestors", False)
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_END)
+    capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_HOME)
+    for _ in range(index):
+        capture(session)
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    spoken, brailled = capture(session)
+    assert spoken == [name, state]
+    text = f"{indicator} {name} TREE LEVEL 1"
+    assert brailled[-1] == BrailleLine(1, text, text, "\x00" * len(text))
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("index, name", [(0, "Notebook"), (1, "Water bottle")])
+def test_checkable_tree_item_toggle(web_tree: BrowserSession, index: int, name: str) -> None:
+    """Presents both checked states when Space toggles a tree item."""
+
+    session = web_tree
+    reset_web_state(session)
+    session.orca.set("BraillePresenter", "DisplayAncestors", False)
+    for _ in range(2):
+        keyboard.tap_key(keyboard.KEYSYM_TAB)
+        capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_HOME)
+    capture(session)
+    for _ in range(index):
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        capture(session)
+    states = [("checked", "<x>"), ("not checked", "< >")]
+    if index:
+        states.reverse()
+    for state, indicator in states:
+        keyboard.tap_key(keyboard.KEYSYM_SPACE)
+        spoken, brailled = capture(session)
+        assert spoken == [state]
+        text = f"{indicator} {name} TREE LEVEL 1"
+        assert brailled[-1] == BrailleLine(1, text, text, "\x00" * len(text))
+
+
+@pytest.mark.native_app
+def test_checkable_expandable_tree_item(web_tree: BrowserSession) -> None:
+    """Speaks only the changed state while braille retains both tree-item states."""
+
+    session = web_tree
+    reset_web_state(session)
+    session.orca.set("BraillePresenter", "DisplayAncestors", False)
+    for _ in range(2):
+        keyboard.tap_key(keyboard.KEYSYM_TAB)
+        capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_HOME)
+    capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_END)
+    spoken, brailled = capture(session)
+    assert spoken == ["Bag", "checked", "collapsed"]
+    text = "<x> Bag collapsed TREE LEVEL 1"
+    assert brailled[-1] == BrailleLine(1, text, text, "\x00" * len(text))
+
+    for key, state, indicator, expansion in (
+        (keyboard.KEYSYM_RIGHT, "expanded", "<x>", "expanded"),
+        (keyboard.KEYSYM_SPACE, "not checked", "< >", "expanded"),
+        (keyboard.KEYSYM_SPACE, "checked", "<x>", "expanded"),
+        (keyboard.KEYSYM_LEFT, "collapsed", "<x>", "collapsed"),
+        (keyboard.KEYSYM_SPACE, "not checked", "< >", "collapsed"),
+        (keyboard.KEYSYM_RIGHT, "expanded", "< >", "expanded"),
+        (keyboard.KEYSYM_SPACE, "checked", "<x>", "expanded"),
+        (keyboard.KEYSYM_LEFT, "collapsed", "<x>", "collapsed"),
+    ):
+        keyboard.tap_key(key)
+        spoken, brailled = capture(session)
+        assert spoken == [state]
+        text = f"{indicator} Bag {expansion} TREE LEVEL 1"
+        assert brailled[-1] == BrailleLine(1, text, text, "\x00" * len(text))
