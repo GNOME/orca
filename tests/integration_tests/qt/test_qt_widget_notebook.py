@@ -22,6 +22,7 @@
 
 from __future__ import annotations
 
+import sys
 from typing import TYPE_CHECKING
 
 import pytest
@@ -29,6 +30,7 @@ import pytest
 from tests.integration_tests import helpers
 from tests.integration_tests.apps import qt
 from tests.integration_tests.harness import keyboard
+from tests.integration_tests.version_helpers import command_version, version_at_least
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -314,6 +316,19 @@ def test_readonly_spin_button(qt_widget_notebook: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    not qt.is_qt5()
+    and version_at_least(
+        command_version(
+            (sys.executable, "-c", "from PySide6.QtCore import qVersion; print(qVersion())")
+        ),
+        6,
+        12,
+    ),
+    reason="Qt 6.12 exposes submenu openers as MENU_ITEM without HAS_POPUP or EXPANDED",
+    strict=True,
+    raises=AssertionError,
+)
 def test_menu_navigation(qt_widget_notebook: NativeAppSession) -> None:
     """Navigates menu items and a submenu using arrow keys."""
 

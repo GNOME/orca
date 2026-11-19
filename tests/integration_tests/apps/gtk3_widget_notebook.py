@@ -238,6 +238,10 @@ def main() -> int:
     window.add_accel_group(accel_group)
     reset_key, reset_mods = Gtk.accelerator_parse("F12")
     accel_group.connect(reset_key, reset_mods, Gtk.AccelFlags.VISIBLE, _reset_to_start)
+    bump_key, bump_mods = Gtk.accelerator_parse("F5")
+    widgets.bump_button.add_accelerator(
+        "clicked", accel_group, bump_key, bump_mods, Gtk.AccelFlags.VISIBLE
+    )
 
     window.connect("map", lambda _widget: widgets.save_button.grab_focus())
 

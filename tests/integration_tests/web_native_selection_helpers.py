@@ -71,8 +71,15 @@ def select_character(session: BrowserSession, key: str) -> list[str]:
 def select_word(session: BrowserSession, key: str) -> list[str]:
     """Extends or retracts Chromium's native selection by one word."""
 
-    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], key)
-    return speech(session)
+    # Early modifier release can make Orca classify selection as word navigation.
+    keyboard.press_key(keyboard.KEYSYM_CONTROL_L)
+    keyboard.press_key(keyboard.KEYSYM_SHIFT_L)
+    try:
+        keyboard.tap_key(key)
+        return speech(session)
+    finally:
+        keyboard.release_key(keyboard.KEYSYM_SHIFT_L)
+        keyboard.release_key(keyboard.KEYSYM_CONTROL_L)
 
 
 def select_line(session: BrowserSession, key: str) -> list[str]:

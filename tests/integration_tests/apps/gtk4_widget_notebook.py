@@ -247,6 +247,13 @@ def main() -> int:
     )
     window.add_controller(controller)
 
+    shortcuts = Gtk.ShortcutController()
+    shortcuts.set_scope(Gtk.ShortcutScope.GLOBAL)
+    shortcuts.add_shortcut(
+        Gtk.Shortcut.new(Gtk.KeyvalTrigger.new(Gdk.KEY_F5, 0), Gtk.SignalAction.new("clicked"))
+    )
+    widgets.bump_button.add_controller(shortcuts)
+
     window.connect("map", lambda _widget: widgets.save_button.grab_focus())
 
     window.present()
