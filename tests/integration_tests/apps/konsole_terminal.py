@@ -25,28 +25,32 @@ from __future__ import annotations
 import os
 import shutil
 import sys
+import time
 from pathlib import Path
 
 
 def prepare_window(pid: int) -> None:
-    """Focuses the owned Konsole window on Xvfb."""
+    """Waits for the owned Konsole window to be mapped, then focuses it on Xvfb."""
 
     from Xlib import X, display  # type: ignore[import-untyped]
 
     connection = display.Display()
     try:
         pid_atom = connection.intern_atom("_NET_WM_PID")
-        for window in connection.screen().root.query_tree().children:
-            owner = window.get_full_property(pid_atom, X.AnyPropertyType)
-            if owner is None or owner.value[0] != pid:
-                continue
-            attributes = window.get_attributes()
-            if attributes.map_state != X.IsViewable or attributes.win_class != X.InputOutput:
-                continue
-            window.set_input_focus(X.RevertToParent, X.CurrentTime)
-            connection.sync()
-            return
-        raise RuntimeError(f"No mapped Konsole window found for pid {pid}")
+        deadline = time.monotonic() + 5.0
+        while time.monotonic() < deadline:
+            for window in connection.screen().root.query_tree().children:
+                owner = window.get_full_property(pid_atom, X.AnyPropertyType)
+                if owner is None or owner.value[0] != pid:
+                    continue
+                attributes = window.get_attributes()
+                if attributes.map_state != X.IsViewable or attributes.win_class != X.InputOutput:
+                    continue
+                window.set_input_focus(X.RevertToParent, X.CurrentTime)
+                connection.sync()
+                return
+            time.sleep(0.05)
+        raise RuntimeError(f"No mapped Konsole window found for pid {pid} within 5 seconds")
     finally:
         connection.close()
 
