@@ -34,6 +34,22 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.native_app
+@pytest.mark.parametrize("tabs", [1, 2], ids=["selection-first", "active-descendant-first"])
+def test_space_selects_active_item_once(gtk_multi_select_list: NativeAppSession, tabs: int) -> None:
+    """Reads the item once when Space selects it and makes it active."""
+
+    session = gtk_multi_select_list
+    session.orca.set("BraillePresenter", "DisplayAncestors", False)
+    for _ in range(tabs):
+        keyboard.tap_key(keyboard.KEYSYM_TAB)
+        capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_SPACE)
+    spoken, brailled = capture(session, quiescence=1.2, overall=5.0, wait_async=True)
+    assert spoken == ["Read report"]
+    assert brailled[-1] == BrailleLine(1, "Read report", "Read report", "\x00" * 11)
+
+
+@pytest.mark.native_app
 def test_selecting_and_unselecting_a_list_item(gtk_multi_select_list: NativeAppSession) -> None:
     """Tests selecting and unselecting a list item."""
 

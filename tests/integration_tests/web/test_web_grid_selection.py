@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Tests a grid where selection does not follow focus."""
+"""Tests grid selection and presentation."""
 
 from __future__ import annotations
 
@@ -36,6 +36,27 @@ from tests.integration_tests.helpers import (
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
+
+
+@pytest.mark.native_app
+@pytest.mark.parametrize("selected", [False, True], ids=["unselected-row", "selected-row"])
+@pytest.mark.parametrize("read_row", [False, True], ids=["read-cell", "read-row"])
+def test_tab_into_grid_row(
+    web_grid_selection: BrowserSession, selected: bool, read_row: bool
+) -> None:
+    """Reads a selected row on Tab entry only when row reading is enabled."""
+
+    session = web_grid_selection
+    reset_web_state(session)
+    session.orca.set("SpeechPresenter", "SpeakRowInDocumentTable", read_row)
+    for _ in range(2 if selected else 1):
+        keyboard.tap_key(keyboard.KEYSYM_TAB)
+        capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    spoken, brailled = capture(session)
+    assert "Read report" in " ".join(spoken)
+    assert ("Complete" in " ".join(spoken)) == (selected and read_row)
+    assert brailled and brailled[-1].visible == "Read report"
 
 
 @pytest.mark.native_app

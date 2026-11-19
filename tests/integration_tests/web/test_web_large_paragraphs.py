@@ -176,7 +176,7 @@ def test_paragraph_filter_cutoff(web_large_paragraphs: BrowserSession) -> None:
 
     assert capture(session, wait_async=True) == (
         [
-            "Paragraphs: 2500 items found",
+            "Paragraphs: 2500 items found dialog",
             "table with 2500 rows 1 column",
             "Visible heading text.",
             "11 of 2500",

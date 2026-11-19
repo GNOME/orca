@@ -1443,18 +1443,21 @@ class AXUtilitiesEvent:
         from . import input_event_manager  # pylint: disable=import-outside-toplevel
 
         mgr = input_event_manager.get_manager()
-        if mgr.last_event_was_space():
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        is_space = mgr.last_event_was_space()
+        if is_space:
             # An ignored selection change can invalidate the previous Select All result.
             AXUtilitiesSelection.set_all_items_selected_state(event.source, False)
-            msg = "AXUtilitiesEvent: Selection toggled via space; handled elsewhere."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
+            if event.source != focus:
+                msg = "AXUtilitiesEvent: Selection toggled via space; handled elsewhere."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
 
-        focus = focus_manager.get_manager().get_locus_of_focus()
         source_states = AXObject.get_state_set(event.source)
         if (
             AXUtilitiesState.manages_descendants(event.source, source_states)
             and not mgr.last_event_was_select_all()
+            and not (is_space and event.source == focus)
         ):
             AXUtilitiesSelection.set_all_items_selected_state(event.source, False)
             if not AXUtilitiesState.is_focused(event.source, source_states) or (

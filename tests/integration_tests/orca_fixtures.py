@@ -688,9 +688,9 @@ def _run_app_with_orca(
     braille_log = sandbox_dir / "braille.jsonl"
     env = sandbox.build_sandbox_env(sandbox_dir)
 
-    with _launch_subprocess(argv, env) as (_process, app_accessible):
+    with _launch_subprocess(argv, env) as (_process, _app_accessible):
         if ready_predicate is not None:
-            _wait_until_ready(app_accessible, ready_predicate)
+            _wait_until_ready(_process.pid, ready_predicate)
         if prepare_window is not None:
             prepare_window(_process.pid)
         orca = OrcaSession(env)
@@ -743,8 +743,11 @@ def _launch_subprocess(
                 process.wait()
 
 
-def _find_registered_application(pid: int) -> Atspi.Accessible | None:
-    """Returns an accessible application with this pid, or None."""
+def _find_registered_application(
+    pid: int,
+    predicate: Callable[[Atspi.Accessible], bool] | None = None,
+) -> Atspi.Accessible | None:
+    """Returns an application matching the pid and optional predicate."""
 
     try:
         desktop = Atspi.get_desktop(0)
@@ -756,30 +759,28 @@ def _find_registered_application(pid: int) -> Atspi.Accessible | None:
         try:
             child = desktop.get_child_at_index(index)
             child_pid = Atspi.Accessible.get_process_id(child)
+            matches = child_pid == pid and (predicate is None or predicate(child))
         except GLib.GError:
             continue
-        if child_pid == pid:
+        if matches:
             return child
     return None
 
 
 def _wait_until_ready(
-    app_accessible: Atspi.Accessible,
+    pid: int,
     predicate: Callable[[Atspi.Accessible], bool],
     timeout: float = 10.0,
     poll_interval: float = 0.1,
 ) -> None:
-    """Polls predicate(app_accessible) until True or raises TimeoutError."""
+    """Waits for a registered application with this pid to satisfy predicate."""
 
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
-        try:
-            if predicate(app_accessible):
-                return
-        except GLib.GError:
-            pass
+        if _find_registered_application(pid, predicate) is not None:
+            return
         time.sleep(poll_interval)
-    raise TimeoutError(f"App {app_accessible!r} did not become ready within {timeout}s")
+    raise TimeoutError(f"App with pid {pid} did not become ready within {timeout}s")
 
 
 def _name_equals(target: str) -> Callable[[Atspi.Accessible], bool]:

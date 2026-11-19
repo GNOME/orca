@@ -152,7 +152,7 @@ def test_table_rows(qt_item_views: NativeAppSession) -> None:
     raises=AssertionError,
 )
 def test_table_cells(qt_item_views: NativeAppSession) -> None:
-    """Reads cell values and column headers when moving horizontally."""
+    """Reads individual cells with arrows and Tab, including across row boundaries."""
 
     session = qt_item_views
     _prepare(session, "table")
@@ -160,11 +160,25 @@ def test_table_cells(qt_item_views: NativeAppSession) -> None:
         (keyboard.KEYSYM_RIGHT, "Role", "Engineer"),
         (keyboard.KEYSYM_RIGHT, "Office", "London"),
         (keyboard.KEYSYM_LEFT, "Role", "Engineer"),
+        (keyboard.KEYSYM_TAB, "Office", "London"),
     ):
         keyboard.tap_key(key)
         spoken, brailled = helpers.capture(session)
         assert spoken == [f"{header} column header {value}"]
         assert brailled[-1].visible == value
+
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    helpers.capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["2 row header Name column header Grace"]
+    assert brailled[-1].visible == "Grace"
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
+    helpers.capture(session)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["Office column header London"]
+    assert brailled[-1].visible == "London"
 
 
 @pytest.mark.native_app
@@ -237,12 +251,49 @@ def test_tree_focus_after_navigation(qt_item_views: NativeAppSession) -> None:
         spoken, brailled = helpers.capture(session)
         assert spoken == [name, "Complete"]
         assert brailled and name in brailled[-1].full
+        assert "Complete" in brailled[-1].full
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
     spoken, brailled = helpers.capture(session)
-    assert spoken == ["Readme.txt"]
+    assert spoken == ["Readme.txt", "Complete"]
     assert brailled and "Readme.txt" in brailled[-1].full
+    assert "Complete" in brailled[-1].full
+    session.orca.call("SpeechPresenter", "ToggleTableCellReadingMode", True)
+    helpers.capture(session)
+    try:
+        keyboard.tap_key(keyboard.KEYSYM_TAB)
+        helpers.capture(session)
+        keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
+        spoken, brailled = helpers.capture(session)
+        assert spoken == ["Readme.txt"]
+        assert brailled and "Readme.txt" in brailled[-1].full
+        assert "Complete" not in brailled[-1].full
+    finally:
+        session.orca.call("SpeechPresenter", "ToggleTableCellReadingMode", True)
+        helpers.capture(session)
+
+
+@pytest.mark.native_app
+@pytest.mark.xfail(
+    qt.is_qt5(),
+    reason="Qt5's QTreeView lacks AT-SPI Selection and emits no selection-changed event on Space",
+    strict=True,
+    raises=AssertionError,
+)
+def test_select_only_tree_row(qt_item_views: NativeAppSession) -> None:
+    """Reads the only tree row when Space selects it."""
+
+    session = qt_item_views
+    _prepare(session, "tree")
+    for _ in range(2):
+        keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
+        helpers.capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_SPACE)
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["Readme.txt", "Complete"]
+    assert brailled and "Readme.txt" in brailled[-1].full
+    assert "Complete" in brailled[-1].full
 
 
 @pytest.mark.native_app

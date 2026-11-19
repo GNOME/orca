@@ -255,7 +255,9 @@ class Script(script.Script):
 
         active_window = self.utilities.top_level_object(new_focus)
         focus_manager.get_manager().set_active_window(active_window)
-        if old_focus is None:
+        if old_focus is None and (
+            new_focus != active_window or not AXUtilities.is_dialog_or_alert(new_focus)
+        ):
             old_focus = active_window
 
         manager = presentation_manager.get_manager()
@@ -714,6 +716,11 @@ class Script(script.Script):
         if child is not None:
             if AXUtilities.is_page_tab(child) and not AXUtilities.is_focused(child):
                 self.present_object(child, generate_braille=False)
+            elif (
+                input_event_manager.get_manager().last_event_was_space()
+                and not AXUtilities.is_focused(child)
+            ):
+                return True
             else:
                 focus_manager.get_manager().set_locus_of_focus(event, child)
 

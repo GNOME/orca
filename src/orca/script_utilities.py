@@ -254,12 +254,27 @@ class Utilities:
         if (
             focus_manager.get_manager().in_say_all()
             or table_navigator.get_navigator().last_input_event_was_navigation_command()
-            or input_event_manager.get_manager().last_event_was_tab_navigation()
-            or not AXUtilities.cell_row_changed(obj, previous_object)
         ):
             return False
 
-        table = AXUtilities.get_table(obj)
+        table = None
+        if input_event_manager.get_manager().last_event_was_tab_navigation():
+            if previous_object is None or obj == previous_object:
+                return False
+            table = AXUtilities.get_table(obj)
+            if not AXObject.supports_selection(table) or AXUtilities.is_ancestor(
+                previous_object, table, inclusive=True
+            ):
+                return False
+            row = AXObject.get_parent(obj)
+            if not (AXUtilities.is_table_row(row) and AXUtilities.is_selected(row)):
+                row_index, _column = AXTable.get_cell_coordinates(obj, prefer_attribute=False)
+                if not AXTable.is_row_selected(table, row_index):
+                    return False
+        elif not AXUtilities.cell_row_changed(obj, previous_object):
+            return False
+
+        table = table or AXUtilities.get_table(obj)
         if table is None:
             return False
 

@@ -151,7 +151,21 @@ def test_home_end_and_boundaries(nautilus: FileManagerSession) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.parametrize("nautilus", ["icon", "list"], indirect=True)
+@pytest.mark.parametrize(
+    "nautilus",
+    [
+        "icon",
+        pytest.param(
+            "list",
+            marks=pytest.mark.xfail(
+                strict=False,
+                raises=AssertionError,
+                reason="Intermittent missing name: https://gitlab.gnome.org/GNOME/gtk/-/work_items/8530",
+            ),
+        ),
+    ],
+    indirect=True,
+)
 def test_scrolling(nautilus: FileManagerSession) -> None:
     """Checks End, Up, Down, and Home in a folder that requires scrolling."""
 

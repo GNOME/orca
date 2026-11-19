@@ -2229,6 +2229,9 @@ class Utilities(script_utilities.Utilities):
         if not super().should_read_full_row(obj, previous_object):
             return False
 
+        if input_event_manager.get_manager().last_event_was_tab_navigation():
+            return True
+
         if AXUtilities.is_grid_descendant(obj) or AXUtilities.is_tree_or_tree_table_descendant(obj):
             return not document_presenter.get_presenter().in_focus_mode(self._script.app)
 

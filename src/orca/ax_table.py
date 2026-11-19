@@ -491,6 +491,20 @@ class AXTable:
         return columns
 
     @staticmethod
+    def is_row_selected(table: Atspi.Accessible, row: int) -> bool:
+        """Returns True if the specified row is selected."""
+
+        if row < 0 or not AXObject.supports_table(table):
+            return False
+
+        try:
+            return Atspi.Table.is_row_selected(table, row)
+        except GLib.GError as error:
+            tokens = ["AXTable: Exception in is_row_selected:", error]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+    @staticmethod
     def get_selected_row_count(table: Atspi.Accessible) -> int:
         """Returns the number of selected rows in table."""
 

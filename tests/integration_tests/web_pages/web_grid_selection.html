@@ -26,6 +26,22 @@
   </tr>
 </table>
 <p>After the grid.</p>
+<!-- Firefox needs explicit row roles here to expose aria-selected. -->
+<table role="grid" aria-label="Unselected row">
+  <tr><th scope="col">Task</th><th scope="col">Status</th></tr>
+  <tr role="row" aria-selected="false">
+    <td tabindex="0">Read report</td>
+    <td>Complete</td>
+  </tr>
+</table>
+<table role="grid" aria-label="Selected row">
+  <tr><th scope="col">Task</th><th scope="col">Status</th></tr>
+  <tr role="row" aria-selected="true">
+    <td tabindex="0">Read report</td>
+    <td>Complete</td>
+  </tr>
+</table>
+<button>After grids</button>
 <script>
 const grid = document.querySelector('[role="grid"]');
 const cells = Array.from(grid.querySelectorAll('td'));
