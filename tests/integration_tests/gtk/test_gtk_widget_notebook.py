@@ -322,6 +322,89 @@ def test_menu_bar_navigation(gtk_widget_notebook: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+def test_context_menu_opening(gtk_widget_notebook: NativeAppSession) -> None:
+    """Announces the first context-menu item once when the menu opens."""
+
+    session = gtk_widget_notebook
+    _prepare(session)
+    _tab_to(session, 5)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_F10)
+    try:
+        spoken, brailled = helpers.capture(session, quiescence=0.3)
+        assert spoken == helpers.expected_for_gtk(
+            ["Cut", "T"], gtk4=["Context menu menu", "Cut", "T", "Alt+T"]
+        )
+        text = helpers.expected_for_gtk("Cut T", gtk4="Cut T (Alt+T)")
+        assert brailled[-1] == helpers.BrailleLine(1, text, text, "\x00" * len(text))
+    finally:
+        keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
+        helpers.capture(session)
+
+
+@pytest.mark.native_app
+@pytest.mark.xfail(
+    gtk.is_gtk4(),
+    reason="Orca repeats the context-menu name when moving between GTK4 menu items",
+    strict=True,
+    raises=AssertionError,
+)
+def test_context_menu_navigation(gtk_widget_notebook: NativeAppSession) -> None:
+    """Announces each context-menu item once when arrowing down and up."""
+
+    session = gtk_widget_notebook
+    _prepare(session)
+    _tab_to(session, 5)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_F10)
+    helpers.capture(session)
+    try:
+        for key, name, mnemonic in (
+            (keyboard.KEYSYM_DOWN, "Copy", "C"),
+            (keyboard.KEYSYM_DOWN, "Delete", "D"),
+            (keyboard.KEYSYM_UP, "Copy", "C"),
+        ):
+            spoken, brailled = _press(session, key)
+            assert spoken == helpers.expected_for_gtk(
+                [name, mnemonic], gtk4=[name, mnemonic, f"Alt+{mnemonic}"]
+            )
+            text = helpers.expected_for_gtk(
+                f"{name} {mnemonic}", gtk4=f"{name} {mnemonic} (Alt+{mnemonic})"
+            )
+            assert brailled[-1] == helpers.BrailleLine(1, text, text, "\x00" * len(text))
+    finally:
+        keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
+        helpers.capture(session)
+
+
+@pytest.mark.native_app
+@pytest.mark.xfail(
+    reason="Orca presents a nameless frame when closing a GTK entry's context menu",
+    strict=True,
+    raises=AssertionError,
+)
+def test_context_menu_closing(gtk_widget_notebook: NativeAppSession) -> None:
+    """Announces the entry when Escape closes its context menu."""
+
+    session = gtk_widget_notebook
+    _prepare(session)
+    _tab_to(session, 5)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_F10)
+    helpers.capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    helpers.capture(session)
+    assert _press(session, keyboard.KEYSYM_ESCAPE) == (
+        helpers.expected_for_gtk(
+            ["Widgets page tab", "City text", "Madrid", "selected"],
+            gtk4=["Widgets Page 1 panel", "City text", "Madrid", "selected", "opens popup"],
+        ),
+        [
+            helpers.BrailleLine(
+                12, "City Madrid $l", "City Madrid $l", "\x00" * 5 + "\xc0" * 6 + "\x00" * 3
+            ),
+        ],
+    )
+
+
+@pytest.mark.native_app
 def test_toggle_button_state_changes(gtk_widget_notebook: NativeAppSession) -> None:
     """Tests that pressing Space on a toggle button announces the pressed state."""
 

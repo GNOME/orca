@@ -321,19 +321,103 @@ def test_menu_navigation(qt_widget_notebook: NativeAppSession) -> None:
     _prepare(session)
     # Let Qt process Alt before the shortcut opens the menu.
     keyboard.press_chord([keyboard.KEYSYM_ALT_L], ord("f"), modifier_delay=0.15)
-    spoken, brailled = helpers.capture(session)
-    assert "New" in spoken
-    assert brailled and "New" in brailled[-1].full
-    for key, name in (
-        (keyboard.KEYSYM_DOWN, "Open"),
-        (keyboard.KEYSYM_DOWN, "Recent"),
-        (keyboard.KEYSYM_RIGHT, "Report"),
-        (keyboard.KEYSYM_DOWN, "Summary"),
+    assert helpers.capture(session) == (
+        ["File menu", "New", "Alt+N"],
+        [helpers.BrailleLine(1, "New Alt+N", "New Alt+N", "\x00" * 9)],
+    )
+    for key, name, mnemonic in (
+        (keyboard.KEYSYM_DOWN, "Open", "Alt+O"),
+        (keyboard.KEYSYM_DOWN, "Recent menu", "Alt+R"),
+        (keyboard.KEYSYM_RIGHT, "Report", "Alt+R"),
+        (keyboard.KEYSYM_DOWN, "Summary", "Alt+S"),
+        (keyboard.KEYSYM_UP, "Report", "Alt+R"),
     ):
         keyboard.tap_key(key)
-        spoken, brailled = helpers.capture(session)
-        assert any(name in phrase for phrase in spoken)
-        assert brailled and name in brailled[-1].full
-    keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
+        text = f"{name} {mnemonic}"
+        assert helpers.capture(session) == (
+            [name, mnemonic],
+            [helpers.BrailleLine(1, text, text, "\x00" * len(text))],
+        )
     keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
     helpers.capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
+    assert helpers.capture(session) == (
+        ["File menu", "Alt+F"],
+        [helpers.BrailleLine(1, "File menu Alt+F", "File menu Alt+F", "\x00" * 15)],
+    )
+    keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
+    assert helpers.capture(session) == (
+        ["Save button"],
+        [helpers.BrailleLine(1, "Save button", "Save button", "\x00" * 11)],
+    )
+
+
+@pytest.mark.native_app
+@pytest.mark.xfail(
+    reason="Orca does not present the QLineEdit context menu when it opens",
+    strict=True,
+    raises=AssertionError,
+)
+def test_context_menu_opening(qt_widget_notebook: NativeAppSession) -> None:
+    """Announces the context menu once when it opens."""
+
+    session = qt_widget_notebook
+    _prepare(session, 5)
+    keyboard.tap_key(keyboard.KEYSYM_MENU)
+    try:
+        assert helpers.capture(session, quiescence=0.3) == (
+            ["menu"],
+            [helpers.BrailleLine(1, "menu", "menu", "\x00" * 4)],
+        )
+    finally:
+        keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
+        helpers.capture(session)
+
+
+@pytest.mark.native_app
+def test_context_menu_navigation(qt_widget_notebook: NativeAppSession) -> None:
+    """Announces each context-menu item once when arrowing down and up."""
+
+    session = qt_widget_notebook
+    _prepare(session, 5)
+    keyboard.tap_key(keyboard.KEYSYM_MENU)
+    helpers.capture(session)
+    try:
+        for key, name, mnemonic in (
+            (keyboard.KEYSYM_DOWN, "Cut\tCtrl+X", "Alt+T"),
+            (keyboard.KEYSYM_DOWN, "Copy\tCtrl+C", "Alt+C"),
+            (keyboard.KEYSYM_UP, "Cut\tCtrl+X", "Alt+T"),
+        ):
+            keyboard.tap_key(key)
+            text = f"{name} {mnemonic}"
+            assert helpers.capture(session) == (
+                [name, mnemonic],
+                [helpers.BrailleLine(1, text, text, "\x00" * len(text))],
+            )
+    finally:
+        keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
+        helpers.capture(session)
+
+
+@pytest.mark.native_app
+def test_context_menu_closing(qt_widget_notebook: NativeAppSession) -> None:
+    """Announces the entry when Escape closes its context menu."""
+
+    session = qt_widget_notebook
+    _prepare(session, 5)
+    keyboard.tap_key(keyboard.KEYSYM_MENU)
+    helpers.capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    helpers.capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
+    assert helpers.capture(session) == (
+        ["OrcaWidgetNotebook frame", "City text", "Madrid selected"],
+        [
+            helpers.BrailleLine(
+                1, "OrcaWidgetNotebook frame", "OrcaWidgetNotebook frame", "\x00" * 24
+            ),
+            helpers.BrailleLine(
+                12, "City Madrid $l", "City Madrid $l", "\x00" * 5 + "\xc0" * 6 + "\x00" * 3
+            ),
+        ],
+    )

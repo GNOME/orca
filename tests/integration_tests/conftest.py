@@ -113,6 +113,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_combo_box,
     _web_contenteditable_replacement,
     _web_contenteditable_replacement_button,
+    _web_context_menu,
     _web_contracted_braille,
     _web_cssed_brokenness,
     _web_custom_wrappers,

@@ -87,7 +87,15 @@ def main(*, browser_name: str | None = None) -> int:
     if caret_browsing:
         flags.remove("--caret-browsing")
     launch_flags = app.prepare_launch(profile_dir, caret_browsing=caret_browsing)
-    argv = app.build_argv(url, profile_dir, binary, extra_flags=(*launch_flags, *flags))
+    if name == "firefox":
+        kiosk = "--no-kiosk" not in flags
+        if not kiosk:
+            flags.remove("--no-kiosk")
+        argv = firefox_browser.build_argv(
+            url, profile_dir, binary, extra_flags=(*launch_flags, *flags), kiosk=kiosk
+        )
+    else:
+        argv = app.build_argv(url, profile_dir, binary, extra_flags=(*launch_flags, *flags))
     if os.environ.get("ORCA_TEST_DEBUG_DIR"):
         print(f"[diagnostics] {name} argv: {argv!r}", file=sys.stderr)
         subprocess.run([binary, "--version"], check=False, timeout=30)

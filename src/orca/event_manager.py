@@ -547,7 +547,7 @@ class EventManager:
 
     @staticmethod
     def _ignore_state_changed(event: Atspi.Event, role: Atspi.Role) -> bool | None:
-        """Returns True/False for state-changed events, or None if not applicable."""
+        """Returns True to ignore a state change, or None to continue filtering."""
 
         event_type = event.type
         if not event_type.startswith("object:state-changed"):
@@ -575,18 +575,7 @@ class EventManager:
         event_type: str,
         role: int,
     ) -> bool | None:
-        """Returns True/False for state-changed subtypes, or None if not applicable."""
-
-        showing_roles = [
-            Atspi.Role.ALERT,
-            Atspi.Role.ANIMATION,
-            Atspi.Role.DIALOG,
-            Atspi.Role.INFO_BAR,
-            Atspi.Role.MENU,
-            Atspi.Role.NOTIFICATION,
-            Atspi.Role.STATUS_BAR,
-            Atspi.Role.TOOL_TIP,
-        ]
+        """Returns True to ignore a state-change subtype, or None to continue filtering."""
 
         ignore: bool | None = None
         reason = ""
@@ -600,16 +589,25 @@ class EventManager:
             ignore = role not in [Atspi.Role.TEXT, Atspi.Role.ENTRY]
             reason = "role of unfocused source"
         elif "showing" in event_type:
+            showing_roles = [
+                Atspi.Role.ALERT,
+                Atspi.Role.ANIMATION,
+                Atspi.Role.DIALOG,
+                Atspi.Role.INFO_BAR,
+                Atspi.Role.MENU,
+                Atspi.Role.NOTIFICATION,
+                Atspi.Role.STATUS_BAR,
+                Atspi.Role.TOOL_TIP,
+            ]
             ignore = role not in showing_roles
             reason = "role"
 
-        if ignore is None:
+        if not ignore:
             return None
 
-        if ignore:
-            tokens = ["EVENT MANAGER: Ignoring", event_type, "due to", reason]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return ignore
+        tokens = ["EVENT MANAGER: Ignoring", event_type, "due to", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return True
 
     @staticmethod
     def _ignore_active_descendant_or_selection(event: Atspi.Event) -> bool | None:
@@ -687,10 +685,10 @@ class EventManager:
             lambda: self._ignore_by_role(event, role),
             lambda: self._ignore_by_focus_state(event, focus, role),
             lambda: self._ignore_property_change(event, role),
+            lambda: self._ignore_state_changed(event, role),
             lambda: self._ignore_by_spam_filter(event),
             lambda: self._ignore_active_descendant_or_selection(event),
             lambda: self._ignore_children_changed(event, focus),
-            lambda: self._ignore_state_changed(event, role),
             lambda: self._ignore_text_events(event, focus, role),
         ):
             result = check()

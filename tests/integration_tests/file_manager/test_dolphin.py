@@ -89,6 +89,29 @@ def _start_at_first_file(session: FileManagerSession) -> None:
 
 
 @pytest.mark.native_app
+@pytest.mark.xfail(
+    reason="Orca does not present Dolphin's application menu when F10 opens it",
+    raises=AssertionError,
+    strict=True,
+)
+def test_application_menu_opening(dolphin: FileManagerSession) -> None:
+    """Announces the application menu once when F10 opens it."""
+
+    session = dolphin
+    _start_at_first_file(session)
+    session.orca.set("BraillePresenter", "DisplayAncestors", False)
+    keyboard.tap_key(keyboard.KEYSYM_F10)
+    try:
+        assert capture(session, quiescence=0.3) == (
+            ["Dolphin menu"],
+            [BrailleLine(1, "Dolphin menu", "Dolphin menu", "\x00" * 12)],
+        )
+    finally:
+        keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
+        capture(session)
+
+
+@pytest.mark.native_app
 @pytest.mark.parametrize("dolphin", ["list"], indirect=True)
 @pytest.mark.parametrize("expanded", [True, False], ids=["expand", "collapse"])
 @pytest.mark.xfail(

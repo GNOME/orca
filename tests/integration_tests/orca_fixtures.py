@@ -842,6 +842,7 @@ def _run_browser_session(
     browser_name: str,
     page: str,
     caret_browsing: bool = False,
+    firefox_kiosk: bool = True,
     ready_predicate: Callable[[Atspi.Accessible], bool] | None = None,
 ) -> Iterator[BrowserSession]:
     """Launches the selected browser on web_pages/<page> with its own Orca."""
@@ -890,6 +891,8 @@ def _run_browser_session(
     ]
     if caret_browsing:
         argv.append("--caret-browsing")
+    if browser_name == "firefox" and not firefox_kiosk:
+        argv.append("--no-kiosk")
     for session in _run_app_with_orca(
         sandbox_dir,
         argv=argv,
@@ -903,6 +906,7 @@ def _make_web_fixture(
     page: str,
     *,
     caret_browsing: bool = False,
+    firefox_kiosk: bool = True,
     name: str | None = None,
     scope: Literal["function", "class", "module", "package", "session"] = "session",
 ) -> Callable[..., Iterator[BrowserSession]]:
@@ -915,6 +919,7 @@ def _make_web_fixture(
             browser_name=browser.selected_browser(),
             page=page,
             caret_browsing=caret_browsing,
+            firefox_kiosk=firefox_kiosk,
         )
 
     return fixture
@@ -1033,6 +1038,10 @@ _web_math_document_edges = _make_web_fixture("web_math_document_edges.html")
 _web_button_image = _make_web_fixture("web_button_image.html")
 _web_temporary_aria_hidden = _make_web_fixture("web_temporary_aria_hidden.html")
 _web_menu_button = _make_web_fixture("web_menu_button.html")
+# Firefox disables native context menus in kiosk mode.
+_web_context_menu = _make_web_fixture(
+    "web_menu_button.html", name="web_context_menu", firefox_kiosk=False
+)
 _web_menubar = _make_web_fixture("web_menubar.html")
 _web_missing_cells = _make_web_fixture("web_missing_cells.html")
 _web_sortable_table = _make_web_fixture("web_sortable_table.html")

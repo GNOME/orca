@@ -95,6 +95,7 @@ KEYSYM_F9 = 0xFFC6
 KEYSYM_F10 = 0xFFC7
 KEYSYM_F11 = 0xFFC8
 KEYSYM_F12 = 0xFFC9
+KEYSYM_MENU = 0xFF67
 
 
 def press_key(keysym: int) -> None:

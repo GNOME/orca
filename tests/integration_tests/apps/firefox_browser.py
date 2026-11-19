@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Firefox launched in kiosk mode with a fresh integration-test profile."""
+"""Firefox launched with a fresh integration-test profile."""
 
 from __future__ import annotations
 
@@ -74,10 +74,19 @@ def build_argv(
     binary: str,
     *,
     extra_flags: tuple[str, ...] = (),
+    kiosk: bool = True,
 ) -> list[str]:
     """Returns argv for an isolated Firefox on the wrapper's fixed-size Xvfb screen."""
 
-    return [binary, "--no-remote", "--profile", str(profile_dir), "--kiosk", *extra_flags, url]
+    return [
+        binary,
+        "--no-remote",
+        "--profile",
+        str(profile_dir),
+        *(["--kiosk"] if kiosk else []),
+        *extra_flags,
+        url,
+    ]
 
 
 def is_ready_title(title: str) -> bool:
@@ -87,7 +96,7 @@ def is_ready_title(title: str) -> bool:
 
 
 def prepare_window(pid: int) -> None:
-    """Sizes and focuses our kiosk window on Xvfb, which has no window manager."""
+    """Sizes and focuses the test window on Xvfb, which has no window manager."""
 
     from Xlib import X, display  # type: ignore[import-untyped]
 

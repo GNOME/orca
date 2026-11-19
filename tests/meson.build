@@ -276,6 +276,7 @@ orca_integration_tests = {
     'integration_tests/web/test_web_button_image.py',
     'integration_tests/web/test_web_temporary_aria_hidden.py',
     'integration_tests/web/test_web_menu_button.py',
+    'integration_tests/web/test_web_context_menu.py',
     'integration_tests/web/test_web_menubar.py',
     'integration_tests/web/test_web_sister_projects.py',
     'integration_tests/web/test_web_sister_projects_2.py',
