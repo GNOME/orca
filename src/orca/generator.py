@@ -1048,7 +1048,8 @@ class Generator:
     @log_generator_output
     def _generate_state_checked_for_cell(self, obj: Atspi.Accessible) -> list[Any]:
         result = []
-        if self._script.utilities.has_meaningful_toggle_action(obj):
+        checkable = AXUtilities.is_checkable(obj)
+        if checkable or self._script.utilities.has_meaningful_toggle_action(obj):
             result.extend(self.generate(obj, role=Atspi.Role.CHECK_BOX, include_context=False))
 
         return result

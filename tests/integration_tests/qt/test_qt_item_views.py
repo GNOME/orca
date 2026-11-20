@@ -145,6 +145,59 @@ def test_table_rows(qt_item_views: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+def test_toggle_cell(qt_item_views: NativeAppSession) -> None:
+    """Checks row and cell presentation, then toggles Done twice with Space."""
+
+    session = qt_item_views
+    _prepare(session, "table")
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    row = "Grace Admiral Boston <x> check box"
+    full = f" 2 row header Name column header {row}"
+    assert helpers.capture(session) == (
+        ["Grace", "Admiral", "Boston", "check box checked"],
+        [helpers.BrailleLine(1, full, "Grace Admiral Boston <x> check b", "\x00" * len(full))],
+    )
+
+    qt5 = qt.is_qt5()
+    for header, value in (("Role", "Admiral"), ("Office", "Boston")):
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        speech = value if qt5 else f"{header} column header {value}"
+        full = value if qt5 else f" 2 row header {speech}"
+        assert helpers.capture(session) == (
+            [speech],
+            [helpers.BrailleLine(1, full, value, "\x00" * len(full))],
+        )
+
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    prefix = "" if qt5 else " 2 row header Done column header "
+    full = f"{prefix}<x> check box"
+    checked_cell = (
+        ["check box checked" if qt5 else "Done column header check box checked"],
+        [helpers.BrailleLine(1, full, "<x> check box", "\x00" * len(full))],
+    )
+    assert helpers.capture(session) == checked_cell
+
+    for state, indicator in (("not checked", "< >"), ("checked", "<x>")):
+        keyboard.tap_key(keyboard.KEYSYM_SPACE)
+        if qt5:
+            # Qt5 emits no checked-state change when Space toggles the cell.
+            assert helpers.capture(session) == ([], [])
+        else:
+            visible = f"{indicator} check box"
+            full = prefix + visible
+            assert helpers.capture(session) == (
+                [state],
+                [helpers.BrailleLine(1, full, visible, "\x00" * len(full))],
+            )
+
+    keyboard.tap_key(keyboard.KEYSYM_LEFT)
+    helpers.capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    assert helpers.capture(session) == checked_cell
+
+
+@pytest.mark.native_app
 @pytest.mark.xfail(
     qt.is_qt5(),
     reason="Qt5's QTableWidget lacks AT-SPI Selection to identify its focused cell",
