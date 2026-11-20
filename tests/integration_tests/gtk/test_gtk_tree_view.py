@@ -53,9 +53,9 @@ def test_table_navigation(gtk_tree_view: NativeAppSession) -> None:
         [
             BrailleLine(
                 1,
-                " Name column header Grace Admiral Boston <x> check boxDone",
+                " Name column header Grace Admiral Boston <x> check box Done",
                 "Grace Admiral Boston <x> check b",
-                "\x00" * 58,
+                "\x00" * 59,
             )
         ],
     )
@@ -65,9 +65,9 @@ def test_table_navigation(gtk_tree_view: NativeAppSession) -> None:
         [
             BrailleLine(
                 1,
-                " Name column header Alan Analyst Manchester < > check boxDone",
+                " Name column header Alan Analyst Manchester < > check box Done",
                 "Alan Analyst Manchester < > chec",
-                "\x00" * 61,
+                "\x00" * 62,
             )
         ],
     )
@@ -102,9 +102,9 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
         [
             BrailleLine(
                 1,
-                " Name column header Grace Admiral Boston <x> check boxDone",
+                " Name column header Grace Admiral Boston <x> check box Done",
                 "Grace Admiral Boston <x> check b",
-                "\x00" * 58,
+                "\x00" * 59,
             )
         ],
     )
@@ -114,9 +114,9 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
         [
             BrailleLine(
                 1,
-                " Name column header Ada Engineer London < > check boxDone",
+                " Name column header Ada Engineer London < > check box Done",
                 "Ada Engineer London < > check bo",
-                "\x00" * 57,
+                "\x00" * 58,
             )
         ],
     )
@@ -140,9 +140,9 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
         [
             BrailleLine(
                 1,
-                " Name column header Ada Engineer London < > check boxDone",
+                " Name column header Ada Engineer London < > check box Done",
                 "Ada Engineer London < > check bo",
-                "\x00" * 57,
+                "\x00" * 58,
             )
         ],
     )
@@ -159,9 +159,9 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
         [
             BrailleLine(
                 1,
-                " Name column header Grace Admiral Boston <x> check boxDone",
+                " Name column header Grace Admiral Boston <x> check box Done",
                 "Grace Admiral Boston <x> check b",
-                "\x00" * 58,
+                "\x00" * 59,
             )
         ],
     )
@@ -183,9 +183,9 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
         [
             BrailleLine(
                 1,
-                " Role column header Alan Analyst Manchester < > check boxDone",
+                " Role column header Alan Analyst Manchester < > check box Done",
                 "Analyst Manchester < > check box",
-                "\x00" * 61,
+                "\x00" * 62,
             )
         ],
     )
@@ -201,9 +201,9 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
         [
             BrailleLine(
                 1,
-                " Role column header Grace Admiral Boston <x> check boxDone",
-                "Admiral Boston <x> check boxDone",
-                "\x00" * 58,
+                " Role column header Grace Admiral Boston <x> check box Done",
+                "Admiral Boston <x> check box Don",
+                "\x00" * 59,
             )
         ],
     )
@@ -220,9 +220,9 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
         [
             BrailleLine(
                 1,
-                " Name column header Ada Engineer London < > check boxDone",
+                " Name column header Ada Engineer London < > check box Done",
                 "Ada Engineer London < > check bo",
-                "\x00" * 57,
+                "\x00" * 58,
             )
         ],
     )
@@ -232,9 +232,9 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
         [
             BrailleLine(
                 1,
-                " Name column header Alan Analyst Manchester < > check boxDone",
+                " Name column header Alan Analyst Manchester < > check box Done",
                 "Alan Analyst Manchester < > chec",
-                "\x00" * 61,
+                "\x00" * 62,
             )
         ],
     )
@@ -253,9 +253,9 @@ def test_toggle_cell(gtk_tree_view: NativeAppSession) -> None:
         [
             BrailleLine(
                 1,
-                " Name column header Grace Admiral Boston <x> check boxDone",
+                " Name column header Grace Admiral Boston <x> check box Done",
                 "Grace Admiral Boston <x> check b",
-                "\x00" * 58,
+                "\x00" * 59,
             )
         ],
     )
@@ -272,18 +272,48 @@ def test_toggle_cell(gtk_tree_view: NativeAppSession) -> None:
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
     assert capture(session) == (
         ["Done check box checked"],
-        [BrailleLine(1, " Done <x> check boxDone", "<x> check boxDone", "\x00" * 23)],
+        [BrailleLine(1, " Done <x> check box Done", "<x> check box Done", "\x00" * 24)],
     )
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
     assert capture(session) == (
         ["not checked"],
-        [BrailleLine(1, " Done < > check boxDone", "< > check boxDone", "\x00" * 23)],
+        [BrailleLine(1, " Done < > check box Done", "< > check box Done", "\x00" * 24)],
     )
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
     assert capture(session) == (
         ["checked"],
-        [BrailleLine(1, " Done <x> check boxDone", "<x> check boxDone", "\x00" * 23)],
+        [BrailleLine(1, " Done <x> check box Done", "<x> check box Done", "\x00" * 24)],
     )
+
+    verbosity = session.orca.get("BraillePresenter", "VerbosityLevel")
+    session.orca.set("BraillePresenter", "VerbosityLevel", "brief")
+    try:
+        for expected in ("< > Done", "<x> Done"):
+            keyboard.tap_key(keyboard.KEYSYM_SPACE)
+            _, brailled = capture(session)
+            assert brailled[-1].visible == expected
+    finally:
+        session.orca.set("BraillePresenter", "VerbosityLevel", verbosity)
+
+
+@pytest.mark.native_app
+@pytest.mark.xfail(
+    reason="Orca presents a checkable table cell's name twice in braille",
+    strict=True,
+    raises=AssertionError,
+)
+def test_named_toggle_cell_braille(gtk_tree_view: NativeAppSession) -> None:
+    """Presents a named checkable cell in braille when moving across a table row."""
+
+    session = gtk_tree_view
+    keyboard.tap_key(keyboard.KEYSYM_F5)
+    capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    capture(session)
+    for _ in range(3):
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        _, brailled = capture(session)
+    assert brailled[-1].full == " Done column header <x> Reviewed check box"
 
 
 @pytest.mark.native_app
@@ -327,9 +357,9 @@ def test_word_wrap_ends_table_row_window_at_word_boundary(gtk_tree_view: NativeA
             [
                 BrailleLine(
                     1,
-                    " Name column header Grace Admiral Boston <x> check boxDone",
+                    " Name column header Grace Admiral Boston <x> check box Done",
                     "Grace Admiral Boston <x> check ",
-                    "\x00" * 58,
+                    "\x00" * 59,
                 )
             ],
         )

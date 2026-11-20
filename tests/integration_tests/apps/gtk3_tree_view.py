@@ -27,8 +27,9 @@ import sys
 
 import gi
 
+gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import GLib, Gtk
+from gi.repository import Gdk, GLib, Gtk
 
 APP_TITLE = "OrcaTreeView"
 
@@ -74,6 +75,13 @@ def main() -> int:
         tree_view.grab_focus()
         tree_view.set_cursor(Gtk.TreePath.new_first(), tree_view.get_column(0), False)
 
+    def on_key_press(_widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
+        if event.keyval != Gdk.KEY_F5:
+            return False
+        tree_view.get_accessible().ref_at(1, 3).set_name("Reviewed")
+        return True
+
+    window.connect("key-press-event", on_key_press)
     window.connect("map", on_map)
     window.show_all()
     window.present()

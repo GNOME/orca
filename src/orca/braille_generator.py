@@ -1692,21 +1692,18 @@ class BrailleGenerator(generator.Generator):
             result += suffix
             return result
 
-        result = []
-        result += self._generate_state_checked_for_cell(obj)
-        result += [
-            braille.Component(
-                obj,
-                self._as_string(
-                    self._generate_column_header_if_toggle_and_no_text(obj)
-                    + (
-                        self._generate_real_active_descendant_displayed_text(obj)
-                        or self._generate_accessible_label_and_name(obj)
-                    )
-                    + self._generate_state_expanded(obj),
-                ),
-            ),
-        ]
+        result = self._generate_state_checked_for_cell(obj)
+        text = self._as_string(
+            self._generate_column_header_if_toggle_and_no_text(obj)
+            + (
+                self._generate_real_active_descendant_displayed_text(obj)
+                or self._generate_accessible_label_and_name(obj)
+            )
+            + self._generate_state_expanded(obj),
+        )
+        if result and text and not result[-1].string[-1:].isspace() and not text[0].isspace():
+            result.append(braille.Region(" ", contracted=False))
+        result.append(braille.Component(obj, text))
         result += suffix
         result += self._generate_default_suffix(obj)
         return result

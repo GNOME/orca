@@ -90,6 +90,7 @@ def main():
         table.setCurrentCell(0, 0)
         tree.collapseAll()
         tree.setCurrentItem(tree.topLevelItem(0))
+        tree.topLevelItem(1).setCheckState(0, QtCore.Qt.CheckState.Checked)
         toppings.setFocus()
 
     shortcut = QtGui.QShortcut(QtGui.QKeySequence("F12"), window)
