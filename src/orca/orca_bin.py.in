@@ -70,10 +70,12 @@ from orca import messages
 # the debug file and can be debugged when they cannot be reproduced locally.
 _IMPORT_FAILURE = ""
 try:
+    from orca import dbus_service
     from orca import debugging_tools_manager
     from orca import extension_loader
     from orca import gsettings_registry
     from orca import orca
+    from orca import remote_controller_bridge
     from orca import screen_reader_manager
     from orca import speech_manager
 except Exception:  # pylint: disable=broad-exception-caught
@@ -372,6 +374,8 @@ def main() -> int:
 
     if args.debug:
         _open_debug_file(args.debug_file)
+
+    dbus_service.get_remote_controller().set_handler(remote_controller_bridge.get_bridge())
 
     if args.replace:
         cleanup(signal.SIGKILL)

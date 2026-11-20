@@ -178,6 +178,7 @@ lib_sources = [
   'profile_manager_preferences_grid.py',
   'pronunciation_dictionary_manager.py',
   'pronunciation_dictionary_manager_preferences_grid.py',
+  'remote_controller_bridge.py',
   'say_all_presenter.py',
   'say_all_presenter_command_definitions.py',
   'say_all_presenter_preferences_grid.py',

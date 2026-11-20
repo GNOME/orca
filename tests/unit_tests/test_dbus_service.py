@@ -1223,6 +1223,7 @@ def _stub_orca_internals(test_context: OrcaTestContext) -> dict[str, object]:
     test_context.patch_modules(stubs)
 
     sys.modules.pop("orca.dbus_service", None)
+    sys.modules.pop("orca.remote_controller_bridge", None)
     return stubs
 
 
@@ -1461,7 +1462,9 @@ class TestInterfaceBuilder:
         """Calling the synthesized D-Bus method routes through the @command wrapper."""
 
         _stub_orca_internals(test_context)
-        from orca import dbus_service
+        from orca import dbus_service, remote_controller_bridge
+
+        dbus_service.get_remote_controller().set_handler(remote_controller_bridge.get_bridge())
 
         calls: list[tuple] = []
 
@@ -1492,8 +1495,9 @@ class TestInterfaceBuilder:
         """Test a testing user command gets the same event type as a user command."""
 
         stubs = _stub_orca_internals(test_context)
-        from orca import dbus_service
+        from orca import dbus_service, remote_controller_bridge
 
+        dbus_service.get_remote_controller().set_handler(remote_controller_bridge.get_bridge())
         monkeypatch.setenv("ORCA_TEST_RPC_SECRET", "s3cret")
         calls: list[tuple] = []
 
@@ -1529,6 +1533,75 @@ class TestInterfaceBuilder:
         with pytest.raises(PermissionError):
             instance.SelectNextCharacterForTesting("wrong", False)
         assert calls[-1] == ("query", "_RemoteControllerTestingEvent", None)
+
+    def test_parameterized_command_returns_result_unchanged(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """A parameterized command's result reaches the caller as is, not converted to bool."""
+
+        stubs = _stub_orca_internals(test_context)
+        from orca import dbus_service, remote_controller_bridge
+
+        dbus_service.get_remote_controller().set_handler(remote_controller_bridge.get_bridge())
+        calls: list[tuple] = []
+
+        class Tracker:
+            """Records calls so the test can verify what the wrapper passed through."""
+
+            @dbus_service.parameterized_command
+            def get_voices_for_language(
+                self, language: str, variant: str = "", script=None, event=None
+            ) -> list[tuple[str, str, str]]:
+                """Returns voices."""
+                calls.append((language, variant, script, type(event).__name__))
+                return [("v", language, variant)]
+
+        registration = dbus_service._ModuleRegistration.from_module_instance("Tracker", Tracker())
+        instance = dbus_service._InterfaceBuilder.build(registration)()
+
+        assert instance.GetVoicesForLanguage("fr", "ca") == [("v", "fr", "ca")]
+        assert calls[-1] == ("fr", "ca", "active-script", "_RemoteControllerEvent")
+        manager = stubs["input_event_manager_instance"]
+        assert type(manager.last_event).__name__ == "_RemoteControllerEvent"
+
+    def test_commands_do_nothing_without_handler(self, test_context: OrcaTestContext) -> None:
+        """Without a handler, commands are not run: simple ones fail, parameterized ones raise."""
+
+        stubs = _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        calls: list[str] = []
+
+        class Tracker:
+            """Records calls so the test can verify nothing ran."""
+
+            @dbus_service.command
+            def toggle_speech(self, script=None, event=None, notify_user=True) -> bool:
+                """Toggles."""
+                calls.append("toggle_speech")
+                return True
+
+            @dbus_service.parameterized_command
+            def get_voices_for_language(
+                self, language: str, script=None, event=None
+            ) -> list[tuple[str, str, str]]:
+                """Returns voices."""
+                calls.append("get_voices_for_language")
+                return []
+
+        registration = dbus_service._ModuleRegistration.from_module_instance("Tracker", Tracker())
+        instance = dbus_service._InterfaceBuilder.build(registration)()
+
+        assert instance.ToggleSpeech(True) is False
+        with pytest.raises(RuntimeError):
+            instance.GetVoicesForLanguage("fr")
+
+        controller = dbus_service.OrcaRemoteController()
+        controller._registered["Tracker"] = registration
+        assert controller.execute_command_internal("Tracker", "ToggleSpeech") is False
+
+        assert not calls
+        assert stubs["input_event_manager_instance"].last_event is None
 
     def test_property_descriptors_route_to_underlying_methods(
         self, test_context: OrcaTestContext
@@ -1570,6 +1643,8 @@ class TestRemoteControllerInternalAPIs:
     def _registered_controller(self, dbus_service, calls):
         """Returns a controller with one FakeManager registered, ready for in-process use."""
 
+        from orca import remote_controller_bridge
+
         class FakeManager:
             @dbus_service.command
             def toggle_speech(self, script=None, event=None, notify_user=True) -> bool:
@@ -1593,6 +1668,7 @@ class TestRemoteControllerInternalAPIs:
         )
         controller = dbus_service.OrcaRemoteController()
         controller._registered["FakeManager"] = registration
+        controller.set_handler(remote_controller_bridge.get_bridge())
         return controller
 
     def test_execute_command_internal_routes_to_method(self, test_context: OrcaTestContext) -> None:
