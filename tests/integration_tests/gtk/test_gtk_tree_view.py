@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -48,10 +48,10 @@ def test_table_navigation(gtk_tree_view: NativeAppSession) -> None:
     _reset_to_first_cell(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Grace", "Admiral", "Boston", "Done check box checked"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 " Name column header Grace Admiral Boston <x> check box Done",
                 "Grace Admiral Boston <x> check b",
@@ -60,10 +60,10 @@ def test_table_navigation(gtk_tree_view: NativeAppSession) -> None:
         ],
     )
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Alan", "Analyst", "Manchester", "Done check box not checked"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 " Name column header Alan Analyst Manchester < > check box Done",
                 "Alan Analyst Manchester < > chec",
@@ -73,19 +73,19 @@ def test_table_navigation(gtk_tree_view: NativeAppSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Role column header Analyst"],
-        [BrailleLine(1, " Role column header Analyst", "Analyst", "\x00" * 27)],
+        [helpers.BrailleLine(1, " Role column header Analyst", "Analyst", "\x00" * 27)],
     )
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Office column header Manchester"],
-        [BrailleLine(1, " Office column header Manchester", "Manchester", "\x00" * 32)],
+        [helpers.BrailleLine(1, " Office column header Manchester", "Manchester", "\x00" * 32)],
     )
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Role column header Analyst"],
-        [BrailleLine(1, " Role column header Analyst", "Analyst", "\x00" * 27)],
+        [helpers.BrailleLine(1, " Role column header Analyst", "Analyst", "\x00" * 27)],
     )
 
 
@@ -97,10 +97,10 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
     _reset_to_first_cell(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Grace", "Admiral", "Boston", "Done check box checked"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 " Name column header Grace Admiral Boston <x> check box Done",
                 "Grace Admiral Boston <x> check b",
@@ -109,10 +109,10 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
         ],
     )
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Ada", "Engineer", "London", "Done check box not checked"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 " Name column header Ada Engineer London < > check box Done",
                 "Ada Engineer London < > check bo",
@@ -122,12 +122,12 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Name Ada", "column 1 of 4 row 1 of 3"],
-        [BrailleLine(1, " Name column header Ada", "Ada", "\x00" * 23)],
+        [helpers.BrailleLine(1, " Name column header Ada", "Ada", "\x00" * 23)],
     )
     session.orca.call("WhereAmIPresenter", "WhereAmIDetailed", True)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [
             "table with 3 rows 4 columns",
             "Ada",
@@ -138,7 +138,7 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
             "column 1 of 4 row 1 of 3",
         ],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 " Name column header Ada Engineer London < > check box Done",
                 "Ada Engineer London < > check bo",
@@ -148,7 +148,7 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [
             "Grace",
             "Admiral",
@@ -157,7 +157,7 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
             "not selected",
         ],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 " Name column header Grace Admiral Boston <x> check box Done",
                 "Grace Admiral Boston <x> check b",
@@ -166,13 +166,13 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
         ],
     )
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Role column header Admiral", "not selected"],
-        [BrailleLine(1, " Role column header Admiral", "Admiral", "\x00" * 27)],
+        [helpers.BrailleLine(1, " Role column header Admiral", "Admiral", "\x00" * 27)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [
             "Alan",
             "Analyst",
@@ -181,7 +181,7 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
             "not selected",
         ],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 " Role column header Alan Analyst Manchester < > check box Done",
                 "Analyst Manchester < > check box",
@@ -190,7 +190,7 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
         ],
     )
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [
             "Grace",
             "Admiral",
@@ -199,7 +199,7 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
             "not selected",
         ],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 " Role column header Grace Admiral Boston <x> check box Done",
                 "Admiral Boston <x> check box Don",
@@ -209,16 +209,16 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Name column header Grace", "not selected"],
-        [BrailleLine(1, " Name column header Grace", "Grace", "\x00" * 25)],
+        [helpers.BrailleLine(1, " Name column header Grace", "Grace", "\x00" * 25)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Ada", "Engineer", "London", "Done check box not checked"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 " Name column header Ada Engineer London < > check box Done",
                 "Ada Engineer London < > check bo",
@@ -227,10 +227,10 @@ def test_table_selection_where_am_i_and_endpoints(gtk_tree_view: NativeAppSessio
         ],
     )
     keyboard.tap_key(keyboard.KEYSYM_END)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Alan", "Analyst", "Manchester", "Done check box not checked"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 " Name column header Alan Analyst Manchester < > check box Done",
                 "Alan Analyst Manchester < > chec",
@@ -248,10 +248,10 @@ def test_toggle_cell(gtk_tree_view: NativeAppSession) -> None:
     _reset_to_first_cell(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Grace", "Admiral", "Boston", "Done check box checked"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 " Name column header Grace Admiral Boston <x> check box Done",
                 "Grace Admiral Boston <x> check b",
@@ -260,29 +260,29 @@ def test_toggle_cell(gtk_tree_view: NativeAppSession) -> None:
         ],
     )
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Role column header Admiral"],
-        [BrailleLine(1, " Role column header Admiral", "Admiral", "\x00" * 27)],
+        [helpers.BrailleLine(1, " Role column header Admiral", "Admiral", "\x00" * 27)],
     )
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Office column header Boston"],
-        [BrailleLine(1, " Office column header Boston", "Boston", "\x00" * 28)],
+        [helpers.BrailleLine(1, " Office column header Boston", "Boston", "\x00" * 28)],
     )
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Done check box checked"],
-        [BrailleLine(1, "<x> check box Done", "<x> check box Done", "\x00" * 18)],
+        [helpers.BrailleLine(1, "<x> check box Done", "<x> check box Done", "\x00" * 18)],
     )
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["not checked"],
-        [BrailleLine(1, "< > check box Done", "< > check box Done", "\x00" * 18)],
+        [helpers.BrailleLine(1, "< > check box Done", "< > check box Done", "\x00" * 18)],
     )
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["checked"],
-        [BrailleLine(1, "<x> check box Done", "<x> check box Done", "\x00" * 18)],
+        [helpers.BrailleLine(1, "<x> check box Done", "<x> check box Done", "\x00" * 18)],
     )
 
     verbosity = session.orca.get("BraillePresenter", "VerbosityLevel")
@@ -290,7 +290,7 @@ def test_toggle_cell(gtk_tree_view: NativeAppSession) -> None:
     try:
         for expected in ("< > Done", "<x> Done"):
             keyboard.tap_key(keyboard.KEYSYM_SPACE)
-            _, brailled = capture(session)
+            _, brailled = helpers.capture(session)
             assert brailled[-1].visible == expected
     finally:
         session.orca.set("BraillePresenter", "VerbosityLevel", verbosity)
@@ -302,12 +302,12 @@ def test_named_toggle_cell(gtk_tree_view: NativeAppSession) -> None:
 
     session = gtk_tree_view
     keyboard.tap_key(keyboard.KEYSYM_F5)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    capture(session)
+    helpers.capture(session)
     for _ in range(3):
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
     assert spoken == ["Done column header Reviewed check box checked"]
     assert brailled[-1].full == " Done column header <x> Reviewed check box"
 
@@ -322,14 +322,14 @@ def test_toggle_table_cell_read_mode(gtk_tree_view: NativeAppSession) -> None:
     session.reader.reset()
 
     session.orca.call("SpeechPresenter", "ToggleTableCellReadingMode", True)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Speak cell"],
-        [BrailleLine(0, "Speak cell", "Speak cell", "\x00" * 10)],
+        [helpers.BrailleLine(0, "Speak cell", "Speak cell", "\x00" * 10)],
     )
     session.orca.call("SpeechPresenter", "ToggleTableCellReadingMode", True)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Speak row"],
-        [BrailleLine(0, "Speak row", "Speak row", "\x00" * 9)],
+        [helpers.BrailleLine(0, "Speak row", "Speak row", "\x00" * 9)],
     )
 
 
@@ -348,10 +348,10 @@ def test_word_wrap_ends_table_row_window_at_word_boundary(gtk_tree_view: NativeA
     try:
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         # The window ends after the whole word "check" rather than cutting "box" to "b".
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["Grace", "Admiral", "Boston", "Done check box checked"],
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     1,
                     " Name column header Grace Admiral Boston <x> check box Done",
                     "Grace Admiral Boston <x> check ",

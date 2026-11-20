@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import move_to_top, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -38,24 +38,30 @@ def test_backward_navigation_escapes_nested_heading(web_nested_headings: Browser
     """Tests that previous-heading from an inner heading does not get stuck on the outer one."""
 
     session = web_nested_headings
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     # Forward navigation lands on the outer heading, then the third heading.
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Inner heading", "heading 3", " outer tail", "heading 2"]
+    assert helpers.speech(session) == [
+        "h",
+        "Inner heading",
+        "heading 3",
+        " outer tail",
+        "heading 2",
+    ]
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Third heading", "heading 2"]
+    assert helpers.speech(session) == ["h", "Third heading", "heading 2"]
 
     # Backward from the third heading reaches the inner (level 3) heading.
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
-    assert speech(session) == ["H", "Inner heading", "heading 3"]
+    assert helpers.speech(session) == ["H", "Inner heading", "heading 3"]
 
     # Backward from the inner heading must escape to the heading before the outer
     # one. Without the nested-heading guard the caret would land back on the inner
     # heading and structural navigation would be stuck on the outer heading.
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
-    assert speech(session) == ["H", "First heading", "heading 1"]
+    assert helpers.speech(session) == ["H", "First heading", "heading 1"]
 
     # Navigation keeps making progress (wraps to the bottom), proving it is not stuck.
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
-    assert speech(session) == ["H", "Wrapping to bottom.", "Third heading", "heading 2"]
+    assert helpers.speech(session) == ["H", "Wrapping to bottom.", "Third heading", "heading 2"]

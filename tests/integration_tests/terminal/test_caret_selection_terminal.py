@@ -26,19 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import caret_selection_helpers, helpers, terminal_helpers
 from tests.integration_tests.apps import terminal
-from tests.integration_tests.caret_selection_helpers import (
-    END_OF_LINE,
-    NEXT_CHARACTER,
-    NEXT_LINE,
-    NEXT_WORD,
-    PREVIOUS_CHARACTER,
-    PREVIOUS_LINE,
-    select,
-)
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, say_selection, speech
-from tests.integration_tests.terminal_helpers import settle
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -66,7 +56,7 @@ _ORCA_CONTROLS = "The screen reader is controlling the caret."
 _APP_CONTROLS = "The application is controlling the caret."
 
 # After selection collapses, VTE reports the terminal cursor on the pager status line.
-_STATUS_LINE = BrailleLine(8, "doc.txt", "doc.txt", "\x00" * 7)
+_STATUS_LINE = helpers.BrailleLine(8, "doc.txt", "doc.txt", "\x00" * 7)
 
 
 def _move_to_the_second_line(session: NativeAppSession) -> None:
@@ -76,9 +66,9 @@ def _move_to_the_second_line(session: NativeAppSession) -> None:
     session.reader.drain(quiescence_timeout=0.1, overall_timeout=2.0)
     session.reader.reset()
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["line 02\n"],
-        [BrailleLine(1, "line 02", "line 02", "\x00" * 7)],
+        [helpers.BrailleLine(1, "line 02", "line 02", "\x00" * 7)],
     )
 
 
@@ -87,31 +77,31 @@ def test_selection_by_character(terminal_pager: NativeAppSession) -> None:
     """Tests selection by character."""
 
     session = terminal_pager
-    settle(session)
+    terminal_helpers.settle(session)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_ORCA_CONTROLS]
+    assert helpers.capture(session)[0] == [_ORCA_CONTROLS]
 
     _move_to_the_second_line(session)
 
-    assert select(session, NEXT_CHARACTER) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.NEXT_CHARACTER) == (
         ["l", "selected"],
-        BrailleLine(2, "line 02", "line 02", "\xc0" + "\x00" * 6),
+        helpers.BrailleLine(2, "line 02", "line 02", "\xc0" + "\x00" * 6),
     )
-    assert select(session, NEXT_CHARACTER) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.NEXT_CHARACTER) == (
         ["i", "selected"],
-        BrailleLine(3, "line 02", "line 02", "\xc0" * 2 + "\x00" * 5),
+        helpers.BrailleLine(3, "line 02", "line 02", "\xc0" * 2 + "\x00" * 5),
     )
-    assert say_selection(session) == ["Selected text is:  li"]
+    assert helpers.say_selection(session) == ["Selected text is:  li"]
 
-    assert select(session, PREVIOUS_CHARACTER) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.PREVIOUS_CHARACTER) == (
         ["i", "unselected"],
-        BrailleLine(2, "line 02", "line 02", "\xc0" + "\x00" * 6),
+        helpers.BrailleLine(2, "line 02", "line 02", "\xc0" + "\x00" * 6),
     )
-    assert say_selection(session) == ["Selected text is:  l"]
+    assert helpers.say_selection(session) == ["Selected text is:  l"]
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_APP_CONTROLS]
+    assert helpers.capture(session)[0] == [_APP_CONTROLS]
 
 
 @pytest.mark.native_app
@@ -119,34 +109,37 @@ def test_selection_by_word_and_line(terminal_pager: NativeAppSession) -> None:
     """Tests selection by word and by line."""
 
     session = terminal_pager
-    settle(session)
+    terminal_helpers.settle(session)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_ORCA_CONTROLS]
+    assert helpers.capture(session)[0] == [_ORCA_CONTROLS]
 
     _move_to_the_second_line(session)
 
-    assert select(session, NEXT_WORD) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.NEXT_WORD) == (
         ["line", "selected"],
-        BrailleLine(5, "line 02", "line 02", "\xc0" * 4 + "\x00" * 3),
+        helpers.BrailleLine(5, "line 02", "line 02", "\xc0" * 4 + "\x00" * 3),
     )
-    assert select(session, END_OF_LINE) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.END_OF_LINE) == (
         [" 02", "selected"],
-        BrailleLine(8, "line 02", "line 02", "\xc0" * 7),
+        helpers.BrailleLine(8, "line 02", "line 02", "\xc0" * 7),
     )
-    assert say_selection(session) == ["Selected text is:  line 02"]
+    assert helpers.say_selection(session) == ["Selected text is:  line 02"]
 
-    assert select(session, NEXT_LINE) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.NEXT_LINE) == (
         ["\n", "selected"],
-        BrailleLine(1, "line 03", "line 03", "\x00" * 7),
+        helpers.BrailleLine(1, "line 03", "line 03", "\x00" * 7),
     )
-    assert say_selection(session) == ["Selected text is:  line 02\n"]
+    assert helpers.say_selection(session) == ["Selected text is:  line 02\n"]
 
-    assert select(session, PREVIOUS_LINE) == (["line 02\n", "unselected"], _STATUS_LINE)
-    assert say_selection(session) == ["No selected text."]
+    assert caret_selection_helpers.select(session, caret_selection_helpers.PREVIOUS_LINE) == (
+        ["line 02\n", "unselected"],
+        _STATUS_LINE,
+    )
+    assert helpers.say_selection(session) == ["No selected text."]
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_APP_CONTROLS]
+    assert helpers.capture(session)[0] == [_APP_CONTROLS]
 
 
 @pytest.mark.native_app
@@ -154,22 +147,22 @@ def test_selection_removed_by_caret_navigation(terminal_pager: NativeAppSession)
     """Tests removing a selection with the caret navigation commands."""
 
     session = terminal_pager
-    settle(session)
+    terminal_helpers.settle(session)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_ORCA_CONTROLS]
+    assert helpers.capture(session)[0] == [_ORCA_CONTROLS]
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    assert speech(session) == ["line 01\n"]
+    assert helpers.speech(session) == ["line 01\n"]
 
-    assert select(session, NEXT_WORD) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.NEXT_WORD) == (
         ["line", "selected"],
-        BrailleLine(5, "line 01", "line 01", "\xc0" * 4 + "\x00" * 3),
+        helpers.BrailleLine(5, "line 01", "line 01", "\xc0" * 4 + "\x00" * 3),
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Text unselected.", "line 02\n"]
-    assert say_selection(session) == ["No selected text."]
+    assert helpers.speech(session) == ["Text unselected.", "line 02\n"]
+    assert helpers.say_selection(session) == ["No selected text."]
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_APP_CONTROLS]
+    assert helpers.capture(session)[0] == [_APP_CONTROLS]

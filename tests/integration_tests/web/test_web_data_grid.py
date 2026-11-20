@@ -26,9 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers, version_helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, reset_web_state
-from tests.integration_tests.version_helpers import firefox_is_older_than_build
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -36,15 +35,17 @@ if TYPE_CHECKING:
 
 @pytest.mark.native_app
 # Firefox 156 exposes these cells as selectable despite the absence of aria-selected.
-@pytest.mark.skipif(firefox_is_older_than_build(157, 0), reason="Needs Firefox 157 or later")
+@pytest.mark.skipif(
+    version_helpers.firefox_is_older_than_build(157, 0), reason="Needs Firefox 157 or later"
+)
 def test_arrow_navigation_through_grid_cells(web_data_grid: BrowserSession) -> None:
     """Tests arrowing through the grid's cells and jumping to the last and first one."""
 
     session = web_data_grid
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [
         "table with 3 rows 3 columns",
         "Month",
@@ -53,56 +54,74 @@ def test_arrow_navigation_through_grid_cells(web_data_grid: BrowserSession) -> N
         "column 1",
         "Focus mode",
     ]
-    assert brailled[-1] == BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
+    assert brailled[-1] == helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Station", "column header", "column 2"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Station column header", "Station column header", "\x00" * 21
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Kendal", "row 2"]
-    assert brailled[-1] == BrailleLine(1, " Station column header Kendal", "Kendal", "\x00" * 29)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, " Station column header Kendal", "Kendal", "\x00" * 29
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Truro", "row 3"]
-    assert brailled[-1] == BrailleLine(1, " Station column header Truro", "Truro", "\x00" * 28)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, " Station column header Truro", "Truro", "\x00" * 28
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Month column header February", "column 1"]
-    assert brailled[-1] == BrailleLine(1, " Month column header February", "February", "\x00" * 29)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, " Month column header February", "February", "\x00" * 29
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Millimetres column header 61", "column 3"]
-    assert brailled[-1] == BrailleLine(1, " Millimetres column header 61", "61", "\x00" * 29)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, " Millimetres column header 61", "61", "\x00" * 29
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Millimetres 61", "column 3 of 3 row 3 of 3"]
-    assert brailled[-1] == BrailleLine(1, " Millimetres column header 61", "61", "\x00" * 29)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, " Millimetres column header 61", "61", "\x00" * 29
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Station column header Truro", "column 2"]
-    assert brailled[-1] == BrailleLine(1, " Station column header Truro", "Truro", "\x00" * 28)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, " Station column header Truro", "Truro", "\x00" * 28
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Kendal", "row 2"]
-    assert brailled[-1] == BrailleLine(1, " Station column header Kendal", "Kendal", "\x00" * 29)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, " Station column header Kendal", "Kendal", "\x00" * 29
+    )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Millimetres column header 61", "row 3 column 3"]
-    assert brailled[-1] == BrailleLine(1, " Millimetres column header 61", "61", "\x00" * 29)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, " Millimetres column header 61", "61", "\x00" * 29
+    )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Month", "column header", "row 1", "column 1"]
-    assert brailled[-1] == BrailleLine(1, "Month column header", "Month column header", "\x00" * 19)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, "Month column header", "Month column header", "\x00" * 19
+    )

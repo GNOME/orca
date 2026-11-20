@@ -26,24 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers, version_helpers, web_native_selection_helpers
 from tests.integration_tests.apps import browser
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_browser,
-    reset_web_state,
-    say_selection,
-    skip_firefox_caret_tab,
-    speech,
-)
-from tests.integration_tests.version_helpers import requires_browser_version
-from tests.integration_tests.web_native_selection_helpers import (
-    USES_DOCUMENT_SELECTION,
-    native_selection,
-    select_character,
-    select_word,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -54,42 +39,42 @@ def test_selecting_and_unselecting_an_option(web_selection: BrowserSession) -> N
     """Tests selecting and unselecting an option."""
 
     session = web_selection
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     # Firefox includes the list bullet in the option's name and text.
-    olives = expected_for_browser(session, "Olives", firefox="• Olives")
+    olives = helpers.expected_for_browser(session, "Olives", firefox="• Olives")
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Toppings", "multi-select List with 2 items", olives, "Focus mode"]
-    assert brailled[0] == BrailleLine(1, olives, olives, "\x00" * len(olives))
+    assert brailled[0] == helpers.BrailleLine(1, olives, olives, "\x00" * len(olives))
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["selected"]
-    assert brailled[-1] == BrailleLine(0, "selected", "selected", "\x00" * 8)
+    assert brailled[-1] == helpers.BrailleLine(0, "selected", "selected", "\x00" * 8)
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["unselected"]
-    assert brailled[-1] == BrailleLine(0, "unselected", "unselected", "\x00" * 10)
+    assert brailled[-1] == helpers.BrailleLine(0, "unselected", "unselected", "\x00" * 10)
 
 
 @pytest.mark.native_app
-@skip_firefox_caret_tab()
+@helpers.skip_firefox_caret_tab()
 def test_selecting_a_tree_item(web_selection: BrowserSession) -> None:
     """Tests selecting a tree item."""
 
     session = web_selection
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     for _ in range(2):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
-        capture(session)
+        helpers.capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["selected"]
-    assert brailled[-1] == BrailleLine(0, "selected", "selected", "\x00" * 8)
+    assert brailled[-1] == helpers.BrailleLine(0, "selected", "selected", "\x00" * 8)
 
 
 # Gecko lacks the Document selection API: https://bugzilla.mozilla.org/show_bug.cgi?id=1879510
@@ -99,9 +84,10 @@ def test_selecting_a_tree_item(web_selection: BrowserSession) -> None:
     raises=AssertionError,
     strict=True,
 )
-@requires_browser_version("chromium", 156)
+@version_helpers.requires_browser_version("chromium", 156)
 @pytest.mark.skipif(
-    not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
+    not web_native_selection_helpers.USES_DOCUMENT_SELECTION,
+    reason="Button text selection requires document-selection ranges",
 )
 @pytest.mark.native_app
 @pytest.mark.parametrize("spaced", [False, True], ids=["unspaced", "spaced"])
@@ -113,25 +99,31 @@ def test_character_selection_across_inline_button(
 
     session = web_selection
 
-    with native_selection(session):
+    with web_native_selection_helpers.native_selection(session):
         for _ in range(2 if spaced else 1):
             keyboard.tap_key(keyboard.KEYSYM_B)
-            speech(session, wait_async=True)
+            helpers.speech(session, wait_async=True)
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
-        speech(session)
+        helpers.speech(session)
 
         text = "start Next slide finish" if spaced else "startNext slidefinish"
         for character in text:
-            assert select_character(session, keyboard.KEYSYM_RIGHT) == [character, "selected"]
-        assert say_selection(session) == [f"Selected text is:  {text}"]
+            assert web_native_selection_helpers.select_character(
+                session, keyboard.KEYSYM_RIGHT
+            ) == [character, "selected"]
+        assert helpers.say_selection(session) == [f"Selected text is:  {text}"]
         for character in reversed(text):
-            assert select_character(session, keyboard.KEYSYM_LEFT) == [character, "unselected"]
-        assert say_selection(session) == ["No selected text."]
+            assert web_native_selection_helpers.select_character(session, keyboard.KEYSYM_LEFT) == [
+                character,
+                "unselected",
+            ]
+        assert helpers.say_selection(session) == ["No selected text."]
 
 
-@requires_browser_version("chromium", 156)
+@version_helpers.requires_browser_version("chromium", 156)
 @pytest.mark.skipif(
-    not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
+    not web_native_selection_helpers.USES_DOCUMENT_SELECTION,
+    reason="Button text selection requires document-selection ranges",
 )
 @pytest.mark.native_app
 @pytest.mark.parametrize("forward", [True, False], ids=["forward", "backward"])
@@ -145,26 +137,26 @@ def test_selection_containing_whole_inline_button(
 
     session = web_selection
 
-    with native_selection(session):
+    with web_native_selection_helpers.native_selection(session):
         for _ in range(2 if spaced else 1):
             keyboard.tap_key(keyboard.KEYSYM_B)
-            speech(session, wait_async=True)
+            helpers.speech(session, wait_async=True)
         start, end = (
             (keyboard.KEYSYM_HOME, keyboard.KEYSYM_END)
             if forward
             else (keyboard.KEYSYM_END, keyboard.KEYSYM_HOME)
         )
         keyboard.tap_key(start)
-        speech(session)
+        helpers.speech(session)
 
         text = "start Next slide finish" if spaced else "startNext slidefinish"
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], end)
-        assert speech(session) == [text, "selected"]
-        assert say_selection(session) == [f"Selected text is:  {text}"]
+        assert helpers.speech(session) == [text, "selected"]
+        assert helpers.say_selection(session) == [f"Selected text is:  {text}"]
 
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], start)
-        assert speech(session) == [text, "unselected"]
-        assert say_selection(session) == ["No selected text."]
+        assert helpers.speech(session) == [text, "unselected"]
+        assert helpers.say_selection(session) == ["No selected text."]
 
 
 # Gecko lacks the Document selection API: https://bugzilla.mozilla.org/show_bug.cgi?id=1879510
@@ -174,9 +166,10 @@ def test_selection_containing_whole_inline_button(
     raises=AssertionError,
     strict=True,
 )
-@requires_browser_version("chromium", 156)
+@version_helpers.requires_browser_version("chromium", 156)
 @pytest.mark.skipif(
-    not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
+    not web_native_selection_helpers.USES_DOCUMENT_SELECTION,
+    reason="Button text selection requires document-selection ranges",
 )
 @pytest.mark.native_app
 @pytest.mark.parametrize("spaced", [False, True], ids=["unspaced", "spaced"])
@@ -188,13 +181,16 @@ def test_word_selection_across_inline_button(
 
     session = web_selection
 
-    with native_selection(session):
+    with web_native_selection_helpers.native_selection(session):
         for _ in range(2 if spaced else 1):
             keyboard.tap_key(keyboard.KEYSYM_B)
-            speech(session, wait_async=True)
+            helpers.speech(session, wait_async=True)
         keyboard.tap_key(keyboard.KEYSYM_END)
-        speech(session)
+        helpers.speech(session)
 
         words = ["finish", "slide", "Next"] if spaced else ["slidefinish", "Next"]
         for word in words:
-            assert select_word(session, keyboard.KEYSYM_LEFT) == [word, "selected"]
+            assert web_native_selection_helpers.select_word(session, keyboard.KEYSYM_LEFT) == [
+                word,
+                "selected",
+            ]

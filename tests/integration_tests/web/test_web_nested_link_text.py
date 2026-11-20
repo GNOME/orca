@@ -27,16 +27,8 @@ from typing import TYPE_CHECKING
 import pytest
 
 from orca.output_reader import SpeechRecord
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_browser,
-    move_to_bottom,
-    move_to_top,
-    reset_web_state,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -45,8 +37,8 @@ _PLAIN = "\x00"
 _LINK = "\xc0"
 
 
-def _line(full: str, mask: str) -> BrailleLine:
-    return BrailleLine(1, full, full[:32], mask)
+def _line(full: str, mask: str) -> helpers.BrailleLine:
+    return helpers.BrailleLine(1, full, full[:32], mask)
 
 
 @pytest.mark.native_app
@@ -54,10 +46,10 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     """Tests line navigation over nested link text."""
 
     session = web_nested_link_text
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Jump to the ", "glossary entry for RLS", "link", " now."],
         [
             _line(
@@ -68,7 +60,7 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Jump to the ", "localStorage", "link", " glossary entry now."],
         [
             _line(
@@ -79,7 +71,7 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Jump to the ", "bold term", "link", " glossary entry now."],
         [
             _line(
@@ -90,7 +82,7 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Jump to the ", "grant/", "revoke", "link", " glossary entry now."],
         [
             _line(
@@ -101,13 +93,13 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Jump to the ", "sessionStorage", "link"],
         [_line("Jump to the sessionStorage", _PLAIN * 12 + _LINK * 14)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Jump to the ", "one", " and ", "two", "link", " glossary entry now."],
         [
             _line(
@@ -118,7 +110,7 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Jump to the ", "wrapped", "link", " glossary entry now."],
         [
             _line(
@@ -129,7 +121,7 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Jump to the ", "chart", "image link", " glossary entry now."],
         [
             _line(
@@ -140,7 +132,7 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Jump to the ", "read", "write", "link", " glossary entry now."],
         [
             _line(
@@ -151,7 +143,7 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Jump to the ", "get", "set", "link", " glossary entry now."],
         [
             _line(
@@ -162,7 +154,7 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Jump to the ", "redgreenblue", "link", " glossary entry now."],
         [
             _line(
@@ -173,25 +165,25 @@ def test_line_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["open", "close", "heading 1"],
         [_line("open close", _PLAIN * 10)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Jump to the ", "north", "link"],
         [_line("Jump to the north ", _PLAIN * 12 + _LINK * 5 + _PLAIN)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["south", "link"],
         [_line("south ", _LINK * 5 + _PLAIN)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["east", "link", " glossary entry now."],
         [_line("east glossary entry now.", _LINK * 4 + _PLAIN * 20)],
     )
@@ -202,12 +194,12 @@ def test_word_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     """Tests word navigation over nested link text."""
 
     session = web_nested_link_text
-    move_to_bottom(session)
-    speech(session)
+    helpers.move_to_bottom(session)
+    helpers.speech(session)
 
     expected = [
         # Firefox includes the period in the word boundary; retain both for browser review.
-        *expected_for_browser(session, [["."], ["After"]], firefox=[["After."]]),
+        *helpers.expected_for_browser(session, [["."], ["After"]], firefox=[["After."]]),
         ["after"],
         ["here"],
         ["link "],
@@ -220,11 +212,11 @@ def test_word_navigation_over_nested_link_text(web_nested_link_text: BrowserSess
     ]
     for utterances in expected:
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
-        assert speech(session) == utterances
+        assert helpers.speech(session) == utterances
 
     for utterances in [["The "], ["quick "], ["brown "], ["fox"], ["Before "], ["a "]]:
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-        assert speech(session) == utterances
+        assert helpers.speech(session) == utterances
 
 
 @pytest.mark.native_app
@@ -232,7 +224,7 @@ def test_tab_navigation_over_nested_link_text(web_nested_link_text: BrowserSessi
     """Tests tab navigation over nested link text."""
 
     session = web_nested_link_text
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     for text in (
         "glossary entry for RLS",
@@ -249,9 +241,9 @@ def test_tab_navigation_over_nested_link_text(web_nested_link_text: BrowserSessi
         "north south east",
     ):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             [text, "link"],
-            [BrailleLine(1, text, text, _LINK * len(text))],
+            [helpers.BrailleLine(1, text, text, _LINK * len(text))],
         )
 
 
@@ -260,12 +252,12 @@ def test_say_all_over_nested_link_text(web_nested_link_text: BrowserSession) -> 
     """Tests Say All over nested link text."""
 
     session = web_nested_link_text
-    reset_web_state(session)
-    move_to_bottom(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_bottom(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-    assert speech(session) == [
+    assert helpers.speech(session) == [
         "Nested link text",
         "Jump to the ",
         "glossary entry for RLS",
@@ -342,7 +334,7 @@ def test_nested_link_text_uses_the_hyperlink_voice(web_nested_link_text: Browser
     """Tests that nested link text uses the hyperlink voice."""
 
     session = web_nested_link_text
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     for text in ("glossary entry for RLS", "localStorage", "bold term"):
         session.reader.reset()
@@ -365,9 +357,9 @@ def test_say_all_uses_the_hyperlink_voice(web_nested_link_text: BrowserSession) 
     """Tests that Say All uses the hyperlink voice for nested link text."""
 
     session = web_nested_link_text
-    reset_web_state(session)
-    move_to_bottom(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_bottom(session)
+    helpers.move_to_top(session)
 
     session.reader.reset()
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)

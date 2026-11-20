@@ -26,10 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, terminal_helpers
 from tests.integration_tests.apps import terminal
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.terminal_helpers import settle
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -56,10 +55,10 @@ def test_pager_up_speaks_new_top_line(terminal_pager: NativeAppSession) -> None:
     """Tests that Up speaks newly revealed content while the caret stays on the status line."""
 
     session = terminal_pager
-    settle(session)
+    terminal_helpers.settle(session)
     for _ in range(3):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        settle(session)
+        terminal_helpers.settle(session)
 
     for number in (3, 2, 1):
         keyboard.tap_key(keyboard.KEYSYM_UP)

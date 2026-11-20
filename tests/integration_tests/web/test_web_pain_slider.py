@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -38,10 +38,10 @@ def test_slider_announces_valuetext_on_value_change(web_pain_slider: BrowserSess
     """Tests that arrowing a slider announces each new aria-valuetext, forward and backward."""
 
     session = web_pain_slider
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == [
+    assert helpers.speech(session) == [
         "Pain rating",
         "horizontal slider",
         "No pain",
@@ -56,8 +56,8 @@ def test_slider_announces_valuetext_on_value_change(web_pain_slider: BrowserSess
         "Pain prevents daily activities",
     ):
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-        assert speech(session) == [expected]
+        assert helpers.speech(session) == [expected]
 
     for expected in ("Pain interrupts some activities", "Somewhat distracting pain"):
         keyboard.tap_key(keyboard.KEYSYM_LEFT)
-        assert speech(session) == [expected]
+        assert helpers.speech(session) == [expected]

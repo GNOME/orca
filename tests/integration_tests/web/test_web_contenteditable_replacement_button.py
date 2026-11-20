@@ -28,13 +28,12 @@ import pytest
 
 from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
 
 
-def _reload(session: BrowserSession) -> tuple[list[str], list[BrailleLine]]:
+def _reload(session: BrowserSession) -> tuple[list[str], list[helpers.BrailleLine]]:
     """Reloads with Orca running so the page's initial focus events are captured."""
 
     session.orca.set("BraillePresenter", "FlashMessagesAreEnabled", False)
@@ -82,5 +81,6 @@ def test_replaced_lines_down_and_up(
         assert spoken_lines == [[line] for line in lines]
     else:
         assert brailled_lines == [
-            BrailleLine(1, f"{line} $l", f"{line} $l", "\x00" * (len(line) + 3)) for line in lines
+            helpers.BrailleLine(1, f"{line} $l", f"{line} $l", "\x00" * (len(line) + 3))
+            for line in lines
         ]

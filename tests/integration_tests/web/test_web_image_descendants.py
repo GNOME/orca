@@ -26,29 +26,23 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.apps import browser
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    reset_web_state,
-    say_selection,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
 
 
 def _move_before_image(session: BrowserSession, section: int) -> None:
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     for _ in range(section):
         keyboard.tap_key(keyboard.KEYSYM_H)
-        speech(session)
+        helpers.speech(session)
     keyboard.tap_key(keyboard.KEYSYM_P)
-    speech(session)
+    helpers.speech(session)
     keyboard.tap_key(keyboard.KEYSYM_END)
-    speech(session)
+    helpers.speech(session)
 
 
 # Image-map links are still skipped after AT-SPI caret setting in Nightly builds
@@ -64,21 +58,21 @@ def test_tab_navigation_reaches_image_descendants(web_image_descendants: Browser
     """Tests Tab and Shift+Tab reach image-map links and SVG controls."""
 
     session = web_image_descendants
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     expected = [
-        ("North link", BrailleLine(1, "North", "North", "\xc0" * 5)),
-        ("South link", BrailleLine(1, "South", "South", "\xc0" * 5)),
-        ("Open link", BrailleLine(1, "Open", "Open", "\xc0" * 4)),
-        ("Close button", BrailleLine(1, "Close button", "Close button", "\x00" * 12)),
+        ("North link", helpers.BrailleLine(1, "North", "North", "\xc0" * 5)),
+        ("South link", helpers.BrailleLine(1, "South", "South", "\xc0" * 5)),
+        ("Open link", helpers.BrailleLine(1, "Open", "Open", "\xc0" * 4)),
+        ("Close button", helpers.BrailleLine(1, "Close button", "Close button", "\x00" * 12)),
     ]
     for spoken, braille in expected:
         keyboard.tap_key(keyboard.KEYSYM_TAB)
-        actual_spoken, actual_braille = capture(session)
+        actual_spoken, actual_braille = helpers.capture(session)
         assert " ".join(actual_spoken) == spoken
         assert actual_braille[-1] == braille
     for spoken, braille in reversed(expected[:-1]):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
-        actual_spoken, actual_braille = capture(session)
+        actual_spoken, actual_braille = helpers.capture(session)
         assert " ".join(actual_spoken) == spoken
         assert actual_braille[-1] == braille
 
@@ -122,20 +116,20 @@ def test_caret_navigation_through_image_descendants(
     modifiers = [keyboard.KEYSYM_CONTROL_L] if by_word else []
     for item in expected:
         keyboard.press_chord(modifiers, keyboard.KEYSYM_RIGHT)
-        spoken = " ".join(speech(session))
+        spoken = " ".join(helpers.speech(session))
         assert (spoken.strip() if by_word else spoken) == item
 
     keyboard.press_chord(modifiers, keyboard.KEYSYM_RIGHT)
-    assert " ".join(speech(session)).strip() == ("After" if by_word else "A")
+    assert " ".join(helpers.speech(session)).strip() == ("After" if by_word else "A")
     if by_word:
         keyboard.press_chord(modifiers, keyboard.KEYSYM_LEFT)
-        assert " ".join(speech(session)).strip() == "After"
+        assert " ".join(helpers.speech(session)).strip() == "After"
     for item in reversed(expected):
         keyboard.press_chord(modifiers, keyboard.KEYSYM_LEFT)
-        spoken = " ".join(speech(session))
+        spoken = " ".join(helpers.speech(session))
         assert (spoken.strip() if by_word else spoken) == item
     keyboard.press_chord(modifiers, keyboard.KEYSYM_LEFT)
-    assert speech(session) == ["."]
+    assert helpers.speech(session) == ["."]
 
 
 @pytest.mark.native_app
@@ -152,27 +146,27 @@ def test_native_selection_within_svg_text(web_image_descendants: BrowserSession)
     session = web_image_descendants
     _move_before_image(session, 3)
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Quiet river"]
+    assert helpers.speech(session) == ["Quiet river"]
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    speech(session)
+    helpers.speech(session)
 
     for count, character in enumerate("Quiet", 1):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == [character, "selected"]
-        assert brailled[-1] == BrailleLine(
+        assert brailled[-1] == helpers.BrailleLine(
             count + 1, "Quiet river", "Quiet river", "\xc0" * count + "\x00" * (11 - count)
         )
-    assert say_selection(session) == ["Selected text is:  Quiet"]
+    assert helpers.say_selection(session) == ["Selected text is:  Quiet"]
 
     for remaining, character in zip(range(4, -1, -1), reversed("Quiet"), strict=True):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_LEFT)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == [character, "unselected"]
-        assert brailled[-1] == BrailleLine(
+        assert brailled[-1] == helpers.BrailleLine(
             remaining + 1,
             "Quiet river",
             "Quiet river",
             "\xc0" * remaining + "\x00" * (11 - remaining),
         )
-    assert say_selection(session) == ["No selected text."]
+    assert helpers.say_selection(session) == ["No selected text."]

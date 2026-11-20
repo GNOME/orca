@@ -26,14 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, terminal_helpers
 from tests.integration_tests.apps import terminal
-from tests.integration_tests.terminal_helpers import (
-    WIDE_PROMPT_INPUT,
-    WIDE_PROMPT_LINE,
-    settle,
-    type_text,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -44,13 +38,13 @@ def test_pan_braille_across_terminal_line(terminal_shell: NativeAppSession) -> N
     """Tests panning across a prompt line wider than the display, including the edge-walk."""
 
     session = terminal_shell
-    settle(session)
-    type_text(WIDE_PROMPT_INPUT)
+    terminal_helpers.settle(session)
+    terminal_helpers.type_text(terminal_helpers.WIDE_PROMPT_INPUT)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
 
     with helpers.bound_pan_keys(session) as (left_key, right_key):
-        mask = "\x00" * len(WIDE_PROMPT_LINE)
+        mask = "\x00" * len(terminal_helpers.WIDE_PROMPT_LINE)
         # Pan-left slides the window back to the start of the line.
         session.orca.press_bound_key(left_key)
         assert helpers.capture(session) == (
@@ -58,7 +52,7 @@ def test_pan_braille_across_terminal_line(terminal_shell: NativeAppSession) -> N
             [
                 helpers.BrailleLine(
                     0,
-                    WIDE_PROMPT_LINE,
+                    terminal_helpers.WIDE_PROMPT_LINE,
                     "$ abcdefghij klmnopqrst uvwxy 01",
                     mask,
                 )
@@ -68,7 +62,7 @@ def test_pan_braille_across_terminal_line(terminal_shell: NativeAppSession) -> N
         session.orca.press_bound_key(right_key)
         assert helpers.capture(session) == (
             [],
-            [helpers.BrailleLine(9, WIDE_PROMPT_LINE, "01234567", mask)],
+            [helpers.BrailleLine(9, terminal_helpers.WIDE_PROMPT_LINE, "01234567", mask)],
         )
 
 
@@ -94,7 +88,7 @@ def test_pan_braille_left_crosses_wide_line_in_pager(
     """Tests that panning left over a pager line wider than the display reaches the line above."""
 
     session = terminal_wide_pager
-    settle(session)
+    terminal_helpers.settle(session)
     helpers.toggle_flat_review(session)
 
     wide = "this line is wider than the display now $l"

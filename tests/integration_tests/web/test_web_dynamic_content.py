@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import reset_web_state, skip_firefox_caret_tab, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -38,7 +38,7 @@ def test_button_navigation(web_dynamic_content: BrowserSession) -> None:
     """Tests Tab navigation through the page's four action buttons."""
 
     session = web_dynamic_content
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     for expected in (
         ["Add", "button"],
@@ -47,7 +47,7 @@ def test_button_navigation(web_dynamic_content: BrowserSession) -> None:
         ["Reload", "button"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -55,73 +55,73 @@ def test_adding_list_items_is_silent(web_dynamic_content: BrowserSession) -> Non
     """Tests that appending list items while focus is on the button is not announced."""
 
     session = web_dynamic_content
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Add", "button"]
+    assert helpers.speech(session) == ["Add", "button"]
 
     # The list is not an ancestor of focus, so Orca refreshes its cache silently.
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session) == []
+    assert helpers.speech(session) == []
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session) == []
+    assert helpers.speech(session) == []
 
 
 @pytest.mark.native_app
-@skip_firefox_caret_tab()
+@helpers.skip_firefox_caret_tab()
 def test_removing_list_items_is_silent(web_dynamic_content: BrowserSession) -> None:
     """Tests that removing list items while focus is on the button is not announced."""
 
     session = web_dynamic_content
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Add", "button"]
+    assert helpers.speech(session) == ["Add", "button"]
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session) == []
+    assert helpers.speech(session) == []
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Remove", "button"]
+    assert helpers.speech(session) == ["Remove", "button"]
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session) == []
+    assert helpers.speech(session) == []
 
 
 @pytest.mark.native_app
-@skip_firefox_caret_tab()
+@helpers.skip_firefox_caret_tab()
 def test_toggling_panel_is_silent(web_dynamic_content: BrowserSession) -> None:
     """Tests that showing and hiding a display:none panel is not announced."""
 
     session = web_dynamic_content
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     for _ in range(3):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Toggle", "button"]
+    assert helpers.speech(session) == ["Toggle", "button"]
 
     # The panel is added to and removed from the a11y tree; with focus on the
     # button (not inside the panel), Orca refreshes its cache silently.
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session) == []
+    assert helpers.speech(session) == []
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session) == []
+    assert helpers.speech(session) == []
 
 
 @pytest.mark.native_app
-@skip_firefox_caret_tab()
+@helpers.skip_firefox_caret_tab()
 def test_reload_rereads_page(web_dynamic_content: BrowserSession) -> None:
     """Tests that reloading the page presents its contents anew (busy + load-complete)."""
 
     session = web_dynamic_content
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     summary_before = session.orca.get("DocumentPresenter", "PageSummaryOnLoad")
     session.orca.set("DocumentPresenter", "PageSummaryOnLoad", False)
     try:
         for _ in range(4):
             keyboard.tap_key(keyboard.KEYSYM_TAB)
-        assert speech(session) == ["Reload", "button"]
+        assert helpers.speech(session) == ["Reload", "button"]
 
         keyboard.tap_key(keyboard.KEYSYM_SPACE)
-        assert speech(session, overall=4.0) == [
+        assert helpers.speech(session, overall=4.0) == [
             "Orca Web Dynamic Content ready",
             "document web",
             "Dynamic content",
@@ -140,12 +140,12 @@ def test_reload_rereads_page(web_dynamic_content: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
-@skip_firefox_caret_tab()
+@helpers.skip_firefox_caret_tab()
 def test_reload_presents_page_summary(web_dynamic_content: BrowserSession) -> None:
     """Tests that the page-summary-on-load setting presents a structural summary on reload."""
 
     session = web_dynamic_content
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     # The summary should remain queued ahead of the automatic page re-read.
     say_all_before = session.orca.get("DocumentPresenter", "SayAllOnLoad")
@@ -155,10 +155,10 @@ def test_reload_presents_page_summary(web_dynamic_content: BrowserSession) -> No
     try:
         for _ in range(4):
             keyboard.tap_key(keyboard.KEYSYM_TAB)
-        assert speech(session) == ["Reload", "button"]
+        assert helpers.speech(session) == ["Reload", "button"]
 
         keyboard.tap_key(keyboard.KEYSYM_SPACE)
-        assert speech(session, wait_async=True, overall=6.0) == [
+        assert helpers.speech(session, wait_async=True, overall=6.0) == [
             "Orca Web Dynamic Content ready",
             "document web",
             "Page has 1 heading.",

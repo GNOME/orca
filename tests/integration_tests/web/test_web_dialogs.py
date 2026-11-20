@@ -26,14 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.apps import browser
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    expected_for_browser,
-    move_to_bottom,
-    reset_web_state,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -44,14 +39,14 @@ def test_caret_navigation_top_to_bottom(web_dialogs: BrowserSession) -> None:
     """Tests Down-arrow caret navigation through the page's buttons (layout mode on)."""
 
     session = web_dialogs
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     for expected in (
         ["Open dialog", "button"],
         ["Trigger alert", "button"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -59,14 +54,14 @@ def test_caret_navigation_top_to_bottom_layout_off(web_dialogs: BrowserSession) 
     """Tests the same Down-arrow navigation with layout mode disabled."""
 
     session = web_dialogs
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
     for expected in (
         ["Open dialog", "button"],
         ["Trigger alert", "button"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 _BOTTOM_TO_TOP = (
@@ -81,12 +76,12 @@ def test_caret_navigation_bottom_to_top(web_dialogs: BrowserSession) -> None:
     """Tests Up-arrow caret navigation from the bottom of the page (layout mode on)."""
 
     session = web_dialogs
-    reset_web_state(session)
-    move_to_bottom(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_bottom(session)
 
     for expected in _BOTTOM_TO_TOP:
         keyboard.tap_key(keyboard.KEYSYM_UP)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -94,12 +89,12 @@ def test_caret_navigation_bottom_to_top_layout_off(web_dialogs: BrowserSession) 
     """Tests the same Up-arrow navigation with layout mode disabled."""
 
     session = web_dialogs
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
-    move_to_bottom(session)
+    helpers.move_to_bottom(session)
     for expected in _BOTTOM_TO_TOP:
         keyboard.tap_key(keyboard.KEYSYM_UP)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -107,23 +102,23 @@ def test_dialog_appearance(web_dialogs: BrowserSession) -> None:
     """Tests that opening a modal dialog announces it and its default button."""
 
     session = web_dialogs
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Open dialog", "button"]
+    assert helpers.speech(session) == ["Open dialog", "button"]
 
     # Opening the modal announces its content and lands on the autofocused default button.
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
     # Firefox retains a space between the embedded buttons when we expand
     # the dialog text and exclude the buttons; Chromium has no such space.
-    assert speech(session) == [
-        expected_for_browser(session, "Delete this item?", firefox="Delete this item? "),
+    assert helpers.speech(session) == [
+        helpers.expected_for_browser(session, "Delete this item?", firefox="Delete this item? "),
         "OK",
         "button",
     ]
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Cancel", "button"]
+    assert helpers.speech(session) == ["Cancel", "button"]
 
     # Close the modal so the rest of the page is reachable again.
     keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
@@ -143,12 +138,12 @@ def test_alert_announcement(web_dialogs: BrowserSession) -> None:
     """Tests that activating Trigger alert announces the alert text."""
 
     session = web_dialogs
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Open dialog", "button"]
+    assert helpers.speech(session) == ["Open dialog", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Trigger alert", "button"]
+    assert helpers.speech(session) == ["Trigger alert", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session, wait_async=True) == ["Item deleted"]
+    assert helpers.speech(session, wait_async=True) == ["Item deleted"]

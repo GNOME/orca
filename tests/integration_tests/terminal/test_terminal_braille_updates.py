@@ -27,9 +27,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, terminal_helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.terminal_helpers import settle
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -41,7 +40,7 @@ def test_flat_review_updates(terminal_updates: NativeAppSession, navigate: bool)
     """Limits background updates without losing the final text or the review position."""
 
     session = terminal_updates
-    settle(session)
+    terminal_helpers.settle(session)
     session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
     helpers.toggle_flat_review(session)
     keyboard.tap_key(keyboard.KEYSYM_F5)

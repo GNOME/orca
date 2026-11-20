@@ -26,12 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    toggle_flat_review,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -39,14 +35,14 @@ if TYPE_CHECKING:
 
 def _review_second_line_then_switch_away_and_back(session: NativeAppSession) -> None:
     """Reviews the second line, switches to the other window, and returns to this one."""
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
     keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Second line."],
-        [BrailleLine(1, "Second line. $l", "Second line. $l", "\x00" * 15)],
+        [helpers.BrailleLine(1, "Second line. $l", "Second line. $l", "\x00" * 15)],
     )
     keyboard.tap_key(keyboard.KEYSYM_F2)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
@@ -76,9 +72,9 @@ def test_focus_tracking_on_resets_review_on_window_change(
     session.orca.set("FlatReviewPresenter", "FocusTracking", 2)
     _review_second_line_then_switch_away_and_back(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["First line."],
-        [BrailleLine(1, "First line. $l", "First line. $l", "\x00" * 14)],
+        [helpers.BrailleLine(1, "First line. $l", "First line. $l", "\x00" * 14)],
     )
 
 
@@ -102,9 +98,9 @@ def test_focus_tracking_off_keeps_review_on_window_change(
     session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
     _review_second_line_then_switch_away_and_back(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Second line."],
-        [BrailleLine(1, "Second line. $l", "Second line. $l", "\x00" * 15)],
+        [helpers.BrailleLine(1, "Second line. $l", "Second line. $l", "\x00" * 15)],
     )
 
 
@@ -128,9 +124,9 @@ def test_focus_tracking_auto_keeps_review_on_window_change(
     session.orca.set("FlatReviewPresenter", "FocusTracking", 1)
     _review_second_line_then_switch_away_and_back(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Second line."],
-        [BrailleLine(1, "Second line. $l", "Second line. $l", "\x00" * 15)],
+        [helpers.BrailleLine(1, "Second line. $l", "Second line. $l", "\x00" * 15)],
     )
 
 
@@ -143,7 +139,7 @@ def test_reviewing_after_window_switch_presents_the_new_window(
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
     session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
@@ -151,10 +147,10 @@ def test_reviewing_after_window_switch_presents_the_new_window(
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Second Second window entry"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 20,
                 "Second Second window entry $l",
                 "Second window entry $l",

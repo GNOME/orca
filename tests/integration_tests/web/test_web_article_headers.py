@@ -26,10 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, version_helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine
-from tests.integration_tests.version_helpers import firefox_is_older_than_build
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -88,7 +86,7 @@ def _set_announcements(session: BrowserSession, enabled: bool, *, say_all: bool 
 
 
 def _expected_speech(utterances: list[str], enabled: bool) -> list[str]:
-    if not enabled or firefox_is_older_than_build(162, 20261118215316):
+    if not enabled or version_helpers.firefox_is_older_than_build(162, 20261118215316):
         return [item for item in utterances if item not in ("header", "footer")]
     return utterances
 
@@ -127,7 +125,7 @@ def test_navigate_headers_and_footers(
             mask = ("\xc0" if is_link else "\x00") * len(text)
             assert helpers.capture(session) == (
                 _expected_speech(_line_speech(index, context), enabled),
-                [BrailleLine(1, text, text, mask)],
+                [helpers.BrailleLine(1, text, text, mask)],
             )
 
 

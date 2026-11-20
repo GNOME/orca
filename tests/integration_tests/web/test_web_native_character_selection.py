@@ -26,17 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers, version_helpers, web_native_selection_helpers
 from tests.integration_tests.apps import browser
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import say_selection, speech
-from tests.integration_tests.version_helpers import requires_browser_version
-from tests.integration_tests.web_native_selection_helpers import (
-    LONG_PARAGRAPH,
-    USES_DOCUMENT_SELECTION,
-    assert_walks,
-    native_selection,
-    select_character,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -55,7 +47,7 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
     add_text("Intro paragraph.")
     selected.append([])
     add_text("Quoted text.")
-    if USES_DOCUMENT_SELECTION:
+    if web_native_selection_helpers.USES_DOCUMENT_SELECTION:
         selected.append([])
         add_text("Save")
         selected.append([])
@@ -89,7 +81,7 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
     selected.extend([[], ["Red square", "image", "selected"], []])
     add_text("before")
     selected.append([])
-    if USES_DOCUMENT_SELECTION:
+    if web_native_selection_helpers.USES_DOCUMENT_SELECTION:
         add_text("Save all changes")
         selected.append([])
     else:
@@ -105,13 +97,13 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
     selected.append(["Green square", "image", "selected"])
     add_text(" apart")
     selected.append([])
-    if USES_DOCUMENT_SELECTION:
+    if web_native_selection_helpers.USES_DOCUMENT_SELECTION:
         add_text("Next slide")
         selected.append([])
     else:
         selected.append([])
         selected.extend([["selected"]] * len("Next slide"))
-    add_text(LONG_PARAGRAPH)
+    add_text(web_native_selection_helpers.LONG_PARAGRAPH)
 
     unselected = []
     for output in reversed(selected):
@@ -121,7 +113,7 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
             unselected.append([])
 
     count = len(selected)
-    if not USES_DOCUMENT_SELECTION:
+    if not web_native_selection_helpers.USES_DOCUMENT_SELECTION:
         unselected[count - 1 - combo_index] = []
         unselected[count - combo_index] = ["Apple Pear", "unselected"]
     unselected[count - 1 - second_state_only_index] = []
@@ -137,7 +129,9 @@ def _selection_expectations() -> tuple[list[list[str]], list[list[str]]]:
     strict=True,
 )
 # Provisional minimum while selection failures are investigated.
-@requires_browser_version("chromium", 157, when=USES_DOCUMENT_SELECTION)
+@version_helpers.requires_browser_version(
+    "chromium", 157, when=web_native_selection_helpers.USES_DOCUMENT_SELECTION
+)
 @pytest.mark.native_app
 def test_character_selection_and_unselection(
     web_native_text_selection: BrowserSession,
@@ -147,11 +141,19 @@ def test_character_selection_and_unselection(
     session = web_native_text_selection
     expected_selected, expected_unselected = _selection_expectations()
 
-    with native_selection(session):
-        selected = [select_character(session, keyboard.KEYSYM_RIGHT) for _ in expected_selected]
-        unselected = [select_character(session, keyboard.KEYSYM_LEFT) for _ in expected_unselected]
+    with web_native_selection_helpers.native_selection(session):
+        selected = [
+            web_native_selection_helpers.select_character(session, keyboard.KEYSYM_RIGHT)
+            for _ in expected_selected
+        ]
+        unselected = [
+            web_native_selection_helpers.select_character(session, keyboard.KEYSYM_LEFT)
+            for _ in expected_unselected
+        ]
 
-    assert_walks(selected, unselected, expected_selected, expected_unselected)
+    web_native_selection_helpers.assert_walks(
+        selected, unselected, expected_selected, expected_unselected
+    )
 
 
 @pytest.mark.native_app
@@ -162,14 +164,17 @@ def test_selection_to_the_right_after_line_navigation(
 
     session = web_native_text_selection
 
-    with native_selection(session):
+    with web_native_selection_helpers.native_selection(session):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
         session.reader.reset()
 
-        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["Q", "selected"]
-        assert say_selection(session) == ["Selected text is:  Q"]
+        assert web_native_selection_helpers.select_character(session, keyboard.KEYSYM_RIGHT) == [
+            "Q",
+            "selected",
+        ]
+        assert helpers.say_selection(session) == ["Selected text is:  Q"]
 
 
 @pytest.mark.native_app
@@ -180,13 +185,16 @@ def test_selection_to_the_right_after_structural_navigation(
 
     session = web_native_text_selection
 
-    with native_selection(session):
+    with web_native_selection_helpers.native_selection(session):
         keyboard.tap_key(ord("q"))
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
         session.reader.reset()
 
-        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["Q", "selected"]
-        assert say_selection(session) == ["Selected text is:  Q"]
+        assert web_native_selection_helpers.select_character(session, keyboard.KEYSYM_RIGHT) == [
+            "Q",
+            "selected",
+        ]
+        assert helpers.say_selection(session) == ["Selected text is:  Q"]
 
 
 # Gecko keeps reporting the image's Text selection range after native Shift+Left.
@@ -202,17 +210,24 @@ def test_selection_after_image_navigation(web_native_text_selection: BrowserSess
 
     session = web_native_text_selection
 
-    with native_selection(session):
+    with web_native_selection_helpers.native_selection(session):
         keyboard.tap_key(keyboard.KEYSYM_G)
-        assert speech(session) == ["g", "Red square", "image"]
+        assert helpers.speech(session) == ["g", "Red square", "image"]
 
-        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["Red square", "selected"]
-        assert select_character(session, keyboard.KEYSYM_LEFT) == ["Red square", "unselected"]
+        assert web_native_selection_helpers.select_character(session, keyboard.KEYSYM_RIGHT) == [
+            "Red square",
+            "selected",
+        ]
+        assert web_native_selection_helpers.select_character(session, keyboard.KEYSYM_LEFT) == [
+            "Red square",
+            "unselected",
+        ]
 
 
-@requires_browser_version("chromium", 156)
+@version_helpers.requires_browser_version("chromium", 156)
 @pytest.mark.skipif(
-    not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
+    not web_native_selection_helpers.USES_DOCUMENT_SELECTION,
+    reason="Button text selection requires document-selection ranges",
 )
 @pytest.mark.native_app
 @pytest.mark.parametrize("button_number", [1, 2], ids=["single-word", "multi-word"])
@@ -224,18 +239,23 @@ def test_selection_within_button(
 
     session = web_native_text_selection
 
-    with native_selection(session):
+    with web_native_selection_helpers.native_selection(session):
         for _ in range(button_number):
             keyboard.tap_key(keyboard.KEYSYM_B)
-            speech(session, wait_async=True)
+            helpers.speech(session, wait_async=True)
 
         for character in "Save":
-            assert select_character(session, keyboard.KEYSYM_RIGHT) == [character, "selected"]
-        assert say_selection(session) == ["Selected text is:  Save"]
+            assert web_native_selection_helpers.select_character(
+                session, keyboard.KEYSYM_RIGHT
+            ) == [character, "selected"]
+        assert helpers.say_selection(session) == ["Selected text is:  Save"]
 
         for character in reversed("Save"):
-            assert select_character(session, keyboard.KEYSYM_LEFT) == [character, "unselected"]
-        assert say_selection(session) == ["No selected text."]
+            assert web_native_selection_helpers.select_character(session, keyboard.KEYSYM_LEFT) == [
+                character,
+                "unselected",
+            ]
+        assert helpers.say_selection(session) == ["No selected text."]
 
 
 @pytest.mark.native_app
@@ -246,19 +266,37 @@ def test_caret_navigation_after_native_selection(
 
     session = web_native_text_selection
 
-    with native_selection(session):
-        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["S", "selected"]
-        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["t", "selected"]
-        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["r", "selected"]
+    with web_native_selection_helpers.native_selection(session):
+        assert web_native_selection_helpers.select_character(session, keyboard.KEYSYM_RIGHT) == [
+            "S",
+            "selected",
+        ]
+        assert web_native_selection_helpers.select_character(session, keyboard.KEYSYM_RIGHT) == [
+            "t",
+            "selected",
+        ]
+        assert web_native_selection_helpers.select_character(session, keyboard.KEYSYM_RIGHT) == [
+            "r",
+            "selected",
+        ]
 
         keyboard.tap_key(keyboard.KEYSYM_LEFT)
-        assert speech(session) == ["Text unselected.", "S"]
-        assert say_selection(session) == ["No selected text."]
+        assert helpers.speech(session) == ["Text unselected.", "S"]
+        assert helpers.say_selection(session) == ["No selected text."]
 
-        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["S", "selected"]
-        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["t", "selected"]
-        assert select_character(session, keyboard.KEYSYM_RIGHT) == ["r", "selected"]
+        assert web_native_selection_helpers.select_character(session, keyboard.KEYSYM_RIGHT) == [
+            "S",
+            "selected",
+        ]
+        assert web_native_selection_helpers.select_character(session, keyboard.KEYSYM_RIGHT) == [
+            "t",
+            "selected",
+        ]
+        assert web_native_selection_helpers.select_character(session, keyboard.KEYSYM_RIGHT) == [
+            "r",
+            "selected",
+        ]
 
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-        assert speech(session) == ["Text unselected.", "u"]
-        assert say_selection(session) == ["No selected text."]
+        assert helpers.speech(session) == ["Text unselected.", "u"]
+        assert helpers.say_selection(session) == ["No selected text."]

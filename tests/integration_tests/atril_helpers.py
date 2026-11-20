@@ -31,8 +31,8 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import caret_selection_helpers as commands
+from . import helpers
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_top
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -57,15 +57,15 @@ def navigation_session(
         for page in session.pages:
             for index in reversed(range(Atspi.Text.get_n_selections(page))):
                 assert Atspi.Text.remove_selection(page, index)
-        capture(session)
+        helpers.capture(session)
     # Native Ctrl+Home/End scrolls pages without moving the caret. Use Orca to position it.
-    move_to_top(session)
+    helpers.move_to_top(session)
     if bottom:
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-        capture(session)
+        helpers.capture(session)
     if native:
         session.orca.press_orca_key(keyboard.KEYSYM_F12)
-        assert capture(session)[0] == ["The application is controlling the caret."]
+        assert helpers.capture(session)[0] == ["The application is controlling the caret."]
         # Move away and back: a no-op does not reset Atril's column for Up/Down.
         keys = (
             (keyboard.KEYSYM_HOME, keyboard.KEYSYM_END)
@@ -74,13 +74,13 @@ def navigation_session(
         )
         for key in keys:
             keyboard.tap_key(key)
-            capture(session)
+            helpers.capture(session)
     try:
         yield
     finally:
         if native:
             session.orca.press_orca_key(keyboard.KEYSYM_F12)
-            assert capture(session)[0] == ["The screen reader is controlling the caret."]
+            assert helpers.capture(session)[0] == ["The screen reader is controlling the caret."]
 
 
 @contextmanager
@@ -100,18 +100,18 @@ def display_second_page(session: AtrilSession) -> None:
     """
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == ["The application is controlling the caret."]
+    assert helpers.capture(session)[0] == ["The application is controlling the caret."]
     try:
         keyboard.tap_key(keyboard.KEYSYM_END)
-        capture(session)
+        helpers.capture(session)
         keyboard.tap_key(keyboard.KEYSYM_HOME)
-        capture(session)
+        helpers.capture(session)
         for _ in range(6):
             keyboard.tap_key(keyboard.KEYSYM_DOWN)
-            capture(session)
+            helpers.capture(session)
     finally:
         session.orca.press_orca_key(keyboard.KEYSYM_F12)
-        assert capture(session)[0] == ["The screen reader is controlling the caret."]
+        assert helpers.capture(session)[0] == ["The screen reader is controlling the caret."]
 
 
 def selected_ranges(session: AtrilSession) -> tuple[list[tuple[int, int]], ...]:
@@ -130,7 +130,7 @@ def assert_step(
     session: AtrilSession,
     command: str,
     spoken: list[str],
-    brailled: BrailleLine | None,
+    brailled: helpers.BrailleLine | None,
     ranges: tuple[list[tuple[int, int]], ...],
     *,
     native: bool,
@@ -154,7 +154,7 @@ def assert_step(
         keyboard.press_chord(modifiers, key)
     else:
         session.orca.select_with_caret_navigator(command, notify_user=notify_user)
-    actual_speech, actual_braille = capture(session)
+    actual_speech, actual_braille = helpers.capture(session)
     actual_ranges = selected_ranges(session)
     assert actual_ranges == ranges, (command, actual_ranges, ranges)
     assert actual_speech == spoken, (command, actual_speech, spoken)
@@ -167,9 +167,9 @@ def assert_navigation(
     key: int,
     modifiers: list[int],
     spoken: list[str] | None,
-    brailled: BrailleLine | None,
+    brailled: helpers.BrailleLine | None,
     offsets: tuple[int, int],
-    message: BrailleLine | None = None,
+    message: helpers.BrailleLine | None = None,
     *,
     wait_async: bool = False,
 ) -> None:
@@ -180,7 +180,7 @@ def assert_navigation(
     """
 
     keyboard.press_chord(modifiers, key)
-    actual_speech, actual_braille = capture(session, wait_async=wait_async)
+    actual_speech, actual_braille = helpers.capture(session, wait_async=wait_async)
     actual_offsets = tuple(Atspi.Text.get_caret_offset(page) for page in session.pages)
     assert actual_offsets == offsets, (actual_offsets, offsets)
     assert selected_ranges(session) == ([], [])

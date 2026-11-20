@@ -27,10 +27,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, version_helpers
 from tests.integration_tests.apps import qt
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.version_helpers import command_version, version_at_least
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -318,8 +317,8 @@ def test_readonly_spin_button(qt_widget_notebook: NativeAppSession) -> None:
 @pytest.mark.native_app
 @pytest.mark.xfail(
     not qt.is_qt5()
-    and version_at_least(
-        command_version(
+    and version_helpers.version_at_least(
+        version_helpers.command_version(
             (sys.executable, "-c", "from PySide6.QtCore import qVersion; print(qVersion())")
         ),
         6,

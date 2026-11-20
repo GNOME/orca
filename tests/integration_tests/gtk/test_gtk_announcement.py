@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import capture
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -40,5 +40,5 @@ def test_announcement_with_focus_change(gtk_announcement: NativeAppSession) -> N
     session = gtk_announcement
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    spoken, _brailled = capture(session, wait_async=True)
+    spoken, _brailled = helpers.capture(session, wait_async=True)
     assert spoken == ["Event deleted", "Undo button"]

@@ -26,9 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests.file_manager_helpers import LONG_NAME
+from tests.integration_tests import file_manager_helpers, helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, bound_pan_keys, capture
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import FileManagerSession
@@ -40,7 +39,7 @@ def _item_braille(
     folder: str = "Test Files",
     *,
     expanded: bool = False,
-) -> BrailleLine:
+) -> helpers.BrailleLine:
     """Builds the expected braille for a file or folder."""
 
     label = name
@@ -50,7 +49,7 @@ def _item_braille(
         f"dolphin application {folder} \u2014 Dolphin frame Location View layered pane "
         f"split pane {folder} list {label}"
     )
-    return BrailleLine(1, full, label[:32], "\x00" * len(full))
+    return helpers.BrailleLine(1, full, label[:32], "\x00" * len(full))
 
 
 def _assert_item(
@@ -62,7 +61,7 @@ def _assert_item(
 ) -> None:
     """Checks the file or folder announcement in speech and braille."""
 
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     expected = [name]
     if unselected:
         expected.append("not selected")
@@ -74,16 +73,16 @@ def _assert_item(
 
 
 def _assert_message(session: FileManagerSession, message: str) -> None:
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [message]
-    assert brailled[-1] == BrailleLine(0, message, message, "\x00" * len(message))
+    assert brailled[-1] == helpers.BrailleLine(0, message, message, "\x00" * len(message))
 
 
 def _start_at_first_file(session: FileManagerSession) -> None:
     """Navigates to the first file and checks its presentation."""
 
     keyboard.tap_key(keyboard.KEYSYM_END)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
     _assert_item(session, "01 Empty")
 
@@ -97,13 +96,13 @@ def test_application_menu_opening(dolphin: FileManagerSession) -> None:
     session.orca.set("BraillePresenter", "DisplayAncestors", False)
     keyboard.tap_key(keyboard.KEYSYM_F10)
     try:
-        assert capture(session, quiescence=0.3) == (
+        assert helpers.capture(session, quiescence=0.3) == (
             ["Dolphin popup menu"],
-            [BrailleLine(1, "Dolphin popup menu", "Dolphin popup menu", "\x00" * 18)],
+            [helpers.BrailleLine(1, "Dolphin popup menu", "Dolphin popup menu", "\x00" * 18)],
         )
     finally:
         keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
-        capture(session)
+        helpers.capture(session)
 
 
 @pytest.mark.native_app
@@ -126,9 +125,9 @@ def test_expansion_state(dolphin: FileManagerSession, expanded: bool) -> None:
     _assert_item(session, "02 Nested")
     if not expanded:
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-        capture(session)
+        helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_RIGHT if expanded else keyboard.KEYSYM_LEFT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     state = "expanded" if expanded else "collapsed"
     assert spoken == [state]
     assert brailled and brailled[-1] == _item_braille(session, "02 Nested", expanded=expanded)
@@ -186,11 +185,11 @@ def test_home_end_and_boundaries(dolphin: FileManagerSession) -> None:
     session = dolphin
     _start_at_first_file(session)
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == []
     assert all(line == _item_braille(session, "01 Empty") for line in brailled)
     keyboard.tap_key(keyboard.KEYSYM_END)
-    _assert_item(session, LONG_NAME)
+    _assert_item(session, file_manager_helpers.LONG_NAME)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
     _assert_item(session, "01 Empty")
 
@@ -215,9 +214,9 @@ def test_scrolling(dolphin: FileManagerSession) -> None:
         keyboard.tap_key(forward)
         _assert_item(session, name)
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    capture(session, quiescence=0.5)
+    helpers.capture(session, quiescence=0.5)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    capture(session)
+    helpers.capture(session)
     stride = 6 if session.view == "icon" else 1
     for key, name in (
         (keyboard.KEYSYM_END, "item 60.txt"),
@@ -292,7 +291,7 @@ def test_select_all(dolphin: FileManagerSession) -> None:
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
     _assert_message(session, "all items selected")
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == []
     assert brailled[-1] == _item_braille(session, "01 Empty")
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
@@ -321,15 +320,15 @@ def test_select_all_after_navigation(dolphin: FileManagerSession) -> None:
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
     for _ in range(2):
         keyboard.tap_key(forward)
-        capture(session)
+        helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    capture(session, quiescence=1.0, wait_async=True)
+    helpers.capture(session, quiescence=1.0, wait_async=True)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    capture(session)
+    helpers.capture(session)
     backward = keyboard.KEYSYM_LEFT if session.view == "icon" else keyboard.KEYSYM_UP
     for _ in range(2):
         keyboard.tap_key(forward)
-        capture(session)
+        helpers.capture(session)
         keyboard.tap_key(backward)
         _assert_item(session, "item 01.txt", folder="03 Scrolling")
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
@@ -344,7 +343,7 @@ def test_range_to_all_files(dolphin: FileManagerSession) -> None:
     session = dolphin
     _start_at_first_file(session)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
-    _assert_item(session, LONG_NAME)
+    _assert_item(session, file_manager_helpers.LONG_NAME)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_HOME)
     _assert_item(session, "01 Empty")
 
@@ -365,17 +364,19 @@ def test_selection_reporting(dolphin: FileManagerSession) -> None:
     backward = keyboard.KEYSYM_LEFT if session.view == "icon" else keyboard.KEYSYM_UP
     for _ in range(2):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], forward)
-        capture(session)
+        helpers.capture(session)
     names = ["01 Empty", "02 Nested", "03 Scrolling"]
     for key, count in ((None, 3), (backward, 2), (forward, 3)):
         if key is not None:
             keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], key)
-            capture(session)
+            helpers.capture(session)
         session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         message = f"{count} of 14 items selected"
         assert spoken == [message, ",".join(names[:count])]
-        assert brailled and brailled[-1] == BrailleLine(0, message, message, "\x00" * len(message))
+        assert brailled and brailled[-1] == helpers.BrailleLine(
+            0, message, message, "\x00" * len(message)
+        )
 
 
 @pytest.mark.native_app
@@ -386,9 +387,9 @@ def test_braille_panning(dolphin: FileManagerSession) -> None:
     session = dolphin
     _start_at_first_file(session)
     keyboard.tap_key(keyboard.KEYSYM_END)
-    _assert_item(session, LONG_NAME)
-    original = _item_braille(session, LONG_NAME)
-    with bound_pan_keys(session) as (left, right):
+    _assert_item(session, file_manager_helpers.LONG_NAME)
+    original = _item_braille(session, file_manager_helpers.LONG_NAME)
+    with helpers.bound_pan_keys(session) as (left, right):
         for key, cursor, visible in (
             (right, 0, "braille panning and file navigat"),
             (right, 0, "navigation.txt"),
@@ -396,9 +397,11 @@ def test_braille_panning(dolphin: FileManagerSession) -> None:
             (left, 1, "long filename for testing braill"),
         ):
             session.orca.press_bound_key(key)
-            spoken, brailled = capture(session)
+            spoken, brailled = helpers.capture(session)
             assert spoken == []
-            assert brailled[-1] == BrailleLine(cursor, original.full, visible, original.mask)
+            assert brailled[-1] == helpers.BrailleLine(
+                cursor, original.full, visible, original.mask
+            )
 
 
 @pytest.mark.native_app
@@ -411,9 +414,9 @@ def test_where_am_i(dolphin: FileManagerSession) -> None:
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
     for _ in range(2):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], forward)
-        capture(session)
+        helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     expected = ["03 Scrolling list item"]
     if session.view == "list":
         expected.append("collapsed")
@@ -455,10 +458,10 @@ def test_flat_review(dolphin: FileManagerSession) -> None:
         (keyboard.KEYSYM_KP_HOME, first, first, 1),
     ):
         keyboard.tap_key(key)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert "".join(spoken).strip() == expected
         full = line + " $l"
-        assert brailled[-1] == BrailleLine(cursor, full, full[:32], "\x00" * len(full))
+        assert brailled[-1] == helpers.BrailleLine(cursor, full, full[:32], "\x00" * len(full))
 
 
 @pytest.mark.native_app
@@ -490,17 +493,17 @@ def test_return_to_parent(dolphin: FileManagerSession, parent: str) -> None:
     keyboard.tap_key(forward)
     _assert_item(session, "02 Nested")
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    capture(session, quiescence=0.5)
+    helpers.capture(session, quiescence=0.5)
     if parent == "Sibling":
         keyboard.tap_key(keyboard.KEYSYM_END)
-        capture(session)
+        helpers.capture(session)
         keyboard.tap_key(keyboard.KEYSYM_RETURN)
-        capture(session, quiescence=0.5)
+        helpers.capture(session, quiescence=0.5)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    capture(session, quiescence=0.5)
+    helpers.capture(session, quiescence=0.5)
     keyboard.press_chord([keyboard.KEYSYM_ALT_L], keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session, quiescence=0.5)
+    spoken, brailled = helpers.capture(session, quiescence=0.5)
     assert spoken == [f"{parent} \u2014 Dolphin", "Child", ", Folder"]
     assert brailled[-1] == _item_braille(session, "Child", parent)

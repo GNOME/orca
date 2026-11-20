@@ -28,7 +28,6 @@ import pytest
 
 from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -104,7 +103,9 @@ def test_flat_review_horizontal_links(web_inline_list_wrap: BrowserSession) -> N
             spoken, brailled = helpers.capture(session)
             assert spoken == [line]
             expected = f"{line} $l"
-            assert brailled[-1] == BrailleLine(1, expected, expected, "\x00" * len(expected))
+            assert brailled[-1] == helpers.BrailleLine(
+                1, expected, expected, "\x00" * len(expected)
+            )
 
         for command, word, visible, cursor in (
             ("GoStartOfLine", "H", full, 1),
@@ -125,7 +126,7 @@ def test_flat_review_horizontal_links(web_inline_list_wrap: BrowserSession) -> N
             session.orca.call("FlatReviewPresenter", command, True)
             spoken, brailled = helpers.capture(session)
             assert spoken == [word]
-            assert brailled[-1] == BrailleLine(cursor, full, visible, "\x00" * len(full))
+            assert brailled[-1] == helpers.BrailleLine(cursor, full, visible, "\x00" * len(full))
     finally:
         helpers.toggle_flat_review(session)
         session.orca.set("FlatReviewPresenter", "FocusTracking", tracking)

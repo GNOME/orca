@@ -26,10 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, terminal_helpers
 from tests.integration_tests.apps import terminal
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.terminal_helpers import settle
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -59,7 +58,7 @@ def test_say_all_after_vim_page_forward(
     """Tests that Say All starts at the current caret after Vim redraws a page."""
 
     session = terminal_vim_pages
-    settle(session)
+    terminal_helpers.settle(session)
     session.orca.set("SayAllPresenter", "Style", "line")
     if run_say_all:
         keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
@@ -74,7 +73,7 @@ def test_say_all_after_vim_page_forward(
         helpers.capture(session, wait_async=True, quiescence=0.5, overall=4.0)
     finally:
         keyboard.release_key(keyboard.KEYSYM_CONTROL_L)
-    settle(session)
+    terminal_helpers.settle(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
     actual = helpers.speech(session, quiescence=0.5, overall=10.0)
     assert actual == [f"line {number:02d}\n" for number in range(6, 13)]

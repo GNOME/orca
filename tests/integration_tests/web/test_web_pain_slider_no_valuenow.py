@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -40,11 +40,11 @@ def test_slider_announces_valuetext_without_valuenow(
     """Tests that each new aria-valuetext is announced even when aria-valuenow is absent."""
 
     session = web_pain_slider_no_valuenow
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     # With no aria-valuenow, Chromium repairs the value to the min/max midpoint ("50 percent").
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == [
+    assert helpers.speech(session) == [
         "Pain rating",
         "horizontal slider",
         "No pain",
@@ -59,8 +59,8 @@ def test_slider_announces_valuetext_without_valuenow(
         "Pain prevents daily activities",
     ):
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-        assert speech(session) == [expected]
+        assert helpers.speech(session) == [expected]
 
     for expected in ("Pain interrupts some activities", "Somewhat distracting pain"):
         keyboard.tap_key(keyboard.KEYSYM_LEFT)
-        assert speech(session) == [expected]
+        assert helpers.speech(session) == [expected]

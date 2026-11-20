@@ -28,7 +28,6 @@ import pytest
 
 from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -128,33 +127,33 @@ def test_structural_navigation_by_list(web_lists: BrowserSession) -> None:
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
         ["l", "List with 3 items", "• Apple"],
-        [BrailleLine(1, "• Apple", "• Apple", "\x00" * 7)],
+        [helpers.BrailleLine(1, "• Apple", "• Apple", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
         ["l", "leaving list.", "List with 3 items", "1. Wash"],
-        [BrailleLine(1, "1. Wash", "1. Wash", "\x00" * 7)],
+        [helpers.BrailleLine(1, "1. Wash", "1. Wash", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
         ["l", "leaving list.", "List with 2 items", produce],
-        [BrailleLine(1, produce, produce, "\x00" * len(produce))],
+        [helpers.BrailleLine(1, produce, produce, "\x00" * len(produce))],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
         ["l", "List with 2 items Nesting level 1", "◦ Carrot"],
-        [BrailleLine(1, "◦ Carrot", "◦ Carrot", "\x00" * 8)],
+        [helpers.BrailleLine(1, "◦ Carrot", "◦ Carrot", "\x00" * 8)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
         ["l", "Wrapping to top.", "leaving list.", "List with 3 items", "• Apple"],
         [
-            BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
-            BrailleLine(1, "• Apple", "• Apple", "\x00" * 7),
+            helpers.BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
+            helpers.BrailleLine(1, "• Apple", "• Apple", "\x00" * 7),
         ],
     )
 
@@ -168,27 +167,27 @@ def test_structural_navigation_by_list(web_lists: BrowserSession) -> None:
             "◦ Carrot",
         ],
         [
-            BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
-            BrailleLine(1, "◦ Carrot", "◦ Carrot", "\x00" * 8),
+            helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
+            helpers.BrailleLine(1, "◦ Carrot", "◦ Carrot", "\x00" * 8),
         ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
         ["L", "leaving list.", produce],
-        [BrailleLine(1, produce, produce, "\x00" * len(produce))],
+        [helpers.BrailleLine(1, produce, produce, "\x00" * len(produce))],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
         ["L", "leaving list.", "List with 3 items", "1. Wash"],
-        [BrailleLine(1, "1. Wash", "1. Wash", "\x00" * 7)],
+        [helpers.BrailleLine(1, "1. Wash", "1. Wash", "\x00" * 7)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
         ["L", "leaving list.", "List with 3 items", "• Apple"],
-        [BrailleLine(1, "• Apple", "• Apple", "\x00" * 7)],
+        [helpers.BrailleLine(1, "• Apple", "• Apple", "\x00" * 7)],
     )
 
 
@@ -203,69 +202,69 @@ def test_structural_navigation_by_list_item(web_lists: BrowserSession) -> None:
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["i", "List with 3 items", "• Apple"],
-        [BrailleLine(1, "• Apple", "• Apple", "\x00" * 7)],
+        [helpers.BrailleLine(1, "• Apple", "• Apple", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["i", "• Bread"],
-        [BrailleLine(1, "• Bread", "• Bread", "\x00" * 7)],
+        [helpers.BrailleLine(1, "• Bread", "• Bread", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["i", "• Cheese"],
-        [BrailleLine(1, "• Cheese", "• Cheese", "\x00" * 8)],
+        [helpers.BrailleLine(1, "• Cheese", "• Cheese", "\x00" * 8)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["i", "leaving list.", "List with 3 items", "1. Wash"],
-        [BrailleLine(1, "1. Wash", "1. Wash", "\x00" * 7)],
+        [helpers.BrailleLine(1, "1. Wash", "1. Wash", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["i", "2. Rinse"],
-        [BrailleLine(1, "2. Rinse", "2. Rinse", "\x00" * 8)],
+        [helpers.BrailleLine(1, "2. Rinse", "2. Rinse", "\x00" * 8)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["i", "3. Dry"],
-        [BrailleLine(1, "3. Dry", "3. Dry", "\x00" * 6)],
+        [helpers.BrailleLine(1, "3. Dry", "3. Dry", "\x00" * 6)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["i", "leaving list.", "List with 2 items", produce],
-        [BrailleLine(1, produce, produce, "\x00" * len(produce))],
+        [helpers.BrailleLine(1, produce, produce, "\x00" * len(produce))],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["i", "List with 2 items Nesting level 1", "◦ Carrot"],
-        [BrailleLine(1, "◦ Carrot", "◦ Carrot", "\x00" * 8)],
+        [helpers.BrailleLine(1, "◦ Carrot", "◦ Carrot", "\x00" * 8)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["i", "◦ Onion"],
-        [BrailleLine(1, "◦ Onion", "◦ Onion", "\x00" * 7)],
+        [helpers.BrailleLine(1, "◦ Onion", "◦ Onion", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["i", "leaving list.", "List with 2 items", "• Dairy"],
-        [BrailleLine(1, "• Dairy", "• Dairy", "\x00" * 7)],
+        [helpers.BrailleLine(1, "• Dairy", "• Dairy", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["i", "Wrapping to top.", "leaving list.", "List with 3 items", "• Apple"],
         [
-            BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
-            BrailleLine(1, "• Apple", "• Apple", "\x00" * 7),
+            helpers.BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
+            helpers.BrailleLine(1, "• Apple", "• Apple", "\x00" * 7),
         ],
     )
 
@@ -275,33 +274,33 @@ def test_structural_navigation_by_list_item(web_lists: BrowserSession) -> None:
     assert helpers.capture(session) == (
         ["I", "Wrapping to bottom.", "List with 2 items", "• Dairy"],
         [
-            BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
-            BrailleLine(1, "• Dairy", "• Dairy", "\x00" * 7),
+            helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
+            helpers.BrailleLine(1, "• Dairy", "• Dairy", "\x00" * 7),
         ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["I", "List with 2 items Nesting level 1", "◦ Onion"],
-        [BrailleLine(1, "◦ Onion", "◦ Onion", "\x00" * 7)],
+        [helpers.BrailleLine(1, "◦ Onion", "◦ Onion", "\x00" * 7)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["I", "◦ Carrot"],
-        [BrailleLine(1, "◦ Carrot", "◦ Carrot", "\x00" * 8)],
+        [helpers.BrailleLine(1, "◦ Carrot", "◦ Carrot", "\x00" * 8)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["I", "leaving list.", produce],
-        [BrailleLine(1, produce, produce, "\x00" * len(produce))],
+        [helpers.BrailleLine(1, produce, produce, "\x00" * len(produce))],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
         ["I", "leaving list.", "List with 3 items", "3. Dry"],
-        [BrailleLine(1, "3. Dry", "3. Dry", "\x00" * 6)],
+        [helpers.BrailleLine(1, "3. Dry", "3. Dry", "\x00" * 6)],
     )
 
 

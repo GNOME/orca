@@ -29,19 +29,18 @@ import pytest
 from orca.output_reader import BrailleRecord, SpeechRecord
 from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, toggle_flat_review
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
 
 
-def _line(full: str, cursor_cell: int) -> BrailleLine:
-    return BrailleLine(cursor_cell, full, full, "\x00" * len(full))
+def _line(full: str, cursor_cell: int) -> helpers.BrailleLine:
+    return helpers.BrailleLine(cursor_cell, full, full, "\x00" * len(full))
 
 
-def _command(session: BrowserSession, name: str) -> tuple[list[str], list[BrailleLine]]:
+def _command(session: BrowserSession, name: str) -> tuple[list[str], list[helpers.BrailleLine]]:
     session.orca.call("FlatReviewPresenter", name, True)
-    return capture(session)
+    return helpers.capture(session)
 
 
 @pytest.mark.native_app
@@ -54,7 +53,7 @@ def test_review_heading_word_by_word(web_flat_review: BrowserSession) -> None:
     keyboard.tap_key(keyboard.KEYSYM_2)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
 
     full = "Fruit list $l"
     try:
@@ -62,7 +61,7 @@ def test_review_heading_word_by_word(web_flat_review: BrowserSession) -> None:
         assert _command(session, "GoNextItem") == (["list"], [_line(full, 7)])
         assert _command(session, "PresentLine") == (["Fruit list"], [_line(full, 7)])
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
 
 
 @pytest.mark.native_app
@@ -75,7 +74,7 @@ def test_review_uppercase_and_repeated_word(web_flat_review: BrowserSession) -> 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
 
     full = "NASA AAAA done. $l"
     try:
@@ -84,7 +83,7 @@ def test_review_uppercase_and_repeated_word(web_flat_review: BrowserSession) -> 
         assert _command(session, "GoNextItem") == (["done."], [_line(full, 11)])
         assert _command(session, "PresentLine") == (["NASA AAAA done."], [_line(full, 11)])
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
 
 
 @pytest.mark.native_app
@@ -98,7 +97,7 @@ def test_review_hyphenated_word(web_flat_review: BrowserSession) -> None:
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
 
     full = "a one-two b. $l"
     try:
@@ -107,7 +106,7 @@ def test_review_hyphenated_word(web_flat_review: BrowserSession) -> None:
         assert _command(session, "GoNextItem") == (["b."], [_line(full, 11)])
         assert _command(session, "PresentLine") == (["a one-two b."], [_line(full, 11)])
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
 
 
 @pytest.mark.native_app
@@ -120,7 +119,7 @@ def test_spell_and_phonetic_word(web_flat_review: BrowserSession) -> None:
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
 
     full = "NASA AAAA done. $l"
     try:
@@ -130,7 +129,7 @@ def test_spell_and_phonetic_word(web_flat_review: BrowserSession) -> None:
             [_line(full, 1)],
         )
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
 
 
 @pytest.mark.native_app
@@ -147,7 +146,7 @@ def test_review_lines_in_nested_tables(web_flat_review: BrowserSession) -> None:
 
     tracking = session.orca.get("FlatReviewPresenter", "FocusTracking")
     session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
 
     try:
         assert _command(session, "PresentLine") == (
@@ -157,7 +156,7 @@ def test_review_lines_in_nested_tables(web_flat_review: BrowserSession) -> None:
         assert _command(session, "GoNextLine") == (["Hi there,"], [_line("Hi there, $l", 1)])
         assert _command(session, "GoNextLine") == (["Thank you,"], [_line("Thank you, $l", 1)])
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
         session.orca.set("FlatReviewPresenter", "FocusTracking", tracking)
 
 
@@ -173,7 +172,7 @@ def test_review_links_in_list_items(web_flat_review: BrowserSession) -> None:
 
     tracking = session.orca.get("FlatReviewPresenter", "FocusTracking")
     session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
 
     try:
         for command, text in (
@@ -194,9 +193,11 @@ def test_review_links_in_list_items(web_flat_review: BrowserSession) -> None:
         ):
             spoken, brailled = _command(session, command)
             assert spoken == [word]
-            assert brailled[-1] == BrailleLine(cursor, full, "Get Involved $l", "\x00" * len(full))
+            assert brailled[-1] == helpers.BrailleLine(
+                cursor, full, "Get Involved $l", "\x00" * len(full)
+            )
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
         session.orca.set("FlatReviewPresenter", "FocusTracking", tracking)
 
 
@@ -212,7 +213,7 @@ def test_review_named_group(web_flat_review: BrowserSession) -> None:
 
     tracking = session.orca.get("FlatReviewPresenter", "FocusTracking")
     session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
     try:
         for command, text in (
             ("GoNextLine", "Review group"),
@@ -224,7 +225,7 @@ def test_review_named_group(web_flat_review: BrowserSession) -> None:
             assert spoken == [text]
             assert brailled[-1] == _line(f"{text} $l", 1)
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
         session.orca.set("FlatReviewPresenter", "FocusTracking", tracking)
 
 
@@ -242,7 +243,7 @@ def test_review_line_switches_languages(web_flat_review: BrowserSession) -> None
 
     tracking = session.orca.get("FlatReviewPresenter", "FocusTracking")
     session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
     try:
         for command in ("GoNextLine", "PresentLine"):
             session.orca.call("FlatReviewPresenter", command, True)
@@ -255,6 +256,6 @@ def test_review_line_switches_languages(web_flat_review: BrowserSession) -> None
             assert brailled[-1].cursor_cell == 1
             assert brailled[-1].mask == "\x00" * len("Hello bonjour $l")
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
         session.orca.set("FlatReviewPresenter", "FocusTracking", tracking)
         session.orca.set("SpeechManager", "AutoLanguageSwitching", switching)

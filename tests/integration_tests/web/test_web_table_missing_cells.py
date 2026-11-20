@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, expected_for_browser, move_to_top
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -42,87 +42,87 @@ def test_navigation_around_a_missing_cell(web_missing_cells: BrowserSession) -> 
     """Tests cell navigation across a missing cell from each side."""
 
     session = web_missing_cells
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     # The body has a hole: the first body row holds only the rowspan'd "Gemini Pro" in
     # column 1, so the cells under "Type"/"Price" in that row do not exist.
     keyboard.tap_key(keyboard.KEYSYM_T)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["t", "table with 4 rows 3 columns", "Model", "column header"],
-        [BrailleLine(1, "Model", "Model", "\x00" * 5)],
+        [helpers.BrailleLine(1, "Model", "Model", "\x00" * 5)],
     )
 
     _table_nav(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Type", "column header", "Row 1, column 2."],
         [
-            BrailleLine(1, "Type", "Type", "\x00" * 4),
-            BrailleLine(0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16),
+            helpers.BrailleLine(1, "Type", "Type", "\x00" * 4),
+            helpers.BrailleLine(0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16),
         ],
     )
 
     # Down from the "Type" header skips the missing cell to the body cell below it.
     _table_nav(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         # Chromium reports colindex=1 for this cell in column 2, so it repeats the header.
         # TODO: Investigate Chromium's index; this movement stays in the same column.
-        expected_for_browser(
+        helpers.expected_for_browser(
             session,
             ["Type column header Input", "Row 3, column 2."],
             firefox=["Input", "Row 3, column 2."],
         ),
         [
-            BrailleLine(1, "Type", "Type", "\x00" * 4),
-            BrailleLine(1, "Input", "Input", "\x00" * 5),
-            BrailleLine(0, "Row 3, column 2.", "Row 3, column 2.", "\x00" * 16),
+            helpers.BrailleLine(1, "Type", "Type", "\x00" * 4),
+            helpers.BrailleLine(1, "Input", "Input", "\x00" * 5),
+            helpers.BrailleLine(0, "Row 3, column 2.", "Row 3, column 2.", "\x00" * 16),
         ],
     )
 
     # Up from "Input" skips the missing cell back to the header above it.
     _table_nav(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Type", "column header", "Row 1, column 2."],
         [
-            BrailleLine(1, "Input", "Input", "\x00" * 5),
-            BrailleLine(1, "Type", "Type", "\x00" * 4),
-            BrailleLine(0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16),
+            helpers.BrailleLine(1, "Input", "Input", "\x00" * 5),
+            helpers.BrailleLine(1, "Type", "Type", "\x00" * 4),
+            helpers.BrailleLine(0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16),
         ],
     )
 
     _table_nav(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Model", "column header", "Row 1, column 1."],
         [
-            BrailleLine(1, "Type", "Type", "\x00" * 4),
-            BrailleLine(1, "Model", "Model", "\x00" * 5),
-            BrailleLine(0, "Row 1, column 1.", "Row 1, column 1.", "\x00" * 16),
+            helpers.BrailleLine(1, "Type", "Type", "\x00" * 4),
+            helpers.BrailleLine(1, "Model", "Model", "\x00" * 5),
+            helpers.BrailleLine(0, "Row 1, column 1.", "Row 1, column 1.", "\x00" * 16),
         ],
     )
 
     _table_nav(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Gemini Pro", "Row 2, column 1.", "Cell spans 3 rows"],
         [
-            BrailleLine(1, "Model", "Model", "\x00" * 5),
-            BrailleLine(1, "Gemini Pro", "Gemini Pro", "\x00" * 10),
-            BrailleLine(0, "Row 2, column 1.", "Row 2, column 1.", "\x00" * 16),
-            BrailleLine(0, "Cell spans 3 rows", "Cell spans 3 rows", "\x00" * 17),
+            helpers.BrailleLine(1, "Model", "Model", "\x00" * 5),
+            helpers.BrailleLine(1, "Gemini Pro", "Gemini Pro", "\x00" * 10),
+            helpers.BrailleLine(0, "Row 2, column 1.", "Row 2, column 1.", "\x00" * 16),
+            helpers.BrailleLine(0, "Cell spans 3 rows", "Cell spans 3 rows", "\x00" * 17),
         ],
     )
 
     # Right from "Gemini Pro" skips the missing cells in its own row to the first real cell
     # to its right, which lives in a lower row of the cell's span.
     _table_nav(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         # The same Chromium index discrepancy suppresses the header on this column change.
-        expected_for_browser(
+        helpers.expected_for_browser(
             session,
             ["Input", "Row 3, column 2."],
             firefox=["Type column header Input", "Row 3, column 2."],
         ),
         [
-            BrailleLine(1, "Gemini Pro", "Gemini Pro", "\x00" * 10),
-            BrailleLine(1, "Input", "Input", "\x00" * 5),
-            BrailleLine(0, "Row 3, column 2.", "Row 3, column 2.", "\x00" * 16),
+            helpers.BrailleLine(1, "Gemini Pro", "Gemini Pro", "\x00" * 10),
+            helpers.BrailleLine(1, "Input", "Input", "\x00" * 5),
+            helpers.BrailleLine(0, "Row 3, column 2.", "Row 3, column 2.", "\x00" * 16),
         ],
     )

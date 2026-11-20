@@ -26,15 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_browser,
-    reset_web_state,
-    speech,
-    xfail_firefox_caret_tab,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -42,7 +35,7 @@ if TYPE_CHECKING:
 
 def _tab(session: BrowserSession) -> list[str]:
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    return speech(session)
+    return helpers.speech(session)
 
 
 @pytest.mark.native_app
@@ -50,10 +43,10 @@ def test_field_state_announcements_on_focus(web_field_states: BrowserSession) ->
     """Tests that required, invalid, and described states are announced as fields gain focus."""
 
     session = web_field_states
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     # Firefox exposes INVALID_ENTRY on this empty required field; Chromium omits it.
-    assert _tab(session) == expected_for_browser(
+    assert _tab(session) == helpers.expected_for_browser(
         session,
         ["Name", "entry required", "Focus mode"],
         firefox=["Name", "entry required", "invalid entry", "Focus mode"],
@@ -64,18 +57,20 @@ def test_field_state_announcements_on_focus(web_field_states: BrowserSession) ->
     # Firefox maps summary to a push button; Chromium maps it to a toggle button.
     assert _tab(session) == [
         "More options",
-        expected_for_browser(session, "toggle button collapsed", firefox="collapsed button"),
+        helpers.expected_for_browser(
+            session, "toggle button collapsed", firefox="collapsed button"
+        ),
         "Browse mode",
     ]
 
 
 @pytest.mark.native_app
-@xfail_firefox_caret_tab()
+@helpers.xfail_firefox_caret_tab()
 def test_disclosure_expand_and_collapse(web_field_states: BrowserSession) -> None:
     """Tests that activating a disclosure widget announces the expanded and collapsed states."""
 
     session = web_field_states
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     for _ in range(5):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
@@ -83,9 +78,9 @@ def test_disclosure_expand_and_collapse(web_field_states: BrowserSession) -> Non
     session.reader.reset()
 
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    assert speech(session) == ["expanded"]
+    assert helpers.speech(session) == ["expanded"]
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    assert speech(session) == ["collapsed"]
+    assert helpers.speech(session) == ["collapsed"]
 
 
 @pytest.mark.native_app
@@ -100,68 +95,70 @@ def test_reading_native_disclosure_content(
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_R)
     session.reader.drain(quiescence_timeout=0.5, overall_timeout=3.0)
     session.reader.reset()
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("StructuralNavigator", "TriggersFocusMode", automatic_focus_mode)
     session.orca.set("CaretNavigator", "TriggersFocusMode", automatic_focus_mode)
 
-    collapsed = expected_for_browser(
+    collapsed = helpers.expected_for_browser(
         session,
-        BrailleLine(
+        helpers.BrailleLine(
             1,
             "& y More options collapsed toggle button",
             "& y More options collapsed toggl",
             "\x00" * 40,
         ),
-        firefox=BrailleLine(
+        firefox=helpers.BrailleLine(
             1, "More options collapsed button", "More options collapsed button", "\x00" * 29
         ),
     )
-    expanded = expected_for_browser(
+    expanded = helpers.expected_for_browser(
         session,
-        BrailleLine(
+        helpers.BrailleLine(
             1,
             "& y More options expanded toggle button",
             "& y More options expanded toggle",
             "\x00" * 39,
         ),
-        firefox=BrailleLine(
+        firefox=helpers.BrailleLine(
             1, "More options expanded button", "More options expanded button", "\x00" * 28
         ),
     )
 
     keyboard.tap_key(keyboard.KEYSYM_B)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [
         "b",
         "More options",
-        expected_for_browser(session, "toggle button collapsed", firefox="collapsed button"),
+        helpers.expected_for_browser(
+            session, "toggle button collapsed", firefox="collapsed button"
+        ),
     ]
     assert brailled[-1] == collapsed
     assert not session.orca.get("DocumentPresenter", "InFocusMode")
 
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["expanded"]
     assert brailled[-1] == expanded
     assert not session.orca.get("DocumentPresenter", "InFocusMode")
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Extra content."]
-    assert brailled[-1] == BrailleLine(1, "Extra content.", "Extra content.", "\x00" * 14)
+    assert brailled[-1] == helpers.BrailleLine(1, "Extra content.", "Extra content.", "\x00" * 14)
     assert not session.orca.get("DocumentPresenter", "InFocusMode")
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [
         "More options",
-        expected_for_browser(session, "toggle button expanded", firefox="expanded button"),
+        helpers.expected_for_browser(session, "toggle button expanded", firefox="expanded button"),
     ]
     assert brailled[-1] == expanded
     assert not session.orca.get("DocumentPresenter", "InFocusMode")
 
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["collapsed"]
     assert brailled[-1] == collapsed
     assert not session.orca.get("DocumentPresenter", "InFocusMode")

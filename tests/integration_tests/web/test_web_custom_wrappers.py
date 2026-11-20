@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, move_to_top
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -38,16 +38,16 @@ def test_line_assembly_custom_element_wrappers(web_custom_wrappers: BrowserSessi
     """Tests that widgets nested in custom-element wrappers on one row share one line."""
 
     session = web_custom_wrappers
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     # A block-level link and an inline verified badge, each buried under [OBJ]-only
     # custom-element wrappers (yt-formatted-string, badge-shape), share one line; the
     # braille mask marks Ahrix as the link.
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Ahrix", "link", "Verified", "image"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 cursor_cell=1,
                 full="Ahrix Verified image",
                 visible="Ahrix Verified image",
@@ -57,10 +57,10 @@ def test_line_assembly_custom_element_wrappers(web_custom_wrappers: BrowserSessi
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["213 thousand subscribers"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 cursor_cell=1,
                 full="213 thousand subscribers",
                 visible="213 thousand subscribers",
@@ -72,7 +72,7 @@ def test_line_assembly_custom_element_wrappers(web_custom_wrappers: BrowserSessi
     # The like/dislike toggle buttons (nested two wrappers deep in a segmented
     # view-model) and the share/save/more buttons all group onto one line.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    speech, braille = capture(session)
+    speech, braille = helpers.capture(session)
     assert speech == [
         "like this video along with 407,992 other people",
         "toggle button not pressed",

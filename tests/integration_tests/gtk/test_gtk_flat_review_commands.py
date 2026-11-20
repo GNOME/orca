@@ -26,31 +26,25 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_gtk,
-    speech,
-    toggle_flat_review,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
 
 # While reviewing the first line, the braille shows that line regardless of whether
 # speech is presenting the word, the line, or a single character.
-_LINE = BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)
+_LINE = helpers.BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)
 
 
-def _command(session: NativeAppSession, name: str) -> tuple[list[str], list[BrailleLine]]:
+def _command(session: NativeAppSession, name: str) -> tuple[list[str], list[helpers.BrailleLine]]:
     session.orca.call("FlatReviewPresenter", name, True)
-    return capture(session)
+    return helpers.capture(session)
 
 
 def _clipboard_contents(session: NativeAppSession) -> list[str]:
     session.orca.call("ClipboardPresenter", "PresentClipboardContents", True)
-    return speech(session)
+    return helpers.speech(session)
 
 
 @pytest.mark.native_app
@@ -60,7 +54,7 @@ def test_present_spell_phonetic(gtk_text_view: NativeAppSession) -> None:
     session = gtk_text_view
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
 
     try:
         keyboard.tap_key(keyboard.KEYSYM_KP_HOME)
@@ -76,18 +70,18 @@ def test_present_spell_phonetic(gtk_text_view: NativeAppSession) -> None:
         )
 
         assert _command(session, "PresentLine") == (
-            expected_for_gtk(["Line one.\n"], gtk4=["Line one."]),
+            helpers.expected_for_gtk(["Line one.\n"], gtk4=["Line one."]),
             [_LINE],
         )
         assert _command(session, "SpellLine") == (
-            expected_for_gtk(
+            helpers.expected_for_gtk(
                 ["L", "i", "n", "e", " ", "o", "n", "e", ".", "\n"],
                 gtk4=["L", "i", "n", "e", " ", "o", "n", "e", "."],
             ),
             [_LINE],
         )
         assert _command(session, "PhoneticLine") == (
-            expected_for_gtk(
+            helpers.expected_for_gtk(
                 ["lima", "india", "november", "echo", " ", "oscar", "november", "echo", ".", "\n"],
                 gtk4=["lima", "india", "november", "echo", " ", "oscar", "november", "echo", "."],
             ),
@@ -102,7 +96,7 @@ def test_present_spell_phonetic(gtk_text_view: NativeAppSession) -> None:
         assert _command(session, "SpellCharacter") == (["lima"], [_LINE])
         assert _command(session, "UnicodeCurrentCharacter") == (["Unicode 004c"], [_LINE])
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
 
 
 @pytest.mark.native_app
@@ -112,7 +106,7 @@ def test_review_word_by_word(gtk_text_view: NativeAppSession) -> None:
     session = gtk_text_view
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
 
     try:
         keyboard.tap_key(keyboard.KEYSYM_KP_HOME)
@@ -122,11 +116,11 @@ def test_review_word_by_word(gtk_text_view: NativeAppSession) -> None:
 
         assert _command(session, "PresentItem") == (["Line "], [_LINE])
         assert _command(session, "GoNextItem") == (
-            expected_for_gtk(["one.\n"], gtk4=["one."]),
-            [BrailleLine(6, "Line one. $l", "Line one. $l", "\x00" * 12)],
+            helpers.expected_for_gtk(["one.\n"], gtk4=["one."]),
+            [helpers.BrailleLine(6, "Line one. $l", "Line one. $l", "\x00" * 12)],
         )
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
 
 
 @pytest.mark.native_app
@@ -136,13 +130,13 @@ def test_toggle_restrict(gtk_text_view: NativeAppSession) -> None:
     session = gtk_text_view
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
 
     try:
         assert _command(session, "ToggleRestrict") == (
             ["Flat review restricted to the current object"],
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     0,
                     "Flat review restricted to the current object",
                     "Flat review restricted to the cu",
@@ -152,10 +146,14 @@ def test_toggle_restrict(gtk_text_view: NativeAppSession) -> None:
         )
         assert _command(session, "ToggleRestrict") == (
             ["Flat review unrestricted"],
-            [BrailleLine(0, "Flat review unrestricted", "Flat review unrestricted", "\x00" * 24)],
+            [
+                helpers.BrailleLine(
+                    0, "Flat review unrestricted", "Flat review unrestricted", "\x00" * 24
+                )
+            ],
         )
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
 
 
 @pytest.mark.native_app
@@ -165,7 +163,7 @@ def test_copy_and_append(gtk_text_view: NativeAppSession) -> None:
     session = gtk_text_view
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
 
     try:
         keyboard.tap_key(keyboard.KEYSYM_KP_HOME)
@@ -177,14 +175,14 @@ def test_copy_and_append(gtk_text_view: NativeAppSession) -> None:
             session.orca.bound_command("flatReviewCopyHandler", copy_key, copy_mods),
             session.orca.bound_command("flatReviewAppendHandler", append_key, append_mods),
         ):
-            assert _command(session, "PresentLine")[0] == expected_for_gtk(
+            assert _command(session, "PresentLine")[0] == helpers.expected_for_gtk(
                 ["Line one.\n"], gtk4=["Line one."]
             )
             session.orca.press_bound_key(copy_key)
-            assert capture(session) == (
+            assert helpers.capture(session) == (
                 ["Copied contents to clipboard."],
                 [
-                    BrailleLine(
+                    helpers.BrailleLine(
                         0,
                         "Copied contents to clipboard.",
                         "Copied contents to clipboard.",
@@ -197,10 +195,10 @@ def test_copy_and_append(gtk_text_view: NativeAppSession) -> None:
             second_line = "Line two has additional words to make it long enough that "
             assert _command(session, "GoNextLine")[0] == [second_line]
             session.orca.press_bound_key(append_key)
-            assert capture(session) == (
+            assert helpers.capture(session) == (
                 ["Appended contents to clipboard."],
                 [
-                    BrailleLine(
+                    helpers.BrailleLine(
                         0,
                         "Appended contents to clipboard.",
                         "Appended contents to clipboard.",
@@ -209,9 +207,9 @@ def test_copy_and_append(gtk_text_view: NativeAppSession) -> None:
                 ],
             )
             session.orca.call("ClipboardPresenter", "PresentClipboardContents", True)
-            spoken, brailled = capture(session)
+            spoken, brailled = helpers.capture(session)
             assert spoken == [f"Clipboard contains: Line one.\n{second_line}"]
-            assert brailled[-1] == BrailleLine(
+            assert brailled[-1] == helpers.BrailleLine(
                 0,
                 f"Clipboard contains: Line one. {second_line}",
                 "Clipboard contains: Line one. Li",
@@ -220,7 +218,7 @@ def test_copy_and_append(gtk_text_view: NativeAppSession) -> None:
 
             assert _command(session, "GoNextItem")[0] == ["two "]
             session.orca.press_bound_key(copy_key)
-            assert speech(session) == ["Copied contents to clipboard."]
+            assert helpers.speech(session) == ["Copied contents to clipboard."]
             assert _clipboard_contents(session) == ["Clipboard contains: two "]
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)

@@ -29,7 +29,6 @@ import pytest
 from tests.integration_tests import helpers
 from tests.integration_tests.apps import browser
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -70,7 +69,7 @@ def test_say_all_after_find(web_say_all_wrapped_text: BrowserSession, layout_mod
         "After lunch he inspects every cupboard for toys. "
         "In the evening he curls up beside his friend. Time for a nap."
     )
-    assert brailled[-1] == BrailleLine(1, "Time for a nap.", "Time for a nap.", "\x00" * 15)
+    assert brailled[-1] == helpers.BrailleLine(1, "Time for a nap.", "Time for a nap.", "\x00" * 15)
 
 
 @pytest.mark.native_app

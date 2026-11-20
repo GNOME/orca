@@ -28,9 +28,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, terminal_helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.terminal_helpers import settle
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -44,7 +43,7 @@ def test_navigation_with_trailing_deletion(
     """The last deletion must not leave braille showing the previous line."""
 
     session = terminal_trailing_deletion
-    settle(session)
+    terminal_helpers.settle(session)
     captures = []
     for key, text in ((keyboard.KEYSYM_UP, "new line"), (keyboard.KEYSYM_DOWN, "old line")):
         keyboard.tap_key(key)

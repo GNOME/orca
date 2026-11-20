@@ -24,7 +24,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from .helpers import BrailleLine, capture
+from . import helpers
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -41,11 +41,11 @@ START_OF_FILE = "SelectStartOfFileForTesting"
 END_OF_FILE = "SelectEndOfFileForTesting"
 
 
-def select(session: NativeAppSession, command: str) -> tuple[list[str], BrailleLine]:
+def select(session: NativeAppSession, command: str) -> tuple[list[str], helpers.BrailleLine]:
     """Runs a selection command and returns its speech and its settled braille line."""
 
     session.orca.select_with_caret_navigator(command)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     return spoken, brailled[-1]
 
 
@@ -53,4 +53,4 @@ def select_without_notifying(session: NativeAppSession, command: str) -> tuple[l
     """Runs a selection command which is not meant to present anything to the user."""
 
     session.orca.select_with_caret_navigator(command, notify_user=False)
-    return capture(session)
+    return helpers.capture(session)

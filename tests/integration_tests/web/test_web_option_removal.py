@@ -26,13 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_browser,
-    reset_web_state,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -43,27 +38,27 @@ def test_focused_option_removed(web_option_removal: BrowserSession) -> None:
     """Tests that removing the active-descendant option announces the new option."""
 
     session = web_option_removal
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     # Firefox includes the list bullet in the options' names and text; Chromium omits it.
-    option_a = expected_for_browser(session, "Option A", firefox="• Option A")
-    option_b = expected_for_browser(session, "Option B", firefox="• Option B")
+    option_a = helpers.expected_for_browser(session, "Option A", firefox="• Option A")
+    option_b = helpers.expected_for_browser(session, "Option B", firefox="• Option B")
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Items", "List with 3 items", option_a, "Focus mode"],
         [
-            BrailleLine(1, option_a, option_a, "\x00" * len(option_a)),
-            BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10),
+            helpers.BrailleLine(1, option_a, option_a, "\x00" * len(option_a)),
+            helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10),
         ],
     )
 
     # Delete moves aria-activedescendant to the next option and removes the old one.
     keyboard.tap_key(keyboard.KEYSYM_DELETE)
-    assert capture(session, wait_async=True) == (
+    assert helpers.capture(session, wait_async=True) == (
         [option_b],
         [
-            BrailleLine(1, option_a, option_a, "\x00" * len(option_a)),
-            BrailleLine(1, option_b, option_b, "\x00" * len(option_b)),
+            helpers.BrailleLine(1, option_a, option_a, "\x00" * len(option_a)),
+            helpers.BrailleLine(1, option_b, option_b, "\x00" * len(option_b)),
         ],
     )

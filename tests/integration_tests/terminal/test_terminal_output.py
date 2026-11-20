@@ -27,11 +27,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, terminal_helpers, version_helpers
 from tests.integration_tests.apps import terminal
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.terminal_helpers import review_first_line, settle, type_text
-from tests.integration_tests.version_helpers import requires_vte_version
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -42,11 +40,11 @@ def test_command_output_is_spoken(terminal_shell: NativeAppSession) -> None:
     """Tests that the output of a command is spoken when the command completes."""
 
     session = terminal_shell
-    settle(session)
+    terminal_helpers.settle(session)
 
-    type_text("echo hi\n")
+    terminal_helpers.type_text("echo hi\n")
     assert helpers.speech(session) in (["hi\n$ "], ["hi", "$ "], ["\nhi\n$ \n"])
-    type_text("echo hello world\n")
+    terminal_helpers.type_text("echo hello world\n")
     assert helpers.speech(session) in (
         ["hello world\n$ "],
         ["hello world", "$ "],
@@ -62,14 +60,14 @@ def test_multiline_command_output_is_spoken(terminal_shell: NativeAppSession) ->
         pytest.skip("seq is not available")
 
     session = terminal_shell
-    settle(session)
+    terminal_helpers.settle(session)
 
-    type_text("seq 3\n")
+    terminal_helpers.type_text("seq 3\n")
     assert helpers.speech(session) in (["1\n2\n3\n$ "], ["1\n2\n3", "$ "], ["\n1\n2\n3\n$ \n"])
 
 
 @pytest.mark.native_app
-@requires_vte_version("3.91", 0, 85, 0, when=terminal.selected_toolkit() == "gtk4")
+@version_helpers.requires_vte_version("3.91", 0, 85, 0, when=terminal.selected_toolkit() == "gtk4")
 def test_scrolled_command_output_is_spoken(terminal_shell: NativeAppSession) -> None:
     """Tests that command output which scrolls the terminal is spoken."""
 
@@ -77,17 +75,17 @@ def test_scrolled_command_output_is_spoken(terminal_shell: NativeAppSession) -> 
         pytest.skip("seq is not available")
 
     session = terminal_shell
-    settle(session)
+    terminal_helpers.settle(session)
 
     # GTK4 scrolling notifications are fixed in VTE commit 9d70a010761749a515876851b9e6c8bf578c2ac6.
     # The terminal is 8 rows, so seq 20 scrolls lines 1-13 off the top and only the
     # visible remainder is spoken.
-    type_text("seq 20\n")
+    terminal_helpers.type_text("seq 20\n")
     assert helpers.speech(session) == ["14\n15\n16\n17\n18\n19\n20\n$ \n"]
 
 
 @pytest.mark.native_app
-@requires_vte_version("3.91", 0, 85, 0, when=terminal.selected_toolkit() == "gtk4")
+@version_helpers.requires_vte_version("3.91", 0, 85, 0, when=terminal.selected_toolkit() == "gtk4")
 @pytest.mark.xfail(
     terminal.selected_toolkit() == "konsole",
     reason=(
@@ -102,11 +100,11 @@ def test_output_after_several_commands(terminal_shell: NativeAppSession) -> None
     """Tests that successive commands speak their own output as the terminal starts scrolling."""
 
     session = terminal_shell
-    settle(session)
+    terminal_helpers.settle(session)
 
     for word in ("alpha", "bravo", "charlie", "delta"):
-        type_text(f"echo {word}")
-        settle(session)
+        terminal_helpers.type_text(f"echo {word}")
+        terminal_helpers.settle(session)
         keyboard.tap_key(keyboard.KEYSYM_RETURN)
         spoken, brailled = helpers.capture(session)
         lines = [line for chunk in spoken for line in chunk.splitlines() if line]
@@ -115,7 +113,7 @@ def test_output_after_several_commands(terminal_shell: NativeAppSession) -> None
 
 
 @pytest.mark.native_app
-@requires_vte_version("3.91", 0, 85, 0, when=terminal.selected_toolkit() == "gtk4")
+@version_helpers.requires_vte_version("3.91", 0, 85, 0, when=terminal.selected_toolkit() == "gtk4")
 @pytest.mark.xfail(
     terminal.selected_toolkit() == "konsole",
     reason=(
@@ -132,14 +130,14 @@ def test_new_output_after_long_command(terminal_shell: NativeAppSession) -> None
         pytest.skip("seq is not available")
 
     session = terminal_shell
-    settle(session)
+    terminal_helpers.settle(session)
     # Unequal old and new line lengths expose incorrect scrolling insertion offsets.
-    type_text("seq 100000000000000 100000000000020\n")
-    settle(session)
+    terminal_helpers.type_text("seq 100000000000000 100000000000020\n")
+    terminal_helpers.settle(session)
 
     for word in ("fresh", "current"):
-        type_text(f"echo {word}")
-        settle(session)
+        terminal_helpers.type_text(f"echo {word}")
+        terminal_helpers.settle(session)
         keyboard.tap_key(keyboard.KEYSYM_RETURN)
         spoken, brailled = helpers.capture(session)
         lines = [line for chunk in spoken for line in chunk.splitlines() if line]
@@ -183,10 +181,10 @@ def test_flat_review_after_shell_output(
         ]
 
     session = terminal_shell
-    settle(session)
+    terminal_helpers.settle(session)
     for command in commands:
-        type_text(command + "\n")
-        settle(session)
+        terminal_helpers.type_text(command + "\n")
+        terminal_helpers.settle(session)
 
     steps = [("GoHome", lines[0])]
     steps.extend(("GoNextLine", line) for line in lines[1:])
@@ -195,7 +193,7 @@ def test_flat_review_after_shell_output(
     try:
         for command, line in steps:
             if command == "GoHome":
-                review_first_line(session)
+                terminal_helpers.review_first_line(session)
             else:
                 session.orca.call("FlatReviewPresenter", command, True)
             spoken, brailled = helpers.capture(session)
@@ -224,9 +222,11 @@ def test_braille_shows_final_output_after_a_burst(
     """Tests that braille gets the final overwrite even when no more output follows."""
 
     session = terminal_shell
-    settle(session)
-    type_text(f"sleep .3; printf before; sleep .05; printf '\\r{final_text}\\033[K'; read")
-    settle(session)
+    terminal_helpers.settle(session)
+    terminal_helpers.type_text(
+        f"sleep .3; printf before; sleep .05; printf '\\r{final_text}\\033[K'; read"
+    )
+    terminal_helpers.settle(session)
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
 
     # The command waits for input, so no later prompt can trigger another refresh.
@@ -261,9 +261,9 @@ def test_terminal_dimensions(terminal_shell: NativeAppSession, check_braille: bo
     """Checks that the program sees the intended terminal grid."""
 
     session = terminal_shell
-    settle(session)
-    type_text("stty size")
-    settle(session)
+    terminal_helpers.settle(session)
+    terminal_helpers.type_text("stty size")
+    terminal_helpers.settle(session)
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     spoken, brailled = helpers.capture(session)
     if check_braille:

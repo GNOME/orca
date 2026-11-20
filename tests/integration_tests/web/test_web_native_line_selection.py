@@ -26,16 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers, version_helpers, web_native_selection_helpers
 from tests.integration_tests.apps import browser
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import say_selection, speech
-from tests.integration_tests.version_helpers import requires_browser_version
-from tests.integration_tests.web_native_selection_helpers import (
-    USES_DOCUMENT_SELECTION,
-    assert_walks,
-    native_selection,
-    select_line,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -49,7 +42,9 @@ if TYPE_CHECKING:
     raises=pytest.fail.Exception,
     strict=True,
 )
-@requires_browser_version("chromium", 156, when=USES_DOCUMENT_SELECTION)
+@version_helpers.requires_browser_version(
+    "chromium", 156, when=web_native_selection_helpers.USES_DOCUMENT_SELECTION
+)
 @pytest.mark.native_app
 def test_line_selection_and_unselection(web_native_text_selection: BrowserSession) -> None:
     """Tests native line selection through varied content, then back to the top."""
@@ -59,7 +54,9 @@ def test_line_selection_and_unselection(web_native_text_selection: BrowserSessio
         ["Structural navigation", "selected"],
         ["Intro paragraph.", "selected"],
         ["Quoted text.", "selected"],
-        ["Save", "selected"] if USES_DOCUMENT_SELECTION else ["selected"],
+        ["Save", "selected"]
+        if web_native_selection_helpers.USES_DOCUMENT_SELECTION
+        else ["selected"],
         [],
         ["Fruit Apple Pear", "selected"],
         ["City", "selected"],
@@ -74,13 +71,17 @@ def test_line_selection_and_unselection(web_native_text_selection: BrowserSessio
         ["Clickable region", "selected"],
         ["Red square", "image", "selected"],
         ["before", "selected"],
-        ["Save all changes", "selected"] if USES_DOCUMENT_SELECTION else ["selected"],
+        ["Save all changes", "selected"]
+        if web_native_selection_helpers.USES_DOCUMENT_SELECTION
+        else ["selected"],
         ["after", "selected"],
         ["left", "selected"],
         ["Red square", "image", "selected"],
         ["right", "selected"],
         ["spaced  apart", "selected"],
-        ["Next slide", "selected"] if USES_DOCUMENT_SELECTION else ["selected"],
+        ["Next slide", "selected"]
+        if web_native_selection_helpers.USES_DOCUMENT_SELECTION
+        else ["selected"],
         [
             (
                 "This is a sufficiently long paragraph of body text so that it qualifies as a "
@@ -106,13 +107,17 @@ def test_line_selection_and_unselection(web_native_text_selection: BrowserSessio
             ),
             "unselected",
         ],
-        ["Next slide", "unselected"] if USES_DOCUMENT_SELECTION else ["unselected"],
+        ["Next slide", "unselected"]
+        if web_native_selection_helpers.USES_DOCUMENT_SELECTION
+        else ["unselected"],
         ["spaced  apart", "unselected"],
         ["right", "unselected"],
         ["Red square", "image", "unselected"],
         ["left", "unselected"],
         ["after", "unselected"],
-        ["Save all changes", "unselected"] if USES_DOCUMENT_SELECTION else ["unselected"],
+        ["Save all changes", "unselected"]
+        if web_native_selection_helpers.USES_DOCUMENT_SELECTION
+        else ["unselected"],
         ["before", "unselected"],
         ["Red square", "image", "unselected"],
         ["Clickable region", "unselected"],
@@ -127,7 +132,9 @@ def test_line_selection_and_unselection(web_native_text_selection: BrowserSessio
         ["City", "unselected"],
         ["Fruit Apple Pear", "unselected"],
         [],
-        ["Save", "unselected"] if USES_DOCUMENT_SELECTION else ["unselected"],
+        ["Save", "unselected"]
+        if web_native_selection_helpers.USES_DOCUMENT_SELECTION
+        else ["unselected"],
         ["Quoted text.", "unselected"],
         ["Intro paragraph.", "unselected"],
         ["Structural navigation", "unselected"],
@@ -135,11 +142,19 @@ def test_line_selection_and_unselection(web_native_text_selection: BrowserSessio
         [],
     ]
 
-    with native_selection(session):
-        selected = [select_line(session, keyboard.KEYSYM_DOWN) for _ in expected_selected]
-        unselected = [select_line(session, keyboard.KEYSYM_UP) for _ in expected_unselected]
+    with web_native_selection_helpers.native_selection(session):
+        selected = [
+            web_native_selection_helpers.select_line(session, keyboard.KEYSYM_DOWN)
+            for _ in expected_selected
+        ]
+        unselected = [
+            web_native_selection_helpers.select_line(session, keyboard.KEYSYM_UP)
+            for _ in expected_unselected
+        ]
 
-    assert_walks(selected, unselected, expected_selected, expected_unselected)
+    web_native_selection_helpers.assert_walks(
+        selected, unselected, expected_selected, expected_unselected
+    )
 
 
 @pytest.mark.native_app
@@ -150,10 +165,10 @@ def test_selected_text_has_no_added_trailing_space(
 
     session = web_native_text_selection
 
-    with native_selection(session):
-        select_line(session, keyboard.KEYSYM_DOWN)
-        select_line(session, keyboard.KEYSYM_DOWN)
-        assert say_selection(session) == [
+    with web_native_selection_helpers.native_selection(session):
+        web_native_selection_helpers.select_line(session, keyboard.KEYSYM_DOWN)
+        web_native_selection_helpers.select_line(session, keyboard.KEYSYM_DOWN)
+        assert helpers.say_selection(session) == [
             "Selected text is:  Structural navigation Intro paragraph."
         ]
 
@@ -171,28 +186,39 @@ def test_selection_by_line_up_then_down(web_native_text_selection: BrowserSessio
 
     session = web_native_text_selection
 
-    with native_selection(session):
+    with web_native_selection_helpers.native_selection(session):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
         session.reader.reset()
 
-        assert select_line(session, keyboard.KEYSYM_UP) == ["paragraph.", "selected"]
-        assert select_line(session, keyboard.KEYSYM_UP) == [
+        assert web_native_selection_helpers.select_line(session, keyboard.KEYSYM_UP) == [
+            "paragraph.",
+            "selected",
+        ]
+        assert web_native_selection_helpers.select_line(session, keyboard.KEYSYM_UP) == [
             "ructural navigation Intro",
             "selected",
         ]
-        assert say_selection(session) == ["Selected text is:  ructural navigation Intro paragraph."]
+        assert helpers.say_selection(session) == [
+            "Selected text is:  ructural navigation Intro paragraph."
+        ]
 
-        assert select_line(session, keyboard.KEYSYM_DOWN) == [
+        assert web_native_selection_helpers.select_line(session, keyboard.KEYSYM_DOWN) == [
             "ructural navigation Intro",
             "unselected",
         ]
-        assert select_line(session, keyboard.KEYSYM_DOWN) == ["paragraph.", "unselected"]
-        assert say_selection(session) == ["No selected text."]
+        assert web_native_selection_helpers.select_line(session, keyboard.KEYSYM_DOWN) == [
+            "paragraph.",
+            "unselected",
+        ]
+        assert helpers.say_selection(session) == ["No selected text."]
 
         # Keep this check between text blocks; button selection has version-gated coverage.
         keyboard.tap_key(keyboard.KEYSYM_UP)
-        speech(session)
-        assert select_line(session, keyboard.KEYSYM_DOWN) == ["Intro paragraph.", "selected"]
-        assert say_selection(session) == ["Selected text is:  Intro paragraph."]
+        helpers.speech(session)
+        assert web_native_selection_helpers.select_line(session, keyboard.KEYSYM_DOWN) == [
+            "Intro paragraph.",
+            "selected",
+        ]
+        assert helpers.say_selection(session) == ["Selected text is:  Intro paragraph."]

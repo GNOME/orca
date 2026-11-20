@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -40,16 +40,16 @@ def test_heading_navigation_enters_and_leaves_the_document(
     """Tests that next-heading treats the heading in the ARIA document as part of the page."""
 
     session = web_aria_document
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Document heading", "heading 2"]
+    assert helpers.speech(session) == ["h", "Document heading", "heading 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Main heading two", "heading 1"]
+    assert helpers.speech(session) == ["h", "Main heading two", "heading 1"]
 
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Wrapping to top.", "Main heading one", "heading 1"]
+    assert helpers.speech(session) == ["h", "Wrapping to top.", "Main heading one", "heading 1"]
 
 
 @pytest.mark.native_app
@@ -59,16 +59,16 @@ def test_backward_heading_navigation_enters_and_leaves_the_document(
     """Tests that previous-heading treats the heading in the ARIA document as part of the page."""
 
     session = web_aria_document
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
-    assert speech(session) == ["H", "Wrapping to bottom.", "Main heading two", "heading 1"]
+    assert helpers.speech(session) == ["H", "Wrapping to bottom.", "Main heading two", "heading 1"]
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
-    assert speech(session) == ["H", "Document heading", "heading 2"]
+    assert helpers.speech(session) == ["H", "Document heading", "heading 2"]
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
-    assert speech(session) == ["H", "Main heading one", "heading 1"]
+    assert helpers.speech(session) == ["H", "Main heading one", "heading 1"]
 
 
 @pytest.mark.native_app
@@ -78,40 +78,40 @@ def test_caret_navigation_enters_and_leaves_the_document(
     """Tests that line navigation reads the content of the ARIA document in page order."""
 
     session = web_aria_document
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Paragraph before the document."]
+    assert helpers.speech(session) == ["Paragraph before the document."]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Document heading", "heading 2"]
+    assert helpers.speech(session) == ["Document heading", "heading 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Paragraph inside the document."]
+    assert helpers.speech(session) == ["Paragraph inside the document."]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Document button", "button", "Document entry", "entry"]
+    assert helpers.speech(session) == ["Document button", "button", "Document entry", "entry"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Main heading two", "heading 1"]
+    assert helpers.speech(session) == ["Main heading two", "heading 1"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Paragraph after the document."]
+    assert helpers.speech(session) == ["Paragraph after the document."]
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == ["Main heading two", "heading 1"]
+    assert helpers.speech(session) == ["Main heading two", "heading 1"]
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == ["Document button", "button", "Document entry", "entry"]
+    assert helpers.speech(session) == ["Document button", "button", "Document entry", "entry"]
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == ["Paragraph inside the document."]
+    assert helpers.speech(session) == ["Paragraph inside the document."]
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == ["Document heading", "heading 2"]
+    assert helpers.speech(session) == ["Document heading", "heading 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == ["Paragraph before the document."]
+    assert helpers.speech(session) == ["Paragraph before the document."]
 
 
 @pytest.mark.native_app
@@ -119,13 +119,13 @@ def test_structural_navigation_by_widget(web_aria_document: BrowserSession) -> N
     """Tests that next-button and next-entry reach the widgets inside the ARIA document."""
 
     session = web_aria_document
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_B)
-    assert speech(session) == ["b", "Document button", "button"]
+    assert helpers.speech(session) == ["b", "Document button", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_E)
-    assert speech(session) == ["e", "Document entry", "entry"]
+    assert helpers.speech(session) == ["e", "Document entry", "entry"]
 
 
 @pytest.mark.native_app
@@ -135,13 +135,13 @@ def test_structural_navigation_focus_mode_setting_uses_the_role(
     """Tests that the role of the widget in the document decides the mode when the setting is on."""
 
     session = web_aria_document
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("StructuralNavigator", "TriggersFocusMode", True)
 
     keyboard.tap_key(keyboard.KEYSYM_B)
-    assert speech(session) == ["b", "Document button", "button"]
+    assert helpers.speech(session) == ["b", "Document button", "button"]
     assert not session.orca.get("DocumentPresenter", "InFocusMode")
 
     keyboard.tap_key(keyboard.KEYSYM_E)
-    assert speech(session) == ["e", "Focus mode", "Document entry", "entry"]
+    assert helpers.speech(session) == ["e", "Focus mode", "Document entry", "entry"]
     assert session.orca.get("DocumentPresenter", "InFocusMode")

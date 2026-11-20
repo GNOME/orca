@@ -26,15 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    move_to_bottom,
-    move_to_top,
-    reset_web_state,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -50,24 +43,24 @@ def test_line_navigation_through_a_multi_line_heading(
     """Tests line navigation through a multi-line heading."""
 
     session = web_multi_line_content
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["foo\n", "heading 1"],
-        [BrailleLine(1, "foo h1", "foo h1", _PLAIN * 6)],
+        [helpers.BrailleLine(1, "foo h1", "foo h1", _PLAIN * 6)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["bar\n", "heading 1"],
-        [BrailleLine(1, "bar h1", "bar h1", _PLAIN * 6)],
+        [helpers.BrailleLine(1, "bar h1", "bar h1", _PLAIN * 6)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["baz", "heading 1"],
-        [BrailleLine(1, "baz h1", "baz h1", _PLAIN * 6)],
+        [helpers.BrailleLine(1, "baz h1", "baz h1", _PLAIN * 6)],
     )
 
 
@@ -78,27 +71,27 @@ def test_line_navigation_through_a_multi_line_link(
     """Tests line navigation through a multi-line link."""
 
     session = web_multi_line_content
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(4):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        capture(session)
+        helpers.capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["one\n", "link"],
-        [BrailleLine(1, "one two three", "one two three", _LINK * 13)],
+        [helpers.BrailleLine(1, "one two three", "one two three", _LINK * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["two\n", "link"],
-        [BrailleLine(1, "one two three", "one two three", _LINK * 13)],
+        [helpers.BrailleLine(1, "one two three", "one two three", _LINK * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["three", "link"],
-        [BrailleLine(1, "one two three", "one two three", _LINK * 13)],
+        [helpers.BrailleLine(1, "one two three", "one two three", _LINK * 13)],
     )
 
 
@@ -109,12 +102,12 @@ def test_say_all_over_a_multi_line_heading_and_link(
     """Tests Say All over a multi-line heading and link."""
 
     session = web_multi_line_content
-    reset_web_state(session)
-    move_to_bottom(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_bottom(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-    assert speech(session) == [
+    assert helpers.speech(session) == [
         "Before.",
         "foo\nbar\nbaz",
         "heading 1",
@@ -138,27 +131,27 @@ def test_upward_line_navigation_through_a_multi_line_link(
     """Tests upward line navigation through a multi-line link."""
 
     session = web_multi_line_content
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(8):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        capture(session)
+        helpers.capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["three", "link"],
-        [BrailleLine(1, "one two three", "one two three", _LINK * 13)],
+        [helpers.BrailleLine(1, "one two three", "one two three", _LINK * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["two\n", "link"],
-        [BrailleLine(1, "one two three", "one two three", _LINK * 13)],
+        [helpers.BrailleLine(1, "one two three", "one two three", _LINK * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["one\n", "link"],
-        [BrailleLine(1, "one two three", "one two three", _LINK * 13)],
+        [helpers.BrailleLine(1, "one two three", "one two three", _LINK * 13)],
     )
 
 
@@ -169,27 +162,27 @@ def test_upward_line_navigation_through_a_multi_line_heading(
     """Tests upward line navigation through a multi-line heading."""
 
     session = web_multi_line_content
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(4):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        capture(session)
+        helpers.capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["baz", "heading 1"],
-        [BrailleLine(1, "baz h1", "baz h1", _PLAIN * 6)],
+        [helpers.BrailleLine(1, "baz h1", "baz h1", _PLAIN * 6)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["bar\n", "heading 1"],
-        [BrailleLine(1, "bar h1", "bar h1", _PLAIN * 6)],
+        [helpers.BrailleLine(1, "bar h1", "bar h1", _PLAIN * 6)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["foo\n", "heading 1"],
-        [BrailleLine(1, "foo h1", "foo h1", _PLAIN * 6)],
+        [helpers.BrailleLine(1, "foo h1", "foo h1", _PLAIN * 6)],
     )
 
 
@@ -200,27 +193,39 @@ def test_line_navigation_through_a_multi_line_link_in_a_heading(
     """Tests line navigation through a multi-line link in a heading."""
 
     session = web_multi_line_content
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(7):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        capture(session)
+        helpers.capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["alpha\n", "link heading 1"],
-        [BrailleLine(1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3)],
+        [
+            helpers.BrailleLine(
+                1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["beta\n", "link heading 1"],
-        [BrailleLine(1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3)],
+        [
+            helpers.BrailleLine(
+                1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["gamma", "link heading 1"],
-        [BrailleLine(1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3)],
+        [
+            helpers.BrailleLine(
+                1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3
+            )
+        ],
     )
 
 
@@ -231,27 +236,27 @@ def test_line_navigation_through_a_multi_line_heading_in_a_link(
     """Tests line navigation through a multi-line heading in a link."""
 
     session = web_multi_line_content
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(10):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        capture(session)
+        helpers.capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["delta\n", "heading 1 link"],
-        [BrailleLine(1, "delta h1", "delta h1", _LINK * 5 + _PLAIN * 3)],
+        [helpers.BrailleLine(1, "delta h1", "delta h1", _LINK * 5 + _PLAIN * 3)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["epsilon\n", "heading 1 link"],
-        [BrailleLine(1, "epsilon h1", "epsilon h1", _LINK * 7 + _PLAIN * 3)],
+        [helpers.BrailleLine(1, "epsilon h1", "epsilon h1", _LINK * 7 + _PLAIN * 3)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["zeta", "heading 1 link"],
-        [BrailleLine(1, "zeta h1", "zeta h1", _LINK * 4 + _PLAIN * 3)],
+        [helpers.BrailleLine(1, "zeta h1", "zeta h1", _LINK * 4 + _PLAIN * 3)],
     )
 
 
@@ -262,27 +267,39 @@ def test_upward_line_navigation_through_a_multi_line_link_in_a_heading(
     """Tests upward line navigation through a multi-line link in a heading."""
 
     session = web_multi_line_content
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(11):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        capture(session)
+        helpers.capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["gamma", "link heading 1"],
-        [BrailleLine(1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3)],
+        [
+            helpers.BrailleLine(
+                1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["beta\n", "link heading 1"],
-        [BrailleLine(1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3)],
+        [
+            helpers.BrailleLine(
+                1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["alpha\n", "link heading 1"],
-        [BrailleLine(1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3)],
+        [
+            helpers.BrailleLine(
+                1, "alpha beta gamma h1", "alpha beta gamma h1", _LINK * 16 + _PLAIN * 3
+            )
+        ],
     )
 
 
@@ -293,22 +310,22 @@ def test_upward_line_navigation_through_a_multi_line_heading_in_a_link(
     """Tests upward line navigation through a multi-line heading in a link."""
 
     session = web_multi_line_content
-    move_to_bottom(session)
+    helpers.move_to_bottom(session)
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["zeta", "heading 1 link"],
-        [BrailleLine(1, "zeta h1", "zeta h1", _LINK * 4 + _PLAIN * 3)],
+        [helpers.BrailleLine(1, "zeta h1", "zeta h1", _LINK * 4 + _PLAIN * 3)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["epsilon\n", "heading 1 link"],
-        [BrailleLine(1, "epsilon h1", "epsilon h1", _LINK * 7 + _PLAIN * 3)],
+        [helpers.BrailleLine(1, "epsilon h1", "epsilon h1", _LINK * 7 + _PLAIN * 3)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["delta\n", "heading 1 link"],
-        [BrailleLine(1, "delta h1", "delta h1", _LINK * 5 + _PLAIN * 3)],
+        [helpers.BrailleLine(1, "delta h1", "delta h1", _LINK * 5 + _PLAIN * 3)],
     )

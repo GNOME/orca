@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -35,7 +35,7 @@ if TYPE_CHECKING:
 
 def _focus_next(session: BrowserSession) -> list[str]:
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    return speech(session)
+    return helpers.speech(session)
 
 
 @pytest.mark.native_app
@@ -43,7 +43,7 @@ def test_label_inference_on_tab(web_label_inference: BrowserSession) -> None:
     """Tests that an unlabeled control's name is inferred from nearby text on focus."""
 
     session = web_label_inference
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     assert _focus_next(session) == ["Full name:", "entry", "Focus mode"]
     assert _focus_next(session) == ["Remember me", "check box not checked", "Browse mode"]

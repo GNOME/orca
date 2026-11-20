@@ -28,18 +28,17 @@ import pytest
 
 from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
 
 
-_ACCOUNT = BrailleLine(
+_ACCOUNT = helpers.BrailleLine(
     16, "Account Current $l", "Account Current $l", "\x00" * 8 + "\xc0" * 7 + "\x00" * 3
 )
-_EDITABLE = BrailleLine(9, "Editable $l", "Editable $l", "\xc0" * 8 + "\x00" * 3)
-_EARLY = BrailleLine(6, "Early $l", "Early $l", "\xc0" * 5 + "\x00" * 3)
-_LATE = BrailleLine(5, "Late $l", "Late $l", "\xc0" * 4 + "\x00" * 3)
+_EDITABLE = helpers.BrailleLine(9, "Editable $l", "Editable $l", "\xc0" * 8 + "\x00" * 3)
+_EARLY = helpers.BrailleLine(6, "Early $l", "Early $l", "\xc0" * 5 + "\x00" * 3)
+_LATE = helpers.BrailleLine(5, "Late $l", "Late $l", "\xc0" * 4 + "\x00" * 3)
 
 
 @pytest.mark.native_app
@@ -62,7 +61,7 @@ def test_table_header_labels_on_tab(web_table_label_inference: BrowserSession) -
             "selected",
             "Focus mode",
         ],
-        [_ACCOUNT, BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)],
+        [_ACCOUNT, helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)],
     )
 
     forward = (

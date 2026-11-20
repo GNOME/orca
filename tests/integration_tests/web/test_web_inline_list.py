@@ -26,14 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    expected_for_browser,
-    move_to_bottom,
-    move_to_top,
-    reset_web_state,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -44,20 +38,20 @@ def test_inline_list_items_share_a_line(web_inline_list: BrowserSession) -> None
     """Tests that inline list items group onto one line while block items do not."""
 
     session = web_inline_list
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     # Inline list items render on one visual row and are presented as a single line.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["List with 3 items", "one", "two", "three"]
+    assert helpers.speech(session) == ["List with 3 items", "one", "two", "three"]
 
     # A block list is the contrast: each item is its own line.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["leaving list.", "List with 2 items", "• alpha"]
+    assert helpers.speech(session) == ["leaving list.", "List with 2 items", "• alpha"]
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["• beta"]
+    assert helpers.speech(session) == ["• beta"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["leaving list.", "Tail paragraph."]
+    assert helpers.speech(session) == ["leaving list.", "Tail paragraph."]
 
 
 @pytest.mark.native_app
@@ -65,11 +59,11 @@ def test_character_navigation_left_to_right(web_inline_list: BrowserSession) -> 
     """Tests Right-arrow character navigation across inline list items and a block list."""
 
     session = web_inline_list
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     stream = "nline listonetwothree• alpha• betaTail paragraph."
     for char in stream:
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-        assert speech(session) == [char]
+        assert helpers.speech(session) == [char]
 
 
 @pytest.mark.native_app
@@ -77,14 +71,14 @@ def test_character_navigation_right_to_left(web_inline_list: BrowserSession) -> 
     """Tests Left-arrow character navigation back across inline list items and a block list."""
 
     session = web_inline_list
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     for _ in range(60):
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-        speech(session)
+        helpers.speech(session)
     stream = "hpargarap liaTateb •ahpla •eerhtowtenotsil enilnI"
     for char in stream:
         keyboard.tap_key(keyboard.KEYSYM_LEFT)
-        assert speech(session) == [char]
+        assert helpers.speech(session) == [char]
 
 
 @pytest.mark.native_app
@@ -92,14 +86,14 @@ def test_end_of_file_then_caret_left(web_inline_list: BrowserSession) -> None:
     """Tests Ctrl+End at the document end, then Left walking back through the last line."""
 
     session = web_inline_list
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-    assert speech(session) == ["Tail paragraph."]
+    assert helpers.speech(session) == ["Tail paragraph."]
 
     for char in "paragraph."[::-1]:
         keyboard.tap_key(keyboard.KEYSYM_LEFT)
-        assert speech(session) == [char]
+        assert helpers.speech(session) == [char]
 
 
 @pytest.mark.native_app
@@ -107,7 +101,7 @@ def test_word_navigation_left_to_right(web_inline_list: BrowserSession) -> None:
     """Tests Ctrl+Right word navigation across inline list items and a block list."""
 
     session = web_inline_list
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     expected = [
         ["Inline "],
@@ -121,12 +115,12 @@ def test_word_navigation_left_to_right(web_inline_list: BrowserSession) -> None:
         ["beta"],
         ["Tail "],
         # Firefox includes the period in the word boundary; retain both for browser review.
-        expected_for_browser(session, ["paragraph"], firefox=["paragraph."]),
+        helpers.expected_for_browser(session, ["paragraph"], firefox=["paragraph."]),
     ]
     result = []
     for _ in expected:
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-        result.append(speech(session))
+        result.append(helpers.speech(session))
     assert result == expected
 
 
@@ -135,12 +129,12 @@ def test_word_navigation_right_to_left(web_inline_list: BrowserSession) -> None:
     """Tests Ctrl+Left word navigation back across inline list items and a block list."""
 
     session = web_inline_list
-    reset_web_state(session)
-    move_to_bottom(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_bottom(session)
 
     expected = [
         # The same punctuation boundary difference applies in reverse.
-        *expected_for_browser(session, [["."], ["paragraph"]], firefox=[["paragraph."]]),
+        *helpers.expected_for_browser(session, [["."], ["paragraph"]], firefox=[["paragraph."]]),
         ["Tail "],
         ["beta"],
         ["• "],
@@ -155,5 +149,5 @@ def test_word_navigation_right_to_left(web_inline_list: BrowserSession) -> None:
     result = []
     for _ in expected:
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
-        result.append(speech(session))
+        result.append(helpers.speech(session))
     assert result == expected

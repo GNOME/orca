@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -38,17 +38,17 @@ def test_treegrid_navigation(web_treegrid: BrowserSession) -> None:
     """Tests treegrid navigation."""
 
     session = web_treegrid
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Roof repair quote Two tiles are cracked", "expanded", "Focus mode"]
-    assert brailled[-1] == BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
+    assert brailled[-1] == helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["re: Roof repair quote The scaffolding is booked"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "re: Roof repair quote The scaffolding is booked table row",
         "re: Roof repair quote The scaffo",
@@ -56,9 +56,9 @@ def test_treegrid_navigation(web_treegrid: BrowserSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["re: Roof repair quote Can we start on Monday", "collapsed"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "re: Roof repair quote Can we start on Monday table row collapsed",
         "re: Roof repair quote Can we sta",
@@ -66,9 +66,9 @@ def test_treegrid_navigation(web_treegrid: BrowserSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["expanded"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "re: Roof repair quote Can we start on Monday table row expanded",
         "re: Roof repair quote Can we sta",
@@ -76,9 +76,9 @@ def test_treegrid_navigation(web_treegrid: BrowserSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["re: Roof repair quote Monday suits us"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "re: Roof repair quote Monday suits us table row",
         "re: Roof repair quote Monday sui",
@@ -86,7 +86,7 @@ def test_treegrid_navigation(web_treegrid: BrowserSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [
         "re: Roof repair quote Monday suits us",
         "Subject re: Roof repair quote",
@@ -96,7 +96,7 @@ def test_treegrid_navigation(web_treegrid: BrowserSession) -> None:
         "row 5 column 2",
         "column 2 of 2 row 5 of 5",
     ]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "re: Roof repair quote Monday suits us table row Subject column header re: Roof "
         "repair quote Summary column header Monday suits us",
@@ -105,9 +105,9 @@ def test_treegrid_navigation(web_treegrid: BrowserSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["re: Roof repair quote Can we start on Monday", "expanded"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "re: Roof repair quote Can we start on Monday table row expanded",
         "re: Roof repair quote Can we sta",
@@ -115,9 +115,9 @@ def test_treegrid_navigation(web_treegrid: BrowserSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["collapsed"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "re: Roof repair quote Can we start on Monday table row collapsed",
         "re: Roof repair quote Can we sta",
@@ -127,9 +127,9 @@ def test_treegrid_navigation(web_treegrid: BrowserSession) -> None:
     session.orca.set("SpeechPresenter", "SpeakPositionInSet", True)
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["re: Roof repair quote The scaffolding is booked", "1 of 2"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "re: Roof repair quote The scaffolding is booked table row",
         "re: Roof repair quote The scaffo",
@@ -137,9 +137,9 @@ def test_treegrid_navigation(web_treegrid: BrowserSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["re: Roof repair quote Can we start on Monday", "collapsed", "2 of 2"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "re: Roof repair quote Can we start on Monday table row collapsed",
         "re: Roof repair quote Can we sta",

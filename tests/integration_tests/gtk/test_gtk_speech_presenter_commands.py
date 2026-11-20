@@ -26,15 +26,15 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests.helpers import BrailleLine, capture
+from tests.integration_tests import helpers
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
 
 
-def _command(session: NativeAppSession, name: str) -> tuple[list[str], list[BrailleLine]]:
+def _command(session: NativeAppSession, name: str) -> tuple[list[str], list[helpers.BrailleLine]]:
     session.orca.call("SpeechPresenter", name, True)
-    return capture(session)
+    return helpers.capture(session)
 
 
 @pytest.mark.native_app
@@ -47,11 +47,15 @@ def test_toggle_verbosity(gtk_text_view: NativeAppSession) -> None:
 
     assert _command(session, "ToggleVerbosity") == (
         ["Verbosity level: brief"],
-        [BrailleLine(0, "Verbosity level: brief", "Verbosity level: brief", "\x00" * 22)],
+        [helpers.BrailleLine(0, "Verbosity level: brief", "Verbosity level: brief", "\x00" * 22)],
     )
     assert _command(session, "ToggleVerbosity") == (
         ["Verbosity level: verbose"],
-        [BrailleLine(0, "Verbosity level: verbose", "Verbosity level: verbose", "\x00" * 24)],
+        [
+            helpers.BrailleLine(
+                0, "Verbosity level: verbose", "Verbosity level: verbose", "\x00" * 24
+            )
+        ],
     )
 
 
@@ -65,11 +69,15 @@ def test_change_number_style(gtk_text_view: NativeAppSession) -> None:
 
     assert _command(session, "ChangeNumberStyle") == (
         ["Speak numbers as digits."],
-        [BrailleLine(0, "Speak numbers as digits.", "Speak numbers as digits.", "\x00" * 24)],
+        [
+            helpers.BrailleLine(
+                0, "Speak numbers as digits.", "Speak numbers as digits.", "\x00" * 24
+            )
+        ],
     )
     assert _command(session, "ChangeNumberStyle") == (
         ["Speak numbers as words."],
-        [BrailleLine(0, "Speak numbers as words.", "Speak numbers as words.", "\x00" * 23)],
+        [helpers.BrailleLine(0, "Speak numbers as words.", "Speak numbers as words.", "\x00" * 23)],
     )
 
 
@@ -83,12 +91,16 @@ def test_toggle_spoken_indentation(gtk_text_view: NativeAppSession) -> None:
 
     assert _command(session, "ToggleIndentation") == (
         ["Spoken indentation enabled."],
-        [BrailleLine(0, "Spoken indentation enabled.", "Spoken indentation enabled.", "\x00" * 27)],
+        [
+            helpers.BrailleLine(
+                0, "Spoken indentation enabled.", "Spoken indentation enabled.", "\x00" * 27
+            )
+        ],
     )
     assert _command(session, "ToggleIndentation") == (
         ["Spoken indentation disabled."],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 0, "Spoken indentation disabled.", "Spoken indentation disabled.", "\x00" * 28
             )
         ],
@@ -106,7 +118,7 @@ def test_cycle_text_attribute_change_mode(gtk_text_view: NativeAppSession) -> No
     assert _command(session, "CycleTextAttributeChangeMode") == (
         ["Text attributes: editable text."],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 0,
                 "Text attributes: editable text.",
                 "Text attributes: editable text.",
@@ -116,11 +128,11 @@ def test_cycle_text_attribute_change_mode(gtk_text_view: NativeAppSession) -> No
     )
     assert _command(session, "CycleTextAttributeChangeMode") == (
         ["Text attributes: on."],
-        [BrailleLine(0, "Text attributes: on.", "Text attributes: on.", "\x00" * 20)],
+        [helpers.BrailleLine(0, "Text attributes: on.", "Text attributes: on.", "\x00" * 20)],
     )
     assert _command(session, "CycleTextAttributeChangeMode") == (
         ["Text attributes: off."],
-        [BrailleLine(0, "Text attributes: off.", "Text attributes: off.", "\x00" * 21)],
+        [helpers.BrailleLine(0, "Text attributes: off.", "Text attributes: off.", "\x00" * 21)],
     )
 
 
@@ -134,5 +146,5 @@ def test_toggle_table_cell_read_mode_outside_table(gtk_text_view: NativeAppSessi
 
     assert _command(session, "ToggleTableCellReadingMode") == (
         ["Not in a table."],
-        [BrailleLine(0, "Not in a table.", "Not in a table.", "\x00" * 15)],
+        [helpers.BrailleLine(0, "Not in a table.", "Not in a table.", "\x00" * 15)],
     )

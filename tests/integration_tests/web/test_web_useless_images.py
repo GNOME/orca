@@ -26,14 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    move_to_top,
-    reset_web_state,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -68,11 +62,11 @@ def test_say_all_by_sentence_omits_useless_images(web_useless_images: BrowserSes
     """Tests that Say All by sentence omits useless images in every position."""
 
     session = web_useless_images
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SayAllPresenter", "Style", "sentence")
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-    assert speech(session) == _EXPECTED_SAY_ALL_SENTENCE
+    assert helpers.speech(session) == _EXPECTED_SAY_ALL_SENTENCE
 
 
 @pytest.mark.native_app
@@ -80,51 +74,55 @@ def test_say_all_by_line_omits_useless_images(web_useless_images: BrowserSession
     """Tests that Say All by line omits useless images in every position."""
 
     session = web_useless_images
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SayAllPresenter", "Style", "line")
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-    assert speech(session) == _EXPECTED_SAY_ALL_LINE
+    assert helpers.speech(session) == _EXPECTED_SAY_ALL_LINE
 
 
 @pytest.mark.native_app
 def test_line_navigation_omits_useless_images(web_useless_images: BrowserSession) -> None:
     """Tests that browsing by line presents each line, and each container, without its image."""
 
-    move_to_top(web_useless_images)
+    helpers.move_to_top(web_useless_images)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(web_useless_images) == (
+    assert helpers.capture(web_useless_images) == (
         ["Inline before ", " inline after."],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1, "Inline before  inline after.", "Inline before  inline after.", "\x00" * 28
             )
         ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(web_useless_images) == (
+    assert helpers.capture(web_useless_images) == (
         ["End of paragraph image. "],
-        [BrailleLine(1, "End of paragraph image. ", "End of paragraph image. ", "\x00" * 24)],
+        [
+            helpers.BrailleLine(
+                1, "End of paragraph image. ", "End of paragraph image. ", "\x00" * 24
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(web_useless_images) == (
+    assert helpers.capture(web_useless_images) == (
         ["Last paragraph of text."],
-        [BrailleLine(1, "Last paragraph of text.", "Last paragraph of text.", "\x00" * 23)],
+        [helpers.BrailleLine(1, "Last paragraph of text.", "Last paragraph of text.", "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(web_useless_images) == (
+    assert helpers.capture(web_useless_images) == (
         ["Read more ", "link"],
-        [BrailleLine(1, "Read more ", "Read more ", "\xc0" * 10)],
+        [helpers.BrailleLine(1, "Read more ", "Read more ", "\xc0" * 10)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(web_useless_images) == (
+    assert helpers.capture(web_useless_images) == (
         ["Submit", "button"],
-        [BrailleLine(1, "Submit button", "Submit button", "\x00" * 13)],
+        [helpers.BrailleLine(1, "Submit button", "Submit button", "\x00" * 13)],
     )
 
 
@@ -134,16 +132,16 @@ def test_tab_navigation_omits_useless_images_in_containers(
 ) -> None:
     """Tests that tabbing to the link and button presents neither container's useless image."""
 
-    reset_web_state(web_useless_images)
+    helpers.reset_web_state(web_useless_images)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert capture(web_useless_images) == (
+    assert helpers.capture(web_useless_images) == (
         ["Read more", "link"],
-        [BrailleLine(1, "Read more", "Read more", "\xc0" * 9)],
+        [helpers.BrailleLine(1, "Read more", "Read more", "\xc0" * 9)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert capture(web_useless_images) == (
+    assert helpers.capture(web_useless_images) == (
         ["Submit", "button"],
-        [BrailleLine(1, "Submit button", "Submit button", "\x00" * 13)],
+        [helpers.BrailleLine(1, "Submit button", "Submit button", "\x00" * 13)],
     )

@@ -26,22 +26,22 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, expected_for_gtk, move_to_top
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
 
 _ORCA_CONTROLS = "The screen reader is controlling the caret."
 _APP_CONTROLS = "The application is controlling the caret."
-_BLANK_LINE = BrailleLine(1, " $l", " $l", "\x00" * 3)
-_FIRST_LINE = BrailleLine(
+_BLANK_LINE = helpers.BrailleLine(1, " $l", " $l", "\x00" * 3)
+_FIRST_LINE = helpers.BrailleLine(
     1,
     "OrcaTextView application frame First sentence. $l",
     "First sentence. $l",
     "\x00" * 49,
 )
-_SECOND_LINE = BrailleLine(1, "Second sentence. $l", "Second sentence. $l", "\x00" * 19)
+_SECOND_LINE = helpers.BrailleLine(1, "Second sentence. $l", "Second sentence. $l", "\x00" * 19)
 
 
 @pytest.mark.native_app
@@ -51,32 +51,32 @@ def test_caret_navigation_through_blank_line(
     """Tests Orca-controlled line navigation through an interior blank line."""
 
     session = gtk_text_view_blank_line
-    move_to_top(session)
+    helpers.move_to_top(session)
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_ORCA_CONTROLS]
+    assert helpers.capture(session)[0] == [_ORCA_CONTROLS]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["blank"]
     assert brailled[-1] == _BLANK_LINE
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
-    assert spoken == expected_for_gtk(["Second sentence.\n"], gtk4=["Second sentence."])
+    spoken, brailled = helpers.capture(session)
+    assert spoken == helpers.expected_for_gtk(["Second sentence.\n"], gtk4=["Second sentence."])
     assert brailled[-1] == _SECOND_LINE
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["blank"]
     assert brailled[-1] == _BLANK_LINE
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
-    assert spoken == expected_for_gtk(["First sentence.\n"], gtk4=["First sentence."])
+    spoken, brailled = helpers.capture(session)
+    assert spoken == helpers.expected_for_gtk(["First sentence.\n"], gtk4=["First sentence."])
     assert brailled[-1] == _FIRST_LINE
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_APP_CONTROLS]
+    assert helpers.capture(session)[0] == [_APP_CONTROLS]
 
 
 @pytest.mark.native_app
@@ -86,29 +86,29 @@ def test_caret_navigation_at_trailing_blank_line(
     """Tests Orca-controlled navigation to and from a trailing blank line."""
 
     session = gtk_text_view_blank_line
-    move_to_top(session)
+    helpers.move_to_top(session)
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_ORCA_CONTROLS]
+    assert helpers.capture(session)[0] == [_ORCA_CONTROLS]
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["blank"]
     assert brailled[-1] == _BLANK_LINE
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
-    assert spoken == expected_for_gtk(["Second sentence.\n"], gtk4=["Second sentence."])
+    spoken, brailled = helpers.capture(session)
+    assert spoken == helpers.expected_for_gtk(["Second sentence.\n"], gtk4=["Second sentence."])
     assert brailled[-1] == _SECOND_LINE
 
     # Moving onto the trailing blank line is silent. Moving back up verifies that the
     # caret reached it; otherwise Up would land on the interior blank line.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    capture(session)
+    helpers.capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
-    assert spoken == expected_for_gtk(["Second sentence.\n"], gtk4=["Second sentence."])
+    spoken, brailled = helpers.capture(session)
+    assert spoken == helpers.expected_for_gtk(["Second sentence.\n"], gtk4=["Second sentence."])
     assert brailled[-1] == _SECOND_LINE
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_APP_CONTROLS]
+    assert helpers.capture(session)[0] == [_APP_CONTROLS]

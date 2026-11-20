@@ -26,10 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, terminal_helpers
 from tests.integration_tests.apps import terminal
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.terminal_helpers import settle, type_text
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -51,11 +50,11 @@ def test_shell_history_navigation(terminal_shell: NativeAppSession) -> None:
     """Tests speech and braille when recalling commands in both directions."""
 
     session = terminal_shell
-    settle(session)
+    terminal_helpers.settle(session)
     commands = ("echo foo", "printf 'bar\\n'", "echo baz", "echo whatever")
     for command in commands:
-        type_text(command + "\n")
-        settle(session)
+        terminal_helpers.type_text(command + "\n")
+        terminal_helpers.settle(session)
 
     # KNOWN ISSUE: https://gitlab.gnome.org/GNOME/vte/-/work_items/2975
     steps = (

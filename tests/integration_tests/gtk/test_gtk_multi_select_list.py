@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -42,11 +42,11 @@ def test_space_selects_active_item_once(gtk_multi_select_list: NativeAppSession,
     session.orca.set("BraillePresenter", "DisplayAncestors", False)
     for _ in range(tabs):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
-        capture(session)
+        helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    spoken, brailled = capture(session, quiescence=1.2, overall=5.0, wait_async=True)
+    spoken, brailled = helpers.capture(session, quiescence=1.2, overall=5.0, wait_async=True)
     assert spoken == ["Read report"]
-    assert brailled[-1] == BrailleLine(1, "Read report", "Read report", "\x00" * 11)
+    assert brailled[-1] == helpers.BrailleLine(1, "Read report", "Read report", "\x00" * 11)
 
 
 @pytest.mark.native_app
@@ -56,16 +56,18 @@ def test_selecting_and_unselecting_a_list_item(gtk_multi_select_list: NativeAppS
     session = gtk_multi_select_list
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Olives"]
-    assert brailled[-1] == BrailleLine(1, " Topping column header Olives", "Olives", "\x00" * 29)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, " Topping column header Olives", "Olives", "\x00" * 29
+    )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["unselected"]
-    assert brailled[-1] == BrailleLine(0, "unselected", "unselected", "\x00" * 10)
+    assert brailled[-1] == helpers.BrailleLine(0, "unselected", "unselected", "\x00" * 10)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["selected"]
-    assert brailled[-1] == BrailleLine(0, "selected", "selected", "\x00" * 8)
+    assert brailled[-1] == helpers.BrailleLine(0, "selected", "selected", "\x00" * 8)

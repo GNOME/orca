@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -51,14 +51,14 @@ def test_copy_and_paste(qt_two_entries: NativeAppSession) -> None:
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
     _discard_output(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_C)
-    assert speech(session) == ["Copied selection to clipboard."]
+    assert helpers.speech(session) == ["Copied selection to clipboard."]
     session.orca.call("ClipboardPresenter", "PresentClipboardContents", True)
-    assert speech(session) == ["Clipboard contains: Apple pie recipe"]
+    assert helpers.speech(session) == ["Clipboard contains: Apple pie recipe"]
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
     _discard_output(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_V)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Pasted contents from clipboard.", "Text unselected."]
     assert brailled
     assert (
@@ -75,14 +75,14 @@ def _assert_text(
     visible: str | None = None,
 ) -> None:
     """Checks speech and the final braille text, cursor, and selection mask."""
-    actual_speech, brailled = capture(session)
+    actual_speech, brailled = helpers.capture(session)
     prefix = "OrcaTwoEntries application OrcaTwoEntries frame "
     full = prefix + text + " $l"
     start, end = selection
     mask = "\x00" * (len(prefix) + start) + "\xc0" * (end - start)
     mask += "\x00" * (len(full) - len(mask))
     assert brailled
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         cursor, full, text + " $l" if visible is None else visible, mask
     )
     assert actual_speech == spoken
@@ -95,7 +95,7 @@ def test_cut(qt_two_entries: NativeAppSession) -> None:
     _home(session)
     for _ in range(5):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_X)
     _assert_text(
         session,
@@ -105,7 +105,7 @@ def test_cut(qt_two_entries: NativeAppSession) -> None:
         visible="OrcaTwoEntries frame  pie recipe",
     )
     session.orca.call("ClipboardPresenter", "PresentClipboardContents", True)
-    assert speech(session) == ["Clipboard contains: Apple"]
+    assert helpers.speech(session) == ["Clipboard contains: Apple"]
 
 
 @pytest.mark.native_app
@@ -116,19 +116,19 @@ def test_paste(qt_two_entries: NativeAppSession, replace_selection: bool) -> Non
     _home(session)
     for _ in range(5):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_C)
-    assert speech(session) == ["Copied selection to clipboard."]
+    assert helpers.speech(session) == ["Copied selection to clipboard."]
     if replace_selection:
         _home(session)
         for _ in range(6):
             keyboard.tap_key(keyboard.KEYSYM_RIGHT)
         for _ in range(3):
             keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-        capture(session)
+        helpers.capture(session)
     else:
         keyboard.tap_key(keyboard.KEYSYM_END)
-        capture(session)
+        helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_V)
     spoken = ["Pasted contents from clipboard."]
     if replace_selection:
@@ -153,9 +153,9 @@ def test_undo_redo_cut(qt_two_entries: NativeAppSession) -> None:
     _home(session)
     for _ in range(5):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_X)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_Z)
     _assert_text(session, ["undo", "Selection restored."], "Apple pie recipe", 6, (0, 5))
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_Z)
@@ -185,21 +185,21 @@ def test_undo_redo_paste(qt_two_entries: NativeAppSession, replace_selection: bo
     _home(session)
     for _ in range(5):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_C)
-    assert speech(session) == ["Copied selection to clipboard."]
+    assert helpers.speech(session) == ["Copied selection to clipboard."]
     if replace_selection:
         _home(session)
         for _ in range(6):
             keyboard.tap_key(keyboard.KEYSYM_RIGHT)
         for _ in range(3):
             keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-        capture(session)
+        helpers.capture(session)
     else:
         keyboard.tap_key(keyboard.KEYSYM_END)
-        capture(session)
+        helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_V)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_Z)
     if replace_selection:
         _assert_text(session, ["undo"], "Apple  recipe", 7)
@@ -255,9 +255,9 @@ def test_undo_redo_replacement(qt_two_entries: NativeAppSession) -> None:
     _home(session)
     for _ in range(5):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_Z)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_Z)
     _assert_text(session, ["undo", "Selection restored."], "Apple pie recipe", 6, (0, 5))
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_Z)

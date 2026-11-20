@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -43,7 +43,7 @@ def _reload(session: BrowserSession) -> None:
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_R)
     session.reader.drain(quiescence_timeout=0.5, overall_timeout=3.0)
     session.reader.reset()
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
 
 @pytest.mark.native_app
@@ -56,10 +56,10 @@ def test_heading_navigation_is_confined_to_the_nested_document(
     _reload(session)
 
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Application heading", "heading 2"]
+    assert helpers.speech(session) == ["h", "Application heading", "heading 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == [
+    assert helpers.speech(session) == [
         "h",
         "Embedded document",
         "document frame",
@@ -70,7 +70,7 @@ def test_heading_navigation_is_confined_to_the_nested_document(
     # The nested document has one heading, so navigation wraps within it instead
     # of continuing to "Main heading two" in the surrounding page.
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Wrapping to top.", "Document heading"]
+    assert helpers.speech(session) == ["h", "Wrapping to top.", "Document heading"]
 
 
 @pytest.mark.native_app
@@ -83,22 +83,22 @@ def test_caret_navigation_skips_over_the_applications(
     _reload(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Paragraph before the application."]
+    assert helpers.speech(session) == ["Paragraph before the application."]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Embedded application", "embedded"]
+    assert helpers.speech(session) == ["Embedded application", "embedded"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Main heading two", "heading 1"]
+    assert helpers.speech(session) == ["Main heading two", "heading 1"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Paragraph after the application."]
+    assert helpers.speech(session) == ["Paragraph after the application."]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Focusable application", "embedded"]
+    assert helpers.speech(session) == ["Focusable application", "embedded"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Main heading three", "heading 1"]
+    assert helpers.speech(session) == ["Main heading three", "heading 1"]
 
 
 @pytest.mark.native_app
@@ -111,22 +111,22 @@ def test_caret_navigation_inside_the_application(
     _reload(session)
 
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Application heading", "heading 2"]
+    assert helpers.speech(session) == ["h", "Application heading", "heading 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Paragraph inside the application."]
+    assert helpers.speech(session) == ["Paragraph inside the application."]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Application button", "button"]
+    assert helpers.speech(session) == ["Application button", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Application link", "link"]
+    assert helpers.speech(session) == ["Application link", "link"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Application entry", "entry"]
+    assert helpers.speech(session) == ["Application entry", "entry"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == [
+    assert helpers.speech(session) == [
         "Embedded document",
         "document frame",
         "Document heading",
@@ -134,10 +134,10 @@ def test_caret_navigation_inside_the_application(
     ]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Paragraph inside the document."]
+    assert helpers.speech(session) == ["Paragraph inside the document."]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["leaving document.", "Main heading two", "heading 1"]
+    assert helpers.speech(session) == ["leaving document.", "Main heading two", "heading 1"]
 
 
 @pytest.mark.native_app
@@ -151,15 +151,15 @@ def test_tab_to_widget_in_application_switches_to_focus_mode(
     assert not _in_focus_mode(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Application button", "button", "Focus mode"]
+    assert helpers.speech(session) == ["Application button", "button", "Focus mode"]
     assert _in_focus_mode(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Application link", "link"]
+    assert helpers.speech(session) == ["Application link", "link"]
     assert _in_focus_mode(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Application entry", "entry"]
+    assert helpers.speech(session) == ["Application entry", "entry"]
     assert _in_focus_mode(session)
 
 
@@ -175,12 +175,12 @@ def test_tab_to_focusable_application_switches_to_focus_mode(
 
     # Shift+Tab from the top of the document wraps to the last focusable element.
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Focusable application", "embedded", "Focus mode"]
+    assert helpers.speech(session) == ["Focusable application", "embedded", "Focus mode"]
     assert _in_focus_mode(session)
 
     # The author of an application is responsible for handling the arrow keys.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == []
+    assert helpers.speech(session) == []
     assert _in_focus_mode(session)
 
 
@@ -194,14 +194,14 @@ def test_tab_to_widget_in_application_from_the_application_switches_to_focus_mod
     _reload(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Paragraph before the application."]
+    assert helpers.speech(session) == ["Paragraph before the application."]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Embedded application", "embedded"]
+    assert helpers.speech(session) == ["Embedded application", "embedded"]
     assert not _in_focus_mode(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Application button", "button", "Focus mode"]
+    assert helpers.speech(session) == ["Application button", "button", "Focus mode"]
     assert _in_focus_mode(session)
 
 
@@ -213,11 +213,11 @@ def test_structural_navigation_by_widget(web_aria_application: BrowserSession) -
     _reload(session)
 
     keyboard.tap_key(keyboard.KEYSYM_B)
-    assert speech(session) == ["b", "Application button", "button"]
+    assert helpers.speech(session) == ["b", "Application button", "button"]
     assert not _in_focus_mode(session)
 
     keyboard.tap_key(keyboard.KEYSYM_E)
-    assert speech(session) == ["e", "Application entry", "entry"]
+    assert helpers.speech(session) == ["e", "Application entry", "entry"]
     assert not _in_focus_mode(session)
 
 
@@ -232,7 +232,7 @@ def test_structural_navigation_to_widget_can_trigger_focus_mode(
     session.orca.set("StructuralNavigator", "TriggersFocusMode", True)
 
     keyboard.tap_key(keyboard.KEYSYM_B)
-    assert speech(session) == ["b", "Focus mode", "Application button", "button"]
+    assert helpers.speech(session) == ["b", "Focus mode", "Application button", "button"]
     assert _in_focus_mode(session)
 
 
@@ -246,11 +246,11 @@ def test_tab_from_inside_the_application_switches_to_focus_mode(
     _reload(session)
 
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Application heading", "heading 2"]
+    assert helpers.speech(session) == ["h", "Application heading", "heading 2"]
     assert not _in_focus_mode(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Application button", "button", "Focus mode"]
+    assert helpers.speech(session) == ["Application button", "button", "Focus mode"]
     assert _in_focus_mode(session)
 
 
@@ -264,19 +264,19 @@ def test_browse_mode_the_user_turned_on_in_the_application_is_preserved(
     _reload(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Application button", "button", "Focus mode"]
+    assert helpers.speech(session) == ["Application button", "button", "Focus mode"]
     assert _in_focus_mode(session)
 
     session.orca.press_orca_key(keyboard.KEYSYM_A)
-    assert speech(session) == ["Browse mode"]
+    assert helpers.speech(session) == ["Browse mode"]
     assert not _in_focus_mode(session)
 
     # The link is not a focus mode widget, so only the application would put us in focus mode.
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Application link", "link"]
+    assert helpers.speech(session) == ["Application link", "link"]
     assert not _in_focus_mode(session)
 
     # The role of the entry still decides, as it does everywhere else.
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Application entry", "entry", "Focus mode"]
+    assert helpers.speech(session) == ["Application entry", "entry", "Focus mode"]
     assert _in_focus_mode(session)

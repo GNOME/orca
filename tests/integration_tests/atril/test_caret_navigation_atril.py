@@ -26,9 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests.atril_helpers import assert_navigation, navigation_session
+from tests.integration_tests import atril_helpers, helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import AtrilSession
@@ -38,29 +37,29 @@ if TYPE_CHECKING:
 def test_lines_across_pages(atril: AtrilSession) -> None:
     """Checks lines across pages without creating a selection."""
 
-    with navigation_session(atril, native=False):
-        assert_navigation(
+    with atril_helpers.navigation_session(atril, native=False):
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_DOWN,
             [],
             ["Hello world.\n"],
-            BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
             (18, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_DOWN,
             [],
             ["I am a test.\n"],
-            BrailleLine(1, "I am a test.", "I am a test.", "\x00" * 12),
+            helpers.BrailleLine(1, "I am a test.", "I am a test.", "\x00" * 12),
             (31, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_DOWN,
             [],
             ["Look, a link! In a PDF.\n"],
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -68,86 +67,86 @@ def test_lines_across_pages(atril: AtrilSession) -> None:
             ),
             (44, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_DOWN,
             [],
             ["Another one!\n"],
-            BrailleLine(1, "Another one!", "Another one!", "\x40" * 12),
+            helpers.BrailleLine(1, "Another one!", "Another one!", "\x40" * 12),
             (68, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_DOWN,
             [],
             ["The end."],
-            BrailleLine(1, "The end.", "The end.", "\x00" * 8),
+            helpers.BrailleLine(1, "The end.", "The end.", "\x00" * 8),
             (81, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_DOWN,
             [],
             ["More pages!\n", "Page 2"],
-            BrailleLine(1, "More pages!", "More pages!", "\x00" * 11),
+            helpers.BrailleLine(1, "More pages!", "More pages!", "\x00" * 11),
             (-1, 0),
-            BrailleLine(0, "Page 2", "Page 2", "\x00" * 6),
+            helpers.BrailleLine(0, "Page 2", "Page 2", "\x00" * 6),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_DOWN,
             [],
             ["Here’s a new page.\n"],
-            BrailleLine(1, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            helpers.BrailleLine(1, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
             (-1, 12),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_DOWN,
             [],
             ["I really like pages."],
-            BrailleLine(1, "I really like pages.", "I really like pages.", "\x00" * 20),
+            helpers.BrailleLine(1, "I really like pages.", "I really like pages.", "\x00" * 20),
             (-1, 31),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_UP,
             [],
             ["Here’s a new page.\n"],
-            BrailleLine(1, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            helpers.BrailleLine(1, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
             (-1, 12),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_UP,
             [],
             ["More pages!\n"],
-            BrailleLine(1, "More pages!", "More pages!", "\x00" * 11),
+            helpers.BrailleLine(1, "More pages!", "More pages!", "\x00" * 11),
             (-1, 0),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_UP,
             [],
             ["The end.", "page", "Page 1"],
-            BrailleLine(1, "The end.", "The end.", "\x00" * 8),
+            helpers.BrailleLine(1, "The end.", "The end.", "\x00" * 8),
             (81, -1),
-            BrailleLine(0, "Page 1", "Page 1", "\x00" * 6),
+            helpers.BrailleLine(0, "Page 1", "Page 1", "\x00" * 6),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_UP,
             [],
             ["Another one!\n"],
-            BrailleLine(1, "Another one!", "Another one!", "\x40" * 12),
+            helpers.BrailleLine(1, "Another one!", "Another one!", "\x40" * 12),
             (68, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_UP,
             [],
             ["Look, a link! In a PDF.\n"],
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -155,28 +154,28 @@ def test_lines_across_pages(atril: AtrilSession) -> None:
             ),
             (44, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_UP,
             [],
             ["I am a test.\n"],
-            BrailleLine(1, "I am a test.", "I am a test.", "\x00" * 12),
+            helpers.BrailleLine(1, "I am a test.", "I am a test.", "\x00" * 12),
             (31, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_UP,
             [],
             ["Hello world.\n"],
-            BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
             (18, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_UP,
             [],
             ["Do headings work?\n"],
-            BrailleLine(1, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(1, "Do headings work?", "Do headings work?", "\x00" * 17),
             (0, -1),
         )
 
@@ -185,69 +184,69 @@ def test_lines_across_pages(atril: AtrilSession) -> None:
 def test_characters(atril: AtrilSession) -> None:
     """Checks characters without creating a selection."""
 
-    with navigation_session(atril, native=False):
-        assert_navigation(
+    with atril_helpers.navigation_session(atril, native=False):
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["o"],
-            BrailleLine(2, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(2, "Do headings work?", "Do headings work?", "\x00" * 17),
             (1, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             [" "],
-            BrailleLine(3, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(3, "Do headings work?", "Do headings work?", "\x00" * 17),
             (2, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["h"],
-            BrailleLine(4, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(4, "Do headings work?", "Do headings work?", "\x00" * 17),
             (3, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["e"],
-            BrailleLine(5, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(5, "Do headings work?", "Do headings work?", "\x00" * 17),
             (4, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["h"],
-            BrailleLine(4, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(4, "Do headings work?", "Do headings work?", "\x00" * 17),
             (3, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             [" "],
-            BrailleLine(3, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(3, "Do headings work?", "Do headings work?", "\x00" * 17),
             (2, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["o"],
-            BrailleLine(2, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(2, "Do headings work?", "Do headings work?", "\x00" * 17),
             (1, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["D"],
-            BrailleLine(1, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(1, "Do headings work?", "Do headings work?", "\x00" * 17),
             (0, -1),
         )
 
@@ -256,85 +255,85 @@ def test_characters(atril: AtrilSession) -> None:
 def test_words(atril: AtrilSession) -> None:
     """Checks words without creating a selection."""
 
-    with navigation_session(atril, native=False):
-        assert_navigation(
+    with atril_helpers.navigation_session(atril, native=False):
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [keyboard.KEYSYM_CONTROL_L],
             ["Do"],
-            BrailleLine(3, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(3, "Do headings work?", "Do headings work?", "\x00" * 17),
             (2, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [keyboard.KEYSYM_CONTROL_L],
             ["headings"],
-            BrailleLine(12, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(12, "Do headings work?", "Do headings work?", "\x00" * 17),
             (11, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [keyboard.KEYSYM_CONTROL_L],
             ["work?"],
-            BrailleLine(18, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(18, "Do headings work?", "Do headings work?", "\x00" * 17),
             (17, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [keyboard.KEYSYM_CONTROL_L],
             ["Hello"],
-            BrailleLine(6, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(6, "Hello world.", "Hello world.", "\x00" * 12),
             (23, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [keyboard.KEYSYM_CONTROL_L],
             ["world."],
-            BrailleLine(13, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(13, "Hello world.", "Hello world.", "\x00" * 12),
             (30, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [keyboard.KEYSYM_CONTROL_L],
             ["world."],
-            BrailleLine(7, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(7, "Hello world.", "Hello world.", "\x00" * 12),
             (24, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [keyboard.KEYSYM_CONTROL_L],
             ["Hello"],
-            BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
             (18, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [keyboard.KEYSYM_CONTROL_L],
             ["work?"],
-            BrailleLine(13, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(13, "Do headings work?", "Do headings work?", "\x00" * 17),
             (12, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [keyboard.KEYSYM_CONTROL_L],
             ["headings"],
-            BrailleLine(4, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(4, "Do headings work?", "Do headings work?", "\x00" * 17),
             (3, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [keyboard.KEYSYM_CONTROL_L],
             ["Do"],
-            BrailleLine(1, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(1, "Do headings work?", "Do headings work?", "\x00" * 17),
             (0, -1),
         )
 
@@ -343,42 +342,42 @@ def test_words(atril: AtrilSession) -> None:
 def test_line_boundaries(atril: AtrilSession) -> None:
     """Checks line boundaries without creating a selection."""
 
-    with navigation_session(atril, native=False):
+    with atril_helpers.navigation_session(atril, native=False):
         keyboard.press_chord([], keyboard.KEYSYM_DOWN)
-        capture(atril)
+        helpers.capture(atril)
         for _ in range(4):
             keyboard.press_chord([], keyboard.KEYSYM_RIGHT)
-            capture(atril)
-        assert_navigation(
+            helpers.capture(atril)
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_END,
             [],
             ["blank"],
-            BrailleLine(13, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(13, "Hello world.", "Hello world.", "\x00" * 12),
             (30, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_HOME,
             [],
             ["H"],
-            BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
             (18, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_END,
             [],
             ["blank"],
-            BrailleLine(13, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(13, "Hello world.", "Hello world.", "\x00" * 12),
             (30, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_HOME,
             [],
             ["H"],
-            BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
             (18, -1),
         )
 
@@ -387,55 +386,55 @@ def test_line_boundaries(atril: AtrilSession) -> None:
 def test_characters_across_lines(atril: AtrilSession) -> None:
     """Checks characters across lines without creating a selection."""
 
-    with navigation_session(atril, native=False):
+    with atril_helpers.navigation_session(atril, native=False):
         keyboard.press_chord([], keyboard.KEYSYM_END)
-        capture(atril)
-        assert_navigation(
+        helpers.capture(atril)
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["H"],
-            BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
             (18, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["e"],
-            BrailleLine(2, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(2, "Hello world.", "Hello world.", "\x00" * 12),
             (19, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["l"],
-            BrailleLine(3, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(3, "Hello world.", "Hello world.", "\x00" * 12),
             (20, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["e"],
-            BrailleLine(2, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(2, "Hello world.", "Hello world.", "\x00" * 12),
             (19, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["H"],
-            BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
             (18, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["blank"],
-            BrailleLine(18, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(18, "Do headings work?", "Do headings work?", "\x00" * 17),
             (17, -1),
         )
 
@@ -444,55 +443,55 @@ def test_characters_across_lines(atril: AtrilSession) -> None:
 def test_words_across_lines(atril: AtrilSession) -> None:
     """Checks words across lines without creating a selection."""
 
-    with navigation_session(atril, native=False):
+    with atril_helpers.navigation_session(atril, native=False):
         keyboard.press_chord([], keyboard.KEYSYM_END)
-        capture(atril)
-        assert_navigation(
+        helpers.capture(atril)
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [keyboard.KEYSYM_CONTROL_L],
             ["Hello"],
-            BrailleLine(6, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(6, "Hello world.", "Hello world.", "\x00" * 12),
             (23, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [keyboard.KEYSYM_CONTROL_L],
             ["world."],
-            BrailleLine(13, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(13, "Hello world.", "Hello world.", "\x00" * 12),
             (30, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [keyboard.KEYSYM_CONTROL_L],
             ["I"],
-            BrailleLine(2, "I am a test.", "I am a test.", "\x00" * 12),
+            helpers.BrailleLine(2, "I am a test.", "I am a test.", "\x00" * 12),
             (32, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [keyboard.KEYSYM_CONTROL_L],
             ["I"],
-            BrailleLine(1, "I am a test.", "I am a test.", "\x00" * 12),
+            helpers.BrailleLine(1, "I am a test.", "I am a test.", "\x00" * 12),
             (31, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [keyboard.KEYSYM_CONTROL_L],
             ["world."],
-            BrailleLine(7, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(7, "Hello world.", "Hello world.", "\x00" * 12),
             (24, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [keyboard.KEYSYM_CONTROL_L],
             ["Hello"],
-            BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
             (18, -1),
         )
 
@@ -501,61 +500,61 @@ def test_words_across_lines(atril: AtrilSession) -> None:
 def test_characters_across_pages(atril: AtrilSession) -> None:
     """Checks characters across pages without creating a selection."""
 
-    with navigation_session(atril, native=False):
+    with atril_helpers.navigation_session(atril, native=False):
         for _ in range(5):
             keyboard.press_chord([], keyboard.KEYSYM_DOWN)
-            capture(atril)
+            helpers.capture(atril)
         keyboard.press_chord([], keyboard.KEYSYM_END)
-        capture(atril)
-        assert_navigation(
+        helpers.capture(atril)
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["M", "Page 2"],
-            BrailleLine(1, "More pages!", "More pages!", "\x00" * 11),
+            helpers.BrailleLine(1, "More pages!", "More pages!", "\x00" * 11),
             (-1, 0),
-            BrailleLine(0, "Page 2", "Page 2", "\x00" * 6),
+            helpers.BrailleLine(0, "Page 2", "Page 2", "\x00" * 6),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["o"],
-            BrailleLine(2, "More pages!", "More pages!", "\x00" * 11),
+            helpers.BrailleLine(2, "More pages!", "More pages!", "\x00" * 11),
             (-1, 1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["r"],
-            BrailleLine(3, "More pages!", "More pages!", "\x00" * 11),
+            helpers.BrailleLine(3, "More pages!", "More pages!", "\x00" * 11),
             (-1, 2),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["o"],
-            BrailleLine(2, "More pages!", "More pages!", "\x00" * 11),
+            helpers.BrailleLine(2, "More pages!", "More pages!", "\x00" * 11),
             (-1, 1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["M"],
-            BrailleLine(1, "More pages!", "More pages!", "\x00" * 11),
+            helpers.BrailleLine(1, "More pages!", "More pages!", "\x00" * 11),
             (-1, 0),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             [".", "Page 1"],
-            BrailleLine(8, "The end.", "The end.", "\x00" * 8),
+            helpers.BrailleLine(8, "The end.", "The end.", "\x00" * 8),
             (88, -1),
-            BrailleLine(0, "Page 1", "Page 1", "\x00" * 6),
+            helpers.BrailleLine(0, "Page 1", "Page 1", "\x00" * 6),
         )
 
 
@@ -571,36 +570,36 @@ def test_characters_across_pages(atril: AtrilSession) -> None:
 def test_words_to_next_page(atril: AtrilSession) -> None:
     """Checks words across pages without creating a selection."""
 
-    with navigation_session(atril, native=False):
+    with atril_helpers.navigation_session(atril, native=False):
         for _ in range(5):
             keyboard.press_chord([], keyboard.KEYSYM_DOWN)
-            capture(atril)
+            helpers.capture(atril)
         keyboard.press_chord([], keyboard.KEYSYM_HOME)
-        capture(atril)
-        assert_navigation(
+        helpers.capture(atril)
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [keyboard.KEYSYM_CONTROL_L],
             ["The"],
-            BrailleLine(4, "The end.", "The end.", "\x00" * 8),
+            helpers.BrailleLine(4, "The end.", "The end.", "\x00" * 8),
             (84, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [keyboard.KEYSYM_CONTROL_L],
             ["end."],
-            BrailleLine(9, "The end.", "The end.", "\x00" * 8),
+            helpers.BrailleLine(9, "The end.", "The end.", "\x00" * 8),
             (89, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [keyboard.KEYSYM_CONTROL_L],
             ["More", "Page 2"],
-            BrailleLine(5, "More pages!", "More pages!", "\x00" * 11),
+            helpers.BrailleLine(5, "More pages!", "More pages!", "\x00" * 11),
             (-1, 4),
-            BrailleLine(0, "Page 2", "Page 2", "\x00" * 6),
+            helpers.BrailleLine(0, "Page 2", "Page 2", "\x00" * 6),
         )
 
 
@@ -608,106 +607,106 @@ def test_words_to_next_page(atril: AtrilSession) -> None:
 def test_unicode(atril: AtrilSession) -> None:
     """Checks unicode without creating a selection."""
 
-    with navigation_session(atril, native=False):
+    with atril_helpers.navigation_session(atril, native=False):
         for _ in range(7):
             keyboard.press_chord([], keyboard.KEYSYM_DOWN)
-            capture(atril)
+            helpers.capture(atril)
         keyboard.press_chord([], keyboard.KEYSYM_HOME)
-        capture(atril)
-        assert_navigation(
+        helpers.capture(atril)
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["e"],
-            BrailleLine(2, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            helpers.BrailleLine(2, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
             (-1, 13),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["r"],
-            BrailleLine(3, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            helpers.BrailleLine(3, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
             (-1, 14),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["e"],
-            BrailleLine(4, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            helpers.BrailleLine(4, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
             (-1, 15),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["’"],
-            BrailleLine(5, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            helpers.BrailleLine(5, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
             (-1, 16),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["s"],
-            BrailleLine(6, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            helpers.BrailleLine(6, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
             (-1, 17),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             [" "],
-            BrailleLine(7, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            helpers.BrailleLine(7, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
             (-1, 18),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["s"],
-            BrailleLine(6, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            helpers.BrailleLine(6, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
             (-1, 17),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["’"],
-            BrailleLine(5, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            helpers.BrailleLine(5, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
             (-1, 16),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["e"],
-            BrailleLine(4, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            helpers.BrailleLine(4, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
             (-1, 15),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["r"],
-            BrailleLine(3, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            helpers.BrailleLine(3, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
             (-1, 14),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["e"],
-            BrailleLine(2, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            helpers.BrailleLine(2, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
             (-1, 13),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["H"],
-            BrailleLine(1, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            helpers.BrailleLine(1, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
             (-1, 12),
         )
 
@@ -716,21 +715,21 @@ def test_unicode(atril: AtrilSession) -> None:
 def test_links(atril: AtrilSession) -> None:
     """Checks links without creating a selection."""
 
-    with navigation_session(atril, native=False):
+    with atril_helpers.navigation_session(atril, native=False):
         for _ in range(3):
             keyboard.press_chord([], keyboard.KEYSYM_DOWN)
-            capture(atril)
+            helpers.capture(atril)
         keyboard.press_chord([], keyboard.KEYSYM_HOME)
-        capture(atril)
+        helpers.capture(atril)
         for _ in range(7):
             keyboard.press_chord([], keyboard.KEYSYM_RIGHT)
-            capture(atril)
-        assert_navigation(
+            helpers.capture(atril)
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["l"],
-            BrailleLine(
+            helpers.BrailleLine(
                 9,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -738,12 +737,12 @@ def test_links(atril: AtrilSession) -> None:
             ),
             (52, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["i"],
-            BrailleLine(
+            helpers.BrailleLine(
                 10,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -751,12 +750,12 @@ def test_links(atril: AtrilSession) -> None:
             ),
             (53, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["n"],
-            BrailleLine(
+            helpers.BrailleLine(
                 11,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -764,12 +763,12 @@ def test_links(atril: AtrilSession) -> None:
             ),
             (54, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["k"],
-            BrailleLine(
+            helpers.BrailleLine(
                 12,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -777,12 +776,12 @@ def test_links(atril: AtrilSession) -> None:
             ),
             (55, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["!"],
-            BrailleLine(
+            helpers.BrailleLine(
                 13,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -790,12 +789,12 @@ def test_links(atril: AtrilSession) -> None:
             ),
             (56, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             [" "],
-            BrailleLine(
+            helpers.BrailleLine(
                 14,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -803,12 +802,12 @@ def test_links(atril: AtrilSession) -> None:
             ),
             (57, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["I"],
-            BrailleLine(
+            helpers.BrailleLine(
                 15,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -816,12 +815,12 @@ def test_links(atril: AtrilSession) -> None:
             ),
             (58, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             [" "],
-            BrailleLine(
+            helpers.BrailleLine(
                 14,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -829,12 +828,12 @@ def test_links(atril: AtrilSession) -> None:
             ),
             (57, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["!"],
-            BrailleLine(
+            helpers.BrailleLine(
                 13,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -842,12 +841,12 @@ def test_links(atril: AtrilSession) -> None:
             ),
             (56, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["k"],
-            BrailleLine(
+            helpers.BrailleLine(
                 12,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -855,12 +854,12 @@ def test_links(atril: AtrilSession) -> None:
             ),
             (55, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["n"],
-            BrailleLine(
+            helpers.BrailleLine(
                 11,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -868,12 +867,12 @@ def test_links(atril: AtrilSession) -> None:
             ),
             (54, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["i"],
-            BrailleLine(
+            helpers.BrailleLine(
                 10,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -881,12 +880,12 @@ def test_links(atril: AtrilSession) -> None:
             ),
             (53, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["l"],
-            BrailleLine(
+            helpers.BrailleLine(
                 9,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -894,12 +893,12 @@ def test_links(atril: AtrilSession) -> None:
             ),
             (52, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             [" "],
-            BrailleLine(
+            helpers.BrailleLine(
                 8,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",
@@ -913,8 +912,8 @@ def test_links(atril: AtrilSession) -> None:
 def test_start_boundary(atril: AtrilSession) -> None:
     """Checks start boundary without creating a selection."""
 
-    with navigation_session(atril, native=False):
-        assert_navigation(
+    with atril_helpers.navigation_session(atril, native=False):
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
@@ -922,7 +921,7 @@ def test_start_boundary(atril: AtrilSession) -> None:
             None,
             (0, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_UP,
             [],
@@ -930,7 +929,7 @@ def test_start_boundary(atril: AtrilSession) -> None:
             None,
             (0, -1),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [keyboard.KEYSYM_CONTROL_L],
@@ -944,16 +943,16 @@ def test_start_boundary(atril: AtrilSession) -> None:
 def test_end_boundary(atril: AtrilSession) -> None:
     """Checks end boundary without creating a selection."""
 
-    with navigation_session(atril, native=False, bottom=True):
-        assert_navigation(
+    with atril_helpers.navigation_session(atril, native=False, bottom=True):
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             [],
-            BrailleLine(21, "I really like pages.", "I really like pages.", "\x00" * 20),
+            helpers.BrailleLine(21, "I really like pages.", "I really like pages.", "\x00" * 20),
             (-1, 51),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_DOWN,
             [],
@@ -961,20 +960,20 @@ def test_end_boundary(atril: AtrilSession) -> None:
             None,
             (-1, 51),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [keyboard.KEYSYM_CONTROL_L],
             ["pages."],
-            BrailleLine(21, "I really like pages.", "I really like pages.", "\x00" * 20),
+            helpers.BrailleLine(21, "I really like pages.", "I really like pages.", "\x00" * 20),
             (-1, 51),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [],
             ["."],
-            BrailleLine(20, "I really like pages.", "I really like pages.", "\x00" * 20),
+            helpers.BrailleLine(20, "I really like pages.", "I really like pages.", "\x00" * 20),
             (-1, 50),
         )
 
@@ -983,42 +982,42 @@ def test_end_boundary(atril: AtrilSession) -> None:
 def test_file_boundaries(atril: AtrilSession) -> None:
     """Checks file boundaries without creating a selection."""
 
-    with navigation_session(atril, native=False):
-        assert_navigation(
+    with atril_helpers.navigation_session(atril, native=False):
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_END,
             [keyboard.KEYSYM_CONTROL_L],
             ["I really like pages.", "Page 2"],
-            BrailleLine(21, "I really like pages.", "I really like pages.", "\x00" * 20),
+            helpers.BrailleLine(21, "I really like pages.", "I really like pages.", "\x00" * 20),
             (-1, 51),
-            BrailleLine(0, "Page 2", "Page 2", "\x00" * 6),
+            helpers.BrailleLine(0, "Page 2", "Page 2", "\x00" * 6),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_HOME,
             [keyboard.KEYSYM_CONTROL_L],
             ["Do headings work?\n", "Page 1"],
-            BrailleLine(1, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(1, "Do headings work?", "Do headings work?", "\x00" * 17),
             (0, -1),
-            BrailleLine(0, "Page 1", "Page 1", "\x00" * 6),
+            helpers.BrailleLine(0, "Page 1", "Page 1", "\x00" * 6),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_END,
             [keyboard.KEYSYM_CONTROL_L],
             ["I really like pages.", "Page 2"],
-            BrailleLine(21, "I really like pages.", "I really like pages.", "\x00" * 20),
+            helpers.BrailleLine(21, "I really like pages.", "I really like pages.", "\x00" * 20),
             (-1, 51),
-            BrailleLine(0, "Page 2", "Page 2", "\x00" * 6),
+            helpers.BrailleLine(0, "Page 2", "Page 2", "\x00" * 6),
         )
-        assert_navigation(
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_HOME,
             [keyboard.KEYSYM_CONTROL_L],
             ["Do headings work?\n", "Page 1"],
-            BrailleLine(1, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(1, "Do headings work?", "Do headings work?", "\x00" * 17),
             (0, -1),
-            BrailleLine(0, "Page 1", "Page 1", "\x00" * 6),
+            helpers.BrailleLine(0, "Page 1", "Page 1", "\x00" * 6),
         )
 
 
@@ -1034,15 +1033,15 @@ def test_file_boundaries(atril: AtrilSession) -> None:
 def test_character_to_document_end(atril: AtrilSession) -> None:
     """Checks moving from the final character to the document end."""
 
-    with navigation_session(atril, native=False, bottom=True):
+    with atril_helpers.navigation_session(atril, native=False, bottom=True):
         keyboard.press_chord([], keyboard.KEYSYM_LEFT)
-        capture(atril)
-        assert_navigation(
+        helpers.capture(atril)
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_RIGHT,
             [],
             ["blank"],
-            BrailleLine(21, "I really like pages.", "I really like pages.", "\x00" * 20),
+            helpers.BrailleLine(21, "I really like pages.", "I really like pages.", "\x00" * 20),
             (-1, 51),
         )
 
@@ -1051,18 +1050,18 @@ def test_character_to_document_end(atril: AtrilSession) -> None:
 def test_word_to_previous_page(atril: AtrilSession) -> None:
     """Checks backward word navigation across the page boundary."""
 
-    with navigation_session(atril, native=False):
+    with atril_helpers.navigation_session(atril, native=False):
         for _ in range(6):
             keyboard.tap_key(keyboard.KEYSYM_DOWN)
-            capture(atril)
-        assert_navigation(
+            helpers.capture(atril)
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_LEFT,
             [keyboard.KEYSYM_CONTROL_L],
             ["end.", "Page 1"],
-            BrailleLine(5, "The end.", "The end.", "\x00" * 8),
+            helpers.BrailleLine(5, "The end.", "The end.", "\x00" * 8),
             (85, -1),
-            BrailleLine(0, "Page 1", "Page 1", "\x00" * 6),
+            helpers.BrailleLine(0, "Page 1", "Page 1", "\x00" * 6),
         )
 
 
@@ -1070,35 +1069,35 @@ def test_word_to_previous_page(atril: AtrilSession) -> None:
 def test_toggle_caret_navigation(atril: AtrilSession) -> None:
     """Checks that native and Orca navigation resume from the same caret."""
 
-    with navigation_session(atril, native=False):
-        assert_navigation(
+    with atril_helpers.navigation_session(atril, native=False):
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_DOWN,
             [],
             ["Hello world.\n"],
-            BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
             (18, -1),
         )
         atril.orca.press_orca_key(keyboard.KEYSYM_F12)
         try:
-            assert capture(atril)[0] == ["The application is controlling the caret."]
-            assert_navigation(
+            assert helpers.capture(atril)[0] == ["The application is controlling the caret."]
+            atril_helpers.assert_navigation(
                 atril,
                 keyboard.KEYSYM_DOWN,
                 [],
                 ["I am a test.\n"],
-                BrailleLine(1, "I am a test.", "I am a test.", "\x00" * 12),
+                helpers.BrailleLine(1, "I am a test.", "I am a test.", "\x00" * 12),
                 (31, -1),
             )
         finally:
             atril.orca.press_orca_key(keyboard.KEYSYM_F12)
-            assert capture(atril)[0] == ["The screen reader is controlling the caret."]
-        assert_navigation(
+            assert helpers.capture(atril)[0] == ["The screen reader is controlling the caret."]
+        atril_helpers.assert_navigation(
             atril,
             keyboard.KEYSYM_DOWN,
             [],
             ["Look, a link! In a PDF.\n"],
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "Look, a link! In a PDF.",
                 "Look, a link! In a PDF.",

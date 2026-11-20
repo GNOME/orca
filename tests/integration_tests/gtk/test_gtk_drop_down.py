@@ -26,9 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.apps import gtk
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -47,7 +47,7 @@ def test_where_am_i_reports_initial_selection(gtk_drop_down: NativeAppSession) -
     session.reader.reset()
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Color combo box Red", "opens popup"],
-        [BrailleLine(7, "Color Red combo box", "Color Red combo box", "\x00" * 19)],
+        [helpers.BrailleLine(7, "Color Red combo box", "Color Red combo box", "\x00" * 19)],
     )

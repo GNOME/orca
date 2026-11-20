@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, toggle_flat_review
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -40,14 +40,14 @@ def test_flat_review_by_line_word_and_character(gtk_tree_view: NativeAppSession)
     session = gtk_tree_view
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
 
     try:
         keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["Ada Engineer London check box not checked"],
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     1,
                     "Ada Engineer London < > check box $l",
                     "Ada Engineer London < > check bo",
@@ -57,10 +57,10 @@ def test_flat_review_by_line_word_and_character(gtk_tree_view: NativeAppSession)
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["Grace Admiral Boston check box checked"],
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     1,
                     "Grace Admiral Boston <x> check box $l",
                     "Grace Admiral Boston <x> check b",
@@ -70,10 +70,10 @@ def test_flat_review_by_line_word_and_character(gtk_tree_view: NativeAppSession)
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["Alan Analyst Manchester check box not checked"],
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     1,
                     "Alan Analyst Manchester < > check box $l",
                     "Alan Analyst Manchester < > chec",
@@ -83,10 +83,10 @@ def test_flat_review_by_line_word_and_character(gtk_tree_view: NativeAppSession)
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_HOME)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["Grace Admiral Boston check box checked"],
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     1,
                     "Grace Admiral Boston <x> check box $l",
                     "Grace Admiral Boston <x> check b",
@@ -96,10 +96,10 @@ def test_flat_review_by_line_word_and_character(gtk_tree_view: NativeAppSession)
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_HOME)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["Ada Engineer London check box not checked"],
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     1,
                     "Ada Engineer London < > check box $l",
                     "Ada Engineer London < > check bo",
@@ -109,10 +109,10 @@ def test_flat_review_by_line_word_and_character(gtk_tree_view: NativeAppSession)
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_BEGIN)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["Ada"],
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     1,
                     "Ada Engineer London < > check box $l",
                     "Ada Engineer London < > check bo",
@@ -122,10 +122,10 @@ def test_flat_review_by_line_word_and_character(gtk_tree_view: NativeAppSession)
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_RIGHT)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["Engineer"],
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     1,
                     "Ada Engineer London < > check box $l",
                     "Engineer London < > check box $l",
@@ -135,10 +135,10 @@ def test_flat_review_by_line_word_and_character(gtk_tree_view: NativeAppSession)
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_RIGHT)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["London"],
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     1,
                     "Ada Engineer London < > check box $l",
                     "London < > check box $l",
@@ -148,10 +148,10 @@ def test_flat_review_by_line_word_and_character(gtk_tree_view: NativeAppSession)
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_DOWN)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["L"],
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     1,
                     "Ada Engineer London < > check box $l",
                     "London < > check box $l",
@@ -161,10 +161,10 @@ def test_flat_review_by_line_word_and_character(gtk_tree_view: NativeAppSession)
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_DOWN)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["o"],
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     2,
                     "Ada Engineer London < > check box $l",
                     "London < > check box $l",
@@ -173,4 +173,4 @@ def test_flat_review_by_line_word_and_character(gtk_tree_view: NativeAppSession)
             ],
         )
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)

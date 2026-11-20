@@ -32,15 +32,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_browser,
-    move_to_top,
-    reset_web_state,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -50,7 +43,7 @@ def _walk(session: BrowserSession, count: int) -> list[list[str]]:
     lines = []
     for _ in range(count):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        lines.append(speech(session))
+        lines.append(helpers.speech(session))
     return lines
 
 
@@ -59,7 +52,7 @@ def test_line_assembly_layout_mode_on(web_wrapping_text: BrowserSession) -> None
     """Tests visual-line assembly in layout mode (the default): inline runs group per line."""
 
     session = web_wrapping_text
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     assert session.orca.get("CaretNavigator", "LayoutMode") is True
 
     # AT-SPI line ranges include the space after "bold here" in Firefox
@@ -72,12 +65,12 @@ def test_line_assembly_layout_mode_on(web_wrapping_text: BrowserSession) -> None
         ["before india juliet kilo lima "],
         ["mike november oscar papa "],
         ["quebec."],
-        expected_for_browser(
+        helpers.expected_for_browser(
             session,
             ["Plain words then bold here"],
             firefox=["Plain words then bold here "],
         ),
-        expected_for_browser(
+        helpers.expected_for_browser(
             session,
             [" then slanted there then a bit "],
             firefox=["then slanted there then a bit "],
@@ -108,7 +101,7 @@ def test_line_assembly_layout_mode_off(web_wrapping_text: BrowserSession) -> Non
     """Tests that with layout mode off each object is its own line; inline runs do not group."""
 
     session = web_wrapping_text
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
     try:
         assert _walk(session, 20) == [
@@ -120,12 +113,12 @@ def test_line_assembly_layout_mode_off(web_wrapping_text: BrowserSession) -> Non
             ["before india juliet kilo lima "],
             ["mike november oscar papa "],
             ["quebec."],
-            expected_for_browser(
+            helpers.expected_for_browser(
                 session,
                 ["Plain words then bold here"],
                 firefox=["Plain words then bold here "],
             ),
-            expected_for_browser(
+            helpers.expected_for_browser(
                 session,
                 [" then slanted there then a bit "],
                 firefox=["then slanted there then a bit "],
@@ -150,27 +143,27 @@ def test_line_assembly_walking_up(web_wrapping_text: BrowserSession) -> None:
     """Tests that Up-arrow presents each wrapped visual line once, not in backward fragments."""
 
     session = web_wrapping_text
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     assert session.orca.get("CaretNavigator", "LayoutMode") is True
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     _walk(session, 13)
 
     up_lines = []
     for _ in range(11):
         keyboard.tap_key(keyboard.KEYSYM_UP)
-        up_lines.append(speech(session))
+        up_lines.append(helpers.speech(session))
 
     assert up_lines == [
         ["trailing words that wrap "],
         ["H", "subscript", "two", "O and x", "superscript", "squared", " plus more "],
         ["of ", "inline code", " and water is "],
-        expected_for_browser(
+        helpers.expected_for_browser(
             session,
             [" then slanted there then a bit "],
             firefox=["then slanted there then a bit "],
         ),
-        expected_for_browser(
+        helpers.expected_for_browser(
             session,
             ["Plain words then bold here"],
             firefox=["Plain words then bold here "],
@@ -184,11 +177,13 @@ def test_line_assembly_walking_up(web_wrapping_text: BrowserSession) -> None:
     ]
 
 
-def _down_to_line(session: BrowserSession, count: int) -> tuple[list[str], list[BrailleLine]]:
+def _down_to_line(
+    session: BrowserSession, count: int
+) -> tuple[list[str], list[helpers.BrailleLine]]:
     result = None
     for _ in range(count):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        result = capture(session)
+        result = helpers.capture(session)
     assert result is not None
     return result
 
@@ -198,13 +193,13 @@ def test_eol_indicator_on_code_blocks_not_inline(web_wrapping_text: BrowserSessi
     """Tests that the braille EOL indicator marks preformatted code lines but not inline code."""
 
     session = web_wrapping_text
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     assert session.orca.get("CaretNavigator", "LayoutMode") is True
 
     assert _down_to_line(session, 10) == (
         ["of ", "inline code", " and water is "],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1, "of inline code and water is ", "of inline code and water is ", "\x00" * 28
             )
         ],
@@ -212,12 +207,12 @@ def test_eol_indicator_on_code_blocks_not_inline(web_wrapping_text: BrowserSessi
 
     assert _down_to_line(session, 13) == (
         ["leaving blockquote.", "code", "code line one"],
-        [BrailleLine(1, "code line one $l", "code line one $l", "\x00" * 16)],
+        [helpers.BrailleLine(1, "code line one $l", "code line one $l", "\x00" * 16)],
     )
 
     assert _down_to_line(session, 1) == (
         ["code line two"],
-        [BrailleLine(1, "code line two $l", "code line two $l", "\x00" * 16)],
+        [helpers.BrailleLine(1, "code line two $l", "code line two $l", "\x00" * 16)],
     )
 
     # A pre whose line ends in a link: the code block's $l belongs at the end of the
@@ -225,7 +220,7 @@ def test_eol_indicator_on_code_blocks_not_inline(web_wrapping_text: BrowserSessi
     assert _down_to_line(session, 4) == (
         ["code", "see ", "the docs", "link"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "see the docs $l",
                 "see the docs $l",
@@ -235,17 +230,17 @@ def test_eol_indicator_on_code_blocks_not_inline(web_wrapping_text: BrowserSessi
     )
     assert _down_to_line(session, 1) == (
         ["plain last line"],
-        [BrailleLine(1, "plain last line $l", "plain last line $l", "\x00" * 18)],
+        [helpers.BrailleLine(1, "plain last line $l", "plain last line $l", "\x00" * 18)],
     )
 
     # A pre line whose last item is an inline child element still ends with the $l.
     assert _down_to_line(session, 4) == (
         ["code", "mix ", "tail"],
-        [BrailleLine(1, "mix tail $l", "mix tail $l", "\x00" * 11)],
+        [helpers.BrailleLine(1, "mix tail $l", "mix tail $l", "\x00" * 11)],
     )
     assert _down_to_line(session, 1) == (
         ["plain end"],
-        [BrailleLine(1, "plain end $l", "plain end $l", "\x00" * 12)],
+        [helpers.BrailleLine(1, "plain end $l", "plain end $l", "\x00" * 12)],
     )
 
 
@@ -254,7 +249,7 @@ def test_fill_in_the_blank_line_assembly(web_wrapping_text: BrowserSession) -> N
     """Tests that an empty inline entry with text on both sides presents as one line."""
 
     session = web_wrapping_text
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     assert session.orca.get("CaretNavigator", "LayoutMode") is True
 
     # The entry's $l marks the end of its (empty) text; the first paragraph wraps
@@ -262,13 +257,13 @@ def test_fill_in_the_blank_line_assembly(web_wrapping_text: BrowserSession) -> N
     # on a single visual line.
     assert _down_to_line(session, 30) == (
         ["leaving code.", "Fill in ", "answer", "entry", " to "],
-        [BrailleLine(1, "Fill in answer  $l to ", "Fill in answer  $l to ", "\x00" * 12)],
+        [helpers.BrailleLine(1, "Fill in answer  $l to ", "Fill in answer  $l to ", "\x00" * 12)],
     )
     assert _down_to_line(session, 1) == (
         ["continue."],
-        [BrailleLine(1, "continue.", "continue.", "\x00" * 9)],
+        [helpers.BrailleLine(1, "continue.", "continue.", "\x00" * 9)],
     )
     assert _down_to_line(session, 1) == (
         ["Pick ", "choice", "entry", " now."],
-        [BrailleLine(1, "Pick choice  $l now.", "Pick choice  $l now.", "\x00" * 10)],
+        [helpers.BrailleLine(1, "Pick choice  $l now.", "Pick choice  $l now.", "\x00" * 10)],
     )

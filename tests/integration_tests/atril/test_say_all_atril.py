@@ -26,9 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests.atril_helpers import FIRST_PAGE, SECOND_PAGE, navigation_session
+from tests.integration_tests import atril_helpers, helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import AtrilSession
@@ -41,18 +40,22 @@ def test_say_all_across_pages(atril: AtrilSession, style: str) -> None:
 
     previous_style = atril.orca.get("SayAllPresenter", "Style")
     try:
-        with navigation_session(atril, native=False):
+        with atril_helpers.navigation_session(atril, native=False):
             atril.orca.set("SayAllPresenter", "Style", style)
             keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-            spoken, brailled = capture(atril, quiescence=0.4, overall=10.0)
+            spoken, brailled = helpers.capture(atril, quiescence=0.4, overall=10.0)
 
             # The page-change notification can arrive between utterances.
             assert spoken.count("Page 2") == 1
             spoken.remove("Page 2")
-            expected = " ".join((FIRST_PAGE + " " + SECOND_PAGE).split())
+            expected = " ".join(
+                (atril_helpers.FIRST_PAGE + " " + atril_helpers.SECOND_PAGE).split()
+            )
             assert " ".join(" ".join(spoken).split()) == expected
 
-            last_line = SECOND_PAGE.splitlines()[-1 if style == "line" else -2]
-            assert brailled[-1] == BrailleLine(1, last_line, last_line, "\x00" * len(last_line))
+            last_line = atril_helpers.SECOND_PAGE.splitlines()[-1 if style == "line" else -2]
+            assert brailled[-1] == helpers.BrailleLine(
+                1, last_line, last_line, "\x00" * len(last_line)
+            )
     finally:
         atril.orca.set("SayAllPresenter", "Style", previous_style)

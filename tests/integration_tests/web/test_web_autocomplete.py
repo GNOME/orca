@@ -26,16 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.apps import browser
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_browser,
-    reset_web_state,
-    speech,
-    xfail_firefox_caret_tab,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -43,7 +36,7 @@ if TYPE_CHECKING:
 
 def _popup_description(session: BrowserSession) -> str:
     # Firefox exposes HAS_POPUP without a type; Chromium exposes haspopup=listbox.
-    return expected_for_browser(session, "opens listbox", firefox="opens popup")
+    return helpers.expected_for_browser(session, "opens listbox", firefox="opens popup")
 
 
 @pytest.mark.native_app
@@ -51,25 +44,30 @@ def test_structural_navigation_then_typing(web_autocomplete: BrowserSession) -> 
     """A popup entry reached structurally must accept typing after entering focus mode."""
 
     session = web_autocomplete
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     keyboard.tap_key(keyboard.KEYSYM_C)
-    assert speech(session) == ["c", "Fruit", "editable combo box", _popup_description(session)]
+    assert helpers.speech(session) == [
+        "c",
+        "Fruit",
+        "editable combo box",
+        _popup_description(session),
+    ]
 
     session.orca.press_orca_key(keyboard.KEYSYM_A)
-    assert speech(session) == ["Focus mode"]
+    assert helpers.speech(session) == ["Focus mode"]
     for key in "kiwi":
         keyboard.tap_key(ord(key))
-    speech(session)
+    helpers.speech(session)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    speech(session)
+    helpers.speech(session)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["kiwi", "selected"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         11, "Fruit kiwi $l", "Fruit kiwi $l", "\x00" * 6 + "\xc0" * 4 + "\x00" * 3
     )
     keyboard.tap_key(keyboard.KEYSYM_DELETE)
-    speech(session)
+    helpers.speech(session)
 
 
 @pytest.mark.native_app
@@ -77,10 +75,10 @@ def test_combobox_listbox_navigation(web_autocomplete: BrowserSession) -> None:
     """Tests opening the listbox and moving selection through the option list."""
 
     session = web_autocomplete
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == [
+    assert helpers.speech(session) == [
         "Fruit",
         "editable combo box",
         _popup_description(session),
@@ -89,13 +87,13 @@ def test_combobox_listbox_navigation(web_autocomplete: BrowserSession) -> None:
 
     # Down opens the popup and lands on the first option; further arrows move selection.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Apricot"]
+    assert helpers.speech(session) == ["Apricot"]
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Apple"]
+    assert helpers.speech(session) == ["Apple"]
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Avocado"]
+    assert helpers.speech(session) == ["Avocado"]
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == ["Apple"]
+    assert helpers.speech(session) == ["Apple"]
 
     # Close the popup so the combobox is pristine for the next test (session-scoped app).
     keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
@@ -111,15 +109,15 @@ def test_combobox_listbox_navigation(web_autocomplete: BrowserSession) -> None:
     raises=AssertionError,
     strict=True,
 )
-@xfail_firefox_caret_tab()
+@helpers.xfail_firefox_caret_tab()
 def test_alert_region_announced(web_autocomplete: BrowserSession) -> None:
     """Tests that populating a role=alert region after activating Submit is announced."""
 
     session = web_autocomplete
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == [
+    assert helpers.speech(session) == [
         "Fruit",
         "editable combo box",
         _popup_description(session),
@@ -127,7 +125,7 @@ def test_alert_region_announced(web_autocomplete: BrowserSession) -> None:
     ]
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Submit", "button", "Browse mode"]
+    assert helpers.speech(session) == ["Submit", "button", "Browse mode"]
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session, wait_async=True) == ["Form could not be submitted"]
+    assert helpers.speech(session, wait_async=True) == ["Form could not be submitted"]

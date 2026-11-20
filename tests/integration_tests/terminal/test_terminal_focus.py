@@ -26,9 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, terminal_helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.terminal_helpers import settle
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -43,7 +42,7 @@ def test_say_all_after_terminal_focus_change(
     """Tests that Say All uses the newly focused terminal's caret offset."""
 
     session = terminal_focus
-    settle(session)
+    terminal_helpers.settle(session)
     session.orca.set("SayAllPresenter", "Style", "line")
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
     assert helpers.speech(session) == ["The screen reader is controlling the caret."]
@@ -54,7 +53,7 @@ def test_say_all_after_terminal_focus_change(
         assert helpers.speech(session, quiescence=0.5, overall=10.0) == ["Last line.\n"]
 
         keyboard.tap_key(keyboard.KEYSYM_F7 if remove_previous else keyboard.KEYSYM_F6)
-        settle(session)
+        terminal_helpers.settle(session)
         keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
         assert helpers.speech(session, quiescence=0.5, overall=10.0) == [
             "Second terminal.\n",
@@ -62,4 +61,4 @@ def test_say_all_after_terminal_focus_change(
         ]
     finally:
         session.orca.press_orca_key(keyboard.KEYSYM_F12)
-        settle(session)
+        terminal_helpers.settle(session)

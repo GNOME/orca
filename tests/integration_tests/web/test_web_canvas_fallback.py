@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -41,17 +41,26 @@ def test_line_navigation_through_canvas_fallback(
     """Tests Down and Up across canvas fallback content and surrounding paragraphs."""
 
     session = web_canvas_fallback
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", layout_mode)
-    before = (["Before canvas."], BrailleLine(1, "Before canvas.", "Before canvas.", "\x00" * 14))
-    heading = (["Message", "heading 2"], BrailleLine(1, "Message h2", "Message h2", "\x00" * 10))
-    button = (["Save", "button"], BrailleLine(1, "Save button", "Save button", "\x00" * 11))
-    after = (["After canvas."], BrailleLine(1, "After canvas.", "After canvas.", "\x00" * 13))
+    before = (
+        ["Before canvas."],
+        helpers.BrailleLine(1, "Before canvas.", "Before canvas.", "\x00" * 14),
+    )
+    heading = (
+        ["Message", "heading 2"],
+        helpers.BrailleLine(1, "Message h2", "Message h2", "\x00" * 10),
+    )
+    button = (["Save", "button"], helpers.BrailleLine(1, "Save button", "Save button", "\x00" * 11))
+    after = (
+        ["After canvas."],
+        helpers.BrailleLine(1, "After canvas.", "After canvas.", "\x00" * 13),
+    )
     if layout_mode:
         paragraph = [
             (
                 ["Quiet ", "river", "link", " flows."],
-                BrailleLine(
+                helpers.BrailleLine(
                     1,
                     "Quiet river flows.",
                     "Quiet river flows.",
@@ -61,9 +70,9 @@ def test_line_navigation_through_canvas_fallback(
         ]
     else:
         paragraph = [
-            (["Quiet "], BrailleLine(1, "Quiet ", "Quiet ", "\x00" * 6)),
-            (["river", "link"], BrailleLine(1, "river", "river", "\xc0" * 5)),
-            ([" flows."], BrailleLine(1, " flows.", " flows.", "\x00" * 7)),
+            (["Quiet "], helpers.BrailleLine(1, "Quiet ", "Quiet ", "\x00" * 6)),
+            (["river", "link"], helpers.BrailleLine(1, "river", "river", "\xc0" * 5)),
+            ([" flows."], helpers.BrailleLine(1, " flows.", " flows.", "\x00" * 7)),
         ]
 
     forward = [before, (["canvas", *heading[0]], heading[1]), *paragraph, button, after]
@@ -74,13 +83,13 @@ def test_line_navigation_through_canvas_fallback(
         before,
         (
             ["Canvas fallback", "heading 1"],
-            BrailleLine(1, "Canvas fallback h1", "Canvas fallback h1", "\x00" * 18),
+            helpers.BrailleLine(1, "Canvas fallback h1", "Canvas fallback h1", "\x00" * 18),
         ),
     ]
     for key, expected in ((keyboard.KEYSYM_DOWN, forward), (keyboard.KEYSYM_UP, backward)):
         for expected_speech, expected_braille in expected:
             keyboard.tap_key(key)
-            spoken, brailled = capture(session)
+            spoken, brailled = helpers.capture(session)
             assert spoken == expected_speech
             assert brailled[-1] == expected_braille
 
@@ -90,7 +99,7 @@ def test_structural_navigation_through_canvas_fallback(web_canvas_fallback: Brow
     """Tests heading, link, and button navigation within canvas fallback content."""
 
     session = web_canvas_fallback
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     expected = [
         (keyboard.KEYSYM_H, [], ["h", "canvas", "Message", "heading 2"], "Message h2", "\x00" * 10),
         (keyboard.KEYSYM_K, [], ["k", "river", "link"], "river", "\xc0" * 5),
@@ -106,9 +115,9 @@ def test_structural_navigation_through_canvas_fallback(web_canvas_fallback: Brow
     ]
     for key, modifiers, expected_speech, line, mask in expected:
         keyboard.press_chord(modifiers, key)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == expected_speech
-        assert brailled[-1] == BrailleLine(1, line, line, mask)
+        assert brailled[-1] == helpers.BrailleLine(1, line, line, mask)
 
 
 @pytest.mark.native_app
@@ -116,7 +125,7 @@ def test_tab_navigation_through_canvas_fallback(web_canvas_fallback: BrowserSess
     """Tests Tab and Shift+Tab reach the fallback link and button."""
 
     session = web_canvas_fallback
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     expected = [
         ([], ["canvas", "river", "link"], "river", "\xc0" * 5),
         ([], ["Save", "button"], "Save button", "\x00" * 11),
@@ -124,6 +133,6 @@ def test_tab_navigation_through_canvas_fallback(web_canvas_fallback: BrowserSess
     ]
     for modifiers, expected_speech, line, mask in expected:
         keyboard.press_chord(modifiers, keyboard.KEYSYM_TAB)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == expected_speech
-        assert brailled[-1] == BrailleLine(1, line, line, mask)
+        assert brailled[-1] == helpers.BrailleLine(1, line, line, mask)

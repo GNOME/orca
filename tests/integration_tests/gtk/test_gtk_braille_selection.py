@@ -26,10 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, version_helpers
 from tests.integration_tests.apps import gtk
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.version_helpers import requires_gtk_version
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -76,7 +75,7 @@ def _select_word(session: NativeAppSession) -> tuple[list[str], helpers.BrailleL
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_selection_mask_uncontracted(gtk_text_view: NativeAppSession) -> None:
     """Tests that the selection underline spans the verbatim cells of each selected word."""
 
@@ -110,7 +109,7 @@ def test_selection_mask_uncontracted(gtk_text_view: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_selection_mask_contracted(gtk_text_view: NativeAppSession) -> None:
     """Tests that the selection underline tracks the contracted cells."""
 
@@ -136,7 +135,7 @@ def test_selection_mask_contracted(gtk_text_view: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_pan_contracted_selection_word_wrap_off(gtk_text_view: NativeAppSession) -> None:
     """Tests panning a selected wide line: word-wrap off cuts the window at a fixed 32 cells."""
 
@@ -159,7 +158,7 @@ def test_pan_contracted_selection_word_wrap_off(gtk_text_view: NativeAppSession)
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_pan_contracted_selection_word_wrap_on(gtk_text_view: NativeAppSession) -> None:
     """Tests panning a selected wide line: word-wrap on breaks the window at word boundaries."""
 

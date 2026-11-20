@@ -39,10 +39,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers, version_helpers
 from tests.integration_tests.apps import gtk
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, expected_for_gtk, move_to_top
-from tests.integration_tests.version_helpers import requires_gtk_version
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -57,48 +56,48 @@ _FAMILY_LINE = f"Family {_FAMILY} here."
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_down_arrow_announces_whole_emoji_lines(gtk_text_view_emoji: NativeAppSession) -> None:
     """Down-arrow presents each line with whole emoji intact."""
 
     session = gtk_text_view_emoji
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
-        expected_for_gtk([f"{_FLAGS_LINE}\n"], gtk4=[_FLAGS_LINE]),
-        [BrailleLine(1, f"{_FLAGS_LINE} $l", f"{_FLAGS_LINE} $l", "\x00" * 24)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk([f"{_FLAGS_LINE}\n"], gtk4=[_FLAGS_LINE]),
+        [helpers.BrailleLine(1, f"{_FLAGS_LINE} $l", f"{_FLAGS_LINE} $l", "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
-        expected_for_gtk([f"{_JOINED_LINE}\n"], gtk4=[_JOINED_LINE]),
-        [BrailleLine(1, f"{_JOINED_LINE} $l", f"{_JOINED_LINE} $l", "\x00" * 21)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk([f"{_JOINED_LINE}\n"], gtk4=[_JOINED_LINE]),
+        [helpers.BrailleLine(1, f"{_JOINED_LINE} $l", f"{_JOINED_LINE} $l", "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
-        expected_for_gtk(
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(
             [f"{_FAMILY_LINE}\n"],
             gtk4=[_FAMILY_LINE],
         ),
-        [BrailleLine(1, f"{_FAMILY_LINE} $l", f"{_FAMILY_LINE} $l", "\x00" * 23)],
+        [helpers.BrailleLine(1, f"{_FAMILY_LINE} $l", f"{_FAMILY_LINE} $l", "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["End."],
-        [BrailleLine(1, "End. $l", "End. $l", "\x00" * 7)],
+        [helpers.BrailleLine(1, "End. $l", "End. $l", "\x00" * 7)],
     )
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_word_nav_announces_whole_emoji(gtk_text_view_emoji: NativeAppSession) -> None:
     """Ctrl+Right word navigation produces whole emoji as part of each word unit."""
 
     session = gtk_text_view_emoji
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
@@ -109,62 +108,62 @@ def test_word_nav_announces_whole_emoji(gtk_text_view_emoji: NativeAppSession) -
     _family_braille = f"{_FAMILY_LINE} $l"
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Flags"],
-        [BrailleLine(6, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(6, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [f"{_US_FLAG} and"],
-        [BrailleLine(13, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(13, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [f"{_IT_FLAG} here"],
-        [BrailleLine(21, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(21, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [".\nJoined"],
-        [BrailleLine(7, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(7, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [f"{_US_FLAG}{_IT_FLAG} flags"],
-        [BrailleLine(18, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(18, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [".\nFamily"],
-        [BrailleLine(7, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(7, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [f"{_FAMILY} here"],
-        [BrailleLine(20, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(20, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [".\nEnd"],
-        [BrailleLine(4, "End. $l", "End. $l", "\x00" * 7)],
+        [helpers.BrailleLine(4, "End. $l", "End. $l", "\x00" * 7)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["."],
-        [BrailleLine(5, "End. $l", "End. $l", "\x00" * 7)],
+        [helpers.BrailleLine(5, "End. $l", "End. $l", "\x00" * 7)],
     )
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_char_nav_right_announces_whole_emoji(gtk_text_view_emoji: NativeAppSession) -> None:
     """Right-arrow character navigation presents each flag and ZWJ family as a single stop."""
 
@@ -174,320 +173,320 @@ def test_char_nav_right_announces_whole_emoji(gtk_text_view_emoji: NativeAppSess
     _joined_braille = f"{_JOINED_LINE} $l"
     _family_braille = f"{_FAMILY_LINE} $l"
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["l"],
-        [BrailleLine(2, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(2, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["a"],
-        [BrailleLine(3, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(3, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["g"],
-        [BrailleLine(4, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(4, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["s"],
-        [BrailleLine(5, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(5, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(6, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(6, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [_US_FLAG],
-        [BrailleLine(7, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(7, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(9, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(9, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["a"],
-        [BrailleLine(10, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(10, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["n"],
-        [BrailleLine(11, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(11, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["d"],
-        [BrailleLine(12, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(12, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(13, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(13, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [_IT_FLAG],
-        [BrailleLine(14, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(14, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(16, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(16, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["h"],
-        [BrailleLine(17, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(17, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e"],
-        [BrailleLine(18, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(18, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["r"],
-        [BrailleLine(19, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(19, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e"],
-        [BrailleLine(20, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(20, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["."],
-        [BrailleLine(21, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(21, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["blank"],
-        [BrailleLine(22, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(22, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(2):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["o"],
-        [BrailleLine(2, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(2, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["i"],
-        [BrailleLine(3, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(3, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["n"],
-        [BrailleLine(4, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(4, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e"],
-        [BrailleLine(5, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(5, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["d"],
-        [BrailleLine(6, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(6, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(7, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(7, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [_US_FLAG],
-        [BrailleLine(8, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(8, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [_IT_FLAG],
-        [BrailleLine(10, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(10, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(12, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(12, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["f"],
-        [BrailleLine(13, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(13, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["l"],
-        [BrailleLine(14, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(14, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["a"],
-        [BrailleLine(15, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(15, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["g"],
-        [BrailleLine(16, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(16, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["s"],
-        [BrailleLine(17, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(17, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["."],
-        [BrailleLine(18, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(18, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["blank"],
-        [BrailleLine(19, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(19, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(3):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["a"],
-        [BrailleLine(2, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(2, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["m"],
-        [BrailleLine(3, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(3, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["i"],
-        [BrailleLine(4, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(4, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["l"],
-        [BrailleLine(5, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(5, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["y"],
-        [BrailleLine(6, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(6, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(7, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(7, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [_FAMILY],
-        [BrailleLine(8, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(8, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(15, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(15, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["h"],
-        [BrailleLine(16, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(16, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e"],
-        [BrailleLine(17, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(17, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["r"],
-        [BrailleLine(18, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(18, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e"],
-        [BrailleLine(19, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(19, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["."],
-        [BrailleLine(20, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(20, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["blank"],
-        [BrailleLine(21, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(21, _family_braille, _family_braille, "\x00" * 23)],
     )
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_char_nav_left_announces_whole_emoji(gtk_text_view_emoji: NativeAppSession) -> None:
     """Left-arrow character navigation presents each flag and ZWJ family as a single stop."""
 
@@ -497,7 +496,7 @@ def test_char_nav_left_announces_whole_emoji(gtk_text_view_emoji: NativeAppSessi
     _joined_braille = f"{_JOINED_LINE} $l"
     _family_braille = f"{_FAMILY_LINE} $l"
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     keyboard.tap_key(keyboard.KEYSYM_END)
@@ -505,120 +504,120 @@ def test_char_nav_left_announces_whole_emoji(gtk_text_view_emoji: NativeAppSessi
     session.reader.reset()
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["."],
-        [BrailleLine(21, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(21, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e"],
-        [BrailleLine(20, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(20, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["r"],
-        [BrailleLine(19, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(19, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e"],
-        [BrailleLine(18, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(18, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["h"],
-        [BrailleLine(17, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(17, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(16, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(16, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [_IT_FLAG],
-        [BrailleLine(14, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(14, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(13, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(13, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["d"],
-        [BrailleLine(12, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(12, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["n"],
-        [BrailleLine(11, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(11, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["a"],
-        [BrailleLine(10, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(10, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(9, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(9, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [_US_FLAG],
-        [BrailleLine(7, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(7, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(6, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(6, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["s"],
-        [BrailleLine(5, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(5, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["g"],
-        [BrailleLine(4, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(4, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["a"],
-        [BrailleLine(3, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(3, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["l"],
-        [BrailleLine(2, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(2, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["F"],
-        [BrailleLine(1, _flags_braille, _flags_braille, "\x00" * 24)],
+        [helpers.BrailleLine(1, _flags_braille, _flags_braille, "\x00" * 24)],
     )
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(2):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
@@ -627,102 +626,102 @@ def test_char_nav_left_announces_whole_emoji(gtk_text_view_emoji: NativeAppSessi
     session.reader.reset()
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["."],
-        [BrailleLine(18, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(18, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["s"],
-        [BrailleLine(17, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(17, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["g"],
-        [BrailleLine(16, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(16, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["a"],
-        [BrailleLine(15, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(15, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["l"],
-        [BrailleLine(14, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(14, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["f"],
-        [BrailleLine(13, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(13, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(12, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(12, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [_IT_FLAG],
-        [BrailleLine(10, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(10, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [_US_FLAG],
-        [BrailleLine(8, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(8, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(7, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(7, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["d"],
-        [BrailleLine(6, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(6, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e"],
-        [BrailleLine(5, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(5, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["n"],
-        [BrailleLine(4, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(4, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["i"],
-        [BrailleLine(3, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(3, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["o"],
-        [BrailleLine(2, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(2, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["J"],
-        [BrailleLine(1, _joined_braille, _joined_braille, "\x00" * 21)],
+        [helpers.BrailleLine(1, _joined_braille, _joined_braille, "\x00" * 21)],
     )
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(3):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
@@ -731,85 +730,85 @@ def test_char_nav_left_announces_whole_emoji(gtk_text_view_emoji: NativeAppSessi
     session.reader.reset()
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["."],
-        [BrailleLine(20, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(20, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e"],
-        [BrailleLine(19, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(19, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["r"],
-        [BrailleLine(18, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(18, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e"],
-        [BrailleLine(17, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(17, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["h"],
-        [BrailleLine(16, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(16, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(15, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(15, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [_FAMILY],
-        [BrailleLine(8, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(8, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(7, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(7, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["y"],
-        [BrailleLine(6, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(6, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["l"],
-        [BrailleLine(5, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(5, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["i"],
-        [BrailleLine(4, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(4, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["m"],
-        [BrailleLine(3, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(3, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["a"],
-        [BrailleLine(2, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(2, _family_braille, _family_braille, "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["F"],
-        [BrailleLine(1, _family_braille, _family_braille, "\x00" * 23)],
+        [helpers.BrailleLine(1, _family_braille, _family_braille, "\x00" * 23)],
     )

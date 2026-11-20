@@ -27,9 +27,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from . import helpers, version_helpers
 from .harness import keyboard
-from .helpers import reset_web_state, speech
-from .version_helpers import atspi_version, version_at_least
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -42,11 +41,11 @@ LONG_PARAGRAPH = (
     "readable prose rather than short fragments or individual controls."
 )
 
-_ATSPI_VERSION = atspi_version()
+_ATSPI_VERSION = version_helpers.atspi_version()
 # Chromium's document-selection bugs are exposed with AT-SPI 2.61.2 and the
 # 2.60.7/2.58.9 backports, where Orca enables the document-selection API.
 USES_DOCUMENT_SELECTION = (
-    version_at_least(_ATSPI_VERSION, 2, 61, 2)
+    version_helpers.version_at_least(_ATSPI_VERSION, 2, 61, 2)
     or (_ATSPI_VERSION[:2] == (2, 60) and _ATSPI_VERSION[2] >= 7)
     or (_ATSPI_VERSION[:2] == (2, 58) and _ATSPI_VERSION[2] >= 9)
 )
@@ -56,7 +55,7 @@ USES_DOCUMENT_SELECTION = (
 def native_selection(session: BrowserSession) -> Iterator[None]:
     """Runs the block in browse mode, where Chromium's own caret performs the selection."""
 
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     assert not session.orca.get("DocumentPresenter", "InFocusMode")
     yield
 
@@ -65,7 +64,7 @@ def select_character(session: BrowserSession, key: str) -> list[str]:
     """Extends or retracts Chromium's native selection by one character."""
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], key)
-    return speech(session)
+    return helpers.speech(session)
 
 
 def select_word(session: BrowserSession, key: str) -> list[str]:
@@ -76,7 +75,7 @@ def select_word(session: BrowserSession, key: str) -> list[str]:
     keyboard.press_key(keyboard.KEYSYM_SHIFT_L)
     try:
         keyboard.tap_key(key)
-        return speech(session)
+        return helpers.speech(session)
     finally:
         keyboard.release_key(keyboard.KEYSYM_SHIFT_L)
         keyboard.release_key(keyboard.KEYSYM_CONTROL_L)
@@ -86,7 +85,7 @@ def select_line(session: BrowserSession, key: str) -> list[str]:
     """Extends or retracts Chromium's native selection by one line."""
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], key)
-    return speech(session)
+    return helpers.speech(session)
 
 
 def assert_walks(

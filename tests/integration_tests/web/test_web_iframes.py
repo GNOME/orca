@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -38,16 +38,16 @@ def test_heading_navigation_enters_and_leaves_the_iframe(web_iframes: BrowserSes
     """Tests that next-heading treats the heading in the iframe as part of the document."""
 
     session = web_iframes
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Frame heading", "heading 2"]
+    assert helpers.speech(session) == ["h", "Frame heading", "heading 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Main heading two", "heading 1"]
+    assert helpers.speech(session) == ["h", "Main heading two", "heading 1"]
 
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Wrapping to top.", "Main heading one", "heading 1"]
+    assert helpers.speech(session) == ["h", "Wrapping to top.", "Main heading one", "heading 1"]
 
 
 @pytest.mark.native_app
@@ -57,16 +57,16 @@ def test_backward_heading_navigation_enters_and_leaves_the_iframe(
     """Tests that previous-heading treats the heading in the iframe as part of the document."""
 
     session = web_iframes
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
-    assert speech(session) == ["H", "Wrapping to bottom.", "Main heading two", "heading 1"]
+    assert helpers.speech(session) == ["H", "Wrapping to bottom.", "Main heading two", "heading 1"]
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
-    assert speech(session) == ["H", "Frame heading", "heading 2"]
+    assert helpers.speech(session) == ["H", "Frame heading", "heading 2"]
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
-    assert speech(session) == ["H", "Main heading one", "heading 1"]
+    assert helpers.speech(session) == ["H", "Main heading one", "heading 1"]
 
 
 @pytest.mark.native_app
@@ -74,40 +74,40 @@ def test_caret_navigation_enters_and_leaves_the_iframe(web_iframes: BrowserSessi
     """Tests that line navigation reads the content of the iframe in document order."""
 
     session = web_iframes
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Paragraph before the frame."]
+    assert helpers.speech(session) == ["Paragraph before the frame."]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Frame heading", "heading 2"]
+    assert helpers.speech(session) == ["Frame heading", "heading 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Paragraph inside the frame."]
+    assert helpers.speech(session) == ["Paragraph inside the frame."]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Frame button", "button", "Frame entry", "entry"]
+    assert helpers.speech(session) == ["Frame button", "button", "Frame entry", "entry"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Main heading two", "heading 1"]
+    assert helpers.speech(session) == ["Main heading two", "heading 1"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Paragraph after the frame."]
+    assert helpers.speech(session) == ["Paragraph after the frame."]
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == ["Main heading two", "heading 1"]
+    assert helpers.speech(session) == ["Main heading two", "heading 1"]
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == ["Frame button", "button", "Frame entry", "entry"]
+    assert helpers.speech(session) == ["Frame button", "button", "Frame entry", "entry"]
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == ["Paragraph inside the frame."]
+    assert helpers.speech(session) == ["Paragraph inside the frame."]
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == ["Frame heading", "heading 2"]
+    assert helpers.speech(session) == ["Frame heading", "heading 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == ["Paragraph before the frame."]
+    assert helpers.speech(session) == ["Paragraph before the frame."]
 
 
 @pytest.mark.native_app
@@ -115,13 +115,13 @@ def test_structural_navigation_by_widget(web_iframes: BrowserSession) -> None:
     """Tests that next-button and next-entry reach the widgets inside the iframe."""
 
     session = web_iframes
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_B)
-    assert speech(session) == ["b", "Frame button", "button"]
+    assert helpers.speech(session) == ["b", "Frame button", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_E)
-    assert speech(session) == ["e", "Frame entry", "entry"]
+    assert helpers.speech(session) == ["e", "Frame entry", "entry"]
 
 
 @pytest.mark.native_app
@@ -131,13 +131,13 @@ def test_structural_navigation_focus_mode_setting_uses_the_role(
     """Tests that the role of the widget in the iframe decides the mode when the setting is on."""
 
     session = web_iframes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("StructuralNavigator", "TriggersFocusMode", True)
 
     keyboard.tap_key(keyboard.KEYSYM_B)
-    assert speech(session) == ["b", "Frame button", "button"]
+    assert helpers.speech(session) == ["b", "Frame button", "button"]
     assert not session.orca.get("DocumentPresenter", "InFocusMode")
 
     keyboard.tap_key(keyboard.KEYSYM_E)
-    assert speech(session) == ["e", "Focus mode", "Frame entry", "entry"]
+    assert helpers.speech(session) == ["e", "Focus mode", "Frame entry", "entry"]
     assert session.orca.get("DocumentPresenter", "InFocusMode")

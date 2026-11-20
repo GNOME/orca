@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, move_to_top, reset_web_state
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -46,11 +46,11 @@ def test_table_navigation_across_grid_cells(web_grid_named_cells: BrowserSession
     """Tests cell-by-cell navigation in focus mode, where the cells are presented as a whole."""
 
     session = web_grid_named_cells
-    reset_web_state(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_T)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [
         "t",
         "table with 2 rows 3 columns",
@@ -59,34 +59,44 @@ def test_table_navigation_across_grid_cells(web_grid_named_cells: BrowserSession
             "Show in folder Delete from history"
         ),
     ]
-    assert brailled[-1] == BrailleLine(1, _TITLE, _TITLE, "\x00" * 20)
+    assert brailled[-1] == helpers.BrailleLine(1, _TITLE, _TITLE, "\x00" * 20)
 
     session.orca.press_orca_key(keyboard.KEYSYM_A)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Focus mode"]
-    assert brailled[-1] == BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
+    assert brailled[-1] == helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
 
     _table_nav(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [_URL, "Row 1, column 2."]
-    assert brailled[-1] == BrailleLine(0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16)
+    assert brailled[-1] == helpers.BrailleLine(
+        0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16
+    )
 
     _table_nav(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [_ACTIONS, "Row 1, column 3."]
-    assert brailled[-1] == BrailleLine(0, "Row 1, column 3.", "Row 1, column 3.", "\x00" * 16)
+    assert brailled[-1] == helpers.BrailleLine(
+        0, "Row 1, column 3.", "Row 1, column 3.", "\x00" * 16
+    )
 
     _table_nav(keyboard.KEYSYM_LEFT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [_URL, "Row 1, column 2."]
-    assert brailled[-1] == BrailleLine(0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16)
+    assert brailled[-1] == helpers.BrailleLine(
+        0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16
+    )
 
     _table_nav(keyboard.KEYSYM_LEFT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [_TITLE, "Row 1, column 1."]
-    assert brailled[-1] == BrailleLine(0, "Row 1, column 1.", "Row 1, column 1.", "\x00" * 16)
+    assert brailled[-1] == helpers.BrailleLine(
+        0, "Row 1, column 1.", "Row 1, column 1.", "\x00" * 16
+    )
 
     _table_nav(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["meeting-notes.pdf", "Row 2, column 1."]
-    assert brailled[-1] == BrailleLine(0, "Row 2, column 1.", "Row 2, column 1.", "\x00" * 16)
+    assert brailled[-1] == helpers.BrailleLine(
+        0, "Row 2, column 1.", "Row 2, column 1.", "\x00" * 16
+    )

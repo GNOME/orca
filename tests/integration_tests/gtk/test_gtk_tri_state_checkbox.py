@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -48,18 +48,20 @@ def test_tri_state_checkbox_cycling(gtk_tri_state_checkbox: NativeAppSession) ->
         ("partially checked", "<->"),
     ):
         keyboard.tap_key(keyboard.KEYSYM_SPACE)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == [state]
         line = f"{_PREFIX}{indicator} Forward check box"
-        assert brailled[-1] == BrailleLine(
+        assert brailled[-1] == helpers.BrailleLine(
             1, line, f"{indicator} Forward check box", "\x00" * len(line)
         )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Backward check box checked"]
     line = f"{_PREFIX}<x> Backward check box"
-    assert brailled[-1] == BrailleLine(1, line, "<x> Backward check box", "\x00" * len(line))
+    assert brailled[-1] == helpers.BrailleLine(
+        1, line, "<x> Backward check box", "\x00" * len(line)
+    )
 
     for state, indicator in (
         ("partially checked", "<->"),
@@ -68,9 +70,9 @@ def test_tri_state_checkbox_cycling(gtk_tri_state_checkbox: NativeAppSession) ->
         ("partially checked", "<->"),
     ):
         keyboard.tap_key(keyboard.KEYSYM_SPACE)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == [state]
         line = f"{_PREFIX}{indicator} Backward check box"
-        assert brailled[-1] == BrailleLine(
+        assert brailled[-1] == helpers.BrailleLine(
             1, line, f"{indicator} Backward check box", "\x00" * len(line)
         )

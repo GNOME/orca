@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -38,72 +38,72 @@ def test_changing_the_value_of_each_slider(web_multithumb_slider: BrowserSession
     """Tests tabbing to each slider thumb and changing its value."""
 
     session = web_multithumb_slider
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Minimum price", "horizontal slider", "$25", "33 percent.", "Focus mode"]
-    assert brailled[-1] == BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
+    assert brailled[-1] == helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["$26"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Minimum price $26 horizontal slider", "Minimum price $26 horizontal sli", "\x00" * 35
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["$27"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Minimum price $27 horizontal slider", "Minimum price $27 horizontal sli", "\x00" * 35
     )
 
     keyboard.tap_key(keyboard.KEYSYM_PAGE_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["$37"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Minimum price $37 horizontal slider", "Minimum price $37 horizontal sli", "\x00" * 35
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Minimum price", "horizontal slider", "$37", "49 percent."]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Minimum price $37 horizontal slider", "Minimum price $37 horizontal sli", "\x00" * 35
     )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Maximum price", "horizontal slider", "$75", "60 percent."]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Maximum price $75 horizontal slider", "Maximum price $75 horizontal sli", "\x00" * 35
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["$74"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Maximum price $74 horizontal slider", "Maximum price $74 horizontal sli", "\x00" * 35
     )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Temperature", "vertical slider", "68 degrees", "45 percent."]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Temperature 68 degrees vertical slider", "Temperature 68 degrees vertical ", "\x00" * 38
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["69 degrees"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Temperature 69 degrees vertical slider", "Temperature 69 degrees vertical ", "\x00" * 38
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["68 degrees"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Temperature 68 degrees vertical slider", "Temperature 68 degrees vertical ", "\x00" * 38
     )

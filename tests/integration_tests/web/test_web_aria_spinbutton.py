@@ -26,9 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, version_helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.version_helpers import firefox_is_older_than_build
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -376,7 +375,7 @@ def test_volume_readonly_input_spinbutton(web_aria_spinbutton: BrowserSession) -
 # Required state mapping: https://www.w3.org/TR/core-aam-1.2/#ariaReadonlyTrue
 @pytest.mark.native_app
 @pytest.mark.xfail(
-    firefox_is_older_than_build(162, 20261110053316),
+    version_helpers.firefox_is_older_than_build(162, 20261110053316),
     reason="Firefox's ATK state mapping does not expose READ_ONLY: "
     "https://bugzilla.mozilla.org/show_bug.cgi?id=1356018",
     raises=AssertionError,

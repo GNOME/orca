@@ -26,13 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    reset_web_state,
-    skip_firefox_caret_tab,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -43,36 +38,38 @@ def test_paging_through_feed_articles(web_feed: BrowserSession) -> None:
     """Tests caret navigation into the feed and paging through its articles."""
 
     session = web_feed
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Search trails", "button"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Search trails button", "Search trails button", "\x00" * 20
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Trail reports", "heading 2"]
-    assert brailled[-1] == BrailleLine(1, "Trail reports h2", "Trail reports h2", "\x00" * 16)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, "Trail reports h2", "Trail reports h2", "\x00" * 16
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Trail reports", "Feed with 3 articles", "article", "Fell Lane", "heading 3"]
-    assert brailled[-1] == BrailleLine(1, "Fell Lane h3", "Fell Lane h3", "\x00" * 12)
+    assert brailled[-1] == helpers.BrailleLine(1, "Fell Lane h3", "Fell Lane h3", "\x00" * 12)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Wet underfoot after the bridge."]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Wet underfoot after the bridge.", "Wet underfoot after the bridge.", "\x00" * 31
     )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Mill Path The stile at the top is broken."]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "Mill Path article The stile at the top is broken.",
         "Mill Path article The stile at t",
@@ -80,9 +77,9 @@ def test_paging_through_feed_articles(web_feed: BrowserSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_PAGE_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Quarry Loop Waymarked as far as the gate."]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "Quarry Loop article Waymarked as far as the gate.",
         "Quarry Loop article Waymarked as",
@@ -90,14 +87,14 @@ def test_paging_through_feed_articles(web_feed: BrowserSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_PAGE_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == []
     assert brailled == []
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Quarry Loop", "heading 3", "Waymarked as far as the gate."]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         0,
         "Quarry Loop h3 Waymarked as far as the gate.",
         "Quarry Loop h3 Waymarked as far ",
@@ -105,9 +102,9 @@ def test_paging_through_feed_articles(web_feed: BrowserSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_PAGE_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Mill Path The stile at the top is broken."]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "Mill Path article The stile at the top is broken.",
         "Mill Path article The stile at t",
@@ -116,28 +113,28 @@ def test_paging_through_feed_articles(web_feed: BrowserSession) -> None:
 
 
 @pytest.mark.native_app
-@skip_firefox_caret_tab()
+@helpers.skip_firefox_caret_tab()
 def test_moving_out_of_the_feed_in_browse_mode(web_feed: BrowserSession) -> None:
     """Tests the feed pattern's move-out keys while in browse mode."""
 
     session = web_feed
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Search trails", "button"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Search trails button", "Search trails button", "\x00" * 20
     )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [
         "Trail reports",
         "Feed with 3 articles",
         "Fell Lane Wet underfoot after the bridge.",
     ]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "Fell Lane article Wet underfoot after the bridge.",
         "Fell Lane article Wet underfoot ",
@@ -145,41 +142,41 @@ def test_moving_out_of_the_feed_in_browse_mode(web_feed: BrowserSession) -> None
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["leaving feed.", "Text after the feed."]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         21, "Text after the feed.", "Text after the feed.", "\x00" * 20
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Feed", "heading 1"]
-    assert brailled[-1] == BrailleLine(1, "Feed h1", "Feed h1", "\x00" * 7)
+    assert brailled[-1] == helpers.BrailleLine(1, "Feed h1", "Feed h1", "\x00" * 7)
 
 
 @pytest.mark.native_app
-@skip_firefox_caret_tab()
+@helpers.skip_firefox_caret_tab()
 def test_moving_after_the_feed_in_focus_mode(web_feed: BrowserSession) -> None:
     """Tests the key the feed pattern defines for moving past the feed."""
 
     session = web_feed
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Search trails", "button"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Search trails button", "Search trails button", "\x00" * 20
     )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [
         "Trail reports",
         "Feed with 3 articles",
         "Fell Lane Wet underfoot after the bridge.",
     ]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "Fell Lane article Wet underfoot after the bridge.",
         "Fell Lane article Wet underfoot ",
@@ -187,39 +184,39 @@ def test_moving_after_the_feed_in_focus_mode(web_feed: BrowserSession) -> None:
     )
 
     session.orca.press_orca_key(keyboard.KEYSYM_A)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Focus mode"]
-    assert brailled[-1] == BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
+    assert brailled[-1] == helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["leaving feed.", "Add a report", "button", "Browse mode"]
-    assert brailled[-1] == BrailleLine(0, "Browse mode", "Browse mode", "\x00" * 11)
+    assert brailled[-1] == helpers.BrailleLine(0, "Browse mode", "Browse mode", "\x00" * 11)
 
 
 @pytest.mark.native_app
-@skip_firefox_caret_tab()
+@helpers.skip_firefox_caret_tab()
 def test_moving_before_the_feed_in_focus_mode(web_feed: BrowserSession) -> None:
     """Tests the key the feed pattern defines for moving ahead of the feed."""
 
     session = web_feed
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Search trails", "button"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Search trails button", "Search trails button", "\x00" * 20
     )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [
         "Trail reports",
         "Feed with 3 articles",
         "Fell Lane Wet underfoot after the bridge.",
     ]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "Fell Lane article Wet underfoot after the bridge.",
         "Fell Lane article Wet underfoot ",
@@ -227,11 +224,11 @@ def test_moving_before_the_feed_in_focus_mode(web_feed: BrowserSession) -> None:
     )
 
     session.orca.press_orca_key(keyboard.KEYSYM_A)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Focus mode"]
-    assert brailled[-1] == BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
+    assert brailled[-1] == helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["leaving feed.", "Search trails", "button", "Browse mode"]
-    assert brailled[-1] == BrailleLine(0, "Browse mode", "Browse mode", "\x00" * 11)
+    assert brailled[-1] == helpers.BrailleLine(0, "Browse mode", "Browse mode", "\x00" * 11)

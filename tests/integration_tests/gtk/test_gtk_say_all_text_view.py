@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import expected_for_gtk, move_to_top, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -42,10 +42,10 @@ def test_say_all_by_sentence_skips_blank_line(
     session = gtk_text_view_blank_line
     session.orca.set("SayAllPresenter", "Style", "sentence")
     session.orca.set("SayAllPresenter", "OnlySpeakDisplayedText", True)
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-    assert speech(session, quiescence=0.4, overall=10.0) == expected_for_gtk(
+    assert helpers.speech(session, quiescence=0.4, overall=10.0) == helpers.expected_for_gtk(
         [
             "First sentence.\n\n",
             "Second sentence.\n",

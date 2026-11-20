@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import capture, move_to_top, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -66,16 +66,16 @@ def test_word_navigation_preserves_adjacent_ranges(
 
     session = gtk_text_view_word_boundaries
     text = "".join(words)
-    move_to_top(session)
+    helpers.move_to_top(session)
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert speech(session) == ["The screen reader is controlling the caret."]
+    assert helpers.speech(session) == ["The screen reader is controlling the caret."]
     try:
         for _ in range(line):
             keyboard.tap_key(keyboard.KEYSYM_DOWN)
-            capture(session)
+            helpers.capture(session)
         if backward:
             keyboard.tap_key(keyboard.KEYSYM_END)
-            capture(session)
+            helpers.capture(session)
 
         ranges = []
         offset = 0
@@ -86,10 +86,10 @@ def test_word_navigation_preserves_adjacent_ranges(
         key = keyboard.KEYSYM_LEFT if backward else keyboard.KEYSYM_RIGHT
         for word, start, end in reversed(ranges) if backward else ranges:
             keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], key)
-            spoken, brailled = capture(session)
+            spoken, brailled = helpers.capture(session)
             assert spoken == [word.rstrip()]
             assert brailled[-1].visible == f"{text} $l"
             assert brailled[-1].cursor_cell == (start if backward else end) + 1
     finally:
         session.orca.press_orca_key(keyboard.KEYSYM_F12)
-        speech(session)
+        helpers.speech(session)

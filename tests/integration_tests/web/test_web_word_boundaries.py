@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import capture, expected_for_browser, move_to_top
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -118,15 +118,15 @@ def test_word_navigation_preserves_adjacent_ranges(
     """Tests that each word range is spoken and its caret position is presented."""
 
     session = web_word_boundaries
-    words = expected_for_browser(session, chromium_words, firefox=firefox_words)
+    words = helpers.expected_for_browser(session, chromium_words, firefox=firefox_words)
     text = "".join(words)
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(line):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        capture(session)
+        helpers.capture(session)
     if backward:
         keyboard.tap_key(keyboard.KEYSYM_END)
-        capture(session)
+        helpers.capture(session)
 
     ranges = []
     offset = 0
@@ -137,7 +137,7 @@ def test_word_navigation_preserves_adjacent_ranges(
     key = keyboard.KEYSYM_LEFT if backward else keyboard.KEYSYM_RIGHT
     for word, start, end in reversed(ranges) if backward else ranges:
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], key)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == [word]
         assert brailled[-1].visible == text
         assert brailled[-1].cursor_cell == (start if backward else end) + 1

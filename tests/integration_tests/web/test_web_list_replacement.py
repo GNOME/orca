@@ -28,7 +28,6 @@ import pytest
 
 from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -52,13 +51,13 @@ def test_list_item_navigation_after_replacement(web_list_replacement: BrowserSes
                     expected.append("Wrapping to top.")
                 expected.append("List with 3 items")
             assert spoken == [*expected, title, "link"]
-            assert brailled[-1] == BrailleLine(1, title, title, "\xc0" * len(title))
+            assert brailled[-1] == helpers.BrailleLine(1, title, title, "\xc0" * len(title))
 
         for title in reversed(titles[:-1]):
             keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_I)
             spoken, brailled = helpers.capture(session)
             assert spoken == ["I", title, "link"]
-            assert brailled[-1] == BrailleLine(1, title, title, "\xc0" * len(title))
+            assert brailled[-1] == helpers.BrailleLine(1, title, title, "\xc0" * len(title))
 
         if page == len(pages) - 1:
             break
@@ -66,7 +65,9 @@ def test_list_item_navigation_after_replacement(web_list_replacement: BrowserSes
         keyboard.tap_key(keyboard.KEYSYM_B)
         spoken, brailled = helpers.capture(session)
         assert spoken == ["b", "leaving list.", "Next page", "button"]
-        assert brailled[-1] == BrailleLine(1, "Next page button", "Next page button", "\x00" * 16)
+        assert brailled[-1] == helpers.BrailleLine(
+            1, "Next page button", "Next page button", "\x00" * 16
+        )
 
         keyboard.tap_key(keyboard.KEYSYM_RETURN)
         helpers.capture(session)

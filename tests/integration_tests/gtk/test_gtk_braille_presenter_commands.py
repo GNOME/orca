@@ -26,10 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers, version_helpers
 from tests.integration_tests.apps import gtk
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture
-from tests.integration_tests.version_helpers import requires_gtk_version
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -41,7 +40,7 @@ _SPOKEN = "Line two has additional words to make it long enough that "
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_word_wrap_ends_visible_window_at_word_boundary(gtk_text_view: NativeAppSession) -> None:
     """Tests that braille word wrap ends the visible window at a word boundary."""
 
@@ -51,9 +50,9 @@ def test_word_wrap_ends_visible_window_at_word_boundary(gtk_text_view: NativeApp
 
     # Default: the window is a hard slice at the display edge, mid layout.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [_SPOKEN],
-        [BrailleLine(1, _FULL, "Line two has additional words to", "\x00" * 61)],
+        [helpers.BrailleLine(1, _FULL, "Line two has additional words to", "\x00" * 61)],
     )
     keyboard.tap_key(keyboard.KEYSYM_UP)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
@@ -62,9 +61,9 @@ def test_word_wrap_ends_visible_window_at_word_boundary(gtk_text_view: NativeApp
     session.orca.set("BraillePresenter", "WordWrapIsEnabled", True)
     try:
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             [_SPOKEN],
-            [BrailleLine(1, _FULL, "Line two has additional words ", "\x00" * 61)],
+            [helpers.BrailleLine(1, _FULL, "Line two has additional words ", "\x00" * 61)],
         )
     finally:
         session.orca.set("BraillePresenter", "WordWrapIsEnabled", False)
@@ -79,12 +78,20 @@ def test_toggle_braille_monitor(gtk_text_view: NativeAppSession) -> None:
     session.reader.reset()
 
     session.orca.call("BraillePresenter", "ToggleMonitor", True)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["On-screen braille enabled."],
-        [BrailleLine(0, "On-screen braille enabled.", "On-screen braille enabled.", "\x00" * 26)],
+        [
+            helpers.BrailleLine(
+                0, "On-screen braille enabled.", "On-screen braille enabled.", "\x00" * 26
+            )
+        ],
     )
     session.orca.call("BraillePresenter", "ToggleMonitor", True)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["On-screen braille disabled."],
-        [BrailleLine(0, "On-screen braille disabled.", "On-screen braille disabled.", "\x00" * 27)],
+        [
+            helpers.BrailleLine(
+                0, "On-screen braille disabled.", "On-screen braille disabled.", "\x00" * 27
+            )
+        ],
     )

@@ -26,14 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_gtk,
-    move_to_top,
-    toggle_flat_review,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -53,17 +47,17 @@ def test_flat_review_by_line_word_and_character(gtk_text_view: NativeAppSession)
     session.reader.reset()
 
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-    assert capture(session) == (
-        expected_for_gtk(["Line one.\n"], gtk4=["Line one."]),
-        [BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["Line one.\n"], gtk4=["Line one."]),
+        [helpers.BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
     )
 
     # The text view wraps line two, so review by line walks its first visual line.
     keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Line two has additional words to make it long enough that "],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "Line two has additional words to make it long enough that  $l",
                 "Line two has additional words to",
@@ -73,45 +67,45 @@ def test_flat_review_by_line_word_and_character(gtk_text_view: NativeAppSession)
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_HOME)
-    assert capture(session) == (
-        expected_for_gtk(["Line one.\n"], gtk4=["Line one."]),
-        [BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["Line one.\n"], gtk4=["Line one."]),
+        [helpers.BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_BEGIN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Line "],
-        [BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
+        [helpers.BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_RIGHT)
-    assert capture(session) == (
-        expected_for_gtk(["one.\n"], gtk4=["one."]),
-        [BrailleLine(6, "Line one. $l", "Line one. $l", "\x00" * 12)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["one.\n"], gtk4=["one."]),
+        [helpers.BrailleLine(6, "Line one. $l", "Line one. $l", "\x00" * 12)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Line "],
-        [BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
+        [helpers.BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["L"],
-        [BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
+        [helpers.BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["i"],
-        [BrailleLine(2, "Line one. $l", "Line one. $l", "\x00" * 12)],
+        [helpers.BrailleLine(2, "Line one. $l", "Line one. $l", "\x00" * 12)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_END)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["L"],
-        [BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
+        [helpers.BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
     )
 
 
@@ -121,9 +115,9 @@ def test_focus_tracking_off_keeps_review_location(gtk_text_view: NativeAppSessio
 
     session = gtk_text_view
     # The previous test leaves flat review on; exit then re-enter from a known position.
-    toggle_flat_review(session)
-    move_to_top(session)
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
+    helpers.move_to_top(session)
+    helpers.toggle_flat_review(session)
 
     session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
     try:
@@ -136,13 +130,13 @@ def test_focus_tracking_off_keeps_review_location(gtk_text_view: NativeAppSessio
         session.reader.reset()
 
         keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-        assert capture(session) == (
-            expected_for_gtk(["Line one.\n"], gtk4=["Line one."]),
-            [BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
+        assert helpers.capture(session) == (
+            helpers.expected_for_gtk(["Line one.\n"], gtk4=["Line one."]),
+            [helpers.BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
         )
     finally:
         session.orca.set("FlatReviewPresenter", "FocusTracking", 1)
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
 
 
 @pytest.mark.native_app
@@ -150,8 +144,8 @@ def test_focus_tracking_auto_follows_caret(gtk_text_view: NativeAppSession) -> N
     """Tests that FocusTracking=auto moves the review location when the caret moves."""
 
     session = gtk_text_view
-    move_to_top(session)
-    toggle_flat_review(session)
+    helpers.move_to_top(session)
+    helpers.toggle_flat_review(session)
 
     session.orca.set("FlatReviewPresenter", "FocusTracking", 1)
     try:
@@ -164,10 +158,10 @@ def test_focus_tracking_auto_follows_caret(gtk_text_view: NativeAppSession) -> N
         session.reader.reset()
 
         keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["Line two has additional words to make it long enough that "],
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     1,
                     "Line two has additional words to make it long enough that  $l",
                     "Line two has additional words to",
@@ -177,7 +171,7 @@ def test_focus_tracking_auto_follows_caret(gtk_text_view: NativeAppSession) -> N
         )
     finally:
         session.orca.set("FlatReviewPresenter", "FocusTracking", 1)
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
 
 
 def _move_focus_to_review_after(session: NativeAppSession, nav: int) -> list[str]:
@@ -187,8 +181,8 @@ def _move_focus_to_review_after(session: NativeAppSession, nav: int) -> list[str
     session.orca.bind_command("move_focus_to_review", key, mods)
     session.orca.refresh_keybindings()
     try:
-        move_to_top(session)
-        toggle_flat_review(session)
+        helpers.move_to_top(session)
+        helpers.toggle_flat_review(session)
         keyboard.tap_key(keyboard.KEYSYM_KP_UP)
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
         session.reader.reset()
@@ -196,10 +190,10 @@ def _move_focus_to_review_after(session: NativeAppSession, nav: int) -> list[str
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
         session.reader.reset()
         session.orca.press_bound_key(key)
-        spoken, _braille = capture(session)
+        spoken, _braille = helpers.capture(session)
         return spoken
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
         session.orca.unbind_command("move_focus_to_review")
         session.orca.refresh_keybindings()
 
@@ -223,9 +217,9 @@ def test_move_focus_to_review_announces_word(gtk_text_view: NativeAppSession) ->
     session = gtk_text_view
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
-    assert _move_focus_to_review_after(session, keyboard.KEYSYM_KP_RIGHT) == expected_for_gtk(
-        ["one.\n"], gtk4=["one."]
-    )
+    assert _move_focus_to_review_after(
+        session, keyboard.KEYSYM_KP_RIGHT
+    ) == helpers.expected_for_gtk(["one.\n"], gtk4=["one."])
 
 
 @pytest.mark.native_app

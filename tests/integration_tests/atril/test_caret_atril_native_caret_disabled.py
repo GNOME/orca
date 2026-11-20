@@ -30,11 +30,9 @@ import pytest
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from tests.integration_tests import atril_helpers, helpers, version_helpers
 from tests.integration_tests import caret_selection_helpers as commands
-from tests.integration_tests.atril_helpers import assert_navigation, assert_step, selection_session
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, say_selection
-from tests.integration_tests.version_helpers import requires_atril_version
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -47,14 +45,14 @@ def native_caret_disabled(atril: AtrilSession) -> Iterator[AtrilSession]:
     """Disables Atril's native caret before establishing Orca's caret context."""
 
     keyboard.tap_key(keyboard.KEYSYM_F7)
-    capture(atril)
+    helpers.capture(atril)
     try:
-        with selection_session(atril, native=False):
+        with atril_helpers.selection_session(atril, native=False):
             assert tuple(Atspi.Text.get_caret_offset(page) for page in atril.pages) == (-1, -1)
             yield atril
     finally:
         keyboard.tap_key(keyboard.KEYSYM_F7)
-        capture(atril)
+        helpers.capture(atril)
 
 
 @pytest.mark.native_app
@@ -67,7 +65,7 @@ def native_caret_disabled(atril: AtrilSession) -> Iterator[AtrilSession]:
             [],
             ["o"],
             ["D"],
-            BrailleLine(2, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(2, "Do headings work?", "Do headings work?", "\x00" * 17),
         ),
         (
             keyboard.KEYSYM_RIGHT,
@@ -75,7 +73,7 @@ def native_caret_disabled(atril: AtrilSession) -> Iterator[AtrilSession]:
             [keyboard.KEYSYM_CONTROL_L],
             ["Do"],
             ["Do"],
-            BrailleLine(3, "Do headings work?", "Do headings work?", "\x00" * 17),
+            helpers.BrailleLine(3, "Do headings work?", "Do headings work?", "\x00" * 17),
         ),
         (
             keyboard.KEYSYM_DOWN,
@@ -83,7 +81,7 @@ def native_caret_disabled(atril: AtrilSession) -> Iterator[AtrilSession]:
             [],
             ["Hello world.\n"],
             ["Do headings work?\n"],
-            BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
+            helpers.BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
         ),
     ],
     ids=["character", "word", "line"],
@@ -95,13 +93,13 @@ def test_navigation(
     modifiers: list[int],
     spoken: list[str],
     reverse_spoken: list[str],
-    brailled: BrailleLine,
+    brailled: helpers.BrailleLine,
 ) -> None:
     """Checks forward and reverse movement without a native caret or selection."""
 
     session = native_caret_disabled
     # Atril reports -1 for both offsets while its native caret is disabled.
-    assert_navigation(
+    atril_helpers.assert_navigation(
         session,
         forward,
         modifiers,
@@ -109,12 +107,12 @@ def test_navigation(
         brailled,
         (-1, -1),
     )
-    assert_navigation(
+    atril_helpers.assert_navigation(
         session,
         backward,
         modifiers,
         reverse_spoken,
-        BrailleLine(1, "Do headings work?", "Do headings work?", "\x00" * 17),
+        helpers.BrailleLine(1, "Do headings work?", "Do headings work?", "\x00" * 17),
         (-1, -1),
     )
 
@@ -135,31 +133,31 @@ def test_navigation_between_pages(native_caret_disabled: AtrilSession) -> None:
         ("Another one!\n", "Another one!", "\x40" * 12),
         ("The end.", "The end.", "\x00" * 8),
     ):
-        assert_navigation(
+        atril_helpers.assert_navigation(
             session,
             keyboard.KEYSYM_DOWN,
             [],
             [spoken],
-            BrailleLine(1, text, text, mask),
+            helpers.BrailleLine(1, text, text, mask),
             (-1, -1),
         )
-    assert_navigation(
+    atril_helpers.assert_navigation(
         session,
         keyboard.KEYSYM_DOWN,
         [],
         ["More pages!\n", "Page 2"],
-        BrailleLine(1, "More pages!", "More pages!", "\x00" * 11),
+        helpers.BrailleLine(1, "More pages!", "More pages!", "\x00" * 11),
         (-1, -1),
-        BrailleLine(0, "Page 2", "Page 2", "\x00" * 6),
+        helpers.BrailleLine(0, "Page 2", "Page 2", "\x00" * 6),
     )
-    assert_navigation(
+    atril_helpers.assert_navigation(
         session,
         keyboard.KEYSYM_UP,
         [],
         ["The end.", "page", "Page 1"],
-        BrailleLine(1, "The end.", "The end.", "\x00" * 8),
+        helpers.BrailleLine(1, "The end.", "The end.", "\x00" * 8),
         (-1, -1),
-        BrailleLine(0, "Page 1", "Page 1", "\x00" * 6),
+        helpers.BrailleLine(0, "Page 1", "Page 1", "\x00" * 6),
     )
 
 
@@ -173,19 +171,23 @@ def test_navigation_between_pages(native_caret_disabled: AtrilSession) -> None:
             [
                 (
                     ["D", "selected"],
-                    BrailleLine(2, "Do headings work?", "Do headings work?", "\xc0" + "\x00" * 16),
+                    helpers.BrailleLine(
+                        2, "Do headings work?", "Do headings work?", "\xc0" + "\x00" * 16
+                    ),
                     1,
                 ),
                 (
                     ["o", "selected"],
-                    BrailleLine(
+                    helpers.BrailleLine(
                         3, "Do headings work?", "Do headings work?", "\xc0" * 2 + "\x00" * 15
                     ),
                     2,
                 ),
                 (
                     ["o", "unselected"],
-                    BrailleLine(2, "Do headings work?", "Do headings work?", "\xc0" + "\x00" * 16),
+                    helpers.BrailleLine(
+                        2, "Do headings work?", "Do headings work?", "\xc0" + "\x00" * 16
+                    ),
                     1,
                 ),
             ],
@@ -197,21 +199,21 @@ def test_navigation_between_pages(native_caret_disabled: AtrilSession) -> None:
             [
                 (
                     ["Do", "selected"],
-                    BrailleLine(
+                    helpers.BrailleLine(
                         3, "Do headings work?", "Do headings work?", "\xc0" * 2 + "\x00" * 15
                     ),
                     2,
                 ),
                 (
                     ["headings", "selected"],
-                    BrailleLine(
+                    helpers.BrailleLine(
                         12, "Do headings work?", "Do headings work?", "\xc0" * 11 + "\x00" * 6
                     ),
                     11,
                 ),
                 (
                     ["headings", "unselected"],
-                    BrailleLine(
+                    helpers.BrailleLine(
                         4, "Do headings work?", "Do headings work?", "\xc0" * 3 + "\x00" * 14
                     ),
                     3,
@@ -225,17 +227,17 @@ def test_navigation_between_pages(native_caret_disabled: AtrilSession) -> None:
             [
                 (
                     ["Do headings work?", "selected"],
-                    BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
+                    helpers.BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
                     17,
                 ),
                 (
                     ["Hello world.", "selected"],
-                    BrailleLine(1, "I am a test.", "I am a test.", "\x00" * 12),
+                    helpers.BrailleLine(1, "I am a test.", "I am a test.", "\x00" * 12),
                     30,
                 ),
                 (
                     ["Hello world.", "unselected"],
-                    BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
+                    helpers.BrailleLine(1, "Hello world.", "Hello world.", "\x00" * 12),
                     17,
                 ),
             ],
@@ -244,17 +246,19 @@ def test_navigation_between_pages(native_caret_disabled: AtrilSession) -> None:
     ],
     ids=["character", "word", "line"],
 )
-@requires_atril_version(1, 28, 7)
+@version_helpers.requires_atril_version(1, 28, 7)
 def test_selection(
     native_caret_disabled: AtrilSession,
     forward: str,
     backward: str,
-    steps: list[tuple[list[str], BrailleLine, int]],
+    steps: list[tuple[list[str], helpers.BrailleLine, int]],
     selected_text: str,
 ) -> None:
     """Checks extending, shrinking, and querying selection without the native caret."""
 
     session = native_caret_disabled
     for command, (spoken, brailled, end) in zip((forward, forward, backward), steps, strict=True):
-        assert_step(session, command, spoken, brailled, ([(0, end)], []), native=False)
-    assert say_selection(session) == [f"Selected text is:  {selected_text}"]
+        atril_helpers.assert_step(
+            session, command, spoken, brailled, ([(0, end)], []), native=False
+        )
+    assert helpers.say_selection(session) == [f"Selected text is:  {selected_text}"]

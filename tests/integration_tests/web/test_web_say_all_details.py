@@ -28,7 +28,6 @@ import pytest
 
 from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -65,4 +64,4 @@ def test_say_all_continues_past_details(
         session, "toggle button collapsed", firefox="collapsed button"
     )
     assert " ".join(spoken) == f"Before details. More options {role} After details."
-    assert brailled[-1] == BrailleLine(1, "After details.", "After details.", "\x00" * 14)
+    assert brailled[-1] == helpers.BrailleLine(1, "After details.", "After details.", "\x00" * 14)

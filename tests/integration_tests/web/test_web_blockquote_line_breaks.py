@@ -26,14 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    capture,
-    expected_for_browser,
-    move_to_top,
-    reset_web_state,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -41,8 +35,8 @@ if TYPE_CHECKING:
 
 # Firefox exposes trailing spaces in these document text ranges; Chromium omits them.
 def _lines_down(session: BrowserSession) -> list[tuple[list[str], str]]:
-    after = expected_for_browser(session, "after", firefox="after ")
-    after_break = expected_for_browser(session, "after break", firefox="after break ")
+    after = helpers.expected_for_browser(session, "after", firefox="after ")
+    after_break = helpers.expected_for_browser(session, "after break", firefox="after break ")
     return [
         (["block quote", "foo"], "foo block quote"),
         (["bar"], "bar block quote"),
@@ -72,8 +66,8 @@ def _lines_down(session: BrowserSession) -> list[tuple[list[str], str]]:
 
 
 def _lines_up(session: BrowserSession) -> list[list[str]]:
-    after = expected_for_browser(session, "after", firefox="after ")
-    before = expected_for_browser(session, "before", firefox="before ")
+    after = helpers.expected_for_browser(session, "after", firefox="after ")
+    before = helpers.expected_for_browser(session, "before", firefox="before ")
     return [
         ["blank"],
         ["block quote", "more quoted before break"],
@@ -107,12 +101,12 @@ def test_line_navigation_down(web_blockquote_line_breaks: BrowserSession) -> Non
     """Tests line navigation down."""
 
     session = web_blockquote_line_breaks
-    reset_web_state(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
 
     for expected_speech, expected_line in _lines_down(session):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == expected_speech
         assert [line.full for line in brailled] == [expected_line]
 
@@ -122,12 +116,12 @@ def test_line_navigation_up(web_blockquote_line_breaks: BrowserSession) -> None:
     """Tests line navigation up."""
 
     session = web_blockquote_line_breaks
-    reset_web_state(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
     for _i in range(len(_lines_down(session))):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        speech(session)
+        helpers.speech(session)
 
     for expected_speech in _lines_up(session):
         keyboard.tap_key(keyboard.KEYSYM_UP)
-        assert speech(session) == expected_speech
+        assert helpers.speech(session) == expected_speech

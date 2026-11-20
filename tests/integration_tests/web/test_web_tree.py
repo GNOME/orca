@@ -26,14 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_browser,
-    reset_web_state,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -44,15 +38,15 @@ def test_caret_navigation_treats_tree_as_whole(web_tree: BrowserSession) -> None
     """Tests that ordinary browse mode presents the tree without descending it."""
 
     session = web_tree
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     for _ in range(2):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        assert speech(session) == ["Food", "tree"]
+        assert helpers.speech(session) == ["Food", "tree"]
         assert not session.orca.get("DocumentPresenter", "InFocusMode")
 
         keyboard.tap_key(keyboard.KEYSYM_UP)
-        assert speech(session) == ["Tree", "heading 1"]
+        assert helpers.speech(session) == ["Tree", "heading 1"]
 
 
 @pytest.mark.native_app
@@ -60,46 +54,46 @@ def test_tree_navigation_level_and_expansion(web_tree: BrowserSession) -> None:
     """Tests tree item level, expand/collapse, and arrow navigation including a revealed child."""
 
     session = web_tree
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     # Firefox includes list bullets in tree item names; Chromium omits them.
-    fruits = expected_for_browser(session, "Fruits", firefox="• Fruits")
-    apple = expected_for_browser(session, "Apple", firefox="◦ Apple")
-    banana = expected_for_browser(session, "Banana", firefox="◦ Banana")
-    vegetables = expected_for_browser(session, "Vegetables", firefox="• Vegetables")
-    carrot = expected_for_browser(session, "Carrot", firefox="◦ Carrot")
+    fruits = helpers.expected_for_browser(session, "Fruits", firefox="• Fruits")
+    apple = helpers.expected_for_browser(session, "Apple", firefox="◦ Apple")
+    banana = helpers.expected_for_browser(session, "Banana", firefox="◦ Banana")
+    vegetables = helpers.expected_for_browser(session, "Vegetables", firefox="• Vegetables")
+    carrot = helpers.expected_for_browser(session, "Carrot", firefox="◦ Carrot")
 
     # Tab focuses the tree's first item, an expanded level-1 node.
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == [fruits, "expanded", "tree level 1", "Focus mode"]
+    assert helpers.speech(session) == [fruits, "expanded", "tree level 1", "Focus mode"]
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert speech(session) == ["collapsed"]
+    assert helpers.speech(session) == ["collapsed"]
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert speech(session) == ["expanded"]
+    assert helpers.speech(session) == ["expanded"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == [apple, "tree level 2"]
+    assert helpers.speech(session) == [apple, "tree level 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == [banana]
+    assert helpers.speech(session) == [banana]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == [vegetables, "collapsed", "tree level 1"]
+    assert helpers.speech(session) == [vegetables, "collapsed", "tree level 1"]
 
     # Expanding the collapsed node reveals its child, which Down then reaches.
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert speech(session) == ["expanded"]
+    assert helpers.speech(session) == ["expanded"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == [carrot, "tree level 2"]
+    assert helpers.speech(session) == [carrot, "tree level 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == [vegetables, "expanded", "tree level 1"]
+    assert helpers.speech(session) == [vegetables, "expanded", "tree level 1"]
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert speech(session) == ["collapsed"]
+    assert helpers.speech(session) == ["collapsed"]
 
 
 @pytest.mark.native_app
@@ -117,22 +111,22 @@ def test_checkable_tree_item_navigation(
     """Presents a tree item's checked state when it gains focus."""
 
     session = web_tree
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("BraillePresenter", "DisplayAncestors", False)
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_END)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
     for _ in range(index):
-        capture(session)
+        helpers.capture(session)
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [name, state]
     text = f"{indicator} {name} TREE LEVEL 1"
-    assert brailled[-1] == BrailleLine(1, text, text, "\x00" * len(text))
+    assert brailled[-1] == helpers.BrailleLine(1, text, text, "\x00" * len(text))
 
 
 @pytest.mark.native_app
@@ -141,25 +135,25 @@ def test_checkable_tree_item_toggle(web_tree: BrowserSession, index: int, name: 
     """Presents both checked states when Space toggles a tree item."""
 
     session = web_tree
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("BraillePresenter", "DisplayAncestors", False)
     for _ in range(2):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
-        capture(session)
+        helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    capture(session)
+    helpers.capture(session)
     for _ in range(index):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        capture(session)
+        helpers.capture(session)
     states = [("checked", "<x>"), ("not checked", "< >")]
     if index:
         states.reverse()
     for state, indicator in states:
         keyboard.tap_key(keyboard.KEYSYM_SPACE)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == [state]
         text = f"{indicator} {name} TREE LEVEL 1"
-        assert brailled[-1] == BrailleLine(1, text, text, "\x00" * len(text))
+        assert brailled[-1] == helpers.BrailleLine(1, text, text, "\x00" * len(text))
 
 
 @pytest.mark.native_app
@@ -167,18 +161,18 @@ def test_checkable_expandable_tree_item(web_tree: BrowserSession) -> None:
     """Speaks only the changed state while braille retains both tree-item states."""
 
     session = web_tree
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("BraillePresenter", "DisplayAncestors", False)
     for _ in range(2):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
-        capture(session)
+        helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Bag", "checked", "collapsed"]
     text = "<x> Bag collapsed TREE LEVEL 1"
-    assert brailled[-1] == BrailleLine(1, text, text, "\x00" * len(text))
+    assert brailled[-1] == helpers.BrailleLine(1, text, text, "\x00" * len(text))
 
     for key, state, indicator, expansion in (
         (keyboard.KEYSYM_RIGHT, "expanded", "<x>", "expanded"),
@@ -191,7 +185,7 @@ def test_checkable_expandable_tree_item(web_tree: BrowserSession) -> None:
         (keyboard.KEYSYM_LEFT, "collapsed", "<x>", "collapsed"),
     ):
         keyboard.tap_key(key)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == [state]
         text = f"{indicator} Bag {expansion} TREE LEVEL 1"
-        assert brailled[-1] == BrailleLine(1, text, text, "\x00" * len(text))
+        assert brailled[-1] == helpers.BrailleLine(1, text, text, "\x00" * len(text))

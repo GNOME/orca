@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -38,45 +38,45 @@ def test_moving_the_splitters(web_window_splitter: BrowserSession) -> None:
     """Tests tabbing to a vertical and a horizontal splitter and moving each one."""
 
     session = web_window_splitter
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Notes pane size", "vertical splitter", "50", "50 percent.", "Focus mode"]
-    assert brailled[-1] == BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
+    assert brailled[-1] == helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["60"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Notes pane size 60 vertical splitter", "Notes pane size 60 vertical spli", "\x00" * 36
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["50"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Notes pane size 50 vertical splitter", "Notes pane size 50 vertical spli", "\x00" * 36
     )
 
     keyboard.tap_key(keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["100"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Notes pane size 100 vertical splitter", "Notes pane size 100 vertical spl", "\x00" * 37
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Notes pane size", "vertical splitter", "100", "100 percent."]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Notes pane size 100 vertical splitter", "Notes pane size 100 vertical spl", "\x00" * 37
     )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Message list size", "horizontal splitter", "40", "40 percent."]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "Message list size 40 horizontal splitter",
         "Message list size 40 horizontal ",
@@ -84,9 +84,9 @@ def test_moving_the_splitters(web_window_splitter: BrowserSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["50"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "Message list size 50 horizontal splitter",
         "Message list size 50 horizontal ",
@@ -94,9 +94,9 @@ def test_moving_the_splitters(web_window_splitter: BrowserSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["40"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "Message list size 40 horizontal splitter",
         "Message list size 40 horizontal ",
@@ -104,9 +104,9 @@ def test_moving_the_splitters(web_window_splitter: BrowserSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["0"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "Message list size 0 horizontal splitter",
         "Message list size 0 horizontal s",
@@ -114,9 +114,9 @@ def test_moving_the_splitters(web_window_splitter: BrowserSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Message list size", "horizontal splitter", "0", "0 percent."]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "Message list size 0 horizontal splitter",
         "Message list size 0 horizontal s",

@@ -26,16 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import caret_selection_helpers, helpers
 from tests.integration_tests.apps import browser
-from tests.integration_tests.caret_selection_helpers import NEXT_CHARACTER, PREVIOUS_CHARACTER
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    move_to_bottom,
-    move_to_top,
-    reset_web_state,
-    say_selection,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -77,15 +70,15 @@ def test_heading_navigation_across_weird_headings(web_weird_headings: BrowserSes
     """Tests heading navigation presents each heading by its text or, if none, its name."""
 
     session = web_weird_headings
-    reset_web_state(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
     for expected in _HEADINGS:
         keyboard.tap_key(keyboard.KEYSYM_2)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
     for expected in reversed(_HEADINGS[:-1]):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
-        assert speech(session) == ["H", *expected[1:]]
+        assert helpers.speech(session) == ["H", *expected[1:]]
 
 
 @pytest.mark.parametrize(
@@ -106,22 +99,22 @@ def test_empty_aria_heading_is_a_single_caret_stop(
     """Tests that a text-less aria-labeled heading is one caret stop with its name and role."""
 
     session = web_weird_headings
-    reset_web_state(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
     for _ in range(heading_number - 1):
         keyboard.tap_key(keyboard.KEYSYM_2)
-        speech(session)
+        helpers.speech(session)
     keyboard.tap_key(keyboard.KEYSYM_2)
-    assert speech(session) == ["2", name, "heading 2"]
+    assert helpers.speech(session) == ["2", name, "heading 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert speech(session) == ["O"]
+    assert helpers.speech(session) == ["O"]
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert speech(session) == [name, "heading 2"]
+    assert helpers.speech(session) == [name, "heading 2"]
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert speech(session) == [preceding_character]
+    assert helpers.speech(session) == [preceding_character]
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert speech(session) == [name, "heading 2"]
+    assert helpers.speech(session) == [name, "heading 2"]
 
 
 @pytest.mark.native_app
@@ -131,27 +124,27 @@ def test_names_with_empty_children_in_links_and_headers(
     """Tests names survive empty children in links and both kinds of table header."""
 
     session = web_weird_headings
-    reset_web_state(session)
-    move_to_bottom(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_bottom(session)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_K)
-    assert speech(session) == ["K", "Named empty link", "link"]
+    assert helpers.speech(session) == ["K", "Named empty link", "link"]
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_K)
-    speech(session)
+    helpers.speech(session)
     keyboard.tap_key(keyboard.KEYSYM_K)
-    assert speech(session) == ["k", "Named empty link", "link"]
+    assert helpers.speech(session) == ["k", "Named empty link", "link"]
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     keyboard.tap_key(keyboard.KEYSYM_T)
-    assert speech(session) == [
+    assert helpers.speech(session) == [
         "t",
         "table with 2 rows 2 columns",
         "Named column",
         "column header",
     ]
     keyboard.press_chord([keyboard.KEYSYM_ALT_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Named row", "row header", "Row 2, column 1."]
+    assert helpers.speech(session) == ["Named row", "row header", "Row 2, column 1."]
     keyboard.press_chord([keyboard.KEYSYM_ALT_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_UP)
-    assert speech(session) == ["Named column", "column header", "Row 1, column 1."]
+    assert helpers.speech(session) == ["Named column", "column header", "Row 1, column 1."]
 
 
 @pytest.mark.native_app
@@ -161,14 +154,14 @@ def test_named_heading_with_text_remains_caret_navigable(
     """Tests an author-provided name does not replace a heading's navigable text."""
 
     session = web_weird_headings
-    reset_web_state(session)
-    move_to_bottom(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_bottom(session)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
-    assert speech(session) == ["H", "Readable heading", "heading 2"]
+    assert helpers.speech(session) == ["H", "Readable heading", "heading 2"]
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert speech(session) == ["e"]
+    assert helpers.speech(session) == ["e"]
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert speech(session) == ["R"]
+    assert helpers.speech(session) == ["R"]
 
 
 # Gecko lacks the Document selection API: https://bugzilla.mozilla.org/show_bug.cgi?id=1879510
@@ -196,20 +189,21 @@ def test_heading_selection_uses_text_not_the_accessible_name(
     """Tests character selection uses exposed text rather than an author's label."""
 
     session = web_weird_headings
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     for _ in range(heading_number):
         keyboard.tap_key(keyboard.KEYSYM_2)
-        speech(session)
+        helpers.speech(session)
 
     for character in selected_text:
-        session.orca.select_with_caret_navigator(NEXT_CHARACTER)
-        assert speech(session) == [character, "selected"]
-    assert say_selection(session) == [f"Selected text is:  {selected_text}"]
+        session.orca.select_with_caret_navigator(caret_selection_helpers.NEXT_CHARACTER)
+        assert helpers.speech(session) == [character, "selected"]
+    assert helpers.say_selection(session) == [f"Selected text is:  {selected_text}"]
     for character in reversed(selected_text):
-        session.orca.select_with_caret_navigator(PREVIOUS_CHARACTER)
-        actual = speech(session)
+        session.orca.select_with_caret_navigator(caret_selection_helpers.PREVIOUS_CHARACTER)
+        actual = helpers.speech(session)
         assert actual == [character, "unselected"], (
-            f"Late speech after unselection: {speech(session, wait_async=True, overall=3.0)!r}\n"
-            f"Selection query afterward: {say_selection(session)!r}"
+            "Late speech after unselection: "
+            f"{helpers.speech(session, wait_async=True, overall=3.0)!r}\n"
+            f"Selection query afterward: {helpers.say_selection(session)!r}"
         )
-    assert say_selection(session) == ["No selected text."]
+    assert helpers.say_selection(session) == ["No selected text."]

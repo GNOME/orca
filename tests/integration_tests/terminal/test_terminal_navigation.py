@@ -26,10 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, terminal_helpers
 from tests.integration_tests.apps import terminal
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.terminal_helpers import settle, type_text
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -95,7 +94,7 @@ def test_nano_line_navigation_repaint_speaks_each_line_once(
     """Tests line navigation through nano repaints speaks the current line exactly once."""
 
     session = terminal_nano
-    settle(session)
+    terminal_helpers.settle(session)
 
     blank_in_previous = False
     for line_number in range(2, _NANO_LINE_COUNT + 1):
@@ -119,7 +118,7 @@ def test_vim_line_navigation_speaks_only_the_current_line(
     """Tests that scrolling line navigation in Vim speaks the caret's line and nothing else."""
 
     session = terminal_vim_scroll
-    settle(session)
+    terminal_helpers.settle(session)
 
     # Each arrow key repaints Vim's pending command area and ruler, and scrolls a row in.
     for line_number in range(2, 13):
@@ -145,7 +144,7 @@ def test_vim_line_navigation_from_bottom_row_omits_the_ruler(
     """Tests that a scroll which repaints the caret's line and the ruler speaks only the line."""
 
     session = terminal_vim_bottom
-    settle(session)
+    terminal_helpers.settle(session)
 
     for line in _VIM_BOTTOM_LINES[1:]:
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -165,9 +164,9 @@ def test_shell_history_recall_speaks_the_recalled_command(
     """Tests that recalling a command from the shell's history speaks what was recalled."""
 
     session = terminal_shell
-    settle(session)
+    terminal_helpers.settle(session)
 
-    type_text("echo hi\n")
+    terminal_helpers.type_text("echo hi\n")
     session.reader.drain(quiescence_timeout=0.5, overall_timeout=3.0)
     session.reader.reset()
 
@@ -186,7 +185,7 @@ def test_pager_navigation_speaks_each_page(terminal_pager: NativeAppSession) -> 
     """Tests that paging through Less forward and back speaks each newly shown page."""
 
     session = terminal_pager
-    settle(session)
+    terminal_helpers.settle(session)
 
     # The first page-down leaves the initial filename-status paint behind; discard it
     # so the asserted pages start from a settled prompt-status state.
@@ -237,7 +236,7 @@ def test_caret_navigation_in_a_pager(terminal_pager: NativeAppSession) -> None:
     """Tests caret navigation in a pager when Orca controls the caret."""
 
     session = terminal_pager
-    settle(session)
+    terminal_helpers.settle(session)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
     assert helpers.capture(session) == (
@@ -322,7 +321,7 @@ def test_caret_navigation_at_the_start_and_end(terminal_pager: NativeAppSession)
     """Tests caret navigation at the start and end of a terminal."""
 
     session = terminal_pager
-    settle(session)
+    terminal_helpers.settle(session)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
     assert helpers.capture(session)[0] == [_ORCA_CONTROLS]

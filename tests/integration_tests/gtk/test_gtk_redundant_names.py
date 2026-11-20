@@ -26,34 +26,29 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.apps import gtk
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_gtk,
-    tab_and_swallow_presentation,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
 
 _FRAME = "OrcaRedundantNames application frame "
 # GTK4 exposes named content groups instead of GTK3's panels.
-_DETAILS_LINE = expected_for_gtk(
+_DETAILS_LINE = helpers.expected_for_gtk(
     "OrcaRedundantNames application frame panel Details button",
     gtk4="OrcaRedundantNames application frame Details button",
 )
-_OPTIONS_LINE = expected_for_gtk(
+_OPTIONS_LINE = helpers.expected_for_gtk(
     "OrcaRedundantNames application frame Options panel Save button",
     gtk4="OrcaRedundantNames application frame Options grouping Save button",
 )
 _WEATHER_LINE = "OrcaRedundantNames application frame Weather button"
 
 
-def _combo_line(table: str) -> BrailleLine:
+def _combo_line(table: str) -> helpers.BrailleLine:
     full = f"{_FRAME}Contraction Table: {table} combo box Alt+T"
-    return BrailleLine(20, full, full[len(_FRAME) : len(_FRAME) + 32], "\x00" * len(full))
+    return helpers.BrailleLine(20, full, full[len(_FRAME) : len(_FRAME) + 32], "\x00" * len(full))
 
 
 @pytest.mark.native_app
@@ -63,47 +58,47 @@ def test_container_name_matching_focused_widget(gtk_redundant_names: NativeAppSe
     session = gtk_redundant_names
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Details button"],
-        [BrailleLine(1, _DETAILS_LINE, "Details button", "\x00" * len(_DETAILS_LINE))],
+        [helpers.BrailleLine(1, _DETAILS_LINE, "Details button", "\x00" * len(_DETAILS_LINE))],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER, click_count=2)
-    assert capture(session) == (
-        expected_for_gtk(["panel", "Details button"], gtk4=["Details button"]),
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["panel", "Details button"], gtk4=["Details button"]),
         [
-            BrailleLine(1, _DETAILS_LINE, "Details button", "\x00" * len(_DETAILS_LINE)),
-            BrailleLine(1, _DETAILS_LINE, "Details button", "\x00" * len(_DETAILS_LINE)),
+            helpers.BrailleLine(1, _DETAILS_LINE, "Details button", "\x00" * len(_DETAILS_LINE)),
+            helpers.BrailleLine(1, _DETAILS_LINE, "Details button", "\x00" * len(_DETAILS_LINE)),
         ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert capture(session) == (
-        [expected_for_gtk("Options panel", gtk4="Options grouping"), "Save button"],
-        [BrailleLine(1, _OPTIONS_LINE, "Save button", "\x00" * len(_OPTIONS_LINE))],
+    assert helpers.capture(session) == (
+        [helpers.expected_for_gtk("Options panel", gtk4="Options grouping"), "Save button"],
+        [helpers.BrailleLine(1, _OPTIONS_LINE, "Save button", "\x00" * len(_OPTIONS_LINE))],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER, click_count=2)
-    assert capture(session) == (
-        [expected_for_gtk("Options panel", gtk4="Options grouping"), "Save button"],
+    assert helpers.capture(session) == (
+        [helpers.expected_for_gtk("Options panel", gtk4="Options grouping"), "Save button"],
         [
-            BrailleLine(1, _OPTIONS_LINE, "Save button", "\x00" * len(_OPTIONS_LINE)),
-            BrailleLine(1, _OPTIONS_LINE, "Save button", "\x00" * len(_OPTIONS_LINE)),
+            helpers.BrailleLine(1, _OPTIONS_LINE, "Save button", "\x00" * len(_OPTIONS_LINE)),
+            helpers.BrailleLine(1, _OPTIONS_LINE, "Save button", "\x00" * len(_OPTIONS_LINE)),
         ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Weather button"],
-        [BrailleLine(1, _WEATHER_LINE, "Weather button", "\x00" * 51)],
+        [helpers.BrailleLine(1, _WEATHER_LINE, "Weather button", "\x00" * 51)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER, click_count=2)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Weather button"],
         [
-            BrailleLine(1, _WEATHER_LINE, "Weather button", "\x00" * 51),
-            BrailleLine(1, _WEATHER_LINE, "Weather button", "\x00" * 51),
+            helpers.BrailleLine(1, _WEATHER_LINE, "Weather button", "\x00" * 51),
+            helpers.BrailleLine(1, _WEATHER_LINE, "Weather button", "\x00" * 51),
         ],
     )
 
@@ -120,46 +115,46 @@ def test_arrowing_a_combo_box_with_similar_item_names(
 
     session = gtk_redundant_names
     for _ in range(3):
-        tab_and_swallow_presentation(session)
+        helpers.tab_and_swallow_presentation(session)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Contraction Table: English, U.S., contracted combo box", "Alt+T"],
         [_combo_line("English, U.S., contracted")],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["English, U.S., uncontracted"],
         [_combo_line("English, U.S., uncontracted")],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["English, unified, contracted"],
         [_combo_line("English, unified, contracted")],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["English, unified, uncontracted"],
         [_combo_line("English, unified, uncontracted")],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Esperanto"],
         [_combo_line("Esperanto")],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["English, unified, uncontracted"],
         [_combo_line("English, unified, uncontracted")],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["English, unified, contracted"],
         [_combo_line("English, unified, contracted")],
     )
@@ -178,16 +173,16 @@ def test_position_in_set_when_arrowing_a_combo_box(
     session = gtk_redundant_names
     session.orca.set("SpeechPresenter", "SpeakPositionInSet", True)
     for _ in range(3):
-        tab_and_swallow_presentation(session)
+        helpers.tab_and_swallow_presentation(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["English, U.S., uncontracted", "2 of 5"],
         [_combo_line("English, U.S., uncontracted")],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["English, unified, contracted", "3 of 5"],
         [_combo_line("English, unified, contracted")],
     )

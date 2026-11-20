@@ -31,14 +31,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.apps import gtk
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_gtk,
-    toggle_flat_review,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -47,15 +42,15 @@ if TYPE_CHECKING:
 def _review_second_line_then_switch_away_and_back(session: NativeAppSession) -> None:
     """Reviews the second line, switches to the other window, and returns to this one."""
 
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
 
     keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
-    assert capture(session) == (
-        [expected_for_gtk("Second line.\n", gtk4="Second line.")],
-        [BrailleLine(1, "Second line. $l", "Second line. $l", "\x00" * 15)],
+    assert helpers.capture(session) == (
+        [helpers.expected_for_gtk("Second line.\n", gtk4="Second line.")],
+        [helpers.BrailleLine(1, "Second line. $l", "Second line. $l", "\x00" * 15)],
     )
 
     # F2 activates the second window; F3 returns to the first.
@@ -81,9 +76,9 @@ def test_focus_tracking_on_resets_review_on_window_change(
     _review_second_line_then_switch_away_and_back(session)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-    assert capture(session) == (
-        [expected_for_gtk("First line.\n", gtk4="First line.")],
-        [BrailleLine(1, "First line. $l", "First line. $l", "\x00" * 14)],
+    assert helpers.capture(session) == (
+        [helpers.expected_for_gtk("First line.\n", gtk4="First line.")],
+        [helpers.BrailleLine(1, "First line. $l", "First line. $l", "\x00" * 14)],
     )
 
 
@@ -101,9 +96,9 @@ def test_focus_tracking_off_keeps_review_on_window_change(
     _review_second_line_then_switch_away_and_back(session)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-    assert capture(session) == (
-        [expected_for_gtk("Second line.\n", gtk4="Second line.")],
-        [BrailleLine(1, "Second line. $l", "Second line. $l", "\x00" * 15)],
+    assert helpers.capture(session) == (
+        [helpers.expected_for_gtk("Second line.\n", gtk4="Second line.")],
+        [helpers.BrailleLine(1, "Second line. $l", "Second line. $l", "\x00" * 15)],
     )
 
 
@@ -121,9 +116,9 @@ def test_focus_tracking_auto_keeps_review_on_window_change(
     _review_second_line_then_switch_away_and_back(session)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-    assert capture(session) == (
-        [expected_for_gtk("Second line.\n", gtk4="Second line.")],
-        [BrailleLine(1, "Second line. $l", "Second line. $l", "\x00" * 15)],
+    assert helpers.capture(session) == (
+        [helpers.expected_for_gtk("Second line.\n", gtk4="Second line.")],
+        [helpers.BrailleLine(1, "Second line. $l", "Second line. $l", "\x00" * 15)],
     )
 
 
@@ -149,7 +144,7 @@ def test_reviewing_after_window_switch_presents_the_new_window(
 
     session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
 
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
@@ -159,10 +154,10 @@ def test_reviewing_after_window_switch_presents_the_new_window(
     session.reader.reset()
 
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Second Second window entry"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 20,
                 "Second Second window entry $l",
                 "Second window entry $l",

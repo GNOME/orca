@@ -26,13 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    expected_for_browser,
-    reset_web_state,
-    speech,
-    xfail_firefox_native_select,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -40,12 +35,12 @@ if TYPE_CHECKING:
 
 def _toggle_mode(session: BrowserSession) -> list[str]:
     session.orca.press_orca_key(keyboard.KEYSYM_A)
-    return speech(session)
+    return helpers.speech(session)
 
 
 def _next(session: BrowserSession, keysym: int) -> list[str]:
     keyboard.tap_key(keysym)
-    return speech(session)
+    return helpers.speech(session)
 
 
 @pytest.mark.native_app
@@ -55,7 +50,7 @@ def test_manual_toggle_between_browse_and_focus_mode(
     """Tests that Orca+A toggles between focus mode and browse mode."""
 
     session = web_structural_navigation
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     assert _toggle_mode(session) == ["Focus mode"]
     assert _toggle_mode(session) == ["Browse mode"]
@@ -64,14 +59,14 @@ def test_manual_toggle_between_browse_and_focus_mode(
 
 
 @pytest.mark.native_app
-@xfail_firefox_native_select()
+@helpers.xfail_firefox_native_select()
 def test_native_navigation_switches_mode_automatically(
     web_structural_navigation: BrowserSession,
 ) -> None:
     """Tests that tabbing to a combo box enters focus mode and tabbing on leaves it."""
 
     session = web_structural_navigation
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     assert _next(session, keyboard.KEYSYM_TAB) == ["Save", "button"]
     assert _next(session, keyboard.KEYSYM_TAB) == ["Agree", "check box not checked"]
@@ -80,7 +75,7 @@ def test_native_navigation_switches_mode_automatically(
         "combo box",
         "Apple",
         # Firefox exposes a popup state without Chromium's haspopup=menu type.
-        expected_for_browser(session, "opens menu", firefox="opens popup"),
+        helpers.expected_for_browser(session, "opens menu", firefox="opens popup"),
         "Focus mode",
     ]
     assert _next(session, keyboard.KEYSYM_TAB) == ["City", "entry"]
@@ -98,7 +93,7 @@ def test_structural_navigation_stays_in_browse_mode(
     """Tests that quick-navigating to an entry does not auto-switch to focus mode."""
 
     session = web_structural_navigation
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     assert _next(session, keyboard.KEYSYM_E) == ["e", "City", "entry"]
     assert _toggle_mode(session) == ["Focus mode"]
@@ -113,11 +108,11 @@ def test_where_am_i_preserves_browse_mode(
     """Tests that querying a control does not switch from browse mode to focus mode."""
 
     session = web_structural_navigation
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     _next(session, key)
     assert not session.orca.get("DocumentPresenter", "InFocusMode")
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER, click_count=click_count)
-    spoken = speech(session)
+    spoken = helpers.speech(session)
     assert not session.orca.get("DocumentPresenter", "InFocusMode")
     assert "Focus mode" not in spoken

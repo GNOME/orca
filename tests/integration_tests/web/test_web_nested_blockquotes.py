@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import reset_web_state, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -40,11 +40,11 @@ def test_say_all_reads_all_nested_blockquote_sentences(
     """Tests that Say All does not skip text inside nested blockquotes."""
 
     session = web_nested_blockquotes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SayAllPresenter", "Style", "sentence")
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-    spoken = [utterance.strip() for utterance in speech(session)]
+    spoken = [utterance.strip() for utterance in helpers.speech(session)]
     assert spoken == [
         "Top post.",
         "block quote",

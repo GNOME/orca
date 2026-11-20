@@ -32,10 +32,10 @@ import pytest
 
 from orca.output_reader import BrailleRecord, SpeechRecord
 
+from . import version_helpers
 from .apps import browser, gtk
 from .apps.browser import BROWSERS
 from .harness import keyboard
-from .version_helpers import firefox_is_older_than_build
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -54,7 +54,7 @@ def xfail_firefox_caret_tab() -> pytest.MarkDecorator:
     """Marks tests affected by Firefox's caret/Tab bug on older builds."""
 
     return pytest.mark.xfail(
-        firefox_is_older_than_build(*_FIREFOX_CARET_TAB_FIXED),
+        version_helpers.firefox_is_older_than_build(*_FIREFOX_CARET_TAB_FIXED),
         reason=_FIREFOX_CARET_TAB_REASON,
         raises=AssertionError,
         strict=True,
@@ -66,8 +66,8 @@ def xfail_firefox_native_select() -> pytest.MarkDecorator:
 
     return pytest.mark.xfail(
         browser.selected_browser() == "firefox"
-        and not firefox_is_older_than_build(162, 20261110053316)
-        and firefox_is_older_than_build(162, 20261116094510),
+        and not version_helpers.firefox_is_older_than_build(162, 20261110053316)
+        and version_helpers.firefox_is_older_than_build(162, 20261116094510),
         reason="Firefox does not expose native select values or value-change events: "
         "https://bugzilla.mozilla.org/show_bug.cgi?id=2091657",
         raises=AssertionError,
@@ -79,7 +79,7 @@ def skip_firefox_caret_tab() -> pytest.MarkDecorator:
     """Skips tests whose setup needs Firefox's caret/Tab fix."""
 
     return pytest.mark.skipif(
-        firefox_is_older_than_build(*_FIREFOX_CARET_TAB_FIXED),
+        version_helpers.firefox_is_older_than_build(*_FIREFOX_CARET_TAB_FIXED),
         reason=_FIREFOX_CARET_TAB_REASON,
     )
 

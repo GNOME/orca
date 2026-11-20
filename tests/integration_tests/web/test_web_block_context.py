@@ -26,14 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    move_to_bottom,
-    move_to_top,
-    reset_web_state,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -84,11 +78,11 @@ def test_block_context_boundaries_stay_on_separate_lines(
     """Tests block content stays separate while flex rows of an image link and toggles group."""
 
     session = web_block_context
-    reset_web_state(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
     for expected_speech, expected_line in _LINES:
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        spoken, braille = capture(session)
+        spoken, braille = helpers.capture(session)
         assert spoken == expected_speech
         assert [line.full for line in braille] == [expected_line]
 
@@ -104,17 +98,17 @@ def test_clipped_buttons_share_line_with_links(
     """Tests clipped buttons remain on their links' line in both directions."""
 
     session = web_block_context
-    reset_web_state(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
     for _ in range(heading_count + (direction == keyboard.KEYSYM_UP)):
         keyboard.tap_key(keyboard.KEYSYM_H)
-        capture(session)
+        helpers.capture(session)
     if direction == keyboard.KEYSYM_UP:
         keyboard.tap_key(keyboard.KEYSYM_UP)
-        capture(session)
+        helpers.capture(session)
 
     keyboard.tap_key(direction)
-    spoken, braille = capture(session)
+    spoken, braille = helpers.capture(session)
     expected = ["List with 3 items"]
     for name in ("Motors", "Electronics", "Collectibles"):
         expected.extend([name, "link", f"Expand: {name}", "button"])
@@ -125,7 +119,7 @@ def test_clipped_buttons_share_line_with_links(
     )
 
     keyboard.tap_key(direction)
-    spoken, _ = capture(session)
+    spoken, _ = helpers.capture(session)
     heading = "Clipped buttons" if heading_count == 1 else "Clip-path buttons"
     expected = (
         ["leaving list.", heading, "heading 2"]
@@ -145,16 +139,16 @@ def test_landmark_whitespace_does_not_add_role(
     """Tests whitespace between controls does not add the landmark role to braille."""
 
     session = web_block_context
-    reset_web_state(session)
-    move_to_bottom(session)
-    capture(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_bottom(session)
+    helpers.capture(session)
     if direction == keyboard.KEYSYM_DOWN:
         for _ in range(2):
             keyboard.tap_key(keyboard.KEYSYM_UP)
-            capture(session)
+            helpers.capture(session)
 
     keyboard.tap_key(direction)
-    spoken, braille = capture(session)
+    spoken, braille = helpers.capture(session)
     assert spoken == ["banner", "First", "link", "Next", "button"]
     line = "First\u00a0Next button"
-    assert braille[-1] == BrailleLine(1, line, line, "\xc0" * 5 + "\x00" * 12)
+    assert braille[-1] == helpers.BrailleLine(1, line, line, "\xc0" * 5 + "\x00" * 12)

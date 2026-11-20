@@ -26,10 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, terminal_helpers
 from tests.integration_tests.apps import terminal
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.terminal_helpers import settle, type_text
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -59,9 +58,9 @@ def test_typed_characters_are_echoed(terminal_shell: NativeAppSession) -> None:
 
     session = terminal_shell
     _enable_key_echo(session)
-    settle(session)
+    terminal_helpers.settle(session)
 
-    type_text("a")
+    terminal_helpers.type_text("a")
     assert helpers.capture(session) == (
         ["a"],
         [
@@ -69,7 +68,7 @@ def test_typed_characters_are_echoed(terminal_shell: NativeAppSession) -> None:
             helpers.BrailleLine(4, "$ a", "$ a", "\x00" * 3),
         ],
     )
-    type_text("b")
+    terminal_helpers.type_text("b")
     assert helpers.capture(session) == (
         ["b"],
         [
@@ -94,9 +93,9 @@ def test_backspace_and_delete_at_the_prompt(terminal_shell: NativeAppSession) ->
 
     session = terminal_shell
     _enable_key_echo(session)
-    settle(session)
+    terminal_helpers.settle(session)
 
-    type_text("abc")
+    terminal_helpers.type_text("abc")
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
 
@@ -106,7 +105,7 @@ def test_backspace_and_delete_at_the_prompt(terminal_shell: NativeAppSession) ->
     assert helpers.capture(session) == (["b"], [helpers.BrailleLine(4, "$ a", "$ a", "\x00" * 3)])
 
     # Re-type and Left so Delete has something forward to act on.
-    type_text("d")
+    terminal_helpers.type_text("d")
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
@@ -129,9 +128,9 @@ def test_key_echo_while_typing_in_vim(terminal_vim: NativeAppSession) -> None:
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
 
-    type_text("a")
+    terminal_helpers.type_text("a")
     assert helpers.speech(session) == ["a"]
-    type_text("b")
+    terminal_helpers.type_text("b")
     assert helpers.speech(session) == ["b"]
 
 
@@ -150,9 +149,9 @@ def test_ctrl_backspace_at_the_prompt(terminal_shell: NativeAppSession) -> None:
 
     session = terminal_shell
     _enable_key_echo(session)
-    settle(session)
+    terminal_helpers.settle(session)
 
-    type_text("foo bar")
+    terminal_helpers.type_text("foo bar")
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_BACKSPACE)
@@ -164,9 +163,9 @@ def test_caret_movement_at_the_prompt(terminal_shell: NativeAppSession) -> None:
     """Checks speech and braille cursor movement in both directions."""
 
     session = terminal_shell
-    settle(session)
-    type_text("ab")
-    settle(session)
+    terminal_helpers.settle(session)
+    terminal_helpers.type_text("ab")
+    terminal_helpers.settle(session)
     for key, expected, cursor in (
         (keyboard.KEYSYM_LEFT, "b", 4),
         (keyboard.KEYSYM_RIGHT, "blank", 5),

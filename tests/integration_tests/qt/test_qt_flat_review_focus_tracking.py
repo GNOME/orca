@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, toggle_flat_review
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -35,11 +35,11 @@ if TYPE_CHECKING:
 
 def _review_first_entry_then_tab_to_second(session: NativeAppSession) -> None:
     """Reviews the first entry, confirms the location, then tabs to the second entry."""
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Apple pie recipe"],
-        [BrailleLine(17, "Apple pie recipe $l", "Apple pie recipe $l", "\x00" * 19)],
+        [helpers.BrailleLine(17, "Apple pie recipe $l", "Apple pie recipe $l", "\x00" * 19)],
     )
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
@@ -52,13 +52,16 @@ def test_empty_entry_includes_role(qt_two_entries: NativeAppSession) -> None:
     session = qt_two_entries
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
     keyboard.tap_key(keyboard.KEYSYM_BACKSPACE)
-    capture(session)
-    toggle_flat_review(session)
+    helpers.capture(session)
+    helpers.toggle_flat_review(session)
     try:
         keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-        assert capture(session) == (["text"], [BrailleLine(1, "text $l", "text $l", "\x00" * 7)])
+        assert helpers.capture(session) == (
+            ["text"],
+            [helpers.BrailleLine(1, "text $l", "text $l", "\x00" * 7)],
+        )
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
 
 
 @pytest.mark.native_app
@@ -72,9 +75,9 @@ def test_focus_tracking_off_keeps_review_on_unfocused_object(
     session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
     _review_first_entry_then_tab_to_second(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Apple pie recipe"],
-        [BrailleLine(11, "Apple pie recipe $l", "Apple pie recipe $l", "\x00" * 19)],
+        [helpers.BrailleLine(11, "Apple pie recipe $l", "Apple pie recipe $l", "\x00" * 19)],
     )
 
 
@@ -87,10 +90,10 @@ def test_focus_tracking_auto_follows_focus_to_new_object(qt_two_entries: NativeA
     session.orca.set("FlatReviewPresenter", "FocusTracking", 1)
     _review_first_entry_then_tab_to_second(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Banana bread recipe"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 20, "Banana bread recipe $l", "Banana bread recipe $l", "\xc0" * 19 + "\x00" * 3
             )
         ],
@@ -106,10 +109,10 @@ def test_focus_tracking_on_follows_focus_to_new_object(qt_two_entries: NativeApp
     session.orca.set("FlatReviewPresenter", "FocusTracking", 2)
     _review_first_entry_then_tab_to_second(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Banana bread recipe"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 20, "Banana bread recipe $l", "Banana bread recipe $l", "\xc0" * 19 + "\x00" * 3
             )
         ],

@@ -26,10 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, version_helpers
 from tests.integration_tests.apps import browser
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.version_helpers import firefox_is_older_than_build
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -738,7 +737,9 @@ def test_fieldset_legend_role_only_on_entry(web_form_fields: BrowserSession) -> 
 
 @pytest.mark.native_app
 # Firefox 156 includes the entry label in Where Am I.
-@pytest.mark.skipif(firefox_is_older_than_build(157, 0), reason="Needs Firefox 157 or later")
+@pytest.mark.skipif(
+    version_helpers.firefox_is_older_than_build(157, 0), reason="Needs Firefox 157 or later"
+)
 @helpers.xfail_firefox_native_select()
 def test_where_am_i_on_form_controls(web_form_fields: BrowserSession) -> None:
     """Tests Where Am I on entry, combo box, checkbox, radio button, and button."""
@@ -804,11 +805,13 @@ def test_where_am_i_on_form_controls(web_form_fields: BrowserSession) -> None:
 
 @pytest.mark.native_app
 # Firefox 156's caret/Tab failure depends on the preceding Where Am I test running.
-@pytest.mark.skipif(firefox_is_older_than_build(157, 0), reason="Needs Firefox 157 or later")
+@pytest.mark.skipif(
+    version_helpers.firefox_is_older_than_build(157, 0), reason="Needs Firefox 157 or later"
+)
 @helpers.xfail_firefox_caret_tab()
 @pytest.mark.xfail(
     browser.selected_browser() == "firefox"
-    and not firefox_is_older_than_build(162, 20261110053316),
+    and not version_helpers.firefox_is_older_than_build(162, 20261110053316),
     reason="Firefox does not expose position and set size for collapsed native select elements: "
     "https://bugzilla.mozilla.org/show_bug.cgi?id=1732284",
     raises=AssertionError,
@@ -846,7 +849,9 @@ def test_position_in_set_when_arrowing_a_combo_box(web_form_fields: BrowserSessi
 @pytest.mark.native_app
 @pytest.mark.parametrize("click_count", [1, 2], ids=["basic", "detailed"])
 # Firefox 156 unexpectedly passes the caret/Tab known failures in this test sequence.
-@pytest.mark.skipif(firefox_is_older_than_build(157, 0), reason="Needs Firefox 157 or later")
+@pytest.mark.skipif(
+    version_helpers.firefox_is_older_than_build(157, 0), reason="Needs Firefox 157 or later"
+)
 @helpers.xfail_firefox_caret_tab()
 def test_where_am_i_on_noneditable_combo_box(
     web_form_fields: BrowserSession, click_count: int

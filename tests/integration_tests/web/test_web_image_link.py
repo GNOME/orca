@@ -26,14 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_browser,
-    move_to_top,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -48,16 +42,16 @@ def test_tab_presents_image_only_link_as_a_link(web_image_link: BrowserSession) 
     """Tests that Tab reaches the image-only link and presents it as a link."""
 
     session = web_image_link
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Home page", "link"],
-        [BrailleLine(1, "Home page", "Home page", "\xc0" * 9)],
+        [helpers.BrailleLine(1, "Home page", "Home page", "\xc0" * 9)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    speech, braille = capture(session)
+    speech, braille = helpers.capture(session)
     assert speech[-1] == "link"
     assert set(braille[0].mask) == {"\xc0"}
 
@@ -67,12 +61,14 @@ def test_next_image_reaches_the_alt_less_image(web_image_link: BrowserSession) -
     """Tests that G (next image) reaches the alt-less image, so it is not filtered as useless."""
 
     session = web_image_link
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_G)
-    speech, _braille = capture(session)
+    speech, _braille = helpers.capture(session)
     assert speech[0] == "g"
-    assert speech[-1] == expected_for_browser(session, "Unlabeled image", firefox="image link")
+    assert speech[-1] == helpers.expected_for_browser(
+        session, "Unlabeled image", firefox="image link"
+    )
 
 
 @pytest.mark.native_app
@@ -82,39 +78,41 @@ def test_small_standalone_image_is_filtered_from_content(
     """Tests that a tiny unlabeled image is dropped from content but a larger one is presented."""
 
     session = web_image_link
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     # _is_useless_image filters the tiny image (under the 25px threshold) out of
     # presented content, so Down navigation never lands on it; the larger image is
     # presented as its own line.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Intro paragraph."],
-        [BrailleLine(1, "Intro paragraph.", "Intro paragraph.", "\x00" * 16)],
+        [helpers.BrailleLine(1, "Intro paragraph.", "Intro paragraph.", "\x00" * 16)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Home page", "link"],
-        [BrailleLine(1, "Home page", "Home page", "\xc0" * 9)],
+        [helpers.BrailleLine(1, "Home page", "Home page", "\xc0" * 9)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    speech, braille = capture(session)
-    assert speech[-1] == expected_for_browser(session, "Unlabeled image", firefox="image link")
+    speech, braille = helpers.capture(session)
+    assert speech[-1] == helpers.expected_for_browser(
+        session, "Unlabeled image", firefox="image link"
+    )
     assert set(braille[0].mask) == {"\xc0"}
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    image_role = expected_for_browser(session, "Unlabeled image", firefox="image")
-    assert capture(session) == (
+    image_role = helpers.expected_for_browser(session, "Unlabeled image", firefox="image")
+    assert helpers.capture(session) == (
         [image_role],
-        [BrailleLine(1, image_role, image_role, "\x00" * len(image_role))],
+        [helpers.BrailleLine(1, image_role, image_role, "\x00" * len(image_role))],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Closing paragraph."],
-        [BrailleLine(1, "Closing paragraph.", "Closing paragraph.", "\x00" * 18)],
+        [helpers.BrailleLine(1, "Closing paragraph.", "Closing paragraph.", "\x00" * 18)],
     )
 
 
@@ -123,16 +121,16 @@ def test_named_icon_link_speaks_its_name(web_image_link: BrowserSession) -> None
     """Tests a link wrapping a named icon section speaks its name in browse mode, not bare."""
 
     session = web_image_link
-    move_to_top(session)
+    helpers.move_to_top(session)
     captured = None
     for _ in range(6):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        captured = capture(session)
+        captured = helpers.capture(session)
 
     assert captured == (
         ["Your shopping cart contains 0 items", "link"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "Your shopping cart contains 0 items",
                 "Your shopping cart contains 0 it",
@@ -146,11 +144,11 @@ def test_named_icon_link_speaks_its_name(web_image_link: BrowserSession) -> None
 def test_say_all_skips_the_useless_image(web_image_link: BrowserSession) -> None:
     """Tests that Say All reads the navigable images but skips the useless small one."""
 
-    move_to_top(web_image_link)
+    helpers.move_to_top(web_image_link)
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-    spoken = speech(web_image_link)
+    spoken = helpers.speech(web_image_link)
     # The linked and large standalone images are presented; the tiny one is omitted.
-    image_role = expected_for_browser(web_image_link, "Unlabeled image", firefox="image")
+    image_role = helpers.expected_for_browser(web_image_link, "Unlabeled image", firefox="image")
     assert spoken.count(image_role) == 2
     assert "Intro paragraph." in spoken
     assert "Closing paragraph." in spoken

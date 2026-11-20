@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, expected_for_gtk
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -36,10 +36,10 @@ if TYPE_CHECKING:
 def _assert_line(session: NativeAppSession, title: str, line: str) -> None:
     """Checks the current line's speech and braille."""
 
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     full = f"OrcaNoteReader application {title} frame {line} rdonly"
-    assert spoken == expected_for_gtk([line + "\n"], gtk4=[line])
-    assert brailled[-1] == BrailleLine(1, full, f"{line} rdonly"[:32], "\x00" * len(full))
+    assert spoken == helpers.expected_for_gtk([line + "\n"], gtk4=[line])
+    assert brailled[-1] == helpers.BrailleLine(1, full, f"{line} rdonly"[:32], "\x00" * len(full))
 
 
 @pytest.mark.native_app
@@ -51,9 +51,9 @@ def test_navigation_in_second_document(
 
     session = gtk_note_reader
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    capture(session)
+    helpers.capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     _assert_line(session, "Garden note", "Please water the roses.")
@@ -63,18 +63,18 @@ def test_navigation_in_second_document(
     _assert_line(session, "Garden note", "Please water the roses.")
     if close_at_end:
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == ["The hose is beside the shed."]
         assert brailled[-1].full == (
             "OrcaNoteReader application Garden note frame The hose is beside the shed. rdonly"
         )
 
     keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    capture(session)
+    helpers.capture(session)
 
     try:
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -85,4 +85,4 @@ def test_navigation_in_second_document(
         _assert_line(session, "Kitchen note", "Please wash the apples.")
     finally:
         keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
-        capture(session)
+        helpers.capture(session)

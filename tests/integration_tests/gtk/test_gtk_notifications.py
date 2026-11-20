@@ -29,7 +29,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests.helpers import BrailleLine, capture, speech
+from tests.integration_tests import helpers
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -55,7 +55,7 @@ def _send_notification(summary: str, body: str) -> None:
 def _speech_without_age(session: NativeAppSession) -> list[str]:
     """Returns the speech with how long ago the notification arrived removed."""
 
-    spoken = speech(session)
+    spoken = helpers.speech(session)
     text, count = _AGE.subn("", spoken[-1])
     assert count == 1, spoken
     return [*spoken[:-1], text]
@@ -83,9 +83,9 @@ def test_sending_notification(notification_daemon: NativeAppSession) -> None:
 
     session = notification_daemon
     _send_notification("Meeting", "Starts in five minutes")
-    spoken, brailled = capture(session, wait_async=True)
+    spoken, brailled = helpers.capture(session, wait_async=True)
     assert spoken == ["Notification Meeting Starts in five minutes"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         0,
         "Notification Meeting Starts in five minutes",
         "Notification Meeting Starts in f",
@@ -99,9 +99,11 @@ def test_reviewing_notifications(notification_daemon: NativeAppSession) -> None:
 
     session = notification_daemon
     _send_notification("Meeting", "Starts in five minutes")
-    assert speech(session, wait_async=True) == ["Notification Meeting Starts in five minutes"]
+    assert helpers.speech(session, wait_async=True) == [
+        "Notification Meeting Starts in five minutes"
+    ]
     _send_notification("Build", "Finished")
-    assert speech(session, wait_async=True, overall=5.0) == ["Notification Build Finished"]
+    assert helpers.speech(session, wait_async=True, overall=5.0) == ["Notification Build Finished"]
 
     with _bound_commands(session) as (last_key, previous_key, next_key, _list_key):
         session.orca.press_bound_key(last_key)
@@ -127,8 +129,8 @@ def test_reviewing_with_no_notifications(notification_daemon: NativeAppSession) 
     with _bound_commands(session) as keys:
         for key in keys:
             session.orca.press_bound_key(key)
-            spoken, brailled = capture(session)
+            spoken, brailled = helpers.capture(session)
             assert spoken == ["No notification messages"]
-            assert brailled[-1] == BrailleLine(
+            assert brailled[-1] == helpers.BrailleLine(
                 0, "No notification messages", "No notification messages", "\x00" * 24
             )

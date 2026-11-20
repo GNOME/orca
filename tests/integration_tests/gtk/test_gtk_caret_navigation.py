@@ -26,28 +26,27 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers, version_helpers
 from tests.integration_tests.apps import gtk
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, expected_for_gtk, move_to_top
-from tests.integration_tests.version_helpers import requires_gtk_version
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_caret_navigation_presentation(gtk_text_view: NativeAppSession) -> None:
     """Orca's announcements as the caret moves via arrows, word/line jumps, buffer endpoints."""
 
     session = gtk_text_view
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Line two has additional words to make it long enough that "],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "Line two has additional words to make it long enough that  $l",
                 "Line two has additional words to",
@@ -57,58 +56,82 @@ def test_caret_navigation_presentation(gtk_text_view: NativeAppSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
-        expected_for_gtk(["the text view wraps it.\n"], gtk4=["the text view wraps it."]),
-        [BrailleLine(1, "the text view wraps it. $l", "the text view wraps it. $l", "\x00" * 26)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["the text view wraps it.\n"], gtk4=["the text view wraps it."]),
+        [
+            helpers.BrailleLine(
+                1, "the text view wraps it. $l", "the text view wraps it. $l", "\x00" * 26
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
-        expected_for_gtk(["Line three.\n"], gtk4=["Line three."]),
-        [BrailleLine(1, "Line three. $l", "Line three. $l", "\x00" * 14)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["Line three.\n"], gtk4=["Line three."]),
+        [helpers.BrailleLine(1, "Line three. $l", "Line three. $l", "\x00" * 14)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
-        expected_for_gtk(["the text view wraps it.\n"], gtk4=["the text view wraps it."]),
-        [BrailleLine(1, "the text view wraps it. $l", "the text view wraps it. $l", "\x00" * 26)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["the text view wraps it.\n"], gtk4=["the text view wraps it."]),
+        [
+            helpers.BrailleLine(
+                1, "the text view wraps it. $l", "the text view wraps it. $l", "\x00" * 26
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["h"],
-        [BrailleLine(2, "the text view wraps it. $l", "the text view wraps it. $l", "\x00" * 26)],
+        [
+            helpers.BrailleLine(
+                2, "the text view wraps it. $l", "the text view wraps it. $l", "\x00" * 26
+            )
+        ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["the"],
-        [BrailleLine(4, "the text view wraps it. $l", "the text view wraps it. $l", "\x00" * 26)],
+        [
+            helpers.BrailleLine(
+                4, "the text view wraps it. $l", "the text view wraps it. $l", "\x00" * 26
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_END)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["blank"],
-        [BrailleLine(24, "the text view wraps it. $l", "the text view wraps it. $l", "\x00" * 26)],
+        [
+            helpers.BrailleLine(
+                24, "the text view wraps it. $l", "the text view wraps it. $l", "\x00" * 26
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["t"],
-        [BrailleLine(1, "the text view wraps it. $l", "the text view wraps it. $l", "\x00" * 26)],
+        [
+            helpers.BrailleLine(
+                1, "the text view wraps it. $l", "the text view wraps it. $l", "\x00" * 26
+            )
+        ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Last line."],
-        [BrailleLine(11, "Last line. $l", "Last line. $l", "\x00" * 13)],
+        [helpers.BrailleLine(11, "Last line. $l", "Last line. $l", "\x00" * 13)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    assert capture(session) == (
-        expected_for_gtk(["Line one.\n"], gtk4=["Line one."]),
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["Line one.\n"], gtk4=["Line one."]),
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1, "OrcaTextView application frame Line one. $l", "Line one. $l", "\x00" * 43
             )
         ],
@@ -116,19 +139,19 @@ def test_caret_navigation_presentation(gtk_text_view: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_caret_selection_presentation(gtk_text_view: NativeAppSession) -> None:
     """Orca's announcements as selection changes by line, word, char, jumps, and select-all."""
 
     session = gtk_text_view
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["Line one.\n", "selected"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "Line two has additional words to make it long enough that  $l",
                 "Line two has additional words to",
@@ -138,45 +161,49 @@ def test_caret_selection_presentation(gtk_text_view: NativeAppSession) -> None:
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["Line two has additional words to make it long enough that ", "selected"],
-        [BrailleLine(1, "the text view wraps it. $l", "the text view wraps it. $l", "\x00" * 26)],
+        [
+            helpers.BrailleLine(
+                1, "the text view wraps it. $l", "the text view wraps it. $l", "\x00" * 26
+            )
+        ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["the text view wraps it.\n", "selected"],
-        [BrailleLine(1, "Line three. $l", "Line three. $l", "\x00" * 14)],
+        [helpers.BrailleLine(1, "Line three. $l", "Line three. $l", "\x00" * 14)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["L", "selected"],
-        [BrailleLine(2, "Line three. $l", "Line three. $l", "\xc0" + "\x00" * 13)],
+        [helpers.BrailleLine(2, "Line three. $l", "Line three. $l", "\xc0" + "\x00" * 13)],
     )
 
     keyboard.press_chord(
         [keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L],
         keyboard.KEYSYM_RIGHT,
     )
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["ine", "selected"],
-        [BrailleLine(5, "Line three. $l", "Line three. $l", "\xc0" * 4 + "\x00" * 10)],
+        [helpers.BrailleLine(5, "Line three. $l", "Line three. $l", "\xc0" * 4 + "\x00" * 10)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         [" three.", "selected"],
-        [BrailleLine(12, "Line three. $l", "Line three. $l", "\xc0" * 11 + "\x00" * 3)],
+        [helpers.BrailleLine(12, "Line three. $l", "Line three. $l", "\xc0" * 11 + "\x00" * 3)],
     )
 
     session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [
             (
                 "Selected text is:  Line one.\n"
@@ -189,17 +216,17 @@ def test_caret_selection_presentation(gtk_text_view: NativeAppSession) -> None:
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["Line three.", "unselected"],
-        [BrailleLine(1, "Line three. $l", "Line three. $l", "\x00" * 14)],
+        [helpers.BrailleLine(1, "Line three. $l", "Line three. $l", "\x00" * 14)],
     )
 
     keyboard.press_chord(
         [keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L],
         keyboard.KEYSYM_END,
     )
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         [
             (
@@ -209,15 +236,15 @@ def test_caret_selection_presentation(gtk_text_view: NativeAppSession) -> None:
             ),
             "selected",
         ],
-        [BrailleLine(11, "Last line. $l", "Last line. $l", "\xc0" * 10 + "\x00" * 3)],
+        [helpers.BrailleLine(11, "Last line. $l", "Last line. $l", "\xc0" * 10 + "\x00" * 3)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         [],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "OrcaTextView application frame Line one. $l",
                 "Line one. $l",
@@ -227,7 +254,7 @@ def test_caret_selection_presentation(gtk_text_view: NativeAppSession) -> None:
     )
 
     session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [
             (
                 "Selected text is:  Line one.\n"
@@ -242,14 +269,14 @@ def test_caret_selection_presentation(gtk_text_view: NativeAppSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Text unselected.", "blank"],
-        expected_for_gtk(
+        helpers.expected_for_gtk(
             [
-                BrailleLine(11, "Last line. $l", "Last line. $l", "\x00" * 13),
-                BrailleLine(11, "Last line. $l", "Last line. $l", "\x00" * 13),
+                helpers.BrailleLine(11, "Last line. $l", "Last line. $l", "\x00" * 13),
+                helpers.BrailleLine(11, "Last line. $l", "Last line. $l", "\x00" * 13),
             ],
-            gtk4=[BrailleLine(11, "Last line. $l", "Last line. $l", "\x00" * 13)],
+            gtk4=[helpers.BrailleLine(11, "Last line. $l", "Last line. $l", "\x00" * 13)],
         ),
     )
 
@@ -257,7 +284,7 @@ def test_caret_selection_presentation(gtk_text_view: NativeAppSession) -> None:
 def _move_to_line_three(session: NativeAppSession) -> None:
     """Puts the caret at the start of the third line and discards the resulting output."""
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _count in range(3):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
     session.reader.drain(quiescence_timeout=0.2, overall_timeout=2.0)
@@ -281,11 +308,11 @@ def test_selection_by_line_down_then_up(gtk_text_view: NativeAppSession) -> None
     _move_to_line_three(session)
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["Line three.\n", "selected"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "Line four also has extra words to push it past the wrap  $l",
                 "Line four also has extra words t",
@@ -295,18 +322,22 @@ def test_selection_by_line_down_then_up(gtk_text_view: NativeAppSession) -> None
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["Line four also has extra words to push it past the wrap ", "selected"],
-        [BrailleLine(1, "boundary in the view. $l", "boundary in the view. $l", "\x00" * 24)],
+        [
+            helpers.BrailleLine(
+                1, "boundary in the view. $l", "boundary in the view. $l", "\x00" * 24
+            )
+        ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["Line four also has extra words to push it past the wrap ", "unselected"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "Line four also has extra words to push it past the wrap  $l",
                 "Line four also has extra words t",
@@ -316,18 +347,18 @@ def test_selection_by_line_down_then_up(gtk_text_view: NativeAppSession) -> None
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["Line three.\n", "unselected"],
-        [BrailleLine(1, "Line three. $l", "Line three. $l", "\x00" * 14)],
+        [helpers.BrailleLine(1, "Line three. $l", "Line three. $l", "\x00" * 14)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["the text view wraps it.\n", "selected"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "the text view wraps it. $l",
                 "the text view wraps it. $l",
@@ -337,11 +368,11 @@ def test_selection_by_line_down_then_up(gtk_text_view: NativeAppSession) -> None
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["Line two has additional words to make it long enough that ", "selected"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "Line two has additional words to make it long enough that  $l",
                 "Line two has additional words to",
@@ -351,7 +382,7 @@ def test_selection_by_line_down_then_up(gtk_text_view: NativeAppSession) -> None
     )
 
     session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [
             (
                 "Selected text is:  Line two has additional words to make it long enough that "
@@ -363,7 +394,7 @@ def test_selection_by_line_down_then_up(gtk_text_view: NativeAppSession) -> None
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_selection_by_word_and_character(gtk_text_view: NativeAppSession) -> None:
     """Tests selection by word and by character."""
 
@@ -373,40 +404,40 @@ def test_selection_by_word_and_character(gtk_text_view: NativeAppSession) -> Non
     keyboard.press_chord(
         [keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT
     )
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["Line", "selected"],
-        [BrailleLine(5, "Line three. $l", "Line three. $l", "\xc0" * 4 + "\x00" * 10)],
+        [helpers.BrailleLine(5, "Line three. $l", "Line three. $l", "\xc0" * 4 + "\x00" * 10)],
     )
 
     keyboard.press_chord(
         [keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT
     )
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         [" three", "selected"],
-        [BrailleLine(11, "Line three. $l", "Line three. $l", "\xc0" * 10 + "\x00" * 4)],
+        [helpers.BrailleLine(11, "Line three. $l", "Line three. $l", "\xc0" * 10 + "\x00" * 4)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_LEFT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["three", "unselected"],
-        [BrailleLine(6, "Line three. $l", "Line three. $l", "\xc0" * 5 + "\x00" * 9)],
+        [helpers.BrailleLine(6, "Line three. $l", "Line three. $l", "\xc0" * 5 + "\x00" * 9)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_LEFT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         [" ", "unselected"],
-        [BrailleLine(5, "Line three. $l", "Line three. $l", "\xc0" * 4 + "\x00" * 10)],
+        [helpers.BrailleLine(5, "Line three. $l", "Line three. $l", "\xc0" * 4 + "\x00" * 10)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         [" ", "selected"],
-        [BrailleLine(6, "Line three. $l", "Line three. $l", "\xc0" * 5 + "\x00" * 9)],
+        [helpers.BrailleLine(6, "Line three. $l", "Line three. $l", "\xc0" * 5 + "\x00" * 9)],
     )
 
 
@@ -418,7 +449,7 @@ def test_selection_to_the_start_and_end(gtk_text_view: NativeAppSession) -> None
     _move_to_line_three(session)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         [
             (
@@ -429,7 +460,7 @@ def test_selection_to_the_start_and_end(gtk_text_view: NativeAppSession) -> None
             "selected",
         ],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "OrcaTextView application frame Line one. $l",
                 "Line one. $l",
@@ -439,7 +470,7 @@ def test_selection_to_the_start_and_end(gtk_text_view: NativeAppSession) -> None
     )
 
     session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [
             (
                 "Selected text is:  Line one.\n"
@@ -451,7 +482,7 @@ def test_selection_to_the_start_and_end(gtk_text_view: NativeAppSession) -> None
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         [
             (
@@ -467,7 +498,7 @@ def test_selection_to_the_start_and_end(gtk_text_view: NativeAppSession) -> None
             ),
             "selected",
         ],
-        [BrailleLine(11, "Last line. $l", "Last line. $l", "\xc0" * 10 + "\x00" * 3)],
+        [helpers.BrailleLine(11, "Last line. $l", "Last line. $l", "\xc0" * 10 + "\x00" * 3)],
     )
 
 
@@ -476,10 +507,10 @@ def test_say_selected_text_when_nothing_is_selected(gtk_text_view: NativeAppSess
     """Tests say selected text when nothing is selected."""
 
     session = gtk_text_view
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
-    assert capture(session) == (["No selected text."], [])
+    assert helpers.capture(session) == (["No selected text."], [])
 
 
 @pytest.mark.native_app
@@ -503,20 +534,20 @@ def test_typing_over_a_selection(gtk_text_view: NativeAppSession) -> None:
     keyboard.press_chord(
         [keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT
     )
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["Line", "selected"],
-        [BrailleLine(5, "Line three. $l", "Line three. $l", "\xc0" * 4 + "\x00" * 10)],
+        [helpers.BrailleLine(5, "Line three. $l", "Line three. $l", "\xc0" * 4 + "\x00" * 10)],
     )
 
     keyboard.tap_key(ord("z"))
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["z", "Text unselected."]
-    assert brailled[-1] == BrailleLine(2, "z three. $l", "z three. $l", "\x00" * 11)
+    assert brailled[-1] == helpers.BrailleLine(2, "z three. $l", "z three. $l", "\x00" * 11)
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["z"],
-        [BrailleLine(1, "z three. $l", "z three. $l", "\x00" * 11)],
+        [helpers.BrailleLine(1, "z three. $l", "z three. $l", "\x00" * 11)],
     )

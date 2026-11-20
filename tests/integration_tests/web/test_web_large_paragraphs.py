@@ -28,21 +28,21 @@ from typing import TYPE_CHECKING
 import pytest
 from Xlib import X, display  # type: ignore[import-untyped]
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, move_to_top
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
 
 
-def _next(session: BrowserSession, keysym: int) -> tuple[list[str], list[BrailleLine]]:
+def _next(session: BrowserSession, keysym: int) -> tuple[list[str], list[helpers.BrailleLine]]:
     keyboard.tap_key(keysym)
-    return capture(session, overall=10)
+    return helpers.capture(session, overall=10)
 
 
-def _previous(session: BrowserSession, keysym: int) -> tuple[list[str], list[BrailleLine]]:
+def _previous(session: BrowserSession, keysym: int) -> tuple[list[str], list[helpers.BrailleLine]]:
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keysym)
-    return capture(session, overall=10)
+    return helpers.capture(session, overall=10)
 
 
 def _focus_paragraph_dialog() -> None:
@@ -67,9 +67,9 @@ def _focus_paragraph_dialog() -> None:
         connection.close()
 
 
-def _row_braille(text: str) -> BrailleLine:
+def _row_braille(text: str) -> helpers.BrailleLine:
     full = f" Paragraph column header {text}"
-    return BrailleLine(1, full, text[:32], "\x00" * len(full))
+    return helpers.BrailleLine(1, full, text[:32], "\x00" * len(full))
 
 
 @pytest.mark.native_app
@@ -79,86 +79,90 @@ def test_paragraph_filter_cutoff(web_large_paragraphs: BrowserSession) -> None:
     session = web_large_paragraphs
     # Key echo can be interrupted while the full paragraph filter runs.
     session.orca.set("TypingEchoPresenter", "KeyEchoEnabled", False)
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     assert _next(session, keyboard.KEYSYM_P) == (
         ["main content", "First valid paragraph."],
-        [BrailleLine(1, "First valid paragraph.", "First valid paragraph.", "\x00" * 22)],
+        [helpers.BrailleLine(1, "First valid paragraph.", "First valid paragraph.", "\x00" * 22)],
     )
 
     assert _next(session, keyboard.KEYSYM_P) == (
         ["After short paragraphs."],
-        [BrailleLine(1, "After short paragraphs.", "After short paragraphs.", "\x00" * 23)],
+        [helpers.BrailleLine(1, "After short paragraphs.", "After short paragraphs.", "\x00" * 23)],
     )
 
     assert _previous(session, keyboard.KEYSYM_P) == (
         ["First valid paragraph."],
-        [BrailleLine(1, "First valid paragraph.", "First valid paragraph.", "\x00" * 22)],
+        [helpers.BrailleLine(1, "First valid paragraph.", "First valid paragraph.", "\x00" * 22)],
     )
 
     assert _next(session, keyboard.KEYSYM_U) == (
         ["Link in short paragraph", "link"],
-        [BrailleLine(1, "Link in short paragraph", "Link in short paragraph", "\xc0" * 23)],
+        [helpers.BrailleLine(1, "Link in short paragraph", "Link in short paragraph", "\xc0" * 23)],
     )
 
     assert _next(session, keyboard.KEYSYM_P) == (
         ["After short paragraphs."],
-        [BrailleLine(1, "After short paragraphs.", "After short paragraphs.", "\x00" * 23)],
+        [helpers.BrailleLine(1, "After short paragraphs.", "After short paragraphs.", "\x00" * 23)],
     )
 
     assert _previous(session, keyboard.KEYSYM_B) == (
         ["leaving main content.", "Add one paragraph", "button"],
-        [BrailleLine(1, "Add one paragraph button", "Add one paragraph button", "\x00" * 24)],
+        [
+            helpers.BrailleLine(
+                1, "Add one paragraph button", "Add one paragraph button", "\x00" * 24
+            )
+        ],
     )
 
     assert _next(session, keyboard.KEYSYM_RETURN) == ([], [])
 
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     assert _next(session, keyboard.KEYSYM_P) == (
         ["main content", "First valid paragraph."],
-        [BrailleLine(1, "First valid paragraph.", "First valid paragraph.", "\x00" * 22)],
+        [helpers.BrailleLine(1, "First valid paragraph.", "First valid paragraph.", "\x00" * 22)],
     )
 
     assert _next(session, keyboard.KEYSYM_P) == (
         ["x"],
-        [BrailleLine(1, "x", "x", "\x00")],
+        [helpers.BrailleLine(1, "x", "x", "\x00")],
     )
 
     assert _next(session, keyboard.KEYSYM_P) == (
         ["xy"],
-        [BrailleLine(1, "xy", "xy", "\x00" * 2)],
+        [helpers.BrailleLine(1, "xy", "xy", "\x00" * 2)],
     )
 
     assert _next(session, keyboard.KEYSYM_U) == (
         ["Link in short paragraph", "link"],
-        [BrailleLine(1, "Link in short paragraph", "Link in short paragraph", "\xc0" * 23)],
+        [helpers.BrailleLine(1, "Link in short paragraph", "Link in short paragraph", "\xc0" * 23)],
     )
 
     assert _previous(session, keyboard.KEYSYM_P) == (
         ["xy"],
-        [BrailleLine(1, "xy", "xy", "\x00" * 2)],
+        [helpers.BrailleLine(1, "xy", "xy", "\x00" * 2)],
     )
 
     assert _next(session, keyboard.KEYSYM_U) == (
         ["Link in short paragraph", "link"],
-        [BrailleLine(1, "Link in short paragraph", "Link in short paragraph", "\xc0" * 23)],
+        [helpers.BrailleLine(1, "Link in short paragraph", "Link in short paragraph", "\xc0" * 23)],
     )
 
     assert _next(session, keyboard.KEYSYM_P) == (
         ["After short paragraphs."],
-        [BrailleLine(1, "After short paragraphs.", "After short paragraphs.", "\x00" * 23)],
+        [helpers.BrailleLine(1, "After short paragraphs.", "After short paragraphs.", "\x00" * 23)],
     )
 
     assert _next(session, keyboard.KEYSYM_U) == (
         ["Link in long paragraph", "link"],
-        [BrailleLine(1, "Link in long paragraph", "Link in long paragraph", "\xc0" * 22)],
+        [helpers.BrailleLine(1, "Link in long paragraph", "Link in long paragraph", "\xc0" * 22)],
     )
 
     assert _next(session, keyboard.KEYSYM_P) == (
         ["Following accepted paragraph."],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1, "Following accepted paragraph.", "Following accepted paragraph.", "\x00" * 29
             )
         ],
@@ -168,13 +172,13 @@ def test_paragraph_filter_cutoff(web_large_paragraphs: BrowserSession) -> None:
         _next(session, keyboard.KEYSYM_P)
     session.orca.set("SpeechPresenter", "SpeakPositionInSet", True)
     keyboard.press_chord([keyboard.KEYSYM_ALT_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_P)
-    assert capture(session, quiescence=0.1, wait_async=True) == (
+    assert helpers.capture(session, quiescence=0.1, wait_async=True) == (
         ["Loading.  Please wait."],
-        [BrailleLine(0, "Loading.  Please wait.", "Loading.  Please wait.", "\x00" * 22)],
+        [helpers.BrailleLine(0, "Loading.  Please wait.", "Loading.  Please wait.", "\x00" * 22)],
     )
     _focus_paragraph_dialog()
 
-    assert capture(session, wait_async=True) == (
+    assert helpers.capture(session, wait_async=True) == (
         [
             "Paragraphs: 2500 items found dialog",
             "table with 2500 rows 1 column",
@@ -182,7 +186,7 @@ def test_paragraph_filter_cutoff(web_large_paragraphs: BrowserSession) -> None:
             "11 of 2500",
         ],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "orca application Paragraphs: 2500 items found dialog",
                 "Paragraphs: 2500 items found dia",
@@ -215,7 +219,7 @@ def test_paragraph_filter_cutoff(web_large_paragraphs: BrowserSession) -> None:
         ["Visible heading text.", "11 of 2500", "selected"],
         [
             _row_braille("Visible heading text."),
-            BrailleLine(0, "selected", "selected", "\x00" * 8),
+            helpers.BrailleLine(0, "selected", "selected", "\x00" * 8),
         ],
     )
 
@@ -224,7 +228,7 @@ def test_paragraph_filter_cutoff(web_large_paragraphs: BrowserSession) -> None:
         [
             _row_braille("Visible heading text."),
             _row_braille("Visible paragraph text."),
-            BrailleLine(0, "selected", "selected", "\x00" * 8),
+            helpers.BrailleLine(0, "selected", "selected", "\x00" * 8),
         ],
     )
 
@@ -233,7 +237,7 @@ def test_paragraph_filter_cutoff(web_large_paragraphs: BrowserSession) -> None:
         [
             _row_braille("Visible paragraph text."),
             _row_braille("Text after leading spaces."),
-            BrailleLine(0, "selected", "selected", "\x00" * 8),
+            helpers.BrailleLine(0, "selected", "selected", "\x00" * 8),
         ],
     )
 

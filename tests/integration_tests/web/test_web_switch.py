@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -38,54 +38,54 @@ def test_toggling_switches(web_switch: BrowserSession) -> None:
     """Tests tabbing to each switch and toggling it with space."""
 
     session = web_switch
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Dark theme", "off switch"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "& y Dark theme switch", "& y Dark theme switch", "\x00" * 21
     )
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["on"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "&=y Dark theme switch", "&=y Dark theme switch", "\x00" * 21
     )
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["off"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "& y Dark theme switch", "& y Dark theme switch", "\x00" * 21
     )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Sound effects", "off switch"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "& y Sound effects switch", "& y Sound effects switch", "\x00" * 24
     )
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["on"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "&=y Sound effects switch", "&=y Sound effects switch", "\x00" * 24
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Sound effects", "on switch"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "&=y Sound effects switch", "&=y Sound effects switch", "\x00" * 24
     )
 
     # A toggle button that is not a switch keeps the pressed wording.
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Bold", "toggle button not pressed"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "& y Bold toggle button", "& y Bold toggle button", "\x00" * 22
     )

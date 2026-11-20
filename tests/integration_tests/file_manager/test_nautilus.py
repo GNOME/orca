@@ -26,9 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests.file_manager_helpers import LONG_NAME, start_at_first_file
+from tests.integration_tests import file_manager_helpers, helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, bound_pan_keys, capture, toggle_flat_review
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import FileManagerSession
@@ -36,7 +35,7 @@ if TYPE_CHECKING:
 
 def _item_braille(
     session: FileManagerSession, name: str, folder: str = "Test Files"
-) -> BrailleLine:
+) -> helpers.BrailleLine:
     """Builds the expected braille for a file or folder."""
 
     label = name + (". File" if name.endswith(".txt") else ". Folder")
@@ -48,7 +47,7 @@ def _item_braille(
             f"org.gnome.Nautilus application {folder} frame {folder} panel "
             "Content View tree table list " + label
         )
-    return BrailleLine(1, full, label[:32], "\x00" * len(full))
+    return helpers.BrailleLine(1, full, label[:32], "\x00" * len(full))
 
 
 def _assert_item(
@@ -60,7 +59,7 @@ def _assert_item(
 ) -> None:
     """Checks the file or folder announcement in speech and braille."""
 
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     expected = [name + (". File" if name.endswith(".txt") else ". Folder")]
     if unselected and session.view == "icon":
         expected.append("not selected")
@@ -69,9 +68,9 @@ def _assert_item(
 
 
 def _assert_message(session: FileManagerSession, message: str) -> None:
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [message]
-    assert brailled[-1] == BrailleLine(0, message, message, "\x00" * len(message))
+    assert brailled[-1] == helpers.BrailleLine(0, message, message, "\x00" * len(message))
 
 
 @pytest.mark.native_app
@@ -81,7 +80,7 @@ def test_arrow_navigation(nautilus: FileManagerSession, control: bool) -> None:
     """Checks file announcements after arrow and Ctrl+arrow keys."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     modifiers = [keyboard.KEYSYM_CONTROL_L] if control else []
     if session.view == "icon":
         moves = [
@@ -108,7 +107,7 @@ def test_icon_row_boundary(nautilus: FileManagerSession) -> None:
     """Checks Right into the next icon row and Left back into the previous row."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     names = ["02 Nested", "03 Scrolling", "alpha.txt", "bravo.txt"]
     names.append("charlie.txt")
     for name in names:
@@ -139,13 +138,13 @@ def test_home_end_and_boundaries(nautilus: FileManagerSession) -> None:
     """Checks Home and End navigation, and pressing Up on the first item."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == []
     assert all(line == _item_braille(session, "01 Empty") for line in brailled)
     keyboard.tap_key(keyboard.KEYSYM_END)
-    _assert_item(session, LONG_NAME)
+    _assert_item(session, file_manager_helpers.LONG_NAME)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
     _assert_item(session, "01 Empty")
 
@@ -170,15 +169,15 @@ def test_scrolling(nautilus: FileManagerSession) -> None:
     """Checks End, Up, Down, and Home in a folder that requires scrolling."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
     for name in ("02 Nested", "03 Scrolling"):
         keyboard.tap_key(forward)
         _assert_item(session, name)
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    capture(session, quiescence=1.0, wait_async=True)
+    helpers.capture(session, quiescence=1.0, wait_async=True)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    capture(session)
+    helpers.capture(session)
     stride = 5 if session.view == "icon" else 1
     for key, name in (
         (keyboard.KEYSYM_END, "item 60.txt"),
@@ -196,7 +195,7 @@ def test_control_space_selection(nautilus: FileManagerSession) -> None:
     """Adds a second selection, returns to the first, and removes both selections."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
     backward = keyboard.KEYSYM_LEFT if session.view == "icon" else keyboard.KEYSYM_UP
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], forward)
@@ -219,7 +218,7 @@ def test_control_space_single_selection(nautilus: FileManagerSession) -> None:
     """Unselects and reselects the only selected item."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     for message in ("unselected", "selected"):
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_SPACE)
         _assert_message(session, message)
@@ -231,7 +230,7 @@ def test_range_selection(nautilus: FileManagerSession) -> None:
     """Checks file announcements as Shift+arrows extend and shrink a selection."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
     backward = keyboard.KEYSYM_LEFT if session.view == "icon" else keyboard.KEYSYM_UP
     names = ["01 Empty", "02 Nested", "03 Scrolling"]
@@ -263,22 +262,24 @@ def test_selection_reporting(nautilus: FileManagerSession) -> None:
     """Reports selected files in folder order as the selection shrinks and grows."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
     backward = keyboard.KEYSYM_LEFT if session.view == "icon" else keyboard.KEYSYM_UP
     for _ in range(2):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], forward)
-        capture(session)
+        helpers.capture(session)
     names = ["01 Empty. Folder", "02 Nested. Folder", "03 Scrolling. Folder"]
     for key, count in ((None, 3), (backward, 2), (forward, 3)):
         if key is not None:
             keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], key)
-            capture(session)
+            helpers.capture(session)
         session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         message = f"{count} of 14 items selected"
         assert spoken == [message, ",".join(names[:count])]
-        assert brailled and brailled[-1] == BrailleLine(0, message, message, "\x00" * len(message))
+        assert brailled and brailled[-1] == helpers.BrailleLine(
+            0, message, message, "\x00" * len(message)
+        )
 
 
 @pytest.mark.native_app
@@ -301,11 +302,11 @@ def test_braille_panning(nautilus: FileManagerSession) -> None:
     """Checks braille while panning a long filename forward and back."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     keyboard.tap_key(keyboard.KEYSYM_END)
-    _assert_item(session, LONG_NAME)
-    original = _item_braille(session, LONG_NAME)
-    with bound_pan_keys(session) as (left, right):
+    _assert_item(session, file_manager_helpers.LONG_NAME)
+    original = _item_braille(session, file_manager_helpers.LONG_NAME)
+    with helpers.bound_pan_keys(session) as (left, right):
         for key, cursor, visible in (
             (right, 0, "braille panning and file navigat"),
             (
@@ -319,9 +320,11 @@ def test_braille_panning(nautilus: FileManagerSession) -> None:
             (left, 1, "long filename for testing braill"),
         ):
             session.orca.press_bound_key(key)
-            spoken, brailled = capture(session)
+            spoken, brailled = helpers.capture(session)
             assert spoken == []
-            assert brailled[-1] == BrailleLine(cursor, original.full, visible, original.mask)
+            assert brailled[-1] == helpers.BrailleLine(
+                cursor, original.full, visible, original.mask
+            )
 
 
 @pytest.mark.native_app
@@ -330,13 +333,13 @@ def test_where_am_i(nautilus: FileManagerSession) -> None:
     """Checks Where Am I after selecting three items."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
     for _ in range(2):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], forward)
-        capture(session)
+        helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["03 Scrolling. Folder"]
     assert brailled[-1] == _item_braille(session, "03 Scrolling")
 
@@ -347,8 +350,8 @@ def test_flat_review(nautilus: FileManagerSession) -> None:
     """Reviews the focused file's screen line and moves forward and back."""
 
     session = nautilus
-    start_at_first_file(session)
-    toggle_flat_review(session)
+    file_manager_helpers.start_at_first_file(session)
+    helpers.toggle_flat_review(session)
     first = (
         "01 Empty. Folder 02 Nested. Folder 03 Scrolling. Folder alpha.txt. File bravo.txt. File"
         if session.view == "icon"
@@ -367,9 +370,9 @@ def test_flat_review(nautilus: FileManagerSession) -> None:
     ]
     for key, spoken_expected, full, cursor in expectations:
         keyboard.tap_key(key)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert "".join(spoken).strip() == spoken_expected
-        assert brailled[-1] == BrailleLine(cursor, full, full[:32], "\x00" * len(full))
+        assert brailled[-1] == helpers.BrailleLine(cursor, full, full[:32], "\x00" * len(full))
 
 
 @pytest.mark.native_app
@@ -378,7 +381,7 @@ def test_space_behavior(nautilus: FileManagerSession) -> None:
     """Checks that repeated Space presses produce no speech or changed braille."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
     for unselected in (False, True):
         name = "01 Empty"
@@ -388,7 +391,7 @@ def test_space_behavior(nautilus: FileManagerSession) -> None:
             _assert_item(session, name, unselected=True)
         for _ in range(2):
             keyboard.tap_key(keyboard.KEYSYM_SPACE)
-            spoken, brailled = capture(session)
+            spoken, brailled = helpers.capture(session)
             assert spoken == []
             assert all(line == _item_braille(session, name) for line in brailled)
 
@@ -400,21 +403,21 @@ def test_return_to_parent(nautilus: FileManagerSession, parent: str) -> None:
     """Checks the Child folder announcement after returning with Alt+Up."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
     keyboard.tap_key(forward)
     _assert_item(session, "02 Nested")
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    capture(session, quiescence=0.5)
+    helpers.capture(session, quiescence=0.5)
     if parent == "Sibling":
         keyboard.tap_key(keyboard.KEYSYM_END)
-        capture(session)
+        helpers.capture(session)
         keyboard.tap_key(keyboard.KEYSYM_RETURN)
-        capture(session, quiescence=0.5)
+        helpers.capture(session, quiescence=0.5)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    capture(session, quiescence=0.5)
+    helpers.capture(session, quiescence=0.5)
     keyboard.press_chord([keyboard.KEYSYM_ALT_L], keyboard.KEYSYM_UP)
     _assert_item(session, "Child", folder=parent)
 
@@ -425,7 +428,7 @@ def test_select_all(nautilus: FileManagerSession) -> None:
     """Announces that all files are selected."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
     _assert_message(session, "all items selected")
 
@@ -450,11 +453,11 @@ def test_repeated_select_all(nautilus: FileManagerSession) -> None:
     """Selects all files, toggles one selection, and resumes navigation."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
     _assert_message(session, "all items selected")
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == []
     assert brailled[-1] == _item_braille(session, "01 Empty")
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
@@ -479,19 +482,19 @@ def test_select_all_after_navigation(nautilus: FileManagerSession) -> None:
     """Announces Select All again after navigation replaces the selection."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     forward = keyboard.KEYSYM_RIGHT if session.view == "icon" else keyboard.KEYSYM_DOWN
     for _ in range(2):
         keyboard.tap_key(forward)
-        capture(session)
+        helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    capture(session, quiescence=1.0, wait_async=True)
+    helpers.capture(session, quiescence=1.0, wait_async=True)
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    capture(session)
+    helpers.capture(session)
     backward = keyboard.KEYSYM_LEFT if session.view == "icon" else keyboard.KEYSYM_UP
     for _ in range(2):
         keyboard.tap_key(forward)
-        capture(session)
+        helpers.capture(session)
         keyboard.tap_key(backward)
         _assert_item(session, "item 01.txt", folder="03 Scrolling")
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
@@ -504,8 +507,8 @@ def test_range_to_all_files(nautilus: FileManagerSession) -> None:
     """Selects every file with Shift+End, then shrinks the selection with Shift+Home."""
 
     session = nautilus
-    start_at_first_file(session)
+    file_manager_helpers.start_at_first_file(session)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
-    _assert_item(session, LONG_NAME)
+    _assert_item(session, file_manager_helpers.LONG_NAME)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_HOME)
     _assert_item(session, "01 Empty")

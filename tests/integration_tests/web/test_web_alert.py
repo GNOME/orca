@@ -26,9 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers, version_helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, reset_web_state, speech
-from tests.integration_tests.version_helpers import firefox_is_older_than_build
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -36,7 +35,7 @@ if TYPE_CHECKING:
 
 @pytest.mark.native_app
 @pytest.mark.xfail(
-    firefox_is_older_than_build(161, 20261029094000),
+    version_helpers.firefox_is_older_than_build(161, 20261029094000),
     reason="Gecko maps ARIA alertdialog to AT-SPI DIALOG instead of ALERT: "
     "https://bugzilla.mozilla.org/show_bug.cgi?id=2086310",
     raises=AssertionError,
@@ -46,12 +45,12 @@ def test_inserted_alertdialog_is_presented(web_alert: BrowserSession) -> None:
     """Tests that appending a role=alertdialog element into a plain container presents it."""
 
     session = web_alert
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Submit", "button"]
+    assert helpers.speech(session) == ["Submit", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    spoken, brailled = capture(session, wait_async=True)
+    spoken, brailled = helpers.capture(session, wait_async=True)
     assert spoken == ["alert", "Notice", "Form submitted"]
-    assert brailled[-1] == BrailleLine(1, "Notice alert", "Notice alert", "\x00" * 12)
+    assert brailled[-1] == helpers.BrailleLine(1, "Notice alert", "Notice alert", "\x00" * 12)

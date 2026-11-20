@@ -28,7 +28,6 @@ import pytest
 
 from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -63,7 +62,7 @@ def test_page_down_then_up(web_page_up_down: BrowserSession) -> None:
         keyboard.tap_key(key)
         assert helpers.capture(session) == (
             [line],
-            [BrailleLine(cursor, line, line, "\x00" * len(line))],
+            [helpers.BrailleLine(cursor, line, line, "\x00" * len(line))],
         )
 
 

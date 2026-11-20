@@ -26,13 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers, web_native_selection_helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import say_selection
-from tests.integration_tests.web_native_selection_helpers import (
-    native_selection,
-    select_line,
-    select_word,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -44,21 +39,27 @@ def test_say_selected_text(web_native_text_selection: BrowserSession) -> None:
 
     session = web_native_text_selection
 
-    with native_selection(session):
-        assert say_selection(session) == ["No selected text."]
+    with web_native_selection_helpers.native_selection(session):
+        assert helpers.say_selection(session) == ["No selected text."]
 
-        assert select_word(session, keyboard.KEYSYM_RIGHT) == ["Structural", "selected"]
-        assert say_selection(session) == ["Selected text is:  Structural"]
+        assert web_native_selection_helpers.select_word(session, keyboard.KEYSYM_RIGHT) == [
+            "Structural",
+            "selected",
+        ]
+        assert helpers.say_selection(session) == ["Selected text is:  Structural"]
 
-        assert select_line(session, keyboard.KEYSYM_DOWN) == [
+        assert web_native_selection_helpers.select_line(session, keyboard.KEYSYM_DOWN) == [
             "navigation Intro paragraph.",
             "selected",
         ]
-        assert say_selection(session) == [
+        assert helpers.say_selection(session) == [
             "Selected text is:  Structural navigation Intro paragraph."
         ]
 
-        assert select_line(session, keyboard.KEYSYM_DOWN) == ["Quoted text.", "selected"]
-        assert say_selection(session) == [
+        assert web_native_selection_helpers.select_line(session, keyboard.KEYSYM_DOWN) == [
+            "Quoted text.",
+            "selected",
+        ]
+        assert helpers.say_selection(session) == [
             "Selected text is:  Structural navigation Intro paragraph. Quoted text."
         ]

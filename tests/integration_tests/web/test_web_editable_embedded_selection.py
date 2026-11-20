@@ -26,13 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    expected_for_browser,
-    reset_web_state,
-    say_selection,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -45,16 +40,16 @@ def test_selected_text_separates_embedded_control(
     """Tests that selected text separates an embedded control from its adjacent label."""
 
     session = web_editable_embedded_selection
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Editor", "entry", "Focus mode"]
+    assert helpers.speech(session) == ["Editor", "entry", "Focus mode"]
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
-    speech(session)
+    helpers.speech(session)
 
     # Firefox exposes no text for the combo box or its option; Chromium exposes "Apple".
-    expected = expected_for_browser(
+    expected = helpers.expected_for_browser(
         session,
         "Selected text is:  First link Fruit Apple Second paragraph.",
         firefox="Selected text is:  First link Fruit Second paragraph.",
     )
-    assert say_selection(session) == [expected]
+    assert helpers.say_selection(session) == [expected]

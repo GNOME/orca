@@ -26,16 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers, version_helpers
 from tests.integration_tests.apps import gtk
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_gtk,
-    move_to_top,
-    speech,
-)
-from tests.integration_tests.version_helpers import requires_gtk_version
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -54,213 +47,239 @@ def test_toggling_caret_control(gtk_text_view: NativeAppSession) -> None:
     """Tests toggling caret control between Orca and the application."""
 
     session = gtk_text_view
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [_ORCA_CONTROLS],
-        [BrailleLine(0, _ORCA_CONTROLS, "The screen reader is controlling", "\x00" * 43)],
+        [helpers.BrailleLine(0, _ORCA_CONTROLS, "The screen reader is controlling", "\x00" * 43)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Line two has additional words to make it long enough that "]
-    assert brailled[-1] == BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
+    assert brailled[-1] == helpers.BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [_APP_CONTROLS],
-        [BrailleLine(0, _APP_CONTROLS, "The application is controlling t", "\x00" * 41)],
+        [helpers.BrailleLine(0, _APP_CONTROLS, "The application is controlling t", "\x00" * 41)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
-    assert spoken == expected_for_gtk(
+    spoken, brailled = helpers.capture(session)
+    assert spoken == helpers.expected_for_gtk(
         ["the text view wraps it.\n"], gtk4=["the text view wraps it."]
     )
-    assert brailled[-1] == BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26)
+    assert brailled[-1] == helpers.BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26)
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_caret_navigation_by_character_word_and_line(gtk_text_view: NativeAppSession) -> None:
     """Tests caret navigation by character, by word, and by line."""
 
     session = gtk_text_view
-    move_to_top(session)
+    helpers.move_to_top(session)
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_ORCA_CONTROLS]
+    assert helpers.capture(session)[0] == [_ORCA_CONTROLS]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Line two has additional words to make it long enough that "]
-    assert brailled[-1] == BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
+    assert brailled[-1] == helpers.BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
-        expected_for_gtk(["the text view wraps it.\n"], gtk4=["the text view wraps it."]),
-        [BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["the text view wraps it.\n"], gtk4=["the text view wraps it."]),
+        [helpers.BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
-        expected_for_gtk(["Line three.\n"], gtk4=["Line three."]),
-        [BrailleLine(1, "Line three. $l", "Line three. $l", "\x00" * 14)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["Line three.\n"], gtk4=["Line three."]),
+        [helpers.BrailleLine(1, "Line three. $l", "Line three. $l", "\x00" * 14)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
-        expected_for_gtk(["the text view wraps it.\n"], gtk4=["the text view wraps it."]),
-        [BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["the text view wraps it.\n"], gtk4=["the text view wraps it."]),
+        [helpers.BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (["h"], [BrailleLine(2, _WRAPPED, _WRAPPED, "\x00" * 26)])
+    assert helpers.capture(session) == (
+        ["h"],
+        [helpers.BrailleLine(2, _WRAPPED, _WRAPPED, "\x00" * 26)],
+    )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (["the"], [BrailleLine(4, _WRAPPED, _WRAPPED, "\x00" * 26)])
+    assert helpers.capture(session) == (
+        ["the"],
+        [helpers.BrailleLine(4, _WRAPPED, _WRAPPED, "\x00" * 26)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_END)
-    assert capture(session) == (["blank"], [BrailleLine(24, _WRAPPED, _WRAPPED, "\x00" * 26)])
+    assert helpers.capture(session) == (
+        ["blank"],
+        [helpers.BrailleLine(24, _WRAPPED, _WRAPPED, "\x00" * 26)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    assert capture(session) == (["t"], [BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26)])
+    assert helpers.capture(session) == (
+        ["t"],
+        [helpers.BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(28, _LINE_TWO, "to make it long enough that  $l", "\x00" * 61)],
+        [helpers.BrailleLine(28, _LINE_TWO, "to make it long enough that  $l", "\x00" * 61)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["that"],
-        [BrailleLine(24, _LINE_TWO, "to make it long enough that  $l", "\x00" * 61)],
+        [helpers.BrailleLine(24, _LINE_TWO, "to make it long enough that  $l", "\x00" * 61)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    assert capture(session) == (
-        expected_for_gtk(["Line one.\n"], gtk4=["Line one."]),
-        [BrailleLine(1, _FIRST_LINE, "Line one. $l", "\x00" * 43)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["Line one.\n"], gtk4=["Line one."]),
+        [helpers.BrailleLine(1, _FIRST_LINE, "Line one. $l", "\x00" * 43)],
     )
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_APP_CONTROLS]
+    assert helpers.capture(session)[0] == [_APP_CONTROLS]
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_caret_navigation_at_the_start_and_end(gtk_text_view: NativeAppSession) -> None:
     """Tests caret navigation at the start and end of the text."""
 
     session = gtk_text_view
-    move_to_top(session)
+    helpers.move_to_top(session)
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_ORCA_CONTROLS]
+    assert helpers.capture(session)[0] == [_ORCA_CONTROLS]
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Last line."]
-    assert brailled[-1] == BrailleLine(11, _LAST_LINE, _LAST_LINE, "\x00" * 13)
+    assert brailled[-1] == helpers.BrailleLine(11, _LAST_LINE, _LAST_LINE, "\x00" * 13)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == ([], [])
+    assert helpers.capture(session) == ([], [])
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == ([], [])
+    assert helpers.capture(session) == ([], [])
 
     keyboard.tap_key(keyboard.KEYSYM_END)
-    assert capture(session) == (["blank"], [BrailleLine(11, _LAST_LINE, _LAST_LINE, "\x00" * 13)])
+    assert helpers.capture(session) == (
+        ["blank"],
+        [helpers.BrailleLine(11, _LAST_LINE, _LAST_LINE, "\x00" * 13)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    assert capture(session) == (["L"], [BrailleLine(1, _LAST_LINE, _LAST_LINE, "\x00" * 13)])
+    assert helpers.capture(session) == (
+        ["L"],
+        [helpers.BrailleLine(1, _LAST_LINE, _LAST_LINE, "\x00" * 13)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
-        expected_for_gtk(["boundary in the view.\n"], gtk4=["boundary in the view."]),
-        [BrailleLine(1, "boundary in the view. $l", "boundary in the view. $l", "\x00" * 24)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["boundary in the view.\n"], gtk4=["boundary in the view."]),
+        [
+            helpers.BrailleLine(
+                1, "boundary in the view. $l", "boundary in the view. $l", "\x00" * 24
+            )
+        ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    assert capture(session) == (
-        expected_for_gtk(["Line one.\n"], gtk4=["Line one."]),
-        [BrailleLine(1, _FIRST_LINE, "Line one. $l", "\x00" * 43)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["Line one.\n"], gtk4=["Line one."]),
+        [helpers.BrailleLine(1, _FIRST_LINE, "Line one. $l", "\x00" * 43)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == ([], [])
+    assert helpers.capture(session) == ([], [])
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == ([], [])
+    assert helpers.capture(session) == ([], [])
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_APP_CONTROLS]
+    assert helpers.capture(session)[0] == [_APP_CONTROLS]
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_selection_with_shift_plus_arrows(gtk_text_view: NativeAppSession) -> None:
     """Tests selection with shift plus the arrow keys."""
 
     session = gtk_text_view
-    move_to_top(session)
+    helpers.move_to_top(session)
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_ORCA_CONTROLS]
+    assert helpers.capture(session)[0] == [_ORCA_CONTROLS]
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Line one.\n", "selected"]
-    assert brailled[-1] == BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
+    assert brailled[-1] == helpers.BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["L", "selected"],
-        [BrailleLine(2, _LINE_TWO, _LINE_TWO_VISIBLE, "\xc0" + "\x00" * 60)],
+        [helpers.BrailleLine(2, _LINE_TWO, _LINE_TWO_VISIBLE, "\xc0" + "\x00" * 60)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["ine two has additional words to make it long enough that", "selected"],
-        [BrailleLine(32, _LINE_TWO, "rds to make it long enough that ", "\xc0" * 57 + "\x00" * 4)],
+        [
+            helpers.BrailleLine(
+                32, _LINE_TWO, "rds to make it long enough that ", "\xc0" * 57 + "\x00" * 4
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
-    assert spoken == expected_for_gtk(
+    spoken, brailled = helpers.capture(session)
+    assert spoken == helpers.expected_for_gtk(
         ["Text unselected.", "the text view wraps it.\n"],
         gtk4=["Text unselected.", "the text view wraps it."],
     )
-    assert brailled[-1] == BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26)
+    assert brailled[-1] == helpers.BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_APP_CONTROLS]
+    assert helpers.capture(session)[0] == [_APP_CONTROLS]
 
 
 @pytest.mark.native_app
-@requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
+@version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())
 def test_say_all_and_where_am_i(gtk_text_view: NativeAppSession) -> None:
     """Tests say all and where am I."""
 
     session = gtk_text_view
-    move_to_top(session)
+    helpers.move_to_top(session)
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_ORCA_CONTROLS]
+    assert helpers.capture(session)[0] == [_ORCA_CONTROLS]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Line two has additional words to make it long enough that "]
-    assert brailled[-1] == BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
+    assert brailled[-1] == helpers.BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["text", "Line two has additional words to make it long enough that "],
-        [BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)],
+        [helpers.BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-    assert speech(session, quiescence=0.4, overall=10.0) == expected_for_gtk(
+    assert helpers.speech(session, quiescence=0.4, overall=10.0) == helpers.expected_for_gtk(
         [
             "Line two has additional words to make it long enough that the text view wraps it.\n",
             "Line three.\n",
@@ -276,19 +295,23 @@ def test_say_all_and_where_am_i(gtk_text_view: NativeAppSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
-        expected_for_gtk(["boundary in the view.\n"], gtk4=["boundary in the view."]),
-        [BrailleLine(1, "boundary in the view. $l", "boundary in the view. $l", "\x00" * 24)],
+    assert helpers.capture(session) == (
+        helpers.expected_for_gtk(["boundary in the view.\n"], gtk4=["boundary in the view."]),
+        [
+            helpers.BrailleLine(
+                1, "boundary in the view. $l", "boundary in the view. $l", "\x00" * 24
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Last line."],
-        [BrailleLine(1, _LAST_LINE, _LAST_LINE, "\x00" * 13)],
+        [helpers.BrailleLine(1, _LAST_LINE, _LAST_LINE, "\x00" * 13)],
     )
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_APP_CONTROLS]
+    assert helpers.capture(session)[0] == [_APP_CONTROLS]
 
 
 @pytest.mark.native_app
@@ -296,27 +319,27 @@ def test_toggling_layout_mode(gtk_text_view: NativeAppSession) -> None:
     """Tests toggling layout mode."""
 
     session = gtk_text_view
-    move_to_top(session)
+    helpers.move_to_top(session)
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_ORCA_CONTROLS]
+    assert helpers.capture(session)[0] == [_ORCA_CONTROLS]
     assert session.orca.get("CaretNavigator", "LayoutMode") is True
 
     ((key, mods),) = session.orca.available_keybindings(1)
     with session.orca.bound_command("toggle_layout_mode", key, mods):
         session.orca.press_bound_key(key)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == ["Object mode."]
-        assert brailled[-1] == BrailleLine(0, "Object mode.", "Object mode.", "\x00" * 12)
+        assert brailled[-1] == helpers.BrailleLine(0, "Object mode.", "Object mode.", "\x00" * 12)
         assert session.orca.get("CaretNavigator", "LayoutMode") is False
 
         session.orca.press_bound_key(key)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == ["Layout mode."]
-        assert brailled[-1] == BrailleLine(0, "Layout mode.", "Layout mode.", "\x00" * 12)
+        assert brailled[-1] == helpers.BrailleLine(0, "Layout mode.", "Layout mode.", "\x00" * 12)
         assert session.orca.get("CaretNavigator", "LayoutMode") is True
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_APP_CONTROLS]
+    assert helpers.capture(session)[0] == [_APP_CONTROLS]
 
 
 @pytest.mark.native_app
@@ -334,50 +357,59 @@ def test_typing_and_deleting(gtk_text_view: NativeAppSession) -> None:
 
     # This test adds a line to the buffer, so it must remain the last one in the file.
     session = gtk_text_view
-    move_to_top(session)
+    helpers.move_to_top(session)
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_ORCA_CONTROLS]
+    assert helpers.capture(session)[0] == [_ORCA_CONTROLS]
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Last line."]
-    assert brailled[-1] == BrailleLine(11, _LAST_LINE, _LAST_LINE, "\x00" * 13)
+    assert brailled[-1] == helpers.BrailleLine(11, _LAST_LINE, _LAST_LINE, "\x00" * 13)
 
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == []
-    assert brailled[-1] == BrailleLine(1, " $l", " $l", "\x00" * 3)
+    assert brailled[-1] == helpers.BrailleLine(1, " $l", " $l", "\x00" * 3)
 
     keyboard.tap_key(ord("a"))
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["a"]
-    assert brailled[-1] == BrailleLine(2, "a $l", "a $l", "\x00" * 4)
+    assert brailled[-1] == helpers.BrailleLine(2, "a $l", "a $l", "\x00" * 4)
 
     keyboard.tap_key(ord("b"))
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["b"]
-    assert brailled[-1] == BrailleLine(3, "ab $l", "ab $l", "\x00" * 5)
+    assert brailled[-1] == helpers.BrailleLine(3, "ab $l", "ab $l", "\x00" * 5)
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (["b"], [BrailleLine(2, "ab $l", "ab $l", "\x00" * 5)])
+    assert helpers.capture(session) == (
+        ["b"],
+        [helpers.BrailleLine(2, "ab $l", "ab $l", "\x00" * 5)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    assert capture(session) == (["a"], [BrailleLine(1, "ab $l", "ab $l", "\x00" * 5)])
+    assert helpers.capture(session) == (
+        ["a"],
+        [helpers.BrailleLine(1, "ab $l", "ab $l", "\x00" * 5)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_END)
-    assert capture(session) == (["blank"], [BrailleLine(3, "ab $l", "ab $l", "\x00" * 5)])
+    assert helpers.capture(session) == (
+        ["blank"],
+        [helpers.BrailleLine(3, "ab $l", "ab $l", "\x00" * 5)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_BACKSPACE)
-    assert capture(session) == (["b"], [BrailleLine(2, "a $l", "a $l", "\x00" * 4)])
+    assert helpers.capture(session) == (["b"], [helpers.BrailleLine(2, "a $l", "a $l", "\x00" * 4)])
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (["a"], [BrailleLine(1, "a $l", "a $l", "\x00" * 4)])
+    assert helpers.capture(session) == (["a"], [helpers.BrailleLine(1, "a $l", "a $l", "\x00" * 4)])
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Last line.\n"],
-        [BrailleLine(1, _LAST_LINE, _LAST_LINE, "\x00" * 13)],
+        [helpers.BrailleLine(1, _LAST_LINE, _LAST_LINE, "\x00" * 13)],
     )
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_APP_CONTROLS]
+    assert helpers.capture(session)[0] == [_APP_CONTROLS]

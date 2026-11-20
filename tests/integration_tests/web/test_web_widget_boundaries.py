@@ -26,9 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, version_helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.version_helpers import firefox_is_older_than_build
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -44,7 +43,8 @@ if TYPE_CHECKING:
             True,
             id="sticky-browse",
             marks=pytest.mark.skipif(
-                firefox_is_older_than_build(157, 0), reason="Needs Firefox 157 or later"
+                version_helpers.firefox_is_older_than_build(157, 0),
+                reason="Needs Firefox 157 or later",
             ),
         ),
     ],

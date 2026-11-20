@@ -27,9 +27,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.apps import gtk
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, toggle_flat_review
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -55,7 +55,7 @@ def _review_first_entry_then_focus_second(session: NativeAppSession) -> None:
     """Reviews the first entry, then tabs to the second so review and focus differ."""
 
     session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
@@ -85,10 +85,10 @@ def test_move_review_to_focus(gtk_two_entries: NativeAppSession) -> None:
     with _bound(session, "move_review_to_focus") as key:
         _review_first_entry_then_focus_second(session)
         session.orca.press_bound_key(key)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["recipe"],
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     20,
                     "Banana bread recipe $l",
                     "Banana bread recipe $l",
@@ -119,9 +119,9 @@ def test_move_focus_to_review(gtk_two_entries: NativeAppSession) -> None:
     with _bound(session, "move_focus_to_review") as key:
         _review_first_entry_then_focus_second(session)
         session.orca.press_bound_key(key)
-        spoken, brailled = capture(session, wait_async=True)
+        spoken, brailled = helpers.capture(session, wait_async=True)
         assert spoken == ["text", "Apple pie recipe"]
-        assert brailled[-1] == BrailleLine(
+        assert brailled[-1] == helpers.BrailleLine(
             11,
             "OrcaTwoEntries application frame Apple pie recipe $l",
             "Apple pie recipe $l",
@@ -142,12 +142,12 @@ def test_move_focus_to_review_location_unchanged(gtk_two_entries: NativeAppSessi
         keyboard.tap_key(keyboard.KEYSYM_TAB)  # the button (no caret to move)
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
         session.reader.reset()
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
         keyboard.tap_key(keyboard.KEYSYM_KP_UP)
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
         session.reader.reset()
         session.orca.press_bound_key(key)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["Location unchanged"],
-            [BrailleLine(0, "Location unchanged", "Location unchanged", "\x00" * 18)],
+            [helpers.BrailleLine(0, "Location unchanged", "Location unchanged", "\x00" * 18)],
         )

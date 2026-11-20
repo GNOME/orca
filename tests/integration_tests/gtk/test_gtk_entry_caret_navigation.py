@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -49,50 +49,50 @@ def test_caret_navigation_in_an_entry(gtk_two_entries: NativeAppSession) -> None
     session.reader.reset()
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_ORCA_CONTROLS]
+    assert helpers.capture(session)[0] == [_ORCA_CONTROLS]
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["A"]
-    assert brailled[-1] == BrailleLine(1, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
+    assert brailled[-1] == helpers.BrailleLine(1, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["p"]
-    assert brailled[-1] == BrailleLine(2, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
+    assert brailled[-1] == helpers.BrailleLine(2, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Apple"]
-    assert brailled[-1] == BrailleLine(6, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
+    assert brailled[-1] == helpers.BrailleLine(6, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
 
     keyboard.tap_key(keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["blank"]
-    assert brailled[-1] == BrailleLine(17, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
+    assert brailled[-1] == helpers.BrailleLine(17, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Banana bread recipe", "text"]
-    assert brailled[-1] == BrailleLine(1, _SECOND, _SECOND_VISIBLE, "\x00" * 55)
+    assert brailled[-1] == helpers.BrailleLine(1, _SECOND, _SECOND_VISIBLE, "\x00" * 55)
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Apple pie recipe", "text"]
-    assert brailled[-1] == BrailleLine(1, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
+    assert brailled[-1] == helpers.BrailleLine(1, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Apple pie recipe"]
-    assert brailled[-1] == BrailleLine(17, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
+    assert brailled[-1] == helpers.BrailleLine(17, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Apple pie recipe"]
-    assert brailled[-1] == BrailleLine(1, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
+    assert brailled[-1] == helpers.BrailleLine(1, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_APP_CONTROLS]
+    assert helpers.capture(session)[0] == [_APP_CONTROLS]
 
 
 @pytest.mark.native_app
@@ -105,32 +105,32 @@ def test_selection_in_an_entry(gtk_two_entries: NativeAppSession) -> None:
     session.reader.reset()
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["A", "selected"],
-        [BrailleLine(2, _FIRST, _FIRST_VISIBLE, "\x00" * 33 + "\xc0" + "\x00" * 18)],
+        [helpers.BrailleLine(2, _FIRST, _FIRST_VISIBLE, "\x00" * 33 + "\xc0" + "\x00" * 18)],
     )
 
     keyboard.press_chord(
         [keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT
     )
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["pple", "selected"],
-        [BrailleLine(6, _FIRST, _FIRST_VISIBLE, "\x00" * 33 + "\xc0" * 5 + "\x00" * 14)],
+        [helpers.BrailleLine(6, _FIRST, _FIRST_VISIBLE, "\x00" * 33 + "\xc0" * 5 + "\x00" * 14)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         [" pie recipe", "selected"],
-        [BrailleLine(17, _FIRST, _FIRST_VISIBLE, "\x00" * 33 + "\xc0" * 16 + "\x00" * 3)],
+        [helpers.BrailleLine(17, _FIRST, _FIRST_VISIBLE, "\x00" * 33 + "\xc0" * 16 + "\x00" * 3)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Apple pie recipe", "unselected"]
-    assert brailled[-1] == BrailleLine(1, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
+    assert brailled[-1] == helpers.BrailleLine(1, _FIRST, _FIRST_VISIBLE, "\x00" * 52)
 
     session.orca.press_orca_key(keyboard.KEYSYM_UP, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
-    assert capture(session) == (["No selected text."], [])
+    assert helpers.capture(session) == (["No selected text."], [])

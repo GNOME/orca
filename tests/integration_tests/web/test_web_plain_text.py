@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, move_to_top
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -37,16 +37,24 @@ if TYPE_CHECKING:
 def test_line_navigation_in_plain_text_document(web_plain_text: BrowserSession) -> None:
     """Tests that browsing a plain-text document presents each line."""
 
-    move_to_top(web_plain_text)
+    helpers.move_to_top(web_plain_text)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(web_plain_text) == (
+    assert helpers.capture(web_plain_text) == (
         ["Second line of the file."],
-        [BrailleLine(1, "Second line of the file. $l", "Second line of the file. $l", "\x00" * 27)],
+        [
+            helpers.BrailleLine(
+                1, "Second line of the file. $l", "Second line of the file. $l", "\x00" * 27
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(web_plain_text) == (
+    assert helpers.capture(web_plain_text) == (
         ["Third line of the file."],
-        [BrailleLine(1, "Third line of the file. $l", "Third line of the file. $l", "\x00" * 26)],
+        [
+            helpers.BrailleLine(
+                1, "Third line of the file. $l", "Third line of the file. $l", "\x00" * 26
+            )
+        ],
     )

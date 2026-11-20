@@ -26,15 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    move_to_bottom,
-    move_to_top,
-    reset_web_state,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -43,14 +36,14 @@ if TYPE_CHECKING:
 def _say_all(session: BrowserSession, style: str) -> list[str]:
     """Warms the line caches, sets the Say All style, and returns the Say All speech."""
 
-    reset_web_state(session)
-    move_to_bottom(session)
-    move_to_top(session)
-    reset_web_state(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_bottom(session)
+    helpers.move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
     session.orca.set("SayAllPresenter", "Style", style)
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-    return speech(session)
+    return helpers.speech(session)
 
 
 @pytest.mark.native_app
@@ -58,7 +51,7 @@ def test_line_navigation_over_offscreen_labels(web_offscreen_labels: BrowserSess
     """Tests line navigation past fields with off-screen and clip-hidden labels."""
 
     session = web_offscreen_labels
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     for name in (
         "Label one neg X",
@@ -68,13 +61,16 @@ def test_line_navigation_over_offscreen_labels(web_offscreen_labels: BrowserSess
         "Label five clip",
     ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             [name, "entry"],
-            [BrailleLine(17, f"{name}  $l", f"{name}  $l", None)],
+            [helpers.BrailleLine(17, f"{name}  $l", f"{name}  $l", None)],
         )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (["End."], [BrailleLine(1, "End.", "End.", "\x00" * 4)])
+    assert helpers.capture(session) == (
+        ["End."],
+        [helpers.BrailleLine(1, "End.", "End.", "\x00" * 4)],
+    )
 
 
 @pytest.mark.native_app

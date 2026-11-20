@@ -26,9 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.apps import gtk
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, move_to_top, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -48,16 +48,16 @@ def test_copy_and_paste(gtk_two_entries: NativeAppSession) -> None:
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
     _discard_output(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_C)
-    assert speech(session) == ["Copied selection to clipboard."]
+    assert helpers.speech(session) == ["Copied selection to clipboard."]
 
     session.orca.call("ClipboardPresenter", "PresentClipboardContents", True)
-    assert speech(session) == ["Clipboard contains: Apple pie recipe"]
+    assert helpers.speech(session) == ["Clipboard contains: Apple pie recipe"]
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_A)
     _discard_output(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_V)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Pasted contents from clipboard.", "Text unselected."]
     assert brailled[-1].full == "OrcaTwoEntries application frame Apple pie recipe $l"
 
@@ -75,13 +75,13 @@ def _assert_text(
 ) -> None:
     """Checks speech and the final braille text, cursor, and selection mask."""
 
-    actual_speech, brailled = capture(session)
+    actual_speech, brailled = helpers.capture(session)
     prefix = "OrcaTwoEntries application frame "
     full = prefix + text + " $l"
     start, end = selection
     mask = "\x00" * (len(prefix) + start) + "\xc0" * (end - start)
     mask += "\x00" * (len(full) - len(mask))
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         cursor, full, text + " $l" if visible is None else visible, mask
     )
     assert actual_speech == spoken
@@ -92,10 +92,10 @@ def test_cut(gtk_two_entries: NativeAppSession) -> None:
     """Tests cutting selected text and presenting its clipboard contents."""
 
     session = gtk_two_entries
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(5):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_X)
     _assert_text(
         session,
@@ -105,7 +105,7 @@ def test_cut(gtk_two_entries: NativeAppSession) -> None:
         visible="frame  pie recipe $l",
     )
     session.orca.call("ClipboardPresenter", "PresentClipboardContents", True)
-    assert speech(session) == ["Clipboard contains: Apple"]
+    assert helpers.speech(session) == ["Clipboard contains: Apple"]
 
 
 @pytest.mark.native_app
@@ -114,22 +114,22 @@ def test_paste(gtk_two_entries: NativeAppSession, replace_selection: bool) -> No
     """Tests pasting at the caret and over selected text."""
 
     session = gtk_two_entries
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(5):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_C)
-    assert speech(session) == ["Copied selection to clipboard."]
+    assert helpers.speech(session) == ["Copied selection to clipboard."]
     if replace_selection:
-        move_to_top(session)
+        helpers.move_to_top(session)
         for _ in range(6):
             keyboard.tap_key(keyboard.KEYSYM_RIGHT)
         for _ in range(3):
             keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-        capture(session)
+        helpers.capture(session)
     else:
         keyboard.tap_key(keyboard.KEYSYM_END)
-        capture(session)
+        helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_V)
     spoken = ["Pasted contents from clipboard."]
     if replace_selection:
@@ -144,12 +144,12 @@ def test_undo_redo_cut(gtk_two_entries: NativeAppSession) -> None:
     """Tests restoring a cut selection with undo and removing it again with redo."""
 
     session = gtk_two_entries
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(5):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_X)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_Z)
     _assert_text(session, ["undo", "Selection restored."], "Apple pie recipe", 6, (0, 5))
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_Z)
@@ -169,24 +169,24 @@ def test_undo_redo_paste(gtk_two_entries: NativeAppSession, replace_selection: b
     """Tests undo and redo of an insertion or replacement from the clipboard."""
 
     session = gtk_two_entries
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(5):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_C)
-    assert speech(session) == ["Copied selection to clipboard."]
+    assert helpers.speech(session) == ["Copied selection to clipboard."]
     if replace_selection:
-        move_to_top(session)
+        helpers.move_to_top(session)
         for _ in range(6):
             keyboard.tap_key(keyboard.KEYSYM_RIGHT)
         for _ in range(3):
             keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-        capture(session)
+        helpers.capture(session)
     else:
         keyboard.tap_key(keyboard.KEYSYM_END)
-        capture(session)
+        helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_V)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_Z)
     if replace_selection:
         # GtkEntry records paste's deletion and insertion as separate undo actions.
@@ -211,7 +211,7 @@ def test_undo_redo_delete(gtk_two_entries: NativeAppSession) -> None:
     """Tests undo and redo of deleting a character without a selection."""
 
     session = gtk_two_entries
-    move_to_top(session)
+    helpers.move_to_top(session)
     keyboard.tap_key(keyboard.KEYSYM_DELETE)
     _assert_text(session, ["p"], "pple pie recipe", 1)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_Z)
@@ -226,12 +226,12 @@ def test_undo_redo_replacement(gtk_two_entries: NativeAppSession) -> None:
     """Tests undo and redo of typing over selected text."""
 
     session = gtk_two_entries
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(5):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_Z)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_Z)
     _assert_text(session, ["undo", "Selection restored."], "Apple pie recipe", 6, (0, 5))
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_Z)

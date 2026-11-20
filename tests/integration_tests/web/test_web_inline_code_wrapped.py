@@ -29,7 +29,6 @@ import pytest
 from tests.integration_tests import helpers
 from tests.integration_tests.apps import browser
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -75,7 +74,7 @@ def test_wrapped_inline_code_navigation(
             keyboard.tap_key(key)
             assert helpers.capture(session) == (
                 _speech(spoken, enabled),
-                [BrailleLine(1, text, text, "\x00" * len(text))],
+                [helpers.BrailleLine(1, text, text, "\x00" * len(text))],
             )
 
 

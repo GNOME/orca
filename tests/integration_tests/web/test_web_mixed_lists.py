@@ -28,7 +28,6 @@ import pytest
 
 from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -37,7 +36,7 @@ if TYPE_CHECKING:
 def _assert_line(session: BrowserSession, speech: list[str], text: str) -> None:
     spoken, brailled = helpers.capture(session)
     assert spoken == speech
-    assert brailled[-1] == BrailleLine(1, text, text, "\x00" * len(text))
+    assert brailled[-1] == helpers.BrailleLine(1, text, text, "\x00" * len(text))
 
 
 def _mixed_list_count(session: BrowserSession) -> str:

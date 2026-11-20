@@ -26,14 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    capture,
-    move_to_bottom,
-    reset_web_state,
-    speech,
-    xfail_firefox_caret_tab,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -44,11 +38,11 @@ def test_caret_navigation_top_to_bottom(web_live_regions: BrowserSession) -> Non
     """Tests Down-arrow caret navigation through the page's buttons (layout mode on)."""
 
     session = web_live_regions
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     for expected in _TOP_TO_BOTTOM:
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -56,11 +50,11 @@ def test_caret_navigation_top_to_bottom_layout_off(web_live_regions: BrowserSess
     """Tests the same Down-arrow navigation with layout mode disabled."""
 
     session = web_live_regions
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
     for expected in _TOP_TO_BOTTOM:
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 _TOP_TO_BOTTOM = (
@@ -97,12 +91,12 @@ def test_caret_navigation_bottom_to_top(web_live_regions: BrowserSession) -> Non
     """Tests Up-arrow caret navigation from the bottom of the page (layout mode on)."""
 
     session = web_live_regions
-    reset_web_state(session)
-    move_to_bottom(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_bottom(session)
 
     for expected in _BOTTOM_TO_TOP:
         keyboard.tap_key(keyboard.KEYSYM_UP)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -110,12 +104,12 @@ def test_caret_navigation_bottom_to_top_layout_off(web_live_regions: BrowserSess
     """Tests the same Up-arrow navigation with layout mode disabled."""
 
     session = web_live_regions
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
-    move_to_bottom(session)
+    helpers.move_to_bottom(session)
     for expected in _BOTTOM_TO_TOP:
         keyboard.tap_key(keyboard.KEYSYM_UP)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -123,104 +117,104 @@ def test_live_region_politeness(web_live_regions: BrowserSession) -> None:
     """Tests that polite and assertive updates are announced while aria-live=off is silent."""
 
     session = web_live_regions
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Save", "button"]
+    assert helpers.speech(session) == ["Save", "button"]
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session, wait_async=True) == ["Changes saved"]
+    assert helpers.speech(session, wait_async=True) == ["Changes saved"]
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Break", "button"]
+    assert helpers.speech(session) == ["Break", "button"]
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session, wait_async=True) == ["Connection lost"]
+    assert helpers.speech(session, wait_async=True) == ["Connection lost"]
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Quiet", "button"]
+    assert helpers.speech(session) == ["Quiet", "button"]
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session) == []
+    assert helpers.speech(session) == []
 
 
 @pytest.mark.native_app
-@xfail_firefox_caret_tab()
+@helpers.xfail_firefox_caret_tab()
 def test_status_role_live_region_is_announced(web_live_regions: BrowserSession) -> None:
     """Tests that an update to a polite role=status live region is announced."""
 
     session = web_live_regions
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     for _ in range(4):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Status", "button"]
+    assert helpers.speech(session) == ["Status", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session, wait_async=True) == ["Status updated"]
+    assert helpers.speech(session, wait_async=True) == ["Status updated"]
 
 
 @pytest.mark.native_app
-@xfail_firefox_caret_tab()
+@helpers.xfail_firefox_caret_tab()
 def test_live_region_with_icon_content_is_announced_by_name(
     web_live_regions: BrowserSession,
 ) -> None:
     """Tests that an atomic live region whose only content is an icon is announced by its name."""
 
     session = web_live_regions
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     for _ in range(6):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Bezel", "button"]
+    assert helpers.speech(session) == ["Bezel", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session, wait_async=True) == ["Play"]
+    assert helpers.speech(session, wait_async=True) == ["Play"]
 
 
 @pytest.mark.native_app
-@xfail_firefox_caret_tab()
+@helpers.xfail_firefox_caret_tab()
 def test_live_region_child_removal_is_silent(web_live_regions: BrowserSession) -> None:
     """Tests that removing a child of a polite live region away from focus is not announced."""
 
     session = web_live_regions
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     for _ in range(5):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Remove", "button"]
+    assert helpers.speech(session) == ["Remove", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert capture(session, wait_async=True) == ([], [])
+    assert helpers.capture(session, wait_async=True) == ([], [])
 
 
 @pytest.mark.native_app
-@xfail_firefox_caret_tab()
+@helpers.xfail_firefox_caret_tab()
 def test_busy_live_region_rewritten_in_place(web_live_regions: BrowserSession) -> None:
     """Tests that a region rewritten while aria-busy is announced once it is no longer busy."""
 
     session = web_live_regions
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     for _ in range(7):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Rewrite", "button"]
+    assert helpers.speech(session) == ["Rewrite", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session, wait_async=True) == ["First second third"]
+    assert helpers.speech(session, wait_async=True) == ["First second third"]
 
 
 @pytest.mark.native_app
-@xfail_firefox_caret_tab()
+@helpers.xfail_firefox_caret_tab()
 def test_busy_live_region_finalized_with_its_content(web_live_regions: BrowserSession) -> None:
     """Tests that clearing aria-busy along with a final rewrite yields one announcement."""
 
     session = web_live_regions
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     for _ in range(9):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Finalize", "button"]
+    assert helpers.speech(session) == ["Finalize", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session, wait_async=True) == ["Complete rewritten answer"]
+    assert helpers.speech(session, wait_async=True) == ["Complete rewritten answer"]
 
 
 @pytest.mark.native_app
@@ -228,11 +222,11 @@ def test_live_region_inserted_empty_and_then_filled(web_live_regions: BrowserSes
     """Tests adding an empty live region to the page and then putting text in it."""
 
     session = web_live_regions
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     for _ in range(10):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Fill", "button"]
+    assert helpers.speech(session) == ["Fill", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session, wait_async=True) == ["Message read"]
+    assert helpers.speech(session, wait_async=True) == ["Message read"]

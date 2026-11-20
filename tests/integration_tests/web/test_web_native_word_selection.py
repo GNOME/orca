@@ -26,25 +26,18 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers, version_helpers, web_native_selection_helpers
 from tests.integration_tests.apps import browser
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import expected_for_browser, speech
-from tests.integration_tests.version_helpers import requires_browser_version
-from tests.integration_tests.web_native_selection_helpers import (
-    LONG_PARAGRAPH,
-    USES_DOCUMENT_SELECTION,
-    assert_walks,
-    native_selection,
-    select_word,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
 
 
-@requires_browser_version("chromium", 156)
+@version_helpers.requires_browser_version("chromium", 156)
 @pytest.mark.skipif(
-    not USES_DOCUMENT_SELECTION, reason="Button text selection requires document-selection ranges"
+    not web_native_selection_helpers.USES_DOCUMENT_SELECTION,
+    reason="Button text selection requires document-selection ranges",
 )
 @pytest.mark.native_app
 @pytest.mark.parametrize(
@@ -61,15 +54,21 @@ def test_word_selection_within_button(
 
     session = web_native_text_selection
 
-    with native_selection(session):
+    with web_native_selection_helpers.native_selection(session):
         for _ in range(button_number):
             keyboard.tap_key(keyboard.KEYSYM_B)
-            speech(session, wait_async=True)
+            helpers.speech(session, wait_async=True)
 
         for word in words:
-            assert select_word(session, keyboard.KEYSYM_RIGHT) == [word, "selected"]
+            assert web_native_selection_helpers.select_word(session, keyboard.KEYSYM_RIGHT) == [
+                word,
+                "selected",
+            ]
         for word in reversed(words):
-            assert select_word(session, keyboard.KEYSYM_LEFT) == [word, "unselected"]
+            assert web_native_selection_helpers.select_word(session, keyboard.KEYSYM_LEFT) == [
+                word,
+                "unselected",
+            ]
 
 
 # Gecko's native word selection stalls at the separator even without a screen reader.
@@ -83,7 +82,9 @@ def test_word_selection_within_button(
     strict=True,
 )
 # Provisional minimum while selection failures are investigated.
-@requires_browser_version("chromium", 157, when=USES_DOCUMENT_SELECTION)
+@version_helpers.requires_browser_version(
+    "chromium", 157, when=web_native_selection_helpers.USES_DOCUMENT_SELECTION
+)
 @pytest.mark.native_app
 def test_word_selection_and_unselection(web_native_text_selection: BrowserSession) -> None:
     """Tests native word selection from the top into the form controls, then back."""
@@ -101,8 +102,10 @@ def test_word_selection_and_unselection(web_native_text_selection: BrowserSessio
         ["text", "selected"],
         [".", "selected"],
         [],
-        ["Save", "selected"] if USES_DOCUMENT_SELECTION else ["selected"],
-        [] if USES_DOCUMENT_SELECTION else ["selected"],
+        ["Save", "selected"]
+        if web_native_selection_helpers.USES_DOCUMENT_SELECTION
+        else ["selected"],
+        [] if web_native_selection_helpers.USES_DOCUMENT_SELECTION else ["selected"],
         [],
         [],
         [],
@@ -111,8 +114,10 @@ def test_word_selection_and_unselection(web_native_text_selection: BrowserSessio
         [],
         [],
         [],
-        [] if USES_DOCUMENT_SELECTION else ["unselected"],
-        ["Save", "unselected"] if USES_DOCUMENT_SELECTION else ["unselected"],
+        [] if web_native_selection_helpers.USES_DOCUMENT_SELECTION else ["unselected"],
+        ["Save", "unselected"]
+        if web_native_selection_helpers.USES_DOCUMENT_SELECTION
+        else ["unselected"],
         [],
         [],
         [],
@@ -125,11 +130,19 @@ def test_word_selection_and_unselection(web_native_text_selection: BrowserSessio
         [],
     ]
 
-    with native_selection(session):
-        selected = [select_word(session, keyboard.KEYSYM_RIGHT) for _ in expected_selected]
-        unselected = [select_word(session, keyboard.KEYSYM_LEFT) for _ in expected_unselected]
+    with web_native_selection_helpers.native_selection(session):
+        selected = [
+            web_native_selection_helpers.select_word(session, keyboard.KEYSYM_RIGHT)
+            for _ in expected_selected
+        ]
+        unselected = [
+            web_native_selection_helpers.select_word(session, keyboard.KEYSYM_LEFT)
+            for _ in expected_unselected
+        ]
 
-    assert_walks(selected, unselected, expected_selected, expected_unselected)
+    web_native_selection_helpers.assert_walks(
+        selected, unselected, expected_selected, expected_unselected
+    )
 
 
 # Gecko lacks the Document selection API: https://bugzilla.mozilla.org/show_bug.cgi?id=1879510
@@ -139,7 +152,9 @@ def test_word_selection_and_unselection(web_native_text_selection: BrowserSessio
     raises=pytest.fail.Exception,
     strict=True,
 )
-@requires_browser_version("chromium", 157, when=USES_DOCUMENT_SELECTION)
+@version_helpers.requires_browser_version(
+    "chromium", 157, when=web_native_selection_helpers.USES_DOCUMENT_SELECTION
+)
 @pytest.mark.native_app
 def test_word_selection_and_unselection_from_bottom(
     web_native_text_selection: BrowserSession,
@@ -147,14 +162,14 @@ def test_word_selection_and_unselection_from_bottom(
     """Tests native word selection through the final paragraph and preceding button, then back."""
 
     session = web_native_text_selection
-    words = LONG_PARAGRAPH.split()
+    words = web_native_selection_helpers.LONG_PARAGRAPH.split()
     expected_selected = [[".", "selected"], ["controls", "selected"]]
     for word in reversed(words[:-1]):
         if word.endswith(","):
             expected_selected.extend([[",", "selected"], [word[:-1], "selected"]])
         else:
             expected_selected.append([word, "selected"])
-    if USES_DOCUMENT_SELECTION:
+    if web_native_selection_helpers.USES_DOCUMENT_SELECTION:
         # Chromium's native Ctrl+Shift+Left gets stuck at the start of "Next slide".
         # This also happens when Orca is not running.
         # Selection and unselection of content before the button are covered by
@@ -164,14 +179,22 @@ def test_word_selection_and_unselection_from_bottom(
         [*output[:-1], "unselected"] if output else [] for output in reversed(expected_selected)
     ]
 
-    with native_selection(session):
+    with web_native_selection_helpers.native_selection(session):
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
         session.reader.reset()
-        selected = [select_word(session, keyboard.KEYSYM_LEFT) for _ in expected_selected]
-        unselected = [select_word(session, keyboard.KEYSYM_RIGHT) for _ in expected_unselected]
+        selected = [
+            web_native_selection_helpers.select_word(session, keyboard.KEYSYM_LEFT)
+            for _ in expected_selected
+        ]
+        unselected = [
+            web_native_selection_helpers.select_word(session, keyboard.KEYSYM_RIGHT)
+            for _ in expected_unselected
+        ]
 
-    assert_walks(selected, unselected, expected_selected, expected_unselected)
+    web_native_selection_helpers.assert_walks(
+        selected, unselected, expected_selected, expected_unselected
+    )
 
 
 # Gecko's native word selection stalls at the separator even without a screen reader.
@@ -184,7 +207,9 @@ def test_word_selection_and_unselection_from_bottom(
     raises=pytest.fail.Exception,
     strict=True,
 )
-@requires_browser_version("chromium", 157, when=USES_DOCUMENT_SELECTION)
+@version_helpers.requires_browser_version(
+    "chromium", 157, when=web_native_selection_helpers.USES_DOCUMENT_SELECTION
+)
 @pytest.mark.native_app
 def test_word_selection_and_unselection_from_image(
     web_native_text_selection: BrowserSession,
@@ -235,20 +260,28 @@ def test_word_selection_and_unselection_from_image(
         [],
         ["before", "unselected"],
     ]
-    if not USES_DOCUMENT_SELECTION:
+    if not web_native_selection_helpers.USES_DOCUMENT_SELECTION:
         expected_unselected[-3:-1] = [[], ["Red square", "image", "unselected"]]
 
-    with native_selection(session):
+    with web_native_selection_helpers.native_selection(session):
         keyboard.tap_key(keyboard.KEYSYM_G)
-        speech(session)
+        helpers.speech(session)
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-        speech(session)
+        helpers.speech(session)
         keyboard.tap_key(keyboard.KEYSYM_END)
-        speech(session)
-        selected = [select_word(session, keyboard.KEYSYM_LEFT) for _ in expected_selected]
-        unselected = [select_word(session, keyboard.KEYSYM_RIGHT) for _ in expected_unselected]
+        helpers.speech(session)
+        selected = [
+            web_native_selection_helpers.select_word(session, keyboard.KEYSYM_LEFT)
+            for _ in expected_selected
+        ]
+        unselected = [
+            web_native_selection_helpers.select_word(session, keyboard.KEYSYM_RIGHT)
+            for _ in expected_unselected
+        ]
 
-    assert_walks(selected, unselected, expected_selected, expected_unselected)
+    web_native_selection_helpers.assert_walks(
+        selected, unselected, expected_selected, expected_unselected
+    )
 
 
 @pytest.mark.native_app
@@ -256,13 +289,13 @@ def test_selection_after_modifier_release(web_native_text_selection: BrowserSess
     """A caret event after modifier release does not cancel selection speech."""
 
     session = web_native_text_selection
-    with native_selection(session):
+    with web_native_selection_helpers.native_selection(session):
         for key in (keyboard.KEYSYM_G, keyboard.KEYSYM_RIGHT, keyboard.KEYSYM_END):
             keyboard.tap_key(key)
-            speech(session)
+            helpers.speech(session)
         # Extend the selection backward across "before" and the image.
         for _ in range(3):
-            select_word(session, keyboard.KEYSYM_LEFT)
+            web_native_selection_helpers.select_word(session, keyboard.KEYSYM_LEFT)
 
         keyboard.press_key(keyboard.KEYSYM_CONTROL_L)
         keyboard.press_key(keyboard.KEYSYM_SHIFT_L)
@@ -273,6 +306,6 @@ def test_selection_after_modifier_release(web_native_text_selection: BrowserSess
             keyboard.release_key(keyboard.KEYSYM_SHIFT_L)
             keyboard.release_key(keyboard.KEYSYM_CONTROL_L)
         # Firefox's native selection includes more than Chromium's.
-        assert speech(session, wait_async=True) == expected_for_browser(
+        assert helpers.speech(session, wait_async=True) == helpers.expected_for_browser(
             session, ["region", "selected"], firefox=["Clickable ", "selected"]
         )

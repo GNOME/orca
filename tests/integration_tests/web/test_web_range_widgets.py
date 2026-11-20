@@ -28,7 +28,6 @@ import pytest
 
 from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -194,7 +193,7 @@ def test_slider_value_changes_and_progress_bar(web_range_widgets: BrowserSession
     assert helpers.speech(session) == ["30 percent."]
 
 
-def _where_am_i(session: BrowserSession) -> tuple[list[str], list[BrailleLine]]:
+def _where_am_i(session: BrowserSession) -> tuple[list[str], list[helpers.BrailleLine]]:
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
     return helpers.capture(session)
 
@@ -214,7 +213,7 @@ def test_where_am_i_on_slider(web_range_widgets: BrowserSession) -> None:
         "Volume 0 horizontal slider",
         firefox="Volume 0 slider",
     )
-    assert brailled[-1] == BrailleLine(1, line, line, "\x00" * len(line))
+    assert brailled[-1] == helpers.BrailleLine(1, line, line, "\x00" * len(line))
 
 
 @pytest.mark.native_app
@@ -234,7 +233,7 @@ def test_where_am_i_on_native_meter(web_range_widgets: BrowserSession, click_cou
     value = helpers.expected_for_browser(session, "50", firefox="50 gigabytes")
     assert spoken == ["Disk usage", "level bar", value]
     line = f"Disk usage {value} level bar"
-    assert brailled[-1] == BrailleLine(1, line, line[:32], "\x00" * len(line))
+    assert brailled[-1] == helpers.BrailleLine(1, line, line[:32], "\x00" * len(line))
 
 
 @pytest.mark.native_app
@@ -250,4 +249,4 @@ def test_where_am_i_on_aria_meter(web_range_widgets: BrowserSession, click_count
     spoken, brailled = helpers.capture(session)
     assert spoken == ["Battery charge", "level bar", "80 percent"]
     line = "Battery charge 80 percent level bar"
-    assert brailled[-1] == BrailleLine(1, line, line[:32], "\x00" * len(line))
+    assert brailled[-1] == helpers.BrailleLine(1, line, line[:32], "\x00" * len(line))

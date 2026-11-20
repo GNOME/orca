@@ -26,10 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers, version_helpers
 from tests.integration_tests.apps import gtk
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, move_to_top, speech
-from tests.integration_tests.version_helpers import requires_gtk_version
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -57,13 +56,13 @@ def _assert_text(
 ) -> None:
     """Checks speech and the final braille text, cursor, and selection mask."""
 
-    actual_speech, brailled = capture(session)
+    actual_speech, brailled = helpers.capture(session)
     prefix = "OrcaTextView application frame "
     full = prefix + text + " $l"
     start, end = selection
     mask = "\x00" * (len(prefix) + start) + "\xc0" * (end - start)
     mask += "\x00" * (len(full) - len(mask))
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         cursor, full, text + " $l" if visible is None else visible, mask
     )
     assert actual_speech == spoken
@@ -74,10 +73,10 @@ def test_cut(gtk_text_view_selection: NativeAppSession) -> None:
     """Tests cutting selected text and presenting its clipboard contents."""
 
     session = gtk_text_view_selection
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(4):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_X)
     _assert_text(
         session,
@@ -87,7 +86,7 @@ def test_cut(gtk_text_view_selection: NativeAppSession) -> None:
         visible="OrcaTextView application frame  ",
     )
     session.orca.call("ClipboardPresenter", "PresentClipboardContents", True)
-    assert speech(session) == ["Clipboard contains: Line"]
+    assert helpers.speech(session) == ["Clipboard contains: Line"]
 
 
 @pytest.mark.native_app
@@ -96,22 +95,22 @@ def test_paste(gtk_text_view_selection: NativeAppSession, replace_selection: boo
     """Tests pasting at the caret and over selected text."""
 
     session = gtk_text_view_selection
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(4):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_C)
-    assert speech(session) == ["Copied selection to clipboard."]
+    assert helpers.speech(session) == ["Copied selection to clipboard."]
     if replace_selection:
-        move_to_top(session)
+        helpers.move_to_top(session)
         for _ in range(5):
             keyboard.tap_key(keyboard.KEYSYM_RIGHT)
         for _ in range(3):
             keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-        capture(session)
+        helpers.capture(session)
     else:
         keyboard.tap_key(keyboard.KEYSYM_END)
-        capture(session)
+        helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_V)
     spoken = ["Pasted contents from clipboard."]
     if replace_selection and not gtk.is_gtk4():
@@ -127,12 +126,12 @@ def test_undo_redo_cut(gtk_text_view_selection: NativeAppSession) -> None:
     """Tests restoring a cut selection with undo and removing it again with redo."""
 
     session = gtk_text_view_selection
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(4):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_X)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_Z)
     _assert_text(session, ["undo", "Selection restored."], "Line one.", 1, (0, 4))
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_Z)
@@ -154,24 +153,24 @@ def test_undo_redo_paste(
     """Tests undo and redo of an insertion or replacement from the clipboard."""
 
     session = gtk_text_view_selection
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(4):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_C)
-    assert speech(session) == ["Copied selection to clipboard."]
+    assert helpers.speech(session) == ["Copied selection to clipboard."]
     if replace_selection:
-        move_to_top(session)
+        helpers.move_to_top(session)
         for _ in range(5):
             keyboard.tap_key(keyboard.KEYSYM_RIGHT)
         for _ in range(3):
             keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-        capture(session)
+        helpers.capture(session)
     else:
         keyboard.tap_key(keyboard.KEYSYM_END)
-        capture(session)
+        helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_V)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_Z)
     spoken = ["undo", "Selection restored."] if replace_selection else ["undo"]
     _assert_text(
@@ -193,7 +192,7 @@ def test_undo_redo_delete(gtk_text_view_selection: NativeAppSession) -> None:
     """Tests undo and redo of deleting a character without a selection."""
 
     session = gtk_text_view_selection
-    move_to_top(session)
+    helpers.move_to_top(session)
     keyboard.tap_key(keyboard.KEYSYM_DELETE)
     _assert_text(session, ["i"], "ine one.", 1)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_Z)
@@ -209,12 +208,12 @@ def test_undo_redo_replacement(gtk_text_view_selection: NativeAppSession) -> Non
     """Tests undo and redo of typing over selected text."""
 
     session = gtk_text_view_selection
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(4):
         keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_Z)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_Z)
     _assert_text(session, ["undo"], " one.", 32, visible="OrcaTextView application frame  ")
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_Z)
@@ -238,7 +237,10 @@ def test_undo_redo_replacement(gtk_text_view_selection: NativeAppSession) -> Non
     [
         "cut",
         "paste",
-        pytest.param("replacement", marks=requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4())),
+        pytest.param(
+            "replacement",
+            marks=version_helpers.requires_gtk_version("4.0", 4, 24, when=gtk.is_gtk4()),
+        ),
     ],
 )
 def test_undo_restores_selection(gtk_text_view_selection: NativeAppSession, edit: str) -> None:
@@ -246,29 +248,29 @@ def test_undo_restores_selection(gtk_text_view_selection: NativeAppSession, edit
 
     session = gtk_text_view_selection
     if edit == "paste":
-        move_to_top(session)
+        helpers.move_to_top(session)
         for _ in range(4):
             keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-        capture(session)
+        helpers.capture(session)
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_C)
-        assert speech(session) == ["Copied selection to clipboard."]
-        move_to_top(session)
+        assert helpers.speech(session) == ["Copied selection to clipboard."]
+        helpers.move_to_top(session)
         for _ in range(5):
             keyboard.tap_key(keyboard.KEYSYM_RIGHT)
         for _ in range(3):
             keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-        capture(session)
+        helpers.capture(session)
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_V)
     else:
-        move_to_top(session)
+        helpers.move_to_top(session)
         for _ in range(4):
             keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT)
-        capture(session)
+        helpers.capture(session)
         if edit == "cut":
             keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_X)
         else:
             keyboard.tap_key(keyboard.KEYSYM_Z)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_Z)
     if edit == "replacement":
         _assert_text(session, ["undo"], " one.", 32, visible="OrcaTextView application frame  ")

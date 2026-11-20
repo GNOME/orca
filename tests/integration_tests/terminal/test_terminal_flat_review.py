@@ -26,15 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, terminal_helpers
 from tests.integration_tests.apps import terminal
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.terminal_helpers import (
-    bound_command,
-    review_first_line,
-    settle,
-    type_text,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -54,7 +48,7 @@ pytestmark = pytest.mark.xfail(
 def _review_top_line(session: NativeAppSession) -> tuple[list[str], list[helpers.BrailleLine]]:
     """Moves flat review to the top of the screen and returns the presentation."""
 
-    review_first_line(session)
+    terminal_helpers.review_first_line(session)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
     session.orca.call("FlatReviewPresenter", "PresentLine", True)
@@ -71,7 +65,7 @@ def test_flat_review_reflects_new_page(terminal_pager: NativeAppSession) -> None
     """Tests that reviewing the page's top line shows the new page after paging, not stale text."""
 
     session = terminal_pager
-    settle(session)
+    terminal_helpers.settle(session)
     keyboard.tap_key(keyboard.KEYSYM_PAGE_DOWN)
     keyboard.tap_key(keyboard.KEYSYM_PAGE_DOWN)  # to the last page (lines 14-20)
     session.reader.drain(quiescence_timeout=0.5, overall_timeout=3.0)
@@ -110,15 +104,15 @@ def test_move_focus_to_review_location_unchanged(terminal_shell: NativeAppSessio
     """Tests that move-focus-to-review fails when the terminal won't let us set the caret."""
 
     session = terminal_shell
-    settle(session)
+    terminal_helpers.settle(session)
 
-    type_text("echo aaa bbb ccc\n")
+    terminal_helpers.type_text("echo aaa bbb ccc\n")
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
 
-    with bound_command(session, "move_focus_to_review") as key:
+    with terminal_helpers.bound_command(session, "move_focus_to_review") as key:
         helpers.toggle_flat_review(session)
-        review_first_line(session)
+        terminal_helpers.review_first_line(session)
         session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
         session.reader.reset()
         # VTE's GTK3 AtkText.set_caret_offset always returns FALSE, so we cannot set the caret.
@@ -142,8 +136,8 @@ def test_review_line_that_shrinks(terminal_shell: NativeAppSession) -> None:
     """Tests reviewing a line word by word, then after it is overwritten with shorter text."""
 
     session = terminal_shell
-    settle(session)
-    type_text(
+    terminal_helpers.settle(session)
+    terminal_helpers.type_text(
         "clear; printf 'alpha bravo charlie delta echo\\n'; read; clear; printf 'alpha bravo\\n'"
     )
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
@@ -154,7 +148,7 @@ def test_review_line_that_shrinks(terminal_shell: NativeAppSession) -> None:
     visible = "alpha bravo charlie delta echo $"
     helpers.toggle_flat_review(session)
     try:
-        review_first_line(session)
+        terminal_helpers.review_first_line(session)
         assert helpers.capture(session) == (
             ["alpha bravo charlie delta echo\n"],
             [helpers.BrailleLine(1, full, visible, "\x00" * 33)],
@@ -179,7 +173,7 @@ def test_review_line_that_shrinks(terminal_shell: NativeAppSession) -> None:
         session.reader.drain(quiescence_timeout=0.5, overall_timeout=4.0)
         session.reader.reset()
 
-        review_first_line(session)
+        terminal_helpers.review_first_line(session)
         assert helpers.capture(session) == (
             ["alpha bravo\n"],
             [helpers.BrailleLine(1, "alpha bravo $l", "alpha bravo $l", "\x00" * 14)],

@@ -24,8 +24,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import capture
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import FileManagerSession
@@ -38,4 +38,4 @@ def start_at_first_file(session: FileManagerSession) -> None:
 
     for key in (keyboard.KEYSYM_END, keyboard.KEYSYM_HOME):
         keyboard.tap_key(key)
-        capture(session)
+        helpers.capture(session)

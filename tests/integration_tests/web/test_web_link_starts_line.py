@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, move_to_top
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -38,13 +38,13 @@ def test_line_down_through_link_at_start_of_line(web_link_starts_line: BrowserSe
     """Tests that the line whose first item is a link does not include the preceding line."""
 
     session = web_link_starts_line
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["The bank was the first building in the "],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "The bank was the first building in the ",
                 "The bank was the first building ",
@@ -54,16 +54,20 @@ def test_line_down_through_link_at_start_of_line(web_link_starts_line: BrowserSe
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["city to be built in the "],
-        [BrailleLine(1, "city to be built in the ", "city to be built in the ", "\x00" * 24)],
+        [
+            helpers.BrailleLine(
+                1, "city to be built in the ", "city to be built in the ", "\x00" * 24
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["International Style", "link", ". It was commissioned "],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "International Style. It was commissioned ",
                 "International Style. It was comm",
@@ -73,13 +77,13 @@ def test_line_down_through_link_at_start_of_line(web_link_starts_line: BrowserSe
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["by the owners."],
-        [BrailleLine(1, "by the owners.", "by the owners.", "\x00" * 14)],
+        [helpers.BrailleLine(1, "by the owners.", "by the owners.", "\x00" * 14)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["This is the final line."],
-        [BrailleLine(1, "This is the final line.", "This is the final line.", "\x00" * 23)],
+        [helpers.BrailleLine(1, "This is the final line.", "This is the final line.", "\x00" * 23)],
     )

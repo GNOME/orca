@@ -26,18 +26,18 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
 
 
-def _tool_button(name: str, length: int) -> tuple[list[str], list[BrailleLine]]:
+def _tool_button(name: str, length: int) -> tuple[list[str], list[helpers.BrailleLine]]:
     return (
         [f"{name} button"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 f"OrcaToolbar application frame tool bar {name} button",
                 f"{name} button",
@@ -47,9 +47,9 @@ def _tool_button(name: str, length: int) -> tuple[list[str], list[BrailleLine]]:
     )
 
 
-def _press(session: NativeAppSession, keysym: int) -> tuple[list[str], list[BrailleLine]]:
+def _press(session: NativeAppSession, keysym: int) -> tuple[list[str], list[helpers.BrailleLine]]:
     keyboard.tap_key(keysym)
-    return capture(session)
+    return helpers.capture(session)
 
 
 @pytest.mark.native_app

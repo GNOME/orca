@@ -26,13 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_browser,
-    reset_web_state,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -40,19 +35,19 @@ if TYPE_CHECKING:
 
 def _spinbutton_braille(
     session: BrowserSession, value: str, *, where_am_i: bool = False
-) -> BrailleLine:
+) -> helpers.BrailleLine:
     # Firefox exposes the value through AT-SPI Text; Chromium exposes empty Text.
     # We use braille.Text for Firefox and include the role for Chromium.
     # Firefox reports caret offset -1; Where Am I requests braille at offset 0.
-    return expected_for_browser(
+    return helpers.expected_for_browser(
         session,
-        BrailleLine(
+        helpers.BrailleLine(
             1,
             f"Font size in points {value} spin button",
             f"Font size in points {value} spin bu",
             "\x00" * 36,
         ),
-        firefox=BrailleLine(
+        firefox=helpers.BrailleLine(
             21 if where_am_i else 20,
             f"Font size in points {value}",
             f"Font size in points {value}",
@@ -66,31 +61,31 @@ def test_arrow_navigation_through_toolbar_controls(web_toolbar: BrowserSession) 
     """Tests arrowing through the toolbar's buttons, radio group, menu, spin button, and link."""
 
     session = web_toolbar
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Bold", "toggle button not pressed", "Focus mode"]
-    assert brailled[-1] == BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
+    assert brailled[-1] == helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Italic", "toggle button not pressed"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "& y Italic toggle button", "& y Italic toggle button", "\x00" * 24
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Underline", "toggle button not pressed"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "& y Underline toggle button", "& y Underline toggle button", "\x00" * 27
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Text Alignment", "panel", "Text Align Left", "selected radio button"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "Text Alignment &=y Text Align Left radio button",
         "&=y Text Align Left radio button",
@@ -98,9 +93,9 @@ def test_arrow_navigation_through_toolbar_controls(web_toolbar: BrowserSession) 
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Text Align Center", "not selected radio button"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "Text Alignment & y Text Align Center radio button",
         "& y Text Align Center radio butt",
@@ -108,9 +103,9 @@ def test_arrow_navigation_through_toolbar_controls(web_toolbar: BrowserSession) 
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Text Align Right", "not selected radio button"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1,
         "Text Alignment & y Text Align Right radio button",
         "& y Text Align Right radio butto",
@@ -118,112 +113,112 @@ def test_arrow_navigation_through_toolbar_controls(web_toolbar: BrowserSession) 
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["leaving panel.", "Copy", "button grayed"]
-    assert brailled[-1] == BrailleLine(1, "Copy button", "Copy button", "\x00" * 11)
+    assert brailled[-1] == helpers.BrailleLine(1, "Copy button", "Copy button", "\x00" * 11)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Paste", "button grayed"]
-    assert brailled[-1] == BrailleLine(1, "Paste button", "Paste button", "\x00" * 12)
+    assert brailled[-1] == helpers.BrailleLine(1, "Paste button", "Paste button", "\x00" * 12)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Font: Sans-serif", "collapsed button", "opens menu"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Font: Sans-serif collapsed button", "Font: Sans-serif collapsed butto", "\x00" * 33
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Font Family", "menu", "Sans-serif", "radio menu item selected"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "&=y Sans-serif radio menu item", "&=y Sans-serif radio menu item", "\x00" * 30
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Serif", "radio menu item not selected"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "& y Serif radio menu item", "& y Serif radio menu item", "\x00" * 25
     )
 
     keyboard.tap_key(keyboard.KEYSYM_ESCAPE)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Font: Sans-serif", "collapsed button", "opens menu"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Font: Sans-serif collapsed button", "Font: Sans-serif collapsed butto", "\x00" * 33
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Font size in points", "spin button", "14pt"]
     assert brailled[-1] == _spinbutton_braille(session, "14pt")
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert " ".join(spoken) == "Font size in points spin button 14pt"
     assert brailled[-1] == _spinbutton_braille(session, "14pt", where_am_i=True)
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["15pt"]
     assert brailled[-1] == _spinbutton_braille(session, "15pt")
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert " ".join(spoken) == "Font size in points spin button 15pt"
     assert brailled[-1] == _spinbutton_braille(session, "15pt", where_am_i=True)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["14pt"]
     assert brailled[-1] == _spinbutton_braille(session, "14pt")
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert " ".join(spoken) == "Font size in points spin button 14pt"
     assert brailled[-1] == _spinbutton_braille(session, "14pt", where_am_i=True)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Night Mode", "check box not checked"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "< > Night Mode check box", "< > Night Mode check box", "\x00" * 24
     )
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["checked"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "<x> Night Mode check box", "<x> Night Mode check box", "\x00" * 24
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Help", "link"]
-    assert brailled[-1] == BrailleLine(1, "Help", "Help", "ÀÀÀÀ")
+    assert brailled[-1] == helpers.BrailleLine(1, "Help", "Help", "ÀÀÀÀ")
 
     keyboard.tap_key(keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == []
     assert brailled == []
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Bold", "toggle button not pressed"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "& y Bold toggle button", "& y Bold toggle button", "\x00" * 22
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Help", "link"]
-    assert brailled[-1] == BrailleLine(1, "Help", "Help", "\xc0" * 4)
+    assert brailled[-1] == helpers.BrailleLine(1, "Help", "Help", "\xc0" * 4)
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Night Mode", "check box checked"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "<x> Night Mode check box", "<x> Night Mode check box", "\x00" * 24
     )

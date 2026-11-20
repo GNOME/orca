@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -39,7 +39,7 @@ def _reload(session: BrowserSession) -> None:
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_R)
     session.reader.drain(quiescence_timeout=0.5, overall_timeout=3.0)
     session.reader.reset()
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
 
 @pytest.mark.native_app
@@ -50,89 +50,89 @@ def test_arrow_navigation_between_accordion_headers(web_accordion: BrowserSessio
     _reload(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Contact details", "expanded button heading 3", "Focus mode"]
-    assert brailled[-1] == BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
+    assert brailled[-1] == helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Delivery address", "collapsed button heading 3"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Delivery address collapsed button", "Delivery address collapsed butto", "\x00" * 33
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Payment", "collapsed button heading 3"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Payment collapsed button", "Payment collapsed button", "\x00" * 24
     )
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Contact details", "expanded button heading 3"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Contact details expanded button", "Contact details expanded button", "\x00" * 31
     )
 
     keyboard.tap_key(keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Payment", "collapsed button heading 3"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Payment collapsed button", "Payment collapsed button", "\x00" * 24
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["expanded"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Payment expanded button", "Payment expanded button", "\x00" * 23
     )
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Payment", "region", "Street:", "entry"]
-    assert brailled[-1] == BrailleLine(9, "Street:  $l", "Street:  $l", None)
+    assert brailled[-1] == helpers.BrailleLine(9, "Street:  $l", "Street:  $l", None)
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["leaving region.", "Payment", "expanded button heading 3"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Payment expanded button", "Payment expanded button", "\x00" * 23
     )
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Contact details", "expanded button heading 3"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Contact details expanded button", "Contact details expanded button", "\x00" * 31
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Delivery address", "collapsed button heading 3"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Delivery address collapsed button", "Delivery address collapsed butto", "\x00" * 33
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Contact details", "expanded button heading 3"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Contact details expanded button", "Contact details expanded button", "\x00" * 31
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["collapsed"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Contact details collapsed button", "Contact details collapsed button", "\x00" * 32
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["expanded"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Contact details expanded button", "Contact details expanded button", "\x00" * 31
     )
 
@@ -145,22 +145,22 @@ def test_structural_navigation_by_heading(web_accordion: BrowserSession) -> None
     _reload(session)
 
     keyboard.tap_key(keyboard.KEYSYM_H)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["h", "Contact details", "expanded button heading 3"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Contact details expanded button", "Contact details expanded button", "\x00" * 31
     )
 
     keyboard.tap_key(keyboard.KEYSYM_H)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["h", "Delivery address", "collapsed button heading 3"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Delivery address collapsed button", "Delivery address collapsed butto", "\x00" * 33
     )
 
     keyboard.tap_key(keyboard.KEYSYM_H)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["h", "Payment", "collapsed button heading 3"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "Payment collapsed button", "Payment collapsed button", "\x00" * 24
     )

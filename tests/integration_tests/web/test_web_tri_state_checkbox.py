@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -38,12 +38,12 @@ def test_tri_state_checkbox_cycling(web_tri_state_checkbox: BrowserSession) -> N
     """Tests tri-state check box cycling."""
 
     session = web_tri_state_checkbox
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Forward", "check box not checked"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "< > Forward check box", "< > Forward check box", "\x00" * 21
     )
 
@@ -54,15 +54,15 @@ def test_tri_state_checkbox_cycling(web_tri_state_checkbox: BrowserSession) -> N
         ("partially checked", "<->"),
     ):
         keyboard.tap_key(keyboard.KEYSYM_SPACE)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == [state]
         line = f"{indicator} Forward check box"
-        assert brailled[-1] == BrailleLine(1, line, line, "\x00" * 21)
+        assert brailled[-1] == helpers.BrailleLine(1, line, line, "\x00" * 21)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Backward", "check box checked"]
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         1, "<x> Backward check box", "<x> Backward check box", "\x00" * 22
     )
 
@@ -73,7 +73,7 @@ def test_tri_state_checkbox_cycling(web_tri_state_checkbox: BrowserSession) -> N
         ("partially checked", "<->"),
     ):
         keyboard.tap_key(keyboard.KEYSYM_SPACE)
-        spoken, brailled = capture(session)
+        spoken, brailled = helpers.capture(session)
         assert spoken == [state]
         line = f"{indicator} Backward check box"
-        assert brailled[-1] == BrailleLine(1, line, line, "\x00" * 22)
+        assert brailled[-1] == helpers.BrailleLine(1, line, line, "\x00" * 22)

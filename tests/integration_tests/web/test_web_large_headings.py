@@ -26,21 +26,21 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, move_to_top
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
 
 
-def _next(session: BrowserSession, keysym: int) -> tuple[list[str], list[BrailleLine]]:
+def _next(session: BrowserSession, keysym: int) -> tuple[list[str], list[helpers.BrailleLine]]:
     keyboard.tap_key(keysym)
-    return capture(session)
+    return helpers.capture(session)
 
 
-def _previous(session: BrowserSession, keysym: int) -> tuple[list[str], list[BrailleLine]]:
+def _previous(session: BrowserSession, keysym: int) -> tuple[list[str], list[helpers.BrailleLine]]:
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keysym)
-    return capture(session)
+    return helpers.capture(session)
 
 
 @pytest.mark.native_app
@@ -48,24 +48,24 @@ def test_heading_levels_in_large_document(web_large_headings: BrowserSession) ->
     """Tests level-specific navigation with 3001 headings at each level."""
 
     session = web_large_headings
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     assert _next(session, keyboard.KEYSYM_3) == (
         ["3", "Level three 0", "heading 3"],
-        [BrailleLine(1, "Level three 0 h3", "Level three 0 h3", "\x00" * 16)],
+        [helpers.BrailleLine(1, "Level three 0 h3", "Level three 0 h3", "\x00" * 16)],
     )
 
     assert _next(session, keyboard.KEYSYM_3) == (
         ["3", "Level three 1", "heading 3"],
-        [BrailleLine(1, "Level three 1 h3", "Level three 1 h3", "\x00" * 16)],
+        [helpers.BrailleLine(1, "Level three 1 h3", "Level three 1 h3", "\x00" * 16)],
     )
 
     assert _previous(session, keyboard.KEYSYM_3) == (
         ["#", "Level three 0", "heading 3"],
-        [BrailleLine(1, "Level three 0 h3", "Level three 0 h3", "\x00" * 16)],
+        [helpers.BrailleLine(1, "Level three 0 h3", "Level three 0 h3", "\x00" * 16)],
     )
 
     assert _next(session, keyboard.KEYSYM_2) == (
         ["2", "Level two 1", "heading 2"],
-        [BrailleLine(1, "Level two 1 h2", "Level two 1 h2", "\x00" * 14)],
+        [helpers.BrailleLine(1, "Level two 1 h2", "Level two 1 h2", "\x00" * 14)],
     )

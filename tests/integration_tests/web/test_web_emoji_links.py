@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, expected_for_browser, move_to_top
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -38,18 +38,18 @@ def test_line_reading_emoji_text_and_inline_links(web_emoji_links: BrowserSessio
     """Tests that emoji-led text lines are read, not dropped as blank, amid inline links."""
 
     session = web_emoji_links
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     # Firefox pads non-BMP characters with U+FEFF to retain UTF-16 offsets in ATK text.
     # The padding affects braille offsets; speech during character navigation is unchanged.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["🎧 Streaming links:"],
         [
-            expected_for_browser(
+            helpers.expected_for_browser(
                 session,
-                BrailleLine(1, "🎧 Streaming links:", "🎧 Streaming links:", "\x00" * 18),
-                firefox=BrailleLine(
+                helpers.BrailleLine(1, "🎧 Streaming links:", "🎧 Streaming links:", "\x00" * 18),
+                firefox=helpers.BrailleLine(
                     1, "🎧\ufeff Streaming links:", "🎧\ufeff Streaming links:", "\x00" * 19
                 ),
             )
@@ -58,10 +58,10 @@ def test_line_reading_emoji_text_and_inline_links(web_emoji_links: BrowserSessio
 
     # The trailing newline rides along in braille but is filtered from speech.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["https://push.fm/link/htlecq2o", "link"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "https://push.fm/link/htlecq2o ",
                 "https://push.fm/link/htlecq2o ",
@@ -72,17 +72,19 @@ def test_line_reading_emoji_text_and_inline_links(web_emoji_links: BrowserSessio
 
     for _ in range(2):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        assert capture(session) == (["blank"], [BrailleLine(1, "", "", None)])
+        assert helpers.capture(session) == (["blank"], [helpers.BrailleLine(1, "", "", None)])
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     text = "🎵 Follow me on Spotify to get notified whenever I release something!"
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [text + ""],
         [
-            expected_for_browser(
+            helpers.expected_for_browser(
                 session,
-                BrailleLine(1, text, "🎵 Follow me on Spotify to get no", "\x00" * len(text)),
-                firefox=BrailleLine(
+                helpers.BrailleLine(
+                    1, text, "🎵 Follow me on Spotify to get no", "\x00" * len(text)
+                ),
+                firefox=helpers.BrailleLine(
                     1,
                     "🎵\ufeff" + text[1:],
                     "🎵\ufeff Follow me on Spotify to get n",
@@ -93,10 +95,10 @@ def test_line_reading_emoji_text_and_inline_links(web_emoji_links: BrowserSessio
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["https://open.spotify.com/artist/0kXCd..", "link", "."],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "https://open.spotify.com/artist/0kXCd.. .",
                 "https://open.spotify.com/artist/",

@@ -26,16 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_browser,
-    move_to_bottom,
-    reset_web_state,
-    speech,
-    toggle_flat_review,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -43,23 +35,23 @@ if TYPE_CHECKING:
 
 # Firefox exposes <mark> as MARK, while Chromium maps it to static text.
 def _marked_word(session: BrowserSession) -> list[str]:
-    return expected_for_browser(
+    return helpers.expected_for_browser(
         session,
         ["marked"],
         firefox=["highlight start", "marked", "highlight end"],
     )
 
 
-def _marked_braille(session: BrowserSession) -> BrailleLine:
-    line = expected_for_browser(session, "A marked word.", firefox="A marked mark word.")
-    return BrailleLine(1, line, line, "\x00" * len(line))
+def _marked_braille(session: BrowserSession) -> helpers.BrailleLine:
+    line = helpers.expected_for_browser(session, "A marked word.", firefox="A marked mark word.")
+    return helpers.BrailleLine(1, line, line, "\x00" * len(line))
 
 
 def _line_down(
     session: BrowserSession,
 ) -> tuple[list[str], list[tuple[int, str, str | None]]]:
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    return capture(session)
+    return helpers.capture(session)
 
 
 @pytest.mark.native_app
@@ -67,7 +59,7 @@ def test_caret_navigation_top_to_bottom(web_text_attributes: BrowserSession) -> 
     """Tests Down-arrow caret nav with layout mode on: inline markup groups onto its line."""
 
     session = web_text_attributes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
 
     for expected in (
@@ -80,7 +72,7 @@ def test_caret_navigation_top_to_bottom(web_text_attributes: BrowserSession) -> 
         ["Normal heavy then slanted then lined then normal."],
     ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -88,7 +80,7 @@ def test_caret_navigation_top_to_bottom_layout_off(web_text_attributes: BrowserS
     """Tests Down-arrow caret nav with layout mode off: inline markup isolates per line."""
 
     session = web_text_attributes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
     session.orca.set("CaretNavigator", "LayoutMode", False)
     for expected in (
@@ -113,7 +105,7 @@ def test_caret_navigation_top_to_bottom_layout_off(web_text_attributes: BrowserS
         ["Normal heavy then slanted then lined then normal."],
     ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -121,9 +113,9 @@ def test_caret_navigation_bottom_to_top(web_text_attributes: BrowserSession) -> 
     """Tests Up-arrow caret nav with layout mode on: inline markup groups onto its line."""
 
     session = web_text_attributes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
-    move_to_bottom(session)
+    helpers.move_to_bottom(session)
 
     for expected in (
         ["A ", "linked", "link", " word."],
@@ -135,7 +127,7 @@ def test_caret_navigation_bottom_to_top(web_text_attributes: BrowserSession) -> 
         ["Text attributes", "heading 1"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_UP)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -143,10 +135,10 @@ def test_caret_navigation_bottom_to_top_layout_off(web_text_attributes: BrowserS
     """Tests Up-arrow caret nav with layout mode off: inline markup isolates per line."""
 
     session = web_text_attributes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
     session.orca.set("CaretNavigator", "LayoutMode", False)
-    move_to_bottom(session)
+    helpers.move_to_bottom(session)
     for expected in (
         [" word."],
         ["linked", "link"],
@@ -169,7 +161,7 @@ def test_caret_navigation_bottom_to_top_layout_off(web_text_attributes: BrowserS
         ["Text attributes", "heading 1"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_UP)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -177,13 +169,13 @@ def test_inline_markup_presentation(web_text_attributes: BrowserSession) -> None
     """Tests deletion, insertion, highlight, subscript, superscript, and link markup."""
 
     session = web_text_attributes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
 
     assert _line_down(session) == (
         ["A ", "deletion start", "removed", "deletion end", " word."],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "A removed content deletion word.",
                 "A removed content deletion word.",
@@ -195,7 +187,7 @@ def test_inline_markup_presentation(web_text_attributes: BrowserSession) -> None
     assert _line_down(session) == (
         ["An ", "insertion start", "added", "insertion end", " word."],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "An added content insertion word.",
                 "An added content insertion word.",
@@ -211,17 +203,25 @@ def test_inline_markup_presentation(web_text_attributes: BrowserSession) -> None
 
     assert _line_down(session) == (
         ["A ", "subscript", "lower", " word."],
-        [BrailleLine(1, "A lower subscript word.", "A lower subscript word.", "\x00" * 23)],
+        [helpers.BrailleLine(1, "A lower subscript word.", "A lower subscript word.", "\x00" * 23)],
     )
 
     assert _line_down(session) == (
         ["A ", "superscript", "higher", " word."],
-        [BrailleLine(1, "A higher superscript word.", "A higher superscript word.", "\x00" * 26)],
+        [
+            helpers.BrailleLine(
+                1, "A higher superscript word.", "A higher superscript word.", "\x00" * 26
+            )
+        ],
     )
 
     assert _line_down(session) == (
         ["A ", "linked", "link", " word."],
-        [BrailleLine(1, "A linked word.", "A linked word.", "\x00" * 2 + "\xc0" * 6 + "\x00" * 6)],
+        [
+            helpers.BrailleLine(
+                1, "A linked word.", "A linked word.", "\x00" * 2 + "\xc0" * 6 + "\x00" * 6
+            )
+        ],
     )
 
 
@@ -230,7 +230,7 @@ def test_formatting_change_announcements(web_text_attributes: BrowserSession) ->
     """Tests bold/italic/underline/highlight announced once the setting is enabled."""
 
     session = web_text_attributes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "always")
 
     _line_down(session)  # deletion line
@@ -266,7 +266,7 @@ def test_formatting_change_announcements(web_text_attributes: BrowserSession) ->
             " then normal.",
         ],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "Normal heavy then slanted then lined then normal.",
                 "Normal heavy then slanted then l",
@@ -281,53 +281,53 @@ def test_flat_review_markup_lines(web_text_attributes: BrowserSession) -> None:
     """Tests flat review reads each inline-markup line once (guards the doubling fix)."""
 
     session = web_text_attributes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
-    toggle_flat_review(session)
+    helpers.toggle_flat_review(session)
     try:
         keyboard.tap_key(keyboard.KEYSYM_KP_UP)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["Text attributes"],
-            [BrailleLine(1, "Text attributes $l", "Text attributes $l", "\x00" * 18)],
+            [helpers.BrailleLine(1, "Text attributes $l", "Text attributes $l", "\x00" * 18)],
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["A  removed  word."],
-            [BrailleLine(1, "A  removed  word. $l", "A  removed  word. $l", "\x00" * 20)],
+            [helpers.BrailleLine(1, "A  removed  word. $l", "A  removed  word. $l", "\x00" * 20)],
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["An  added  word."],
-            [BrailleLine(1, "An  added  word. $l", "An  added  word. $l", "\x00" * 19)],
+            [helpers.BrailleLine(1, "An  added  word. $l", "An  added  word. $l", "\x00" * 19)],
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["A  marked  word."],
-            [BrailleLine(1, "A  marked  word. $l", "A  marked  word. $l", "\x00" * 19)],
+            [helpers.BrailleLine(1, "A  marked  word. $l", "A  marked  word. $l", "\x00" * 19)],
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_HOME)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["An  added  word."],
-            [BrailleLine(1, "An  added  word. $l", "An  added  word. $l", "\x00" * 19)],
+            [helpers.BrailleLine(1, "An  added  word. $l", "An  added  word. $l", "\x00" * 19)],
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_DOWN)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["A"],
-            [BrailleLine(1, "An  added  word. $l", "An  added  word. $l", "\x00" * 19)],
+            [helpers.BrailleLine(1, "An  added  word. $l", "An  added  word. $l", "\x00" * 19)],
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_DOWN)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             ["n"],
-            [BrailleLine(2, "An  added  word. $l", "An  added  word. $l", "\x00" * 19)],
+            [helpers.BrailleLine(2, "An  added  word. $l", "An  added  word. $l", "\x00" * 19)],
         )
     finally:
-        toggle_flat_review(session)
+        helpers.toggle_flat_review(session)
 
 
 @pytest.mark.native_app
@@ -337,29 +337,29 @@ def test_caret_navigation_announces_formatting_changes(
     """Tests that character navigation announces entering and leaving a bold run when enabled."""
 
     session = web_text_attributes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "always")
 
     # Move to the final line, which has inline bold, italic, and underline runs.
     for _ in range(7):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        speech(session)
+        helpers.speech(session)
 
     # Arrow right across the leading plain word to the start of the bold run.
     for _ in range(6):
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-        speech(session)
+        helpers.speech(session)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert speech(session) == ["bold", "h"]
+    assert helpers.speech(session) == ["bold", "h"]
 
     # Arrow through the rest of the bold word; leaving it announces that bold ended.
     for _ in range(4):
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-        speech(session)
+        helpers.speech(session)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert speech(session) == ["bold off", " "]
+    assert helpers.speech(session) == ["bold off", " "]
 
 
 @pytest.mark.native_app
@@ -367,7 +367,7 @@ def test_character_navigation_left_to_right(web_text_attributes: BrowserSession)
     """Tests Right-arrow character navigation across the whole document, inline and block."""
 
     session = web_text_attributes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
 
     stream = (
@@ -376,7 +376,7 @@ def test_character_navigation_left_to_right(web_text_attributes: BrowserSession)
     )
     for char in stream:
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-        assert speech(session) == [char]
+        assert helpers.speech(session) == [char]
 
 
 @pytest.mark.native_app
@@ -384,9 +384,9 @@ def test_character_navigation_right_to_left(web_text_attributes: BrowserSession)
     """Tests Left-arrow character navigation back across the whole document from the end."""
 
     session = web_text_attributes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
-    move_to_bottom(session)
+    helpers.move_to_bottom(session)
 
     stream = (
         ".lamron neht denil neht detnals neht yvaeh lamroN.drow deknil A"
@@ -394,7 +394,7 @@ def test_character_navigation_right_to_left(web_text_attributes: BrowserSession)
     )
     for char in stream:
         keyboard.tap_key(keyboard.KEYSYM_LEFT)
-        assert speech(session) == [char]
+        assert helpers.speech(session) == [char]
 
 
 @pytest.mark.native_app
@@ -402,14 +402,14 @@ def test_end_of_file_then_caret_left(web_text_attributes: BrowserSession) -> Non
     """Tests Ctrl+End at the end of a line with inline markup, then Left walking back."""
 
     session = web_text_attributes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-    assert speech(session) == ["Normal heavy then slanted then lined then normal."]
+    assert helpers.speech(session) == ["Normal heavy then slanted then lined then normal."]
 
     for char in "normal."[::-1]:
         keyboard.tap_key(keyboard.KEYSYM_LEFT)
-        assert speech(session) == [char]
+        assert helpers.speech(session) == [char]
 
 
 @pytest.mark.native_app
@@ -417,12 +417,12 @@ def test_word_navigation_left_to_right(web_text_attributes: BrowserSession) -> N
     """Tests Ctrl+Right word navigation across the whole document, words spanning inline markup."""
 
     session = web_text_attributes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
 
     # Firefox includes sentence-final periods in its AT-SPI word ranges.
-    word = expected_for_browser(session, [["word"], ["."]], firefox=[["word."]])
-    normal = expected_for_browser(session, [["normal"], ["."]], firefox=[["normal."]])
+    word = helpers.expected_for_browser(session, [["word"], ["."]], firefox=[["word."]])
+    normal = helpers.expected_for_browser(session, [["normal"], ["."]], firefox=[["normal."]])
     expected = [
         ["Text "],
         ["attributes"],
@@ -456,7 +456,7 @@ def test_word_navigation_left_to_right(web_text_attributes: BrowserSession) -> N
     result = []
     for _ in expected:
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-        result.append(speech(session))
+        result.append(helpers.speech(session))
     assert result == expected
 
 
@@ -465,9 +465,9 @@ def test_word_navigation_right_to_left(web_text_attributes: BrowserSession) -> N
     """Tests Ctrl+Left word navigation back across the whole document from the end."""
 
     session = web_text_attributes
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
-    move_to_bottom(session)
+    helpers.move_to_bottom(session)
 
     expected = [
         ["."],
@@ -507,7 +507,7 @@ def test_word_navigation_right_to_left(web_text_attributes: BrowserSession) -> N
         ["Text "],
     ]
     # Firefox includes sentence-final periods in its AT-SPI word ranges.
-    expected = expected_for_browser(
+    expected = helpers.expected_for_browser(
         session,
         expected,
         firefox=[
@@ -544,5 +544,5 @@ def test_word_navigation_right_to_left(web_text_attributes: BrowserSession) -> N
     result = []
     for _ in expected:
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
-        result.append(speech(session))
+        result.append(helpers.speech(session))
     assert result == expected

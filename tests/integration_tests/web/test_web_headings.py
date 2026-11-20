@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import move_to_top, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -35,12 +35,12 @@ if TYPE_CHECKING:
 
 def _next(session: BrowserSession, keysym: int) -> list[str]:
     keyboard.tap_key(keysym)
-    return speech(session)
+    return helpers.speech(session)
 
 
 def _previous(session: BrowserSession, keysym: int) -> list[str]:
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keysym)
-    return speech(session)
+    return helpers.speech(session)
 
 
 @pytest.mark.native_app
@@ -48,7 +48,7 @@ def test_heading_navigation_announces_level(web_headings: BrowserSession) -> Non
     """Tests that h moves through every heading in order, announcing each level, with wrap."""
 
     session = web_headings
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     assert _next(session, keyboard.KEYSYM_H) == ["h", "Section One", "heading 2"]
     assert _next(session, keyboard.KEYSYM_H) == ["h", "Sub A", "heading 3"]
@@ -69,7 +69,7 @@ def test_navigation_by_heading_level(web_headings: BrowserSession) -> None:
 
     session = web_headings
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     assert _next(session, keyboard.KEYSYM_1) == ["1", "Appendix", "heading 1"]
     assert _next(session, keyboard.KEYSYM_1) == [
         "1",
@@ -78,11 +78,11 @@ def test_navigation_by_heading_level(web_headings: BrowserSession) -> None:
         "heading 1",
     ]
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     assert _next(session, keyboard.KEYSYM_2) == ["2", "Section One", "heading 2"]
     assert _next(session, keyboard.KEYSYM_2) == ["2", "Section Two", "heading 2"]
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     assert _next(session, keyboard.KEYSYM_3) == ["3", "Sub A", "heading 3"]
     assert _next(session, keyboard.KEYSYM_3) == ["3", "Sub B", "heading 3"]
 
@@ -92,7 +92,7 @@ def test_no_more_headings_at_absent_level(web_headings: BrowserSession) -> None:
     """Tests the absence message when navigating to a heading level the page lacks."""
 
     session = web_headings
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     assert _next(session, keyboard.KEYSYM_4) == ["4", "No more headings at level 4."]
 
@@ -102,7 +102,7 @@ def test_heading_level_backward_wraps(web_headings: BrowserSession) -> None:
     """Tests that Shift plus a level number navigates backward, wrapping to the bottom."""
 
     session = web_headings
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     assert _previous(session, keyboard.KEYSYM_1) == [
         "!",
@@ -119,7 +119,7 @@ def test_no_wrapping_when_disabled(web_headings: BrowserSession) -> None:
     session = web_headings
     session.orca.set("StructuralNavigator", "NavigationWraps", False)
     try:
-        move_to_top(session)
+        helpers.move_to_top(session)
         for expected in (
             ["h", "Section One", "heading 2"],
             ["h", "Sub A", "heading 3"],
@@ -130,10 +130,10 @@ def test_no_wrapping_when_disabled(web_headings: BrowserSession) -> None:
             assert _next(session, keyboard.KEYSYM_H) == expected
         assert _next(session, keyboard.KEYSYM_H) == ["h", "No more headings."]
 
-        move_to_top(session)
+        helpers.move_to_top(session)
         assert _previous(session, keyboard.KEYSYM_H) == ["H", "No more headings."]
 
-        move_to_top(session)
+        helpers.move_to_top(session)
         assert _next(session, keyboard.KEYSYM_1) == ["1", "Appendix", "heading 1"]
         assert _next(session, keyboard.KEYSYM_1) == ["1", "No more headings at level 1."]
     finally:
@@ -147,14 +147,14 @@ def test_heading_navigation_after_unrelated_page_change(
     """Tests heading navigation right after content elsewhere on the page changes."""
 
     session = web_headings
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Add", "button"]
+    assert helpers.speech(session) == ["Add", "button"]
 
     # The list is not an ancestor of focus, so Orca refreshes its cache silently.
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session) == []
+    assert helpers.speech(session) == []
 
     assert _next(session, keyboard.KEYSYM_H) == ["h", "Section One", "heading 2"]
     assert _next(session, keyboard.KEYSYM_H) == ["h", "Sub A", "heading 3"]

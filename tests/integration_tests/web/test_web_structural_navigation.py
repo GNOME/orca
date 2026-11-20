@@ -32,16 +32,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_browser,
-    move_to_top,
-    reset_web_state,
-    speech,
-    xfail_firefox_native_select,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -55,31 +47,31 @@ _LARGE_OBJECT_TEXT = (
 
 def _next(session: BrowserSession, keysym: int) -> list[str]:
     keyboard.tap_key(keysym)
-    return speech(session)
+    return helpers.speech(session)
 
 
 def _previous(session: BrowserSession, keysym: int) -> list[str]:
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keysym)
-    return speech(session)
+    return helpers.speech(session)
 
 
-def _container_start(session: BrowserSession) -> tuple[list[str], list[BrailleLine]]:
+def _container_start(session: BrowserSession) -> tuple[list[str], list[helpers.BrailleLine]]:
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_COMMA)
-    return capture(session)
+    return helpers.capture(session)
 
 
-def _container_end(session: BrowserSession) -> tuple[list[str], list[BrailleLine]]:
+def _container_end(session: BrowserSession) -> tuple[list[str], list[helpers.BrailleLine]]:
     keyboard.tap_key(keyboard.KEYSYM_COMMA)
-    return capture(session)
+    return helpers.capture(session)
 
 
 @pytest.mark.native_app
-@xfail_firefox_native_select()
+@helpers.xfail_firefox_native_select()
 def test_forward_navigation_by_role(web_structural_navigation: BrowserSession) -> None:
     """Tests forward single-key navigation landing on each role in document order."""
 
     session = web_structural_navigation
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     assert _next(session, keyboard.KEYSYM_P) == ["p", "Intro paragraph."]
     assert _next(session, keyboard.KEYSYM_Q) == ["q", "block quote", "Quoted text."]
@@ -91,7 +83,7 @@ def test_forward_navigation_by_role(web_structural_navigation: BrowserSession) -
         "Fruit",
         "combo box",
         "Apple",
-        expected_for_browser(session, "opens menu", firefox="opens popup"),
+        helpers.expected_for_browser(session, "opens menu", firefox="opens popup"),
     ]
     assert _next(session, keyboard.KEYSYM_E) == ["e", "City", "entry"]
     assert _next(session, keyboard.KEYSYM_R) == ["r", "Option A", "not selected radio button"]
@@ -113,7 +105,7 @@ def test_absence_message(web_structural_navigation: BrowserSession) -> None:
     """Tests the absence message for a role the page lacks."""
 
     session = web_structural_navigation
-    move_to_top(session)
+    helpers.move_to_top(session)
     assert _next(session, keyboard.KEYSYM_L) == ["l", "No more lists."]
 
 
@@ -123,16 +115,16 @@ def test_wrapping(web_structural_navigation: BrowserSession) -> None:
 
     session = web_structural_navigation
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     assert _next(session, keyboard.KEYSYM_B) == ["b", "Save", "button"]
     assert _next(session, keyboard.KEYSYM_B) == ["b", "Save all changes", "button"]
     assert _next(session, keyboard.KEYSYM_B) == ["b", "Next slide", "slide control"]
     assert _next(session, keyboard.KEYSYM_B) == ["b", "Wrapping to top.", "Save", "button"]
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     assert _previous(session, keyboard.KEYSYM_P) == ["P", "Wrapping to bottom.", _LARGE_OBJECT_TEXT]
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     assert _previous(session, keyboard.KEYSYM_U) == [
         "U",
         "Wrapping to bottom.",
@@ -146,16 +138,16 @@ def test_cycle_navigation_mode(web_structural_navigation: BrowserSession) -> Non
     """Tests Orca+z cycling from document mode through GUI and off and back to document."""
 
     session = web_structural_navigation
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     try:
         session.orca.press_orca_key(keyboard.KEYSYM_Z)
-        assert speech(session) == ["GUI mode"]
+        assert helpers.speech(session) == ["GUI mode"]
         session.orca.press_orca_key(keyboard.KEYSYM_Z)
-        assert speech(session) == ["Structural navigation disabled"]
+        assert helpers.speech(session) == ["Structural navigation disabled"]
     finally:
         session.orca.press_orca_key(keyboard.KEYSYM_Z)
-        assert speech(session) == ["Document mode"]
+        assert helpers.speech(session) == ["Document mode"]
 
 
 @pytest.mark.native_app
@@ -165,13 +157,13 @@ def test_no_wrapping_when_disabled(web_structural_navigation: BrowserSession) ->
     session = web_structural_navigation
     session.orca.set("StructuralNavigator", "NavigationWraps", False)
     try:
-        move_to_top(session)
+        helpers.move_to_top(session)
         assert _next(session, keyboard.KEYSYM_B) == ["b", "Save", "button"]
         assert _next(session, keyboard.KEYSYM_B) == ["b", "Save all changes", "button"]
         assert _next(session, keyboard.KEYSYM_B) == ["b", "Next slide", "slide control"]
         assert _next(session, keyboard.KEYSYM_B) == ["b", "No more buttons."]
 
-        move_to_top(session)
+        helpers.move_to_top(session)
         assert _previous(session, keyboard.KEYSYM_P) == ["P", "No more paragraphs."]
     finally:
         session.orca.set("StructuralNavigator", "NavigationWraps", True)
@@ -182,35 +174,35 @@ def test_table_container_start_and_end(web_structural_navigation: BrowserSession
     """Tests container start/end from inside the table."""
 
     session = web_structural_navigation
-    reset_web_state(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_T)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["t", "table with 2 rows 2 columns", "Name", "column header"],
-        [BrailleLine(1, "Name", "Name", "\x00" * 4)],
+        [helpers.BrailleLine(1, "Name", "Name", "\x00" * 4)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_ALT_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Ada", "Row 2, column 1."],
         [
-            BrailleLine(1, "Ada", "Ada", "\x00" * 3),
-            BrailleLine(0, "Row 2, column 1.", "Row 2, column 1.", "\x00" * 16),
+            helpers.BrailleLine(1, "Ada", "Ada", "\x00" * 3),
+            helpers.BrailleLine(0, "Row 2, column 1.", "Row 2, column 1.", "\x00" * 16),
         ],
     )
 
     assert _container_start(session) == (
         ["<", "Name", "column header", "Age", "column header", "column 2"],
         [
-            BrailleLine(1, "Ada", "Ada", "\x00" * 3),
-            BrailleLine(1, "Name Age", "Name Age", "\x00" * 8),
+            helpers.BrailleLine(1, "Ada", "Ada", "\x00" * 3),
+            helpers.BrailleLine(1, "Name Age", "Name Age", "\x00" * 8),
         ],
     )
 
     assert _container_end(session) == (
         [",", "leaving table.", "First link", "link"],
-        [BrailleLine(1, "First link", "First link", "\xc0" * 10)],
+        [helpers.BrailleLine(1, "First link", "First link", "\xc0" * 10)],
     )
 
 
@@ -219,23 +211,31 @@ def test_blockquote_container_start_and_end(web_structural_navigation: BrowserSe
     """Tests container start/end from inside the blockquote."""
 
     session = web_structural_navigation
-    reset_web_state(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_Q)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["q", "block quote", "Quoted text."],
-        [BrailleLine(1, "Quoted text. block quote", "Quoted text. block quote", "\x00" * 24)],
+        [
+            helpers.BrailleLine(
+                1, "Quoted text. block quote", "Quoted text. block quote", "\x00" * 24
+            )
+        ],
     )
 
     assert _container_start(session) == (
         ["<", "Quoted text."],
-        [BrailleLine(1, "Quoted text. block quote", "Quoted text. block quote", "\x00" * 24)],
+        [
+            helpers.BrailleLine(
+                1, "Quoted text. block quote", "Quoted text. block quote", "\x00" * 24
+            )
+        ],
     )
 
     assert _container_end(session) == (
         [",", "leaving blockquote.", "Save", "button"],
-        [BrailleLine(1, "Save button", "Save button", "\x00" * 11)],
+        [helpers.BrailleLine(1, "Save button", "Save button", "\x00" * 11)],
     )
 
 
@@ -244,10 +244,10 @@ def test_container_start_not_in_a_container(web_structural_navigation: BrowserSe
     """Tests the absence message when the caret is on the heading, not in a large container."""
 
     session = web_structural_navigation
-    reset_web_state(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
 
     assert _container_start(session) == (
         ["<", "Not in a container."],
-        [BrailleLine(0, "Not in a container.", "Not in a container.", "\x00" * 19)],
+        [helpers.BrailleLine(0, "Not in a container.", "Not in a container.", "\x00" * 19)],
     )

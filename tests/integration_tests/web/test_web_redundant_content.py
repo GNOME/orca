@@ -26,16 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_browser,
-    move_to_bottom,
-    move_to_top,
-    reset_web_state,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -46,13 +38,13 @@ def test_say_all_omits_redundant_content(web_redundant_content: BrowserSession) 
     """Tests that Say All omits all the redundant content."""
 
     session = web_redundant_content
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     # Ensure we're really at the top of the page.
-    move_to_bottom(session)
-    move_to_top(session)
+    helpers.move_to_bottom(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
-    assert speech(session) == [
+    assert helpers.speech(session) == [
         "Visit ",
         "Home ",
         "house",
@@ -92,16 +84,16 @@ def test_line_navigation_drops_error_message_from_content(
 ) -> None:
     """Tests that the inline error message is dropped from the line's speech and braille."""
 
-    move_to_top(web_redundant_content)
+    helpers.move_to_top(web_redundant_content)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     # Firefox exposes this ARIA textbox as editable; Chromium does not, so it omits $l.
-    assert capture(web_redundant_content) == (
+    assert helpers.capture(web_redundant_content) == (
         ["Status: ", "entry", "x", "invalid entry: Field is required.", " done."],
-        expected_for_browser(
+        helpers.expected_for_browser(
             web_redundant_content,
             [
-                BrailleLine(
+                helpers.BrailleLine(
                     1,
                     "Status: x invalid: Field is required.  done.",
                     "Status: x invalid: Field is requ",
@@ -109,7 +101,7 @@ def test_line_navigation_drops_error_message_from_content(
                 )
             ],
             firefox=[
-                BrailleLine(
+                helpers.BrailleLine(
                     1,
                     "Status: x $l invalid: Field is required.  done.",
                     "Status: x $l invalid: Field is r",
@@ -126,16 +118,16 @@ def test_line_navigation_drops_useless_image_in_editable(
 ) -> None:
     """Tests that the useless image between the meaningful images is dropped in speech/braille."""
 
-    move_to_top(web_redundant_content)
+    helpers.move_to_top(web_redundant_content)
 
     for _ in range(2):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        capture(web_redundant_content)
+        helpers.capture(web_redundant_content)
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(web_redundant_content) == (
+    assert helpers.capture(web_redundant_content) == (
         ["Icons", "x ", "Red square", "image", "Blue square", "image", " y"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 1,
                 "x  $l Red square image Blue square image y $l",
                 "x  $l Red square image Blue squa",

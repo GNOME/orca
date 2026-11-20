@@ -26,30 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import caret_selection_helpers, helpers, version_helpers
 from tests.integration_tests.apps import gtk
-from tests.integration_tests.caret_selection_helpers import (
-    END_OF_FILE,
-    END_OF_LINE,
-    NEXT_CHARACTER,
-    NEXT_LINE,
-    NEXT_WORD,
-    PREVIOUS_CHARACTER,
-    PREVIOUS_LINE,
-    PREVIOUS_WORD,
-    START_OF_FILE,
-    START_OF_LINE,
-    select,
-    select_without_notifying,
-)
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_gtk,
-    move_to_top,
-    say_selection,
-)
-from tests.integration_tests.version_helpers import gtk_version, version_at_least
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -75,35 +54,36 @@ _REST_OF_THE_FILE = (
 def _take_control(session: NativeAppSession) -> None:
     """Moves to the top of the text view and gives Orca the caret."""
 
-    move_to_top(session)
+    helpers.move_to_top(session)
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_ORCA_CONTROLS]
+    assert helpers.capture(session)[0] == [_ORCA_CONTROLS]
 
 
 def _release_control(session: NativeAppSession) -> None:
     """Gives the caret back to the application."""
 
     session.orca.press_orca_key(keyboard.KEYSYM_F12)
-    assert capture(session)[0] == [_APP_CONTROLS]
+    assert helpers.capture(session)[0] == [_APP_CONTROLS]
 
 
 def _move_into_line_two(session: NativeAppSession) -> None:
     """Puts the caret after the first word of the second line."""
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [_WHOLE_LINE_TWO]
-    assert brailled[-1] == BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
+    assert brailled[-1] == helpers.BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Line"]
-    assert brailled[-1] == BrailleLine(5, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
+    assert brailled[-1] == helpers.BrailleLine(5, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
 
 
 @pytest.mark.native_app
 @pytest.mark.xfail(
-    gtk.is_gtk4() and version_at_least(gtk_version("4.0"), 4, 23, 1),
+    gtk.is_gtk4()
+    and version_helpers.version_at_least(version_helpers.gtk_version("4.0"), 4, 23, 1),
     reason=(
         "GTK 4.23.1 and later omit TextView text-selection-changed when the selection is cleared: "
         "https://gitlab.gnome.org/GNOME/gtk/-/work_items/8506"
@@ -117,40 +97,50 @@ def test_selection_by_character(gtk_text_view_selection: NativeAppSession) -> No
     session = gtk_text_view_selection
     _take_control(session)
 
-    assert select(session, NEXT_CHARACTER) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.NEXT_CHARACTER) == (
         ["L", "selected"],
-        BrailleLine(2, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" + "\x00" * 11),
+        helpers.BrailleLine(
+            2, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" + "\x00" * 11
+        ),
     )
 
-    assert select(session, NEXT_CHARACTER) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.NEXT_CHARACTER) == (
         ["i", "selected"],
-        BrailleLine(3, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 2 + "\x00" * 10),
+        helpers.BrailleLine(
+            3, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 2 + "\x00" * 10
+        ),
     )
 
-    assert select(session, NEXT_CHARACTER) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.NEXT_CHARACTER) == (
         ["n", "selected"],
-        BrailleLine(4, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 3 + "\x00" * 9),
+        helpers.BrailleLine(
+            4, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 3 + "\x00" * 9
+        ),
     )
-    assert say_selection(session) == ["Selected text is:  Lin"]
+    assert helpers.say_selection(session) == ["Selected text is:  Lin"]
 
-    assert select(session, PREVIOUS_CHARACTER) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.PREVIOUS_CHARACTER) == (
         ["n", "unselected"],
-        BrailleLine(3, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 2 + "\x00" * 10),
+        helpers.BrailleLine(
+            3, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 2 + "\x00" * 10
+        ),
     )
 
-    assert select(session, PREVIOUS_CHARACTER) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.PREVIOUS_CHARACTER) == (
         ["i", "unselected"],
-        BrailleLine(2, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" + "\x00" * 11),
+        helpers.BrailleLine(
+            2, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" + "\x00" * 11
+        ),
     )
-    assert say_selection(session) == ["Selected text is:  L"]
+    assert helpers.say_selection(session) == ["Selected text is:  L"]
 
-    session.orca.select_with_caret_navigator(PREVIOUS_CHARACTER)
-    spoken, brailled = capture(session)
+    session.orca.select_with_caret_navigator(caret_selection_helpers.PREVIOUS_CHARACTER)
+    spoken, brailled = helpers.capture(session)
     assert (spoken, brailled[-1:]) == (
         ["L", "unselected"],
-        [BrailleLine(1, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 43)],
+        [helpers.BrailleLine(1, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 43)],
     )
-    assert say_selection(session) == ["No selected text."]
+    assert helpers.say_selection(session) == ["No selected text."]
 
     _release_control(session)
 
@@ -162,22 +152,28 @@ def test_selection_by_word(gtk_text_view_selection: NativeAppSession) -> None:
     session = gtk_text_view_selection
     _take_control(session)
 
-    assert select(session, NEXT_WORD) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.NEXT_WORD) == (
         ["Line", "selected"],
-        BrailleLine(5, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 4 + "\x00" * 8),
+        helpers.BrailleLine(
+            5, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 4 + "\x00" * 8
+        ),
     )
 
-    assert select(session, NEXT_WORD) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.NEXT_WORD) == (
         [" one.", "selected"],
-        BrailleLine(10, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 9 + "\x00" * 3),
+        helpers.BrailleLine(
+            10, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 9 + "\x00" * 3
+        ),
     )
-    assert say_selection(session) == ["Selected text is:  Line one."]
+    assert helpers.say_selection(session) == ["Selected text is:  Line one."]
 
-    assert select(session, PREVIOUS_WORD) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.PREVIOUS_WORD) == (
         ["one.", "unselected"],
-        BrailleLine(6, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 5 + "\x00" * 7),
+        helpers.BrailleLine(
+            6, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 5 + "\x00" * 7
+        ),
     )
-    assert say_selection(session) == ["Selected text is:  Line "]
+    assert helpers.say_selection(session) == ["Selected text is:  Line "]
 
     _release_control(session)
 
@@ -189,11 +185,11 @@ def test_selection_by_line(gtk_text_view_selection: NativeAppSession) -> None:
     session = gtk_text_view_selection
     _take_control(session)
 
-    assert select(session, NEXT_LINE) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.NEXT_LINE) == (
         ["Line one.\n", "selected"],
-        expected_for_gtk(
-            BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61),
-            gtk4=BrailleLine(
+        helpers.expected_for_gtk(
+            helpers.BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61),
+            gtk4=helpers.BrailleLine(
                 1,
                 f"OrcaTextView application frame {_LINE_TWO}",
                 "Line two has additional words to",
@@ -201,13 +197,13 @@ def test_selection_by_line(gtk_text_view_selection: NativeAppSession) -> None:
             ),
         ),
     )
-    assert say_selection(session) == ["Selected text is:  Line one.\n"]
+    assert helpers.say_selection(session) == ["Selected text is:  Line one.\n"]
 
-    assert select(session, NEXT_LINE) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.NEXT_LINE) == (
         [_WHOLE_LINE_TWO, "selected"],
-        expected_for_gtk(
-            BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26),
-            gtk4=BrailleLine(
+        helpers.expected_for_gtk(
+            helpers.BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26),
+            gtk4=helpers.BrailleLine(
                 1,
                 "OrcaTextView application frame the text view wraps it. $l",
                 "the text view wraps it. $l",
@@ -215,13 +211,13 @@ def test_selection_by_line(gtk_text_view_selection: NativeAppSession) -> None:
             ),
         ),
     )
-    assert say_selection(session) == [f"Selected text is:  Line one.\n{_WHOLE_LINE_TWO}"]
+    assert helpers.say_selection(session) == [f"Selected text is:  Line one.\n{_WHOLE_LINE_TWO}"]
 
-    assert select(session, PREVIOUS_LINE) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.PREVIOUS_LINE) == (
         [_WHOLE_LINE_TWO, "unselected"],
-        expected_for_gtk(
-            BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61),
-            gtk4=BrailleLine(
+        helpers.expected_for_gtk(
+            helpers.BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61),
+            gtk4=helpers.BrailleLine(
                 1,
                 f"OrcaTextView application frame {_LINE_TWO}",
                 "Line two has additional words to",
@@ -229,7 +225,7 @@ def test_selection_by_line(gtk_text_view_selection: NativeAppSession) -> None:
             ),
         ),
     )
-    assert say_selection(session) == ["Selected text is:  Line one.\n"]
+    assert helpers.say_selection(session) == ["Selected text is:  Line one.\n"]
 
     _release_control(session)
 
@@ -242,22 +238,22 @@ def test_selection_to_the_line_boundaries(gtk_text_view_selection: NativeAppSess
     _take_control(session)
     _move_into_line_two(session)
 
-    assert select(session, END_OF_LINE) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.END_OF_LINE) == (
         [_TO_THE_END_OF_LINE_TWO, "selected"],
-        BrailleLine(
+        helpers.BrailleLine(
             32,
             _LINE_TWO,
             "rds to make it long enough that ",
             "\x00" * 4 + "\xc0" * 53 + "\x00" * 4,
         ),
     )
-    assert say_selection(session) == [f"Selected text is:  {_TO_THE_END_OF_LINE_TWO}"]
+    assert helpers.say_selection(session) == [f"Selected text is:  {_TO_THE_END_OF_LINE_TWO}"]
 
-    assert select(session, START_OF_LINE) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.START_OF_LINE) == (
         [_TO_THE_END_OF_LINE_TWO, "unselected", "Line", "selected"],
-        BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\xc0" * 4 + "\x00" * 57),
+        helpers.BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\xc0" * 4 + "\x00" * 57),
     )
-    assert say_selection(session) == ["Selected text is:  Line"]
+    assert helpers.say_selection(session) == ["Selected text is:  Line"]
 
     _release_control(session)
 
@@ -270,21 +266,21 @@ def test_selection_to_the_file_boundaries(gtk_text_view_selection: NativeAppSess
     _take_control(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [_WHOLE_LINE_TWO]
-    assert brailled[-1] == BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
+    assert brailled[-1] == helpers.BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
 
-    assert select(session, END_OF_FILE) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.END_OF_FILE) == (
         [_REST_OF_THE_FILE, "selected"],
-        BrailleLine(11, _LAST_LINE, _LAST_LINE, "\xc0" * 10 + "\x00" * 3),
+        helpers.BrailleLine(11, _LAST_LINE, _LAST_LINE, "\xc0" * 10 + "\x00" * 3),
     )
-    assert say_selection(session) == [f"Selected text is:  {_REST_OF_THE_FILE}"]
+    assert helpers.say_selection(session) == [f"Selected text is:  {_REST_OF_THE_FILE}"]
 
-    assert select(session, START_OF_FILE) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.START_OF_FILE) == (
         [_REST_OF_THE_FILE, "unselected", "Line one.\n", "selected"],
-        expected_for_gtk(
-            BrailleLine(1, "Line one. $l", "Line one. $l", "\xc0" * 9 + "\x00" * 3),
-            gtk4=BrailleLine(
+        helpers.expected_for_gtk(
+            helpers.BrailleLine(1, "Line one. $l", "Line one. $l", "\xc0" * 9 + "\x00" * 3),
+            gtk4=helpers.BrailleLine(
                 1,
                 "OrcaTextView application frame Line one. $l",
                 "Line one. $l",
@@ -292,7 +288,7 @@ def test_selection_to_the_file_boundaries(gtk_text_view_selection: NativeAppSess
             ),
         ),
     )
-    assert say_selection(session) == ["Selected text is:  Line one.\n"]
+    assert helpers.say_selection(session) == ["Selected text is:  Line one.\n"]
 
     _release_control(session)
 
@@ -305,34 +301,34 @@ def test_selection_backward_from_the_caret(gtk_text_view_selection: NativeAppSes
     _take_control(session)
     _move_into_line_two(session)
 
-    assert select(session, PREVIOUS_CHARACTER) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.PREVIOUS_CHARACTER) == (
         ["e", "selected"],
-        BrailleLine(4, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 3 + "\xc0" + "\x00" * 57),
+        helpers.BrailleLine(4, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 3 + "\xc0" + "\x00" * 57),
     )
-    assert say_selection(session) == ["Selected text is:  e"]
+    assert helpers.say_selection(session) == ["Selected text is:  e"]
 
-    assert select(session, PREVIOUS_CHARACTER) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.PREVIOUS_CHARACTER) == (
         ["n", "selected"],
-        BrailleLine(3, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 2 + "\xc0" * 2 + "\x00" * 57),
+        helpers.BrailleLine(3, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 2 + "\xc0" * 2 + "\x00" * 57),
     )
-    assert say_selection(session) == ["Selected text is:  ne"]
+    assert helpers.say_selection(session) == ["Selected text is:  ne"]
 
-    assert select(session, PREVIOUS_CHARACTER) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.PREVIOUS_CHARACTER) == (
         ["i", "selected"],
-        BrailleLine(2, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" + "\xc0" * 3 + "\x00" * 57),
+        helpers.BrailleLine(2, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" + "\xc0" * 3 + "\x00" * 57),
     )
-    assert say_selection(session) == ["Selected text is:  ine"]
+    assert helpers.say_selection(session) == ["Selected text is:  ine"]
 
-    assert select(session, PREVIOUS_WORD) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.PREVIOUS_WORD) == (
         ["L", "selected"],
-        BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\xc0" * 4 + "\x00" * 57),
+        helpers.BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\xc0" * 4 + "\x00" * 57),
     )
-    assert say_selection(session) == ["Selected text is:  Line"]
+    assert helpers.say_selection(session) == ["Selected text is:  Line"]
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Text unselected.", "L"]
-    assert brailled[-1] == BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
+    assert brailled[-1] == helpers.BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
 
     _release_control(session)
 
@@ -354,24 +350,30 @@ def test_selection_without_notifying_the_user(gtk_text_view_selection: NativeApp
     session = gtk_text_view_selection
     _take_control(session)
 
-    spoken, brailled = select_without_notifying(session, NEXT_WORD)
+    spoken, brailled = caret_selection_helpers.select_without_notifying(
+        session, caret_selection_helpers.NEXT_WORD
+    )
     assert spoken == []
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         5, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 4 + "\x00" * 8
     )
-    assert say_selection(session) == ["Selected text is:  Line"]
+    assert helpers.say_selection(session) == ["Selected text is:  Line"]
 
-    spoken, brailled = select_without_notifying(session, NEXT_WORD)
+    spoken, brailled = caret_selection_helpers.select_without_notifying(
+        session, caret_selection_helpers.NEXT_WORD
+    )
     assert spoken == []
-    assert brailled[-1] == BrailleLine(
+    assert brailled[-1] == helpers.BrailleLine(
         10, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 9 + "\x00" * 3
     )
-    assert say_selection(session) == ["Selected text is:  Line one."]
+    assert helpers.say_selection(session) == ["Selected text is:  Line one."]
 
-    spoken, brailled = select_without_notifying(session, NEXT_LINE)
+    spoken, brailled = caret_selection_helpers.select_without_notifying(
+        session, caret_selection_helpers.NEXT_LINE
+    )
     assert spoken == []
-    assert brailled[-1] == BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
-    assert say_selection(session) == ["Selected text is:  Line one.\n"]
+    assert brailled[-1] == helpers.BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61)
+    assert helpers.say_selection(session) == ["Selected text is:  Line one.\n"]
 
     _release_control(session)
 
@@ -383,22 +385,24 @@ def test_selection_removed_by_caret_navigation(gtk_text_view_selection: NativeAp
     session = gtk_text_view_selection
     _take_control(session)
 
-    assert select(session, NEXT_WORD) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.NEXT_WORD) == (
         ["Line", "selected"],
-        BrailleLine(5, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 4 + "\x00" * 8),
+        helpers.BrailleLine(
+            5, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 31 + "\xc0" * 4 + "\x00" * 8
+        ),
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Text unselected.", " "]
-    assert brailled[-1] == BrailleLine(5, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 43)
-    assert say_selection(session) == ["No selected text."]
+    assert brailled[-1] == helpers.BrailleLine(5, _FIRST_LINE, _FIRST_LINE_VISIBLE, "\x00" * 43)
+    assert helpers.say_selection(session) == ["No selected text."]
 
-    assert select(session, NEXT_LINE) == (
+    assert caret_selection_helpers.select(session, caret_selection_helpers.NEXT_LINE) == (
         [" one.\n", "selected"],
-        expected_for_gtk(
-            BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61),
-            gtk4=BrailleLine(
+        helpers.expected_for_gtk(
+            helpers.BrailleLine(1, _LINE_TWO, _LINE_TWO_VISIBLE, "\x00" * 61),
+            gtk4=helpers.BrailleLine(
                 1,
                 f"OrcaTextView application frame {_LINE_TWO}",
                 "Line two has additional words to",
@@ -408,12 +412,12 @@ def test_selection_removed_by_caret_navigation(gtk_text_view_selection: NativeAp
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
-    assert spoken == expected_for_gtk(
+    spoken, brailled = helpers.capture(session)
+    assert spoken == helpers.expected_for_gtk(
         ["Text unselected.", "the text view wraps it.\n"],
         gtk4=["Text unselected.", "the text view wraps it."],
     )
-    assert brailled[-1] == BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26)
-    assert say_selection(session) == ["No selected text."]
+    assert brailled[-1] == helpers.BrailleLine(1, _WRAPPED, _WRAPPED, "\x00" * 26)
+    assert helpers.say_selection(session) == ["No selected text."]
 
     _release_control(session)

@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -41,7 +41,7 @@ _SLEEP_MODE_MODIFIERS = [
 
 def _toggle_sleep_mode(session: NativeAppSession) -> list[str]:
     keyboard.press_chord(_SLEEP_MODE_MODIFIERS, keyboard.KEYSYM_Q)
-    return speech(session)
+    return helpers.speech(session)
 
 
 @pytest.mark.native_app

@@ -27,10 +27,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from tests.integration_tests import helpers
+from tests.integration_tests import helpers, terminal_helpers
 from tests.integration_tests.apps import terminal
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.terminal_helpers import review_first_line, settle, type_text
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -50,7 +49,7 @@ pytestmark = pytest.mark.xfail(
 def _navigate_to_c1_line(session: NativeAppSession) -> None:
     """Moves flat review to the c1/c2 output line and discards the output."""
 
-    review_first_line(session)
+    terminal_helpers.review_first_line(session)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
     session.orca.call("FlatReviewPresenter", "GoNextLine", True)
@@ -63,9 +62,9 @@ def test_flat_review_speaks_live_update(terminal_flatrev: NativeAppSession) -> N
     """Tests that a terminal line changing in place is spoken when SpeaksUpdates is on."""
 
     session = terminal_flatrev
-    settle(session)
+    terminal_helpers.settle(session)
 
-    type_text("bash t.sh")
+    terminal_helpers.type_text("bash t.sh")
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     time.sleep(0.5)
 
@@ -95,9 +94,9 @@ def test_flat_review_silent_live_update_when_disabled(
     """Tests that a terminal line changing in place is not spoken when SpeaksUpdates is off."""
 
     session = terminal_flatrev
-    settle(session)
+    terminal_helpers.settle(session)
 
-    type_text("bash t.sh")
+    terminal_helpers.type_text("bash t.sh")
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     time.sleep(0.5)
 
@@ -125,9 +124,9 @@ def test_flat_review_location_survives_terminal_live_update(
     """Tests that a terminal update does not undo a preceding flat-review command."""
 
     session = terminal_review_update
-    settle(session)
+    terminal_helpers.settle(session)
 
-    type_text("bash review.sh")
+    terminal_helpers.type_text("bash review.sh")
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     time.sleep(0.5)
 

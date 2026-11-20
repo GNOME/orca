@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine, capture, reset_web_state
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -38,67 +38,77 @@ def test_tabs_navigation(web_tabs: BrowserSession) -> None:
     """Tests tabs navigation."""
 
     session = web_tabs
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Aberdeen", "page tab", "Focus mode"]
-    assert brailled[-1] == BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
+    assert brailled[-1] == helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Brindisi", "page tab"]
-    assert brailled[-1] == BrailleLine(1, "Brindisi page tab", "Brindisi page tab", "\x00" * 17)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, "Brindisi page tab", "Brindisi page tab", "\x00" * 17
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Cusco", "page tab"]
-    assert brailled[-1] == BrailleLine(1, "Cusco page tab", "Cusco page tab", "\x00" * 14)
+    assert brailled[-1] == helpers.BrailleLine(1, "Cusco page tab", "Cusco page tab", "\x00" * 14)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Cusco", "page tab"]
-    assert brailled[-1] == BrailleLine(1, "Cusco page tab", "Cusco page tab", "\x00" * 14)
+    assert brailled[-1] == helpers.BrailleLine(1, "Cusco page tab", "Cusco page tab", "\x00" * 14)
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Aberdeen", "page tab"]
-    assert brailled[-1] == BrailleLine(1, "Aberdeen page tab", "Aberdeen page tab", "\x00" * 17)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, "Aberdeen page tab", "Aberdeen page tab", "\x00" * 17
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Cusco", "page tab"]
-    assert brailled[-1] == BrailleLine(1, "Cusco page tab", "Cusco page tab", "\x00" * 14)
+    assert brailled[-1] == helpers.BrailleLine(1, "Cusco page tab", "Cusco page tab", "\x00" * 14)
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["selected"]
-    assert brailled[-1] == BrailleLine(0, "selected", "selected", "\x00" * 8)
+    assert brailled[-1] == helpers.BrailleLine(0, "selected", "selected", "\x00" * 8)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Spring", "page tab"]
-    assert brailled[-1] == BrailleLine(1, "Spring page tab", "Spring page tab", "\x00" * 15)
+    assert brailled[-1] == helpers.BrailleLine(1, "Spring page tab", "Spring page tab", "\x00" * 15)
 
     # Return to the first tablist without relying on browser-specific Tab wrapping.
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Cusco", "page tab"]
-    assert brailled[-1] == BrailleLine(1, "Cusco page tab", "Cusco page tab", "\x00" * 14)
+    assert brailled[-1] == helpers.BrailleLine(1, "Cusco page tab", "Cusco page tab", "\x00" * 14)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Aberdeen", "page tab"]
-    assert brailled[-1] == BrailleLine(1, "Aberdeen page tab", "Aberdeen page tab", "\x00" * 17)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, "Aberdeen page tab", "Aberdeen page tab", "\x00" * 17
+    )
 
     session.orca.set("SpeechPresenter", "SpeakPositionInSet", True)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Brindisi", "page tab", "2 of 3"]
-    assert brailled[-1] == BrailleLine(1, "Brindisi page tab", "Brindisi page tab", "\x00" * 17)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, "Brindisi page tab", "Brindisi page tab", "\x00" * 17
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Aberdeen", "page tab", "1 of 3"]
-    assert brailled[-1] == BrailleLine(1, "Aberdeen page tab", "Aberdeen page tab", "\x00" * 17)
+    assert brailled[-1] == helpers.BrailleLine(
+        1, "Aberdeen page tab", "Aberdeen page tab", "\x00" * 17
+    )

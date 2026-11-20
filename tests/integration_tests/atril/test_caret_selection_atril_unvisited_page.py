@@ -26,15 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import atril_helpers, helpers, version_helpers
 from tests.integration_tests import caret_selection_helpers as commands
-from tests.integration_tests.atril_helpers import (
-    FIRST_PAGE,
-    assert_step,
-    selected_ranges,
-    selection_session,
-)
-from tests.integration_tests.helpers import BrailleLine, capture
-from tests.integration_tests.version_helpers import requires_atril_version
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import AtrilSession
@@ -49,21 +42,21 @@ if TYPE_CHECKING:
         "https://github.com/mate-desktop/atril/issues/734"
     ),
 )
-@requires_atril_version(1, 28, 7)
+@version_helpers.requires_atril_version(1, 28, 7)
 def test_selection_on_unvisited_page(atril: AtrilSession) -> None:
     """Retains the first page and selects text on the previously undisplayed second page."""
 
     # This file owns a fresh session: no earlier test can have rendered page two.
-    with selection_session(atril, native=False):
+    with atril_helpers.selection_session(atril, native=False):
         for _ in range(6):
             atril.orca.select_with_caret_navigator(commands.NEXT_LINE)
-            capture(atril)
-        assert selected_ranges(atril) == ([(0, len(FIRST_PAGE))], [])
-        assert_step(
+            helpers.capture(atril)
+        assert atril_helpers.selected_ranges(atril) == ([(0, len(atril_helpers.FIRST_PAGE))], [])
+        atril_helpers.assert_step(
             atril,
             commands.NEXT_LINE,
             ["More pages!", "selected"],
-            BrailleLine(1, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
-            ([(0, len(FIRST_PAGE))], [(0, 11)]),
+            helpers.BrailleLine(1, "Here’s a new page.", "Here’s a new page.", "\x00" * 18),
+            ([(0, len(atril_helpers.FIRST_PAGE))], [(0, 11)]),
             native=False,
         )

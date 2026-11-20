@@ -28,7 +28,6 @@ import pytest
 
 from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -154,49 +153,49 @@ def test_flat_review_by_line_and_character(web_landmarks: BrowserSession) -> Non
         keyboard.tap_key(keyboard.KEYSYM_KP_UP)
         assert helpers.capture(session) == (
             ["Site banner text."],
-            [BrailleLine(1, "Site banner text. $l", "Site banner text. $l", "\x00" * 20)],
+            [helpers.BrailleLine(1, "Site banner text. $l", "Site banner text. $l", "\x00" * 20)],
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_DOWN)
         assert helpers.capture(session) == (
             ["S"],
-            [BrailleLine(1, "Site banner text. $l", "Site banner text. $l", "\x00" * 20)],
+            [helpers.BrailleLine(1, "Site banner text. $l", "Site banner text. $l", "\x00" * 20)],
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_DOWN)
         assert helpers.capture(session) == (
             ["i"],
-            [BrailleLine(2, "Site banner text. $l", "Site banner text. $l", "\x00" * 20)],
+            [helpers.BrailleLine(2, "Site banner text. $l", "Site banner text. $l", "\x00" * 20)],
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
         assert helpers.capture(session) == (
             ["Primary Home"],
-            [BrailleLine(1, "Primary Home $l", "Primary Home $l", "\x00" * 15)],
+            [helpers.BrailleLine(1, "Primary Home $l", "Primary Home $l", "\x00" * 15)],
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
         assert helpers.capture(session) == (
             ["Secondary Help"],
-            [BrailleLine(1, "Secondary Help $l", "Secondary Help $l", "\x00" * 17)],
+            [helpers.BrailleLine(1, "Secondary Help $l", "Secondary Help $l", "\x00" * 17)],
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
         assert helpers.capture(session) == (
             ["Search entry"],
-            [BrailleLine(1, "Search entry $l", "Search entry $l", "\x00" * 15)],
+            [helpers.BrailleLine(1, "Search entry $l", "Search entry $l", "\x00" * 15)],
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_HOME)
         assert helpers.capture(session) == (
             ["Secondary Help"],
-            [BrailleLine(1, "Secondary Help $l", "Secondary Help $l", "\x00" * 17)],
+            [helpers.BrailleLine(1, "Secondary Help $l", "Secondary Help $l", "\x00" * 17)],
         )
 
         keyboard.tap_key(keyboard.KEYSYM_KP_HOME)
         assert helpers.capture(session) == (
             ["Primary Home"],
-            [BrailleLine(1, "Primary Home $l", "Primary Home $l", "\x00" * 15)],
+            [helpers.BrailleLine(1, "Primary Home $l", "Primary Home $l", "\x00" * 15)],
         )
     finally:
         helpers.toggle_flat_review(session)
@@ -227,7 +226,7 @@ def test_flat_review_entry_inside_label(web_landmarks: BrowserSession, text: str
     helpers.toggle_flat_review(session)
     reviewed = text or "Search entry"
     full = f"{reviewed} $l"
-    line = BrailleLine(1, full, full, "\x00" * len(full))
+    line = helpers.BrailleLine(1, full, full, "\x00" * len(full))
     try:
         for _ in range(2):
             keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
@@ -273,7 +272,7 @@ def test_flat_review_omits_document_navigation_context(
             keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
             spoken, brailled = helpers.capture(session)
             assert " ".join(spoken) == text
-            assert brailled[-1] == BrailleLine(
+            assert brailled[-1] == helpers.BrailleLine(
                 1, text + " $l", text + " $l", "\x00" * (len(text) + 3)
             )
 
@@ -284,7 +283,9 @@ def test_flat_review_omits_document_navigation_context(
         keyboard.tap_key(keyboard.KEYSYM_KP_PAGE_UP)
         spoken, brailled = helpers.capture(session)
         assert " ".join(spoken) == "Footer text."
-        assert brailled[-1] == BrailleLine(1, "Footer text. $l", "Footer text. $l", "\x00" * 15)
+        assert brailled[-1] == helpers.BrailleLine(
+            1, "Footer text. $l", "Footer text. $l", "\x00" * 15
+        )
     finally:
         helpers.toggle_flat_review(session)
 
@@ -299,70 +300,74 @@ def test_structural_navigation_by_landmark_forward(web_landmarks: BrowserSession
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["m", "leaving banner.", "navigation", "Primary", "Home", "link"],
-        [BrailleLine(1, "Home", "Home", "\xc0" * 4)],
+        [helpers.BrailleLine(1, "Home", "Home", "\xc0" * 4)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["m", "leaving navigation.", "navigation", "Secondary", "Help", "link", "(Current page)"],
-        [BrailleLine(1, "Help (Current page)", "Help (Current page)", "\xc0" * 4 + "\x00" * 15)],
+        [
+            helpers.BrailleLine(
+                1, "Help (Current page)", "Help (Current page)", "\xc0" * 4 + "\x00" * 15
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["m", "leaving navigation.", "search", "Search "],
-        [BrailleLine(1, "Search ", "Search ", "\x00" * 7)],
+        [helpers.BrailleLine(1, "Search ", "Search ", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["m", "leaving search.", "main content", "Main content", "heading 1"],
-        [BrailleLine(1, "Main content h1", "Main content h1", "\x00" * 15)],
+        [helpers.BrailleLine(1, "Main content h1", "Main content h1", "\x00" * 15)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["m", "leaving main content.", "complementary content", "Sidebar", "Aside text."],
-        [BrailleLine(1, "Aside text.", "Aside text.", "\x00" * 11)],
+        [helpers.BrailleLine(1, "Aside text.", "Aside text.", "\x00" * 11)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["m", "leaving complementary content.", "form", "Newsletter signup", "Email "],
-        [BrailleLine(1, "Email ", "Email ", "\x00" * 6)],
+        [helpers.BrailleLine(1, "Email ", "Email ", "\x00" * 6)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["m", "leaving form.", "Related links", "region", "Region text."],
-        [BrailleLine(1, "Region text.", "Region text.", "\x00" * 12)],
+        [helpers.BrailleLine(1, "Region text.", "Region text.", "\x00" * 12)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["m", "leaving region.", "Status updates", "region", "Status text."],
-        [BrailleLine(1, "Status text.", "Status text.", "\x00" * 12)],
+        [helpers.BrailleLine(1, "Status text.", "Status text.", "\x00" * 12)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["m", "leaving region.", "information", "Footer text."],
-        [BrailleLine(1, "Footer text.", "Footer text.", "\x00" * 12)],
+        [helpers.BrailleLine(1, "Footer text.", "Footer text.", "\x00" * 12)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["m", "Wrapping to top.", "leaving information.", "banner", "Site banner text."],
         [
-            BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
-            BrailleLine(1, "Site banner text.", "Site banner text.", "\x00" * 17),
+            helpers.BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
+            helpers.BrailleLine(1, "Site banner text.", "Site banner text.", "\x00" * 17),
         ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["m", "leaving banner.", "navigation", "Primary", "Home", "link"],
-        [BrailleLine(1, "Home", "Home", "\xc0" * 4)],
+        [helpers.BrailleLine(1, "Home", "Home", "\xc0" * 4)],
     )
 
 
@@ -377,71 +382,75 @@ def test_structural_navigation_by_landmark_backward(web_landmarks: BrowserSessio
     assert helpers.capture(session) == (
         ["M", "Wrapping to bottom.", "leaving banner.", "information", "Footer text."],
         [
-            BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
-            BrailleLine(1, "Footer text.", "Footer text.", "\x00" * 12),
+            helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
+            helpers.BrailleLine(1, "Footer text.", "Footer text.", "\x00" * 12),
         ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["M", "leaving information.", "Status updates", "region", "Status text."],
-        [BrailleLine(1, "Status text.", "Status text.", "\x00" * 12)],
+        [helpers.BrailleLine(1, "Status text.", "Status text.", "\x00" * 12)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["M", "leaving region.", "Related links", "region", "Region text."],
-        [BrailleLine(1, "Region text.", "Region text.", "\x00" * 12)],
+        [helpers.BrailleLine(1, "Region text.", "Region text.", "\x00" * 12)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["M", "leaving region.", "form", "Newsletter signup", "Email "],
-        [BrailleLine(1, "Email ", "Email ", "\x00" * 6)],
+        [helpers.BrailleLine(1, "Email ", "Email ", "\x00" * 6)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["M", "leaving form.", "complementary content", "Sidebar", "Aside text."],
-        [BrailleLine(1, "Aside text.", "Aside text.", "\x00" * 11)],
+        [helpers.BrailleLine(1, "Aside text.", "Aside text.", "\x00" * 11)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["M", "leaving complementary content.", "main content", "Main content", "heading 1"],
-        [BrailleLine(1, "Main content h1", "Main content h1", "\x00" * 15)],
+        [helpers.BrailleLine(1, "Main content h1", "Main content h1", "\x00" * 15)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["M", "leaving main content.", "search", "Search "],
-        [BrailleLine(1, "Search ", "Search ", "\x00" * 7)],
+        [helpers.BrailleLine(1, "Search ", "Search ", "\x00" * 7)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["M", "leaving search.", "navigation", "Secondary", "Help", "link", "(Current page)"],
-        [BrailleLine(1, "Help (Current page)", "Help (Current page)", "\xc0" * 4 + "\x00" * 15)],
+        [
+            helpers.BrailleLine(
+                1, "Help (Current page)", "Help (Current page)", "\xc0" * 4 + "\x00" * 15
+            )
+        ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["M", "leaving navigation.", "navigation", "Primary", "Home", "link"],
-        [BrailleLine(1, "Home", "Home", "\xc0" * 4)],
+        [helpers.BrailleLine(1, "Home", "Home", "\xc0" * 4)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["M", "leaving navigation.", "banner", "Site banner text."],
-        [BrailleLine(1, "Site banner text.", "Site banner text.", "\x00" * 17)],
+        [helpers.BrailleLine(1, "Site banner text.", "Site banner text.", "\x00" * 17)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["M", "Wrapping to bottom.", "leaving banner.", "information", "Footer text."],
         [
-            BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
-            BrailleLine(1, "Footer text.", "Footer text.", "\x00" * 12),
+            helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
+            helpers.BrailleLine(1, "Footer text.", "Footer text.", "\x00" * 12),
         ],
     )
 
@@ -523,4 +532,4 @@ def test_where_am_i_on_link(web_landmarks: BrowserSession) -> None:
     helpers.tab_and_swallow_presentation(session)
     spoken, brailled = _where_am_i(session)
     assert spoken == ["https link Home", "different site"]
-    assert brailled[-1] == BrailleLine(1, "Home", "Home", "\xc0" * 4)
+    assert brailled[-1] == helpers.BrailleLine(1, "Home", "Home", "\xc0" * 4)

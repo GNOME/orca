@@ -44,6 +44,7 @@ from gi.repository import Atspi, Gio, GLib, PangoCairo
 
 from orca.output_reader import OutputReader
 
+from . import version_helpers
 from .apps import (
     atril,
     browser,
@@ -82,7 +83,6 @@ from .apps import (
 )
 from .harness import keyboard, sandbox
 from .harness.orca_session import OrcaSession
-from .version_helpers import has_typelib
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
@@ -169,7 +169,7 @@ def _make_native_app_fixture(
                     "GTK4 TreeView accessibility: "
                     "https://gitlab.gnome.org/GNOME/gtk/-/work_items/4274"
                 )
-            if not has_typelib("Gtk", "4.0"):
+            if not version_helpers.has_typelib("Gtk", "4.0"):
                 pytest.skip("GTK 4.0 typelib is not available")
             app_module = gtk.app_module(app.__name__.rsplit("gtk3_", 1)[1])
         if required_font is not None and not _font_is_installed(required_font):
@@ -302,7 +302,7 @@ def _atril(tmp_path_factory: pytest.TempPathFactory) -> Iterator[AtrilSession]:
 def _gtk_drop_down(tmp_path_factory: pytest.TempPathFactory) -> Iterator[NativeAppSession]:
     """Runs the GTK4 DropDown app."""
 
-    if not has_typelib("Gtk", "4.0"):
+    if not version_helpers.has_typelib("Gtk", "4.0"):
         pytest.skip("GTK 4.0 typelib is not available")
     yield from _run_native_app(
         tmp_path_factory,
@@ -463,7 +463,7 @@ def _notification_daemon(tmp_path_factory: pytest.TempPathFactory) -> Iterator[N
     process = subprocess.Popen([_NOTIFICATION_DAEMON], env=sandbox.build_sandbox_env(sandbox_dir))
     try:
         _wait_for_bus_name(process, "org.freedesktop.Notifications")
-        if gtk.is_gtk4() and not has_typelib("Gtk", "4.0"):
+        if gtk.is_gtk4() and not version_helpers.has_typelib("Gtk", "4.0"):
             pytest.skip("GTK 4.0 typelib is not available")
         app_module = gtk.app_module("two_entries") if gtk.is_gtk4() else gtk3_two_entries.__name__
         argv = [sys.executable, "-m", app_module]
@@ -638,7 +638,7 @@ def _require_terminal() -> None:
         if shutil.which("konsole") is None:
             pytest.skip("Konsole is not available")
         return
-    if not has_typelib("Vte", version):
+    if not version_helpers.has_typelib("Vte", version):
         pytest.skip(f"VTE {version} ({toolkit}) typelib is not available")
 
 

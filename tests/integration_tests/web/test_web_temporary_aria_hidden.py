@@ -29,7 +29,6 @@ import pytest
 from tests.integration_tests import helpers
 from tests.integration_tests.apps import browser
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import BrailleLine
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -38,7 +37,7 @@ if TYPE_CHECKING:
 _LINES = [
     (
         ["1. Introduction", "heading 1"],
-        BrailleLine(1, "1. Introduction h1", "1. Introduction h1", "\x00" * 18),
+        helpers.BrailleLine(1, "1. Introduction h1", "1. Introduction h1", "\x00" * 18),
     ),
     (
         [
@@ -47,7 +46,7 @@ _LINES = [
             "link",
             ", Hans Rademacher ",
         ],
-        BrailleLine(
+        helpers.BrailleLine(
             1,
             "In his book Topics in Analytic Number Theory\xa0Reference\xa0 13, Hans Rademacher ",
             "In his book Topics in Analytic N",
@@ -56,7 +55,7 @@ _LINES = [
     ),
     (
         ["gave a partial fraction decomposition of the partition generating function "],
-        BrailleLine(
+        helpers.BrailleLine(
             1,
             "gave a partial fraction decomposition of the partition generating function ",
             "gave a partial fraction decompos",
@@ -74,7 +73,7 @@ _LINES = [
             ".",
             " He conjectured that the decomposition of the generating ",
         ],
-        BrailleLine(
+        helpers.BrailleLine(
             1,
             "⠐⠩⠚⠀⠨⠂⠱⠀⠼⠂⠻⠷⠂⠤⠭⠘⠚⠐⠾⠘⠤⠂ tree. He conjectured that the decomposition of the generating ",
             "⠐⠩⠚⠀⠨⠂⠱⠀⠼⠂⠻⠷⠂⠤⠭⠘⠚⠐⠾⠘⠤⠂ tree. He ",
@@ -88,7 +87,7 @@ _LINES = [
             "image",
             " parts (equivalently, into parts from ",
         ],
-        BrailleLine(
+        helpers.BrailleLine(
             1,
             "function of partitions into at most\xa0⠠⠝ image parts (equivalently, into parts from ",
             "function of partitions into at m",
@@ -97,11 +96,11 @@ _LINES = [
     ),
     (
         ["StartSet 1 comma ellipsis comma upper N EndSet", "tree", "),"],
-        BrailleLine(1, "⠨⠷⠂⠠⠀⠄⠄⠄⠠⠀⠠⠝⠨⠾ tree),", "⠨⠷⠂⠠⠀⠄⠄⠄⠠⠀⠠⠝⠨⠾ tree),", "\x00" * 21),
+        helpers.BrailleLine(1, "⠨⠷⠂⠠⠀⠄⠄⠄⠠⠀⠠⠝⠨⠾ tree),", "⠨⠷⠂⠠⠀⠄⠄⠄⠠⠀⠠⠝⠨⠾ tree),", "\x00" * 21),
     ),
     (
         ["End of introduction", "heading 2"],
-        BrailleLine(1, "End of introduction h2", "End of introduction h2", "\x00" * 22),
+        helpers.BrailleLine(1, "End of introduction h2", "End of introduction h2", "\x00" * 22),
     ),
 ]
 

@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import expected_for_gtk, move_to_top, speech
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import NativeAppSession
@@ -41,19 +41,19 @@ def test_repeated_emoji_with_and_without_zero_width_spaces(
     """Tests that U+FEFF does not prevent repeated emoji from being counted."""
 
     session = gtk_text_view_repeated_symbols
-    move_to_top(session)
+    helpers.move_to_top(session)
     for _ in range(line_number - 1):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        speech(session)
+        helpers.speech(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == expected_for_gtk(
+    assert helpers.speech(session) == helpers.expected_for_gtk(
         ["10 🎵 characters\n"], gtk4=["10 \U0001f3b5 characters"]
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    speech(session)
+    helpers.speech(session)
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == expected_for_gtk(
+    assert helpers.speech(session) == helpers.expected_for_gtk(
         ["10 🎵 characters\n"], gtk4=["10 \U0001f3b5 characters"]
     )

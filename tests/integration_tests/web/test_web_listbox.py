@@ -26,13 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    BrailleLine,
-    capture,
-    expected_for_browser,
-    reset_web_state,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -43,53 +38,53 @@ def test_listbox_navigation(web_listbox: BrowserSession) -> None:
     """Tests listbox navigation."""
 
     session = web_listbox
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     # Both browsers expose option set sizes: per group in Firefox, five in Chromium.
     # Chromium also exposes setsize on the listbox; without it, we fall back on the child count.
     assert spoken == [
         "Transuranium elements",
-        expected_for_browser(session, "List with 5 items", firefox="List with 2 items"),
+        helpers.expected_for_browser(session, "List with 5 items", firefox="List with 2 items"),
         "Actinides",
         "Neptunium",
         "Focus mode",
     ]
-    assert brailled[-1] == BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
+    assert brailled[-1] == helpers.BrailleLine(0, "Focus mode", "Focus mode", "\x00" * 10)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Plutonium"]
-    assert brailled[-1] == BrailleLine(1, "Plutonium", "Plutonium", "\x00" * 9)
+    assert brailled[-1] == helpers.BrailleLine(1, "Plutonium", "Plutonium", "\x00" * 9)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Americium"]
-    assert brailled[-1] == BrailleLine(1, "Americium", "Americium", "\x00" * 9)
+    assert brailled[-1] == helpers.BrailleLine(1, "Americium", "Americium", "\x00" * 9)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["leaving panel.", "Transactinides", "Rutherfordium"]
-    assert brailled[-1] == BrailleLine(1, "Rutherfordium", "Rutherfordium", "\x00" * 13)
+    assert brailled[-1] == helpers.BrailleLine(1, "Rutherfordium", "Rutherfordium", "\x00" * 13)
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["leaving panel.", "Actinides", "Neptunium"]
-    assert brailled[-1] == BrailleLine(1, "Neptunium", "Neptunium", "\x00" * 9)
+    assert brailled[-1] == helpers.BrailleLine(1, "Neptunium", "Neptunium", "\x00" * 9)
 
     keyboard.tap_key(keyboard.KEYSYM_END)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["leaving panel.", "Transactinides", "Dubnium"]
-    assert brailled[-1] == BrailleLine(1, "Dubnium", "Dubnium", "\x00" * 7)
+    assert brailled[-1] == helpers.BrailleLine(1, "Dubnium", "Dubnium", "\x00" * 7)
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Dubnium", "list item"]
-    assert brailled[-1] == BrailleLine(1, "Dubnium", "Dubnium", "\x00" * 7)
+    assert brailled[-1] == helpers.BrailleLine(1, "Dubnium", "Dubnium", "\x00" * 7)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == [
         "leaving panel.",
         "Nearby amenities",
@@ -97,36 +92,36 @@ def test_listbox_navigation(web_listbox: BrowserSession) -> None:
         "A park",
         "not selected",
     ]
-    assert brailled[-1] == BrailleLine(1, "A park", "A park", "\x00" * 6)
+    assert brailled[-1] == helpers.BrailleLine(1, "A park", "A park", "\x00" * 6)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["A school", "not selected"]
-    assert brailled[-1] == BrailleLine(1, "A school", "A school", "\x00" * 8)
+    assert brailled[-1] == helpers.BrailleLine(1, "A school", "A school", "\x00" * 8)
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["selected"]
-    assert brailled[-1] == BrailleLine(0, "selected", "selected", "\x00" * 8)
+    assert brailled[-1] == helpers.BrailleLine(0, "selected", "selected", "\x00" * 8)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["Shops", "not selected"]
-    assert brailled[-1] == BrailleLine(1, "Shops", "Shops", "\x00" * 5)
+    assert brailled[-1] == helpers.BrailleLine(1, "Shops", "Shops", "\x00" * 5)
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["selected"]
-    assert brailled[-1] == BrailleLine(0, "selected", "selected", "\x00" * 8)
+    assert brailled[-1] == helpers.BrailleLine(0, "selected", "selected", "\x00" * 8)
 
     session.orca.set("SpeechPresenter", "SpeakPositionInSet", True)
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["A park", "not selected", "1 of 3"]
-    assert brailled[-1] == BrailleLine(1, "A park", "A park", "\x00" * 6)
+    assert brailled[-1] == helpers.BrailleLine(1, "A park", "A park", "\x00" * 6)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    spoken, brailled = capture(session)
+    spoken, brailled = helpers.capture(session)
     assert spoken == ["A school", "2 of 3"]
-    assert brailled[-1] == BrailleLine(1, "A school", "A school", "\x00" * 8)
+    assert brailled[-1] == helpers.BrailleLine(1, "A school", "A school", "\x00" * 8)

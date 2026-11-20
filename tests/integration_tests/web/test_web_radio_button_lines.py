@@ -26,14 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    capture,
-    expected_for_browser,
-    move_to_bottom,
-    move_to_top,
-    reset_web_state,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -148,23 +142,23 @@ def test_radio_button_line_navigation(
     """Tests radio and label lines with visual grouping enabled and disabled."""
 
     session = web_radio_button_lines
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", layout_mode)
     if direction == "down":
-        move_to_top(session)
+        helpers.move_to_top(session)
         key = keyboard.KEYSYM_DOWN
         lines = _DOWN_LINES if layout_mode else _DOWN_LINES_LAYOUT_OFF
     else:
-        move_to_bottom(session)
+        helpers.move_to_bottom(session)
         key = keyboard.KEYSYM_UP
         lines = _UP_LINES if layout_mode else _UP_LINES_LAYOUT_OFF
 
     try:
         for common_speech, expected_braille in lines:
             keyboard.tap_key(key)
-            spoken, brailled = capture(session)
+            spoken, brailled = helpers.capture(session)
             # Firefox presents the fieldset role first and exposes label click actions.
-            expected_speech = expected_for_browser(
+            expected_speech = helpers.expected_for_browser(
                 session,
                 common_speech,
                 firefox={

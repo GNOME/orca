@@ -26,13 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
-from tests.integration_tests.helpers import (
-    expected_for_browser,
-    move_to_top,
-    reset_web_state,
-    speech,
-)
 
 if TYPE_CHECKING:
     from tests.integration_tests.orca_fixtures import BrowserSession
@@ -40,22 +35,22 @@ if TYPE_CHECKING:
 
 def _right(session: BrowserSession) -> list[str]:
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    return speech(session)
+    return helpers.speech(session)
 
 
 def _word_right(session: BrowserSession) -> list[str]:
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    return speech(session)
+    return helpers.speech(session)
 
 
 def _left(session: BrowserSession) -> list[str]:
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    return speech(session)
+    return helpers.speech(session)
 
 
 def _word_left(session: BrowserSession) -> list[str]:
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
-    return speech(session)
+    return helpers.speech(session)
 
 
 def _into_heading(session: BrowserSession, count: int) -> None:
@@ -70,7 +65,7 @@ def test_character_navigation(web_structural_navigation: BrowserSession) -> None
     """Tests Right-arrow announcing each character it moves onto across the first heading."""
 
     session = web_structural_navigation
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     # The caret starts before the heading, so Right announces the character to its
     # right; the leading "S" of "Structural navigation" is therefore not spoken.
@@ -91,16 +86,16 @@ def test_word_navigation(web_structural_navigation: BrowserSession) -> None:
     """Tests Control+Right announcing each word, crossing from the heading into paragraphs."""
 
     session = web_structural_navigation
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     expected = [
         ["Structural "],
         ["navigation"],
         ["Intro "],
         # Firefox includes sentence-ending punctuation in the AT-SPI word boundary.
-        *expected_for_browser(session, [["paragraph"], ["."]], firefox=[["paragraph."]]),
+        *helpers.expected_for_browser(session, [["paragraph"], ["."]], firefox=[["paragraph."]]),
         ["Quoted "],
-        *expected_for_browser(session, [["text"], ["."]], firefox=[["text."]]),
+        *helpers.expected_for_browser(session, [["text"], ["."]], firefox=[["text."]]),
     ]
 
     assert [_word_right(session) for _ in expected] == expected
@@ -111,7 +106,7 @@ def test_character_navigation_backward(web_structural_navigation: BrowserSession
     """Tests Left-arrow announcing each character, reaching the leading "S" forward skipped."""
 
     session = web_structural_navigation
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     _into_heading(session, 9)
 
     assert [_left(session) for _ in range(9)] == [
@@ -132,8 +127,8 @@ def test_word_navigation_backward(web_structural_navigation: BrowserSession) -> 
     """Tests Control+Left announcing each word back across the paragraphs and heading."""
 
     session = web_structural_navigation
-    reset_web_state(session)
-    for _ in range(expected_for_browser(session, 9, firefox=7)):
+    helpers.reset_web_state(session)
+    for _ in range(helpers.expected_for_browser(session, 9, firefox=7)):
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
@@ -141,9 +136,9 @@ def test_word_navigation_backward(web_structural_navigation: BrowserSession) -> 
     # Chromium exposes each period as a separate word range; Firefox includes it
     # in the preceding word. TODO: Review these word boundaries.
     expected = [
-        *expected_for_browser(session, [["."], ["text"]], firefox=[["text."]]),
+        *helpers.expected_for_browser(session, [["."], ["text"]], firefox=[["text."]]),
         ["Quoted "],
-        *expected_for_browser(session, [["."], ["paragraph"]], firefox=[["paragraph."]]),
+        *helpers.expected_for_browser(session, [["."], ["paragraph"]], firefox=[["paragraph."]]),
         ["Intro "],
         ["navigation"],
     ]
@@ -157,8 +152,8 @@ def test_character_navigation_onto_embedded_button(
     """Tests character navigation treats controls as whole objects and speaks their roles."""
 
     session = web_structural_navigation
-    reset_web_state(session)
-    for _ in range(expected_for_browser(session, 8, firefox=6)):
+    helpers.reset_web_state(session)
+    for _ in range(helpers.expected_for_browser(session, 8, firefox=6)):
         _word_right(session)
     assert _right(session) == ["Save", "button"]
     assert _right(session) == ["Agree", "check box not checked"]
@@ -173,10 +168,10 @@ def test_character_navigation_onto_embedded_image(
     """Tests that Right-arrow onto an embedded image speaks the image."""
 
     session = web_structural_navigation
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     # Use "Go to next image", then Left, to reach the character before the image.
     keyboard.tap_key(keyboard.KEYSYM_G)
-    speech(session)
+    helpers.speech(session)
     assert _left(session) == ["n"]
     assert _right(session) == ["Red square", "image"]
 
@@ -186,8 +181,8 @@ def test_line_start_and_end(web_structural_navigation: BrowserSession) -> None:
     """Tests Home and End moving the caret to the start and end of the current line."""
 
     session = web_structural_navigation
-    reset_web_state(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
@@ -195,12 +190,14 @@ def test_line_start_and_end(web_structural_navigation: BrowserSession) -> None:
     session.reader.reset()
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    assert speech(session) == ["I"]
+    assert helpers.speech(session) == ["I"]
     keyboard.tap_key(keyboard.KEYSYM_END)
     # At the offset after the period, Firefox returns an empty character range.
     # Chromium returns invalid offsets, causing us to present the whole line.
     # TODO: Review handling of invalid character ranges.
-    assert speech(session) == expected_for_browser(session, ["Intro paragraph."], firefox=["blank"])
+    assert helpers.speech(session) == helpers.expected_for_browser(
+        session, ["Intro paragraph."], firefox=["blank"]
+    )
 
 
 @pytest.mark.native_app
@@ -208,18 +205,18 @@ def test_file_start_and_end(web_structural_navigation: BrowserSession) -> None:
     """Tests Ctrl+End and Ctrl+Home moving the caret to the end and start of the document."""
 
     session = web_structural_navigation
-    reset_web_state(session)
-    move_to_top(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_top(session)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
-    assert speech(session) == [
+    assert helpers.speech(session) == [
         (
             "targets substantial chunks of readable prose rather than short fragments or "
             "individual controls."
         ),
     ]
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    assert speech(session) == ["Structural navigation", "heading 1"]
+    assert helpers.speech(session) == ["Structural navigation", "heading 1"]
 
 
 @pytest.mark.native_app
@@ -242,10 +239,10 @@ def test_word_navigation_through_whole_object(
     """Tests each object is one word-navigation unit, with its role, in both directions."""
 
     session = web_structural_navigation
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     for _ in range(2):
         keyboard.tap_key(keyboard.KEYSYM_B)
-        speech(session)
+        helpers.speech(session)
     assert " ".join(_word_left(session)).strip() == "before"
     for _ in range(skip):
         _word_right(session)
@@ -277,12 +274,12 @@ def test_role_respects_displayed_text_preference(
     """Tests native and custom role names both respect the displayed-text-only preference."""
 
     session = web_structural_navigation
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("SpeechPresenter", "OnlySpeakDisplayedText", only_displayed_text)
 
     for _ in range(button_number):
         keyboard.tap_key(keyboard.KEYSYM_B)
-        spoken = speech(session)
+        spoken = helpers.speech(session)
 
     expected = ["b", name]
     if not only_displayed_text:
@@ -314,10 +311,10 @@ def test_navigation_with_only_displayed_text(
     """Tests navigation uses the current displayed-text-only preference."""
 
     session = web_structural_navigation
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     for _ in range(2):
         keyboard.tap_key(keyboard.KEYSYM_B)
-        speech(session)
+        helpers.speech(session)
     assert " ".join(_word_left(session)).strip() == "before"
     assert " ".join(_word_right(session)).strip() == "before"
     session.orca.set("SpeechPresenter", "OnlySpeakDisplayedText", True)
@@ -326,5 +323,5 @@ def test_navigation_with_only_displayed_text(
         spoken = " ".join(_word_right(session)).strip()
     else:
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        spoken = " ".join(speech(session)).strip()
+        spoken = " ".join(helpers.speech(session)).strip()
     assert spoken == "Save all changes"
