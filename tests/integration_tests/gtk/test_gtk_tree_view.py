@@ -272,17 +272,17 @@ def test_toggle_cell(gtk_tree_view: NativeAppSession) -> None:
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
     assert capture(session) == (
         ["Done check box checked"],
-        [BrailleLine(1, " Done <x> check box Done", "<x> check box Done", "\x00" * 24)],
+        [BrailleLine(1, "<x> check box Done", "<x> check box Done", "\x00" * 18)],
     )
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
     assert capture(session) == (
         ["not checked"],
-        [BrailleLine(1, " Done < > check box Done", "< > check box Done", "\x00" * 24)],
+        [BrailleLine(1, "< > check box Done", "< > check box Done", "\x00" * 18)],
     )
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
     assert capture(session) == (
         ["checked"],
-        [BrailleLine(1, " Done <x> check box Done", "<x> check box Done", "\x00" * 24)],
+        [BrailleLine(1, "<x> check box Done", "<x> check box Done", "\x00" * 18)],
     )
 
     verbosity = session.orca.get("BraillePresenter", "VerbosityLevel")
@@ -297,13 +297,8 @@ def test_toggle_cell(gtk_tree_view: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.xfail(
-    reason="Orca presents a checkable table cell's name twice in braille",
-    strict=True,
-    raises=AssertionError,
-)
-def test_named_toggle_cell_braille(gtk_tree_view: NativeAppSession) -> None:
-    """Presents a named checkable cell in braille when moving across a table row."""
+def test_named_toggle_cell(gtk_tree_view: NativeAppSession) -> None:
+    """Presents a named checkable cell when moving across a table row."""
 
     session = gtk_tree_view
     keyboard.tap_key(keyboard.KEYSYM_F5)
@@ -312,7 +307,8 @@ def test_named_toggle_cell_braille(gtk_tree_view: NativeAppSession) -> None:
     capture(session)
     for _ in range(3):
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-        _, brailled = capture(session)
+        spoken, brailled = capture(session)
+    assert spoken == ["Done column header Reviewed check box checked"]
     assert brailled[-1].full == " Done column header <x> Reviewed check box"
 
 

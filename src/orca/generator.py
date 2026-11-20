@@ -1553,12 +1553,18 @@ class Generator:
 
         result: list[Any] = []
         original_context = self._context
+        names = original_context.presented_names
         prior = original_context.prior_obj
         prior_reading_row = self._reading_row
         self._reading_row = reading_row
         for index, cell in enumerate(cells):
             with_context = index == 0 or detailed
-            self._context = replace(original_context, prior_obj=prior, include_context=with_context)
+            self._context = replace(
+                original_context,
+                prior_obj=prior,
+                include_context=with_context,
+                presented_names=names if names is not None else set(),
+            )
             cell_result = self._generate_table_cell_contents(cell)
             if cell_result and result and self._mode is GeneratorMode.BRAILLE:
                 result.append(braille.Region(object_properties.TABLE_CELL_DELIMITER_BRAILLE))
@@ -1571,22 +1577,6 @@ class Generator:
             result.extend(self._generate_position_in_list(obj))
         if reading_row:
             result.extend(self._generate_state_unselected(obj))
-        return result
-
-    # TODO - JD: If we had dedicated generators for cell types, we wouldn't need this.
-    @log_generator_output
-    def _generate_column_header_if_toggle_and_no_text(
-        self,
-        obj: Atspi.Accessible,
-    ) -> list[Any]:
-        if not self._get_is_nameless_toggle(obj):
-            return []
-
-        result = []
-        headers = AXUtilities.get_column_headers(obj)
-        if headers:
-            result.append(AXObject.get_name(headers[0]) or AXText.get_all_text(headers[0]))
-
         return result
 
     # TODO - JD: This needs to also be looked into.

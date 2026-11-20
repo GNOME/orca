@@ -393,16 +393,12 @@ def test_tree_navigation(qt_item_views: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-@pytest.mark.xfail(
-    reason="Orca presents a checkable table cell's name twice in braille",
-    strict=True,
-    raises=AssertionError,
-)
-def test_checkable_tree_item_braille(qt_item_views: NativeAppSession) -> None:
-    """Presents a checked tree item in braille when arrowing down to it."""
+def test_checkable_tree_item(qt_item_views: NativeAppSession) -> None:
+    """Presents a checked tree item when arrowing down to it."""
 
     session = qt_item_views
     _prepare(session, "tree")
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    _, brailled = helpers.capture(session)
+    spoken, brailled = helpers.capture(session)
+    assert spoken == ["Home check box checked", "collapsed"]
     assert brailled[-1].full == " Projects column header <x> Home check box collapsed"

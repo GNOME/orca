@@ -1693,8 +1693,11 @@ class BrailleGenerator(generator.Generator):
             return result
 
         result = self._generate_state_checked_for_cell(obj)
+        column_header = []
+        if self._get_is_nameless_toggle(obj):
+            column_header = self._generate_table_cell_column_header(obj)
         text = self._as_string(
-            self._generate_column_header_if_toggle_and_no_text(obj)
+            column_header
             + (
                 self._generate_real_active_descendant_displayed_text(obj)
                 or self._generate_accessible_label_and_name(obj)
@@ -1721,7 +1724,9 @@ class BrailleGenerator(generator.Generator):
         row_header = self._generate_table_cell_row_header(obj)
         if row_header:
             result += [braille.Region(" " + self._as_string(row_header))]
-        column_header = self._generate_table_cell_column_header(obj)
+        column_header = []
+        if not self._get_is_nameless_toggle(obj):
+            column_header = self._generate_table_cell_column_header(obj)
         if column_header:
             result += [braille.Region(" " + self._as_string(column_header))]
         if row_header or column_header:
