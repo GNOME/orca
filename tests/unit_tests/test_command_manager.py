@@ -1253,10 +1253,14 @@ class TestDiffBasedGrabUpdates:
         keybindings_mock = essential_modules["orca.keybindings"]
         keybindings_mock.KeyBinding = test_context.Mock
         keybindings_mock.KeyBindings = test_context.Mock
+        keybindings_mock.ORCA_MODIFIER_MASK = 256
 
         orca_modifier_manager_mock = essential_modules["orca.orca_modifier_manager"]
         modifier_manager_instance = test_context.Mock()
         modifier_manager_instance.refresh_orca_modifiers = test_context.Mock()
+        modifier_manager_instance.get_orca_modifier_keys = test_context.Mock(
+            return_value=["Insert", "KP_Insert"],
+        )
         orca_modifier_manager_mock.get_manager = test_context.Mock(
             return_value=modifier_manager_instance,
         )
@@ -1349,6 +1353,7 @@ class TestDiffBasedGrabUpdates:
         from orca.command_manager import CommandManager, KeyboardCommand
 
         manager = CommandManager()
+        manager._orca_modifiers_used_for_grabs = ["Insert", "KP_Insert"]
         function = self._create_mock_function(test_context)
 
         # Old command with grabs
@@ -1383,6 +1388,7 @@ class TestDiffBasedGrabUpdates:
         from orca.command_manager import CommandManager, KeyboardCommand
 
         manager = CommandManager()
+        manager._orca_modifiers_used_for_grabs = ["Insert", "KP_Insert"]
         function = self._create_mock_function(test_context)
 
         # Old command with grabs

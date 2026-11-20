@@ -142,6 +142,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         self._group_enabled: dict[str, bool | None] = {}
         self._exclusive_groups: list[set[str]] = []
         self._numlock_on: bool = False
+        self._orca_modifiers_used_for_grabs: list[str] = []
         self._modal_handler: ModalInputHandler | None = None
         self._modal_braille_handler: ModalBrailleHandler | None = None
         self._user_extensions: weakref.WeakSet[object] = weakref.WeakSet()
@@ -1082,6 +1083,13 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         """Updates grabs based on diff between old and new binding maps."""
 
         orca_modifiers = orca_modifier_manager.get_manager().get_orca_modifier_keys()
+        if orca_modifiers != self._orca_modifiers_used_for_grabs:
+            # A grab only works with the Orca modifier keys it was made with.
+            for old_kb in old_bindings.values():
+                if old_kb.modifiers & keybindings.ORCA_MODIFIER_MASK:
+                    old_kb.remove_grabs()
+            self._orca_modifiers_used_for_grabs = list(orca_modifiers)
+
         removed: list[tuple[str, int, int]] = []
         added: list[tuple[str, int, int]] = []
         transferred: list[tuple[str, int, int]] = []
