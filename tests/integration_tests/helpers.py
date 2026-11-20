@@ -26,6 +26,7 @@ import contextlib
 import glob
 import os
 import shutil
+import time
 from typing import TYPE_CHECKING, NamedTuple, TypeVar
 
 import pytest
@@ -202,6 +203,30 @@ def move_to_top(
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
     session.reader.drain(quiescence_timeout=quiescence, overall_timeout=overall)
     session.reader.reset()
+
+
+def focus_dialog(title_prefix: str) -> None:
+    """Focuses our dialog on Xvfb, which has no window manager."""
+
+    from Xlib import X, display  # type: ignore[import-untyped]
+
+    connection = display.Display()
+    try:
+        deadline = time.monotonic() + 30
+        while time.monotonic() < deadline:
+            for window in connection.screen().root.query_tree().children:
+                if not (window.get_wm_name() or "").startswith(title_prefix):
+                    continue
+                if window.get_attributes().map_state != X.IsViewable:
+                    continue
+                window.configure(stack_mode=X.Above)
+                window.set_input_focus(X.RevertToParent, X.CurrentTime)
+                connection.sync()
+                return
+            time.sleep(0.05)
+        raise RuntimeError(f"Dialog {title_prefix!r} did not appear")
+    finally:
+        connection.close()
 
 
 def move_to_bottom(

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Actions List ready</title>
+</head>
+<body>
+<h1>Files</h1>
+<div role="tablist" aria-label="Documents">
+  <button role="tab" aria-actions="archive copy" onclick="document.getElementById('result').textContent = 'Report opened.'">Report</button>
+</div>
+<button id="copy" onclick="document.getElementById('result').textContent = 'Report copied.'">Copy report</button>
+<button id="archive" onclick="document.getElementById('result').textContent = 'Report archived.'">Archive report</button>
+<p id="result">Choose an action.</p>
+</body>
+</html>

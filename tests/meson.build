@@ -226,6 +226,8 @@ orca_integration_tests = {
     'integration_tests/web/test_web_form_fields_navigation.py',
     'integration_tests/web/test_web_custom_wrappers.py',
     'integration_tests/web/test_web_emoji_links.py',
+    'integration_tests/web/test_web_current.py',
+    'integration_tests/web/test_web_actions_list.py',
     'integration_tests/web/test_web_landmarks.py',
     'integration_tests/web/test_web_region_headings.py',
     'integration_tests/web/test_web_article_headers.py',

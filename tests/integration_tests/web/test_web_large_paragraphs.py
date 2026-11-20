@@ -22,11 +22,9 @@
 
 from __future__ import annotations
 
-import time
 from typing import TYPE_CHECKING
 
 import pytest
-from Xlib import X, display  # type: ignore[import-untyped]
 
 from tests.integration_tests import helpers
 from tests.integration_tests.harness import keyboard
@@ -43,28 +41,6 @@ def _next(session: BrowserSession, keysym: int) -> tuple[list[str], list[helpers
 def _previous(session: BrowserSession, keysym: int) -> tuple[list[str], list[helpers.BrailleLine]]:
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keysym)
     return helpers.capture(session, overall=10)
-
-
-def _focus_paragraph_dialog() -> None:
-    """Focuses our dialog on Xvfb, which has no window manager."""
-
-    connection = display.Display()
-    try:
-        deadline = time.monotonic() + 30
-        while time.monotonic() < deadline:
-            for window in connection.screen().root.query_tree().children:
-                if not (window.get_wm_name() or "").startswith("Paragraphs: "):
-                    continue
-                if window.get_attributes().map_state != X.IsViewable:
-                    continue
-                window.configure(stack_mode=X.Above)
-                window.set_input_focus(X.RevertToParent, X.CurrentTime)
-                connection.sync()
-                return
-            time.sleep(0.05)
-        raise RuntimeError("Paragraph dialog did not appear")
-    finally:
-        connection.close()
 
 
 def _row_braille(text: str) -> helpers.BrailleLine:
@@ -176,7 +152,7 @@ def test_paragraph_filter_cutoff(web_large_paragraphs: BrowserSession) -> None:
         ["Loading.  Please wait."],
         [helpers.BrailleLine(0, "Loading.  Please wait.", "Loading.  Please wait.", "\x00" * 22)],
     )
-    _focus_paragraph_dialog()
+    helpers.focus_dialog("Paragraphs: ")
 
     assert helpers.capture(session, wait_async=True) == (
         [
