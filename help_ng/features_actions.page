@@ -41,8 +41,9 @@
           </keyseq>
         </p>
         <p>
-          Opens a window listing the actions available for the current item. Use <key>Up Arrow</key> and <key>Down Arrow</key> to choose an action, then
-          press <key>Enter</key> to perform it. Press <key>Escape</key> to close the list without
+          Opens a window listing the actions available for the current item. Use
+          <key>Up Arrow</key> and <key>Down Arrow</key> to choose an action, then press
+          <key>Enter</key> to perform it. Press <key>Escape</key> to close the list without
           performing an action. If the item does not expose any actions, Orca tells you.
         </p>
       </item>

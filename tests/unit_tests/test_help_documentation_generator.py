@@ -113,6 +113,20 @@ def test_inline_code_markup(
     assert "".join(parent.itertext()) == expected
 
 
+@pytest.mark.parametrize("scheme", ("http", "https"))
+def test_inline_external_links(generator: dict[str, Any], scheme: str) -> None:
+    """An external reference links its label without including adjacent punctuation."""
+
+    parent = ET.Element("test")
+    url = f"{scheme}://daisy.github.io/MathCAT/"
+    generator["_add_text_paragraphs"](parent, f"Requires [MathCAT]({url}), a math library.")
+    link = parent.find("m:p/m:link", _NS)
+    assert link is not None
+    assert link.get("href") == url
+    assert link.text == "MathCAT"
+    assert "".join(parent.itertext()) == "Requires MathCAT, a math library."
+
+
 def test_prose_bullet_lists(generator: dict[str, Any]) -> None:
     """Keeps paragraphs and list items distinct while formatting inline content."""
 
@@ -696,6 +710,31 @@ def test_generated_help_is_valid_and_current(
         assert (_HELP_DIR / name).read_text() == content
 
 
+@pytest.mark.parametrize(
+    ("filename", "shared"),
+    (("features_debugging.page", False), ("features_where_am_i.page", True)),
+)
+def test_command_locations_stay_with_commands(
+    topic_commands: dict[str, Any], filename: str, shared: bool
+) -> None:
+    """Command-focused topics share a location; mixed guides keep it beside commands."""
+
+    root = _parse_generated_page(topic_commands["all_rendered"][filename])
+
+    def locations(element: ET.Element) -> list[ET.Element]:
+        return [
+            paragraph
+            for paragraph in element.findall("m:p", _NS)
+            if paragraph.findtext("m:em", namespaces=_NS) == "Preferences location:"
+        ]
+
+    assert len(locations(root)) == int(shared)
+    command_sections = root.findall(".//m:section[m:title='Commands']", _NS)
+    assert len(command_sections) >= 2
+    for section in command_sections:
+        assert len(locations(section)) == int(not shared)
+
+
 def test_page_ids_and_types_match_filenames(topic_commands: dict[str, Any]) -> None:
     """Page identifiers match filenames, and the guide suffix matches the page type."""
 
@@ -1085,6 +1124,59 @@ def test_wrap_preserves_hyphenated_words(generator: dict[str, Any]) -> None:
     assert text == ("Orca-controlled AT-SPI user-interface " * 20).strip()
 
 
+def test_inline_labels_use_the_available_line_width(generator: dict[str, Any]) -> None:
+    """Descriptions wrap after inline labels without leaving most of the line empty."""
+
+    page = ET.Element(f"{{{generator['MALLARD_NS']}}}page")
+    paragraph = ET.SubElement(page, f"{{{generator['MALLARD_NS']}}}p")
+    label = ET.SubElement(paragraph, f"{{{generator['MALLARD_NS']}}}gui")
+    label.text = "Language"
+    label.tail = ": " + " ".join(["documentation"] * 20)
+    result = generator["_serialize"](ET.ElementTree(page))
+    first_line = next(line for line in result.splitlines() if "<gui>" in line)
+    assert 80 <= len(first_line) <= 96
+    parsed = _parse_generated_page(result).find("m:p", _NS)
+    assert parsed is not None
+    assert " ".join("".join(parsed.itertext()).split()) == (
+        "Language: " + " ".join(["documentation"] * 20)
+    )
+
+
+@pytest.mark.parametrize(
+    "text",
+    (
+        (
+            "Opens a window listing the actions available for the current item. Use Up Arrow "
+            "and Down Arrow to choose an action, then press Enter to perform it. Press Escape "
+            "to close the list without performing an action. If the item does not expose any "
+            "actions, Orca tells you."
+        ),
+        "Press Shift+Tab to return to the list, then press Enter to choose an item. " * 4,
+        "Run `orca --help` for details, then run `orca --version` to check the version. " * 4,
+        'See "[the topic](https://example.org/)" for instructions, then press Enter. ' * 4,
+    ),
+)
+def test_wrapping_tracks_text_before_inline_elements(generator: dict[str, Any], text: str) -> None:
+    """Keys, commands, and links wrap without changing words, punctuation, or destinations."""
+
+    page = ET.Element(f"{{{generator['MALLARD_NS']}}}page")
+    generator["_add_text_paragraphs"](page, text)
+    ET.indent(page, space="  ")
+    expected_text = " ".join("".join(page.itertext()).split())
+    expected_links = [link.attrib for link in page.findall(".//m:link", _NS)]
+    result = generator["_serialize"](ET.ElementTree(page))
+    parsed = _parse_generated_page(result)
+    assert " ".join("".join(parsed.itertext()).split()) == expected_text
+    assert [link.attrib for link in parsed.findall(".//m:link", _NS)] == expected_links
+    assert all(len(line) <= 96 for line in result.splitlines()[1:]), result
+
+
+def test_quoted_sentences_keep_their_punctuation(generator: dict[str, Any]) -> None:
+    """A quoted sentence does not receive another period after its closing quote."""
+
+    assert generator["_sentence"]('"Quoted sentence."') == '"Quoted sentence."'
+
+
 def test_settings_have_documentation_or_an_explicit_exemption(generator: dict[str, Any]) -> None:
     """Every schema key has preference metadata or a recorded exemption."""
 
@@ -1253,7 +1345,7 @@ def test_braille_indicators_follow_source_definitions(
     generator["_add_text_paragraphs"](parent, section.details)
     rendered = ET.tostring(parent, encoding="unicode")
     parsed = _parse_generated_page(rendered)
-    assert [code.text for code in parsed.findall(".//m:code", _NS)] == [
+    assert [code.text for code in parsed.findall(".//m:list//m:code", _NS)] == [
         *(value for values in replacements.values() for value in values),
         "read_only_test",
     ]

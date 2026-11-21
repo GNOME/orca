@@ -40,11 +40,13 @@ def get_feature_documentation() -> FeaturePageDoc:
                 title="Math navigation",
                 intro="Explore mathematical expressions.",
                 details=(
-                    "Math navigation requires MathCAT, a library for presenting mathematical "
-                    "expressions. An expression contains related parts, such as a fraction's "
-                    "numerator and denominator. In a matrix, cells are entries arranged in rows "
-                    "and columns. The commands below let you explore an expression's structure "
-                    "and your location within it."
+                    "Orca uses [MathCAT](https://daisy.github.io/MathCAT/) to provide speech, "
+                    "braille, and navigation for mathematical expressions written in MathML.\n\n"
+                    "Orca's math navigation commands and default shortcuts are intended to "
+                    "follow MathCAT's. The command and navigation-mode descriptions below are "
+                    "adapted from MathCAT's documentation. Consult the "
+                    "[MathCAT user guide](https://daisy.github.io/MathCAT/users.html) for more "
+                    "information."
                 ),
                 preference_panels=("math_presenter.math-presentation",),
                 command_groups=("commands.math-navigation",),

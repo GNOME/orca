@@ -40,20 +40,20 @@
     <list>
       <item>
         <p>
-          <gui>Font size</gui>: Sets the text size in the
-          on-screen speech display. Default: 14. Range: 8 to 72.
+          <gui>Font size</gui>: Sets the text size in the on-screen speech display. Default: 14.
+          Range: 8 to 72.
         </p>
       </item>
       <item>
         <p>
-          <gui>Text color</gui>: Sets the text color in
-          the on-screen speech display. Default: #ffffff.
+          <gui>Text color</gui>: Sets the text color in the on-screen speech display. Default:
+          #ffffff.
         </p>
       </item>
       <item>
         <p>
-          <gui>Background color</gui>: Sets the
-          background color in the on-screen speech display. Default: #000000.
+          <gui>Background color</gui>: Sets the background color in the on-screen speech
+          display. Default: #000000.
         </p>
       </item>
     </list>
@@ -62,7 +62,8 @@
     <title>Commands</title>
     <p>
       <em style="strong">Preferences location:</em>
-      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Speech and verbosity</gui> group.
+      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Speech and verbosity</gui>
+      group.
     </p>
     <list>
       <item>
@@ -78,8 +79,7 @@
           closed at the time. Select text and use <keyseq>
             <key>Ctrl</key>
             <key>C</key>
-          </keyseq>
-          to copy it for pasting into another application.
+          </keyseq> to copy it for pasting into another application.
         </p>
       </item>
     </list>

@@ -37,10 +37,10 @@
     <list>
       <item>
         <p>
-          <gui>Always use sleep mode with these applications</gui>: Lists applications
-          for which Orca automatically enters sleep mode. Add an application, then enable or
-          disable automatic sleep mode for its entry. An application must be running to add it;
-          saved applications remain listed even when they are not running.
+          <gui>Always use sleep mode with these applications</gui>: Lists applications for which
+          Orca automatically enters sleep mode. Add an application, then enable or disable
+          automatic sleep mode for its entry. An application must be running to add it; saved
+          applications remain listed even when they are not running.
         </p>
       </item>
     </list>

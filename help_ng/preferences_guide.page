@@ -54,7 +54,8 @@
       <title>Commands</title>
       <p>
         <em style="strong">Preferences location:</em>
-        <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Screen Reader Management</gui> group.
+        <gui>Commands</gui> category, <gui>Commands</gui> section,
+        <gui>Screen Reader Management</gui> group.
       </p>
       <list>
         <item>
@@ -80,20 +81,24 @@
   <section id="changing-and-saving-settings">
     <title>Changing and saving settings</title>
     <p>
-      Settings are grouped into categories in the side panel on the left. Use <key>Up Arrow</key> and <key>Down Arrow</key> to choose a category. As you
-      change categories, the panel on the right displays that category's settings. Press <key>Tab</key> to move into that panel.
+      Settings are grouped into categories in the side panel on the left. Use
+      <key>Up Arrow</key> and <key>Down Arrow</key> to choose a category. As you change
+      categories, the panel on the right displays that category's settings. Press <key>Tab</key>
+      to move into that panel.
     </p>
     <p>
-      Some categories contain subcategories. Use <key>Up Arrow</key> and <key>Down Arrow</key> to choose one, then <key>Right Arrow</key> or <key>Enter</key> to open it. Press <key>Left Arrow</key> or <key>Escape</key> to return to the subcategory list.
-      From the main settings list, press <key>Left Arrow</key> to return to the sidebar. Use <key>Tab</key> and <keyseq>
+      Some categories contain subcategories. Use <key>Up Arrow</key> and <key>Down Arrow</key>
+      to choose one, then <key>Right Arrow</key> or <key>Enter</key> to open it. Press
+      <key>Left Arrow</key> or <key>Escape</key> to return to the subcategory list. From the
+      main settings list, press <key>Left Arrow</key> to return to the sidebar. Use
+      <key>Tab</key> and <keyseq>
         <key>Shift</key>
         <key>Tab</key>
-      </keyseq>
-      to move among controls.
+      </keyseq> to move among controls.
     </p>
     <p>
-      The "Options" menu button is at the top of the left panel. Press <key>F10</key> to move to "Options". You can also
-      reach it from the sidebar with <keyseq>
+      The "Options" menu button is at the top of the left panel. Press <key>F10</key> to move to
+      "Options". You can also reach it from the sidebar with <keyseq>
         <key>Shift</key>
         <key>Tab</key>
       </keyseq>. Press <key>Enter</key> or <key>Space</key> to open the menu. Use the "Options"
@@ -105,17 +110,16 @@
       edits. Changes already applied remain saved.
     </p>
     <p>
-      Preferences is a window, not a dialog: <key>Escape</key> does not close it. Close it with <keyseq>
+      Preferences is a window, not a dialog: <key>Escape</key> does not close it. Close it with
+      <keyseq>
         <key>Alt</key>
         <key>F4</key>
-      </keyseq>
-      or the "Options" menu. If you press <keyseq>
+      </keyseq> or the "Options" menu. If you press <keyseq>
         <key>Alt</key>
         <key>F4</key>
-      </keyseq>
-      with unsaved changes, Orca prompts you to save them, close without saving, or cancel and
-      return to preferences. In global preferences, you can also save the changes as a new
-      profile.
+      </keyseq> with unsaved changes, Orca prompts you to save them, close without saving, or
+      cancel and return to preferences. In global preferences, you can also save the changes as
+      a new profile.
     </p>
     <p>
       See also:
@@ -123,8 +127,8 @@
     <list>
       <item>
         <p>
-          <link xref="features_settings_backup">Backing up, restoring, and resetting settings</link>: Save a backup,
-          transfer settings to another machine, or start fresh.
+          <link xref="features_settings_backup">Backing up, restoring, and resetting settings</link>:
+          Save a backup, transfer settings to another machine, or start fresh.
         </p>
       </item>
     </list>

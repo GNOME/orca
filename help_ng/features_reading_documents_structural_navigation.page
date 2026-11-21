@@ -25,8 +25,19 @@
     interactive controls, lists, landmarks, tables, and large text blocks.
   </p>
   <p>
-    From a list, you can move to the chosen object without activating it, or activate it when it
-    supports an action, such as following a link or pressing a button.
+    Use the list commands below to open a dialog containing matching objects, such as headings
+    or links. Use <key>Up Arrow</key> and <key>Down Arrow</key> to choose an item, then
+    <key>Tab</key> to reach the dialog's buttons.
+  </p>
+  <p>
+    "Jump to" closes the list and moves to the chosen object without activating it. "Activate"
+    performs its action, such as following a link or pressing a button. This button is
+    unavailable if the object does not support an action.
+  </p>
+  <p>
+    Pressing <key>Enter</key> while the list has focus activates the chosen object if it
+    supports an action; otherwise, it jumps to the object. Press <key>Escape</key> or use
+    "Cancel" to close the list without moving to or activating an object.
   </p>
   <p>
     Structural navigation is not limited to web content. It can be used in document content and
@@ -54,27 +65,26 @@
     <list>
       <item>
         <p>
-          <gui>Structural navigation</gui>: Controls whether
-          Orca's structural navigation commands are available. Default: on.
+          <gui>Structural navigation</gui>: Controls whether Orca's structural navigation
+          commands are available. Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Wrap around</gui>: Controls whether
-          structural navigation wraps to the other end of the document. Default: on.
+          <gui>Wrap around</gui>: Controls whether structural navigation wraps to the other end
+          of the document. Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Large object length</gui>: Sets the minimum
-          number of characters in a text block for the large-object structural navigation
-          commands. Default: 75. Range: 1 to 500.
+          <gui>Large object length</gui>: Sets the minimum number of characters in a text block
+          for the large-object structural navigation commands. Default: 75. Range: 1 to 500.
         </p>
       </item>
       <item>
         <p>
-          <gui>Skip unlabeled images</gui>: Controls whether
-          image navigation skips images without accessible names or descriptions. Default: off.
+          <gui>Skip unlabeled images</gui>: Controls whether image navigation skips images
+          without accessible names or descriptions. Default: off.
         </p>
       </item>
     </list>
@@ -83,7 +93,8 @@
     <title>Commands</title>
     <p>
       <em style="strong">Preferences location:</em>
-      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Structural navigation</gui> group.
+      <gui>Commands</gui> category, <gui>Commands</gui> section,
+      <gui>Structural navigation</gui> group.
     </p>
     <section id="structural-navigation-mode">
       <title>Mode</title>
@@ -289,20 +300,17 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous annotation</gui>: Unbound by
-            default.
+            <gui>Go to previous annotation</gui>: Unbound by default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to next annotation</gui>: Unbound by
-            default.
+            <gui>Go to next annotation</gui>: Unbound by default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of annotations</gui>: Unbound by
-            default.
+            <gui>Display a list of annotations</gui>: Unbound by default.
           </p>
         </item>
       </list>
@@ -486,8 +494,7 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous internal frame</gui>: Unbound by
-            default.
+            <gui>Go to previous internal frame</gui>: Unbound by default.
           </p>
           <p>
             An internal frame is a document embedded within another page.
@@ -495,8 +502,7 @@
         </item>
         <item>
           <p>
-            <gui>Go to next internal frame</gui>: Unbound by
-            default.
+            <gui>Go to next internal frame</gui>: Unbound by default.
           </p>
           <p>
             An internal frame is a document embedded within another page.
@@ -504,8 +510,7 @@
         </item>
         <item>
           <p>
-            <gui>Display a list of internal frames</gui>: Unbound by
-            default.
+            <gui>Display a list of internal frames</gui>: Unbound by default.
           </p>
           <p>
             An internal frame is a document embedded within another page.
@@ -634,20 +639,17 @@
       <list>
         <item>
           <p>
-            <gui>Go to previous math expression</gui>: Unbound by
-            default.
+            <gui>Go to previous math expression</gui>: Unbound by default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Go to next math expression</gui>: Unbound by
-            default.
+            <gui>Go to next math expression</gui>: Unbound by default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Display a list of math expressions</gui>: Unbound by
-            default.
+            <gui>Display a list of math expressions</gui>: Unbound by default.
           </p>
         </item>
       </list>
@@ -939,8 +941,8 @@
       </item>
       <item>
         <p>
-          <link xref="features_reading_documents_browse_mode_and_focus_mode#commands-documents">Browse mode and focus mode commands</link>: Switch between
-          browse mode and focus mode in documents and web content.
+          <link xref="features_reading_documents_browse_mode_and_focus_mode#commands-documents">Browse mode and focus mode commands</link>:
+          Switch between browse mode and focus mode in documents and web content.
         </p>
       </item>
     </list>

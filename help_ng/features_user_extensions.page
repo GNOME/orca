@@ -33,8 +33,9 @@
   </p>
   <p>
     Use the settings below to inspect and manage installed extensions. You can also approve or
-    revoke approval from the command line, as described in "<link xref="introduction">Starting and stopping Orca</link>". Extensions
-    approved that way load on the next Orca startup.
+    revoke approval from the command line, as described in
+    "<link xref="introduction">Starting and stopping Orca</link>". Extensions approved that way
+    load on the next Orca startup.
   </p>
   <section id="extension-settings">
     <title>Extension settings</title>
@@ -50,50 +51,46 @@
       <list>
         <item>
           <p>
-            <gui>User Extensions</gui>: Lists installed
-            extensions. The switch beside an approved extension enables or disables it without
-            removing approval. These changes take effect without restarting Orca.
+            <gui>User Extensions</gui>: Lists installed extensions. The switch beside an
+            approved extension enables or disables it without removing approval. These changes
+            take effect without restarting Orca.
           </p>
           <list>
             <item>
               <p>
-                <gui>Approve</gui>: Approves the
-                extension for loading after you inspect its information. Changing its contents,
-                including translations in a package, invalidates approval.
+                <gui>Approve</gui>: Approves the extension for loading after you inspect its
+                information. Changing its contents, including translations in a package,
+                invalidates approval.
               </p>
             </item>
             <item>
               <p>
-                <gui>Re-approve</gui>: Approves a changed
-                extension after you inspect the changes. Reapproving a disabled extension leaves
-                it disabled.
+                <gui>Re-approve</gui>: Approves a changed extension after you inspect the
+                changes. Reapproving a disabled extension leaves it disabled.
               </p>
             </item>
             <item>
               <p>
-                <gui>Revoke</gui>: Revokes approval and
-                prevents the extension from loading. Approval changes made here take effect
-                without restarting Orca.
+                <gui>Revoke</gui>: Revokes approval and prevents the extension from loading.
+                Approval changes made here take effect without restarting Orca.
               </p>
             </item>
             <item>
               <p>
-                <gui>Delete</gui>: Removes the extension
-                file or package after confirmation.
+                <gui>Delete</gui>: Removes the extension file or package after confirmation.
               </p>
             </item>
             <item>
               <p>
-                <gui>Info</gui>: Shows extension
-                information, including shortcut conflicts under "Status".
+                <gui>Info</gui>: Shows extension information, including shortcut conflicts under
+                "Status".
               </p>
             </item>
             <item>
               <p>
-                <gui>Settings</gui>: Opens preferences
-                provided by the extension. In Orca's standard extension settings dialog,
-                choosing "OK" stages your changes. Apply or save the main Preferences window to
-                save them.
+                <gui>Settings</gui>: Opens preferences provided by the extension. In Orca's
+                standard extension settings dialog, choosing "OK" stages your changes. Apply or
+                save the main Preferences window to save them.
               </p>
             </item>
           </list>
@@ -106,8 +103,9 @@
     <p>
       An extension can load successfully even if some of its commands have no shortcut. If a
       requested shortcut is already used by an Orca command or another extension, the
-      conflicting extension command is left unbound. See "<link xref="features_keyboard_layout">Keyboard layout and Orca Modifier</link>" for configuring
-      shortcuts.
+      conflicting extension command is left unbound. See
+      "<link xref="features_keyboard_layout">Keyboard layout and Orca Modifier</link>" for
+      configuring shortcuts.
     </p>
   </section>
 </page>

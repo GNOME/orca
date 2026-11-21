@@ -35,9 +35,9 @@
   </p>
   <p>
     To select document text using the application's own navigation, enable its native
-    caret-navigation support, often called caret browsing. This is typically toggled with <key>F7</key> and is needed for keyboard-driven
-    selection in document content. The document viewer or application manages the selection;
-    Orca presents the selection changes it reports.
+    caret-navigation support, often called caret browsing. This is typically toggled with
+    <key>F7</key> and is needed for keyboard-driven selection in document content. The document
+    viewer or application manages the selection; Orca presents the selection changes it reports.
   </p>
   <section id="settings-caret-navigation">
     <title>Settings</title>
@@ -51,24 +51,23 @@
     <list>
       <item>
         <p>
-          <gui>Caret navigation</gui>: Controls whether
-          Orca provides text navigation using the arrow keys, Home, and End. Default: on.
+          <gui>Caret navigation</gui>: Controls whether Orca provides text navigation using the
+          arrow keys, Home, and End. Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Text selection</gui>: Lets Orca manage
-          text selection when you hold Shift while using its caret navigation commands. Not all
-          applications provide the support Orca needs. Avoid enabling this globally; enable it
-          in application-specific preferences only where Orca's selection support is needed and
-          you have verified it works. Default: off.
+          <gui>Text selection</gui>: Lets Orca manage text selection when you hold Shift while
+          using its caret navigation commands. Not all applications provide the support Orca
+          needs. Avoid enabling this globally; enable it in application-specific preferences
+          only where Orca's selection support is needed and you have verified it works. Default:
+          off. Available in Orca 52 and later.
         </p>
       </item>
       <item>
         <p>
-          <gui>Layout mode</gui>: Controls whether Orca
-          presents each full visual line or treats each object as if it were on a separate line.
-          Default: on.
+          <gui>Layout mode</gui>: Controls whether Orca presents each full visual line or treats
+          each object as if it were on a separate line. Default: on.
         </p>
       </item>
     </list>
@@ -77,7 +76,8 @@
     <title>Commands</title>
     <p>
       <em style="strong">Preferences location:</em>
-      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Caret navigation</gui> group.
+      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Caret navigation</gui>
+      group.
     </p>
     <section id="caret-navigation-navigation">
       <title>Navigation</title>
@@ -90,15 +90,13 @@
             </keyseq>
           </p>
           <p>
-            Turns Orca's caret navigation on or off in text objects where browse mode is not
-            supported. This changes the current session across applications; it does not save a
-            preference.
+            Switches between Orca's caret navigation and the application's own. The change is
+            temporary and does not change your saved settings.
           </p>
         </item>
         <item>
           <p>
-            <gui>Toggle layout mode</gui>: Unbound by
-            default.
+            <gui>Toggle layout mode</gui>: Unbound by default.
           </p>
         </item>
         <item>
@@ -179,6 +177,11 @@
     </section>
     <section id="caret-navigation-selection">
       <title>Selection</title>
+      <note>
+        <p>
+          Available in Orca 52 and later.
+        </p>
+      </note>
       <list>
         <item>
           <p>
@@ -275,8 +278,8 @@
     <list>
       <item>
         <p>
-          <link xref="features_reading_documents_browse_mode_and_focus_mode#commands-documents">Browse mode and focus mode commands</link>: Switch between
-          browse mode and focus mode in documents and web content.
+          <link xref="features_reading_documents_browse_mode_and_focus_mode#commands-documents">Browse mode and focus mode commands</link>:
+          Switch between browse mode and focus mode in documents and web content.
         </p>
       </item>
     </list>

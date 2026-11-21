@@ -59,24 +59,7 @@ def get_feature_documentation() -> FeaturePageDoc:
                     f'Use "{guilabels.VOICE_GLOBAL_VOICE_SETTINGS}" preferences to configure '
                     "speech behavior shared by all voice types and voice sets."
                 ),
-                details=(
-                    "To configure the voices Orca "
-                    f'uses, use the separate "{guilabels.LANGUAGE_VOICE_SETTINGS}" preferences '
-                    "subgroup. "
-                    f'The "{guilabels.VOICE_SET_GLOBAL}" voice set holds the voices '
-                    "Orca normally uses. You can add voice sets for other languages "
-                    "to use when switching languages.\n\n"
-                    "Each voice set consists of four voice types: the default voice is "
-                    "used for presenting on-screen objects and text, "
-                    "the uppercase voice identifies capital letters, the hyperlink voice "
-                    "identifies links, and the system voice presents information supplied "
-                    "by Orca, such as roles, states, and messages. All four initially sound "
-                    "the same. "
-                    "Any voice type you have not explicitly configured uses the default "
-                    "voice's settings. To make the uppercase, hyperlink, or system voice "
-                    f'sound different, configure it in "{guilabels.LANGUAGE_VOICE_SETTINGS}" '
-                    "preferences."
-                ),
+                details=("To configure the voices themselves, use [[speech.voice-sets.feature]]."),
                 links=(
                     FeatureLinkDoc("speech.voice-sets.feature"),
                     FeatureLinkDoc("speech.language-switching.feature"),
@@ -120,7 +103,10 @@ def get_feature_documentation() -> FeaturePageDoc:
                     "The default voice is used for presenting on-screen objects and text. The "
                     "uppercase voice identifies capital letters, the hyperlink voice identifies "
                     "links, and the system voice presents information supplied by Orca, such as "
-                    "roles, states, and messages. See [[speech.global-voice-settings.feature]] "
+                    "roles, states, and messages. All four initially sound the same. Any voice "
+                    "type you have not explicitly configured uses the default voice's "
+                    "settings.\n\n"
+                    "See [[speech.global-voice-settings.feature]] "
                     "for behavior shared by all voice types and "
                     "[[speech.language-switching.feature]] for automatic and manual switching "
                     "between voice sets."
@@ -204,6 +190,10 @@ def get_feature_documentation() -> FeaturePageDoc:
                 intro=(
                     "Use verbosity settings and commands to control how much information Orca "
                     "includes in spoken output."
+                ),
+                details=(
+                    "Configure automatic formatting-change announcements in "
+                    "[[text-attributes.feature]]."
                 ),
             ),
             FeatureSectionDoc(

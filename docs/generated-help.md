@@ -102,3 +102,4 @@ For external links, use a full HTTP or HTTPS URL as the target and supply a
 label="Orca mailing list")`. You can also supply a `summary`.
 
 Use backticks around terminal commands and filenames.
+Use `[label](https://example.org/)` for external links within prose.

@@ -25,9 +25,10 @@
     use either layout on any computer.
   </p>
   <p>
-    Orca also has its own modifier key, which works like <key>Shift</key>, <key>Ctrl</key>, or <key>Alt</key>: hold it down while pressing another
-    key to perform a command. In this documentation, <key>Orca Modifier</key> means whichever key you have
-    configured for this purpose.
+    Orca also has its own modifier key, which works like <key>Shift</key>, <key>Ctrl</key>, or
+    <key>Alt</key>: hold it down while pressing another key to perform a command. In this
+    documentation, <key>Orca Modifier</key> means whichever key you have configured for this
+    purpose.
   </p>
   <p>
     In the command lists, press twice or press three times means to press the shortcut that many
@@ -44,9 +45,10 @@
       not configured in the Commands list.
     </p>
     <p>
-      To bind or change a command shortcut, arrow to the command and press <key>Enter</key>. Then press the new key
-      combination and press <key>Enter</key> to confirm it. Press <key>Delete</key> or <key>Backspace</key> without modifiers to unbind the
-      command. Press <key>Escape</key> to cancel editing that command.
+      To bind or change a command shortcut, arrow to the command and press <key>Enter</key>.
+      Then press the new key combination and press <key>Enter</key> to confirm it. Press
+      <key>Delete</key> or <key>Backspace</key> without modifiers to unbind the command. Press
+      <key>Escape</key> to cancel editing that command.
     </p>
     <p>
       Orca refuses a shortcut already used by another active command. Unbind that other command
@@ -58,31 +60,30 @@
     <list>
       <item>
         <p>
-          <gui>Keyboard Layout</gui>: Selects the
-          keyboard layout. Choices: Desktop, Laptop.
+          <gui>Keyboard Layout</gui>: Selects the keyboard layout. Choices: Desktop, Laptop.
         </p>
         <list>
           <item>
             <p>
-              <gui>Desktop (default)</gui>: Uses numeric
-              keypad keys for some commands. Num Lock must be off to use these keypad shortcuts.
-              The initial Orca Modifier keys are Insert and Keypad Insert.
+              <gui>Desktop (default)</gui>: Uses numeric keypad keys for some commands. Num Lock
+              must be off to use these keypad shortcuts. The initial Orca Modifier keys are
+              Insert and Keypad Insert.
             </p>
           </item>
           <item>
             <p>
-              <gui>Laptop</gui>: Does not use numeric
-              keypad keys for commands. The initial Orca Modifier key is Caps Lock.
+              <gui>Laptop</gui>: Does not use numeric keypad keys for commands. The initial Orca
+              Modifier key is Caps Lock.
             </p>
           </item>
         </list>
       </item>
       <item>
         <p>
-          <gui>Screen Reader Modifier Keys</gui>: Selects modifier
-          keys for the current layout. Enable each desired key using its switch; at least one
-          must remain enabled. Orca takes over the normal behavior of configured modifier keys.
-          Press a configured modifier twice quickly to perform its usual single-press action.
+          <gui>Screen Reader Modifier Keys</gui>: Selects modifier keys for the current layout.
+          Enable each desired key using its switch; at least one must remain enabled. Orca takes
+          over the normal behavior of configured modifier keys. Press a configured modifier
+          twice quickly to perform its usual single-press action.
         </p>
         <list>
           <item>
@@ -108,13 +109,13 @@
     <title>Commands</title>
     <p>
       <em style="strong">Preferences location:</em>
-      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Keyboard Layout</gui> group.
+      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Keyboard Layout</gui>
+      group.
     </p>
     <list>
       <item>
         <p>
-          <gui>Toggle keyboard layout</gui>: Unbound by
-          default.
+          <gui>Toggle keyboard layout</gui>: Unbound by default.
         </p>
       </item>
     </list>
@@ -127,8 +128,8 @@
     <list>
       <item>
         <p>
-          <link xref="preferences_guide">Preferences</link>: Open preferences
-          and save your settings.
+          <link xref="preferences_guide">Preferences</link>: Open preferences and save your
+          settings.
         </p>
       </item>
     </list>

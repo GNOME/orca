@@ -246,6 +246,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         PreferenceControlDoc(
                             label=guilabels.AUTO_LANGUAGE_SWITCHING_UI,
                             kind="switch",
+                            summary=(
+                                "Controls automatic language switching for application "
+                                "user-interface elements."
+                            ),
                             schema="speech",
                             key="auto-language-switching-ui",
                         ),
@@ -946,24 +950,30 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         PreferenceControlDoc(
                             label=guilabels.VOICE_RATE,
                             kind="integer",
+                            summary="Sets the speech rate for the selected voice type (0-100).",
                             schema="voice",
                             key="rate",
                         ),
                         PreferenceControlDoc(
                             label=guilabels.VOICE_PITCH,
                             kind="number",
+                            summary="Sets the pitch for the selected voice type (0.0-10.0).",
                             schema="voice",
                             key="pitch",
                         ),
                         PreferenceControlDoc(
                             label=guilabels.VOICE_INFLECTION,
                             kind="number",
+                            summary=(
+                                "Sets the pitch variation for the selected voice type (0.0-10.0)."
+                            ),
                             schema="voice",
                             key="pitch-range",
                         ),
                         PreferenceControlDoc(
                             label=guilabels.VOICE_VOLUME,
                             kind="number",
+                            summary="Sets the volume for the selected voice type (0.0-10.0).",
                             schema="voice",
                             key="volume",
                         ),

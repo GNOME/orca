@@ -110,6 +110,7 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     ),
                     schema="caret-navigation",
                     key=caret_navigator.CaretNavigator.KEY_SELECTION_ENABLED,
+                    since="52",
                 ),
                 PreferenceControlDoc(
                     label=guilabels.CONTENT_LAYOUT_MODE,

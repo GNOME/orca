@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 
 from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
-from .help_metadata import CommandDoc, CommandGroupDoc
+from .help_metadata import CommandDoc, CommandGroupDoc, CommandSectionDoc
 
 if TYPE_CHECKING:
     from .system_information_presenter import SystemInformationPresenter
@@ -51,6 +51,18 @@ def get_documentation() -> CommandGroupDoc:
             ),
         ),
         summary=("Present details such as date, time, battery, CPU, and memory usage."),
+        sections=(
+            CommandSectionDoc(
+                title="Commands",
+                command_names=(
+                    "presentTimeHandler",
+                    "presentDateHandler",
+                    "present_battery_status",
+                    "present_cpu_and_memory_usage",
+                    "present_modifier_keys_state",
+                ),
+            ),
+        ),
     )
 
 

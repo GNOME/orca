@@ -26,17 +26,32 @@
     your system does not start it automatically. Orca does not start BRLTTY itself.
   </p>
   <p>
+    Orca presents application content and messages on your braille display and handles display
+    commands such as panning and cursor routing. Typing with the display's braille keyboard is
+    handled separately by BRLTTY and your desktop's input support, not by Orca. This lets the
+    keyboard provide input independently of the screen reader.
+  </p>
+  <p>
+    In X11 sessions, braille keyboard input is handled by xbrlapi. For more information, see
+    <link href="https://brltty.app/doc/X11.html">BRLTTY's X11 documentation</link> and
+    <link href="https://brltty.app/doc/Introduction.html">BRLTTY's braille keyboard documentation</link>.
+    For additional questions, including braille input on Wayland, ask on the
+    <link href="https://brltty.app/contact.html">BRLTTY mailing list</link>.
+  </p>
+  <p>
     Orca uses the following indicators to show the state of controls in braille:
   </p>
   <list>
     <item>
       <p>
-        Check boxes: <code>&lt; &gt;</code> for unchecked, <code>&lt;x&gt;</code> for checked, and <code>&lt;-&gt;</code> for partially checked.
+        Check boxes: <code>&lt; &gt;</code> for unchecked, <code>&lt;x&gt;</code> for checked,
+        and <code>&lt;-&gt;</code> for partially checked.
       </p>
     </item>
     <item>
       <p>
-        Radio buttons: <code>&amp; y</code> for unselected and <code>&amp;=y</code> for selected.
+        Radio buttons: <code>&amp; y</code> for unselected and <code>&amp;=y</code> for
+        selected.
       </p>
     </item>
     <item>
@@ -46,21 +61,22 @@
     </item>
     <item>
       <p>
-        Toggle buttons: <code>&amp; y</code> for not pressed and <code>&amp;=y</code> for pressed.
+        Toggle buttons: <code>&amp; y</code> for not pressed and <code>&amp;=y</code> for
+        pressed.
       </p>
     </item>
     <item>
       <p>
-        Read-only text: <code>rdonly</code> indicates that the text cannot
-        be edited.
+        Read-only text: <code>rdonly</code> indicates that the text cannot be edited.
       </p>
     </item>
   </list>
   <p>
     Orca can also mark links, selected text, and text attributes by raising dots beneath the
-    affected characters, similar to underlining. See "<link xref="features_braille_display_settings">Display settings</link>" to configure these
-    indicators, and "<link xref="features_text_attributes">Text attributes</link>" to choose which
-    text attributes are marked.
+    affected characters, similar to underlining. See
+    "<link xref="features_braille_display_settings">Display settings</link>" to configure these
+    indicators, and "<link xref="features_text_attributes">Text attributes</link>" to choose
+    which text attributes are marked.
   </p>
   <section id="settings-braille-output">
     <title>Settings</title>
@@ -71,8 +87,7 @@
     <list>
       <item>
         <p>
-          <gui>Braille support</gui>: Turns braille
-          output on or off. Default: on.
+          <gui>Braille support</gui>: Turns braille output on or off. Default: on.
         </p>
       </item>
     </list>
@@ -149,9 +164,10 @@
         </list>
         <p>
           Moves the caret to the character at the selected braille cell or activates the item at
-          that cell, depending on the application's accessibility support. See "<link xref="features_reviewing_objects_mouse_review">Mouse review and clicking</link>" for clicking and
-          its limitations on Wayland. If a flash message is displayed, pressing a routing key
-          dismisses that message instead.
+          that cell, depending on the application's accessibility support. See
+          "<link xref="features_reviewing_objects_mouse_review">Mouse review and clicking</link>"
+          for clicking and its limitations on Wayland. If a flash message is displayed, pressing
+          a routing key dismisses that message instead.
         </p>
       </item>
       <item>

@@ -63,9 +63,86 @@ def get_documentation() -> CommandGroupDoc:
                 ),
             ),
             CommandDoc("math_exit", details=("Leaves math navigation.")),
+            CommandDoc(
+                "math_move_next",
+                details="Moves to the next part at the current level of detail.",
+            ),
+            CommandDoc(
+                "math_move_previous",
+                details="Moves to the previous part at the current level of detail.",
+            ),
             CommandDoc("math_zoom_in", details=("Explores smaller parts of the expression.")),
             CommandDoc(
                 "math_zoom_out", details=("Returns to larger structures within the expression.")
+            ),
+            CommandDoc(
+                "math_zoom_in_all",
+                details="Moves to the smallest part within the current part of the expression.",
+            ),
+            CommandDoc(
+                "math_zoom_out_all",
+                details="Returns to the whole expression.",
+            ),
+            CommandDoc(
+                "math_move_start",
+                details="Moves to the first part of the expression.",
+            ),
+            CommandDoc(
+                "math_move_end",
+                details="Moves to the last part of the expression.",
+            ),
+            CommandDoc(
+                "math_move_line_start",
+                details=(
+                    "Moves to the beginning of the current mathematical line, such as a "
+                    "fraction's numerator or denominator."
+                ),
+            ),
+            CommandDoc(
+                "math_move_line_end",
+                details=(
+                    "Moves to the end of the current mathematical line, such as a fraction's "
+                    "numerator or denominator."
+                ),
+            ),
+            CommandDoc(
+                "math_move_column_start",
+                details="Moves to the top of the current column in tabular math.",
+            ),
+            CommandDoc(
+                "math_move_column_end",
+                details="Moves to the bottom of the current column in tabular math.",
+            ),
+            CommandDoc(
+                "math_move_cell_previous",
+                details="Moves left within a matrix or other tabular expression.",
+            ),
+            CommandDoc(
+                "math_move_cell_next",
+                details="Moves right within a matrix or other tabular expression.",
+            ),
+            CommandDoc(
+                "math_move_cell_up",
+                details="Moves up within a matrix or other tabular expression.",
+            ),
+            CommandDoc(
+                "math_move_cell_down",
+                details="Moves down within a matrix or other tabular expression.",
+            ),
+            CommandDoc(
+                "math_move_last_location",
+                details=(
+                    "Returns to the previous navigation position. Unlike moving left, this can "
+                    "return inside a fraction after you have moved out of it."
+                ),
+            ),
+            CommandDoc(
+                "math_toggle_zoom_lock_up",
+                details=("Cycles through Character, Simple, Enhanced, and back to Character."),
+            ),
+            CommandDoc(
+                "math_toggle_zoom_lock_down",
+                details=("Cycles through Enhanced, Simple, Character, and back to Enhanced."),
             ),
             CommandDoc(
                 "math_toggle_speech_mode",
@@ -89,25 +166,41 @@ def get_documentation() -> CommandGroupDoc:
                 ),
             ),
             CommandDoc(
-                "math_read_previous", details=("Speaks the selected part of the expression.")
+                "math_read_previous",
+                details="Moves to the previous part of the expression and speaks it.",
             ),
-            CommandDoc("math_read_next", details=("Speaks the selected part of the expression.")),
+            CommandDoc(
+                "math_read_next",
+                details="Moves to the next part of the expression and speaks it.",
+            ),
             CommandDoc(
                 "math_read_current", details=("Speaks the selected part of the expression.")
             ),
             CommandDoc(
-                "math_read_cell_current", details=("Speaks the selected part of the expression.")
+                "math_read_cell_current",
+                details=(
+                    "Speaks the current cell in a matrix or other tabular expression, rather "
+                    "than just the part you are exploring."
+                ),
             ),
             CommandDoc(
                 "math_describe_previous",
-                details=("Gives an outline of the selected part's structure."),
+                details="Moves to the previous part and gives an overview of its structure.",
             ),
             CommandDoc(
-                "math_describe_next", details=("Gives an outline of the selected part's structure.")
+                "math_describe_next",
+                details="Moves to the next part and gives an overview of its structure.",
             ),
             CommandDoc(
                 "math_describe_current",
                 details=("Gives an outline of the selected part's structure."),
+            ),
+            CommandDoc(
+                "math_copy",
+                details=(
+                    "Copies math content to the clipboard using the format configured in the "
+                    "settings above."
+                ),
             ),
         ),
         sections=(
@@ -125,6 +218,10 @@ def get_documentation() -> CommandGroupDoc:
             ),
             CommandSectionDoc(
                 title="Place markers",
+                instructions=(
+                    "A place marker records a position within a mathematical expression so you "
+                    "can return to it later."
+                ),
                 command_names=tuple(
                     f"math_{prefix.lower()}_{digit}"
                     for prefix in PLACE_MARKER_PREFIXES
@@ -133,6 +230,10 @@ def get_documentation() -> CommandGroupDoc:
             ),
             CommandSectionDoc(
                 title="Reading and describing expressions",
+                instructions=(
+                    "Reading speaks the selected part's mathematical content. Describing gives "
+                    "an overview of its structure."
+                ),
                 command_names=tuple(
                     name
                     for name, *_rest in COMMAND_SPECS

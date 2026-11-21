@@ -30,8 +30,7 @@
     <list>
       <item>
         <p>
-          <gui>Speech support</gui>: Turns speech output
-          on or off. Default: on.
+          <gui>Speech support</gui>: Turns speech output on or off. Default: on.
         </p>
       </item>
     </list>
@@ -40,7 +39,8 @@
     <title>Commands</title>
     <p>
       <em style="strong">Preferences location:</em>
-      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Speech and verbosity</gui> group.
+      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Speech and verbosity</gui>
+      group.
     </p>
     <list>
       <item>

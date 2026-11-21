@@ -35,39 +35,35 @@
     <list>
       <item>
         <p>
-          <gui>Braille updates</gui>: Controls whether
-          Orca periodically shows progress-bar updates. Default: off.
+          <gui>Braille updates</gui>: Controls whether Orca periodically shows progress-bar
+          updates. Default: off.
         </p>
       </item>
       <item>
         <p>
-          <gui>Frequency (secs):</gui> Sets the minimum
-          number of seconds between updates for the same progress bar. Zero removes this minimum
-          delay. Default: 10. Range: 0 to 100.
+          <gui>Frequency (secs):</gui> Sets the minimum number of seconds between updates for
+          the same progress bar. Zero removes this minimum delay. Default: 10. Range: 0 to 100.
         </p>
       </item>
       <item>
         <p>
-          <gui>Applies to:</gui> Selects which progress
-          bars provide updates. Choices: All, Application, Window.
+          <gui>Applies to:</gui> Selects which progress bars provide updates. Choices: All,
+          Application, Window.
         </p>
         <list>
           <item>
             <p>
-              <gui>All</gui>: Progress bars in all
-              applications.
+              <gui>All</gui>: Progress bars in all applications.
             </p>
           </item>
           <item>
             <p>
-              <gui>Application (default)</gui>: Progress bars in
-              the active application.
+              <gui>Application (default)</gui>: Progress bars in the active application.
             </p>
           </item>
           <item>
             <p>
-              <gui>Window</gui>: Progress bars in the
-              active window.
+              <gui>Window</gui>: Progress bars in the active window.
             </p>
           </item>
         </list>
@@ -82,14 +78,13 @@
     <list>
       <item>
         <p>
-          <link xref="features_speech_and_voices_progress_bars">Speech progress bars</link>: Orca can speak
-          progress updates as an operation proceeds.
+          <link xref="features_speech_and_voices_progress_bars">Speech progress bars</link>:
+          Orca can speak progress updates as an operation proceeds.
         </p>
       </item>
       <item>
         <p>
-          <link xref="features_sound">Sound</link>: Audible
-          progress-bar updates.
+          <link xref="features_sound">Sound</link>: Audible progress-bar updates.
         </p>
       </item>
     </list>

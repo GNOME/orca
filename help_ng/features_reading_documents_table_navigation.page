@@ -44,14 +44,14 @@
     <list>
       <item>
         <p>
-          <gui>Table navigation</gui>: Controls whether
-          Orca's table navigation commands are available. Default: on.
+          <gui>Table navigation</gui>: Controls whether Orca's table navigation commands are
+          available. Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Skip blank cells</gui>: Controls whether
-          table navigation skips empty cells. Default: off.
+          <gui>Skip blank cells</gui>: Controls whether table navigation skips empty cells.
+          Default: off.
         </p>
       </item>
     </list>
@@ -60,7 +60,8 @@
     <title>Commands</title>
     <p>
       <em style="strong">Preferences location:</em>
-      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Table navigation</gui> group.
+      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Table navigation</gui>
+      group.
     </p>
     <section id="table-navigation-navigation">
       <title>Navigation</title>
@@ -196,8 +197,7 @@
               <key>Orca Modifier</key>
               <key>Shift</key>
               <key>R</key>
-            </keyseq>
-            (press twice quickly)
+            </keyseq> (press twice quickly)
           </p>
         </item>
         <item>
@@ -220,8 +220,7 @@
               <key>Orca Modifier</key>
               <key>Shift</key>
               <key>C</key>
-            </keyseq>
-            (press twice quickly)
+            </keyseq> (press twice quickly)
           </p>
         </item>
       </list>
@@ -235,8 +234,8 @@
     <list>
       <item>
         <p>
-          <link xref="features_speech_and_voices_tables">Speech table settings</link>: In some tables,
-          such as a message list, speaking the full row can provide useful context.
+          <link xref="features_speech_and_voices_tables">Speech table settings</link>: In some
+          tables, such as a message list, speaking the full row can provide useful context.
         </p>
       </item>
     </list>

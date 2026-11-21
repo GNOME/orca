@@ -30,7 +30,8 @@
     can include text that is not currently visible. The application controls the search and
     navigation to matches; Orca's presentation depends on the accessibility information it
     provides. The settings below control presentation of supported application search results.
-    For searching visible window contents with flat review, see "<link xref="features_reviewing_objects_orca_find">Orca Find</link>".
+    For searching visible window contents with flat review, see
+    "<link xref="features_reviewing_objects_orca_find">Orca Find</link>".
   </p>
   <section id="settings-native-navigation">
     <title>Settings</title>
@@ -44,43 +45,43 @@
     <list>
       <item>
         <p>
-          <gui>Find Options</gui>: Controls what Orca
-          speaks while you use an application's Find toolbar.
+          <gui>Find Options</gui>: Controls what Orca speaks while you use an application's Find
+          toolbar.
         </p>
         <list>
           <item>
             <p>
-              <gui>Speak results during find</gui>: Controls whether
-              Orca speaks the line containing each find result. Default: on.
+              <gui>Speak results during find</gui>: Controls whether Orca speaks the line
+              containing each find result. Default: on.
             </p>
           </item>
           <item>
             <p>
-              <gui>Only speak changed lines during find</gui>: Controls whether
-              Orca speaks a find result only when it is on a different line than the previous
-              result. Default: off.
+              <gui>Only speak changed lines during find</gui>: Controls whether Orca speaks a
+              find result only when it is on a different line than the previous result. Default:
+              off.
             </p>
           </item>
           <item>
             <p>
-              <gui>Minimum length of matched text:</gui>
-              Sets the minimum number of matching characters required before Orca speaks the
-              find result. Default: 4. Range: 0 to 20.
+              <gui>Minimum length of matched text:</gui> Sets the minimum number of matching
+              characters required before Orca speaks the find result. Default: 4. Range: 0 to
+              20.
             </p>
           </item>
         </list>
       </item>
       <item>
         <p>
-          <gui>Page load</gui>: Controls what Orca does
-          when a document or web page finishes loading.
+          <gui>Page load</gui>: Controls what Orca does when a document or web page finishes
+          loading.
         </p>
         <list>
           <item>
             <p>
-              <gui>Automatically start speaking a page when it is first loaded</gui>: Controls whether
-              Orca automatically performs Say All when a document or web page first loads.
-              Default: on.
+              <gui>Automatically start speaking a page when it is first loaded</gui>: Controls
+              whether Orca automatically performs Say All when a document or web page first
+              loads. Default: on.
             </p>
           </item>
           <item>
@@ -102,8 +103,8 @@
     <list>
       <item>
         <p>
-          <link xref="features_reading_documents_browse_mode_and_focus_mode">Browse mode and focus mode</link>: Navigate document
-          content and interact with controls.
+          <link xref="features_reading_documents_browse_mode_and_focus_mode">Browse mode and focus mode</link>:
+          Navigate document content and interact with controls.
         </p>
       </item>
     </list>

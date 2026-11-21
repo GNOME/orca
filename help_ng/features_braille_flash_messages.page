@@ -37,30 +37,29 @@
     <list>
       <item>
         <p>
-          <gui>Flash messages</gui>: Controls whether
-          Orca shows messages and command feedback in braille. Default: on.
+          <gui>Flash messages</gui>: Controls whether Orca shows messages and command feedback
+          in braille. Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Messages are detailed</gui>: Chooses detailed
-          rather than brief messages when both forms are available. For example, detailed
-          feedback can include a setting's name and its new value, while brief feedback gives
-          just the value. Default: on.
+          <gui>Messages are detailed</gui>: Chooses detailed rather than brief messages when
+          both forms are available. For example, detailed feedback can include a setting's name
+          and its new value, while brief feedback gives just the value. Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Messages are persistent</gui>: Keeps a flash
-          message displayed until another update replaces it, instead of restoring the previous
-          contents after a timeout. Default: off.
+          <gui>Messages are persistent</gui>: Keeps a flash message displayed until another
+          update replaces it, instead of restoring the previous contents after a timeout.
+          Default: off.
         </p>
       </item>
       <item>
         <p>
-          <gui>Duration (secs):</gui> Sets how long
-          temporary braille messages are displayed when they are not persistent. This setting is
-          ignored when messages are persistent. Default: 5 seconds. Range: 1 to 100.
+          <gui>Duration (secs):</gui> Sets how long temporary braille messages are displayed
+          when they are not persistent. This setting is ignored when messages are persistent.
+          Default: 5 seconds. Range: 1 to 100.
         </p>
       </item>
     </list>

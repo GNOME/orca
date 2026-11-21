@@ -33,7 +33,8 @@
     <title>Commands</title>
     <p>
       <em style="strong">Preferences location:</em>
-      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Structural navigation</gui> group.
+      <gui>Commands</gui> category, <gui>Commands</gui> section,
+      <gui>Structural navigation</gui> group.
     </p>
     <list>
       <item>
@@ -59,11 +60,12 @@
         </p>
       </item>
     </list>
-    <section id="commands-live-regions">
-      <title>Live regions</title>
+    <section id="commands-presentation-and-history">
+      <title>Presentation and history</title>
       <p>
         <em style="strong">Preferences location:</em>
-        <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Live regions</gui> group.
+        <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Live regions</gui>
+        group.
       </p>
       <list>
         <item>
@@ -80,8 +82,7 @@
         </item>
         <item>
           <p>
-            <gui>Advance live region politeness setting</gui>: Unbound by
-            default.
+            <gui>Advance live region politeness setting</gui>: Unbound by default.
           </p>
           <p>
             Cycles through off, polite, and assertive politeness levels for the current live
@@ -90,8 +91,7 @@
         </item>
         <item>
           <p>
-            <gui>Set default live region politeness level to off</gui>: Unbound by
-            default.
+            <gui>Set default live region politeness level to off</gui>: Unbound by default.
           </p>
           <p>
             Turns announcements off for the current page. Use it again to restore announcements.
@@ -100,14 +100,12 @@
         </item>
         <item>
           <p>
-            <gui>Present previous live region message</gui>: Unbound by
-            default.
+            <gui>Present previous live region message</gui>: Unbound by default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Present next live region message</gui>: Unbound by
-            default.
+            <gui>Present next live region message</gui>: Unbound by default.
           </p>
         </item>
       </list>

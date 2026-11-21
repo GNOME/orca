@@ -45,65 +45,61 @@
     <list>
       <item>
         <p>
-          <gui>End of line symbol</gui>: Distinguishes the
-          end of a line of text from the edge of the braille display. Default: on.
+          <gui>End of line symbol</gui>: Distinguishes the end of a line of text from the edge
+          of the braille display. Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Word wrap</gui>: Keeps words from being
-          split across successive pans of the braille display. Default: off.
+          <gui>Word wrap</gui>: Keeps words from being split across successive pans of the
+          braille display. Default: off.
         </p>
       </item>
       <item>
         <p>
-          <gui>Contracted Braille</gui>: Controls whether
-          Orca uses contracted braille through liblouis, a braille translation library. Default:
-          off.
+          <gui>Contracted Braille</gui>: Controls whether Orca uses contracted braille through
+          liblouis, a braille translation library. Default: off.
         </p>
       </item>
       <item>
         <p>
-          <gui>Expand word at cursor</gui>: Shows the word at
-          the cursor in computer braille so you can inspect its individual characters while
-          keeping surrounding text contracted. Default: on.
+          <gui>Expand word at cursor</gui>: Shows the word at the cursor in computer braille so
+          you can inspect its individual characters while keeping surrounding text contracted.
+          Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Contraction Table:</gui> Selects the liblouis
-          translation table Orca uses for braille symbols and contractions. Default: chosen for
-          your locale.
+          <gui>Contraction Table:</gui> Selects the liblouis translation table Orca uses for
+          braille symbols and contractions. Default: chosen for your locale.
         </p>
       </item>
       <item>
         <p>
-          <gui>Indicators</gui>: Controls which braille
-          dots Orca uses to mark links, selections, and text attributes. These indicators are
-          shown like underlining on the braille display.
+          <gui>Indicators</gui>: Controls which braille dots Orca uses to mark links,
+          selections, and text attributes. These indicators are shown like underlining on the
+          braille display.
         </p>
         <list>
           <item>
             <p>
-              <gui>Hyperlink:</gui> Selects the dot or
-              dots Orca uses to mark text that is part of a link. Choices: None, Dot 7, Dot 8,
-              Dots 7 and 8 (default).
+              <gui>Hyperlink:</gui> Selects the dot or dots Orca uses to mark text that is part
+              of a link. Choices: None, Dot 7, Dot 8, Dots 7 and 8 (default).
             </p>
           </item>
           <item>
             <p>
-              <gui>Selection:</gui> Selects the dot or
-              dots Orca uses to mark selected text. Choices: None, Dot 7, Dot 8, Dots 7 and 8
-              (default).
+              <gui>Selection:</gui> Selects the dot or dots Orca uses to mark selected text.
+              Choices: None, Dot 7, Dot 8, Dots 7 and 8 (default).
             </p>
           </item>
           <item>
             <p>
-              <gui>Text Attributes:</gui> Selects the dots
-              used to mark text attributes in braille, like underlining. The same indicator is
-              used for all attributes enabled for braille; it shows where an attribute is
-              present, rather than which attribute it is. Choosing no indicator hides the
-              markers. Choices: None (default), Dot 7, Dot 8, Dots 7 and 8.
+              <gui>Text Attributes:</gui> Selects the dots used to mark text attributes in
+              braille, like underlining. The same indicator is used for all attributes enabled
+              for braille; it shows where an attribute is present, rather than which attribute
+              it is. Choosing no indicator hides the markers. Choices: None (default), Dot 7,
+              Dot 8, Dots 7 and 8.
             </p>
           </item>
         </list>
@@ -147,12 +143,6 @@
           <link xref="features_braille_output">Braille output</link>: Braille displays
           communicate with Orca through BRLTTY, a service that connects braille displays to
           applications.
-        </p>
-      </item>
-      <item>
-        <p>
-          <link xref="features_clipboard">Clipboard</link>: Present the
-          contents of the system clipboard.
         </p>
       </item>
     </list>

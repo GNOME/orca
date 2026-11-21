@@ -107,18 +107,19 @@ def get_feature_documentation() -> FeaturePageDoc:
             ),
             FeatureSectionDoc(
                 title="Collecting debugging information",
+                target="debugging.collecting-information",
                 intro=(
+                    "Debug logs contain detailed information about "
+                    "your actions and interactions with applications while logging is enabled, "
+                    "including application content. Review logs for private information before "
+                    "sharing them.\n\n"
                     "Start Orca with verbose debugging enabled using `orca --debug`, or "
                     "`orca --debug-file FILE` to choose the log destination. If Orca is already "
                     "running as an application, add `--replace`, for example "
                     "`orca --replace --debug`. If your desktop manages Orca as a service, "
                     "stop it using the desktop's screen reader controls first.\n\n"
                     "Debug logs can become very large. If possible, limit your activity "
-                    "while logging to the steps needed to demonstrate the problem.\n\n"
-                    "Debug logs contain detailed information about "
-                    "your actions and interactions with applications while logging is enabled, "
-                    "including application content. Review logs for private information before "
-                    "sharing them."
+                    "while logging to the steps needed to demonstrate the problem."
                 ),
                 command_groups=("commands.debugging-tools",),
             ),

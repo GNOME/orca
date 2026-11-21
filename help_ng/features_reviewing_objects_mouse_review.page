@@ -39,16 +39,16 @@
     <list>
       <item>
         <p>
-          <gui>Present tooltips</gui>: Controls whether
-          Orca presents tooltips that appear when the pointer hovers over an object. Tooltips
-          requested from the keyboard, such as with Ctrl+F1 in supported applications, are
-          presented regardless of this setting. Default: off.
+          <gui>Present tooltips</gui>: Controls whether Orca presents tooltips that appear when
+          the pointer hovers over an object. Tooltips requested from the keyboard, such as with
+          Ctrl+F1 in supported applications, are presented regardless of this setting. Default:
+          off.
         </p>
       </item>
       <item>
         <p>
-          <gui>Speak object under mouse</gui>: Controls whether
-          Orca speaks the object under the mouse pointer as the pointer moves. Default: off.
+          <gui>Speak object under mouse</gui>: Controls whether Orca speaks the object under the
+          mouse pointer as the pointer moves. Default: off.
         </p>
       </item>
     </list>
@@ -147,8 +147,7 @@
       </item>
       <item>
         <p>
-          <gui>Toggle mouse review mode</gui>: Unbound by
-          default.
+          <gui>Toggle mouse review mode</gui>: Unbound by default.
         </p>
         <p>
           Turns mouse review on or off for the current session, whether or not it is enabled in

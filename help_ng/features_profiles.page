@@ -22,8 +22,9 @@
   </title>
   <p>
     Profiles are named collections of Orca settings for different activities. Orca normally
-    starts with the "Default" profile. To start with another saved profile, run <code>orca -p NAME</code> or <code>orca --profile NAME</code>, replacing NAME with
-    the profile's name. If Orca is already running as an application, add <code>--replace</code>.
+    starts with the "Default" profile. To start with another saved profile, run
+    <code>orca -p NAME</code> or <code>orca --profile NAME</code>, replacing NAME with the
+    profile's name. If Orca is already running as an application, add <code>--replace</code>.
   </p>
   <section id="settings-profiles">
     <title>Settings</title>
@@ -43,33 +44,30 @@
     <list>
       <item>
         <p>
-          <gui>New Profile</gui>: Creates a profile from
-          the current profile's saved settings and switches to it. Type a unique name and
-          confirm. Apply recent edits first if you want them included: unsaved changes are not
-          copied and are discarded if you continue.
+          <gui>New Profile</gui>: Creates a profile from the current profile's saved settings
+          and switches to it. Type a unique name and confirm. Apply recent edits first if you
+          want them included: unsaved changes are not copied and are discarded if you continue.
         </p>
       </item>
       <item>
         <p>
-          <gui>Current Profile</gui>: Select a profile to
-          activate it, then adjust settings in the other categories and save your changes. Save
-          any edits before switching; unsaved changes to the previous profile are discarded.
+          <gui>Current Profile</gui>: Select a profile to activate it, then adjust settings in
+          the other categories and save your changes. Save any edits before switching; unsaved
+          changes to the previous profile are discarded.
         </p>
         <list>
           <item>
             <p>
-              <gui>Rename...</gui>: Changes the selected
-              profile's name. Use Tab to reach the button, enter a new name, and confirm it in
-              the rename dialog. Then apply or save the change in the Preferences window. The
-              default profile cannot be renamed.
+              <gui>Rename...</gui>: Changes the selected profile's name. Use Tab to reach the
+              button, enter a new name, and confirm it in the rename dialog. Then apply or save
+              the change in the Preferences window. The default profile cannot be renamed.
             </p>
           </item>
           <item>
             <p>
-              <gui>Remove Profile...</gui>: Deletes the
-              selected profile and its saved settings immediately after confirmation. If it is
-              active, Orca switches to the default profile. The default profile cannot be
-              removed.
+              <gui>Remove Profile...</gui>: Deletes the selected profile and its saved settings
+              immediately after confirmation. If it is active, Orca switches to the default
+              profile. The default profile cannot be removed.
             </p>
           </item>
         </list>
@@ -85,14 +83,12 @@
     <list>
       <item>
         <p>
-          <gui>Cycle to the next settings profile</gui>: Unbound by
-          default.
+          <gui>Cycle to the next settings profile</gui>: Unbound by default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Present the current profile</gui>: Unbound by
-          default.
+          <gui>Present the current profile</gui>: Unbound by default.
         </p>
       </item>
     </list>
@@ -105,8 +101,8 @@
     <list>
       <item>
         <p>
-          <link xref="features_settings_backup">Backing up, restoring, and resetting settings</link>: Save a backup,
-          transfer settings to another machine, or start fresh.
+          <link xref="features_settings_backup">Backing up, restoring, and resetting settings</link>:
+          Save a backup, transfer settings to another machine, or start fresh.
         </p>
       </item>
     </list>

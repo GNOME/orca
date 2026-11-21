@@ -26,9 +26,16 @@
   <p>
     The default voice is used for presenting on-screen objects and text. The uppercase voice
     identifies capital letters, the hyperlink voice identifies links, and the system voice
-    presents information supplied by Orca, such as roles, states, and messages. See "<link xref="features_speech_and_voices_global_voice_settings">Global voice settings</link>" for behavior
-    shared by all voice types and "<link xref="features_speech_and_voices_language_switching">Language switching</link>" for automatic and
-    manual switching between voice sets.
+    presents information supplied by Orca, such as roles, states, and messages. All four
+    initially sound the same. Any voice type you have not explicitly configured uses the default
+    voice's settings.
+  </p>
+  <p>
+    See
+    "<link xref="features_speech_and_voices_global_voice_settings">Global voice settings</link>"
+    for behavior shared by all voice types and
+    "<link xref="features_speech_and_voices_language_switching">Language switching</link>" for
+    automatic and manual switching between voice sets.
   </p>
   <section id="settings-voice-sets">
     <title>Settings</title>
@@ -42,74 +49,68 @@
     <list>
       <item>
         <p>
-          <gui>Voice Sets</gui>: Lists the "Global" voice
-          set and any language-specific voice sets.
+          <gui>Voice Sets</gui>: Lists the "Global" voice set and any language-specific voice
+          sets.
         </p>
         <list>
           <item>
             <p>
-              <gui>Voice set:</gui> Selects the voice set
-              to review or change.
+              <gui>Voice set:</gui> Selects the voice set to review or change.
             </p>
           </item>
           <item>
             <p>
-              <gui>New Voice Set</gui>: Creates a voice
-              set for a specific language.
+              <gui>New Voice Set</gui>: Creates a voice set for a specific language.
             </p>
           </item>
           <item>
             <p>
-              <gui>Remove</gui>: Removes the selected
-              language-specific voice set.
+              <gui>Remove</gui>: Removes the selected language-specific voice set.
             </p>
           </item>
         </list>
       </item>
       <item>
         <p>
-          <gui>Voice Type Settings</gui>: Lists the voice
-          types in the selected voice set. Activate the settings button for a voice type to
-          change how that voice sounds.
+          <gui>Voice Type Settings</gui>: Lists the voice types in the selected voice set.
+          Activate the settings button for a voice type to change how that voice sounds.
         </p>
         <list>
           <item>
             <p>
-              <gui>Language:</gui> Selects the language
-              for the selected voice type. Available languages come from the voices reported by
-              the current synthesizer.
+              <gui>Language:</gui> Selects the language for the selected voice type. Available
+              languages come from the voices reported by the current synthesizer.
             </p>
           </item>
           <item>
             <p>
-              <gui>Person:</gui> Selects the synthesizer
-              voice for the selected voice type. Choices depend on the current synthesizer and
-              selected language. If an installed voice is missing, check that it is available
-              through the selected speech system and synthesizer and that its language is
-              selected.
+              <gui>Person:</gui> Selects the synthesizer voice for the selected voice type.
+              Choices depend on the current synthesizer and selected language. If an installed
+              voice is missing, check that it is available through the selected speech system
+              and synthesizer and that its language is selected.
             </p>
           </item>
           <item>
             <p>
-              <gui>Rate:</gui> Speech rate (0-100).
+              <gui>Rate:</gui> Sets the speech rate for the selected voice type (0-100).
               Default: 50.
             </p>
           </item>
           <item>
             <p>
-              <gui>Pitch:</gui> Speech pitch (0.0-10.0).
-              Default: 5.0.
+              <gui>Pitch:</gui> Sets the pitch for the selected voice type (0.0-10.0). Default:
+              5.0.
             </p>
           </item>
           <item>
             <p>
-              <gui>Inflection:</gui> Speech inflection /
-              pitch range (0.0-10.0). Default: 5.0.
+              <gui>Inflection:</gui> Sets the pitch variation for the selected voice type
+              (0.0-10.0). Default: 5.0.
             </p>
           </item>
           <item>
             <p>
-              <gui>Volume:</gui> Speech volume (0.0-10.0).
+              <gui>Volume:</gui> Sets the volume for the selected voice type (0.0-10.0).
               Default: 10.0.
             </p>
           </item>
@@ -121,87 +122,52 @@
     <title>Commands</title>
     <p>
       <em style="strong">Preferences location:</em>
-      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Speech and verbosity</gui> group.
+      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Speech and verbosity</gui>
+      group.
+    </p>
+    <p>
+      These commands temporarily change the active voice set's rate, pitch, inflection, or
+      volume. For saved changes or individual voice-type settings, use the settings above.
     </p>
     <list>
       <item>
         <p>
-          <gui>Decrease the speech rate</gui>: Unbound by
-          default.
-        </p>
-        <p>
-          Decreases the active voice set's rate temporarily. To save changes or configure
-          individual voice types, see "<link xref="features_speech_and_voices_voice_sets">Voice sets</link>".
+          <gui>Decrease the speech rate</gui>: Unbound by default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Increase the speech rate</gui>: Unbound by
-          default.
-        </p>
-        <p>
-          Increases the active voice set's rate temporarily. To save changes or configure
-          individual voice types, see "<link xref="features_speech_and_voices_voice_sets">Voice sets</link>".
+          <gui>Increase the speech rate</gui>: Unbound by default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Decrease the speech pitch</gui>: Unbound by
-          default.
-        </p>
-        <p>
-          Decreases the active voice set's pitch temporarily. To save changes or configure
-          individual voice types, see "<link xref="features_speech_and_voices_voice_sets">Voice sets</link>".
+          <gui>Decrease the speech pitch</gui>: Unbound by default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Increase the speech pitch</gui>: Unbound by
-          default.
-        </p>
-        <p>
-          Increases the active voice set's pitch temporarily. To save changes or configure
-          individual voice types, see "<link xref="features_speech_and_voices_voice_sets">Voice sets</link>".
+          <gui>Increase the speech pitch</gui>: Unbound by default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Decrease the speech inflection</gui>: Unbound by
-          default.
-        </p>
-        <p>
-          Decreases the active voice set's inflection temporarily. To save changes or configure
-          individual voice types, see "<link xref="features_speech_and_voices_voice_sets">Voice sets</link>".
+          <gui>Decrease the speech inflection</gui>: Unbound by default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Increase the speech inflection</gui>: Unbound by
-          default.
-        </p>
-        <p>
-          Increases the active voice set's inflection temporarily. To save changes or configure
-          individual voice types, see "<link xref="features_speech_and_voices_voice_sets">Voice sets</link>".
+          <gui>Increase the speech inflection</gui>: Unbound by default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Decrease the speech volume</gui>: Unbound by
-          default.
-        </p>
-        <p>
-          Decreases the active voice set's volume temporarily. To save changes or configure
-          individual voice types, see "<link xref="features_speech_and_voices_voice_sets">Voice sets</link>".
+          <gui>Decrease the speech volume</gui>: Unbound by default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Increase the speech volume</gui>: Unbound by
-          default.
-        </p>
-        <p>
-          Increases the active voice set's volume temporarily. To save changes or configure
-          individual voice types, see "<link xref="features_speech_and_voices_voice_sets">Voice sets</link>".
+          <gui>Increase the speech volume</gui>: Unbound by default.
         </p>
       </item>
     </list>

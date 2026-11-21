@@ -1539,7 +1539,7 @@ def _sentence(text: str) -> str:
     if not text:
         return ""
     text = text[:1].upper() + text[1:]
-    if text[-1] not in ".?!":
+    if not text.rstrip("\"'").endswith((".", "?", "!")):
         text += "."
     return text
 
@@ -1726,7 +1726,9 @@ _KEY_SEQUENCE_PATTERN = re.compile(
     r"(?![\w+])"
 )
 _INLINE_PROSE_PATTERN = re.compile(
-    r'`(?P<code>[^`\n]+)`|(?P<quoted>"[^"\n]+")|' + _KEY_SEQUENCE_PATTERN.pattern
+    r'`(?P<code>[^`\n]+)`|(?P<quoted>"[^"\n]+")|'
+    r"\[(?P<link_label>[^\]\n]+)\]\((?P<link_url>https?://[^\s)]+)\)|"
+    + _KEY_SEQUENCE_PATTERN.pattern
 )
 
 
@@ -1763,6 +1765,9 @@ def _append_paragraph_with_inline_markup(parent: ET.Element, text: str) -> ET.El
             child = _append_child(p, "code", match.group("code"))
         elif match.group("quoted") is not None:
             _append_text(p, child, match.group("quoted"))
+        elif match.group("link_url") is not None:
+            child = _append_child(p, "link", match.group("link_label"))
+            child.set("href", match.group("link_url"))
         else:
             child = _append_inline_key_markup(p, match.group(0))
         last_index = match.end()
@@ -3199,13 +3204,25 @@ def _share_command_location(
     commands: dict[str, CollectedCommandDoc],
     context: FeatureCommandContext,
 ) -> FeatureCommandContext:
-    """Shows a common command location once for multi-section feature topics."""
+    """Shares the location on command-focused topics, ignoring link-only sections."""
 
     command_sections = [
         section for section in sections if section.command_names or section.command_groups
     ]
     preferences = context.preference_categories.get("commands")
     if len(command_sections) < 2 or not preferences:
+        return context
+    if any(
+        not (section.command_names or section.command_groups)
+        and (
+            section.intro
+            or section.details
+            or section.preference_categories
+            or section.preference_panels
+            or section.preference_controls
+        )
+        for section in sections
+    ):
         return context
     selected = [commands[name] for section in command_sections for name in section.command_names]
     selected.extend(
@@ -3492,7 +3509,12 @@ def _wrap_paragraph_text(text: str, indent: str, width: int = 100, prefix_len: i
     leading = text[: len(text) - len(text.lstrip())]
     trailing = text[len(text.rstrip()) :]
     content = text.strip()
-    first_width = max(width - len(indent) - prefix_len, 20)
+    first_column = (
+        len(leading.rsplit("\n", 1)[-1])
+        if "\n" in leading
+        else len(indent) + prefix_len + len(leading)
+    )
+    first_width = max(width - first_column, 1)
     subsequent_width = max(width - len(indent), 20)
     first_lines = textwrap.wrap(
         content, width=first_width, break_on_hyphens=False, break_long_words=False
@@ -3524,7 +3546,8 @@ def _wrap_tail_after_inline(text: str, indent: str, prefix_len: int, width: int)
     content = text.strip()
     if content[0] in ',.;:!?)"':
         return _wrap_paragraph_text(text, indent, width, prefix_len=prefix_len)
-    if len(indent) + prefix_len + len(content.split(maxsplit=1)[0]) > width:
+    leading_length = len(text) - len(text.lstrip())
+    if len(indent) + prefix_len + leading_length + len(content.split(maxsplit=1)[0]) > width:
         if content.startswith(": "):
             wrapped = _wrap_paragraph_text(f"{content[2:]}{trailing}", indent, width)
             return f":\n{indent}{wrapped.lstrip()}"
@@ -3534,15 +3557,23 @@ def _wrap_tail_after_inline(text: str, indent: str, prefix_len: int, width: int)
     return _wrap_paragraph_text(text, indent, width, prefix_len=prefix_len)
 
 
-def _serialized_inline_length(element: ET.Element) -> int:
-    """Returns serialized length of element without its tail."""
+def _serialized_inline(element: ET.Element) -> str:
+    """Serializes an inline element without its tail or repeated namespace declarations."""
 
     tail = element.tail
     element.tail = None
     try:
-        return len(ET.tostring(element, encoding="unicode", short_empty_elements=True))
+        serialized = ET.tostring(element, encoding="unicode", short_empty_elements=True)
+        return re.sub(r' xmlns(?::\w+)?="[^"]*"', "", serialized)
     finally:
         element.tail = tail
+
+
+def _column_after(text: str, column: int = 0) -> int:
+    """Returns the column after appending serialized text."""
+
+    newline = text.rfind("\n")
+    return len(text) - newline - 1 if newline >= 0 else column + len(text)
 
 
 def _add_closing_tag_indent(text: str, indent: str) -> str:
@@ -3570,14 +3601,30 @@ def _wrap_generated_paragraphs(root: ET.Element, width: int = 96) -> None:
             element.text = _wrap_paragraph_text(element.text or "", inline_indent, width)
             if element.text and element.text.strip():
                 element.text = f"\n{inline_indent}{element.text.lstrip()}"
+            column = _column_after(element.text or "")
+            previous = element
             for child in element:
-                prefix_len = _serialized_inline_length(child)
+                serialized = _serialized_inline(child)
+                if column + len(serialized.split("\n", 1)[0]) > width:
+                    before = (element.text if previous is element else previous.tail) or ""
+                    boundary = re.search(r"\s+(\S*)$", before)
+                    if boundary:
+                        attached = boundary.group(1)
+                        wrapped = f"{before[: boundary.start()]}\n{inline_indent}{attached}"
+                        if previous is element:
+                            element.text = wrapped
+                        else:
+                            previous.tail = wrapped
+                        column = len(inline_indent) + len(attached)
+                column = _column_after(serialized, column)
                 child.tail = _wrap_tail_after_inline(
                     child.tail or "",
                     inline_indent,
-                    prefix_len,
+                    column - len(inline_indent),
                     width,
                 )
+                column = _column_after(child.tail, column)
+                previous = child
             if len(element):
                 element[-1].tail = _add_closing_tag_indent(element[-1].tail or "", closing_indent)
             else:

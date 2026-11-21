@@ -29,11 +29,18 @@
     Object navigation uses a separate navigator focus; the commands below explore and interact
     with the object at that location.
   </p>
+  <p>
+    Object navigation starts from the object Orca is currently presenting, such as the focused
+    control or the object at the caret. Each object-navigation command then uses the navigator's
+    current position. If you move to a different object using application navigation or another
+    Orca navigation feature, the next object-navigation command starts from that new location.
+  </p>
   <section id="commands-object-navigation">
     <title>Commands</title>
     <p>
       <em style="strong">Preferences location:</em>
-      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Object navigation</gui> group.
+      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Object navigation</gui>
+      group.
     </p>
     <list>
       <item>

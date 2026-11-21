@@ -33,28 +33,26 @@
     <list>
       <item>
         <p>
-          <gui>Object presentation is detailed</gui>: Controls whether
-          Orca shows more detailed object information. Default: on.
+          <gui>Object presentation is detailed</gui>: Controls whether Orca shows more detailed
+          object information. Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Show context (ancestors)</gui>: Controls whether
-          Orca shows contextual information about the current object, such as the panel it is
-          inside. Default: on.
+          <gui>Show context (ancestors)</gui>: Controls whether Orca shows contextual
+          information about the current object, such as the panel it is inside. Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Abbreviated role names</gui>: Controls whether
-          Orca uses abbreviated role names, such as btn for button. Default: off.
+          <gui>Abbreviated role names</gui>: Controls whether Orca uses abbreviated role names,
+          such as btn for button. Default: off.
         </p>
       </item>
       <item>
         <p>
-          <gui>Mnemonics</gui>: Controls whether Orca
-          shows shortcut letters, such as the F used with Alt to open a File menu, in braille.
-          Default: on.
+          <gui>Mnemonics</gui>: Controls whether Orca shows shortcut letters, such as the F used
+          with Alt to open a File menu, in braille. Default: on.
         </p>
       </item>
     </list>

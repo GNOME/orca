@@ -35,20 +35,19 @@
     <list>
       <item>
         <p>
-          <gui>Time and Date</gui>: Controls how Orca
-          presents the current date and time.
+          <gui>Time and Date</gui>: Controls how Orca presents the current date and time.
         </p>
         <list>
           <item>
             <p>
-              <gui>Date format:</gui> Selects the format
-              Orca uses when presenting the current date. Default: the system locale's format.
+              <gui>Date format:</gui> Selects the format Orca uses when presenting the current
+              date. Default: the system locale's format.
             </p>
           </item>
           <item>
             <p>
-              <gui>Time format:</gui> Selects the format
-              Orca uses when presenting the current time. Default: the system locale's format.
+              <gui>Time format:</gui> Selects the format Orca uses when presenting the current
+              time. Default: the system locale's format.
             </p>
           </item>
         </list>
@@ -59,36 +58,10 @@
     <title>Commands</title>
     <p>
       <em style="strong">Preferences location:</em>
-      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>System information</gui> group.
+      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>System information</gui>
+      group.
     </p>
     <list>
-      <item>
-        <p>
-          <gui>Present battery status</gui>: Unbound by
-          default.
-        </p>
-        <p>
-          Requires the Python psutil package, often packaged as python3-psutil.
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Present CPU and memory usage</gui>: Unbound by
-          default.
-        </p>
-        <p>
-          Requires the Python psutil package, often packaged as python3-psutil.
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Present current date</gui>: <keyseq>
-            <key>Orca Modifier</key>
-            <key>T</key>
-          </keyseq>
-          (press twice quickly)
-        </p>
-      </item>
       <item>
         <p>
           <gui>Present current time</gui>: <keyseq>
@@ -99,8 +72,32 @@
       </item>
       <item>
         <p>
-          <gui>Present the state of modifier keys</gui>: Reports Caps Lock
-          and Num Lock state. Unbound by default.
+          <gui>Present current date</gui>: <keyseq>
+            <key>Orca Modifier</key>
+            <key>T</key>
+          </keyseq> (press twice quickly)
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Present battery status</gui>: Unbound by default.
+        </p>
+        <p>
+          Requires the Python psutil package, often packaged as python3-psutil.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Present CPU and memory usage</gui>: Unbound by default.
+        </p>
+        <p>
+          Requires the Python psutil package, often packaged as python3-psutil.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Present the state of modifier keys</gui>: Reports Caps Lock and Num Lock state.
+          Unbound by default.
         </p>
       </item>
     </list>

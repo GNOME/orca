@@ -52,60 +52,60 @@
     <list>
       <item>
         <p>
-          <gui>Speak room name</gui>: Controls whether
-          Orca includes the conversation name with incoming messages, unless the message came
-          from the focused conversation. Default: off.
+          <gui>Speak room name</gui>: Controls whether Orca includes the conversation name with
+          incoming messages, unless the message came from the focused conversation. Default:
+          off.
         </p>
       </item>
       <item>
         <p>
-          <gui>Speak room name last</gui>: Controls whether
-          the conversation name is spoken after the message instead of before it. Default: off.
+          <gui>Speak room name last</gui>: Controls whether the conversation name is spoken
+          after the message instead of before it. Default: off.
         </p>
       </item>
       <item>
         <p>
-          <gui>Announce when your buddies are typing</gui>: Controls whether
-          Orca announces changes in typing status when the chat application provides that
-          information. Default: off.
+          <gui>Announce when your buddies are typing</gui>: Controls whether Orca announces
+          changes in typing status when the chat application provides that information. Default:
+          off.
         </p>
       </item>
       <item>
         <p>
-          <gui>Provide chat room specific message histories</gui>: Controls whether
-          Orca keeps separate recent-message histories for each conversation. Default: off.
+          <gui>Provide chat room specific message histories</gui>: Controls whether Orca keeps
+          separate recent-message histories for each conversation. Default: off.
         </p>
       </item>
       <item>
         <p>
-          <gui>Speak messages from</gui>: Controls which
-          incoming chat messages Orca speaks automatically. Choices: All channels when using any
-          application, The active channel when using any application, All channels when using
-          the application, The active channel when using the application.
+          <gui>Speak messages from</gui>: Controls which incoming chat messages Orca speaks
+          automatically. Choices: All channels when using any application, The active channel
+          when using any application, All channels when using the application, The active
+          channel when using the application.
         </p>
         <list>
           <item>
             <p>
-              <gui>All channels when using any application (default)</gui>: Speaks messages
-              from all conversations, even when another application is active.
+              <gui>All channels when using any application (default)</gui>: Speaks messages from
+              all conversations, even when another application is active.
             </p>
           </item>
           <item>
             <p>
-              <gui>The active channel when using any application</gui>: Speaks messages
-              from the active conversation, even when another application is active.
+              <gui>The active channel when using any application</gui>: Speaks messages from the
+              active conversation, even when another application is active.
             </p>
           </item>
           <item>
             <p>
-              <gui>All channels when using the application</gui>: Speaks messages
-              from all conversations while the chat application is active.
+              <gui>All channels when using the application</gui>: Speaks messages from all
+              conversations while the chat application is active.
             </p>
           </item>
           <item>
             <p>
-              <gui>The active channel when using the application</gui>: Speaks messages
-              from the active conversation while the chat application is active.
+              <gui>The active channel when using the application</gui>: Speaks messages from the
+              active conversation while the chat application is active.
             </p>
           </item>
         </list>
@@ -121,32 +121,27 @@
     <list>
       <item>
         <p>
-          <gui>Present next chat room message</gui>: Unbound by
-          default.
+          <gui>Present next chat room message</gui>: Unbound by default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Present previous chat room message</gui>: Unbound by
-          default.
+          <gui>Present previous chat room message</gui>: Unbound by default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Toggle chat room specific message histories</gui>: Unbound by
-          default.
+          <gui>Toggle chat room specific message histories</gui>: Unbound by default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Toggle room name presentation</gui>: Unbound by
-          default.
+          <gui>Toggle room name presentation</gui>: Unbound by default.
         </p>
       </item>
       <item>
         <p>
-          <gui>Toggle typing announcements</gui>: Unbound by
-          default.
+          <gui>Toggle typing announcements</gui>: Unbound by default.
         </p>
       </item>
     </list>

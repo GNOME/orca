@@ -54,62 +54,6 @@ def get_documentation() -> CommandGroupDoc:
                     "voice set."
                 ),
             ),
-            CommandDoc(
-                "decreaseSpeechRateHandler",
-                details=(
-                    "Decreases the active voice set's rate temporarily. To save changes or "
-                    "configure individual voice types, see [[speech.voice-sets.feature]]."
-                ),
-            ),
-            CommandDoc(
-                "increaseSpeechRateHandler",
-                details=(
-                    "Increases the active voice set's rate temporarily. To save changes or "
-                    "configure individual voice types, see [[speech.voice-sets.feature]]."
-                ),
-            ),
-            CommandDoc(
-                "decreaseSpeechPitchHandler",
-                details=(
-                    "Decreases the active voice set's pitch temporarily. To save changes or "
-                    "configure individual voice types, see [[speech.voice-sets.feature]]."
-                ),
-            ),
-            CommandDoc(
-                "increaseSpeechPitchHandler",
-                details=(
-                    "Increases the active voice set's pitch temporarily. To save changes or "
-                    "configure individual voice types, see [[speech.voice-sets.feature]]."
-                ),
-            ),
-            CommandDoc(
-                "decreaseSpeechInflectionHandler",
-                details=(
-                    "Decreases the active voice set's inflection temporarily. To save changes "
-                    "or configure individual voice types, see [[speech.voice-sets.feature]]."
-                ),
-            ),
-            CommandDoc(
-                "increaseSpeechInflectionHandler",
-                details=(
-                    "Increases the active voice set's inflection temporarily. To save changes "
-                    "or configure individual voice types, see [[speech.voice-sets.feature]]."
-                ),
-            ),
-            CommandDoc(
-                "decreaseSpeechVolumeHandler",
-                details=(
-                    "Decreases the active voice set's volume temporarily. To save changes or "
-                    "configure individual voice types, see [[speech.voice-sets.feature]]."
-                ),
-            ),
-            CommandDoc(
-                "increaseSpeechVolumeHandler",
-                details=(
-                    "Increases the active voice set's volume temporarily. To save changes or "
-                    "configure individual voice types, see [[speech.voice-sets.feature]]."
-                ),
-            ),
         ),
         target="speech.commands",
         summary="Control Orca's spoken output.",
@@ -137,12 +81,23 @@ def get_documentation() -> CommandGroupDoc:
                 summary=(""),
                 title="Voice sets",
                 target="speech.commands.voice-sets",
+                instructions=(
+                    "Orca creates a separate command to switch directly to each configured "
+                    "voice set, including the global voice set. These commands are unbound by "
+                    "default. When you add a language-specific voice set, its command becomes "
+                    "available for you to assign a shortcut."
+                ),
                 command_names=("cycleVoiceSetHandler",),
                 command_prefixes=("switch-voice-set-",),
             ),
             CommandSectionDoc(
                 title="Voice parameters",
                 target="speech.commands.voice-parameters",
+                instructions=(
+                    "These commands temporarily change the active voice set's rate, pitch, "
+                    "inflection, or volume. For saved changes or individual voice-type settings, "
+                    "use the settings above."
+                ),
                 command_names=(
                     "decreaseSpeechRateHandler",
                     "increaseSpeechRateHandler",

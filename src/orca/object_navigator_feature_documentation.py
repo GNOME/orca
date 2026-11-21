@@ -45,7 +45,13 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                     "objects, and children with the same parent are siblings. For example, a "
                     "toolbar can contain several buttons. Object navigation uses a separate "
                     "navigator focus; the commands below explore and interact with the object "
-                    "at that location."
+                    "at that location.\n\n"
+                    "Object navigation starts from the object Orca is currently presenting, "
+                    "such as the focused control or the object at the caret. Each "
+                    "object-navigation command then uses the navigator's current position. "
+                    "If you move to a different object using application navigation or another "
+                    "Orca navigation feature, the next object-navigation command starts from "
+                    "that new location."
                 ),
                 settings_and_commands=(
                     FeatureLinkDoc(

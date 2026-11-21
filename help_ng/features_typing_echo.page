@@ -37,109 +37,103 @@
     <list>
       <item>
         <p>
-          <gui>Key echo</gui>: Controls whether Orca
-          speaks keys as they are pressed, including keys that do not insert text, such as
-          navigation and function keys. Choose which key types are spoken with the key-type
-          settings below. In terminals, key echo also waits for matching text to appear before
-          announcing a printable key, so input that is not displayed, such as a password, is not
-          echoed. Default: on.
+          <gui>Key echo</gui>: Controls whether Orca speaks keys as they are pressed, including
+          keys that do not insert text, such as navigation and function keys. Choose which key
+          types are spoken with the key-type settings below. In terminals, key echo also waits
+          for matching text to appear before announcing a printable key, so input that is not
+          displayed, such as a password, is not echoed. Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Keys to Echo</gui>: Controls which types
-          of keys Orca speaks when they are pressed.
+          <gui>Keys to Echo</gui>: Controls which types of keys Orca speaks when they are
+          pressed.
         </p>
         <list>
           <item>
             <p>
-              <gui>Alphabetic keys</gui>: Controls whether
-              Orca speaks keys such as A, B, and C. Default: on.
+              <gui>Alphabetic keys</gui>: Controls whether Orca speaks keys such as A, B, and C.
+              Default: on.
             </p>
           </item>
           <item>
             <p>
-              <gui>Numeric keys</gui>: Controls whether
-              Orca speaks keys such as 1, 2, and 3. Default: on.
+              <gui>Numeric keys</gui>: Controls whether Orca speaks keys such as 1, 2, and 3.
+              Default: on.
             </p>
           </item>
           <item>
             <p>
-              <gui>Punctuation keys</gui>: Controls whether
-              Orca speaks keys such as percent, semicolon, and question mark. Default: on.
+              <gui>Punctuation keys</gui>: Controls whether Orca speaks keys such as percent,
+              semicolon, and question mark. Default: on.
             </p>
           </item>
           <item>
             <p>
-              <gui>Space</gui>: Controls whether Orca
-              speaks Space when it is pressed. Default: on.
+              <gui>Space</gui>: Controls whether Orca speaks Space when it is pressed. Default:
+              on.
             </p>
           </item>
           <item>
             <p>
-              <gui>Modifier keys</gui>: Controls whether
-              Orca speaks modifier keys such as Shift, Ctrl, Alt, and Meta. Default: on.
+              <gui>Modifier keys</gui>: Controls whether Orca speaks modifier keys such as
+              Shift, Ctrl, Alt, and Meta. Default: on.
             </p>
           </item>
           <item>
             <p>
-              <gui>Function keys</gui>: Controls whether
-              Orca speaks function keys from F1 through F12. Default: on.
+              <gui>Function keys</gui>: Controls whether Orca speaks function keys from F1
+              through F12. Default: on.
             </p>
           </item>
           <item>
             <p>
-              <gui>Action keys</gui>: Controls whether
-              Orca speaks action keys such as Backspace, Delete, Enter, Escape, Tab, Page Up,
-              and Page Down. Default: on.
+              <gui>Action keys</gui>: Controls whether Orca speaks action keys such as
+              Backspace, Delete, Enter, Escape, Tab, Page Up, and Page Down. Default: on.
             </p>
           </item>
           <item>
             <p>
-              <gui>Navigation keys</gui>: Controls whether
-              Orca speaks navigation keys such as Left Arrow, Right Arrow, Up Arrow, Down Arrow,
-              Home, and End. Default: off.
+              <gui>Navigation keys</gui>: Controls whether Orca speaks navigation keys such as
+              Left Arrow, Right Arrow, Up Arrow, Down Arrow, Home, and End. Default: off.
             </p>
           </item>
           <item>
             <p>
-              <gui>Diacritical keys</gui>: Controls whether
-              Orca speaks diacritical keys, such as keys used to add accents to letters.
-              Default: off.
+              <gui>Diacritical keys</gui>: Controls whether Orca speaks diacritical keys, such
+              as keys used to add accents to letters. Default: off.
             </p>
           </item>
         </list>
       </item>
       <item>
         <p>
-          <gui>Typing Echo</gui>: Controls whether Orca
-          speaks text inserted into the document as you type.
+          <gui>Typing Echo</gui>: Controls whether Orca speaks text inserted into the document
+          as you type.
         </p>
         <list>
           <item>
             <p>
-              <gui>Character</gui>: Announces text
-              inserted as you type in an editable field or terminal, rather than the key press
-              itself. It depends on the application reporting inserted text through its
-              accessibility support. When both key echo and character echo are enabled, Orca
-              uses character echo for printable text typed into an editable field or terminal
-              and suppresses the corresponding key echo, avoiding duplicate announcements. Other
-              enabled key types can still be announced, as can printable keys pressed outside
-              editable text. Default: off.
+              <gui>Character</gui>: Announces text inserted as you type in an editable field or
+              terminal, rather than the key press itself. It depends on the application
+              reporting inserted text through its accessibility support. When both key echo and
+              character echo are enabled, Orca uses character echo for printable text typed into
+              an editable field or terminal and suppresses the corresponding key echo, avoiding
+              duplicate announcements. Other enabled key types can still be announced, as can
+              printable keys pressed outside editable text. Default: off.
             </p>
           </item>
           <item>
             <p>
-              <gui>Word</gui>: Announces completed words.
-              Enable it alongside character echo to have both individual characters and
-              completed words spoken. Default: off.
+              <gui>Word</gui>: Announces completed words. Enable it alongside character echo to
+              have both individual characters and completed words spoken. Default: off.
             </p>
           </item>
           <item>
             <p>
-              <gui>Sentence</gui>: Announces completed
-              sentences. Enable it alongside character echo to have both individual characters
-              and completed sentences spoken. Default: off.
+              <gui>Sentence</gui>: Announces completed sentences. Enable it alongside character
+              echo to have both individual characters and completed sentences spoken. Default:
+              off.
             </p>
           </item>
         </list>
@@ -155,8 +149,7 @@
     <list>
       <item>
         <p>
-          <gui>Cycle to the next key echo level</gui>: Unbound by
-          default.
+          <gui>Cycle to the next key echo level</gui>: Unbound by default.
         </p>
         <p>
           Switches among key echo, word echo, sentence echo, key and word echo, word and

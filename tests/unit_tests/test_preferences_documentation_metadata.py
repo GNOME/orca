@@ -150,6 +150,62 @@ def _grid_classes(path: Path) -> list[ast.ClassDef]:
     return classes
 
 
+def _static_control_documentation_issues(class_node: ast.ClassDef) -> list[str]:
+    """Finds removed controls and mismatched bounds in explicitly constructed grids."""
+
+    if not {_name(base) for base in class_node.bases} & {
+        "AutoPreferencesGrid",
+        "preferences_grid_base.AutoPreferencesGrid",
+    }:
+        return []
+
+    controls: dict[str, ast.Call] = {}
+    for call in (node for node in ast.walk(class_node) if isinstance(node, ast.Call)):
+        if _name(call.func) not in _CONTROL_CLASSES:
+            continue
+        label = _keyword(call, "label")
+        if label is None or not (
+            isinstance(label, ast.Constant) or _name(label).startswith("guilabels.")
+        ):
+            # Dynamically built controls need their provider's own coverage.
+            return []
+        controls[_expression(label)] = call
+
+    issues = []
+    for method in class_node.body:
+        if not isinstance(method, ast.FunctionDef) or method.name != "get_documentation":
+            continue
+        for call in (node for node in ast.walk(method) if isinstance(node, ast.Call)):
+            if _name(call.func) not in _DOC_CONTROL_CLASSES or _keyword(call, "key") is None:
+                continue
+            kind = _keyword(call, "kind")
+            if isinstance(kind, ast.Constant) and kind.value in {"group", "page"}:
+                continue
+            label = _keyword(call, "label")
+            if label is None:
+                continue
+            name = _expression(label)
+            if name not in controls:
+                issues.append(f"{name}: documented control is absent from the UI")
+                continue
+            for bound in ("minimum", "maximum"):
+                ui_value = _keyword(controls[name], bound)
+                if ui_value is None:
+                    continue
+                try:
+                    expected = float(ast.literal_eval(ui_value))
+                except (ValueError, TypeError):
+                    continue
+                doc_value = _keyword(call, bound)
+                if doc_value is None:
+                    issues.append(f"{name}: undocumented {bound}")
+                    continue
+                actual = float(ast.literal_eval(doc_value))
+                if actual != expected:
+                    issues.append(f"{name}: documented {bound} {actual:g} != UI {expected:g}")
+    return issues
+
+
 @pytest.mark.unit
 @pytest.mark.parametrize("path", _PREFERENCES_GRID_FILES, ids=lambda path: path.name)
 def test_preferences_grids_have_documentation_metadata(path: Path) -> None:
@@ -175,3 +231,69 @@ def test_preferences_controls_have_documentation_metadata(path: Path) -> None:
             f"{path.relative_to(_REPO_ROOT)}:{class_node.lineno}: "
             f"{class_node.name} has undocumented preference keys: {missing}"
         )
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("path", _PREFERENCES_GRID_FILES, ids=lambda path: path.name)
+def test_static_preference_documentation_matches_controls(path: Path) -> None:
+    """Documented controls still exist and show the numeric bounds described in help."""
+
+    for class_node in _grid_classes(path):
+        issues = _static_control_documentation_issues(class_node)
+        assert not issues, f"{path.name}:{class_node.name}: {issues}"
+
+
+@pytest.fixture(name="range_grid")
+def range_grid_fixture() -> ast.ClassDef:
+    """A numeric control and its help share a label and range."""
+
+    tree = ast.parse(
+        "class Grid(AutoPreferencesGrid):\n"
+        "    def get_documentation(cls):\n"
+        "        return PreferenceControlDoc(label=guilabels.COUNT, kind='integer',\n"
+        "            key='count', minimum='1', maximum='100')\n"
+        "    def __init__(self):\n"
+        "        IntRangePreferenceControl(label=guilabels.COUNT, minimum=1, maximum=100)\n"
+    )
+    node = tree.body[0]
+    assert isinstance(node, ast.ClassDef)
+    return node
+
+
+def test_matching_numeric_control_documentation(range_grid: ast.ClassDef) -> None:
+    """Help can express a numeric bound as text without changing its value."""
+
+    assert _static_control_documentation_issues(range_grid) == []
+
+
+def test_changed_numeric_control_bound(range_grid: ast.ClassDef) -> None:
+    """Changing a slider's maximum requires updating its documented range."""
+
+    for call in ast.walk(range_grid.body[1]):
+        if isinstance(call, ast.Call):
+            for keyword in call.keywords:
+                if keyword.arg == "maximum":
+                    keyword.value = ast.Constant(200)
+    assert _static_control_documentation_issues(range_grid) == [
+        "guilabels.COUNT: documented maximum 100 != UI 200"
+    ]
+
+
+def test_removed_control_documentation(range_grid: ast.ClassDef) -> None:
+    """Removing a control requires removing its help even if its schema key remains."""
+
+    range_grid.body.pop()
+    assert _static_control_documentation_issues(range_grid) == [
+        "guilabels.COUNT: documented control is absent from the UI"
+    ]
+
+
+def test_dynamic_controls_are_not_inferred(range_grid: ast.ClassDef) -> None:
+    """A provider-generated label cannot establish that a documented control was removed."""
+
+    for call in ast.walk(range_grid.body[1]):
+        if isinstance(call, ast.Call):
+            for keyword in call.keywords:
+                if keyword.arg == "label":
+                    keyword.value = ast.Attribute(value=ast.Name(id="pref"), attr="label")
+    assert _static_control_documentation_issues(range_grid) == []

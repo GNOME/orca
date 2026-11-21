@@ -40,9 +40,8 @@ def get_documentation() -> CommandGroupDoc:
             CommandDoc(
                 "toggle_enabled",
                 details=(
-                    "Turns Orca's caret navigation on or off in text objects where browse mode "
-                    "is not supported. This changes the current session across applications; it "
-                    "does not save a preference."
+                    "Switches between Orca's caret navigation and the application's own. "
+                    "The change is temporary and does not change your saved settings."
                 ),
             ),
         ),
@@ -56,6 +55,7 @@ def get_documentation() -> CommandGroupDoc:
             ),
             CommandSectionDoc(
                 title="Selection",
+                since="52",
                 command_prefixes=("select_",),
             ),
         ),

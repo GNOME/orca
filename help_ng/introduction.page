@@ -32,8 +32,8 @@
       </keyseq>.
     </p>
     <p>
-      You can also start Orca by running <code>orca</code> in a terminal or your desktop's
-      Run dialog.
+      You can also start Orca by running <code>orca</code> in a terminal or your desktop's Run
+      dialog.
     </p>
   </section>
   <section id="stopping-orca">
@@ -46,13 +46,13 @@
       <title>Commands</title>
       <p>
         <em style="strong">Preferences location:</em>
-        <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Screen Reader Management</gui> group.
+        <gui>Commands</gui> category, <gui>Commands</gui> section,
+        <gui>Screen Reader Management</gui> group.
       </p>
       <list>
         <item>
           <p>
-            <gui>Quit the screen reader application</gui>: Unbound by
-            default.
+            <gui>Quit the screen reader application</gui>: Unbound by default.
           </p>
           <p>
             Quits an Orca instance started as a regular application. For a systemd-managed
@@ -71,14 +71,12 @@
     <list>
       <item>
         <p>
-          <code>orca --help</code>: Display the available
-          options and their usage.
+          <code>orca --help</code>: Display the available options and their usage.
         </p>
       </item>
       <item>
         <p>
-          <code>orca --version</code>: Display the
-          installed version of Orca.
+          <code>orca --version</code>: Display the installed version of Orca.
         </p>
       </item>
       <item>
@@ -89,14 +87,12 @@
       </item>
       <item>
         <p>
-          <code>orca --approve-extension FILENAME</code>: Approve a user
-          extension for loading.
+          <code>orca --approve-extension FILENAME</code>: Approve a user extension for loading.
         </p>
       </item>
       <item>
         <p>
-          <code>orca --revoke-extension FILENAME</code>: Revoke a user
-          extension's approval.
+          <code>orca --revoke-extension FILENAME</code>: Revoke a user extension's approval.
         </p>
       </item>
     </list>
@@ -106,47 +102,55 @@
     <list>
       <item>
         <p>
-          <code>orca -p NAME</code> or <code>orca --profile NAME</code>: Start Orca with
-          the named settings profile.
+          <code>orca -p NAME</code> or <code>orca --profile NAME</code>: Start Orca with the
+          named settings profile.
         </p>
       </item>
       <item>
         <p>
-          <code>orca -s</code> or <code>orca --setup</code>: Start Orca and open
-          the Preferences window. If Orca is already running, open its Preferences window
-          instead.
+          <code>orca -s</code> or <code>orca --setup</code>: Start Orca and open the Preferences
+          window. If Orca is already running, open its Preferences window instead.
         </p>
       </item>
       <item>
         <p>
-          <code>orca --speech-system NAME</code>: Start Orca with
-          the selected speech system. The supported names are <code>speechdispatcherfactory</code> for Speech
-          Dispatcher (the default) and <code>spiel</code> for Spiel. The selected
-          backend must be installed and available.
+          <code>orca --speech-system NAME</code>: Start Orca with the selected speech system.
+          The supported names are <code>speechdispatcherfactory</code> for Speech Dispatcher
+          (the default) and <code>spiel</code> for Spiel. The selected backend must be installed
+          and available.
         </p>
       </item>
       <item>
         <p>
-          <code>orca -r</code> or <code>orca --replace</code>: Start Orca,
-          replacing an instance started as an application.
-        </p>
-      </item>
-      <item>
-        <p>
-          <code>orca --debug</code>: Start Orca with
-          verbose debugging enabled, saving the log to a file with a timestamped filename.
-        </p>
-      </item>
-      <item>
-        <p>
-          <code>orca --debug-file FILE</code>: Start Orca with
-          verbose debugging enabled, saving the log to the specified file.
+          <code>orca -r</code> or <code>orca --replace</code>: Start Orca, replacing an instance
+          started as an application.
         </p>
       </item>
     </list>
     <p>
-      If Orca is already running as an application, add <code>-r</code> or <code>--replace</code> when starting it with
-      debugging, a different speech system, or a different profile. For example, <code>orca --replace --debug</code>. If your desktop
+      Debug logs include details of your interactions with applications, including application
+      content. See
+      "<link xref="features_debugging#collecting-debugging-information">Collecting debugging information</link>"
+      before collecting or sharing a log.
+    </p>
+    <list>
+      <item>
+        <p>
+          <code>orca --debug</code>: Start Orca with verbose debugging enabled, saving the log
+          to a file with a timestamped filename.
+        </p>
+      </item>
+      <item>
+        <p>
+          <code>orca --debug-file FILE</code>: Start Orca with verbose debugging enabled, saving
+          the log to the specified file.
+        </p>
+      </item>
+    </list>
+    <p>
+      If Orca is already running as an application, add <code>-r</code> or
+      <code>--replace</code> when starting it with debugging, a different speech system, or a
+      different profile. For example, <code>orca --replace --debug</code>. If your desktop
       manages Orca as a service, use the desktop's screen reader controls to stop it before
       starting Orca with these options, rather than using <code>--replace</code>.
     </p>

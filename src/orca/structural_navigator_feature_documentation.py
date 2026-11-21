@@ -22,6 +22,7 @@
 
 from __future__ import annotations
 
+from . import guilabels
 from .help_metadata import (
     FeatureDocumentationDoc,
     FeatureLinkDoc,
@@ -51,9 +52,18 @@ def get_feature_documentation() -> FeatureDocumentationDoc:
                     FeatureLinkDoc("documents.structural-navigation"),
                 ),
                 details=(
-                    "From a list, you can move to the chosen object without activating it, or "
-                    "activate it when it supports an action, such as following a link or "
-                    "pressing a button.\n\n"
+                    "Use the list commands below to open a dialog containing matching objects, "
+                    "such as headings or links. Use Up Arrow and Down Arrow to choose an item, "
+                    "then Tab to reach the dialog's buttons.\n\n"
+                    f'"{guilabels.BTN_JUMP_TO}" closes the list and moves to the chosen object '
+                    "without activating it. "
+                    f'"{guilabels.ACTIVATE}" performs its action, such as following a link '
+                    "or pressing a button. This button is unavailable if the object does not "
+                    "support an action.\n\n"
+                    "Pressing Enter while the list has focus activates the chosen object if "
+                    "it supports an action; otherwise, it jumps to the object. "
+                    f'Press Escape or use "{guilabels.BTN_CANCEL}" to close the list without '
+                    "moving to or activating an object.\n\n"
                     "Structural navigation is not limited to web content. It can be used in "
                     "document content and in application user interfaces. It relies on the "
                     "accessible collections interface, an API that lets Orca search the "

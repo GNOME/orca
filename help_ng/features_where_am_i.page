@@ -68,8 +68,7 @@
               <p>
                 Desktop: <keyseq>
                   <key>Keypad Enter</key>
-                </keyseq>
-                (press twice quickly)
+                </keyseq> (press twice quickly)
               </p>
             </item>
             <item>
@@ -77,8 +76,7 @@
                 Laptop: <keyseq>
                   <key>Orca Modifier</key>
                   <key>Enter</key>
-                </keyseq>
-                (press twice quickly)
+                </keyseq> (press twice quickly)
               </p>
             </item>
           </list>
@@ -129,8 +127,7 @@
                 Desktop: <keyseq>
                   <key>Orca Modifier</key>
                   <key>Keypad Enter</key>
-                </keyseq>
-                (press twice quickly)
+                </keyseq> (press twice quickly)
               </p>
             </item>
             <item>
@@ -138,8 +135,7 @@
                 Laptop: <keyseq>
                   <key>Orca Modifier</key>
                   <key>Slash</key>
-                </keyseq>
-                (press twice quickly)
+                </keyseq> (press twice quickly)
               </p>
             </item>
           </list>
@@ -174,14 +170,12 @@
         </item>
         <item>
           <p>
-            <gui>Speak link details</gui>: Unbound by
-            default.
+            <gui>Speak link details</gui>: Unbound by default.
           </p>
         </item>
         <item>
           <p>
-            <gui>Present size and location of current object</gui>: Unbound by
-            default.
+            <gui>Present size and location of current object</gui>: Unbound by default.
           </p>
         </item>
         <item>
@@ -203,8 +197,8 @@
     <list>
       <item>
         <p>
-          <link xref="features_text_attributes">Text attributes</link>: Examine text
-          formatting in speech and braille.
+          <link xref="features_text_attributes">Text attributes</link>: Examine text formatting
+          in speech and braille.
         </p>
       </item>
     </list>

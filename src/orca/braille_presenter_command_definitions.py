@@ -40,7 +40,6 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for braille commands."""
 
     return CommandGroupDoc(
-        see_also=("clipboard.feature",),
         commands=(
             CommandDoc(
                 "processRoutingKeyHandler",

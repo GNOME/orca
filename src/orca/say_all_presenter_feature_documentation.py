@@ -43,7 +43,8 @@ def get_feature_documentation() -> FeaturePageDoc:
                 details=(
                     "The settings below control continuous presentation and navigation during "
                     "Say All. For presenting the visible contents of a window or dialog, see "
-                    "[[reviewing.flat-review]]."
+                    "[[reviewing.flat-review]]. Configure formatting-change announcements "
+                    "during Say All in [[text-attributes.feature]]."
                 ),
                 command_groups=("commands.say-all",),
                 links=(

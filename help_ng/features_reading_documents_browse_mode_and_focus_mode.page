@@ -50,9 +50,9 @@
       <list>
         <item>
           <p>
-            <gui>Automatic focus mode</gui>: Controls whether
-            Orca switches to focus mode when native navigation, such as Tab or Shift+Tab, lands
-            on an interactive widget. Default: on.
+            <gui>Automatic focus mode</gui>: Controls whether Orca switches to focus mode when
+            native navigation, such as Tab or Shift+Tab, lands on an interactive widget.
+            Default: on.
           </p>
         </item>
         <item>
@@ -76,9 +76,8 @@
       <list>
         <item>
           <p>
-            <gui>Automatic focus mode</gui>: Controls whether
-            Orca switches to focus mode when caret navigation lands on an interactive widget.
-            Default: off.
+            <gui>Automatic focus mode</gui>: Controls whether Orca switches to focus mode when
+            caret navigation lands on an interactive widget. Default: off.
           </p>
         </item>
       </list>
@@ -95,9 +94,8 @@
       <list>
         <item>
           <p>
-            <gui>Automatic focus mode</gui>: Controls whether
-            Orca switches to focus mode when structural navigation lands on an interactive
-            widget. Default: off.
+            <gui>Automatic focus mode</gui>: Controls whether Orca switches to focus mode when
+            structural navigation lands on an interactive widget. Default: off.
           </p>
         </item>
       </list>
@@ -123,8 +121,7 @@
           <gui>Enable sticky focus mode</gui>: <keyseq>
             <key>Orca Modifier</key>
             <key>A</key>
-          </keyseq>
-          (press twice quickly)
+          </keyseq> (press twice quickly)
         </p>
         <p>
           Keeps Orca in focus mode until you explicitly change modes, overriding automatic
@@ -136,8 +133,7 @@
           <gui>Enable sticky browse mode</gui>: <keyseq>
             <key>Orca Modifier</key>
             <key>A</key>
-          </keyseq>
-          (press three times quickly)
+          </keyseq> (press three times quickly)
         </p>
         <p>
           Keeps Orca in browse mode until you explicitly change modes, overriding automatic
@@ -154,26 +150,27 @@
     <list>
       <item>
         <p>
-          <link xref="index#reading">Reading documents and web pages</link>: Read documents,
-          web pages, and interactive content.
+          <link xref="index#reading">Reading documents and web pages</link>: Read documents, web
+          pages, and interactive content.
         </p>
       </item>
       <item>
         <p>
-          <link xref="features_reading_documents_caret_navigation#commands-caret-navigation">Caret navigation commands</link>: Move through text
-          by character, word, and line.
+          <link xref="features_reading_documents_caret_navigation#commands-caret-navigation">Caret navigation commands</link>:
+          Move through text by character, word, and line.
         </p>
       </item>
       <item>
         <p>
-          <link xref="features_reading_documents_structural_navigation#commands-structural-navigation">Structural navigation commands</link>: Move among
-          headings, links, interactive controls, tables, landmarks, and other structures.
+          <link xref="features_reading_documents_structural_navigation#commands-structural-navigation">Structural navigation commands</link>:
+          Move among headings, links, interactive controls, tables, landmarks, and other
+          structures.
         </p>
       </item>
       <item>
         <p>
-          <link xref="features_reading_documents_table_navigation#commands-table-navigation">Table navigation commands</link>: Use
-          Orca-controlled table navigation.
+          <link xref="features_reading_documents_table_navigation#commands-table-navigation">Table navigation commands</link>:
+          Use Orca-controlled table navigation.
         </p>
       </item>
     </list>

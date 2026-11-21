@@ -24,8 +24,9 @@
   </p>
   <p>
     Finding a match does not move application focus or reposition the caret. To search document
-    content beyond the visible portion, use the application's search feature. See "<link xref="features_reading_documents_native_navigation">Native navigation</link>" for application
-    search and Orca's presentation of its results.
+    content beyond the visible portion, use the application's search feature. See
+    "<link xref="features_reading_documents_native_navigation">Native navigation</link>" for
+    application search and Orca's presentation of its results.
   </p>
   <section id="commands-find">
     <title>Commands</title>

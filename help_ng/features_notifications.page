@@ -30,13 +30,13 @@
     <title>Commands</title>
     <p>
       <em style="strong">Preferences location:</em>
-      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Notification presenter</gui> group.
+      <gui>Commands</gui> category, <gui>Commands</gui> section,
+      <gui>Notification presenter</gui> group.
     </p>
     <list>
       <item>
         <p>
-          <gui>Present last notification message</gui>: Unbound by
-          default.
+          <gui>Present last notification message</gui>: Unbound by default.
         </p>
         <p>
           Presents the most recent message and how long ago it was received.
@@ -44,8 +44,7 @@
       </item>
       <item>
         <p>
-          <gui>Present previous notification message</gui>: Unbound by
-          default.
+          <gui>Present previous notification message</gui>: Unbound by default.
         </p>
         <p>
           Presents the previous message and how long ago it was received.
@@ -53,8 +52,7 @@
       </item>
       <item>
         <p>
-          <gui>Present next notification message</gui>: Unbound by
-          default.
+          <gui>Present next notification message</gui>: Unbound by default.
         </p>
         <p>
           Presents the next message and how long ago it was received.
@@ -62,8 +60,7 @@
       </item>
       <item>
         <p>
-          <gui>Present notification messages list</gui>: Unbound by
-          default.
+          <gui>Present notification messages list</gui>: Unbound by default.
         </p>
         <p>
           Opens a list of recent messages, newest first, alongside how long ago each was

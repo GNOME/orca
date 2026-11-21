@@ -35,6 +35,7 @@ def get_documentation() -> CommandGroupDoc:
     """Returns documentation metadata for live region commands."""
 
     return CommandGroupDoc(
+        title="Presentation and history",
         target="documents.live-regions.commands",
         commands=(
             CommandDoc(

@@ -37,7 +37,8 @@
     misspelled words as you navigate or type. The application's spelling-error indicators,
     usually red squiggly underlines, must be enabled and exposed as accessibility text
     attributes. Announcements while typing also require the application to report changes to
-    those attributes through accessibility events. Configure these announcements in "<link xref="features_speech_and_voices_verbosity#settings-verbosity">Verbosity preferences</link>".
+    those attributes through accessibility events. Configure these announcements in
+    "<link xref="features_speech_and_voices_verbosity#settings-verbosity">Verbosity preferences</link>".
   </p>
   <section id="settings-spell-checking">
     <title>Settings</title>
@@ -51,20 +52,20 @@
     <list>
       <item>
         <p>
-          <gui>Spell error</gui>: Controls whether Orca
-          spells out the current error after speaking it. Default: on.
+          <gui>Spell error</gui>: Controls whether Orca spells out the current error after
+          speaking it. Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Spell suggestion</gui>: Controls whether
-          Orca spells out the current suggestion after speaking it. Default: on.
+          <gui>Spell suggestion</gui>: Controls whether Orca spells out the current suggestion
+          after speaking it. Default: on.
         </p>
       </item>
       <item>
         <p>
-          <gui>Present context of error</gui>: Controls whether
-          Orca presents the surrounding text in which the mistake occurred. Default: on.
+          <gui>Present context of error</gui>: Controls whether Orca presents the surrounding
+          text in which the mistake occurred. Default: on.
         </p>
       </item>
     </list>

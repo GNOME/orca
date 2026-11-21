@@ -39,8 +39,8 @@
         </p>
         <p>
           Turns bypass mode on or off. Switching to another application also ends bypass mode.
-          While it is active, keys normally used as <key>Orca Modifier</key> keys are passed through
-          to the application too.
+          While it is active, keys normally used as <key>Orca Modifier</key> keys are passed
+          through to the application too.
         </p>
       </item>
     </list>

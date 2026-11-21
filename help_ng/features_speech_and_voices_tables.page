@@ -36,67 +36,66 @@
     <list>
       <item>
         <p>
-          <gui>Row Navigation</gui>: Controls whether
-          Orca speaks an entire row or only the focused cell when moving by row.
+          <gui>Row Navigation</gui>: Controls whether Orca speaks an entire row or only the
+          focused cell when moving by row.
         </p>
         <list>
           <item>
             <p>
-              <gui>Speak full row in GUI tables</gui>: Controls whether
-              Orca speaks the entire row or only the focused cell in application tables, such as
-              a message list. Default: on.
+              <gui>Speak full row in GUI tables</gui>: Controls whether Orca speaks the entire
+              row or only the focused cell in application tables, such as a message list.
+              Default: on.
             </p>
           </item>
           <item>
             <p>
-              <gui>Speak full row in document tables</gui>: Controls whether
-              Orca speaks the entire row or only the focused cell in document tables, such as
-              Writer and web tables. Default: on.
+              <gui>Speak full row in document tables</gui>: Controls whether Orca speaks the
+              entire row or only the focused cell in document tables, such as Writer and web
+              tables. Default: on.
             </p>
           </item>
           <item>
             <p>
-              <gui>Speak full row in spreadsheets</gui>: Controls whether
-              Orca speaks the entire row or only the focused cell in spreadsheets. Default: off.
+              <gui>Speak full row in spreadsheets</gui>: Controls whether Orca speaks the entire
+              row or only the focused cell in spreadsheets. Default: off.
             </p>
           </item>
         </list>
       </item>
       <item>
         <p>
-          <gui>Cell Navigation</gui>: Controls which cell
-          details Orca speaks while navigating tables.
+          <gui>Cell Navigation</gui>: Controls which cell details Orca speaks while navigating
+          tables.
         </p>
         <list>
           <item>
             <p>
-              <gui>Speak cell header</gui>: Controls whether
-              Orca speaks the header of a table cell. Default: on.
+              <gui>Speak cell header</gui>: Controls whether Orca speaks the header of a table
+              cell. Default: on.
             </p>
           </item>
           <item>
             <p>
-              <gui>Speak cell coordinates</gui>: Controls whether
-              Orca speaks table cell coordinates in document content. Default: on.
+              <gui>Speak cell coordinates</gui>: Controls whether Orca speaks table cell
+              coordinates in document content. Default: on.
             </p>
           </item>
           <item>
             <p>
-              <gui>Speak spreadsheet cell coordinates</gui>: Controls whether
-              Orca speaks spreadsheet cell coordinates. Default: on.
+              <gui>Speak spreadsheet cell coordinates</gui>: Controls whether Orca speaks
+              spreadsheet cell coordinates. Default: on.
             </p>
           </item>
           <item>
             <p>
-              <gui>Speak multiple cell spans</gui>: Controls whether
-              Orca speaks how many rows and columns a cell spans. Default: on.
+              <gui>Speak multiple cell spans</gui>: Controls whether Orca speaks how many rows
+              and columns a cell spans. Default: on.
             </p>
           </item>
           <item>
             <p>
-              <gui>Always speak selected spreadsheet range</gui>: Controls whether
-              Orca speaks the full selected range when spreadsheet selection changes. Default:
-              off.
+              <gui>Always speak selected spreadsheet range</gui>: Controls whether Orca speaks
+              the full selected range when spreadsheet selection changes. Default: off.
             </p>
           </item>
         </list>
@@ -107,12 +106,14 @@
     <title>Commands</title>
     <p>
       <em style="strong">Preferences location:</em>
-      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Speech and verbosity</gui> group.
+      <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Speech and verbosity</gui>
+      group.
     </p>
     <list>
       <item>
         <p>
-          <gui>Toggle whether to read just the current table cell or the whole row</gui>: <keyseq>
+          <gui>Toggle whether to read just the current table cell or the whole row</gui>:
+          <keyseq>
             <key>Orca Modifier</key>
             <key>F11</key>
           </keyseq>
@@ -128,8 +129,9 @@
     <list>
       <item>
         <p>
-          <link xref="features_reading_documents_table_navigation">Table navigation</link>: Table navigation
-          lets you use Orca commands to move by cell, row, and column in tables.
+          <link xref="features_reading_documents_table_navigation">Table navigation</link>:
+          Table navigation lets you use Orca commands to move by cell, row, and column in
+          tables.
         </p>
       </item>
     </list>

@@ -40,10 +40,9 @@
           </keyseq>
         </p>
         <p>
-          Enters learn mode. Press <key>F1</key> to leave learn mode and open Orca
-          help. Press <key>F2</key> to leave learn mode and show Orca
-          shortcuts. Press <key>Escape</key> to exit without opening
-          another window.
+          Enters learn mode. Press <key>F1</key> to leave learn mode and open Orca help. Press
+          <key>F2</key> to leave learn mode and show Orca shortcuts. Press <key>Escape</key> to
+          exit without opening another window.
         </p>
       </item>
     </list>

@@ -42,26 +42,25 @@
       <list>
         <item>
           <p>
-            <gui>Add New Pronunciation</gui>: Opens a dialog
-            where you can add a word and the replacement text Orca should speak.
+            <gui>Add New Pronunciation</gui>: Opens a dialog where you can add a word and the
+            replacement text Orca should speak.
           </p>
         </item>
         <item>
           <p>
-            <gui>Pronunciation Dictionary</gui>: Lists words and
-            the replacement text Orca sends to speech before speaking them.
+            <gui>Pronunciation Dictionary</gui>: Lists words and the replacement text Orca sends
+            to speech before speaking them.
           </p>
           <list>
             <item>
               <p>
-                <gui>Edit Pronunciation</gui>: Opens a dialog
-                where you can change the selected pronunciation entry.
+                <gui>Edit Pronunciation</gui>: Opens a dialog where you can change the selected
+                pronunciation entry.
               </p>
             </item>
             <item>
               <p>
-                <gui>Delete</gui>: Removes the selected
-                pronunciation entry.
+                <gui>Delete</gui>: Removes the selected pronunciation entry.
               </p>
             </item>
           </list>
@@ -80,8 +79,8 @@
       <list>
         <item>
           <p>
-            <gui>Use pronunciation dictionary</gui>: Controls whether
-            Orca uses pronunciation dictionary entries. Default: on.
+            <gui>Use pronunciation dictionary</gui>: Controls whether Orca uses pronunciation
+            dictionary entries. Default: on.
           </p>
         </item>
       </list>

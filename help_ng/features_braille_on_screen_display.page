@@ -35,27 +35,26 @@
     <list>
       <item>
         <p>
-          <gui>Cell count</gui>: Sets the number of
-          braille cells shown in the on-screen braille display. Default: 32. Range: 1 to 80.
+          <gui>Cell count</gui>: Sets the number of braille cells shown in the on-screen braille
+          display. Default: 32. Range: 1 to 80.
         </p>
       </item>
       <item>
         <p>
-          <gui>Show braille dot patterns</gui>: Controls whether
-          the on-screen braille display shows Unicode braille dot patterns instead of text
-          characters. Default: off.
+          <gui>Show braille dot patterns</gui>: Controls whether the on-screen braille display
+          shows Unicode braille dot patterns instead of text characters. Default: off.
         </p>
       </item>
       <item>
         <p>
-          <gui>Text color</gui>: Selects the text color
-          for the on-screen braille display. Default: #000000.
+          <gui>Text color</gui>: Selects the text color for the on-screen braille display.
+          Default: #000000.
         </p>
       </item>
       <item>
         <p>
-          <gui>Background color</gui>: Selects the
-          background color for the on-screen braille display. Default: #ffffff.
+          <gui>Background color</gui>: Selects the background color for the on-screen braille
+          display. Default: #ffffff.
         </p>
       </item>
     </list>
@@ -69,22 +68,7 @@
     <list>
       <item>
         <p>
-          <gui>Toggle the on-screen braille display on and off</gui>: Unbound by
-          default.
-        </p>
-      </item>
-    </list>
-  </section>
-  <section id="on-screen-braille-display-related">
-    <title>Related topics</title>
-    <p>
-      See also:
-    </p>
-    <list>
-      <item>
-        <p>
-          <link xref="features_clipboard">Clipboard</link>: Present the
-          contents of the system clipboard.
+          <gui>Toggle the on-screen braille display on and off</gui>: Unbound by default.
         </p>
       </item>
     </list>

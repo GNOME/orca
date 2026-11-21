@@ -117,17 +117,27 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         PreferenceValueDoc(
                             label=guilabels.MATH_NAV_MODE_ENHANCED,
                             value="enhanced",
-                            summary="Groups related items together for faster navigation.",
+                            summary=(
+                                "Moves among mathematically meaningful parts, such as "
+                                "numerators, denominators, exponents, and expressions within "
+                                "parentheses."
+                            ),
                         ),
                         PreferenceValueDoc(
                             label=guilabels.MATH_NAV_MODE_SIMPLE,
                             value="simple",
-                            summary="Visits each math element individually.",
+                            summary=(
+                                "Moves among words while keeping structures such as fractions "
+                                "and square roots together. Zoom in to explore those structures."
+                            ),
                         ),
                         PreferenceValueDoc(
                             label=guilabels.MATH_NAV_MODE_CHARACTER,
                             value="character",
-                            summary="Visits individual symbols one at a time.",
+                            summary=(
+                                "Moves among math symbols, names, and numbers. Zoom in on a "
+                                "name or number to explore its individual characters."
+                            ),
                         ),
                     ),
                 ),

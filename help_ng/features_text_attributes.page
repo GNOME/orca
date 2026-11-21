@@ -47,19 +47,17 @@
       <list>
         <item>
           <p>
-            <gui>Text Attributes</gui>: Lists text
-            attributes and lets you choose whether each is spoken, marked in braille, both, or
-            neither. The choices and presentation order can be customized for individual
-            applications. Speech choices apply to the explicit formatting command, not automatic
-            formatting-change announcements. Enable braille marking for the mistake attribute to
-            mark spelling and grammar errors. Choices: None, Speak, Mark in braille, Speak and
-            mark.
+            <gui>Text Attributes</gui>: Lists text attributes and lets you choose whether each
+            is spoken, marked in braille, both, or neither. The choices and presentation order
+            can be customized for individual applications. Speech choices apply to the explicit
+            formatting command, not automatic formatting-change announcements. Enable braille
+            marking for the mistake attribute to mark spelling and grammar errors. Choices:
+            None, Speak, Mark in braille, Speak and mark.
           </p>
           <list>
             <item>
               <p>
-                <gui>None</gui>: Does not present the
-                attribute.
+                <gui>None</gui>: Does not present the attribute.
               </p>
             </item>
             <item>
@@ -69,46 +67,42 @@
             </item>
             <item>
               <p>
-                <gui>Mark in braille</gui>: Marks the
-                attribute in braille.
+                <gui>Mark in braille</gui>: Marks the attribute in braille.
               </p>
             </item>
             <item>
               <p>
-                <gui>Speak and mark</gui>: Speaks the
-                attribute and marks it in braille.
+                <gui>Speak and mark</gui>: Speaks the attribute and marks it in braille.
               </p>
             </item>
           </list>
           <list>
             <item>
               <p>
-                <gui>Reorder</gui>: Moves the selected
-                text attribute earlier or later in the presentation order.
+                <gui>Reorder</gui>: Moves the selected text attribute earlier or later in the
+                presentation order.
               </p>
             </item>
             <item>
               <p>
-                <gui>Move to top</gui>: Moves the selected
-                text attribute to the top of the list.
+                <gui>Move to top</gui>: Moves the selected text attribute to the top of the
+                list.
               </p>
             </item>
             <item>
               <p>
-                <gui>Move up one</gui>: Moves the selected
-                text attribute up one position.
+                <gui>Move up one</gui>: Moves the selected text attribute up one position.
               </p>
             </item>
             <item>
               <p>
-                <gui>Move down one</gui>: Moves the selected
-                text attribute down one position.
+                <gui>Move down one</gui>: Moves the selected text attribute down one position.
               </p>
             </item>
             <item>
               <p>
-                <gui>Move to bottom</gui>: Moves the selected
-                text attribute to the bottom of the list.
+                <gui>Move to bottom</gui>: Moves the selected text attribute to the bottom of
+                the list.
               </p>
             </item>
           </list>
@@ -119,7 +113,8 @@
       <title>Commands</title>
       <p>
         <em style="strong">Preferences location:</em>
-        <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Object details</gui> group.
+        <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Object details</gui>
+        group.
       </p>
       <list>
         <item>
@@ -141,14 +136,14 @@
             <gui>Show character formatting</gui>: <keyseq>
               <key>Orca Modifier</key>
               <key>F</key>
-            </keyseq>
-            (press twice quickly)
+            </keyseq> (press twice quickly)
           </p>
           <p>
             Opens a window showing all available attributes for the current character, including
-            those not enabled for speech. You can inspect and copy the details. Press <key>Escape</key> to close the window. Uses
-            the character at the flat review location when flat review is active, or at the text
-            caret otherwise. If no formatting information is available, Orca tells you.
+            those not enabled for speech. You can inspect and copy the details. Press
+            <key>Escape</key> to close the window. Uses the character at the flat review
+            location when flat review is active, or at the text caret otherwise. If no
+            formatting information is available, Orca tells you.
           </p>
         </item>
       </list>
@@ -160,7 +155,8 @@
       Orca can announce formatting changes, such as bold or italic, as you move through text.
       The settings below control these announcements. Applications can also expose spelling and
       grammar errors as text attributes, often corresponding to a squiggly underline on screen.
-      Configure those announcements in "<link xref="features_speech_and_voices_verbosity#settings-verbosity">Verbosity preferences</link>".
+      Configure those announcements in
+      "<link xref="features_speech_and_voices_verbosity#settings-verbosity">Verbosity preferences</link>".
     </p>
     <section id="settings-automatic-announcements">
       <title>Settings</title>
@@ -176,10 +172,10 @@
         <list>
           <item>
             <p>
-              <gui>Text attribute changes</gui>: Controls automatic
-              announcements of formatting changes as you navigate. These announcements are
-              independent of the attribute list used by the explicit formatting command.
-              Choices: Off (default), Editable text only, Always.
+              <gui>Text attribute changes</gui>: Controls automatic announcements of formatting
+              changes as you navigate. These announcements are independent of the attribute list
+              used by the explicit formatting command. Choices: Off (default), Editable text
+              only, Always.
             </p>
           </item>
         </list>
@@ -196,28 +192,26 @@
         <list>
           <item>
             <p>
-              <gui>Text attribute changes</gui>: Controls automatic
-              announcements of formatting changes during Say All, independently of announcements
-              during navigation and the attribute list used by the explicit formatting command.
-              Choices: Off, Editable text only, Always.
+              <gui>Text attribute changes</gui>: Controls automatic announcements of formatting
+              changes during Say All, independently of announcements during navigation and the
+              attribute list used by the explicit formatting command. Choices: Off, Editable
+              text only, Always.
             </p>
             <list>
               <item>
                 <p>
-                  <gui>Off (default)</gui>: Does not announce
-                  formatting changes.
+                  <gui>Off (default)</gui>: Does not announce formatting changes.
                 </p>
               </item>
               <item>
                 <p>
-                  <gui>Editable text only</gui>: Announces
-                  formatting changes only in editable text.
+                  <gui>Editable text only</gui>: Announces formatting changes only in editable
+                  text.
                 </p>
               </item>
               <item>
                 <p>
-                  <gui>Always</gui>: Always announces
-                  formatting changes.
+                  <gui>Always</gui>: Always announces formatting changes.
                 </p>
               </item>
             </list>
@@ -229,13 +223,13 @@
       <title>Commands</title>
       <p>
         <em style="strong">Preferences location:</em>
-        <gui>Commands</gui> category, <gui>Commands</gui> section, <gui>Speech and verbosity</gui> group.
+        <gui>Commands</gui> category, <gui>Commands</gui> section,
+        <gui>Speech and verbosity</gui> group.
       </p>
       <list>
         <item>
           <p>
-            <gui>Cycle to the next text attribute change mode</gui>: Unbound by
-            default.
+            <gui>Cycle to the next text attribute change mode</gui>: Unbound by default.
           </p>
           <p>
             Cycles through formatting-change announcement modes for the current session.
@@ -248,7 +242,8 @@
     <title>Braille indicators</title>
     <p>
       Braille indicators mark formatting without adding words to the display. They are
-      independent of spoken formatting announcements. Configure the indicator in "<link xref="features_braille_display_settings">Display settings</link>".
+      independent of spoken formatting announcements. Configure the indicator in
+      "<link xref="features_braille_display_settings">Display settings</link>".
     </p>
   </section>
 </page>

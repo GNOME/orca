@@ -28,9 +28,10 @@
       including profiles and application-specific settings.
     </p>
     <p>
-      Save any changes in Orca's Preferences window before making a backup. Run <code>dconf dump /org/gnome/orca/ &gt; orca-settings.ini</code>
-      to save your settings to a file named <code>orca-settings.ini</code> in the terminal's
-      current directory. Choose a different filename to keep an earlier backup.
+      Save any changes in Orca's Preferences window before making a backup. Run
+      <code>dconf dump /org/gnome/orca/ &gt; orca-settings.ini</code> to save your settings to a
+      file named <code>orca-settings.ini</code> in the terminal's current directory. Choose a
+      different filename to keep an earlier backup.
     </p>
   </section>
   <section id="restoring-or-transferring-settings">
@@ -40,13 +41,19 @@
       braille support your settings use must also be available on that machine.
     </p>
     <p>
+      User extension files are not included in the settings backup. Copy them separately; see
+      "<link xref="features_user_extensions">User extensions</link>" for their installation
+      location.
+    </p>
+    <p>
       Close Orca's Preferences window before restoring settings. From the directory containing
       your backup, run <code>dconf load /org/gnome/orca/ &lt; orca-settings.ini</code>.
     </p>
     <p>
       Loading a backup overwrites the settings present in the file but leaves other existing
       settings unchanged. To replace your settings with the backup instead, first back up any
-      current settings you want to keep, then run <code>dconf reset -f /org/gnome/orca/ &amp;&amp; dconf load /org/gnome/orca/ &lt; orca-settings.ini</code>.
+      current settings you want to keep, then run
+      <code>dconf reset -f /org/gnome/orca/ &amp;&amp; dconf load /org/gnome/orca/ &lt; orca-settings.ini</code>.
     </p>
     <p>
       Restart Orca after restoring settings so all changes take effect.
@@ -57,8 +64,8 @@
     <list>
       <item>
         <p>
-          <link xref="introduction">Starting and stopping Orca</link>: Start and stop
-          Orca using your desktop or the command line.
+          <link xref="introduction">Starting and stopping Orca</link>: Start and stop Orca using
+          your desktop or the command line.
         </p>
       </item>
     </list>
@@ -66,9 +73,10 @@
   <section id="resetting-all-settings">
     <title>Resetting all settings</title>
     <p>
-      To start fresh, close Orca's Preferences window and run <code>dconf reset -f /org/gnome/orca/</code>. This removes all
-      your saved Orca settings, including profiles, application-specific settings, voice
-      choices, and command bindings. Make a backup first if you might want to restore them.
+      To start fresh, close Orca's Preferences window and run
+      <code>dconf reset -f /org/gnome/orca/</code>. This removes all your saved Orca settings,
+      including profiles, application-specific settings, voice choices, and command bindings.
+      Make a backup first if you might want to restore them.
     </p>
     <p>
       Restart Orca to use the default settings.
@@ -98,9 +106,9 @@
       </item>
     </list>
     <p>
-      To back up, restore, or reset another profile, replace <code>default</code> in the path with its stored
-      identifier. Run <code>dconf list /org/gnome/orca/</code> to list the stored
-      profile directories; their names can differ from the names shown in preferences.
+      To back up, restore, or reset another profile, replace <code>default</code> in the path
+      with its stored identifier. Run <code>dconf list /org/gnome/orca/</code> to list the
+      stored profile directories; their names can differ from the names shown in preferences.
     </p>
     <p>
       The same backup and restore precautions apply to individual profiles. Resetting a
@@ -114,8 +122,8 @@
     <list>
       <item>
         <p>
-          <link xref="features_profiles">Profiles</link>: Create collections
-          of settings for different activities.
+          <link xref="features_profiles">Profiles</link>: Create collections of settings for
+          different activities.
         </p>
       </item>
     </list>
