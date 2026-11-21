@@ -23,22 +23,12 @@
 from __future__ import annotations
 
 import enum
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 from . import dbus_service, debug, gsettings_registry
 from .ax_text import AXTextAttribute
-
-if TYPE_CHECKING:
-    from .text_attribute_manager_preferences_grid import TextAttributePreferencesGrid
-
-
-class PresentationMode(enum.IntEnum):
-    """How a text attribute should be presented."""
-
-    NONE = 0
-    SPEAK = 1
-    BRAILLE = 2
-    SPEAK_AND_BRAILLE = 3
+from .text_attribute_manager_preferences_grid import TextAttributePreferencesGrid
+from .text_attribute_manager_settings import TextAttributeSettings
 
 
 @gsettings_registry.get_registry().gsettings_enum(
@@ -61,8 +51,6 @@ class TextAttributeManager:
     """Manager for text attribute presentation settings."""
 
     _SCHEMA = "text-attributes"
-    KEY_ATTRIBUTES_TO_SPEAK = "attributes-to-speak"
-    KEY_ATTRIBUTES_TO_BRAILLE = "attributes-to-braille"
 
     def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -83,13 +71,10 @@ class TextAttributeManager:
     def create_preferences_grid(self) -> TextAttributePreferencesGrid:
         """Create and return a preferences grid for text attributes."""
 
-        # pylint: disable-next=import-outside-toplevel
-        from .text_attribute_manager_preferences_grid import TextAttributePreferencesGrid
-
-        return TextAttributePreferencesGrid()
+        return TextAttributePreferencesGrid(self)
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ATTRIBUTES_TO_SPEAK,
+        key=TextAttributeSettings.KEY_ATTRIBUTES_TO_SPEAK,
         schema="text-attributes",
         gtype="as",
         default=[],
@@ -100,7 +85,7 @@ class TextAttributeManager:
     def get_attributes_to_speak(self) -> list[str]:
         """Returns the list of text attributes to speak."""
 
-        return self._get_setting(self.KEY_ATTRIBUTES_TO_SPEAK, "as", [])
+        return self._get_setting(TextAttributeSettings.KEY_ATTRIBUTES_TO_SPEAK, "as", [])
 
     def get_resolved_attributes_to_speak(self) -> list[AXTextAttribute]:
         """Returns the resolved list of attributes to speak, falling back to defaults."""
@@ -123,13 +108,13 @@ class TextAttributeManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_ATTRIBUTES_TO_SPEAK,
+            TextAttributeSettings.KEY_ATTRIBUTES_TO_SPEAK,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ATTRIBUTES_TO_BRAILLE,
+        key=TextAttributeSettings.KEY_ATTRIBUTES_TO_BRAILLE,
         schema="text-attributes",
         gtype="as",
         default=[],
@@ -140,7 +125,7 @@ class TextAttributeManager:
     def get_attributes_to_braille(self) -> list[str]:
         """Returns the list of text attributes to mark in braille."""
 
-        return self._get_setting(self.KEY_ATTRIBUTES_TO_BRAILLE, "as", [])
+        return self._get_setting(TextAttributeSettings.KEY_ATTRIBUTES_TO_BRAILLE, "as", [])
 
     @dbus_service.setter
     def set_attributes_to_braille(self, value: list[str]) -> bool:
@@ -153,7 +138,7 @@ class TextAttributeManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_ATTRIBUTES_TO_BRAILLE,
+            TextAttributeSettings.KEY_ATTRIBUTES_TO_BRAILLE,
             value,
         )
         return True

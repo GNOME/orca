@@ -174,7 +174,6 @@ class TestWhereAmIPresenter:
         ax_utilities_mock.AXUtilities.get_selected_text = test_context.Mock(
             return_value=("selected text", 0, 5),
         )
-        ax_utilities_mock.AXUtilities.get_all_supported_text_attributes = test_context.Mock()
         ax_utilities_mock.AXUtilities.is_layout_only = test_context.Mock(return_value=False)
 
         return essential_modules

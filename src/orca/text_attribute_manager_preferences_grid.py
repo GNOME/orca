@@ -22,15 +22,17 @@
 
 from __future__ import annotations
 
+import enum
+from typing import TYPE_CHECKING
+
 import gi
 
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GObject, Gtk
 
-from . import gsettings_registry, guilabels, orca_gui_helpers, text_attribute_manager
+from . import gsettings_registry, guilabels, orca_gui_helpers
 from .ax_text import AXTextAttribute
-from .ax_utilities import AXUtilities
 from .help_metadata import (
     PreferenceActionDoc,
     PreferenceCategoryDoc,
@@ -39,7 +41,19 @@ from .help_metadata import (
     PreferenceValueDoc,
 )
 from .preferences_grid_base import PreferencesGridBase
-from .text_attribute_manager import PresentationMode
+from .text_attribute_manager_settings import TextAttributeSettings
+
+if TYPE_CHECKING:
+    from .text_attribute_manager import TextAttributeManager
+
+
+class PresentationMode(enum.IntEnum):
+    """How a text attribute should be presented."""
+
+    NONE = 0
+    SPEAK = 1
+    BRAILLE = 2
+    SPEAK_AND_BRAILLE = 3
 
 
 class TextAttributePreferencesGrid(PreferencesGridBase):
@@ -139,8 +153,9 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
             ),
         )
 
-    def __init__(self) -> None:
+    def __init__(self, manager: TextAttributeManager) -> None:
         super().__init__(guilabels.TEXT_ATTRIBUTES)
+        self._manager: TextAttributeManager = manager
         self._initializing: bool = True
         self._listbox: Gtk.ListBox | None = None
         self._attributes: list[tuple[AXTextAttribute, PresentationMode]] = []
@@ -391,15 +406,15 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
         self._initializing = True
         self._has_unsaved_changes = False
 
-        spoken_attrs = text_attribute_manager.get_manager().get_attributes_to_speak()
+        spoken_attrs = self._manager.get_attributes_to_speak()
         if not spoken_attrs:
             spoken_attrs = [
                 attr.get_attribute_name()
-                for attr in AXUtilities.get_all_supported_text_attributes()
+                for attr in AXTextAttribute
                 if attr.should_present_by_default()
             ]
 
-        brailled_attrs = text_attribute_manager.get_manager().get_attributes_to_braille()
+        brailled_attrs = self._manager.get_attributes_to_braille()
         if not brailled_attrs:
             brailled_attrs = []
 
@@ -423,7 +438,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
 
             self._attributes.append((attr, mode))
 
-        for supported_attr in AXUtilities.get_all_supported_text_attributes():
+        for supported_attr in AXTextAttribute:
             attr_name = supported_attr.get_attribute_name()
             if attr_name not in spoken_set:
                 if attr_name in brailled_set:
@@ -478,10 +493,8 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
                 brailled_attributes.append(key)
 
         result = {
-            text_attribute_manager.TextAttributeManager.KEY_ATTRIBUTES_TO_SPEAK: spoken_attributes,
-            text_attribute_manager.TextAttributeManager.KEY_ATTRIBUTES_TO_BRAILLE: (
-                brailled_attributes
-            ),
+            TextAttributeSettings.KEY_ATTRIBUTES_TO_SPEAK: spoken_attributes,
+            TextAttributeSettings.KEY_ATTRIBUTES_TO_BRAILLE: brailled_attributes,
         }
 
         if profile and self._has_unsaved_changes:

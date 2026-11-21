@@ -1835,8 +1835,6 @@ class AXUtilities:
         end_offset: int = -1,
     ) -> list[tuple[int, int, dict[str, str]]]: ...
     @staticmethod
-    def get_all_supported_text_attributes() -> list[AXTextAttribute]: ...
-    @staticmethod
     def get_visible_lines(
         obj: Atspi.Accessible,
         clip_rect: Atspi.Rect,

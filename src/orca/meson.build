@@ -222,6 +222,7 @@ lib_sources = [
   'table_navigator_command_definitions.py',
   'text_attribute_manager.py',
   'text_attribute_manager_preferences_grid.py',
+  'text_attribute_manager_settings.py',
   'text_attribute_names.py',
   'text_selection_manager.py',
   'text_selection_presenter.py',

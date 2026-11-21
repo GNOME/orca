@@ -1377,12 +1377,6 @@ class AXUtilitiesText:
         return rv
 
     @staticmethod
-    def get_all_supported_text_attributes() -> list[AXTextAttribute]:
-        """Returns a set of all supported text attribute names."""
-
-        return list(AXTextAttribute)
-
-    @staticmethod
     def _rect_is_fully_contained_in(rect1: Atspi.Rect, rect2: Atspi.Rect) -> bool:
         """Returns true if rect1 is fully contained in rect2"""
 

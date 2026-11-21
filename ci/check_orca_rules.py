@@ -398,7 +398,6 @@ class ImportsOutsideTopLevel(Rule):
         "src/orca/pronunciation_dictionary_manager.py": 1,
         "src/orca/screen_reader_manager.py": 1,
         "src/orca/speech_presenter.py": 2,
-        "src/orca/text_attribute_manager.py": 1,
     }
 
     @staticmethod
