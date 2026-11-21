@@ -88,7 +88,6 @@ def get_commands(owner: CaretNavigator) -> list[Command]:
     kb_shift_home = keybindings.KeyBinding("Home", keybindings.SHIFT_MODIFIER_MASK)
 
     enabled = owner.get_is_enabled() and not owner._suspended  # pylint: disable=protected-access
-    selection_visible = owner.get_selection_available()
     selection_enabled = owner.get_selection_enabled() and enabled
     toggle_enabled = not owner._suspended  # pylint: disable=protected-access
 
@@ -209,7 +208,6 @@ def get_commands(owner: CaretNavigator) -> list[Command]:
             laptop_keybinding=kb_shift_right,
             enabled=selection_enabled,
             activation_group=owner.SELECTION_ACTIVATION_GROUP,
-            user_visible=selection_visible,
         ),
         KeyboardCommand(
             "select_previous_character",
@@ -220,7 +218,6 @@ def get_commands(owner: CaretNavigator) -> list[Command]:
             laptop_keybinding=kb_shift_left,
             enabled=selection_enabled,
             activation_group=owner.SELECTION_ACTIVATION_GROUP,
-            user_visible=selection_visible,
         ),
         KeyboardCommand(
             "select_next_word",
@@ -231,7 +228,6 @@ def get_commands(owner: CaretNavigator) -> list[Command]:
             laptop_keybinding=kb_ctrl_shift_right,
             enabled=selection_enabled,
             activation_group=owner.SELECTION_ACTIVATION_GROUP,
-            user_visible=selection_visible,
         ),
         KeyboardCommand(
             "select_previous_word",
@@ -242,7 +238,6 @@ def get_commands(owner: CaretNavigator) -> list[Command]:
             laptop_keybinding=kb_ctrl_shift_left,
             enabled=selection_enabled,
             activation_group=owner.SELECTION_ACTIVATION_GROUP,
-            user_visible=selection_visible,
         ),
         KeyboardCommand(
             "select_next_line",
@@ -253,7 +248,6 @@ def get_commands(owner: CaretNavigator) -> list[Command]:
             laptop_keybinding=kb_shift_down,
             enabled=selection_enabled,
             activation_group=owner.SELECTION_ACTIVATION_GROUP,
-            user_visible=selection_visible,
         ),
         KeyboardCommand(
             "select_previous_line",
@@ -264,7 +258,6 @@ def get_commands(owner: CaretNavigator) -> list[Command]:
             laptop_keybinding=kb_shift_up,
             enabled=selection_enabled,
             activation_group=owner.SELECTION_ACTIVATION_GROUP,
-            user_visible=selection_visible,
         ),
         KeyboardCommand(
             "select_start_of_file",
@@ -275,7 +268,6 @@ def get_commands(owner: CaretNavigator) -> list[Command]:
             laptop_keybinding=kb_ctrl_shift_home,
             enabled=selection_enabled,
             activation_group=owner.SELECTION_ACTIVATION_GROUP,
-            user_visible=selection_visible,
         ),
         KeyboardCommand(
             "select_end_of_file",
@@ -286,7 +278,6 @@ def get_commands(owner: CaretNavigator) -> list[Command]:
             laptop_keybinding=kb_ctrl_shift_end,
             enabled=selection_enabled,
             activation_group=owner.SELECTION_ACTIVATION_GROUP,
-            user_visible=selection_visible,
         ),
         KeyboardCommand(
             "select_start_of_line",
@@ -297,7 +288,6 @@ def get_commands(owner: CaretNavigator) -> list[Command]:
             laptop_keybinding=kb_shift_home,
             enabled=selection_enabled,
             activation_group=owner.SELECTION_ACTIVATION_GROUP,
-            user_visible=selection_visible,
         ),
         KeyboardCommand(
             "select_end_of_line",
@@ -308,6 +298,5 @@ def get_commands(owner: CaretNavigator) -> list[Command]:
             laptop_keybinding=kb_shift_end,
             enabled=selection_enabled,
             activation_group=owner.SELECTION_ACTIVATION_GROUP,
-            user_visible=selection_visible,
         ),
     ]

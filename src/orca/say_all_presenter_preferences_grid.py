@@ -372,29 +372,17 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         presenter.set_announce_form,
                         SayAllSettings.KEY_ANNOUNCE_FORM,
                     ),
-                    *(
-                        (
-                            (
-                                guilabels.ANNOUNCE_HEADERS_AND_FOOTERS,
-                                presenter.get_announce_header_and_footer,
-                                presenter.set_announce_header_and_footer,
-                                SayAllSettings.KEY_ANNOUNCE_HEADER_AND_FOOTER,
-                            ),
-                        )
-                        if presenter.get_header_and_footer_available()
-                        else ()
+                    (
+                        guilabels.ANNOUNCE_HEADERS_AND_FOOTERS,
+                        presenter.get_announce_header_and_footer,
+                        presenter.set_announce_header_and_footer,
+                        SayAllSettings.KEY_ANNOUNCE_HEADER_AND_FOOTER,
                     ),
-                    *(
-                        (
-                            (
-                                guilabels.ANNOUNCE_INLINE_CODE,
-                                presenter.get_announce_inline_code,
-                                presenter.set_announce_inline_code,
-                                SayAllSettings.KEY_ANNOUNCE_INLINE_CODE,
-                            ),
-                        )
-                        if presenter.get_inline_code_available()
-                        else ()
+                    (
+                        guilabels.ANNOUNCE_INLINE_CODE,
+                        presenter.get_announce_inline_code,
+                        presenter.set_announce_inline_code,
+                        SayAllSettings.KEY_ANNOUNCE_INLINE_CODE,
                     ),
                     (
                         guilabels.ANNOUNCE_LANDMARKS,

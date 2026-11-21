@@ -23,48 +23,12 @@
 from __future__ import annotations
 
 import ast
-import re
 from pathlib import Path
 
 import pytest
 
 _ORCA_SRC = Path(__file__).resolve().parents[2] / "src/orca"
 _TRANSLATION_ARGUMENTS = {"_": 1, "C_": 2, "ngettext": 2}
-# These strings cannot be marked for translation during the v51 string freeze.
-_UNLOCALIZED_UNTIL_52 = {
-    "cmdnames": {
-        repr("Select next character"),
-        repr("Select previous character"),
-        repr("Select next word"),
-        repr("Select previous word"),
-        repr("Select next line"),
-        repr("Select previous line"),
-        repr("Select to the top of the file"),
-        repr("Select to the bottom of the file"),
-        repr("Select to the beginning of the line"),
-        repr("Select to the end of the line"),
-    },
-    "guilabels": {
-        repr("Inline code"),
-        repr("You can assign keybindings to any configured voice set in Commands."),
-        repr("Text selection"),
-        repr("Headers and footers"),
-        repr("If 'Text selection' is enabled, Orca will also attempt to control text selection."),
-    },
-    "messages": {
-        "f'{used:.1f} of {total:.1f} GB used.'",
-        "f'{used:.1f} of {total:.1f} MB used.'",
-    },
-}
-
-
-def _major_version() -> int:
-    """Read the source version so a version bump takes effect without rebuilding Orca."""
-
-    source = (_ORCA_SRC.parents[1] / "meson.build").read_text(encoding="utf-8")
-    match = re.search(r"\bversion:\s*'([0-9]+)\.", source)
-    assert match is not None, "Could not read Orca's major version from meson.build"
-    return int(match.group(1))
 
 
 def _unlocalized_strings(source: str) -> list[tuple[int, str]]:
@@ -115,35 +79,8 @@ def test_user_facing_strings_are_localized(module: str) -> None:
 
     path = _ORCA_SRC / f"{module}.py"
     findings = _unlocalized_strings(path.read_text(encoding="utf-8"))
-    if _major_version() < 52:
-        exceptions = _UNLOCALIZED_UNTIL_52.get(module, set())
-        findings = [(line, text) for line, text in findings if text not in exceptions]
     details = "\n".join(f"{path.name}:{line}: {text}" for line, text in findings)
     assert not findings, f"Strings missing translation markers:\n{details}"
-
-
-def test_voice_set_commands_hint_restored_in_v52() -> None:
-    """Require the temporarily hidden Voice Sets hint to return when string freeze ends."""
-
-    # TODO - JD: Restore VOICE_SET_INFO_COMMANDS in the UI once marked for translation in v52.
-    # In src/orca/speech_manager_preferences_grid.py, uncomment the original msg assignment
-    # and delete the temporary assignment.
-    if _major_version() < 52:
-        return
-
-    path = _ORCA_SRC / "speech_manager_preferences_grid.py"
-    tree = ast.parse(path.read_text(encoding="utf-8"))
-    assert any(
-        isinstance(node, ast.Attribute)
-        and isinstance(node.value, ast.Name)
-        and node.value.id == "guilabels"
-        and node.attr == "VOICE_SET_INFO_COMMANDS"
-        for node in ast.walk(tree)
-    ), (
-        "Mark VOICE_SET_INFO_COMMANDS for translation in v52, then uncomment the original "
-        "msg assignment and delete the temporary assignment in "
-        "src/orca/speech_manager_preferences_grid.py"
-    )
 
 
 @pytest.mark.parametrize(

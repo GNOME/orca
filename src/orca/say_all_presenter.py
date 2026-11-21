@@ -807,27 +807,13 @@ class SayAllPresenter(Extension):
         gtype="b",
         default=True,
         summary="Announce headers and footers",
-        user_visible=False,
-        preserve_default=True,
     )
-    @dbus_service.undocumented
     @dbus_service.getter
     def get_announce_header_and_footer(self) -> bool:
         """Returns whether headers and footers are announced when entered."""
 
         return self._get_setting(SayAllSettings.KEY_ANNOUNCE_HEADER_AND_FOOTER, True)
 
-    def get_header_and_footer_available(self) -> bool:
-        """Returns whether header and footer announcements have an explicit value."""
-
-        return (
-            gsettings_registry.get_registry().layered_lookup(
-                self._SCHEMA, SayAllSettings.KEY_ANNOUNCE_HEADER_AND_FOOTER, "b"
-            )
-            is not None
-        )
-
-    @dbus_service.undocumented
     @dbus_service.setter
     def set_announce_header_and_footer(self, value: bool) -> bool:
         """Sets whether headers and footers are announced when entered."""
@@ -845,27 +831,13 @@ class SayAllPresenter(Extension):
         gtype="b",
         default=False,
         summary="Announce inline code",
-        user_visible=False,
-        preserve_default=True,
     )
-    @dbus_service.undocumented
     @dbus_service.getter
     def get_announce_inline_code(self) -> bool:
         """Returns whether inline code boundaries are announced."""
 
         return self._get_setting(SayAllSettings.KEY_ANNOUNCE_INLINE_CODE, False)
 
-    def get_inline_code_available(self) -> bool:
-        """Returns whether inline code announcements have an explicit value."""
-
-        return (
-            gsettings_registry.get_registry().layered_lookup(
-                self._SCHEMA, SayAllSettings.KEY_ANNOUNCE_INLINE_CODE, "b"
-            )
-            is not None
-        )
-
-    @dbus_service.undocumented
     @dbus_service.setter
     def set_announce_inline_code(self, value: bool) -> bool:
         """Sets whether inline code boundaries are announced."""

@@ -64,22 +64,20 @@ ANNOUNCE_EMBEDDED_DOCUMENTS = C_("Context", "Embedded documents")
 # the end of the form, Orca will announce that the form is being exited.
 ANNOUNCE_FORMS = C_("Context", "Forms")
 
-# TODO - JD: Use C_("Context", "Headers and footers") in v52.
 # Translators: Some users want to hear additional information when entering
 # different types of content. If this switch is enabled, Orca will announce
 # that a header or footer has been entered before speaking its contents.
 # Headers and footers are containers for introductory or concluding content,
 # such as the title and author of an article or links to related information.
 # These are not headings or table row and column headers.
-ANNOUNCE_HEADERS_AND_FOOTERS = "Headers and footers"
+ANNOUNCE_HEADERS_AND_FOOTERS = C_("Context", "Headers and footers")
 
-# TODO - JD: Use C_("Context", "Inline code") in v52.
 # Translators: Some users want to hear additional information when reading
 # different types of content. If this switch is enabled, Orca will announce
 # the start and end of code snippets within sentences, such as a command name
 # or a variable. This setting is separate from announcements of code blocks,
 # which occupy their own lines rather than forming part of a sentence.
-ANNOUNCE_INLINE_CODE = "Inline code"
+ANNOUNCE_INLINE_CODE = C_("Context", "Inline code")
 
 # Translators: Some users want to hear additional information when entering
 # different types of content. If this checkbox is checked, Orca will announce
@@ -536,11 +534,9 @@ KB_GROUP_DOCUMENTS = _("Documents")
 # toggled on in other applications.
 KB_GROUP_CARET_NAVIGATION = _("Caret navigation")
 
-# Intentionally unlocalized for the developer-only opt-in. Mark for translation in v52.
-# TODO - JD: Use C_("caret navigation", "Text selection") in v52.
 # Translators: This is a label for a switch which enables Orca to extend text
 # selections when the user holds Shift while using caret-navigation commands.
-CARET_SELECTION_ENABLED = "Text selection"
+CARET_SELECTION_ENABLED = C_("caret navigation", "Text selection")
 
 # Translators: This string is a label for the group of Orca commands which
 # are related to math navigation via MathCAT.
@@ -553,11 +549,10 @@ CARET_NAVIGATION_INFO = _(
     "content by character, word, or line.",
 )
 
-# Intentionally unlocalized for the developer-only opt-in. Mark for translation in v52.
 # Translators: This is an informational message on the Caret Navigation preferences
 # page explaining what text selection does. When translating "Text selection", please
 # use terminology consistent with that of CARET_SELECTION_ENABLED above.
-CARET_SELECTION_INFO = (
+CARET_SELECTION_INFO = _(
     "If 'Text selection' is enabled, Orca will also attempt to control text selection."
 )
 
@@ -2458,7 +2453,7 @@ VOICE_SET_INFO = (
 # the primary set or a language-specific set (e.g. Italian). When translating
 # "Commands", please use terminology consistent with that of this localized
 # string above: `COMMANDS = _("Commands")`
-VOICE_SET_INFO_COMMANDS = "You can assign keybindings to any configured voice set in Commands."
+VOICE_SET_INFO_COMMANDS = _("You can assign keybindings to any configured voice set in Commands.")
 
 # Translators: This is the label of the Voice Types page in the Orca
 # Preferences dialog, where users configure voices for different contexts

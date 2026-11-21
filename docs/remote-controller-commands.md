@@ -96,6 +96,16 @@ These commands are available directly on the main service object at `/org/gnome/
 - **`PreviousCharacter`:** Moves to the previous character.
 - **`PreviousLine`:** Moves to the previous line.
 - **`PreviousWord`:** Moves to the previous word.
+- **`SelectEndOfFile`:** Extends the selection to the end of the file.
+- **`SelectEndOfLine`:** Extends the selection to the end of the line.
+- **`SelectNextCharacter`:** Extends the selection to the next character.
+- **`SelectNextLine`:** Extends the selection to the next line.
+- **`SelectNextWord`:** Extends the selection to the next word.
+- **`SelectPreviousCharacter`:** Extends the selection to the previous character.
+- **`SelectPreviousLine`:** Extends the selection to the previous line.
+- **`SelectPreviousWord`:** Extends the selection to the previous word.
+- **`SelectStartOfFile`:** Extends the selection to the start of the file.
+- **`SelectStartOfLine`:** Extends the selection to the start of the line.
 - **`StartOfFile`:** Moves to the start of the file.
 - **`StartOfLine`:** Moves to the start of the line.
 - **`ToggleEnabled`:** Toggles caret navigation.
@@ -105,6 +115,7 @@ These commands are available directly on the main service object at `/org/gnome/
 
 - **`IsEnabled`** (`b`, read/write): Whether caret navigation is enabled.
 - **`LayoutMode`** (`b`, read/write): Whether layout mode is enabled.
+- **`SelectionEnabled`** (`b`, read/write): Whether Orca-controlled text selection is enabled.
 - **`TriggersFocusMode`** (`b`, read/write): Whether caret navigation triggers focus mode.
 
 ---
@@ -375,6 +386,8 @@ These commands are available directly on the main service object at `/org/gnome/
 - **`AnnounceDocument`** (`b`, read/write): Whether embedded documents are announced when entered and left.
 - **`AnnounceForm`** (`b`, read/write): Whether non-landmark forms are announced when entered.
 - **`AnnounceGrouping`** (`b`, read/write): Whether groupings are announced when entered.
+- **`AnnounceHeaderAndFooter`** (`b`, read/write): Whether headers and footers are announced when entered.
+- **`AnnounceInlineCode`** (`b`, read/write): Whether inline code boundaries are announced.
 - **`AnnounceLandmark`** (`b`, read/write): Whether landmarks are announced when entered.
 - **`AnnounceList`** (`b`, read/write): Whether lists are announced when entered.
 - **`AnnounceTable`** (`b`, read/write): Whether tables are announced when entered.
@@ -505,6 +518,8 @@ These commands are available directly on the main service object at `/org/gnome/
 - **`AnnounceDocument`** (`b`, read/write): Whether embedded documents are announced when entered and left.
 - **`AnnounceForm`** (`b`, read/write): Whether non-landmark forms are announced when entered.
 - **`AnnounceGrouping`** (`b`, read/write): Whether groupings are announced when entered.
+- **`AnnounceHeaderAndFooter`** (`b`, read/write): Whether headers and footers are announced when entered.
+- **`AnnounceInlineCode`** (`b`, read/write): Whether inline code boundaries are announced.
 - **`AnnounceLandmark`** (`b`, read/write): Whether landmarks are announced when entered.
 - **`AnnounceList`** (`b`, read/write): Whether lists are announced when entered.
 - **`AnnounceSpreadsheetCellCoordinates`** (`b`, read/write): Whether spreadsheet cell coordinates are announced.

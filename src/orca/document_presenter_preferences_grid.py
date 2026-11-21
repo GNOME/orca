@@ -153,6 +153,13 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 determine_sensitivity=is_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.CARET_SELECTION_ENABLED,
+                getter=nav.get_selection_enabled,
+                setter=nav.set_selection_enabled,
+                prefs_key=caret_navigator.CaretNavigator.KEY_SELECTION_ENABLED,
+                determine_sensitivity=is_enabled,
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CONTENT_LAYOUT_MODE,
                 getter=nav.get_layout_mode,
                 setter=nav.set_layout_mode,
@@ -160,19 +167,7 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 determine_sensitivity=is_enabled,
             ),
         ]
-        caret_info = guilabels.CARET_NAVIGATION_INFO
-        if nav.get_selection_available():
-            caret_info = f"{caret_info} {guilabels.CARET_SELECTION_INFO}"
-            controls.insert(
-                2,
-                preferences_grid_base.BooleanPreferenceControl(
-                    label=guilabels.CARET_SELECTION_ENABLED,
-                    getter=nav.get_selection_enabled,
-                    setter=nav.set_selection_enabled,
-                    prefs_key=caret_navigator.CaretNavigator.KEY_SELECTION_ENABLED,
-                    determine_sensitivity=is_enabled,
-                ),
-            )
+        caret_info = f"{guilabels.CARET_NAVIGATION_INFO} {guilabels.CARET_SELECTION_INFO}"
         info = (
             f"{caret_info}\n\n{guilabels.AUTOMATIC_FOCUS_MODE_INFO}\n\n{guilabels.LAYOUT_MODE_INFO}"
         )

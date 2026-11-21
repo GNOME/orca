@@ -112,6 +112,7 @@ These operations also work at the profile level:
 | --- | --- | --- | --- |
 | `enabled` | `b` | `true` | Enable caret navigation |
 | `layout-mode` | `b` | `true` | Use document layout mode |
+| `selection-enabled` | `b` | `false` | Enable Orca-controlled text selection |
 | `triggers-focus-mode` | `b` | `false` | Caret navigation triggers focus mode |
 
 ---
@@ -233,6 +234,8 @@ These operations also work at the profile level:
 | `announce-document` | `b` | `true` | Announce embedded documents |
 | `announce-form` | `b` | `true` | Announce non-landmark forms |
 | `announce-grouping` | `b` | `true` | Announce groupings |
+| `announce-header-and-footer` | `b` | `true` | Announce headers and footers |
+| `announce-inline-code` | `b` | `false` | Announce inline code |
 | `announce-landmark` | `b` | `true` | Announce landmarks |
 | `announce-list` | `b` | `true` | Announce lists |
 | `announce-table` | `b` | `true` | Announce tables |
@@ -279,6 +282,8 @@ These operations also work at the profile level:
 | `announce-document` | `b` | `true` | Announce embedded documents |
 | `announce-form` | `b` | `true` | Announce forms |
 | `announce-grouping` | `b` | `true` | Announce groupings/panels |
+| `announce-header-and-footer` | `b` | `true` | Announce headers and footers |
+| `announce-inline-code` | `b` | `false` | Announce inline code |
 | `announce-landmark` | `b` | `true` | Announce landmarks |
 | `announce-list` | `b` | `true` | Announce lists |
 | `announce-spreadsheet-cell-coordinates` | `b` | `true` | Announce spreadsheet cell coordinates |

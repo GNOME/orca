@@ -747,27 +747,13 @@ class SpeechPresenter(Extension):
         gtype="b",
         default=True,
         summary="Announce headers and footers",
-        user_visible=False,
-        preserve_default=True,
     )
-    @dbus_service.undocumented
     @dbus_service.getter
     def get_announce_header_and_footer(self) -> bool:
         """Returns whether headers and footers are announced when entered."""
 
         return self._get_setting(self.KEY_ANNOUNCE_HEADER_AND_FOOTER, "b", True)
 
-    def get_header_and_footer_available(self) -> bool:
-        """Returns whether header and footer announcements have an explicit value."""
-
-        return (
-            gsettings_registry.get_registry().layered_lookup(
-                self._SCHEMA, self.KEY_ANNOUNCE_HEADER_AND_FOOTER, "b"
-            )
-            is not None
-        )
-
-    @dbus_service.undocumented
     @dbus_service.setter
     def set_announce_header_and_footer(self, value: bool) -> bool:
         """Sets whether headers and footers are announced when entered."""
@@ -785,27 +771,13 @@ class SpeechPresenter(Extension):
         gtype="b",
         default=False,
         summary="Announce inline code",
-        user_visible=False,
-        preserve_default=True,
     )
-    @dbus_service.undocumented
     @dbus_service.getter
     def get_announce_inline_code(self) -> bool:
         """Returns whether inline code boundaries are announced."""
 
         return self._get_setting(self.KEY_ANNOUNCE_INLINE_CODE, "b", False)
 
-    def get_inline_code_available(self) -> bool:
-        """Returns whether inline code announcements have an explicit value."""
-
-        return (
-            gsettings_registry.get_registry().layered_lookup(
-                self._SCHEMA, self.KEY_ANNOUNCE_INLINE_CODE, "b"
-            )
-            is not None
-        )
-
-    @dbus_service.undocumented
     @dbus_service.setter
     def set_announce_inline_code(self, value: bool) -> bool:
         """Sets whether inline code boundaries are announced."""
@@ -2817,29 +2789,17 @@ class SpeechPresenter(Extension):
                 self.get_announce_form,
                 self.set_announce_form,
             ),
-            *(
-                (
-                    SpeechPreference(
-                        self.KEY_ANNOUNCE_HEADER_AND_FOOTER,
-                        guilabels.ANNOUNCE_HEADERS_AND_FOOTERS,
-                        self.get_announce_header_and_footer,
-                        self.set_announce_header_and_footer,
-                    ),
-                )
-                if self.get_header_and_footer_available()
-                else ()
+            SpeechPreference(
+                self.KEY_ANNOUNCE_HEADER_AND_FOOTER,
+                guilabels.ANNOUNCE_HEADERS_AND_FOOTERS,
+                self.get_announce_header_and_footer,
+                self.set_announce_header_and_footer,
             ),
-            *(
-                (
-                    SpeechPreference(
-                        self.KEY_ANNOUNCE_INLINE_CODE,
-                        guilabels.ANNOUNCE_INLINE_CODE,
-                        self.get_announce_inline_code,
-                        self.set_announce_inline_code,
-                    ),
-                )
-                if self.get_inline_code_available()
-                else ()
+            SpeechPreference(
+                self.KEY_ANNOUNCE_INLINE_CODE,
+                guilabels.ANNOUNCE_INLINE_CODE,
+                self.get_announce_inline_code,
+                self.set_announce_inline_code,
             ),
             SpeechPreference(
                 self.KEY_ANNOUNCE_LANDMARK,

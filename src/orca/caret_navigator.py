@@ -181,27 +181,13 @@ class CaretNavigator(Extension):
         gtype="b",
         default=False,
         summary="Enable Orca-controlled text selection",
-        user_visible=False,
-        preserve_default=True,
     )
-    @dbus_service.undocumented
     @dbus_service.getter
     def get_selection_enabled(self) -> bool:
         """Returns whether Orca-controlled text selection is enabled."""
 
         return self._get_setting(self.KEY_SELECTION_ENABLED, False)
 
-    def get_selection_available(self) -> bool:
-        """Returns whether text selection has an explicit value, including false."""
-
-        return (
-            gsettings_registry.get_registry().layered_lookup(
-                self._SCHEMA, self.KEY_SELECTION_ENABLED, "b"
-            )
-            is not None
-        )
-
-    @dbus_service.undocumented
     @dbus_service.setter
     def set_selection_enabled(self, value: bool) -> bool:
         """Sets whether Orca-controlled text selection is enabled."""
@@ -1483,7 +1469,6 @@ class CaretNavigator(Extension):
         presenter.present_contents(contents, prior_obj=prior_obj)
         return True
 
-    @dbus_service.undocumented
     @dbus_service.command
     @navigation_command
     def select_next_character(
@@ -1506,7 +1491,6 @@ class CaretNavigator(Extension):
             selection_forward=True,
         )
 
-    @dbus_service.undocumented
     @dbus_service.command
     @navigation_command
     def select_previous_character(
@@ -1529,7 +1513,6 @@ class CaretNavigator(Extension):
             selection_forward=False,
         )
 
-    @dbus_service.undocumented
     @dbus_service.command
     @navigation_command
     def select_next_word(
@@ -1552,7 +1535,6 @@ class CaretNavigator(Extension):
             selection_forward=True,
         )
 
-    @dbus_service.undocumented
     @dbus_service.command
     @navigation_command
     def select_previous_word(
@@ -1575,7 +1557,6 @@ class CaretNavigator(Extension):
             selection_forward=False,
         )
 
-    @dbus_service.undocumented
     @dbus_service.command
     @navigation_command
     def select_next_line(
@@ -1599,7 +1580,6 @@ class CaretNavigator(Extension):
             selection_forward=True,
         )
 
-    @dbus_service.undocumented
     @dbus_service.command
     @navigation_command
     def select_previous_line(
@@ -1623,7 +1603,6 @@ class CaretNavigator(Extension):
             selection_forward=False,
         )
 
-    @dbus_service.undocumented
     @dbus_service.command
     @navigation_command
     def select_start_of_file(
@@ -1646,7 +1625,6 @@ class CaretNavigator(Extension):
             selection_forward=False,
         )
 
-    @dbus_service.undocumented
     @dbus_service.command
     @navigation_command
     def select_end_of_file(
@@ -1669,7 +1647,6 @@ class CaretNavigator(Extension):
             selection_forward=True,
         )
 
-    @dbus_service.undocumented
     @dbus_service.command
     @navigation_command
     def select_start_of_line(
@@ -1692,7 +1669,6 @@ class CaretNavigator(Extension):
             selection_forward=False,
         )
 
-    @dbus_service.undocumented
     @dbus_service.command
     @navigation_command
     def select_end_of_line(

@@ -784,36 +784,35 @@ CARET_NAVIGATION_LINE_START = _("Go to the beginning of the line")
 # Translators: this is a command related to navigating within a document.
 CARET_NAVIGATION_LINE_END = _("Go to the end of the line")
 
-# Intentionally unlocalized for the developer-only opt-in. Mark for translation in v52.
 # Translators: this is a command for extending a text selection.
-CARET_SELECTION_NEXT_CHAR = "Select next character"
+CARET_SELECTION_NEXT_CHAR = _("Select next character")
 
 # Translators: this is a command for extending a text selection.
-CARET_SELECTION_PREV_CHAR = "Select previous character"
+CARET_SELECTION_PREV_CHAR = _("Select previous character")
 
 # Translators: this is a command for extending a text selection.
-CARET_SELECTION_NEXT_WORD = "Select next word"
+CARET_SELECTION_NEXT_WORD = _("Select next word")
 
 # Translators: this is a command for extending a text selection.
-CARET_SELECTION_PREV_WORD = "Select previous word"
+CARET_SELECTION_PREV_WORD = _("Select previous word")
 
 # Translators: this is a command for extending a text selection.
-CARET_SELECTION_NEXT_LINE = "Select next line"
+CARET_SELECTION_NEXT_LINE = _("Select next line")
 
 # Translators: this is a command for extending a text selection.
-CARET_SELECTION_PREV_LINE = "Select previous line"
+CARET_SELECTION_PREV_LINE = _("Select previous line")
 
 # Translators: this is a command for extending a text selection.
-CARET_SELECTION_FILE_START = "Select to the top of the file"
+CARET_SELECTION_FILE_START = _("Select to the top of the file")
 
 # Translators: this is a command for extending a text selection.
-CARET_SELECTION_FILE_END = "Select to the bottom of the file"
+CARET_SELECTION_FILE_END = _("Select to the bottom of the file")
 
 # Translators: this is a command for extending a text selection.
-CARET_SELECTION_LINE_START = "Select to the beginning of the line"
+CARET_SELECTION_LINE_START = _("Select to the beginning of the line")
 
 # Translators: this is a command for extending a text selection.
-CARET_SELECTION_LINE_END = "Select to the end of the line"
+CARET_SELECTION_LINE_END = _("Select to the end of the line")
 
 # Translators: this is a command related to navigating within a document.
 CARET_NAVIGATION_NEXT_OBJECT = _("Go to the next object")

@@ -2734,7 +2734,7 @@ def memory_usage_gb(used, total):
 
     # Translators: Orca has a command to report CPU and memory usage levels. This
     # message presents the amount of memory used and total amount in GB.
-    return f"{used:.1f} of {total:.1f} GB used."
+    return _("%(used).1f of %(total).1f GB used.") % {"used": used, "total": total}
 
 
 def memory_usage_mb(used, total):
@@ -2742,7 +2742,7 @@ def memory_usage_mb(used, total):
 
     # Translators: Orca has a command to report CPU and memory usage levels. This
     # message presents the amount of memory used and total amount in MB.
-    return f"{used:.1f} of {total:.1f} MB used."
+    return _("%(used).1f of %(total).1f MB used.") % {"used": used, "total": total}
 
 
 def unvisited_link_count(count, only_if_found=True):
