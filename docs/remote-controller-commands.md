@@ -365,7 +365,7 @@ These commands are available directly on the main service object at `/org/gnome/
 
 - **`FastForward`:** Jumps forward in the current Say All.
 - **`Rewind`:** Jumps back in the current Say All.
-- **`SayAll`:** Speaks the entire document or text, starting from the current position.
+- **`SayAll`:** Speaks the entire document or text, optionally interrupting current presentation.
 
 #### Properties
 
