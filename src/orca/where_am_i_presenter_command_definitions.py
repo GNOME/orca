@@ -176,6 +176,7 @@ def get_commands(owner: WhereAmIPresenter) -> list[Command]:
             owner.GROUP_LABEL,
             cmdnames.PRESENT_CELL_FORMULA,
             desktop_keybinding=kb_orca_equal,
+            laptop_keybinding=kb_orca_equal,
         ),
         KeyboardCommand(
             "whereAmIBasicHandler",

@@ -186,23 +186,11 @@
         </item>
         <item>
           <p>
-            <gui>Present the formula for the current cell</gui>
+            <gui>Present the formula for the current cell</gui>: <keyseq>
+              <key>Orca Modifier</key>
+              <key>Equals</key>
+            </keyseq>
           </p>
-          <list>
-            <item>
-              <p>
-                Desktop: <keyseq>
-                  <key>Orca Modifier</key>
-                  <key>Equals</key>
-                </keyseq>
-              </p>
-            </item>
-            <item>
-              <p>
-                Laptop: unbound by default.
-              </p>
-            </item>
-          </list>
         </item>
       </list>
     </section>
