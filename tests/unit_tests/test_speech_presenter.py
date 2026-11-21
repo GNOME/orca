@@ -630,7 +630,8 @@ class TestSpeechPresenter:
         """Test apply_speech_preferences applies values correctly."""
 
         self._setup_dependencies(test_context)
-        from orca.speech_presenter import SpeechPreference, SpeechPresenter
+        from orca.speech_presenter import SpeechPresenter
+        from orca.speech_presenter_settings import SpeechPreference
 
         presenter = SpeechPresenter()
 

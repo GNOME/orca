@@ -203,6 +203,7 @@ lib_sources = [
   'speech_presenter.py',
   'speech_presenter_command_definitions.py',
   'speech_presenter_preferences_grid.py',
+  'speech_presenter_settings.py',
   'spellcheck_presenter.py',
   'spellcheck_presenter_preferences_grid.py',
   'spellcheck_presenter_settings.py',

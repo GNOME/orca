@@ -397,7 +397,7 @@ class ImportsOutsideTopLevel(Rule):
         "src/orca/document_presenter.py": 1,
         "src/orca/pronunciation_dictionary_manager.py": 1,
         "src/orca/screen_reader_manager.py": 1,
-        "src/orca/speech_presenter.py": 2,
+        "src/orca/speech_presenter.py": 1,
     }
 
     @staticmethod

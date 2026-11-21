@@ -36,8 +36,6 @@ from . import (
     gsettings_registry,
     guilabels,
     preferences_grid_base,
-    speech_manager,
-    speech_presenter,
     text_attribute_manager,
 )
 from .help_metadata import (
@@ -46,12 +44,14 @@ from .help_metadata import (
     PreferencePanelDoc,
     PreferenceValueDoc,
 )
+from .speech_presenter_settings import ProgressBarVerbosity, SpeechPreference, SpeechSettings
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
     from gi.repository import Gio
 
+    from .speech_manager import SpeechManager
     from .speech_presenter import SpeechPresenter
 
 
@@ -78,21 +78,21 @@ class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             kind="switch",
                             summary=("Controls whether Orca announces articles."),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_ARTICLE,
+                            key=SpeechSettings.KEY_ANNOUNCE_ARTICLE,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_BLOCKQUOTES,
                             kind="switch",
                             summary=("Controls whether Orca announces blockquotes."),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_BLOCKQUOTE,
+                            key=SpeechSettings.KEY_ANNOUNCE_BLOCKQUOTE,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_CODE_BLOCKS,
                             kind="switch",
                             summary=("Controls whether Orca announces code blocks."),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_CODE_BLOCK,
+                            key=SpeechSettings.KEY_ANNOUNCE_CODE_BLOCK,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_EMBEDDED_DOCUMENTS,
@@ -102,21 +102,21 @@ class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "application."
                             ),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_DOCUMENT,
+                            key=SpeechSettings.KEY_ANNOUNCE_DOCUMENT,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_FORMS,
                             kind="switch",
                             summary=("Controls whether Orca announces forms."),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_FORM,
+                            key=SpeechSettings.KEY_ANNOUNCE_FORM,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_HEADERS_AND_FOOTERS,
                             kind="switch",
                             summary=("Controls whether Orca announces headers and footers."),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_HEADER_AND_FOOTER,
+                            key=SpeechSettings.KEY_ANNOUNCE_HEADER_AND_FOOTER,
                             since="52",
                         ),
                         PreferenceControlDoc(
@@ -124,7 +124,7 @@ class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             kind="switch",
                             summary=("Controls whether Orca announces inline code."),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_INLINE_CODE,
+                            key=SpeechSettings.KEY_ANNOUNCE_INLINE_CODE,
                             since="52",
                         ),
                         PreferenceControlDoc(
@@ -135,28 +135,28 @@ class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "of a page such as navigation or main content."
                             ),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_LANDMARK,
+                            key=SpeechSettings.KEY_ANNOUNCE_LANDMARK,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_LISTS,
                             kind="switch",
                             summary=("Controls whether Orca announces lists."),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_LIST,
+                            key=SpeechSettings.KEY_ANNOUNCE_LIST,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_PANELS,
                             kind="switch",
                             summary=("Controls whether Orca announces panels."),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_GROUPING,
+                            key=SpeechSettings.KEY_ANNOUNCE_GROUPING,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_TABLES,
                             kind="switch",
                             summary=("Controls whether Orca announces tables."),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_TABLE,
+                            key=SpeechSettings.KEY_ANNOUNCE_TABLE,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_TRACKED_CHANGES,
@@ -166,7 +166,7 @@ class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "insertions, deletions, highlights, and suggestions."
                             ),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_TRACKED_CHANGES,
+                            key=SpeechSettings.KEY_ANNOUNCE_TRACKED_CHANGES,
                         ),
                     ),
                 ),
@@ -211,7 +211,7 @@ class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     kind="switch",
                     summary="Controls whether Orca speaks progress-bar updates.",
                     schema="speech",
-                    key=speech_presenter.SpeechPresenter.KEY_SPEAK_PROGRESS_BAR_UPDATES,
+                    key=SpeechSettings.KEY_SPEAK_PROGRESS_BAR_UPDATES,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.GENERAL_FREQUENCY_SECS,
@@ -221,7 +221,7 @@ class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "progress bar. Zero removes this minimum delay."
                     ),
                     schema="speech",
-                    key=speech_presenter.SpeechPresenter.KEY_PROGRESS_BAR_SPEECH_INTERVAL,
+                    key=SpeechSettings.KEY_PROGRESS_BAR_SPEECH_INTERVAL,
                     minimum="0",
                     maximum="100",
                 ),
@@ -230,7 +230,7 @@ class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     kind="choice",
                     summary=("Selects which progress bars provide updates."),
                     schema="speech",
-                    key=speech_presenter.SpeechPresenter.KEY_PROGRESS_BAR_SPEECH_VERBOSITY,
+                    key=SpeechSettings.KEY_PROGRESS_BAR_SPEECH_VERBOSITY,
                     values=(
                         guilabels.PROGRESS_BAR_ALL,
                         guilabels.PROGRESS_BAR_APPLICATION,
@@ -260,13 +260,13 @@ class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.GENERAL_SPEAK_UPDATES,
                 getter=presenter.get_speak_progress_bar_updates,
                 setter=presenter.set_speak_progress_bar_updates,
-                prefs_key=speech_presenter.SpeechPresenter.KEY_SPEAK_PROGRESS_BAR_UPDATES,
+                prefs_key=SpeechSettings.KEY_SPEAK_PROGRESS_BAR_UPDATES,
             ),
             preferences_grid_base.IntRangePreferenceControl(
                 label=guilabels.GENERAL_FREQUENCY_SECS,
                 getter=presenter.get_progress_bar_speech_interval,
                 setter=presenter.set_progress_bar_speech_interval,
-                prefs_key=speech_presenter.SpeechPresenter.KEY_PROGRESS_BAR_SPEECH_INTERVAL,
+                prefs_key=SpeechSettings.KEY_PROGRESS_BAR_SPEECH_INTERVAL,
                 minimum=0,
                 maximum=100,
             ),
@@ -274,16 +274,16 @@ class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.GENERAL_APPLIES_TO,
                 getter=presenter.get_progress_bar_speech_verbosity,
                 setter=presenter.set_progress_bar_speech_verbosity,
-                prefs_key=speech_presenter.SpeechPresenter.KEY_PROGRESS_BAR_SPEECH_VERBOSITY,
+                prefs_key=SpeechSettings.KEY_PROGRESS_BAR_SPEECH_VERBOSITY,
                 options=[
                     guilabels.PROGRESS_BAR_ALL,
                     guilabels.PROGRESS_BAR_APPLICATION,
                     guilabels.PROGRESS_BAR_WINDOW,
                 ],
                 values=[
-                    speech_presenter.ProgressBarVerbosity.ALL.value,
-                    speech_presenter.ProgressBarVerbosity.APPLICATION.value,
-                    speech_presenter.ProgressBarVerbosity.WINDOW.value,
+                    ProgressBarVerbosity.ALL.value,
+                    ProgressBarVerbosity.APPLICATION.value,
+                    ProgressBarVerbosity.WINDOW.value,
                 ],
             ),
         ]
@@ -317,7 +317,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             summary="Controls whether Orca uses detailed messages or brief "
                             "alternatives for Orca-specific information.",
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_MESSAGES_ARE_DETAILED,
+                            key=SpeechSettings.KEY_MESSAGES_ARE_DETAILED,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.OBJECT_PRESENTATION_IS_DETAILED,
@@ -342,7 +342,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             "and omits extra details such as role, state, and misspelling "
                             "indicators.",
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ONLY_SPEAK_DISPLAYED_TEXT,
+                            key=SpeechSettings.KEY_ONLY_SPEAK_DISPLAYED_TEXT,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_DESCRIPTION,
@@ -352,7 +352,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "the application in addition to an object's name."
                             ),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_SPEAK_DESCRIPTION,
+                            key=SpeechSettings.KEY_SPEAK_DESCRIPTION,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_CHILD_POSITION,
@@ -360,7 +360,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             summary="Controls whether Orca speaks an item's position in a set, "
                             "such as item 6 of 7.",
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_SPEAK_POSITION_IN_SET,
+                            key=SpeechSettings.KEY_SPEAK_POSITION_IN_SET,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.PRESENT_OBJECT_MNEMONICS,
@@ -370,7 +370,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "Alt+O for an OK button."
                             ),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_SPEAK_WIDGET_MNEMONIC,
+                            key=SpeechSettings.KEY_SPEAK_WIDGET_MNEMONIC,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_TUTORIAL_MESSAGES,
@@ -380,7 +380,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "to interact with the focused object."
                             ),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_SPEAK_TUTORIAL_MESSAGES,
+                            key=SpeechSettings.KEY_SPEAK_TUTORIAL_MESSAGES,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_BLANK_LINES,
@@ -389,7 +389,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             "document content. When disabled, Orca says nothing when you "
                             "move to a blank line.",
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_SPEAK_BLANK_LINES,
+                            key=SpeechSettings.KEY_SPEAK_BLANK_LINES,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_MISSPELLED_WORD_INDICATOR,
@@ -402,7 +402,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "key echo or word echo."
                             ),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_SPEAK_MISSPELLED_INDICATOR,
+                            key=SpeechSettings.KEY_SPEAK_MISSPELLED_INDICATOR,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.TEXT_ATTRIBUTE_CHANGES,
@@ -414,7 +414,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "list used by the explicit formatting command."
                             ),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_SPEAK_TEXT_ATTRIBUTE_CHANGES,
+                            key=SpeechSettings.KEY_SPEAK_TEXT_ATTRIBUTE_CHANGES,
                             values=(
                                 guilabels.TEXT_ATTRIBUTE_CHANGES_OFF,
                                 guilabels.TEXT_ATTRIBUTE_CHANGES_EDITABLE,
@@ -427,7 +427,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             summary="Controls whether Orca speaks indentation information for "
                             "text content.",
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_SPEAK_INDENTATION,
+                            key=SpeechSettings.KEY_SPEAK_INDENTATION,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.SPEECH_INDENTATION_ONLY_IF_CHANGED,
@@ -436,7 +436,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             "changes from the previous line.",
                             schema="speech",
                             key=(
-                                speech_presenter.SpeechPresenter.KEY_SPEAK_INDENTATION_ONLY_IF_CHANGED  # pylint: disable=line-too-long
+                                SpeechSettings.KEY_SPEAK_INDENTATION_ONLY_IF_CHANGED  # pylint: disable=line-too-long
                             ),
                         ),
                     ),
@@ -452,26 +452,26 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             _announcements_prefs,
         ) = presenter.get_speech_preferences()
 
-        text_speak_blank_lines = speech_presenter.SpeechPreference(
-            speech_presenter.SpeechPresenter.KEY_SPEAK_BLANK_LINES,
+        text_speak_blank_lines = SpeechPreference(
+            SpeechSettings.KEY_SPEAK_BLANK_LINES,
             guilabels.SPEECH_SPEAK_BLANK_LINES,
             presenter.get_speak_blank_lines,
             presenter.set_speak_blank_lines,
         )
-        text_speak_misspelled = speech_presenter.SpeechPreference(
-            speech_presenter.SpeechPresenter.KEY_SPEAK_MISSPELLED_INDICATOR,
+        text_speak_misspelled = SpeechPreference(
+            SpeechSettings.KEY_SPEAK_MISSPELLED_INDICATOR,
             guilabels.SPEECH_SPEAK_MISSPELLED_WORD_INDICATOR,
             presenter.get_speak_misspelled_indicator,
             presenter.set_speak_misspelled_indicator,
         )
-        text_speak_indentation = speech_presenter.SpeechPreference(
-            speech_presenter.SpeechPresenter.KEY_SPEAK_INDENTATION,
+        text_speak_indentation = SpeechPreference(
+            SpeechSettings.KEY_SPEAK_INDENTATION,
             guilabels.SPEECH_SPEAK_INDENTATION,
             presenter.get_speak_indentation,
             presenter.set_speak_indentation,
         )
-        text_indentation_only_if_changed = speech_presenter.SpeechPreference(
-            speech_presenter.SpeechPresenter.KEY_SPEAK_INDENTATION_ONLY_IF_CHANGED,
+        text_indentation_only_if_changed = SpeechPreference(
+            SpeechSettings.KEY_SPEAK_INDENTATION_ONLY_IF_CHANGED,
             guilabels.SPEECH_INDENTATION_ONLY_IF_CHANGED,
             presenter.get_speak_indentation_only_if_changed,
             presenter.set_speak_indentation_only_if_changed,
@@ -571,7 +571,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 ],
                 getter=presenter.get_text_attribute_change_mode_as_int,
                 setter=presenter.set_text_attribute_change_mode_from_int,
-                prefs_key=speech_presenter.SpeechPresenter.KEY_SPEAK_TEXT_ATTRIBUTE_CHANGES,
+                prefs_key=SpeechSettings.KEY_SPEAK_TEXT_ATTRIBUTE_CHANGES,
                 member_of=guilabels.SPEECH_OBJECT_DETAILS,
                 determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
@@ -592,9 +592,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
         """Save settings, writing the verbosity-level enum from the presenter."""
 
         result = super().save_settings(profile, app_name)
-        result[speech_presenter.SpeechPresenter.KEY_VERBOSITY_LEVEL] = (
-            self._presenter.get_verbosity_level()
-        )
+        result[SpeechSettings.KEY_VERBOSITY_LEVEL] = self._presenter.get_verbosity_level()
         return result
 
     def _only_speak_displayed_text_is_off(self) -> bool:
@@ -637,7 +635,7 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "focused cell in application tables, such as a message list."
                             ),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_SPEAK_ROW_IN_GUI_TABLE,
+                            key=SpeechSettings.KEY_SPEAK_ROW_IN_GUI_TABLE,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_FULL_ROW_IN_DOCUMENT_TABLES,
@@ -648,7 +646,7 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "tables."
                             ),
                             schema="speech",
-                            key=(speech_presenter.SpeechPresenter.KEY_SPEAK_ROW_IN_DOCUMENT_TABLE),
+                            key=(SpeechSettings.KEY_SPEAK_ROW_IN_DOCUMENT_TABLE),
                         ),
                         PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_FULL_ROW_IN_SPREADSHEETS,
@@ -658,7 +656,7 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                                 "focused cell in spreadsheets."
                             ),
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_SPEAK_ROW_IN_SPREADSHEET,
+                            key=SpeechSettings.KEY_SPEAK_ROW_IN_SPREADSHEET,
                         ),
                     ),
                 ),
@@ -672,7 +670,7 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             kind="switch",
                             summary="Controls whether Orca speaks the header of a table cell.",
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_CELL_HEADERS,
+                            key=SpeechSettings.KEY_ANNOUNCE_CELL_HEADERS,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.TABLE_SPEAK_CELL_COORDINATES,
@@ -680,7 +678,7 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             summary="Controls whether Orca speaks table cell coordinates in "
                             "document content.",
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_CELL_COORDINATES,
+                            key=SpeechSettings.KEY_ANNOUNCE_CELL_COORDINATES,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.SPREADSHEET_SPEAK_CELL_COORDINATES,
@@ -688,7 +686,7 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             summary="Controls whether Orca speaks spreadsheet cell coordinates.",
                             schema="speech",
                             key=(
-                                speech_presenter.SpeechPresenter.KEY_ANNOUNCE_SPREADSHEET_CELL_COORDINATES  # pylint: disable=line-too-long
+                                SpeechSettings.KEY_ANNOUNCE_SPREADSHEET_CELL_COORDINATES  # pylint: disable=line-too-long
                             ),
                         ),
                         PreferenceControlDoc(
@@ -697,7 +695,7 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             summary="Controls whether Orca speaks how many rows and columns a "
                             "cell spans.",
                             schema="speech",
-                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_CELL_SPAN,
+                            key=SpeechSettings.KEY_ANNOUNCE_CELL_SPAN,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.SPREADSHEET_SPEAK_SELECTED_RANGE,
@@ -706,7 +704,7 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             "spreadsheet selection changes.",
                             schema="speech",
                             key=(
-                                speech_presenter.SpeechPresenter.KEY_ALWAYS_ANNOUNCE_SELECTED_RANGE_IN_SPREADSHEET  # pylint: disable=line-too-long
+                                SpeechSettings.KEY_ALWAYS_ANNOUNCE_SELECTED_RANGE_IN_SPREADSHEET  # pylint: disable=line-too-long
                             ),
                         ),
                     ),
@@ -716,50 +714,50 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 
     def __init__(self, presenter: SpeechPresenter) -> None:
         # Table preferences
-        table_gui_rows = speech_presenter.SpeechPreference(
-            speech_presenter.SpeechPresenter.KEY_SPEAK_ROW_IN_GUI_TABLE,
+        table_gui_rows = SpeechPreference(
+            SpeechSettings.KEY_SPEAK_ROW_IN_GUI_TABLE,
             guilabels.SPEECH_SPEAK_FULL_ROW_IN_GUI_TABLES,
             presenter.get_speak_row_in_gui_table,
             presenter.set_speak_row_in_gui_table,
         )
-        table_doc_rows = speech_presenter.SpeechPreference(
-            speech_presenter.SpeechPresenter.KEY_SPEAK_ROW_IN_DOCUMENT_TABLE,
+        table_doc_rows = SpeechPreference(
+            SpeechSettings.KEY_SPEAK_ROW_IN_DOCUMENT_TABLE,
             guilabels.SPEECH_SPEAK_FULL_ROW_IN_DOCUMENT_TABLES,
             presenter.get_speak_row_in_document_table,
             presenter.set_speak_row_in_document_table,
         )
-        table_spreadsheet_rows = speech_presenter.SpeechPreference(
-            speech_presenter.SpeechPresenter.KEY_SPEAK_ROW_IN_SPREADSHEET,
+        table_spreadsheet_rows = SpeechPreference(
+            SpeechSettings.KEY_SPEAK_ROW_IN_SPREADSHEET,
             guilabels.SPEECH_SPEAK_FULL_ROW_IN_SPREADSHEETS,
             presenter.get_speak_row_in_spreadsheet,
             presenter.set_speak_row_in_spreadsheet,
         )
-        table_cell_headers = speech_presenter.SpeechPreference(
-            speech_presenter.SpeechPresenter.KEY_ANNOUNCE_CELL_HEADERS,
+        table_cell_headers = SpeechPreference(
+            SpeechSettings.KEY_ANNOUNCE_CELL_HEADERS,
             guilabels.TABLE_SPEAK_CELL_HEADER,
             presenter.get_announce_cell_headers,
             presenter.set_announce_cell_headers,
         )
-        table_cell_coords = speech_presenter.SpeechPreference(
-            speech_presenter.SpeechPresenter.KEY_ANNOUNCE_CELL_COORDINATES,
+        table_cell_coords = SpeechPreference(
+            SpeechSettings.KEY_ANNOUNCE_CELL_COORDINATES,
             guilabels.TABLE_SPEAK_CELL_COORDINATES,
             presenter.get_announce_cell_coordinates,
             presenter.set_announce_cell_coordinates,
         )
-        table_spreadsheet_coords = speech_presenter.SpeechPreference(
-            speech_presenter.SpeechPresenter.KEY_ANNOUNCE_SPREADSHEET_CELL_COORDINATES,
+        table_spreadsheet_coords = SpeechPreference(
+            SpeechSettings.KEY_ANNOUNCE_SPREADSHEET_CELL_COORDINATES,
             guilabels.SPREADSHEET_SPEAK_CELL_COORDINATES,
             presenter.get_announce_spreadsheet_cell_coordinates,
             presenter.set_announce_spreadsheet_cell_coordinates,
         )
-        table_cell_span = speech_presenter.SpeechPreference(
-            speech_presenter.SpeechPresenter.KEY_ANNOUNCE_CELL_SPAN,
+        table_cell_span = SpeechPreference(
+            SpeechSettings.KEY_ANNOUNCE_CELL_SPAN,
             guilabels.TABLE_SPEAK_CELL_SPANS,
             presenter.get_announce_cell_span,
             presenter.set_announce_cell_span,
         )
-        table_selected_range = speech_presenter.SpeechPreference(
-            speech_presenter.SpeechPresenter.KEY_ALWAYS_ANNOUNCE_SELECTED_RANGE_IN_SPREADSHEET,
+        table_selected_range = SpeechPreference(
+            SpeechSettings.KEY_ALWAYS_ANNOUNCE_SELECTED_RANGE_IN_SPREADSHEET,
             guilabels.SPREADSHEET_SPEAK_SELECTED_RANGE,
             presenter.get_always_announce_selected_range_in_spreadsheet,
             presenter.set_always_announce_selected_range_in_spreadsheet,
@@ -845,7 +843,7 @@ class SpeechOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     kind="integer",
                     summary="Sets the text size in the on-screen speech display.",
                     schema="speech",
-                    key=speech_presenter.SpeechPresenter.KEY_MONITOR_FONT_SIZE,
+                    key=SpeechSettings.KEY_MONITOR_FONT_SIZE,
                     minimum="8",
                     maximum="72",
                 ),
@@ -854,14 +852,14 @@ class SpeechOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     kind="color",
                     summary="Sets the text color in the on-screen speech display.",
                     schema="speech",
-                    key=speech_presenter.SpeechPresenter.KEY_MONITOR_FOREGROUND,
+                    key=SpeechSettings.KEY_MONITOR_FOREGROUND,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.SPEECH_MONITOR_BACKGROUND,
                     kind="color",
                     summary="Sets the background color in the on-screen speech display.",
                     schema="speech",
-                    key=speech_presenter.SpeechPresenter.KEY_MONITOR_BACKGROUND,
+                    key=SpeechSettings.KEY_MONITOR_BACKGROUND,
                 ),
             ),
         )
@@ -872,7 +870,7 @@ class SpeechOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.SPEECH_MONITOR_FONT_SIZE,
                 getter=presenter.get_monitor_font_size,
                 setter=presenter.set_monitor_font_size,
-                prefs_key=speech_presenter.SpeechPresenter.KEY_MONITOR_FONT_SIZE,
+                prefs_key=SpeechSettings.KEY_MONITOR_FONT_SIZE,
                 minimum=8,
                 maximum=72,
                 apply_immediately=True,
@@ -881,13 +879,13 @@ class SpeechOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.SPEECH_MONITOR_FOREGROUND,
                 getter=presenter.get_monitor_foreground,
                 setter=presenter.set_monitor_foreground,
-                prefs_key=speech_presenter.SpeechPresenter.KEY_MONITOR_FOREGROUND,
+                prefs_key=SpeechSettings.KEY_MONITOR_FOREGROUND,
             ),
             preferences_grid_base.ColorPreferenceControl(
                 label=guilabels.SPEECH_MONITOR_BACKGROUND,
                 getter=presenter.get_monitor_background,
                 setter=presenter.set_monitor_background,
-                prefs_key=speech_presenter.SpeechPresenter.KEY_MONITOR_BACKGROUND,
+                prefs_key=SpeechSettings.KEY_MONITOR_BACKGROUND,
             ),
         ]
 
@@ -996,15 +994,15 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def __init__(
         self,
         presenter: SpeechPresenter,
+        manager: SpeechManager,
         title_change_callback: Callable[[str], None] | None = None,
         app_name: str = "",
     ) -> None:
         super().__init__(guilabels.SPEECH)
         self._presenter = presenter
+        self._manager = manager
         self._initializing = True
         self._title_change_callback = title_change_callback
-
-        manager = speech_manager.get_manager()
 
         # Create child grids (but don't attach them yet - they'll go in the stack detail)
         self._voices_grid = manager.create_voices_preferences_grid(app_name=app_name)
@@ -1021,8 +1019,6 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _build(self) -> None:
         row = 0
 
-        manager = speech_manager.get_manager()
-
         categories = [
             (guilabels.VOICE_GLOBAL_VOICE_SETTINGS, "voice", self._voices_grid),
             (guilabels.LANGUAGE_VOICE_SETTINGS, "voice-sets", self._voice_types_grid),
@@ -1035,8 +1031,8 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         enable_listbox, stack, _categories_listbox = self._create_child_grid_preferences_stack(
             enable_label=guilabels.SPEECH_ENABLE_SPEECH,
-            enable_getter=manager.get_speech_is_enabled,
-            enable_setter=manager.set_speech_is_enabled,
+            enable_getter=self._manager.get_speech_is_enabled,
+            enable_setter=self._manager.set_speech_is_enabled,
             categories=categories,
             title_change_callback=self._title_change_callback,
             main_title=guilabels.SPEECH,
