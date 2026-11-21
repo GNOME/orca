@@ -73,9 +73,11 @@ class TestDBusService:
 
         internal_modules = [
             "orca.debug",
+            "orca.focus_manager",
             "orca.input_event",
             "orca.input_event_manager",
             "orca.orca_platform",
+            "orca.screen_reader_manager",
             "orca.script_manager",
             "orca.braille_presenter",
             "orca.presentation_manager",
@@ -372,18 +374,17 @@ class TestDBusService:
     def test_show_preferences_success(self, test_context: OrcaTestContext) -> None:
         """Test OrcaDBusServiceInterface.ShowPreferences success."""
 
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
+        essential_modules = self._setup_dependencies(test_context)
+        from orca import dbus_service, remote_controller_bridge
+
+        dbus_service.get_remote_controller().set_handler(remote_controller_bridge.get_bridge())
 
         mock_script = test_context.Mock()
         mock_manager = test_context.Mock()
         mock_manager.get_active_script.return_value = mock_script
         test_context.patch("orca.script_manager.get_manager", return_value=mock_manager)
-        mock_presenter = test_context.Mock()
-        mock_presenter.show_preferences_gui.return_value = True
-        screen_reader_manager_mod = types.ModuleType("orca.screen_reader_manager")
-        screen_reader_manager_mod.get_manager = test_context.Mock(return_value=mock_presenter)
-        test_context.patch_modules({"orca.screen_reader_manager": screen_reader_manager_mod})
+        mock_presenter = essential_modules["orca.screen_reader_manager"].get_manager()
+        mock_presenter.show_preferences_gui.return_value = False
         service = dbus_service.OrcaDBusServiceInterface()
         result = service.ShowPreferences()
         assert result is True
@@ -392,19 +393,17 @@ class TestDBusService:
     def test_show_preferences_no_active_script(self, test_context: OrcaTestContext) -> None:
         """Test OrcaDBusServiceInterface.ShowPreferences no active script."""
 
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
+        essential_modules = self._setup_dependencies(test_context)
+        from orca import dbus_service, remote_controller_bridge
+
+        dbus_service.get_remote_controller().set_handler(remote_controller_bridge.get_bridge())
 
         mock_script = test_context.Mock()
         mock_manager = test_context.Mock()
         mock_manager.get_active_script.return_value = None
         mock_manager.get_default_script.return_value = mock_script
         test_context.patch("orca.script_manager.get_manager", return_value=mock_manager)
-        mock_presenter = test_context.Mock()
-        mock_presenter.show_preferences_gui.return_value = True
-        screen_reader_manager_mod = types.ModuleType("orca.screen_reader_manager")
-        screen_reader_manager_mod.get_manager = test_context.Mock(return_value=mock_presenter)
-        test_context.patch_modules({"orca.screen_reader_manager": screen_reader_manager_mod})
+        mock_presenter = essential_modules["orca.screen_reader_manager"].get_manager()
         service = dbus_service.OrcaDBusServiceInterface()
         result = service.ShowPreferences()
         assert result is True
@@ -414,7 +413,9 @@ class TestDBusService:
         """Test OrcaDBusServiceInterface.ShowPreferences no script."""
 
         self._setup_dependencies(test_context)
-        from orca import dbus_service
+        from orca import dbus_service, remote_controller_bridge
+
+        dbus_service.get_remote_controller().set_handler(remote_controller_bridge.get_bridge())
 
         mock_manager = test_context.Mock()
         mock_manager.get_active_script.return_value = None
@@ -428,7 +429,9 @@ class TestDBusService:
         """Test OrcaDBusServiceInterface.PresentMessage success."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca import dbus_service
+        from orca import dbus_service, remote_controller_bridge
+
+        dbus_service.get_remote_controller().set_handler(remote_controller_bridge.get_bridge())
 
         mock_script = test_context.Mock()
         mock_manager = test_context.Mock()
@@ -445,7 +448,9 @@ class TestDBusService:
         """Test OrcaDBusServiceInterface.PresentMessage works without active script."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca import dbus_service
+        from orca import dbus_service, remote_controller_bridge
+
+        dbus_service.get_remote_controller().set_handler(remote_controller_bridge.get_bridge())
 
         mock_manager = test_context.Mock()
         mock_manager.get_active_script.return_value = None
@@ -463,7 +468,9 @@ class TestDBusService:
         """Test OrcaDBusServiceInterface.SpeakMessage delegates to presentation manager."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca import dbus_service
+        from orca import dbus_service, remote_controller_bridge
+
+        dbus_service.get_remote_controller().set_handler(remote_controller_bridge.get_bridge())
 
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         service = dbus_service.OrcaDBusServiceInterface()
@@ -476,7 +483,9 @@ class TestDBusService:
         """Test OrcaDBusServiceInterface.DisplayMessage delegates to presentation manager."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca import dbus_service
+        from orca import dbus_service, remote_controller_bridge
+
+        dbus_service.get_remote_controller().set_handler(remote_controller_bridge.get_bridge())
 
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         service = dbus_service.OrcaDBusServiceInterface()
@@ -1210,12 +1219,22 @@ def _stub_orca_internals(test_context: OrcaTestContext) -> dict[str, object]:
     presentation_manager_mod = types.ModuleType("orca.presentation_manager")
     presentation_manager_mod.get_manager = lambda: presentation_manager_instance
 
+    focus_manager_instance = test_context.Mock()
+    focus_manager_mod = types.ModuleType("orca.focus_manager")
+    focus_manager_mod.get_manager = lambda: focus_manager_instance
+
+    screen_reader_manager_mod = types.ModuleType("orca.screen_reader_manager")
+    screen_reader_manager_mod.get_manager = test_context.Mock()
+
     stubs: dict[str, object] = {
         "orca.orca_platform": platform_mod,
         "orca.debug": debug_mod,
+        "orca.focus_manager": focus_manager_mod,
+        "focus_manager_instance": focus_manager_instance,
         "orca.input_event": input_event_mod,
         "orca.input_event_manager": iem_mod,
         "orca.presentation_manager": presentation_manager_mod,
+        "orca.screen_reader_manager": screen_reader_manager_mod,
         "presentation_manager_instance": presentation_manager_instance,
         "orca.script_manager": sm_mod,
         "input_event_manager_instance": iem_instance,
@@ -1747,13 +1766,14 @@ class TestRemoteControllerInternalAPIs:
         """Sound internal APIs call the presentation manager directly."""
 
         stubs = _stub_orca_internals(test_context)
-        from orca import dbus_service
+        from orca import dbus_service, remote_controller_bridge
 
         presentation_manager_instance = stubs["presentation_manager_instance"]
         presentation_manager_instance.play_sound_file.return_value = True
         presentation_manager_instance.play_tone.return_value = True
 
         controller = dbus_service.OrcaRemoteController()
+        controller.set_handler(remote_controller_bridge.get_bridge())
 
         assert (
             controller.play_sound_file_internal("/tmp/ding.ogg", interrupt=False, volume=0.5)
@@ -1773,6 +1793,46 @@ class TestRemoteControllerInternalAPIs:
             wave="square",
             interrupt=False,
         )
+
+    def test_focus_internal_apis_route_to_focus_manager(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Focus internal APIs return the focus manager's active window and focus."""
+
+        stubs = _stub_orca_internals(test_context)
+        from orca import dbus_service, remote_controller_bridge
+
+        focus_manager_instance = stubs["focus_manager_instance"]
+        focus_manager_instance.get_active_window.return_value = "window"
+        focus_manager_instance.get_locus_of_focus.return_value = "focus"
+
+        controller = dbus_service.OrcaRemoteController()
+        controller.set_handler(remote_controller_bridge.get_bridge())
+
+        assert controller.get_active_window_internal() == "window"
+        assert controller.get_current_object_internal() == "focus"
+
+    def test_internal_apis_do_nothing_without_handler(self, test_context: OrcaTestContext) -> None:
+        """Without a handler, messages and sounds fail and there is no window or focus."""
+
+        stubs = _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        service = dbus_service.OrcaDBusServiceInterface()
+        assert service.ShowPreferences() is False
+        assert service.PresentMessage("Both") is False
+        assert service.SpeakMessage("Speech") is False
+        assert service.DisplayMessage("Braille", True) is False
+
+        controller = dbus_service.OrcaRemoteController()
+        assert controller.play_sound_file_internal("/tmp/ding.ogg") is False
+        assert controller.play_tone_internal(0.25, 440) is False
+        assert controller.get_active_window_internal() is None
+        assert controller.get_current_object_internal() is None
+
+        assert not stubs["presentation_manager_instance"].mock_calls
+        assert not stubs["focus_manager_instance"].mock_calls
 
 
 @pytest.mark.unit

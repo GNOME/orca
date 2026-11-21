@@ -24,10 +24,22 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from . import input_event, input_event_manager, script_manager
+from . import (
+    focus_manager,
+    input_event,
+    input_event_manager,
+    presentation_manager,
+    screen_reader_manager,
+    script_manager,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Callable
+
+    import gi
+
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
 
 
 class RemoteControllerBridge:
@@ -48,6 +60,64 @@ class RemoteControllerBridge:
         result = method(script=script, event=event, **arguments)
         input_event_manager.get_manager().process_remote_controller_event(event)
         return result
+
+    def show_preferences(self) -> bool:
+        """Shows the preferences for the active script. Returns False if there is no script."""
+
+        manager = script_manager.get_manager()
+        script = manager.get_active_script() or manager.get_default_script()
+        if script is None:
+            return False
+
+        screen_reader_manager.get_manager().show_preferences_gui(script)
+        return True
+
+    def present_message(self, message: str) -> None:
+        """Presents message in speech and braille."""
+
+        presentation_manager.get_manager().present_message(message)
+
+    def speak_message(self, message: str) -> None:
+        """Speaks message."""
+
+        presentation_manager.get_manager().speak_message(message)
+
+    def display_message(self, message: str, persistent: bool) -> None:
+        """Displays message in braille."""
+
+        presentation_manager.get_manager().display_message(message, persistent=persistent)
+
+    def play_sound_file(self, path: str, interrupt: bool, volume: float) -> bool:
+        """Plays the sound file at path."""
+
+        return presentation_manager.get_manager().play_sound_file(
+            path,
+            interrupt=interrupt,
+            volume=volume,
+        )
+
+    def play_tone(
+        self, duration: float, frequency: int, volume: float, wave: str, interrupt: bool
+    ) -> bool:
+        """Plays a tone."""
+
+        return presentation_manager.get_manager().play_tone(
+            duration,
+            frequency,
+            volume=volume,
+            wave=wave,
+            interrupt=interrupt,
+        )
+
+    def get_active_window(self) -> Atspi.Accessible | None:
+        """Returns the active window."""
+
+        return focus_manager.get_manager().get_active_window()
+
+    def get_current_object(self) -> Atspi.Accessible | None:
+        """Returns the current object."""
+
+        return focus_manager.get_manager().get_locus_of_focus()
 
 
 _bridge: RemoteControllerBridge = RemoteControllerBridge()
