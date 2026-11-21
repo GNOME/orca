@@ -773,10 +773,10 @@ class RemoteControllerHandler(Protocol):
     ) -> bool:
         """Plays a tone."""
 
-    def get_active_window(self) -> Atspi.Accessible | None:
+    def get_active_window(self) -> typing.Optional[Atspi.Accessible]:  # noqa: UP045
         """Returns the active window."""
 
-    def get_current_object(self) -> Atspi.Accessible | None:
+    def get_current_object(self) -> typing.Optional[Atspi.Accessible]:  # noqa: UP045
         """Returns the current object."""
 
     def quit(self) -> None:
