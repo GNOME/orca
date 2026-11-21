@@ -3775,7 +3775,7 @@ def main() -> int:
     """CLI entry point."""
 
     repo_root = Path(__file__).resolve().parent.parent
-    parser = argparse.ArgumentParser(description="Generate Orca's uninstalled English help preview")
+    parser = argparse.ArgumentParser(description="Generate Orca's English help documentation")
     parser.add_argument(
         "--src-dir",
         default=str(repo_root / "src"),
@@ -3783,12 +3783,12 @@ def main() -> int:
     )
     parser.add_argument(
         "--output-dir",
-        default=str(repo_root / "help_ng"),
-        help="Path to output Mallard directory (default: help_ng; not installed or translated).",
+        default=str(repo_root / "help" / "C"),
+        help="Path to output Mallard directory (default: help/C).",
     )
     parser.add_argument(
         "--metadata",
-        default=str(repo_root / "help_ng" / "generated_help_metadata.json"),
+        default=str(repo_root / "help" / "C" / "generated_help_metadata.json"),
         help="Path to generated-help prose metadata.",
     )
     mode = parser.add_mutually_exclusive_group()
@@ -3888,7 +3888,7 @@ def main() -> int:
                     yelp_build,
                     "html",
                     "-x",
-                    str(repo_root / "help_ng" / "help_html.xsl"),
+                    str(repo_root / "help" / "C" / "help_html.xsl"),
                     "-o",
                     str(html_dir.resolve()),
                     str(output_dir.resolve()),

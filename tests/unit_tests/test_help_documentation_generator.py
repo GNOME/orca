@@ -40,7 +40,7 @@ from typing import Any
 import pytest
 
 _ROOT = Path(__file__).resolve().parents[2]
-_HELP_DIR = _ROOT / "help_ng"
+_HELP_DIR = _ROOT / "help" / "C"
 _METADATA_PATH = _HELP_DIR / "generated_help_metadata.json"
 _SCRIPT = _ROOT / "tools" / "generate_help_documentation.py"
 _NS = {"m": "http://projectmallard.org/1.0/"}
@@ -277,23 +277,21 @@ def test_preview_index_is_generated_and_checked(
     assert generator["main"]() == 1
 
 
-def test_default_generation_preserves_installed_help(
+def test_default_generation_updates_installed_help(
     generator: dict[str, Any], tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """Default generation and freshness checks use only the uninstalled preview."""
+    """Default generation and freshness checks use the English help source directory."""
 
-    shutil.copytree(_HELP_DIR, tmp_path / "help_ng", ignore=shutil.ignore_patterns("*.page"))
+    shutil.copytree(_HELP_DIR, tmp_path / "help/C", ignore=shutil.ignore_patterns("*.page", "html"))
     installed_help = tmp_path / "help/C/index.page"
-    installed_help.parent.mkdir(parents=True)
-    installed_help.write_text("Installed help must remain unchanged.\n")
+    installed_help.write_text("Outdated help.\n")
     namespace = generator["main"].__globals__
     script = tmp_path / "tools/generate_help_documentation.py"
     monkeypatch.setitem(namespace, "__file__", str(script))
     argv = [str(script), "--src-dir", str(_ROOT / "src")]
     monkeypatch.setattr("sys.argv", argv)
     assert generator["main"]() == 0
-    assert (tmp_path / "help_ng/index.page").exists()
-    assert installed_help.read_text() == "Installed help must remain unchanged.\n"
+    assert "This file is generated" in installed_help.read_text()
     monkeypatch.setattr("sys.argv", [*argv, "--check"])
     assert generator["main"]() == 0
 

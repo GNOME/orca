@@ -31,13 +31,13 @@ do
     cd $d
     echo "Generating help for $lang"
     if [ $lang == "C" ]; then
-      yelp-build html -o $OUTPUT_DIR/help .
+      yelp-build html -x "$toplevel/help/C/help_html.xsl" -o $OUTPUT_DIR/help .
       # special case to avoid having "C" in the human-readable list of languages  
       LANGLINKS="${LANGLINKS}<a href='help/'>en</a> "
     else
       lang_output_dir=$OUTPUT_DIR/help/$lang
       mkdir $lang_output_dir
-      yelp-build html -o $lang_output_dir . -p ../C
+      yelp-build html -x "$toplevel/help/C/help_html.xsl" -o $lang_output_dir . -p ../C
       LANGLINKS="${LANGLINKS}<a href='help/$lang/'>$lang</a> "
     fi
     cd $toplevel

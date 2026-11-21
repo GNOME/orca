@@ -1,8 +1,8 @@
 # Generated Help
 
-The generator creates Mallard documentation in `help_ng/` from source metadata.
-Edit the source metadata, not the generated pages. For now, this preview is
-deliberately excluded from translation and installation; `help/` remains unchanged.
+The generator creates Mallard documentation in `help/C/` from source metadata.
+Edit the source metadata, not the generated pages. These pages are the source for
+the installed, translated help and the Orca documentation website.
 
 ## Generate and View
 
@@ -10,7 +10,7 @@ From the source root:
 
 ```sh
 python tools/generate_help_documentation.py
-yelp help_ng/index.page
+yelp help/C/index.page
 ```
 
 To view the help in a web browser, install `yelp-tools` and generate HTML:
@@ -20,7 +20,7 @@ python tools/generate_help_documentation.py --html
 ```
 
 This command regenerates the Mallard pages and then renders them as HTML.
-Open `help_ng/html/index.html` in your preferred browser. Rerun the command after
+Open `help/C/html/index.html` in your preferred browser. Rerun the command after
 editing the documentation and reload the page to review your changes. The HTML
 preview is ignored by Git.
 
@@ -59,7 +59,8 @@ usage instructions. Put explanations of individual choices and list actions in
    command definitions or preferences metadata.
 3. Choose an index section using `guide_xref`, following the existing examples.
    Give each topic one parent guide. Guide page IDs end in `_guide`, except for `index`.
-   Add each generated page ID to `feature_order` in `help_ng/generated_help_metadata.json`.
+   Add each generated page ID to `feature_order` in `help/C/generated_help_metadata.json`
+   and its filename to `sources` in `help/meson.build`.
    For a new settings category, also define its `PreferenceCategoryDoc` in the
    preferences grid and add its category ID to `preference_order`.
 
