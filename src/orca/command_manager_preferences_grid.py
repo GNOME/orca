@@ -101,7 +101,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             command_groups=("keyboard-layout.commands",),
             instructions=(
                 "The bindings shown here are for standard keyboards. Braille-display "
-                "button bindings are not configured in the Commands list.\n\n"
+                "bindings are not configured in the Commands list.\n\n"
                 "To bind or change a command shortcut, arrow to the command and press "
                 "Enter. Then press the new key combination and press Enter to confirm "
                 "it. Press Delete or Backspace without modifiers to unbind the command. "

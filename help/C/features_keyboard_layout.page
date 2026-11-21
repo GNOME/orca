@@ -41,8 +41,8 @@
       <gui>Commands</gui> category.
     </p>
     <p>
-      The bindings shown here are for standard keyboards. Braille-display button bindings are
-      not configured in the Commands list.
+      The bindings shown here are for standard keyboards. Braille-display bindings are not
+      configured in the Commands list.
     </p>
     <p>
       To bind or change a command shortcut, arrow to the command and press <key>Enter</key>.
