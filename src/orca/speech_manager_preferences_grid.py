@@ -231,12 +231,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         PreferenceControlDoc(
                             summary=(
                                 "Controls automatic language switching for document content. "
-                                "For example, disable it in global preferences but enable it in "
-                                "application preferences for one or more web browsers. Other "
-                                "applications continue to use the global setting unless they "
-                                "have their own override. See [[screen-reader.configuration]] "
-                                "for opening global and application preferences and removing "
-                                "overrides."
+                                "For example, Orca can use a French voice for a passage marked "
+                                "as French in an English document."
                             ),
                             label=guilabels.AUTO_LANGUAGE_SWITCHING,
                             kind="switch",

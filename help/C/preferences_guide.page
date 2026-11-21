@@ -34,10 +34,12 @@
     an application-specific override continue to use the global configuration.
   </p>
   <p>
-    To use a different value in an application, open its application preferences, change the
-    setting, and save. Repeat for other applications as needed. To make an application follow
-    the global setting again, set the application value to the global value and save. Orca
-    removes the matching override, so later changes to the global setting also apply to that
+    While using the application you want to customize, open Orca's preferences for that
+    application (see
+    "<link xref="preferences_guide#opening-preferences">Opening preferences</link>"). Change the
+    setting and save. Repeat for other applications as needed. To make an application follow the
+    global setting again, set the application value to the global value and save. Orca removes
+    the matching override, so later changes to the global setting also apply to that
     application.
   </p>
   <section id="opening-preferences">

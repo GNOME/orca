@@ -33,10 +33,10 @@
       <gui>Profiles</gui> category.
     </p>
     <p>
-      In application preferences, select an existing profile to configure that application for
-      the selected profile. For example, select a work profile to save Writer-specific settings
-      for it. Selecting a profile also changes Orca's active profile. Create, rename, and remove
-      profiles in the global Preferences window.
+      In global Preferences, you can select or create a profile and rename or remove any profile
+      other than the default. In application preferences, the only control is the "Current
+      Profile" list. Choose the profile in which to save settings for that application.
+      Selecting a profile in either window makes it Orca's active profile.
     </p>
     <p>
       <em style="strong">Available settings:</em>

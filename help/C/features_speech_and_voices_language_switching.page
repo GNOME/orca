@@ -47,11 +47,8 @@
           <item>
             <p>
               <gui>Document content</gui>: Controls automatic language switching for document
-              content. For example, disable it in global preferences but enable it in
-              application preferences for one or more web browsers. Other applications continue
-              to use the global setting unless they have their own override. See
-              "<link xref="preferences_guide">Preferences</link>" for opening global and
-              application preferences and removing overrides. Default: on.
+              content. For example, Orca can use a French voice for a passage marked as French
+              in an English document. Default: on.
             </p>
           </item>
           <item>

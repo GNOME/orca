@@ -50,8 +50,10 @@
             <gui>Text Attributes</gui>: Lists text attributes and lets you choose whether each
             is spoken, marked in braille, both, or neither. The choices and presentation order
             can be customized for individual applications. Speech choices apply to the explicit
-            formatting command, not automatic formatting-change announcements. Enable braille
-            marking for the mistake attribute to mark spelling and grammar errors. Choices:
+            formatting command, not automatic formatting-change announcements. To mark the
+            selected attributes on your braille display, choose indicator dots for text
+            attributes in
+            "<link xref="features_braille_display_settings">Display settings</link>". Choices:
             None, Speak, Mark in braille, Speak and mark.
           </p>
           <list>

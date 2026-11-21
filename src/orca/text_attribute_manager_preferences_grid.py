@@ -101,8 +101,9 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
                         "marked in braille, both, or neither. The choices and presentation "
                         "order can be customized for individual applications. Speech choices "
                         "apply to the explicit formatting command, not automatic "
-                        "formatting-change announcements. Enable braille marking for the "
-                        "mistake attribute to mark spelling and grammar errors."
+                        "formatting-change announcements. To mark the selected attributes on "
+                        "your braille display, choose indicator dots for text attributes in "
+                        "[[braille.display-settings.feature]]."
                     ),
                     value_docs=(
                         PreferenceValueDoc(
