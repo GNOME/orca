@@ -1968,6 +1968,9 @@ def _build_help_index_page(metadata: dict[str, Any]) -> ET.ElementTree:
         section = _append_child(page, "section")
         section.set("id", section_doc["id"])
         _append_child(section, "title", section_doc["title"])
+        links = _append_child(section, "links")
+        links.set("type", "topic")
+        links.set("style", "2column")
     return ET.ElementTree(page)
 
 
@@ -3171,6 +3174,7 @@ def _add_feature_guide_links(
 
     links = _append_child(parent, "links")
     links.set("type", "topic")
+    links.set("style", "2column")
     if page_doc.topics_title:
         _append_child(links, "title", page_doc.topics_title)
     info = parent.find(f"{{{MALLARD_NS}}}info")

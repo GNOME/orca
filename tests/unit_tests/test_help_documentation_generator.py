@@ -237,6 +237,10 @@ def test_index_sections_follow_metadata(generator: dict[str, Any]) -> None:
     assert [section.get("id") for section in sections] == [
         section["id"] for section in metadata["index"]["sections"]
     ]
+    for section in sections:
+        links = section.find("m:links[@type='topic']", _NS)
+        assert links is not None
+        assert links.get("style") == "2column"
 
 
 def test_preview_index_is_generated_and_checked(
@@ -659,6 +663,12 @@ def test_html_generation_preserves_topic_navigation(tmp_path: Path) -> None:
     assert (output / "index.html").is_file()
     for path in source.glob("*.page"):
         topic = _parse_generated_page(path.read_text())
+        topic_lists = topic.findall(".//m:links[@type='topic']", _NS)
+        for links in topic_lists:
+            assert links.get("style") == "2column", path.name
+        if topic_lists:
+            content = (output / f"{path.stem}.html").read_text()
+            assert content.count('class="links-twocolumn"') == len(topic_lists), path.name
         parent = topic.find("m:info/m:link[@type='guide']", _NS)
         if parent is None:
             continue

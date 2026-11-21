@@ -20,5 +20,5 @@
   <title>
     <media type="image" width="40px" height="40px" its:translate="no" src="figures/orca-logo.svg" /> Braille
   </title>
-  <links type="topic" />
+  <links type="topic" style="2column" />
 </page>

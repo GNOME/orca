@@ -40,20 +40,26 @@
   </note>
   <section id="getting_started">
     <title>Getting started</title>
+    <links type="topic" style="2column" />
   </section>
   <section id="output">
     <title>Output and presentation</title>
+    <links type="topic" style="2column" />
   </section>
   <section id="reviewing">
     <title>Reviewing and interacting with objects</title>
+    <links type="topic" style="2column" />
   </section>
   <section id="reading">
     <title>Reading documents and web pages</title>
+    <links type="topic" style="2column" />
   </section>
   <section id="interaction">
     <title>Interacting with applications and the desktop environment</title>
+    <links type="topic" style="2column" />
   </section>
   <section id="troubleshooting">
     <title>Troubleshooting</title>
+    <links type="topic" style="2column" />
   </section>
 </page>
