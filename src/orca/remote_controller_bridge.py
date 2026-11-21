@@ -28,6 +28,7 @@ from . import (
     focus_manager,
     input_event,
     input_event_manager,
+    orca,
     presentation_manager,
     screen_reader_manager,
     script_manager,
@@ -118,6 +119,11 @@ class RemoteControllerBridge:
         """Returns the current object."""
 
         return focus_manager.get_manager().get_locus_of_focus()
+
+    def quit(self) -> None:
+        """Quits Orca."""
+
+        orca.shutdown()
 
 
 _bridge: RemoteControllerBridge = RemoteControllerBridge()

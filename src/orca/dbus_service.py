@@ -730,12 +730,15 @@ class OrcaDBusServiceInterface(Publishable):
         msg = "DBUS SERVICE: Quit called."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        from . import orca  # pylint: disable=import-outside-toplevel
+        if (handler := get_remote_controller().get_handler()) is None:
+            msg = "DBUS SERVICE: Cannot quit; no handler."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
 
-        # orca.shutdown() shuts down the dbus service, so send the response immediately and then
+        # Quitting shuts down the dbus service, so send the response immediately and then
         # do the actual shutdown after a brief delay.
         def _delayed_shutdown():
-            orca.shutdown()
+            handler.quit()
             return False
 
         GLib.timeout_add(100, _delayed_shutdown)
@@ -775,6 +778,9 @@ class RemoteControllerHandler(Protocol):
 
     def get_current_object(self) -> Atspi.Accessible | None:
         """Returns the current object."""
+
+    def quit(self) -> None:
+        """Quits Orca."""
 
 
 class OrcaRemoteController:

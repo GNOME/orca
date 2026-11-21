@@ -76,6 +76,7 @@ class TestDBusService:
             "orca.focus_manager",
             "orca.input_event",
             "orca.input_event_manager",
+            "orca.orca",
             "orca.orca_platform",
             "orca.screen_reader_manager",
             "orca.script_manager",
@@ -1226,6 +1227,9 @@ def _stub_orca_internals(test_context: OrcaTestContext) -> dict[str, object]:
     screen_reader_manager_mod = types.ModuleType("orca.screen_reader_manager")
     screen_reader_manager_mod.get_manager = test_context.Mock()
 
+    orca_mod = types.ModuleType("orca.orca")
+    orca_mod.shutdown = test_context.Mock()
+
     stubs: dict[str, object] = {
         "orca.orca_platform": platform_mod,
         "orca.debug": debug_mod,
@@ -1233,6 +1237,7 @@ def _stub_orca_internals(test_context: OrcaTestContext) -> dict[str, object]:
         "focus_manager_instance": focus_manager_instance,
         "orca.input_event": input_event_mod,
         "orca.input_event_manager": iem_mod,
+        "orca.orca": orca_mod,
         "orca.presentation_manager": presentation_manager_mod,
         "orca.screen_reader_manager": screen_reader_manager_mod,
         "presentation_manager_instance": presentation_manager_instance,
@@ -1833,6 +1838,28 @@ class TestRemoteControllerInternalAPIs:
 
         assert not stubs["presentation_manager_instance"].mock_calls
         assert not stubs["focus_manager_instance"].mock_calls
+
+    def test_quit_replies_then_shuts_down(self, test_context: OrcaTestContext) -> None:
+        """Quit returns True right away and shuts Orca down from a timeout."""
+
+        stubs = _stub_orca_internals(test_context)
+        from orca import dbus_service, remote_controller_bridge
+
+        timeout_add = test_context.patch_object(dbus_service.GLib, "timeout_add")
+        shutdown = stubs["orca.orca"].shutdown
+        service = dbus_service.OrcaDBusServiceInterface()
+
+        assert service.Quit() is False
+        timeout_add.assert_not_called()
+
+        dbus_service.get_remote_controller().set_handler(remote_controller_bridge.get_bridge())
+        assert service.Quit() is True
+        shutdown.assert_not_called()
+
+        delay, delayed_shutdown = timeout_add.call_args.args
+        assert delay == 100
+        assert delayed_shutdown() is False
+        shutdown.assert_called_once_with()
 
 
 @pytest.mark.unit
