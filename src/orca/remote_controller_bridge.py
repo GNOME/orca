@@ -34,7 +34,6 @@ from . import (  # pylint: disable=no-name-in-module
     focus_manager,
     input_event,
     input_event_manager,
-    orca,
     orca_platform,
     presentation_manager,
     screen_reader_manager,
@@ -149,7 +148,7 @@ class RemoteControllerBridge:
     def quit(self) -> None:
         """Quits Orca."""
 
-        orca.shutdown()
+        screen_reader_manager.get_manager().shutdown()
 
 
 _bridge: RemoteControllerBridge = RemoteControllerBridge()

@@ -51,7 +51,6 @@ from . import (
     messages,
     mouse_presenter,
     orca_modifier_manager,
-    preferences_window,
     presentation_manager,
     screen_reader_manager,
     script_manager,
@@ -95,66 +94,13 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
     manager.print_running_applications(force=False)
 
 
-def shutdown(_event=None, _signum=None):
-    """Exits Orca. Returns True if shutdown ran to completion."""
-
-    if hasattr(shutdown, "in_progress"):
-        msg = "ORCA: Shutdown already in progress"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return False
-
-    shutdown.in_progress = True
-
-    def _timeout(_signum=None, _frame=None):
-        msg = "TIMEOUT: something has hung. Aborting."
-        debug.print_message(debug.LEVEL_SEVERE, msg, True)
-        os.kill(os.getpid(), signal.SIGKILL)
-
-    debug.print_message(debug.LEVEL_INFO, "ORCA: Shutting down", True)
-    signal.signal(signal.SIGALRM, _timeout)
-    signal.alarm(5)
-
-    manager = presentation_manager.get_manager()
-    manager.interrupt_presentation()
-    manager.present_message(messages.STOP_ORCA)
-
-    extension_loader.get_loader().shutdown_user_extensions()
-    dbus_service.get_remote_controller().shutdown()
-    orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")
-
-    # Pause event queuing first so that it clears its queue and will not accept new
-    # events. Then let the script manager unregister script event listeners as well
-    # as key grabs. Finally deactivate the event manager and the device
-    # manager, which will cause the Atspi.Device to be set to None.
-    event_manager.get_manager().pause_queuing(True, True, "Shutting down.")
-    script_manager.get_manager().deactivate()
-    event_manager.get_manager().deactivate()
-
-    # TODO - JD: This ultimately belongs in an extension manager.
-    clipboard_presenter.get_presenter().deactivate()
-    mouse_presenter.get_presenter().deactivate()
-
-    presentation_manager.get_manager().shutdown_presenters()
-
-    preferences_window.close_preferences_gui_for_shutdown()
-
-    ax_device_manager.get_manager().deactivate()
-    systemd.get_manager().notify_stopping()
-    signal.alarm(0)
-    debug.print_message(debug.LEVEL_INFO, "ORCA: Quitting Atspi main event loop", True)
-    Atspi.event_quit()  # pylint: disable=no-value-for-parameter
-    debug.print_message(debug.LEVEL_INFO, "ORCA: Shutdown complete", True)
-    debug.shutdown()
-    return True
-
-
 def _setup_signal_handlers():
     """Sets up signal handlers for reload, shutdown, and preferences."""
 
     def _glib_shutdown_handler():
         msg = "ORCA: GLib handler received shutdown signal"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        shutdown()
+        screen_reader_manager.get_manager().shutdown()
         return GLib.SOURCE_REMOVE
 
     def _glib_reload_handler():
