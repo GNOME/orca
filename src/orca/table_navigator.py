@@ -51,6 +51,7 @@ from .ax_table import AXTable
 from .ax_utilities import AXUtilities
 from .enums import ActivePresentationMode, CaretSetReason
 from .extension import Extension
+from .table_navigator_preferences_grid import TableNavigationPreferencesGrid
 from .table_navigator_settings import TableNavigationSettings
 
 if TYPE_CHECKING:
@@ -687,6 +688,11 @@ class TableNavigator(Extension):
                 presentation_manager.get_manager().present_message(
                     messages.cell_span(rowspan, colspan),
                 )
+
+    def create_preferences_grid(self) -> TableNavigationPreferencesGrid:
+        """Returns the preferences grid for table navigation settings."""
+
+        return TableNavigationPreferencesGrid(self)
 
     @gsettings_registry.get_registry().gsetting(
         key=TableNavigationSettings.KEY_ENABLED,

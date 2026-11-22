@@ -62,6 +62,7 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .enums import ActivePresentationMode, CaretSetReason, StructuralNavigationMode
 from .extension import Extension
+from .structural_navigator_preferences_grid import StructuralNavigationPreferencesGrid
 from .structural_navigator_settings import StructuralNavigationSettings
 
 if TYPE_CHECKING:
@@ -277,6 +278,11 @@ class StructuralNavigator(Extension):
             value,
         )
         return True
+
+    def create_preferences_grid(self) -> StructuralNavigationPreferencesGrid:
+        """Returns the preferences grid for structural navigation settings."""
+
+        return StructuralNavigationPreferencesGrid(self)
 
     @gsettings_registry.get_registry().gsetting(
         key=StructuralNavigationSettings.KEY_ENABLED,

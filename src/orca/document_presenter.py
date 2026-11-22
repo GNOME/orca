@@ -1258,7 +1258,13 @@ class DocumentPresenter(Extension):
         # pylint: disable-next=import-outside-toplevel
         from .document_presenter_preferences_grid import DocumentPreferencesGrid
 
-        return DocumentPreferencesGrid(self, title_change_callback)
+        return DocumentPreferencesGrid(
+            self,
+            caret_navigator.get_navigator().create_preferences_grid(),
+            structural_navigator.get_navigator().create_preferences_grid(),
+            table_navigator.get_navigator().create_preferences_grid(),
+            title_change_callback,
+        )
 
 
 _presenter = DocumentPresenter()

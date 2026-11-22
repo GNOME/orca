@@ -49,6 +49,7 @@ from . import (
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .caret_navigator_preferences_grid import CaretNavigationPreferencesGrid
 from .caret_navigator_settings import CaretNavigationSettings
 from .enums import ActivePresentationMode, CaretSetReason
 from .extension import Extension
@@ -127,6 +128,11 @@ class CaretNavigator(Extension):
         tokens = ["CARET NAVIGATOR:", script, "is not the active script", active_script]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
+
+    def create_preferences_grid(self) -> CaretNavigationPreferencesGrid:
+        """Returns the preferences grid for caret navigation settings."""
+
+        return CaretNavigationPreferencesGrid(self)
 
     @gsettings_registry.get_registry().gsetting(
         key=CaretNavigationSettings.KEY_ENABLED,

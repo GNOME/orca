@@ -32,14 +32,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from . import (
-    caret_navigator,
     guilabels,
     math_presenter,
     preferences_grid_base,
-    structural_navigator,
-    table_navigator,
 )
-from .caret_navigator_settings import CaretNavigationSettings
 from .document_presenter_settings import DocumentSettings
 from .help_metadata import (
     PreferenceCategoryDoc,
@@ -47,338 +43,18 @@ from .help_metadata import (
     PreferencePanelDoc,
     PreferenceValueDoc,
 )
-from .structural_navigator_settings import StructuralNavigationSettings
-from .table_navigator_settings import TableNavigationSettings
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
     import gi
 
+    from .caret_navigator_preferences_grid import CaretNavigationPreferencesGrid
     from .document_presenter import DocumentPresenter
+    from .structural_navigator_preferences_grid import StructuralNavigationPreferencesGrid
+    from .table_navigator_preferences_grid import TableNavigationPreferencesGrid
 
     gi.require_version("Gtk", "3.0")
-    from gi.repository import Gtk
-
-
-class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
-    """Sub-grid for caret navigation settings within the Documents page."""
-
-    _gsettings_schema = "caret-navigation"
-
-    @classmethod
-    def get_documentation(cls) -> PreferencePanelDoc:
-        """Return documentation metadata for caret navigation preferences."""
-
-        return PreferencePanelDoc(
-            title=guilabels.KB_GROUP_CARET_NAVIGATION,
-            panel_id="document_presenter.caret-navigation",
-            command_groups=("documents.caret-navigation.commands",),
-            target="documents.caret-navigation",
-            link_summary=(
-                "Configure how caret navigation works in text and how lines are presented."
-            ),
-            schema="caret-navigation",
-            controls=(
-                PreferenceControlDoc(
-                    label=guilabels.KB_GROUP_CARET_NAVIGATION,
-                    kind="switch",
-                    summary=(
-                        "Controls whether Orca provides text navigation using the arrow "
-                        "keys, Home, and End."
-                    ),
-                    schema="caret-navigation",
-                    key=CaretNavigationSettings.KEY_ENABLED,
-                ),
-                PreferenceControlDoc(
-                    label=guilabels.AUTOMATIC_FOCUS_MODE,
-                    kind="switch",
-                    target="documents.caret-focus-mode",
-                    summary=(
-                        "Controls whether Orca switches to focus mode when caret "
-                        "navigation lands on an interactive widget."
-                    ),
-                    schema="caret-navigation",
-                    key=CaretNavigationSettings.KEY_TRIGGERS_FOCUS_MODE,
-                ),
-                PreferenceControlDoc(
-                    label=guilabels.CARET_SELECTION_ENABLED,
-                    kind="switch",
-                    summary=(
-                        "Lets Orca manage text selection when you hold Shift while using its "
-                        "caret navigation commands. Not all applications provide the support "
-                        "Orca needs. Avoid enabling this globally; enable it in "
-                        "application-specific preferences only where Orca's selection support "
-                        "is needed and you have verified it works."
-                    ),
-                    schema="caret-navigation",
-                    key=CaretNavigationSettings.KEY_SELECTION_ENABLED,
-                    since="52",
-                ),
-                PreferenceControlDoc(
-                    label=guilabels.CONTENT_LAYOUT_MODE,
-                    kind="switch",
-                    summary=(
-                        "Controls whether Orca presents each full visual line or treats "
-                        "each object as if it were on a separate line."
-                    ),
-                    schema="caret-navigation",
-                    key=CaretNavigationSettings.KEY_LAYOUT_MODE,
-                ),
-            ),
-        )
-
-    def __init__(self) -> None:
-        nav = caret_navigator.get_navigator()
-
-        # Child controls need to check the enabled switch's UI state (not runtime state)
-        # because the enabled switch has apply_immediately=False.
-        self._enabled_switch: Gtk.Switch | None = None
-
-        def is_enabled() -> bool:
-            if self._enabled_switch is not None:
-                return self._enabled_switch.get_active()
-            return nav.get_is_enabled()
-
-        controls = [
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.KB_GROUP_CARET_NAVIGATION,
-                getter=nav.get_is_enabled,
-                setter=nav.set_is_enabled,
-                prefs_key=CaretNavigationSettings.KEY_ENABLED,
-                apply_immediately=False,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.AUTOMATIC_FOCUS_MODE,
-                getter=nav.get_triggers_focus_mode,
-                setter=nav.set_triggers_focus_mode,
-                prefs_key=CaretNavigationSettings.KEY_TRIGGERS_FOCUS_MODE,
-                determine_sensitivity=is_enabled,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.CARET_SELECTION_ENABLED,
-                getter=nav.get_selection_enabled,
-                setter=nav.set_selection_enabled,
-                prefs_key=CaretNavigationSettings.KEY_SELECTION_ENABLED,
-                determine_sensitivity=is_enabled,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.CONTENT_LAYOUT_MODE,
-                getter=nav.get_layout_mode,
-                setter=nav.set_layout_mode,
-                prefs_key=CaretNavigationSettings.KEY_LAYOUT_MODE,
-                determine_sensitivity=is_enabled,
-            ),
-        ]
-        caret_info = f"{guilabels.CARET_NAVIGATION_INFO} {guilabels.CARET_SELECTION_INFO}"
-        info = (
-            f"{caret_info}\n\n{guilabels.AUTOMATIC_FOCUS_MODE_INFO}\n\n{guilabels.LAYOUT_MODE_INFO}"
-        )
-        super().__init__(guilabels.KB_GROUP_CARET_NAVIGATION, controls, info_message=info)
-
-        self._enabled_switch = self._widgets[0]
-
-
-class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
-    """Sub-grid for structural navigation settings within the Documents page."""
-
-    _gsettings_schema = "structural-navigation"
-
-    @classmethod
-    def get_documentation(cls) -> PreferencePanelDoc:
-        """Return documentation metadata for structural navigation preferences."""
-
-        return PreferencePanelDoc(
-            title=guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
-            panel_id="document_presenter.structural-navigation",
-            command_groups=("documents.structural-navigation.commands",),
-            target="documents.structural-navigation",
-            link_summary=(
-                "Configure how structural navigation works in document content and application "
-                "interfaces."
-            ),
-            schema="structural-navigation",
-            controls=(
-                PreferenceControlDoc(
-                    label=guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
-                    kind="switch",
-                    summary=(
-                        "Controls whether Orca's structural navigation commands are available."
-                    ),
-                    schema="structural-navigation",
-                    key=StructuralNavigationSettings.KEY_ENABLED,
-                ),
-                PreferenceControlDoc(
-                    label=guilabels.AUTOMATIC_FOCUS_MODE,
-                    kind="switch",
-                    target="documents.structural-focus-mode",
-                    summary=(
-                        "Controls whether Orca switches to focus mode when structural "
-                        "navigation lands on an interactive widget."
-                    ),
-                    schema="structural-navigation",
-                    key=StructuralNavigationSettings.KEY_TRIGGERS_FOCUS_MODE,
-                ),
-                PreferenceControlDoc(
-                    label=guilabels.STRUCTURAL_NAVIGATION_WRAP_AROUND,
-                    kind="switch",
-                    summary=(
-                        "Controls whether structural navigation wraps to the other end "
-                        "of the document."
-                    ),
-                    schema="structural-navigation",
-                    key=StructuralNavigationSettings.KEY_WRAPS,
-                ),
-                PreferenceControlDoc(
-                    label=guilabels.STRUCTURAL_NAVIGATION_LARGE_OBJECT_LENGTH,
-                    kind="integer",
-                    summary=(
-                        "Sets the minimum number of characters in a text block for the "
-                        "large-object structural navigation commands."
-                    ),
-                    schema="structural-navigation",
-                    key=StructuralNavigationSettings.KEY_LARGE_OBJECT_TEXT_LENGTH,
-                    minimum="1",
-                    maximum="500",
-                ),
-                PreferenceControlDoc(
-                    label=guilabels.STRUCTURAL_NAVIGATION_SKIP_UNLABELED_IMAGES,
-                    kind="switch",
-                    summary=(
-                        "Controls whether image navigation skips images without accessible "
-                        "names or descriptions."
-                    ),
-                    schema="structural-navigation",
-                    key=StructuralNavigationSettings.KEY_SKIP_UNLABELED_IMAGES,
-                ),
-            ),
-        )
-
-    def __init__(self) -> None:
-        nav = structural_navigator.get_navigator()
-
-        # Child controls need to check the enabled switch's UI state (not runtime state)
-        # because the enabled switch has apply_immediately=False.
-        self._enabled_switch: Gtk.Switch | None = None
-
-        def is_enabled() -> bool:
-            if self._enabled_switch is not None:
-                return self._enabled_switch.get_active()
-            return nav.get_is_enabled()
-
-        controls: list[preferences_grid_base.ControlType] = [
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
-                getter=nav.get_is_enabled,
-                setter=nav.set_is_enabled,
-                prefs_key=StructuralNavigationSettings.KEY_ENABLED,
-                apply_immediately=False,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.AUTOMATIC_FOCUS_MODE,
-                getter=nav.get_triggers_focus_mode,
-                setter=nav.set_triggers_focus_mode,
-                prefs_key=StructuralNavigationSettings.KEY_TRIGGERS_FOCUS_MODE,
-                determine_sensitivity=is_enabled,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.STRUCTURAL_NAVIGATION_WRAP_AROUND,
-                getter=nav.get_navigation_wraps,
-                setter=nav.set_navigation_wraps,
-                prefs_key=StructuralNavigationSettings.KEY_WRAPS,
-                determine_sensitivity=is_enabled,
-            ),
-            preferences_grid_base.IntRangePreferenceControl(
-                label=guilabels.STRUCTURAL_NAVIGATION_LARGE_OBJECT_LENGTH,
-                minimum=1,
-                maximum=500,
-                getter=nav.get_large_object_text_length,
-                setter=nav.set_large_object_text_length,
-                prefs_key=StructuralNavigationSettings.KEY_LARGE_OBJECT_TEXT_LENGTH,
-                determine_sensitivity=is_enabled,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.STRUCTURAL_NAVIGATION_SKIP_UNLABELED_IMAGES,
-                getter=nav.get_skip_unlabeled_images,
-                setter=nav.set_skip_unlabeled_images,
-                prefs_key=StructuralNavigationSettings.KEY_SKIP_UNLABELED_IMAGES,
-                determine_sensitivity=is_enabled,
-            ),
-        ]
-        info = (
-            f"{guilabels.STRUCTURAL_NAVIGATION_INFO}\n\n{guilabels.AUTOMATIC_FOCUS_MODE_INFO}"
-            f"\n\n{guilabels.LARGE_OBJECT_INFO}"
-        )
-        super().__init__(guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, controls, info_message=info)
-
-        self._enabled_switch = self._widgets[0]
-
-
-class TableNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
-    """Sub-grid for table navigation settings within the Documents page."""
-
-    _gsettings_schema = "table-navigation"
-
-    @classmethod
-    def get_documentation(cls) -> PreferencePanelDoc:
-        """Return documentation metadata for table navigation preferences."""
-
-        return PreferencePanelDoc(
-            title=guilabels.KB_GROUP_TABLE_NAVIGATION,
-            panel_id="document_presenter.table-navigation",
-            command_groups=("documents.table-navigation.commands",),
-            target="documents.table-navigation",
-            link_summary="Configure how Orca-controlled table navigation works.",
-            schema="table-navigation",
-            controls=(
-                PreferenceControlDoc(
-                    label=guilabels.KB_GROUP_TABLE_NAVIGATION,
-                    kind="switch",
-                    summary=("Controls whether Orca's table navigation commands are available."),
-                    schema="table-navigation",
-                    key=TableNavigationSettings.KEY_ENABLED,
-                ),
-                PreferenceControlDoc(
-                    label=guilabels.TABLE_SKIP_BLANK_CELLS,
-                    kind="switch",
-                    summary=("Controls whether table navigation skips empty cells."),
-                    schema="table-navigation",
-                    key=TableNavigationSettings.KEY_SKIP_BLANK_CELLS,
-                ),
-            ),
-        )
-
-    def __init__(self) -> None:
-        nav = table_navigator.get_navigator()
-
-        # Child controls need to check the enabled switch's UI state (not runtime state)
-        # because the enabled switch has apply_immediately=False.
-        self._enabled_switch: Gtk.Switch | None = None
-
-        def is_enabled() -> bool:
-            if self._enabled_switch is not None:
-                return self._enabled_switch.get_active()
-            return nav.get_is_enabled()
-
-        controls = [
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.KB_GROUP_TABLE_NAVIGATION,
-                getter=nav.get_is_enabled,
-                setter=nav.set_is_enabled,
-                prefs_key=TableNavigationSettings.KEY_ENABLED,
-                apply_immediately=False,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.TABLE_SKIP_BLANK_CELLS,
-                getter=nav.get_skip_blank_cells,
-                setter=nav.set_skip_blank_cells,
-                prefs_key=TableNavigationSettings.KEY_SKIP_BLANK_CELLS,
-                determine_sensitivity=is_enabled,
-            ),
-        ]
-        super().__init__(guilabels.KB_GROUP_TABLE_NAVIGATION, controls)
-
-        self._enabled_switch = self._widgets[0]
 
 
 class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
@@ -639,6 +315,9 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def __init__(
         self,
         presenter: DocumentPresenter,
+        caret_grid: CaretNavigationPreferencesGrid,
+        structural_grid: StructuralNavigationPreferencesGrid,
+        table_grid: TableNavigationPreferencesGrid,
         title_change_callback: Callable[[str], None] | None = None,
     ) -> None:
         super().__init__(guilabels.DOCUMENTS)
@@ -646,9 +325,9 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = True
         self._title_change_callback = title_change_callback
 
-        self._caret_grid = CaretNavigationPreferencesGrid()
-        self._structural_grid = StructuralNavigationPreferencesGrid()
-        self._table_grid = TableNavigationPreferencesGrid()
+        self._caret_grid = caret_grid
+        self._structural_grid = structural_grid
+        self._table_grid = table_grid
         self._native_grid = NativeNavigationPreferencesGrid(presenter)
         self._math_grid = math_presenter.get_presenter().create_preferences_grid()
 
