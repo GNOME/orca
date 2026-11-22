@@ -511,17 +511,20 @@ class TestDBusService:
     def test_get_version_scenarios(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test OrcaDBusServiceInterface.GetVersion with and without revision."""
         self._setup_dependencies(test_context)
-        from orca import dbus_service
+        from orca import dbus_service, remote_controller_bridge
+
+        dbus_service.get_remote_controller().set_handler(remote_controller_bridge.get_bridge())
 
         version = case["version"]
         revision = case["revision"]
         expected_result = case["expected_result"]
 
-        test_context.patch_object(dbus_service.orca_platform, "version", new=version)
-        test_context.patch_object(dbus_service.orca_platform, "revision", new=revision)
+        test_context.patch_object(remote_controller_bridge.orca_platform, "version", new=version)
+        test_context.patch_object(remote_controller_bridge.orca_platform, "revision", new=revision)
         service = dbus_service.OrcaDBusServiceInterface()
         result = service.GetVersion()
         assert result == expected_result
+        assert dbus_service.get_remote_controller().get_version_internal() == expected_result
 
     def test_orca_remote_controller_constructor(self, test_context: OrcaTestContext) -> None:
         """Test OrcaRemoteController constructor."""
@@ -1199,6 +1202,10 @@ def _stub_orca_internals(test_context: OrcaTestContext) -> dict[str, object]:
     platform_mod.version = "test-version"
     platform_mod.revision = ""
 
+    clipboard_manager_instance = test_context.Mock()
+    clipboard_manager_mod = types.ModuleType("orca.clipboard_manager")
+    clipboard_manager_mod.get_manager = lambda: clipboard_manager_instance
+
     debug_mod = types.ModuleType("orca.debug")
     debug_mod.LEVEL_INFO = 800
     debug_mod.LEVEL_WARNING = 900
@@ -1232,6 +1239,8 @@ def _stub_orca_internals(test_context: OrcaTestContext) -> dict[str, object]:
 
     stubs: dict[str, object] = {
         "orca.orca_platform": platform_mod,
+        "orca.clipboard_manager": clipboard_manager_mod,
+        "clipboard_manager_instance": clipboard_manager_instance,
         "orca.debug": debug_mod,
         "orca.focus_manager": focus_manager_mod,
         "focus_manager_instance": focus_manager_instance,
@@ -1742,27 +1751,30 @@ class TestRemoteControllerInternalAPIs:
         assert controller.get_value_internal("FakeManager", "Bogus") is None
         assert controller.set_value_internal("FakeManager", "Bogus", 1) is False
 
-    def test_message_internal_apis_route_to_service(self, test_context: OrcaTestContext) -> None:
-        """Message internal APIs call the service object directly."""
+    def test_message_internal_apis_route_to_presentation_manager(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Message internal APIs call the presentation manager without the service started."""
 
-        _stub_orca_internals(test_context)
-        from orca import dbus_service
+        stubs = _stub_orca_internals(test_context)
+        from orca import dbus_service, remote_controller_bridge
 
-        service = test_context.Mock()
-        service.PresentMessage.return_value = True
-        service.SpeakMessage.return_value = True
-        service.DisplayMessage.return_value = True
+        presentation_manager_instance = stubs["presentation_manager_instance"]
 
         controller = dbus_service.OrcaRemoteController()
-        controller._dbus_service_interface = service
+        controller.set_handler(remote_controller_bridge.get_bridge())
 
         assert controller.present_message_internal("Both") is True
         assert controller.speak_message_internal("Speech") is True
         assert controller.display_message_internal("Braille", persistent=True) is True
 
-        service.PresentMessage.assert_called_once_with("Both")
-        service.SpeakMessage.assert_called_once_with("Speech")
-        service.DisplayMessage.assert_called_once_with("Braille", True)
+        presentation_manager_instance.present_message.assert_called_once_with("Both")
+        presentation_manager_instance.speak_message.assert_called_once_with("Speech")
+        presentation_manager_instance.display_message.assert_called_once_with(
+            "Braille",
+            persistent=True,
+        )
 
     def test_sound_internal_apis_route_to_presentation_manager(
         self,
@@ -1799,6 +1811,26 @@ class TestRemoteControllerInternalAPIs:
             interrupt=False,
         )
 
+    def test_clipboard_internal_apis_route_to_clipboard_manager(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Clipboard internal APIs call the clipboard manager."""
+
+        stubs = _stub_orca_internals(test_context)
+        from orca import dbus_service, remote_controller_bridge
+
+        clipboard_manager_instance = stubs["clipboard_manager_instance"]
+
+        controller = dbus_service.OrcaRemoteController()
+        controller.set_handler(remote_controller_bridge.get_bridge())
+
+        assert controller.set_clipboard_text_internal("first") is True
+        assert controller.append_clipboard_text_internal("second", " ") is True
+
+        clipboard_manager_instance.set_text.assert_called_once_with("first")
+        clipboard_manager_instance.append_text.assert_called_once_with("second", " ")
+
     def test_focus_internal_apis_route_to_focus_manager(
         self,
         test_context: OrcaTestContext,
@@ -1819,7 +1851,7 @@ class TestRemoteControllerInternalAPIs:
         assert controller.get_current_object_internal() == "focus"
 
     def test_internal_apis_do_nothing_without_handler(self, test_context: OrcaTestContext) -> None:
-        """Without a handler, messages and sounds fail and there is no window or focus."""
+        """Without a handler, nothing is presented or copied and nothing is returned."""
 
         stubs = _stub_orca_internals(test_context)
         from orca import dbus_service
@@ -1829,14 +1861,24 @@ class TestRemoteControllerInternalAPIs:
         assert service.PresentMessage("Both") is False
         assert service.SpeakMessage("Speech") is False
         assert service.DisplayMessage("Braille", True) is False
+        assert service.GetVersion() == ""
+        assert service.GetAtspiVersion() == ""
 
         controller = dbus_service.OrcaRemoteController()
+        assert controller.get_version_internal() == ""
+        assert controller.get_atspi_version_internal() == ""
+        assert controller.set_clipboard_text_internal("first") is False
+        assert controller.append_clipboard_text_internal("second") is False
+        assert controller.present_message_internal("Both") is False
+        assert controller.speak_message_internal("Speech") is False
+        assert controller.display_message_internal("Braille") is False
         assert controller.play_sound_file_internal("/tmp/ding.ogg") is False
         assert controller.play_tone_internal(0.25, 440) is False
         assert controller.get_active_window_internal() is None
         assert controller.get_current_object_internal() is None
 
         assert not stubs["presentation_manager_instance"].mock_calls
+        assert not stubs["clipboard_manager_instance"].mock_calls
         assert not stubs["focus_manager_instance"].mock_calls
 
     def test_quit_replies_then_shuts_down(self, test_context: OrcaTestContext) -> None:

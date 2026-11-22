@@ -45,11 +45,7 @@ from dasbus.typing import UInt32 as UInt32  # noqa: PLC0414  (re-export)
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
-from . import (  # pylint: disable=no-name-in-module
-    clipboard_manager,
-    debug,
-    orca_platform,
-)
+from . import debug
 
 
 def undocumented(func):
@@ -708,8 +704,12 @@ class OrcaDBusServiceInterface(Publishable):
     def GetAtspiVersion(self) -> str:  # pylint: disable=invalid-name
         """Returns the version of AT-SPI2 Orca is using."""
 
-        version = Atspi.get_version()  # pylint: disable=no-value-for-parameter
-        result = f"{version[0]}.{version[1]}.{version[2]}"
+        if (handler := get_remote_controller().get_handler()) is None:
+            msg = "DBUS SERVICE: Cannot get AT-SPI2 version; no handler."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return ""
+
+        result = handler.get_atspi_version()
         tokens = ["DBUS SERVICE: GetAtspiVersion called, returning:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
@@ -717,9 +717,12 @@ class OrcaDBusServiceInterface(Publishable):
     def GetVersion(self) -> str:  # pylint: disable=invalid-name
         """Returns Orca's version and revision if available."""
 
-        result = orca_platform.version
-        if orca_platform.revision:
-            result += f" (rev {orca_platform.revision})"
+        if (handler := get_remote_controller().get_handler()) is None:
+            msg = "DBUS SERVICE: Cannot get version; no handler."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return ""
+
+        result = handler.get_version()
         tokens = ["DBUS SERVICE: GetVersion called, returning:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
@@ -756,6 +759,12 @@ class RemoteControllerHandler(Protocol):
     def show_preferences(self) -> bool:
         """Shows the preferences for the active script. Returns False if there is no script."""
 
+    def get_atspi_version(self) -> str:
+        """Returns the version of AT-SPI2 Orca is using."""
+
+    def get_version(self) -> str:
+        """Returns Orca's version and revision if available."""
+
     def present_message(self, message: str) -> None:
         """Presents message in speech and braille."""
 
@@ -772,6 +781,12 @@ class RemoteControllerHandler(Protocol):
         self, duration: float, frequency: int, volume: float, wave: str, interrupt: bool
     ) -> bool:
         """Plays a tone."""
+
+    def set_clipboard_text(self, text: str) -> None:
+        """Sets the clipboard contents to text."""
+
+    def append_clipboard_text(self, text: str, separator: str) -> None:
+        """Appends text to the clipboard contents."""
 
     def get_active_window(self) -> typing.Optional[Atspi.Accessible]:  # noqa: UP045
         """Returns the active window."""
@@ -942,52 +957,55 @@ class OrcaRemoteController:
     def get_atspi_version_internal(self) -> str:
         """Returns the version of AT-SPI2 Orca is using without a D-Bus round-trip."""
 
-        if self._dbus_service_interface is None:
-            msg = "REMOTE CONTROLLER: Cannot get AT-SPI2 version; service not started."
+        if self._handler is None:
+            msg = "REMOTE CONTROLLER: Cannot get AT-SPI2 version; no handler."
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return ""
 
-        return self._dbus_service_interface.GetAtspiVersion()
+        return self._handler.get_atspi_version()
 
     def get_version_internal(self) -> str:
         """Returns Orca's version and revision without a D-Bus round-trip."""
 
-        if self._dbus_service_interface is None:
-            msg = "REMOTE CONTROLLER: Cannot get version; service not started."
+        if self._handler is None:
+            msg = "REMOTE CONTROLLER: Cannot get version; no handler."
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return ""
 
-        return self._dbus_service_interface.GetVersion()
+        return self._handler.get_version()
 
     def present_message_internal(self, message: str) -> bool:
         """Presents a message via speech and/or braille without a D-Bus round-trip."""
 
-        if self._dbus_service_interface is None:
-            msg = "REMOTE CONTROLLER: Cannot present message; service not started."
+        if self._handler is None:
+            msg = "REMOTE CONTROLLER: Cannot present message; no handler."
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return False
 
-        return self._dbus_service_interface.PresentMessage(message)
+        self._handler.present_message(message)
+        return True
 
     def speak_message_internal(self, message: str) -> bool:
         """Speaks a message without a D-Bus round-trip."""
 
-        if self._dbus_service_interface is None:
-            msg = "REMOTE CONTROLLER: Cannot speak message; service not started."
+        if self._handler is None:
+            msg = "REMOTE CONTROLLER: Cannot speak message; no handler."
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return False
 
-        return self._dbus_service_interface.SpeakMessage(message)
+        self._handler.speak_message(message)
+        return True
 
     def display_message_internal(self, message: str, persistent: bool = False) -> bool:
         """Displays a message in braille without a D-Bus round-trip."""
 
-        if self._dbus_service_interface is None:
-            msg = "REMOTE CONTROLLER: Cannot display message; service not started."
+        if self._handler is None:
+            msg = "REMOTE CONTROLLER: Cannot display message; no handler."
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return False
 
-        return self._dbus_service_interface.DisplayMessage(message, persistent)
+        self._handler.display_message(message, persistent)
+        return True
 
     def play_sound_file_internal(
         self,
@@ -1024,13 +1042,23 @@ class OrcaRemoteController:
     def set_clipboard_text_internal(self, text: str) -> bool:
         """Attempts to set the clipboard contents without a D-Bus round-trip."""
 
-        clipboard_manager.get_manager().set_text(text)
+        if self._handler is None:
+            msg = "REMOTE CONTROLLER: Cannot set clipboard text; no handler."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        self._handler.set_clipboard_text(text)
         return True
 
     def append_clipboard_text_internal(self, text: str, separator: str = "\n") -> bool:
         """Attempts to append text to the clipboard contents without a D-Bus round-trip."""
 
-        clipboard_manager.get_manager().append_text(text, separator)
+        if self._handler is None:
+            msg = "REMOTE CONTROLLER: Cannot append clipboard text; no handler."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        self._handler.append_clipboard_text(text, separator)
         return True
 
     def get_active_window_internal(self) -> typing.Optional[Atspi.Accessible]:  # noqa: UP045

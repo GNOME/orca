@@ -24,11 +24,18 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from . import (
+import gi
+
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
+from . import (  # pylint: disable=no-name-in-module
+    clipboard_manager,
     focus_manager,
     input_event,
     input_event_manager,
     orca,
+    orca_platform,
     presentation_manager,
     screen_reader_manager,
     script_manager,
@@ -36,11 +43,6 @@ from . import (
 
 if TYPE_CHECKING:
     from collections.abc import Callable
-
-    import gi
-
-    gi.require_version("Atspi", "2.0")
-    from gi.repository import Atspi
 
 
 class RemoteControllerBridge:
@@ -72,6 +74,20 @@ class RemoteControllerBridge:
 
         screen_reader_manager.get_manager().show_preferences_gui(script)
         return True
+
+    def get_atspi_version(self) -> str:
+        """Returns the version of AT-SPI2 Orca is using."""
+
+        version = Atspi.get_version()  # pylint: disable=no-value-for-parameter
+        return f"{version[0]}.{version[1]}.{version[2]}"
+
+    def get_version(self) -> str:
+        """Returns Orca's version and revision if available."""
+
+        result = orca_platform.version
+        if orca_platform.revision:
+            result += f" (rev {orca_platform.revision})"
+        return result
 
     def present_message(self, message: str) -> None:
         """Presents message in speech and braille."""
@@ -109,6 +125,16 @@ class RemoteControllerBridge:
             wave=wave,
             interrupt=interrupt,
         )
+
+    def set_clipboard_text(self, text: str) -> None:
+        """Sets the clipboard contents to text."""
+
+        clipboard_manager.get_manager().set_text(text)
+
+    def append_clipboard_text(self, text: str, separator: str) -> None:
+        """Appends text to the clipboard contents."""
+
+        clipboard_manager.get_manager().append_text(text, separator)
 
     def get_active_window(self) -> Atspi.Accessible | None:
         """Returns the active window."""
