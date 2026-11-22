@@ -50,6 +50,7 @@ from . import (
     messages,
     orca_modifier_manager,
 )
+from .command import BrailleCommand, Command, KeyboardCommand
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -57,9 +58,6 @@ if TYPE_CHECKING:
     from . import input_event
     from .command_manager_preferences_grid import KeybindingsPreferencesGrid
     from .scripts import default
-
-
-from .command import BrailleCommand, Command, KeyboardCommand
 
 
 class ModalInputHandler(Protocol):
@@ -102,7 +100,6 @@ class ModalBrailleHandler(Protocol):
         """Handles a claimed event."""
 
 
-# pylint: disable-next=too-many-instance-attributes
 @gsettings_registry.get_registry().gsettings_enum(
     "org.gnome.Orca.KeyboardLayout",
     values={"desktop": 1, "laptop": 2},
@@ -1405,7 +1402,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         # pylint: disable-next=import-outside-toplevel
         from .command_manager_preferences_grid import KeybindingsPreferencesGrid
 
-        return KeybindingsPreferencesGrid(script, title_change_callback)
+        return KeybindingsPreferencesGrid(self, script, title_change_callback)
 
 
 _manager: CommandManager = CommandManager()

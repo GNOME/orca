@@ -49,7 +49,6 @@ from . import (
     orca_gui_helpers,
     orca_modifier_manager,
     preferences_grid_base,
-    script_manager,
 )
 from .ax_object import AXObject
 from .help_metadata import (
@@ -63,6 +62,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from .command import KeyboardCommand
+    from .command_manager import CommandManager
     from .scripts import default
 
 
@@ -157,12 +157,14 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
     def __init__(
         self,
+        manager: CommandManager,
         script: default.Script,
         title_change_callback: Callable[[str], None] | None = None,
     ) -> None:
         """Initialize the keybindings preferences grid."""
 
         super().__init__(guilabels.COMMANDS)
+        self._manager: CommandManager = manager
         self._script = script
         self._initializing = True
         self._title_change_callback = title_change_callback
@@ -177,7 +179,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._saved_commands: dict[str, KeyboardCommand] = {}
 
         self._original_keyboard_layout_is_desktop: bool = (
-            command_manager.get_manager().get_keyboard_layout_is_desktop()
+            self._manager.get_keyboard_layout_is_desktop()
         )
 
         self.keyboard_layout_combo: Gtk.ComboBox | None = None
@@ -270,10 +272,8 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             app_name=app_name or None,
             default="desktop",
         )
-        command_manager.get_manager().set_keyboard_layout_is_desktop(layout == "desktop")
-        self._original_keyboard_layout_is_desktop = (
-            command_manager.get_manager().get_keyboard_layout_is_desktop()
-        )
+        self._manager.set_keyboard_layout_is_desktop(layout == "desktop")
+        self._original_keyboard_layout_is_desktop = self._manager.get_keyboard_layout_is_desktop()
         # set_keyboard_layout_is_desktop() already applied the overrides and updated the grabs.
         self._populate_keybindings()
         if self._current_category and self._current_category in self._categories:
@@ -285,11 +285,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def revert_changes(self) -> None:
         """Revert keyboard layout and orca modifier to their original values."""
 
-        current_is_desktop = command_manager.get_manager().get_keyboard_layout_is_desktop()
+        current_is_desktop = self._manager.get_keyboard_layout_is_desktop()
         if current_is_desktop != self._original_keyboard_layout_is_desktop:
-            command_manager.get_manager().load_keyboard_layout(
-                self._original_keyboard_layout_is_desktop
-            )
+            self._manager.load_keyboard_layout(self._original_keyboard_layout_is_desktop)
 
         orca_modifier_manager.get_manager().set_modifier_keys_override(None)
 
@@ -307,7 +305,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if app_name:
             self._categories[app_name] = []
 
-        all_commands = command_manager.get_manager().get_user_visible_keyboard_commands()
+        all_commands = self._manager.get_user_visible_keyboard_commands()
 
         for cmd in all_commands:
             group_label = cmd.get_group_label()
@@ -580,12 +578,10 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         capture_entry.connect("key-release-event", on_key_release)
         row.capture_entry = capture_entry
 
-        script = script_manager.get_manager().get_active_script()
-        assert script
         self._present_message(messages.KB_ENTER_NEW_KEY)
-        self._saved_commands = command_manager.get_manager().get_keyboard_commands()
+        self._saved_commands = self._manager.get_keyboard_commands()
         orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
-        command_manager.get_manager().set_active_commands({}, "Capturing keys")
+        self._manager.set_active_commands({}, "Capturing keys")
         ax_device_manager.get_manager().unmap_all_modifiers()
 
     def _finish_inline_editing(
@@ -603,7 +599,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         # anything (is_active() returns False when keybinding is None).
         if not canceled:
             captured_text = capture_entry.get_text().strip()
-            script_manager.get_manager().get_active_script()
             handler_name = command.get_name()
             if not captured_text:
                 command.set_keybinding(None)
@@ -632,7 +627,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
                     GLib.idle_add(present_confirmation)
 
-        command_manager.get_manager().set_active_commands(
+        self._manager.set_active_commands(
             self._saved_commands,
             "Done capturing keys",
         )
@@ -671,7 +666,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     ) -> str | None:
         """Find if a keybinding is already used and return its description."""
 
-        mgr = command_manager.get_manager()
+        mgr = self._manager
         for category_label, category_commands in self._categories.items():
             if group_label and mgr.are_groups_exclusive(group_label, category_label):
                 continue
@@ -768,7 +763,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         general: dict[str, int | list[str]] = {}
         bindings: dict[str, list[list[Any]]] = {}
 
-        layout_value = command_manager.get_manager().get_keyboard_layout_value()
+        layout_value = self._manager.get_keyboard_layout_value()
         if self.keyboard_layout_combo is not None:
             layout_iter = self.keyboard_layout_combo.get_active_iter()
             if layout_iter is not None:
@@ -795,7 +790,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         for category_commands in self._categories.values():
             for cmd in category_commands:
                 handler_name = cmd.get_name()
-                if command_manager.get_manager().get_keyboard_command(handler_name) is None:
+                if self._manager.get_keyboard_command(handler_name) is None:
                     continue
                 if handler_name in self._modified_keybindings:
                     current_kb = self._modified_keybindings[handler_name]
@@ -809,7 +804,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 else:
                     parent_text = self._format_keybinding_text(
                         cmd.get_default_keybinding(
-                            command_manager.get_manager().is_desktop_layout(),
+                            self._manager.is_desktop_layout(),
                         ),
                     )
 
@@ -857,7 +852,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = True
 
         if self.keyboard_layout_combo is not None:
-            current_layout = command_manager.get_manager().get_keyboard_layout_value()
+            current_layout = self._manager.get_keyboard_layout_value()
             model = self.keyboard_layout_combo.get_model()
             if model:
                 for i, row in enumerate(model):
@@ -866,10 +861,10 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         break
 
         if self._modifier_switches:
-            layout_value = command_manager.get_manager().get_keyboard_layout_value()
+            layout_value = self._manager.get_keyboard_layout_value()
             is_desktop = layout_value == command_manager.KeyboardLayout.DESKTOP.value
             app_name = AXObject.get_name(self._script.app) if self._script.app else ""
-            modifier_keys = command_manager.get_manager().get_modifier_keys_for_layout(
+            modifier_keys = self._manager.get_modifier_keys_for_layout(
                 is_desktop,
                 app_name,
             )
@@ -890,12 +885,12 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             layout_value = model.get_value(tree_iter, 1)
 
             is_desktop = layout_value == command_manager.KeyboardLayout.DESKTOP.value
-            command_manager.get_manager().load_keyboard_layout(is_desktop)
+            self._manager.load_keyboard_layout(is_desktop)
 
             if self._modifier_switches:
                 self._initializing = True
                 app_name = AXObject.get_name(self._script.app) if self._script.app else ""
-                saved_keys = command_manager.get_manager().get_modifier_keys_for_layout(
+                saved_keys = self._manager.get_modifier_keys_for_layout(
                     is_desktop,
                     app_name,
                 )
