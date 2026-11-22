@@ -40,7 +40,7 @@ gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atk, Gdk, GLib, Gtk  # pylint: disable=no-name-in-module
 
-from . import gsettings_registry, orca_gui_helpers
+from . import dbus_service, gsettings_registry, orca_gui_helpers
 from .help_metadata import PreferencePanelDoc
 
 if TYPE_CHECKING:
@@ -310,6 +310,11 @@ class PreferencesGridBase(Gtk.Grid):
 
         if self._focus_sidebar_callback:
             self._focus_sidebar_callback()
+
+    def _present_message(self, message: str) -> None:
+        """Presents message in speech and braille."""
+
+        dbus_service.get_remote_controller().present_message_internal(message)
 
     def is_in_multipage_detail(self) -> bool:
         """Returns True if this grid has a multipage stack showing a detail page."""

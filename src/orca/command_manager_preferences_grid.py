@@ -49,7 +49,6 @@ from . import (
     orca_gui_helpers,
     orca_modifier_manager,
     preferences_grid_base,
-    presentation_manager,
     script_manager,
 )
 from .ax_object import AXObject
@@ -524,7 +523,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     if description_dup:
 
                         def present_duplicate_error():
-                            presentation_manager.get_manager().present_message(
+                            self._present_message(
                                 messages.KB_ALREADY_BOUND % description_dup,
                             )
                             return False
@@ -554,7 +553,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 self._captured_key = ("", 0, 0)
 
                 def present_delete_message():
-                    presentation_manager.get_manager().present_message(messages.KB_DELETED)
+                    self._present_message(messages.KB_DELETED)
                     return False
 
                 GLib.idle_add(present_delete_message)
@@ -568,7 +567,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             capture_entry.set_text(new_string)
 
             def present_message_after_keypress():
-                presentation_manager.get_manager().present_message(
+                self._present_message(
                     messages.KB_CAPTURED % new_string,
                 )
                 return False
@@ -583,7 +582,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         script = script_manager.get_manager().get_active_script()
         assert script
-        presentation_manager.get_manager().present_message(messages.KB_ENTER_NEW_KEY)
+        self._present_message(messages.KB_ENTER_NEW_KEY)
         self._saved_commands = command_manager.get_manager().get_keyboard_commands()
         orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
         command_manager.get_manager().set_active_commands({}, "Capturing keys")
@@ -612,7 +611,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 self._has_unsaved_changes = True
 
                 def present_delete_confirmation():
-                    presentation_manager.get_manager().present_message(
+                    self._present_message(
                         messages.KB_DELETED_CONFIRMATION,
                     )
                     return False
@@ -628,7 +627,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
                     def present_confirmation():
                         msg = messages.KB_CAPTURED_CONFIRMATION % captured_text
-                        presentation_manager.get_manager().present_message(msg)
+                        self._present_message(msg)
                         return False
 
                     GLib.idle_add(present_confirmation)

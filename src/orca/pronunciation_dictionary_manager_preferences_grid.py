@@ -35,8 +35,6 @@ from . import (
     messages,
     orca_gui_helpers,
     preferences_grid_base,
-    presentation_manager,
-    script_manager,
 )
 from .ax_object import AXObject
 from .help_metadata import (
@@ -265,11 +263,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         self._has_unsaved_changes = True
         self.refresh()
 
-        script = script_manager.get_manager().get_active_script()
-        if script:
-            presentation_manager.get_manager().present_message(
-                messages.PRONUNCIATION_DELETED % phrase,
-            )
+        self._present_message(messages.PRONUNCIATION_DELETED % phrase)
 
     def _on_listbox_realize(self, _widget: Gtk.Widget) -> None:
         """Suppress pronunciation substitution while editing entries."""

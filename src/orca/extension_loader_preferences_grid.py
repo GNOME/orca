@@ -44,7 +44,6 @@ from . import (
     guilabels,
     orca_gui_helpers,
     preferences_grid_base,
-    presentation_manager,
 )
 from .help_metadata import (
     PreferenceActionDoc,
@@ -669,7 +668,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _present_delete_error(self, info: extension_loader.UserExtensionInfo) -> None:
         """Present a deletion error message."""
 
-        presentation_manager.get_manager().present_message(
+        self._present_message(
             guilabels.EXTENSIONS_DELETE_ERROR_MESSAGE % self._get_display_name(info),
         )
 

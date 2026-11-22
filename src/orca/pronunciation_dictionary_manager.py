@@ -27,11 +27,11 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from . import gsettings_registry
+from .pronunciation_dictionary_manager_preferences_grid import (
+    PronunciationDictionaryPreferencesGrid,
+)
 
 if TYPE_CHECKING:
-    from .pronunciation_dictionary_manager_preferences_grid import (
-        PronunciationDictionaryPreferencesGrid,
-    )
     from .scripts import default
 
 
@@ -53,11 +53,6 @@ class PronunciationDictionaryManager:
         script: default.Script,
     ) -> PronunciationDictionaryPreferencesGrid:
         """Returns the GtkGrid containing the pronunciation dictionary UI."""
-
-        # pylint: disable-next=import-outside-toplevel
-        from .pronunciation_dictionary_manager_preferences_grid import (
-            PronunciationDictionaryPreferencesGrid,
-        )
 
         return PronunciationDictionaryPreferencesGrid(self, script)
 
