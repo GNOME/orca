@@ -1,52 +1,10 @@
 schema_generator = files('../tools/generate_gsettings_schemas.py')
 
-# Source files with @gsettings_schema decorators. For meson dependency tracking only;
-# the Python script discovers schemas by scanning src/orca/*.py at build time.
-schema_sources = files(
-  '../src/orca/speechserver.py',
-  '../src/orca/speech_manager.py',
-  '../src/orca/speech_presenter.py',
-  '../src/orca/speech_presenter_settings.py',
-  '../src/orca/braille_presenter.py',
-  '../src/orca/braille_presenter_settings.py',
-  '../src/orca/typing_echo_presenter.py',
-  '../src/orca/typing_echo_presenter_settings.py',
-  '../src/orca/caret_navigator.py',
-  '../src/orca/structural_navigator.py',
-  '../src/orca/table_navigator.py',
-  '../src/orca/document_presenter.py',
-  '../src/orca/say_all_presenter.py',
-  '../src/orca/say_all_presenter_settings.py',
-  '../src/orca/flat_review_presenter.py',
-  '../src/orca/flat_review_presenter_settings.py',
-  '../src/orca/sound_presenter.py',
-  '../src/orca/sound_presenter_settings.py',
-  '../src/orca/chat_presenter.py',
-  '../src/orca/chat_presenter_settings.py',
-  '../src/orca/spellcheck_presenter.py',
-  '../src/orca/spellcheck_presenter_settings.py',
-  '../src/orca/mouse_presenter.py',
-  '../src/orca/mouse_presenter_settings.py',
-  '../src/orca/live_region_presenter.py',
-  '../src/orca/math_presenter.py',
-  '../src/orca/math_presenter_settings.py',
-  '../src/orca/system_information_presenter.py',
-  '../src/orca/system_information_presenter_settings.py',
-  '../src/orca/pronunciation_dictionary_manager.py',
-  '../src/orca/command_manager.py',
-  '../src/orca/text_attribute_manager.py',
-  '../src/orca/text_attribute_manager_settings.py',
-  '../src/orca/profile_manager.py',
-  '../src/orca/orca_modifier_manager.py',
-  '../src/orca/sleep_mode_manager.py',
-  '../src/orca/extension_loader.py',
-)
-
 generated_schema = custom_target(
   'org.gnome.Orca.gschema.xml',
   output: 'org.gnome.Orca.gschema.xml',
   command: [python3, schema_generator, meson.project_source_root() / 'src', '@OUTPUT@'],
-  depend_files: [schema_generator, schema_sources],
+  depend_files: [schema_generator, lib_source_files, files('../src/orca/meson.build')],
   install: true,
   install_dir: get_option('datadir') / 'glib-2.0' / 'schemas'
 )

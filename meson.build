@@ -151,12 +151,13 @@ gnome.post_install(
 
 summary += {'Install dir': python.find_installation('python3').get_install_dir()}
 
-subdir('data')
 subdir('docs')
 subdir('help')
 subdir('icons')
 subdir('po')
 subdir('src')
+# The schemas generated in data depend on the list of library sources defined in src.
+subdir('data')
 subdir('tests')
 
 summary(summary)

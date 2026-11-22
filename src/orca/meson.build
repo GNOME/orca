@@ -235,6 +235,8 @@ lib_sources = [
   'where_am_i_presenter_command_definitions.py',
 ]
 
+lib_source_files = files(lib_sources)
+
 python3.install_sources(
   [ lib_sources, orca_i18n_py, orca_platform_py ],
   subdir: meson.project_name())
