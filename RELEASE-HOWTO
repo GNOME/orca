@@ -122,3 +122,13 @@ setting "XX" to the major release preceding this one.
 
 git commit -a
 git push
+
+REMINDER ABOUT BRANCHING AND STRING ADDITIONS:
+----------------------------------------------
+
+The Translation Team has automation which adds new gnome-xx branches to Damned Lies.
+If, after branching, new strings are committed to Orca's main branch before this update
+has occurred, they might be flagged as a possible string-freeze violation. To avoid this,
+check (https://l10n.gnome.org/module/orca/). If the new stable branch is not listed,
+log in and choose "Update Module" to add the branch. Otherwise, wait until the job runs
+before adding those new strings.
