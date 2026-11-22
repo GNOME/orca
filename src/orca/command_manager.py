@@ -51,7 +51,7 @@ from . import (
 )
 from .command import BrailleCommand, Command, KeyboardCommand
 from .command_manager_preferences_grid import KeybindingsPreferencesGrid
-from .command_manager_settings import KeyboardLayout
+from .command_manager_settings import KeybindingsSettings, KeyboardLayout
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -141,7 +141,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         return self._is_desktop
 
     @gsettings_registry.get_registry().gsetting(
-        key="keyboard-layout",
+        key=KeybindingsSettings.KEY_KEYBOARD_LAYOUT,
         schema="keybindings",
         genum="org.gnome.Orca.KeyboardLayout",
         default="desktop",
@@ -204,7 +204,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         if is_desktop is None:
             layout = gsettings_registry.get_registry().layered_lookup(
                 self._SCHEMA,
-                "keyboard-layout",
+                KeybindingsSettings.KEY_KEYBOARD_LAYOUT,
                 "",
                 genum="org.gnome.Orca.KeyboardLayout",
                 default="desktop",
@@ -213,7 +213,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         self.set_keyboard_layout_is_desktop(is_desktop)
 
     @gsettings_registry.get_registry().gsetting(
-        key="desktop-modifier-keys",
+        key=KeybindingsSettings.KEY_DESKTOP_MODIFIER_KEYS,
         schema="keybindings",
         gtype="as",
         default=["Insert", "KP_Insert"],
@@ -225,7 +225,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "desktop-modifier-keys",
+            KeybindingsSettings.KEY_DESKTOP_MODIFIER_KEYS,
             "as",
             default=["Insert", "KP_Insert"],
         )
@@ -236,13 +236,13 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "desktop-modifier-keys",
+            KeybindingsSettings.KEY_DESKTOP_MODIFIER_KEYS,
             keys,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="laptop-modifier-keys",
+        key=KeybindingsSettings.KEY_LAPTOP_MODIFIER_KEYS,
         schema="keybindings",
         gtype="as",
         default=["Caps_Lock", "Shift_Lock"],
@@ -254,7 +254,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "laptop-modifier-keys",
+            KeybindingsSettings.KEY_LAPTOP_MODIFIER_KEYS,
             "as",
             default=["Caps_Lock", "Shift_Lock"],
         )
@@ -265,7 +265,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "laptop-modifier-keys",
+            KeybindingsSettings.KEY_LAPTOP_MODIFIER_KEYS,
             keys,
         )
         return True
@@ -274,7 +274,11 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         """Returns the per-layout modifier keys for the given layout."""
 
         if app_name:
-            key = "desktop-modifier-keys" if is_desktop else "laptop-modifier-keys"
+            key = (
+                KeybindingsSettings.KEY_DESKTOP_MODIFIER_KEYS
+                if is_desktop
+                else KeybindingsSettings.KEY_LAPTOP_MODIFIER_KEYS
+            )
             if (
                 keys := gsettings_registry.get_registry().layered_lookup(
                     self._SCHEMA,
@@ -323,7 +327,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         new_is_desktop = not self._is_desktop
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "keyboard-layout",
+            KeybindingsSettings.KEY_KEYBOARD_LAYOUT,
             "desktop" if new_is_desktop else "laptop",
         )
         orca_modifier_manager.get_manager().set_modifiers_for_layout()
@@ -766,7 +770,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         keybindings_dict = gsettings_registry.get_registry().layered_lookup(
             "keybindings",
-            "entries",
+            KeybindingsSettings.KEY_ENTRIES,
             "a{saas}",
             default={},
         )
@@ -1237,7 +1241,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         return self._keyboard_commands
 
     @gsettings_registry.get_registry().gsetting(
-        key="entries",
+        key=KeybindingsSettings.KEY_ENTRIES,
         schema="keybindings",
         gtype="a{saas}",
         default={},
@@ -1248,7 +1252,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         return gsettings_registry.get_registry().layered_lookup(
             "keybindings",
-            "entries",
+            KeybindingsSettings.KEY_ENTRIES,
             "a{saas}",
             default={},
         )
@@ -1314,7 +1318,9 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         ]
         overrides = self.get_keybinding_overrides()
         overrides[command_name] = [binding_data]
-        gsettings_registry.get_registry().set_runtime_value("keybindings", "entries", overrides)
+        gsettings_registry.get_registry().set_runtime_value(
+            "keybindings", KeybindingsSettings.KEY_ENTRIES, overrides
+        )
         return True
 
     @dbus_service.testing_command
@@ -1331,7 +1337,9 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         # call refresh_keybindings_for_testing afterwards.
         overrides = self.get_keybinding_overrides()
         overrides.pop(command_name, None)
-        gsettings_registry.get_registry().set_runtime_value("keybindings", "entries", overrides)
+        gsettings_registry.get_registry().set_runtime_value(
+            "keybindings", KeybindingsSettings.KEY_ENTRIES, overrides
+        )
         return True
 
     @dbus_service.testing_command

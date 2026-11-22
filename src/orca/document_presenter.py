@@ -60,6 +60,7 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_utilities_math import AXUtilitiesMath
+from .document_presenter_settings import DocumentSettings
 from .enums import StructuralNavigationMode
 from .extension import Extension
 
@@ -108,12 +109,6 @@ class DocumentPresenter(Extension):
     GROUP_LABEL = guilabels.KB_GROUP_DOCUMENTS
 
     _SCHEMA = "document"
-    KEY_NATIVE_NAV_TRIGGERS_FOCUS_MODE = "native-nav-triggers-focus-mode"
-    KEY_AUTO_STICKY_FOCUS_MODE = "auto-sticky-focus-mode"
-    KEY_SAY_ALL_ON_LOAD = "say-all-on-load"
-    KEY_PAGE_SUMMARY_ON_LOAD = "page-summary-on-load"
-    KEY_FIND_RESULTS_VERBOSITY = "find-results-verbosity"
-    KEY_FIND_RESULTS_MINIMUM_LENGTH = "find-results-minimum-length"
 
     def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -819,7 +814,7 @@ class DocumentPresenter(Extension):
         self._made_find_announcement = False
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_NATIVE_NAV_TRIGGERS_FOCUS_MODE,
+        key=DocumentSettings.KEY_NATIVE_NAV_TRIGGERS_FOCUS_MODE,
         schema="document",
         gtype="b",
         default=True,
@@ -830,7 +825,7 @@ class DocumentPresenter(Extension):
     def get_native_nav_triggers_focus_mode(self) -> bool:
         """Returns whether native navigation triggers focus mode."""
 
-        return self._get_setting(self.KEY_NATIVE_NAV_TRIGGERS_FOCUS_MODE, "b", True)
+        return self._get_setting(DocumentSettings.KEY_NATIVE_NAV_TRIGGERS_FOCUS_MODE, "b", True)
 
     @dbus_service.setter
     def set_native_nav_triggers_focus_mode(self, value: bool) -> bool:
@@ -843,13 +838,13 @@ class DocumentPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_NATIVE_NAV_TRIGGERS_FOCUS_MODE,
+            DocumentSettings.KEY_NATIVE_NAV_TRIGGERS_FOCUS_MODE,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_AUTO_STICKY_FOCUS_MODE,
+        key=DocumentSettings.KEY_AUTO_STICKY_FOCUS_MODE,
         schema="document",
         gtype="b",
         default=True,
@@ -860,7 +855,7 @@ class DocumentPresenter(Extension):
     def get_auto_sticky_focus_mode_for_web_apps(self) -> bool:
         """Returns whether to auto-detect web apps and enable sticky focus mode."""
 
-        return self._get_setting(self.KEY_AUTO_STICKY_FOCUS_MODE, "b", True)
+        return self._get_setting(DocumentSettings.KEY_AUTO_STICKY_FOCUS_MODE, "b", True)
 
     @dbus_service.setter
     def set_auto_sticky_focus_mode_for_web_apps(self, value: bool) -> bool:
@@ -873,13 +868,13 @@ class DocumentPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_AUTO_STICKY_FOCUS_MODE,
+            DocumentSettings.KEY_AUTO_STICKY_FOCUS_MODE,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SAY_ALL_ON_LOAD,
+        key=DocumentSettings.KEY_SAY_ALL_ON_LOAD,
         schema="document",
         gtype="b",
         default=True,
@@ -890,7 +885,7 @@ class DocumentPresenter(Extension):
     def get_say_all_on_load(self) -> bool:
         """Returns whether to perform say all when a document loads."""
 
-        return self._get_setting(self.KEY_SAY_ALL_ON_LOAD, "b", True)
+        return self._get_setting(DocumentSettings.KEY_SAY_ALL_ON_LOAD, "b", True)
 
     @dbus_service.setter
     def set_say_all_on_load(self, value: bool) -> bool:
@@ -902,12 +897,12 @@ class DocumentPresenter(Extension):
         tokens = ["DOCUMENT PRESENTER: Setting say all on load to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_SAY_ALL_ON_LOAD, value
+            self._SCHEMA, DocumentSettings.KEY_SAY_ALL_ON_LOAD, value
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_PAGE_SUMMARY_ON_LOAD,
+        key=DocumentSettings.KEY_PAGE_SUMMARY_ON_LOAD,
         schema="document",
         gtype="b",
         default=True,
@@ -918,7 +913,7 @@ class DocumentPresenter(Extension):
     def get_page_summary_on_load(self) -> bool:
         """Returns whether to present a page summary when a document loads."""
 
-        return self._get_setting(self.KEY_PAGE_SUMMARY_ON_LOAD, "b", True)
+        return self._get_setting(DocumentSettings.KEY_PAGE_SUMMARY_ON_LOAD, "b", True)
 
     @dbus_service.setter
     def set_page_summary_on_load(self, value: bool) -> bool:
@@ -931,13 +926,13 @@ class DocumentPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_PAGE_SUMMARY_ON_LOAD,
+            DocumentSettings.KEY_PAGE_SUMMARY_ON_LOAD,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_FIND_RESULTS_VERBOSITY,
+        key=DocumentSettings.KEY_FIND_RESULTS_VERBOSITY,
         schema="document",
         genum="org.gnome.Orca.FindResultsVerbosity",
         default="all",
@@ -949,7 +944,7 @@ class DocumentPresenter(Extension):
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            self.KEY_FIND_RESULTS_VERBOSITY,
+            DocumentSettings.KEY_FIND_RESULTS_VERBOSITY,
             "",
             genum="org.gnome.Orca.FindResultsVerbosity",
             default="all",
@@ -973,7 +968,7 @@ class DocumentPresenter(Extension):
         name = "all" if value else "none"
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_FIND_RESULTS_VERBOSITY,
+            DocumentSettings.KEY_FIND_RESULTS_VERBOSITY,
             name,
         )
         return True
@@ -996,13 +991,13 @@ class DocumentPresenter(Extension):
         name = "if-line-changed" if value else "all"
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_FIND_RESULTS_VERBOSITY,
+            DocumentSettings.KEY_FIND_RESULTS_VERBOSITY,
             name,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_FIND_RESULTS_MINIMUM_LENGTH,
+        key=DocumentSettings.KEY_FIND_RESULTS_MINIMUM_LENGTH,
         schema="document",
         gtype="i",
         default=4,
@@ -1013,7 +1008,7 @@ class DocumentPresenter(Extension):
     def get_find_results_minimum_length(self) -> UInt32:
         """Returns the minimum length for find results to be spoken."""
 
-        return self._get_setting(self.KEY_FIND_RESULTS_MINIMUM_LENGTH, "i", 4)
+        return self._get_setting(DocumentSettings.KEY_FIND_RESULTS_MINIMUM_LENGTH, "i", 4)
 
     @dbus_service.setter
     def set_find_results_minimum_length(self, value: UInt32) -> bool:
@@ -1026,7 +1021,7 @@ class DocumentPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_FIND_RESULTS_MINIMUM_LENGTH,
+            DocumentSettings.KEY_FIND_RESULTS_MINIMUM_LENGTH,
             value,
         )
         return True

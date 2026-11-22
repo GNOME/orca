@@ -36,6 +36,7 @@ from typing import TYPE_CHECKING, Any
 
 from . import command_manager, debug, gsettings_registry
 from .extension import Extension, RegionChange, get_translation
+from .extension_loader_settings import ExtensionLoaderSettings
 
 if TYPE_CHECKING:
     import gettext
@@ -49,9 +50,6 @@ if TYPE_CHECKING:
     from .enums import ActivePresentationMode
 
 _SCHEMA = "extensions"
-_KEY_DISABLED = "disabled-extensions"
-_KEY_APPROVED = "approved-user-extensions"
-_KEY_SETTINGS = "settings"
 _USER_EXTENSION_PACKAGE = "orca_user_extension"
 
 
@@ -121,7 +119,7 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
         self._orca_is_ready = False
 
     @gsettings_registry.get_registry().gsetting(
-        key="disabled-extensions",
+        key=ExtensionLoaderSettings.KEY_DISABLED_EXTENSIONS,
         schema="extensions",
         gtype="as",
         default=[],
@@ -132,7 +130,7 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
 
         return gsettings_registry.get_registry().layered_lookup(
             _SCHEMA,
-            _KEY_DISABLED,
+            ExtensionLoaderSettings.KEY_DISABLED_EXTENSIONS,
             "as",
             default=[],
         )
@@ -142,12 +140,12 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
 
         return gsettings_registry.get_registry().set_strv(
             _SCHEMA,
-            _KEY_DISABLED,
+            ExtensionLoaderSettings.KEY_DISABLED_EXTENSIONS,
             value,
         )
 
     @gsettings_registry.get_registry().gsetting(
-        key="approved-user-extensions",
+        key=ExtensionLoaderSettings.KEY_APPROVED_USER_EXTENSIONS,
         schema="extensions",
         gtype="a{ss}",
         default={},
@@ -158,7 +156,7 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
 
         return gsettings_registry.get_registry().layered_lookup(
             _SCHEMA,
-            _KEY_APPROVED,
+            ExtensionLoaderSettings.KEY_APPROVED_USER_EXTENSIONS,
             "a{ss}",
             default={},
         )
@@ -168,13 +166,13 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
 
         return gsettings_registry.get_registry().set_dict(
             _SCHEMA,
-            _KEY_APPROVED,
+            ExtensionLoaderSettings.KEY_APPROVED_USER_EXTENSIONS,
             "a{ss}",
             value,
         )
 
     @gsettings_registry.get_registry().gsetting(
-        key="settings",
+        key=ExtensionLoaderSettings.KEY_SETTINGS,
         schema="extensions",
         gtype="a{sv}",
         default={},
@@ -185,7 +183,7 @@ class ExtensionLoader:  # pylint: disable=too-many-public-methods
 
         return gsettings_registry.get_registry().layered_lookup(
             _SCHEMA,
-            _KEY_SETTINGS,
+            ExtensionLoaderSettings.KEY_SETTINGS,
             "a{sv}",
             default={},
         )

@@ -847,10 +847,11 @@ class TestCaretNavigator:
         keybindings.KeyBinding.side_effect = lambda key, modifiers: (key, modifiers)
         from orca import gsettings_registry
         from orca.caret_navigator import CaretNavigator
+        from orca.caret_navigator_settings import CaretNavigationSettings
 
         navigator = CaretNavigator()
         gsettings_registry.get_registry().set_runtime_value(
-            "caret-navigation", navigator.KEY_SELECTION_ENABLED, selection_enabled
+            "caret-navigation", CaretNavigationSettings.KEY_SELECTION_ENABLED, selection_enabled
         )
         test_context.patch_object(navigator, "get_is_enabled", return_value=caret_enabled)
         navigator._suspended = suspended

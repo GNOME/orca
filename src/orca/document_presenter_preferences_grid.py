@@ -33,19 +33,22 @@ from typing import TYPE_CHECKING, Any
 
 from . import (
     caret_navigator,
-    document_presenter,
     guilabels,
     math_presenter,
     preferences_grid_base,
     structural_navigator,
     table_navigator,
 )
+from .caret_navigator_settings import CaretNavigationSettings
+from .document_presenter_settings import DocumentSettings
 from .help_metadata import (
     PreferenceCategoryDoc,
     PreferenceControlDoc,
     PreferencePanelDoc,
     PreferenceValueDoc,
 )
+from .structural_navigator_settings import StructuralNavigationSettings
+from .table_navigator_settings import TableNavigationSettings
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -85,7 +88,7 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "keys, Home, and End."
                     ),
                     schema="caret-navigation",
-                    key=caret_navigator.CaretNavigator.KEY_ENABLED,
+                    key=CaretNavigationSettings.KEY_ENABLED,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.AUTOMATIC_FOCUS_MODE,
@@ -96,7 +99,7 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "navigation lands on an interactive widget."
                     ),
                     schema="caret-navigation",
-                    key=caret_navigator.CaretNavigator.KEY_TRIGGERS_FOCUS_MODE,
+                    key=CaretNavigationSettings.KEY_TRIGGERS_FOCUS_MODE,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.CARET_SELECTION_ENABLED,
@@ -109,7 +112,7 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "is needed and you have verified it works."
                     ),
                     schema="caret-navigation",
-                    key=caret_navigator.CaretNavigator.KEY_SELECTION_ENABLED,
+                    key=CaretNavigationSettings.KEY_SELECTION_ENABLED,
                     since="52",
                 ),
                 PreferenceControlDoc(
@@ -120,7 +123,7 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "each object as if it were on a separate line."
                     ),
                     schema="caret-navigation",
-                    key=caret_navigator.CaretNavigator.KEY_LAYOUT_MODE,
+                    key=CaretNavigationSettings.KEY_LAYOUT_MODE,
                 ),
             ),
         )
@@ -142,28 +145,28 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.KB_GROUP_CARET_NAVIGATION,
                 getter=nav.get_is_enabled,
                 setter=nav.set_is_enabled,
-                prefs_key=caret_navigator.CaretNavigator.KEY_ENABLED,
+                prefs_key=CaretNavigationSettings.KEY_ENABLED,
                 apply_immediately=False,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.AUTOMATIC_FOCUS_MODE,
                 getter=nav.get_triggers_focus_mode,
                 setter=nav.set_triggers_focus_mode,
-                prefs_key=caret_navigator.CaretNavigator.KEY_TRIGGERS_FOCUS_MODE,
+                prefs_key=CaretNavigationSettings.KEY_TRIGGERS_FOCUS_MODE,
                 determine_sensitivity=is_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CARET_SELECTION_ENABLED,
                 getter=nav.get_selection_enabled,
                 setter=nav.set_selection_enabled,
-                prefs_key=caret_navigator.CaretNavigator.KEY_SELECTION_ENABLED,
+                prefs_key=CaretNavigationSettings.KEY_SELECTION_ENABLED,
                 determine_sensitivity=is_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CONTENT_LAYOUT_MODE,
                 getter=nav.get_layout_mode,
                 setter=nav.set_layout_mode,
-                prefs_key=caret_navigator.CaretNavigator.KEY_LAYOUT_MODE,
+                prefs_key=CaretNavigationSettings.KEY_LAYOUT_MODE,
                 determine_sensitivity=is_enabled,
             ),
         ]
@@ -203,7 +206,7 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
                         "Controls whether Orca's structural navigation commands are available."
                     ),
                     schema="structural-navigation",
-                    key=structural_navigator.StructuralNavigator.KEY_ENABLED,
+                    key=StructuralNavigationSettings.KEY_ENABLED,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.AUTOMATIC_FOCUS_MODE,
@@ -214,7 +217,7 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
                         "navigation lands on an interactive widget."
                     ),
                     schema="structural-navigation",
-                    key=structural_navigator.StructuralNavigator.KEY_TRIGGERS_FOCUS_MODE,
+                    key=StructuralNavigationSettings.KEY_TRIGGERS_FOCUS_MODE,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.STRUCTURAL_NAVIGATION_WRAP_AROUND,
@@ -224,7 +227,7 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
                         "of the document."
                     ),
                     schema="structural-navigation",
-                    key=structural_navigator.StructuralNavigator.KEY_WRAPS,
+                    key=StructuralNavigationSettings.KEY_WRAPS,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.STRUCTURAL_NAVIGATION_LARGE_OBJECT_LENGTH,
@@ -234,7 +237,7 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
                         "large-object structural navigation commands."
                     ),
                     schema="structural-navigation",
-                    key=structural_navigator.StructuralNavigator.KEY_LARGE_OBJECT_TEXT_LENGTH,
+                    key=StructuralNavigationSettings.KEY_LARGE_OBJECT_TEXT_LENGTH,
                     minimum="1",
                     maximum="500",
                 ),
@@ -246,7 +249,7 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
                         "names or descriptions."
                     ),
                     schema="structural-navigation",
-                    key=structural_navigator.StructuralNavigator.KEY_SKIP_UNLABELED_IMAGES,
+                    key=StructuralNavigationSettings.KEY_SKIP_UNLABELED_IMAGES,
                 ),
             ),
         )
@@ -268,21 +271,21 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
                 label=guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
                 getter=nav.get_is_enabled,
                 setter=nav.set_is_enabled,
-                prefs_key=structural_navigator.StructuralNavigator.KEY_ENABLED,
+                prefs_key=StructuralNavigationSettings.KEY_ENABLED,
                 apply_immediately=False,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.AUTOMATIC_FOCUS_MODE,
                 getter=nav.get_triggers_focus_mode,
                 setter=nav.set_triggers_focus_mode,
-                prefs_key=structural_navigator.StructuralNavigator.KEY_TRIGGERS_FOCUS_MODE,
+                prefs_key=StructuralNavigationSettings.KEY_TRIGGERS_FOCUS_MODE,
                 determine_sensitivity=is_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.STRUCTURAL_NAVIGATION_WRAP_AROUND,
                 getter=nav.get_navigation_wraps,
                 setter=nav.set_navigation_wraps,
-                prefs_key=structural_navigator.StructuralNavigator.KEY_WRAPS,
+                prefs_key=StructuralNavigationSettings.KEY_WRAPS,
                 determine_sensitivity=is_enabled,
             ),
             preferences_grid_base.IntRangePreferenceControl(
@@ -291,14 +294,14 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
                 maximum=500,
                 getter=nav.get_large_object_text_length,
                 setter=nav.set_large_object_text_length,
-                prefs_key=structural_navigator.StructuralNavigator.KEY_LARGE_OBJECT_TEXT_LENGTH,
+                prefs_key=StructuralNavigationSettings.KEY_LARGE_OBJECT_TEXT_LENGTH,
                 determine_sensitivity=is_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.STRUCTURAL_NAVIGATION_SKIP_UNLABELED_IMAGES,
                 getter=nav.get_skip_unlabeled_images,
                 setter=nav.set_skip_unlabeled_images,
-                prefs_key=structural_navigator.StructuralNavigator.KEY_SKIP_UNLABELED_IMAGES,
+                prefs_key=StructuralNavigationSettings.KEY_SKIP_UNLABELED_IMAGES,
                 determine_sensitivity=is_enabled,
             ),
         ]
@@ -333,14 +336,14 @@ class TableNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     kind="switch",
                     summary=("Controls whether Orca's table navigation commands are available."),
                     schema="table-navigation",
-                    key=table_navigator.TableNavigator.KEY_ENABLED,
+                    key=TableNavigationSettings.KEY_ENABLED,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.TABLE_SKIP_BLANK_CELLS,
                     kind="switch",
                     summary=("Controls whether table navigation skips empty cells."),
                     schema="table-navigation",
-                    key=table_navigator.TableNavigator.KEY_SKIP_BLANK_CELLS,
+                    key=TableNavigationSettings.KEY_SKIP_BLANK_CELLS,
                 ),
             ),
         )
@@ -362,14 +365,14 @@ class TableNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.KB_GROUP_TABLE_NAVIGATION,
                 getter=nav.get_is_enabled,
                 setter=nav.set_is_enabled,
-                prefs_key=table_navigator.TableNavigator.KEY_ENABLED,
+                prefs_key=TableNavigationSettings.KEY_ENABLED,
                 apply_immediately=False,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.TABLE_SKIP_BLANK_CELLS,
                 getter=nav.get_skip_blank_cells,
                 setter=nav.set_skip_blank_cells,
-                prefs_key=table_navigator.TableNavigator.KEY_SKIP_BLANK_CELLS,
+                prefs_key=TableNavigationSettings.KEY_SKIP_BLANK_CELLS,
                 determine_sensitivity=is_enabled,
             ),
         ]
@@ -406,7 +409,7 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                         "navigation, such as Tab or Shift+Tab, lands on an interactive widget."
                     ),
                     schema="document",
-                    key=document_presenter.DocumentPresenter.KEY_NATIVE_NAV_TRIGGERS_FOCUS_MODE,
+                    key=DocumentSettings.KEY_NATIVE_NAV_TRIGGERS_FOCUS_MODE,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.AUTO_STICKY_FOCUS_MODE,
@@ -418,7 +421,7 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                         "work."
                     ),
                     schema="document",
-                    key=document_presenter.DocumentPresenter.KEY_AUTO_STICKY_FOCUS_MODE,
+                    key=DocumentSettings.KEY_AUTO_STICKY_FOCUS_MODE,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.FIND_OPTIONS,
@@ -431,7 +434,7 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                             label=guilabels.FIND_SPEAK_RESULTS,
                             kind="switch",
                             schema="document",
-                            key="find-results-verbosity",
+                            key=DocumentSettings.KEY_FIND_RESULTS_VERBOSITY,
                             default_labels=(PreferenceValueDoc("on", "all"),),
                             summary=(
                                 "Controls whether Orca speaks the line containing each find result."
@@ -441,7 +444,7 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                             label=guilabels.FIND_ONLY_SPEAK_CHANGED_LINES,
                             kind="switch",
                             schema="document",
-                            key="find-results-verbosity",
+                            key=DocumentSettings.KEY_FIND_RESULTS_VERBOSITY,
                             default_labels=(PreferenceValueDoc("off", "all"),),
                             summary=(
                                 "Controls whether Orca speaks a find result only when it is "
@@ -456,9 +459,7 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                                 "before Orca speaks the find result."
                             ),
                             schema="document",
-                            key=(
-                                document_presenter.DocumentPresenter.KEY_FIND_RESULTS_MINIMUM_LENGTH
-                            ),
+                            key=(DocumentSettings.KEY_FIND_RESULTS_MINIMUM_LENGTH),
                             minimum="0",
                             maximum="20",
                         ),
@@ -479,7 +480,7 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                                 "a document or web page first loads."
                             ),
                             schema="document",
-                            key=document_presenter.DocumentPresenter.KEY_SAY_ALL_ON_LOAD,
+                            key=DocumentSettings.KEY_SAY_ALL_ON_LOAD,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.PAGE_SUMMARY_UPON_LOAD,
@@ -490,7 +491,7 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                                 "or web page first loads."
                             ),
                             schema="document",
-                            key=document_presenter.DocumentPresenter.KEY_PAGE_SUMMARY_ON_LOAD,
+                            key=DocumentSettings.KEY_PAGE_SUMMARY_ON_LOAD,
                         ),
                     ),
                 ),
@@ -504,13 +505,13 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 label=guilabels.AUTOMATIC_FOCUS_MODE,
                 getter=presenter.get_native_nav_triggers_focus_mode,
                 setter=presenter.set_native_nav_triggers_focus_mode,
-                prefs_key=document_presenter.DocumentPresenter.KEY_NATIVE_NAV_TRIGGERS_FOCUS_MODE,
+                prefs_key=DocumentSettings.KEY_NATIVE_NAV_TRIGGERS_FOCUS_MODE,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.AUTO_STICKY_FOCUS_MODE,
                 getter=presenter.get_auto_sticky_focus_mode_for_web_apps,
                 setter=presenter.set_auto_sticky_focus_mode_for_web_apps,
-                prefs_key=document_presenter.DocumentPresenter.KEY_AUTO_STICKY_FOCUS_MODE,
+                prefs_key=DocumentSettings.KEY_AUTO_STICKY_FOCUS_MODE,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.FIND_SPEAK_RESULTS,
@@ -531,21 +532,21 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 maximum=20,
                 getter=presenter.get_find_results_minimum_length,
                 setter=presenter.set_find_results_minimum_length,
-                prefs_key=document_presenter.DocumentPresenter.KEY_FIND_RESULTS_MINIMUM_LENGTH,
+                prefs_key=DocumentSettings.KEY_FIND_RESULTS_MINIMUM_LENGTH,
                 member_of=guilabels.FIND_OPTIONS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.READ_PAGE_UPON_LOAD,
                 getter=presenter.get_say_all_on_load,
                 setter=presenter.set_say_all_on_load,
-                prefs_key=document_presenter.DocumentPresenter.KEY_SAY_ALL_ON_LOAD,
+                prefs_key=DocumentSettings.KEY_SAY_ALL_ON_LOAD,
                 member_of=guilabels.PAGE_LOAD,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.PAGE_SUMMARY_UPON_LOAD,
                 getter=presenter.get_page_summary_on_load,
                 setter=presenter.set_page_summary_on_load,
-                prefs_key=document_presenter.DocumentPresenter.KEY_PAGE_SUMMARY_ON_LOAD,
+                prefs_key=DocumentSettings.KEY_PAGE_SUMMARY_ON_LOAD,
                 member_of=guilabels.PAGE_LOAD,
             ),
         ]
@@ -561,9 +562,9 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
 
         result = super().save_settings(profile, app_name)
         verbosity = self._presenter.get_find_results_verbosity_name()
-        result[document_presenter.DocumentPresenter.KEY_FIND_RESULTS_VERBOSITY] = verbosity
+        result[DocumentSettings.KEY_FIND_RESULTS_VERBOSITY] = verbosity
         self._write_gsettings(
-            {document_presenter.DocumentPresenter.KEY_FIND_RESULTS_VERBOSITY: verbosity},
+            {DocumentSettings.KEY_FIND_RESULTS_VERBOSITY: verbosity},
             profile,
             app_name,
         )

@@ -49,6 +49,7 @@ from . import (
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .caret_navigator_settings import CaretNavigationSettings
 from .enums import ActivePresentationMode, CaretSetReason
 from .extension import Extension
 
@@ -72,10 +73,6 @@ class CaretNavigator(Extension):
     """Implements the caret navigation support available to scripts."""
 
     _SCHEMA = "caret-navigation"
-    KEY_ENABLED = "enabled"
-    KEY_SELECTION_ENABLED = "selection-enabled"
-    KEY_TRIGGERS_FOCUS_MODE = "triggers-focus-mode"
-    KEY_LAYOUT_MODE = "layout-mode"
     SELECTION_ACTIVATION_GROUP = "caret-selection"
 
     def _get_setting(self, key: str, default: bool) -> bool:
@@ -132,7 +129,7 @@ class CaretNavigator(Extension):
         return False
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ENABLED,
+        key=CaretNavigationSettings.KEY_ENABLED,
         schema="caret-navigation",
         gtype="b",
         default=True,
@@ -143,7 +140,7 @@ class CaretNavigator(Extension):
     def get_is_enabled(self) -> bool:
         """Returns whether caret navigation is enabled."""
 
-        return self._get_setting(self.KEY_ENABLED, True)
+        return self._get_setting(CaretNavigationSettings.KEY_ENABLED, True)
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:
@@ -164,7 +161,9 @@ class CaretNavigator(Extension):
 
         tokens = ["CARET NAVIGATOR: Setting enabled to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_ENABLED, value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, CaretNavigationSettings.KEY_ENABLED, value
+        )
 
         self._last_input_event = None
         command_manager.get_manager().set_group_enabled(guilabels.KB_GROUP_CARET_NAVIGATION, value)
@@ -176,7 +175,7 @@ class CaretNavigator(Extension):
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SELECTION_ENABLED,
+        key=CaretNavigationSettings.KEY_SELECTION_ENABLED,
         schema="caret-navigation",
         gtype="b",
         default=False,
@@ -186,7 +185,7 @@ class CaretNavigator(Extension):
     def get_selection_enabled(self) -> bool:
         """Returns whether Orca-controlled text selection is enabled."""
 
-        return self._get_setting(self.KEY_SELECTION_ENABLED, False)
+        return self._get_setting(CaretNavigationSettings.KEY_SELECTION_ENABLED, False)
 
     @dbus_service.setter
     def set_selection_enabled(self, value: bool) -> bool:
@@ -197,7 +196,7 @@ class CaretNavigator(Extension):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             gsettings_registry.get_registry().set_runtime_value(
                 self._SCHEMA,
-                self.KEY_SELECTION_ENABLED,
+                CaretNavigationSettings.KEY_SELECTION_ENABLED,
                 value,
             )
 
@@ -209,7 +208,7 @@ class CaretNavigator(Extension):
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_TRIGGERS_FOCUS_MODE,
+        key=CaretNavigationSettings.KEY_TRIGGERS_FOCUS_MODE,
         schema="caret-navigation",
         gtype="b",
         default=False,
@@ -220,7 +219,7 @@ class CaretNavigator(Extension):
     def get_triggers_focus_mode(self) -> bool:
         """Returns whether caret navigation triggers focus mode."""
 
-        return self._get_setting(self.KEY_TRIGGERS_FOCUS_MODE, False)
+        return self._get_setting(CaretNavigationSettings.KEY_TRIGGERS_FOCUS_MODE, False)
 
     @dbus_service.setter
     def set_triggers_focus_mode(self, value: bool) -> bool:
@@ -233,13 +232,13 @@ class CaretNavigator(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_TRIGGERS_FOCUS_MODE,
+            CaretNavigationSettings.KEY_TRIGGERS_FOCUS_MODE,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_LAYOUT_MODE,
+        key=CaretNavigationSettings.KEY_LAYOUT_MODE,
         schema="caret-navigation",
         gtype="b",
         default=True,
@@ -250,7 +249,7 @@ class CaretNavigator(Extension):
     def get_layout_mode(self) -> bool:
         """Returns whether layout mode is enabled."""
 
-        return self._get_setting(self.KEY_LAYOUT_MODE, True)
+        return self._get_setting(CaretNavigationSettings.KEY_LAYOUT_MODE, True)
 
     @dbus_service.setter
     def set_layout_mode(self, value: bool) -> bool:
@@ -262,7 +261,7 @@ class CaretNavigator(Extension):
         tokens = ["CARET NAVIGATOR: Setting layout mode to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_LAYOUT_MODE, value
+            self._SCHEMA, CaretNavigationSettings.KEY_LAYOUT_MODE, value
         )
         return True
 

@@ -44,6 +44,7 @@ from .help_metadata import (
     PreferencePanelDoc,
     PreferenceValueDoc,
 )
+from .speech_manager_settings import SpeechManagerSettings
 from .speech_presenter_settings import ProgressBarVerbosity, SpeechPreference, SpeechSettings
 
 if TYPE_CHECKING:
@@ -323,7 +324,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             label=guilabels.OBJECT_PRESENTATION_IS_DETAILED,
                             kind="switch",
                             schema="speech",
-                            key="verbosity-level",
+                            key=SpeechSettings.KEY_VERBOSITY_LEVEL,
                             default_labels=(PreferenceValueDoc("on", "verbose"),),
                             summary="Controls whether Orca provides brief or detailed object "
                             "descriptions.",
@@ -933,7 +934,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     kind="switch",
                     summary="Turns speech output on or off.",
                     schema="speech",
-                    key="enable",
+                    key=SpeechManagerSettings.KEY_ENABLE,
                 ),
                 PreferenceControlDoc(
                     label=guilabels.VOICE_GLOBAL_VOICE_SETTINGS,

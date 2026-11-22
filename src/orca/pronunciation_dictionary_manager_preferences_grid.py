@@ -43,6 +43,7 @@ from .help_metadata import (
     PreferenceControlDoc,
     PreferencePanelDoc,
 )
+from .pronunciation_dictionary_manager_settings import PronunciationDictionarySettings
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -477,9 +478,13 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
             pron_gs = registry.get_settings("pronunciations", profile, "pronunciations", app_name)
             if pron_gs is not None:
                 if diff:
-                    pron_gs.set_value("entries", GLib.Variant("a{ss}", diff))
-                elif pron_gs.get_user_value("entries") is not None:
-                    pron_gs.reset("entries")
+                    pron_gs.set_value(
+                        PronunciationDictionarySettings.KEY_ENTRIES, GLib.Variant("a{ss}", diff)
+                    )
+                elif (
+                    pron_gs.get_user_value(PronunciationDictionarySettings.KEY_ENTRIES) is not None
+                ):
+                    pron_gs.reset(PronunciationDictionarySettings.KEY_ENTRIES)
 
         return result
 
@@ -506,7 +511,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 
             pronunciation_dict = registry.layered_lookup(
                 "pronunciations",
-                "entries",
+                PronunciationDictionarySettings.KEY_ENTRIES,
                 "a{ss}",
                 app_name=app_name or None,
                 default={},

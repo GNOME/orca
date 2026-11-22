@@ -30,6 +30,7 @@ from . import gsettings_registry
 from .pronunciation_dictionary_manager_preferences_grid import (
     PronunciationDictionaryPreferencesGrid,
 )
+from .pronunciation_dictionary_manager_settings import PronunciationDictionarySettings
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -80,7 +81,7 @@ class PronunciationDictionaryManager:
         if self._dictionary is None:
             self._dictionary = registry.layered_lookup(
                 "pronunciations",
-                "entries",
+                PronunciationDictionarySettings.KEY_ENTRIES,
                 "a{ss}",
                 default={},
             )
@@ -117,7 +118,7 @@ class PronunciationDictionaryManager:
         self._dictionary[key] = replacement
 
     @gsettings_registry.get_registry().gsetting(
-        key="entries",
+        key=PronunciationDictionarySettings.KEY_ENTRIES,
         schema="pronunciations",
         gtype="a{ss}",
         default={},

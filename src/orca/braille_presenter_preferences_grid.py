@@ -63,7 +63,7 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                     label=guilabels.OBJECT_PRESENTATION_IS_DETAILED,
                     kind="switch",
                     schema="braille",
-                    key="verbosity-level",
+                    key=BrailleSettings.KEY_VERBOSITY_LEVEL,
                     default_labels=(PreferenceValueDoc("on", "verbose"),),
                     summary="Controls whether Orca shows more detailed object information.",
                 ),
@@ -81,7 +81,7 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                     label=guilabels.BRAILLE_ABBREVIATED_ROLE_NAMES,
                     kind="switch",
                     schema="braille",
-                    key="rolename-style",
+                    key=BrailleSettings.KEY_ROLENAME_STYLE,
                     default_labels=(PreferenceValueDoc("off", "verbose"),),
                     summary=(
                         "Controls whether Orca uses abbreviated role names, such as btn for button."
@@ -459,7 +459,7 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
                     label=guilabels.BRAILLE_DURATION_SECS,
                     kind="integer",
                     schema="braille",
-                    key="flash-message-duration",
+                    key=BrailleSettings.KEY_FLASH_MESSAGE_DURATION,
                     default_labels=(PreferenceValueDoc("5 seconds", "5000"),),
                     summary=(
                         "Sets how long temporary braille messages are displayed when "

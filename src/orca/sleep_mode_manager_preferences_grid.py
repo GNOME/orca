@@ -30,6 +30,7 @@ from .help_metadata import (
     PreferenceControlDoc,
     PreferencePanelDoc,
 )
+from .sleep_mode_manager_settings import SleepModeSettings
 
 if TYPE_CHECKING:
     import gi
@@ -76,7 +77,7 @@ class SleepModePreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         "remain listed even when they are not running."
                     ),
                     schema="sleep-mode",
-                    key="apps",
+                    key=SleepModeSettings.KEY_APPS,
                     dynamic_values=True,
                 ),
             ),
@@ -165,9 +166,9 @@ class SleepModePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             registry = gsettings_registry.get_registry()
             registry.save_schema(
                 "sleep-mode",
-                {"apps": enabled_apps},
+                {SleepModeSettings.KEY_APPS: enabled_apps},
                 profile,
                 app_name,
             )
 
-        return {"apps": enabled_apps}
+        return {SleepModeSettings.KEY_APPS: enabled_apps}

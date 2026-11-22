@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Settings values for commands."""
+"""Settings keys and values for commands."""
 
 from __future__ import annotations
 
@@ -42,3 +42,12 @@ class KeyboardLayout(Enum):
         """Returns the lowercase string name for this enum value."""
 
         return self.name.lower()
+
+
+class KeybindingsSettings:
+    """The keybindings settings keys."""
+
+    KEY_DESKTOP_MODIFIER_KEYS = "desktop-modifier-keys"
+    KEY_ENTRIES = "entries"
+    KEY_KEYBOARD_LAYOUT = "keyboard-layout"
+    KEY_LAPTOP_MODIFIER_KEYS = "laptop-modifier-keys"

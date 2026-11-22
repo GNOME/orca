@@ -62,6 +62,7 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .enums import ActivePresentationMode, CaretSetReason, StructuralNavigationMode
 from .extension import Extension
+from .structural_navigator_settings import StructuralNavigationSettings
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -109,11 +110,6 @@ class StructuralNavigator(Extension):
     """Implements the structural navigation support available to scripts."""
 
     _SCHEMA = "structural-navigation"
-    KEY_WRAPS = "wraps"
-    KEY_LARGE_OBJECT_TEXT_LENGTH = "large-object-text-length"
-    KEY_ENABLED = "enabled"
-    KEY_TRIGGERS_FOCUS_MODE = "triggers-focus-mode"
-    KEY_SKIP_UNLABELED_IMAGES = "skip-unlabeled-images"
 
     def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -231,7 +227,7 @@ class StructuralNavigator(Extension):
         return not self.get_triggers_focus_mode()
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_WRAPS,
+        key=StructuralNavigationSettings.KEY_WRAPS,
         schema="structural-navigation",
         gtype="b",
         default=True,
@@ -242,7 +238,7 @@ class StructuralNavigator(Extension):
     def get_navigation_wraps(self) -> bool:
         """Returns whether navigation wraps when reaching the top/bottom of the document."""
 
-        return self._get_setting(self.KEY_WRAPS, "b", True)
+        return self._get_setting(StructuralNavigationSettings.KEY_WRAPS, "b", True)
 
     @dbus_service.setter
     def set_navigation_wraps(self, value: bool) -> bool:
@@ -250,11 +246,13 @@ class StructuralNavigator(Extension):
 
         tokens = ["STRUCTURAL NAVIGATOR: Setting navigation wraps to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_WRAPS, value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, StructuralNavigationSettings.KEY_WRAPS, value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_LARGE_OBJECT_TEXT_LENGTH,
+        key=StructuralNavigationSettings.KEY_LARGE_OBJECT_TEXT_LENGTH,
         schema="structural-navigation",
         gtype="i",
         default=75,
@@ -265,7 +263,7 @@ class StructuralNavigator(Extension):
     def get_large_object_text_length(self) -> UInt32:
         """Returns the minimum number of characters to be considered a 'large object'."""
 
-        return self._get_setting(self.KEY_LARGE_OBJECT_TEXT_LENGTH, "i", 75)
+        return self._get_setting(StructuralNavigationSettings.KEY_LARGE_OBJECT_TEXT_LENGTH, "i", 75)
 
     @dbus_service.setter
     def set_large_object_text_length(self, value: UInt32) -> bool:
@@ -275,13 +273,13 @@ class StructuralNavigator(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_LARGE_OBJECT_TEXT_LENGTH,
+            StructuralNavigationSettings.KEY_LARGE_OBJECT_TEXT_LENGTH,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ENABLED,
+        key=StructuralNavigationSettings.KEY_ENABLED,
         schema="structural-navigation",
         gtype="b",
         default=True,
@@ -292,7 +290,7 @@ class StructuralNavigator(Extension):
     def get_is_enabled(self) -> bool:
         """Returns whether structural navigation is enabled."""
 
-        return self._get_setting(self.KEY_ENABLED, "b", True)
+        return self._get_setting(StructuralNavigationSettings.KEY_ENABLED, "b", True)
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:
@@ -311,7 +309,7 @@ class StructuralNavigator(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_ENABLED,
+            StructuralNavigationSettings.KEY_ENABLED,
             value,
         )
 
@@ -342,7 +340,7 @@ class StructuralNavigator(Extension):
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_TRIGGERS_FOCUS_MODE,
+        key=StructuralNavigationSettings.KEY_TRIGGERS_FOCUS_MODE,
         schema="structural-navigation",
         gtype="b",
         default=False,
@@ -353,7 +351,7 @@ class StructuralNavigator(Extension):
     def get_triggers_focus_mode(self) -> bool:
         """Returns whether structural navigation triggers focus mode."""
 
-        return self._get_setting(self.KEY_TRIGGERS_FOCUS_MODE, "b", False)
+        return self._get_setting(StructuralNavigationSettings.KEY_TRIGGERS_FOCUS_MODE, "b", False)
 
     @dbus_service.setter
     def set_triggers_focus_mode(self, value: bool) -> bool:
@@ -366,13 +364,13 @@ class StructuralNavigator(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_TRIGGERS_FOCUS_MODE,
+            StructuralNavigationSettings.KEY_TRIGGERS_FOCUS_MODE,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SKIP_UNLABELED_IMAGES,
+        key=StructuralNavigationSettings.KEY_SKIP_UNLABELED_IMAGES,
         schema="structural-navigation",
         gtype="b",
         default=False,
@@ -382,7 +380,7 @@ class StructuralNavigator(Extension):
     def get_skip_unlabeled_images(self) -> bool:
         """Returns whether unlabeled images are skipped during navigation."""
 
-        return self._get_setting(self.KEY_SKIP_UNLABELED_IMAGES, "b", False)
+        return self._get_setting(StructuralNavigationSettings.KEY_SKIP_UNLABELED_IMAGES, "b", False)
 
     @dbus_service.setter
     def set_skip_unlabeled_images(self, value: bool) -> bool:
@@ -392,7 +390,7 @@ class StructuralNavigator(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_SKIP_UNLABELED_IMAGES,
+            StructuralNavigationSettings.KEY_SKIP_UNLABELED_IMAGES,
             value,
         )
         return True

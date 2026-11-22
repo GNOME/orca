@@ -44,6 +44,7 @@ from gi.repository import (
 )
 
 from . import ax_device_manager, debug, gsettings_registry, keybindings
+from .command_manager_settings import KeybindingsSettings
 
 DESKTOP_MODIFIER_KEYS: list[str] = ["Insert", "KP_Insert"]
 LAPTOP_MODIFIER_KEYS: list[str] = ["Caps_Lock", "Shift_Lock"]
@@ -231,7 +232,7 @@ class OrcaModifierManager:
         registry = gsettings_registry.get_registry()
         layout = registry.layered_lookup(
             _SCHEMA,
-            "keyboard-layout",
+            KeybindingsSettings.KEY_KEYBOARD_LAYOUT,
             "",
             genum="org.gnome.Orca.KeyboardLayout",
             default="desktop",
@@ -239,13 +240,13 @@ class OrcaModifierManager:
         if layout == "desktop":
             return registry.layered_lookup(
                 _SCHEMA,
-                "desktop-modifier-keys",
+                KeybindingsSettings.KEY_DESKTOP_MODIFIER_KEYS,
                 "as",
                 default=DESKTOP_MODIFIER_KEYS,
             )
         return registry.layered_lookup(
             _SCHEMA,
-            "laptop-modifier-keys",
+            KeybindingsSettings.KEY_LAPTOP_MODIFIER_KEYS,
             "as",
             default=LAPTOP_MODIFIER_KEYS,
         )

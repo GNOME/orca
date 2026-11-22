@@ -50,7 +50,7 @@ from . import (
     preferences_grid_base,
 )
 from .ax_object import AXObject
-from .command_manager_settings import KeyboardLayout
+from .command_manager_settings import KeybindingsSettings, KeyboardLayout
 from .help_metadata import (
     PreferenceCategoryDoc,
     PreferenceControlDoc,
@@ -115,7 +115,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     kind="choice",
                     summary="Selects the keyboard layout.",
                     schema="keybindings",
-                    key="keyboard-layout",
+                    key=KeybindingsSettings.KEY_KEYBOARD_LAYOUT,
                     values=(guilabels.KEYBOARD_LAYOUT_DESKTOP, guilabels.KEYBOARD_LAYOUT_LAPTOP),
                     value_docs=(
                         PreferenceValueDoc(
@@ -266,7 +266,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         app_name = AXObject.get_name(self._script.app) if self._script.app else ""
         layout = gsettings_registry.get_registry().layered_lookup(
             "keybindings",
-            "keyboard-layout",
+            KeybindingsSettings.KEY_KEYBOARD_LAYOUT,
             "",
             genum="org.gnome.Orca.KeyboardLayout",
             app_name=app_name or None,
@@ -768,16 +768,16 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             layout_iter = self.keyboard_layout_combo.get_active_iter()
             if layout_iter is not None:
                 layout_value = self.keyboard_layout_combo.get_model().get_value(layout_iter, 1)
-        general["keyboard-layout"] = layout_value
+        general[KeybindingsSettings.KEY_KEYBOARD_LAYOUT] = layout_value
 
         is_desktop = layout_value == KeyboardLayout.DESKTOP.value
         if self._modifier_switches:
             modifier_keys = self._get_selected_modifier_keys()
             if modifier_keys:
                 if is_desktop:
-                    general["desktop-modifier-keys"] = modifier_keys
+                    general[KeybindingsSettings.KEY_DESKTOP_MODIFIER_KEYS] = modifier_keys
                 else:
-                    general["laptop-modifier-keys"] = modifier_keys
+                    general[KeybindingsSettings.KEY_LAPTOP_MODIFIER_KEYS] = modifier_keys
 
         parent_overrides: dict[str, list[list[str]]] = {}
         if profile and (profile != "default" or app_name):
@@ -840,9 +840,14 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             kb_gs = registry.get_settings("keybindings", profile, "keybindings", app_name)
             if kb_gs is not None:
                 if bindings:
-                    kb_gs.set_value("entries", GLib.Variant("a{saas}", bindings))
-                elif self._categories and kb_gs.get_user_value("entries") is not None:
-                    kb_gs.reset("entries")
+                    kb_gs.set_value(
+                        KeybindingsSettings.KEY_ENTRIES, GLib.Variant("a{saas}", bindings)
+                    )
+                elif (
+                    self._categories
+                    and kb_gs.get_user_value(KeybindingsSettings.KEY_ENTRIES) is not None
+                ):
+                    kb_gs.reset(KeybindingsSettings.KEY_ENTRIES)
 
         return general, bindings
 

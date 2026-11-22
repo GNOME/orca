@@ -51,6 +51,7 @@ from .help_metadata import (
     PreferencePanelDoc,
     PreferenceValueDoc,
 )
+from .speech_manager_settings import SpeechManagerSettings
 from .speechserver import CapitalizationStyle, PunctuationStyle
 
 if TYPE_CHECKING:
@@ -89,7 +90,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                                 "and Spiel."
                             ),
                             schema="speech",
-                            key="speech-server",
+                            key=SpeechManagerSettings.KEY_SPEECH_SERVER,
                             dynamic_values=True,
                         ),
                         PreferenceControlDoc(
@@ -104,7 +105,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                                 "documentation."
                             ),
                             schema="speech",
-                            key="synthesizer",
+                            key=SpeechManagerSettings.KEY_SYNTHESIZER,
                             dynamic_values=True,
                         ),
                         PreferenceControlDoc(
@@ -112,7 +113,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             kind="choice",
                             summary="Controls how much punctuation Orca speaks.",
                             schema="speech",
-                            key="punctuation-level",
+                            key=SpeechManagerSettings.KEY_PUNCTUATION_LEVEL,
                             values=(
                                 guilabels.PUNCTUATION_STYLE_NONE,
                                 guilabels.PUNCTUATION_STYLE_SOME,
@@ -149,7 +150,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             kind="choice",
                             summary="Controls how Orca indicates uppercase letters.",
                             schema="speech",
-                            key="capitalization-style",
+                            key=SpeechManagerSettings.KEY_CAPITALIZATION_STYLE,
                             default_labels=(
                                 PreferenceValueDoc(
                                     guilabels.CAPITALIZATION_STYLE_VOICE_ONLY, "none"
@@ -193,7 +194,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             "Orca sends the number to the synthesizer, which likely speaks it "
                             "as one hundred and twenty three.",
                             schema="speech",
-                            key="speak-numbers-as-digits",
+                            key=SpeechManagerSettings.KEY_SPEAK_NUMBERS_AS_DIGITS,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_COLORS_AS_NAMES,
@@ -201,7 +202,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             summary="Controls whether Orca speaks colors by name, such as light "
                             "blue, instead of as RGB values.",
                             schema="speech",
-                            key="use-color-names",
+                            key=SpeechManagerSettings.KEY_USE_COLOR_NAMES,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.SPEECH_BREAK_INTO_CHUNKS,
@@ -210,7 +211,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             "of a spoken presentation, such as name, role, state, mnemonic, "
                             "and tutorial message.",
                             schema="speech",
-                            key="insert-pauses-between-utterances",
+                            key=SpeechManagerSettings.KEY_INSERT_PAUSES_BETWEEN_UTTERANCES,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.SPEECH_USE_PRONUNCIATION_DICTIONARY,
@@ -218,7 +219,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             target="speech.use-pronunciation-dictionary",
                             summary="Controls whether Orca uses pronunciation dictionary entries.",
                             schema="speech",
-                            key="use-pronunciation-dictionary",
+                            key=SpeechManagerSettings.KEY_USE_PRONUNCIATION_DICTIONARY,
                         ),
                     ),
                 ),
@@ -237,7 +238,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             label=guilabels.AUTO_LANGUAGE_SWITCHING,
                             kind="switch",
                             schema="speech",
-                            key="auto-language-switching",
+                            key=SpeechManagerSettings.KEY_AUTO_LANGUAGE_SWITCHING,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.AUTO_LANGUAGE_SWITCHING_UI,
@@ -247,7 +248,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                                 "user-interface elements."
                             ),
                             schema="speech",
-                            key="auto-language-switching-ui",
+                            key=SpeechManagerSettings.KEY_AUTO_LANGUAGE_SWITCHING_UI,
                         ),
                         PreferenceControlDoc(
                             summary=(
@@ -259,7 +260,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             label=guilabels.ONLY_SWITCH_CONFIGURED_LANGUAGES,
                             kind="switch",
                             schema="speech",
-                            key="only-switch-configured-languages",
+                            key=SpeechManagerSettings.KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES,
                         ),
                     ),
                 ),
@@ -486,27 +487,35 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             "voices": {vt: dict(acss) for vt, acss in self._voices.items()},
         }
 
-        result[self._manager.KEY_SPEECH_SERVER] = self._manager.get_speech_server()
-        result[self._manager.KEY_SYNTHESIZER] = self._manager.get_synthesizer()
-        result[self._manager.KEY_SPEECH_SERVER_FACTORY] = self._manager.get_speech_server_factory()
-        result[self._manager.KEY_PUNCTUATION_LEVEL] = self._manager.get_punctuation_level()
-        result[self._manager.KEY_CAPITALIZATION_STYLE] = self._manager.get_capitalization_style()
+        result[SpeechManagerSettings.KEY_SPEECH_SERVER] = self._manager.get_speech_server()
+        result[SpeechManagerSettings.KEY_SYNTHESIZER] = self._manager.get_synthesizer()
+        result[SpeechManagerSettings.KEY_SPEECH_SERVER_FACTORY] = (
+            self._manager.get_speech_server_factory()
+        )
+        result[SpeechManagerSettings.KEY_PUNCTUATION_LEVEL] = self._manager.get_punctuation_level()
+        result[SpeechManagerSettings.KEY_CAPITALIZATION_STYLE] = (
+            self._manager.get_capitalization_style()
+        )
 
-        result[self._manager.KEY_SPEAK_NUMBERS_AS_DIGITS] = self._speak_numbers_switch.get_active()
-        result[self._manager.KEY_USE_COLOR_NAMES] = self._use_color_names_switch.get_active()
-        result[self._manager.KEY_INSERT_PAUSES_BETWEEN_UTTERANCES] = (
+        result[SpeechManagerSettings.KEY_SPEAK_NUMBERS_AS_DIGITS] = (
+            self._speak_numbers_switch.get_active()
+        )
+        result[SpeechManagerSettings.KEY_USE_COLOR_NAMES] = (
+            self._use_color_names_switch.get_active()
+        )
+        result[SpeechManagerSettings.KEY_INSERT_PAUSES_BETWEEN_UTTERANCES] = (
             self._enable_pause_breaks_switch.get_active()
         )
-        result[self._manager.KEY_USE_PRONUNCIATION_DICTIONARY] = (
+        result[SpeechManagerSettings.KEY_USE_PRONUNCIATION_DICTIONARY] = (
             self._use_pronunciation_dict_switch.get_active()
         )
-        result[self._manager.KEY_AUTO_LANGUAGE_SWITCHING] = (
+        result[SpeechManagerSettings.KEY_AUTO_LANGUAGE_SWITCHING] = (
             self._auto_language_switching_content_switch.get_active()
         )
-        result[self._manager.KEY_AUTO_LANGUAGE_SWITCHING_UI] = (
+        result[SpeechManagerSettings.KEY_AUTO_LANGUAGE_SWITCHING_UI] = (
             self._auto_language_switching_ui_switch.get_active()
         )
-        result[self._manager.KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES] = (
+        result[SpeechManagerSettings.KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES] = (
             self._only_switch_configured_languages_switch.get_active()
         )
 
@@ -663,7 +672,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         gsettings_registry.get_registry().set_runtime_value(
             self._manager.SPEECH_SCHEMA,
-            self._manager.KEY_PUNCTUATION_LEVEL,
+            SpeechManagerSettings.KEY_PUNCTUATION_LEVEL,
             PunctuationStyle(level).string_name,
         )
         self._manager.update_punctuation_level()
@@ -685,7 +694,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         gsettings_registry.get_registry().set_runtime_value(
             self._manager.SPEECH_SCHEMA,
-            self._manager.KEY_CAPITALIZATION_STYLE,
+            SpeechManagerSettings.KEY_CAPITALIZATION_STYLE,
             CapitalizationStyle(style).string_name,
         )
         self._manager.update_capitalization_style()
@@ -756,7 +765,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         gsettings_registry.get_registry().set_runtime_value(
             self._manager.SPEECH_SCHEMA,
-            self._manager.KEY_SPEECH_SERVER,
+            SpeechManagerSettings.KEY_SPEECH_SERVER,
             server_name,
         )
         self._manager.set_current_server(server_name)
@@ -782,7 +791,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         # the live module to the dconf value before the user has clicked save.
         gsettings_registry.get_registry().set_runtime_value(
             self._manager.SPEECH_SCHEMA,
-            self._manager.KEY_SYNTHESIZER,
+            SpeechManagerSettings.KEY_SYNTHESIZER,
             synth_name,
         )
         self._manager.set_current_synthesizer(synth_name)
@@ -940,7 +949,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                                 "and that its language is selected."
                             ),
                             schema="voice",
-                            key="family-name",
+                            key=SpeechManagerSettings.KEY_FAMILY_NAME,
                             dynamic_values=True,
                         ),
                         PreferenceControlDoc(
@@ -948,14 +957,14 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             kind="integer",
                             summary="Sets the speech rate for the selected voice type (0-100).",
                             schema="voice",
-                            key="rate",
+                            key=SpeechManagerSettings.KEY_RATE,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.VOICE_PITCH,
                             kind="number",
                             summary="Sets the pitch for the selected voice type (0.0-10.0).",
                             schema="voice",
-                            key="pitch",
+                            key=SpeechManagerSettings.KEY_PITCH,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.VOICE_INFLECTION,
@@ -964,14 +973,14 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                                 "Sets the pitch variation for the selected voice type (0.0-10.0)."
                             ),
                             schema="voice",
-                            key="pitch-range",
+                            key=SpeechManagerSettings.KEY_PITCH_RANGE,
                         ),
                         PreferenceControlDoc(
                             label=guilabels.VOICE_VOLUME,
                             kind="number",
                             summary="Sets the volume for the selected voice type (0.0-10.0).",
                             schema="voice",
-                            key="volume",
+                            key=SpeechManagerSettings.KEY_VOLUME,
                         ),
                     ),
                 ),

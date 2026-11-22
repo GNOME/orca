@@ -40,6 +40,7 @@ from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .extension import Extension
 from .sleep_mode_manager_preferences_grid import SleepModePreferencesGrid
+from .sleep_mode_manager_settings import SleepModeSettings
 
 if TYPE_CHECKING:
     from gi.repository import Atspi
@@ -111,7 +112,7 @@ class SleepModeManager(Extension):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     @gsettings_registry.get_registry().gsetting(
-        key="apps",
+        key=SleepModeSettings.KEY_APPS,
         schema="sleep-mode",
         gtype="as",
         default=[],
@@ -123,7 +124,7 @@ class SleepModeManager(Extension):
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "apps",
+            SleepModeSettings.KEY_APPS,
             "as",
             default=[],
         )
@@ -134,7 +135,7 @@ class SleepModeManager(Extension):
 
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "apps",
+            SleepModeSettings.KEY_APPS,
             apps,
         )
         return True

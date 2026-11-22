@@ -49,6 +49,7 @@ from .acss import ACSS
 from .enums import VoiceType
 from .extension import Extension
 from .speech_manager_preferences_grid import VoicesPreferencesGrid, VoiceTypesPreferencesGrid
+from .speech_manager_settings import SpeechManagerSettings
 from .speechserver import CapitalizationStyle, PunctuationStyle
 
 if TYPE_CHECKING:
@@ -69,31 +70,6 @@ class SpeechManager(Extension):
 
     SPEECH_SCHEMA = "speech"
     _VOICE_SCHEMA = "voice"
-
-    KEY_ENABLE = "enable"
-    KEY_SPEECH_SERVER = "speech-server"
-    KEY_SPEECH_SERVER_FACTORY = "speech-server-factory"
-    KEY_SYNTHESIZER = "synthesizer"
-    KEY_SPEAK_NUMBERS_AS_DIGITS = "speak-numbers-as-digits"
-    KEY_USE_COLOR_NAMES = "use-color-names"
-    KEY_INSERT_PAUSES_BETWEEN_UTTERANCES = "insert-pauses-between-utterances"
-    KEY_USE_PRONUNCIATION_DICTIONARY = "use-pronunciation-dictionary"
-    KEY_AUTO_LANGUAGE_SWITCHING = "auto-language-switching"
-    KEY_AUTO_LANGUAGE_SWITCHING_UI = "auto-language-switching-ui"
-    KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES = "only-switch-configured-languages"
-    KEY_CAPITALIZATION_STYLE = "capitalization-style"
-    KEY_PUNCTUATION_LEVEL = "punctuation-level"
-
-    KEY_ESTABLISHED = "established"
-    KEY_RATE = "rate"
-    KEY_PITCH = "pitch"
-    KEY_PITCH_RANGE = "pitch-range"
-    KEY_VOLUME = "volume"
-    KEY_FAMILY_NAME = "family-name"
-    KEY_FAMILY_LANG = "family-lang"
-    KEY_FAMILY_DIALECT = "family-dialect"
-    KEY_FAMILY_GENDER = "family-gender"
-    KEY_FAMILY_VARIANT = "family-variant"
 
     def _get_setting(
         self,
@@ -132,7 +108,7 @@ class SpeechManager(Extension):
 
         established = lookup(
             self._VOICE_SCHEMA,
-            self.KEY_ESTABLISHED,
+            SpeechManagerSettings.KEY_ESTABLISHED,
             "b",
             voice_type=vtype,
             app_name=app_name,
@@ -140,30 +116,50 @@ class SpeechManager(Extension):
         if established is not None:
             voice["established"] = established
 
-        rate = lookup(self._VOICE_SCHEMA, self.KEY_RATE, "i", voice_type=vtype, app_name=app_name)
+        rate = lookup(
+            self._VOICE_SCHEMA,
+            SpeechManagerSettings.KEY_RATE,
+            "i",
+            voice_type=vtype,
+            app_name=app_name,
+        )
         if rate is not None:
             voice[ACSS.RATE] = rate
-        pitch = lookup(self._VOICE_SCHEMA, self.KEY_PITCH, "d", voice_type=vtype, app_name=app_name)
+        pitch = lookup(
+            self._VOICE_SCHEMA,
+            SpeechManagerSettings.KEY_PITCH,
+            "d",
+            voice_type=vtype,
+            app_name=app_name,
+        )
         if pitch is not None:
             voice[ACSS.AVERAGE_PITCH] = pitch
         pitch_range = lookup(
-            self._VOICE_SCHEMA, self.KEY_PITCH_RANGE, "d", voice_type=vtype, app_name=app_name
+            self._VOICE_SCHEMA,
+            SpeechManagerSettings.KEY_PITCH_RANGE,
+            "d",
+            voice_type=vtype,
+            app_name=app_name,
         )
         if pitch_range is not None:
             voice[ACSS.PITCH_RANGE] = pitch_range
         volume = lookup(
-            self._VOICE_SCHEMA, self.KEY_VOLUME, "d", voice_type=vtype, app_name=app_name
+            self._VOICE_SCHEMA,
+            SpeechManagerSettings.KEY_VOLUME,
+            "d",
+            voice_type=vtype,
+            app_name=app_name,
         )
         if volume is not None:
             voice[ACSS.GAIN] = volume
 
         family: dict[str, str] = {}
         for dconf_key, family_key in (
-            (self.KEY_FAMILY_NAME, speechserver.VoiceFamily.NAME),
-            (self.KEY_FAMILY_LANG, speechserver.VoiceFamily.LANG),
-            (self.KEY_FAMILY_DIALECT, speechserver.VoiceFamily.DIALECT),
-            (self.KEY_FAMILY_GENDER, speechserver.VoiceFamily.GENDER),
-            (self.KEY_FAMILY_VARIANT, speechserver.VoiceFamily.VARIANT),
+            (SpeechManagerSettings.KEY_FAMILY_NAME, speechserver.VoiceFamily.NAME),
+            (SpeechManagerSettings.KEY_FAMILY_LANG, speechserver.VoiceFamily.LANG),
+            (SpeechManagerSettings.KEY_FAMILY_DIALECT, speechserver.VoiceFamily.DIALECT),
+            (SpeechManagerSettings.KEY_FAMILY_GENDER, speechserver.VoiceFamily.GENDER),
+            (SpeechManagerSettings.KEY_FAMILY_VARIANT, speechserver.VoiceFamily.VARIANT),
         ):
             value = lookup(self._VOICE_SCHEMA, dconf_key, "s", voice_type=vtype, app_name=app_name)
             if value:
@@ -184,7 +180,7 @@ class SpeechManager(Extension):
             types = (voice_type,)
         for vtype in types:
             config = self.get_voice_properties(vtype, voice_set=voice_set)
-            if config and config.get(self.KEY_ESTABLISHED):
+            if config and config.get(SpeechManagerSettings.KEY_ESTABLISHED):
                 return config
         return ACSS({})
 
@@ -193,11 +189,11 @@ class SpeechManager(Extension):
 
         registry = gsettings_registry.get_registry()
         for family_key, key in (
-            (speechserver.VoiceFamily.NAME, self.KEY_FAMILY_NAME),
-            (speechserver.VoiceFamily.LANG, self.KEY_FAMILY_LANG),
-            (speechserver.VoiceFamily.DIALECT, self.KEY_FAMILY_DIALECT),
-            (speechserver.VoiceFamily.GENDER, self.KEY_FAMILY_GENDER),
-            (speechserver.VoiceFamily.VARIANT, self.KEY_FAMILY_VARIANT),
+            (speechserver.VoiceFamily.NAME, SpeechManagerSettings.KEY_FAMILY_NAME),
+            (speechserver.VoiceFamily.LANG, SpeechManagerSettings.KEY_FAMILY_LANG),
+            (speechserver.VoiceFamily.DIALECT, SpeechManagerSettings.KEY_FAMILY_DIALECT),
+            (speechserver.VoiceFamily.GENDER, SpeechManagerSettings.KEY_FAMILY_GENDER),
+            (speechserver.VoiceFamily.VARIANT, SpeechManagerSettings.KEY_FAMILY_VARIANT),
         ):
             registry.remove_runtime_value(self._VOICE_SCHEMA, key, voice_type=voice_type)
             if value := family.get(family_key):
@@ -208,18 +204,18 @@ class SpeechManager(Extension):
 
         registry = gsettings_registry.get_registry()
         prosody = (
-            (ACSS.RATE, self.KEY_RATE),
-            (ACSS.AVERAGE_PITCH, self.KEY_PITCH),
-            (ACSS.PITCH_RANGE, self.KEY_PITCH_RANGE),
-            (ACSS.GAIN, self.KEY_VOLUME),
+            (ACSS.RATE, SpeechManagerSettings.KEY_RATE),
+            (ACSS.AVERAGE_PITCH, SpeechManagerSettings.KEY_PITCH),
+            (ACSS.PITCH_RANGE, SpeechManagerSettings.KEY_PITCH_RANGE),
+            (ACSS.GAIN, SpeechManagerSettings.KEY_VOLUME),
         )
-        for _attr, key in ((None, self.KEY_ESTABLISHED), *prosody):
+        for _attr, key in ((None, SpeechManagerSettings.KEY_ESTABLISHED), *prosody):
             registry.remove_runtime_value(self._VOICE_SCHEMA, key, voice_type=voice_type)
         # A non-default voice type is only used if it is established; mirror that here so the
         # generator applies it rather than falling back to the default voice.
         registry.set_runtime_value(
             self._VOICE_SCHEMA,
-            self.KEY_ESTABLISHED,
+            SpeechManagerSettings.KEY_ESTABLISHED,
             bool(voice.get("established")),
             voice_type=voice_type,
         )
@@ -257,16 +253,16 @@ class SpeechManager(Extension):
 
         registry = gsettings_registry.get_registry()
         for key in (
-            self.KEY_ESTABLISHED,
-            self.KEY_RATE,
-            self.KEY_PITCH,
-            self.KEY_PITCH_RANGE,
-            self.KEY_VOLUME,
-            self.KEY_FAMILY_NAME,
-            self.KEY_FAMILY_LANG,
-            self.KEY_FAMILY_DIALECT,
-            self.KEY_FAMILY_GENDER,
-            self.KEY_FAMILY_VARIANT,
+            SpeechManagerSettings.KEY_ESTABLISHED,
+            SpeechManagerSettings.KEY_RATE,
+            SpeechManagerSettings.KEY_PITCH,
+            SpeechManagerSettings.KEY_PITCH_RANGE,
+            SpeechManagerSettings.KEY_VOLUME,
+            SpeechManagerSettings.KEY_FAMILY_NAME,
+            SpeechManagerSettings.KEY_FAMILY_LANG,
+            SpeechManagerSettings.KEY_FAMILY_DIALECT,
+            SpeechManagerSettings.KEY_FAMILY_GENDER,
+            SpeechManagerSettings.KEY_FAMILY_VARIANT,
         ):
             registry.remove_runtime_value(self._VOICE_SCHEMA, key, voice_type=voice_type)
 
@@ -354,15 +350,15 @@ class SpeechManager(Extension):
 
         voice.pop(ACSS.VOICE_TYPE, None)
         config = self.get_voice_set_voice(voice_type, voice_set, fall_back_to_default)
-        if not config.get(self.KEY_ESTABLISHED):
+        if not config.get(SpeechManagerSettings.KEY_ESTABLISHED):
             return voice
 
         registry = gsettings_registry.get_registry()
         for key, acss_key in (
-            (self.KEY_RATE, ACSS.RATE),
-            (self.KEY_PITCH, ACSS.AVERAGE_PITCH),
-            (self.KEY_PITCH_RANGE, ACSS.PITCH_RANGE),
-            (self.KEY_VOLUME, ACSS.GAIN),
+            (SpeechManagerSettings.KEY_RATE, ACSS.RATE),
+            (SpeechManagerSettings.KEY_PITCH, ACSS.AVERAGE_PITCH),
+            (SpeechManagerSettings.KEY_PITCH_RANGE, ACSS.PITCH_RANGE),
+            (SpeechManagerSettings.KEY_VOLUME, ACSS.GAIN),
         ):
             found, value = registry.get_runtime_value(self._VOICE_SCHEMA, key, voice_set=voice_set)
             if found:
@@ -383,25 +379,25 @@ class SpeechManager(Extension):
 
         voice: dict[str, Any] = {}
         for key, acss_key in (
-            (self.KEY_RATE, ACSS.RATE),
-            (self.KEY_PITCH, ACSS.AVERAGE_PITCH),
-            (self.KEY_PITCH_RANGE, ACSS.PITCH_RANGE),
-            (self.KEY_VOLUME, ACSS.GAIN),
+            (SpeechManagerSettings.KEY_RATE, ACSS.RATE),
+            (SpeechManagerSettings.KEY_PITCH, ACSS.AVERAGE_PITCH),
+            (SpeechManagerSettings.KEY_PITCH_RANGE, ACSS.PITCH_RANGE),
+            (SpeechManagerSettings.KEY_VOLUME, ACSS.GAIN),
         ):
             if gs.get_user_value(key) is not None:
                 voice[acss_key] = gs.get_value(key).unpack()
 
-        established = gs.get_user_value(self.KEY_ESTABLISHED)
+        established = gs.get_user_value(SpeechManagerSettings.KEY_ESTABLISHED)
         if established is not None:
             voice["established"] = established.get_boolean()
 
         family: dict[str, str] = {}
         for dconf_key, family_key in (
-            (self.KEY_FAMILY_NAME, speechserver.VoiceFamily.NAME),
-            (self.KEY_FAMILY_LANG, speechserver.VoiceFamily.LANG),
-            (self.KEY_FAMILY_DIALECT, speechserver.VoiceFamily.DIALECT),
-            (self.KEY_FAMILY_GENDER, speechserver.VoiceFamily.GENDER),
-            (self.KEY_FAMILY_VARIANT, speechserver.VoiceFamily.VARIANT),
+            (SpeechManagerSettings.KEY_FAMILY_NAME, speechserver.VoiceFamily.NAME),
+            (SpeechManagerSettings.KEY_FAMILY_LANG, speechserver.VoiceFamily.LANG),
+            (SpeechManagerSettings.KEY_FAMILY_DIALECT, speechserver.VoiceFamily.DIALECT),
+            (SpeechManagerSettings.KEY_FAMILY_GENDER, speechserver.VoiceFamily.GENDER),
+            (SpeechManagerSettings.KEY_FAMILY_VARIANT, speechserver.VoiceFamily.VARIANT),
         ):
             val = gs.get_user_value(dconf_key)
             if val is not None:
@@ -420,24 +416,24 @@ class SpeechManager(Extension):
         if gs is None:
             return
 
-        gs.set_boolean(self.KEY_ESTABLISHED, True)
+        gs.set_boolean(SpeechManagerSettings.KEY_ESTABLISHED, True)
 
         for key, acss_key, setter in (
-            (self.KEY_RATE, ACSS.RATE, gs.set_int),
-            (self.KEY_PITCH, ACSS.AVERAGE_PITCH, gs.set_double),
-            (self.KEY_PITCH_RANGE, ACSS.PITCH_RANGE, gs.set_double),
-            (self.KEY_VOLUME, ACSS.GAIN, gs.set_double),
+            (SpeechManagerSettings.KEY_RATE, ACSS.RATE, gs.set_int),
+            (SpeechManagerSettings.KEY_PITCH, ACSS.AVERAGE_PITCH, gs.set_double),
+            (SpeechManagerSettings.KEY_PITCH_RANGE, ACSS.PITCH_RANGE, gs.set_double),
+            (SpeechManagerSettings.KEY_VOLUME, ACSS.GAIN, gs.set_double),
         ):
             if acss_key in properties:
                 setter(key, properties[acss_key])
 
         family = properties.get(ACSS.FAMILY, {})
         for dconf_key, family_key in (
-            (self.KEY_FAMILY_NAME, speechserver.VoiceFamily.NAME),
-            (self.KEY_FAMILY_LANG, speechserver.VoiceFamily.LANG),
-            (self.KEY_FAMILY_DIALECT, speechserver.VoiceFamily.DIALECT),
-            (self.KEY_FAMILY_GENDER, speechserver.VoiceFamily.GENDER),
-            (self.KEY_FAMILY_VARIANT, speechserver.VoiceFamily.VARIANT),
+            (SpeechManagerSettings.KEY_FAMILY_NAME, speechserver.VoiceFamily.NAME),
+            (SpeechManagerSettings.KEY_FAMILY_LANG, speechserver.VoiceFamily.LANG),
+            (SpeechManagerSettings.KEY_FAMILY_DIALECT, speechserver.VoiceFamily.DIALECT),
+            (SpeechManagerSettings.KEY_FAMILY_GENDER, speechserver.VoiceFamily.GENDER),
+            (SpeechManagerSettings.KEY_FAMILY_VARIANT, speechserver.VoiceFamily.VARIANT),
         ):
             if family.get(family_key):
                 gs.set_string(dconf_key, family[family_key])
@@ -562,7 +558,7 @@ class SpeechManager(Extension):
         self.shutdown_speech()
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
-            self.KEY_SPEECH_SERVER_FACTORY,
+            SpeechManagerSettings.KEY_SPEECH_SERVER_FACTORY,
             target_module,
         )
         self.start_speech()
@@ -578,7 +574,7 @@ class SpeechManager(Extension):
         return result
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SPEECH_SERVER,
+        key=SpeechManagerSettings.KEY_SPEECH_SERVER,
         schema="speech",
         gtype="s",
         default="",
@@ -608,10 +604,12 @@ class SpeechManager(Extension):
     def get_speech_server(self, app_name: str | None = None) -> str:
         """Returns the speech server setting."""
 
-        return self._get_setting(self.KEY_SPEECH_SERVER, "s", "", app_name=app_name)
+        return self._get_setting(
+            SpeechManagerSettings.KEY_SPEECH_SERVER, "s", "", app_name=app_name
+        )
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SPEECH_SERVER_FACTORY,
+        key=SpeechManagerSettings.KEY_SPEECH_SERVER_FACTORY,
         schema="speech",
         gtype="s",
         default="speechdispatcherfactory",
@@ -623,10 +621,12 @@ class SpeechManager(Extension):
 
         if dbus_service.get_testing_secret():
             return "tests.integration_tests.harness.dummy_speech_server"
-        return self._get_setting(self.KEY_SPEECH_SERVER_FACTORY, "s", "speechdispatcherfactory")
+        return self._get_setting(
+            SpeechManagerSettings.KEY_SPEECH_SERVER_FACTORY, "s", "speechdispatcherfactory"
+        )
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SYNTHESIZER,
+        key=SpeechManagerSettings.KEY_SYNTHESIZER,
         schema="speech",
         gtype="s",
         default="",
@@ -671,7 +671,7 @@ class SpeechManager(Extension):
     def get_synthesizer(self, app_name: str | None = None) -> str:
         """Returns the synthesizer setting."""
 
-        return self._get_setting(self.KEY_SYNTHESIZER, "s", "", app_name=app_name)
+        return self._get_setting(SpeechManagerSettings.KEY_SYNTHESIZER, "s", "", app_name=app_name)
 
     @dbus_service.getter
     def get_available_synthesizers(self) -> list[str]:
@@ -756,7 +756,7 @@ class SpeechManager(Extension):
         return result
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_FAMILY_NAME,
+        key=SpeechManagerSettings.KEY_FAMILY_NAME,
         schema="voice",
         gtype="s",
         default="",
@@ -777,7 +777,7 @@ class SpeechManager(Extension):
         return result
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_FAMILY_LANG,
+        key=SpeechManagerSettings.KEY_FAMILY_LANG,
         schema="voice",
         gtype="s",
         default="",
@@ -796,7 +796,7 @@ class SpeechManager(Extension):
         return ""
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_FAMILY_DIALECT,
+        key=SpeechManagerSettings.KEY_FAMILY_DIALECT,
         schema="voice",
         gtype="s",
         default="",
@@ -815,7 +815,7 @@ class SpeechManager(Extension):
         return ""
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_FAMILY_GENDER,
+        key=SpeechManagerSettings.KEY_FAMILY_GENDER,
         schema="voice",
         gtype="s",
         default="",
@@ -834,7 +834,7 @@ class SpeechManager(Extension):
         return ""
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_FAMILY_VARIANT,
+        key=SpeechManagerSettings.KEY_FAMILY_VARIANT,
         schema="voice",
         gtype="s",
         default="",
@@ -955,7 +955,7 @@ class SpeechManager(Extension):
             tokens = ["SPEECH MANAGER: Using speech server factory:", factory]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-            synth = self._get_setting(self.KEY_SYNTHESIZER, "s", "")
+            synth = self._get_setting(SpeechManagerSettings.KEY_SYNTHESIZER, "s", "")
             if synth:
                 self._server.set_output_module(synth)
 
@@ -1088,7 +1088,7 @@ class SpeechManager(Extension):
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ESTABLISHED,
+        key=SpeechManagerSettings.KEY_ESTABLISHED,
         schema="voice",
         gtype="b",
         default=False,
@@ -1101,7 +1101,7 @@ class SpeechManager(Extension):
         return False
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_RATE,
+        key=SpeechManagerSettings.KEY_RATE,
         schema="voice",
         gtype="i",
         default=50,
@@ -1111,7 +1111,7 @@ class SpeechManager(Extension):
     def get_rate(self) -> UInt32:
         """Returns the current speech rate."""
 
-        return self._get_active_voice_value(self.KEY_RATE, ACSS.RATE, 50)
+        return self._get_active_voice_value(SpeechManagerSettings.KEY_RATE, ACSS.RATE, 50)
 
     def _get_active_voice_value(self, key: str, acss_key: str, default: Any) -> Any:
         """Returns a voice property including overrides for the selected voice set."""
@@ -1129,7 +1129,7 @@ class SpeechManager(Extension):
         return gsettings_registry.get_registry().layered_lookup(
             self._VOICE_SCHEMA,
             key,
-            "i" if key == self.KEY_RATE else "d",
+            "i" if key == SpeechManagerSettings.KEY_RATE else "d",
             voice_type=VoiceType.DEFAULT,
             default=default,
         )
@@ -1159,7 +1159,7 @@ class SpeechManager(Extension):
         if not isinstance(value, (int, float)):
             return False
 
-        self._set_active_voice_value(self.KEY_RATE, value)
+        self._set_active_voice_value(SpeechManagerSettings.KEY_RATE, value)
 
         tokens = ["SPEECH MANAGER: Set rate to:", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1236,7 +1236,7 @@ class SpeechManager(Extension):
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_PITCH,
+        key=SpeechManagerSettings.KEY_PITCH,
         schema="voice",
         gtype="d",
         default=5.0,
@@ -1246,7 +1246,9 @@ class SpeechManager(Extension):
     def get_pitch(self) -> float:
         """Returns the current speech pitch."""
 
-        return self._get_active_voice_value(self.KEY_PITCH, ACSS.AVERAGE_PITCH, 5.0)
+        return self._get_active_voice_value(
+            SpeechManagerSettings.KEY_PITCH, ACSS.AVERAGE_PITCH, 5.0
+        )
 
     @dbus_service.setter
     def set_pitch(self, value: float) -> bool:
@@ -1255,7 +1257,7 @@ class SpeechManager(Extension):
         if not isinstance(value, (int, float)):
             return False
 
-        self._set_active_voice_value(self.KEY_PITCH, value)
+        self._set_active_voice_value(SpeechManagerSettings.KEY_PITCH, value)
 
         tokens = ["SPEECH MANAGER: Set pitch to:", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1332,7 +1334,7 @@ class SpeechManager(Extension):
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_PITCH_RANGE,
+        key=SpeechManagerSettings.KEY_PITCH_RANGE,
         schema="voice",
         gtype="d",
         default=5.0,
@@ -1342,7 +1344,9 @@ class SpeechManager(Extension):
     def get_pitch_range(self) -> float:
         """Returns the current speech inflection (pitch range)."""
 
-        return self._get_active_voice_value(self.KEY_PITCH_RANGE, ACSS.PITCH_RANGE, 5.0)
+        return self._get_active_voice_value(
+            SpeechManagerSettings.KEY_PITCH_RANGE, ACSS.PITCH_RANGE, 5.0
+        )
 
     @dbus_service.setter
     def set_pitch_range(self, value: float) -> bool:
@@ -1351,7 +1355,7 @@ class SpeechManager(Extension):
         if not isinstance(value, (int, float)):
             return False
 
-        self._set_active_voice_value(self.KEY_PITCH_RANGE, value)
+        self._set_active_voice_value(SpeechManagerSettings.KEY_PITCH_RANGE, value)
 
         tokens = ["SPEECH MANAGER: Set pitch range to:", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1428,7 +1432,7 @@ class SpeechManager(Extension):
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_VOLUME,
+        key=SpeechManagerSettings.KEY_VOLUME,
         schema="voice",
         gtype="d",
         default=10.0,
@@ -1438,7 +1442,7 @@ class SpeechManager(Extension):
     def get_volume(self) -> float:
         """Returns the current speech volume."""
 
-        return self._get_active_voice_value(self.KEY_VOLUME, ACSS.GAIN, 10.0)
+        return self._get_active_voice_value(SpeechManagerSettings.KEY_VOLUME, ACSS.GAIN, 10.0)
 
     @dbus_service.setter
     def set_volume(self, value: float) -> bool:
@@ -1447,7 +1451,7 @@ class SpeechManager(Extension):
         if not isinstance(value, (int, float)):
             return False
 
-        self._set_active_voice_value(self.KEY_VOLUME, value)
+        self._set_active_voice_value(SpeechManagerSettings.KEY_VOLUME, value)
 
         tokens = ["SPEECH MANAGER: Set volume to:", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1524,7 +1528,7 @@ class SpeechManager(Extension):
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_CAPITALIZATION_STYLE,
+        key=SpeechManagerSettings.KEY_CAPITALIZATION_STYLE,
         schema="speech",
         genum="org.gnome.Orca.CapitalizationStyle",
         default="none",
@@ -1536,7 +1540,7 @@ class SpeechManager(Extension):
         """Returns the current capitalization style."""
 
         return self._get_setting(
-            self.KEY_CAPITALIZATION_STYLE,
+            SpeechManagerSettings.KEY_CAPITALIZATION_STYLE,
             "",
             default="none",
             app_name=app_name,
@@ -1558,7 +1562,7 @@ class SpeechManager(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
-            self.KEY_CAPITALIZATION_STYLE,
+            SpeechManagerSettings.KEY_CAPITALIZATION_STYLE,
             style.string_name,
         )
         self.update_capitalization_style()
@@ -1614,7 +1618,7 @@ class SpeechManager(Extension):
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_PUNCTUATION_LEVEL,
+        key=SpeechManagerSettings.KEY_PUNCTUATION_LEVEL,
         schema="speech",
         genum="org.gnome.Orca.PunctuationStyle",
         default="most",
@@ -1626,7 +1630,7 @@ class SpeechManager(Extension):
         """Returns the current punctuation level."""
 
         return self._get_setting(
-            self.KEY_PUNCTUATION_LEVEL,
+            SpeechManagerSettings.KEY_PUNCTUATION_LEVEL,
             "",
             default="most",
             app_name=app_name,
@@ -1648,7 +1652,7 @@ class SpeechManager(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
-            self.KEY_PUNCTUATION_LEVEL,
+            SpeechManagerSettings.KEY_PUNCTUATION_LEVEL,
             style.string_name,
         )
         self.update_punctuation_level()
@@ -1719,7 +1723,7 @@ class SpeechManager(Extension):
 
         active_id = server.get_output_module()
         if not server_id:
-            server_id = self._get_setting(self.KEY_SYNTHESIZER, "s", "")
+            server_id = self._get_setting(SpeechManagerSettings.KEY_SYNTHESIZER, "s", "")
 
         if server_id and server_id != active_id:
             tokens = ["SPEECH MANAGER: Updating synthesizer from", active_id, "to", server_id, "."]
@@ -1875,7 +1879,7 @@ class SpeechManager(Extension):
         return self.activate_voice_set(available[index], script, event, notify_user)
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ENABLE,
+        key=SpeechManagerSettings.KEY_ENABLE,
         schema="speech",
         gtype="b",
         default=True,
@@ -1886,7 +1890,7 @@ class SpeechManager(Extension):
     def get_speech_is_enabled(self) -> bool:
         """Returns whether the speech server is enabled. See also is-muted."""
 
-        return self._get_setting(self.KEY_ENABLE, "b", True)
+        return self._get_setting(SpeechManagerSettings.KEY_ENABLE, "b", True)
 
     @dbus_service.setter
     def set_speech_is_enabled(self, value: bool) -> bool:
@@ -1899,7 +1903,7 @@ class SpeechManager(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         gsettings_registry.get_registry().set_runtime_value(
-            self.SPEECH_SCHEMA, self.KEY_ENABLE, value
+            self.SPEECH_SCHEMA, SpeechManagerSettings.KEY_ENABLE, value
         )
         if value:
             self.start_speech()
@@ -1913,7 +1917,7 @@ class SpeechManager(Extension):
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SPEAK_NUMBERS_AS_DIGITS,
+        key=SpeechManagerSettings.KEY_SPEAK_NUMBERS_AS_DIGITS,
         schema="speech",
         gtype="b",
         default=False,
@@ -1924,7 +1928,9 @@ class SpeechManager(Extension):
     def get_speak_numbers_as_digits(self, app_name: str | None = None) -> bool:
         """Returns whether numbers are spoken as digits."""
 
-        return self._get_setting(self.KEY_SPEAK_NUMBERS_AS_DIGITS, "b", False, app_name=app_name)
+        return self._get_setting(
+            SpeechManagerSettings.KEY_SPEAK_NUMBERS_AS_DIGITS, "b", False, app_name=app_name
+        )
 
     @dbus_service.setter
     def set_speak_numbers_as_digits(self, value: bool) -> bool:
@@ -1934,13 +1940,13 @@ class SpeechManager(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
-            self.KEY_SPEAK_NUMBERS_AS_DIGITS,
+            SpeechManagerSettings.KEY_SPEAK_NUMBERS_AS_DIGITS,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_USE_COLOR_NAMES,
+        key=SpeechManagerSettings.KEY_USE_COLOR_NAMES,
         schema="speech",
         gtype="b",
         default=True,
@@ -1951,7 +1957,9 @@ class SpeechManager(Extension):
     def get_use_color_names(self, app_name: str | None = None) -> bool:
         """Returns whether colors are announced by name or as RGB values."""
 
-        return self._get_setting(self.KEY_USE_COLOR_NAMES, "b", True, app_name=app_name)
+        return self._get_setting(
+            SpeechManagerSettings.KEY_USE_COLOR_NAMES, "b", True, app_name=app_name
+        )
 
     @dbus_service.setter
     def set_use_color_names(self, value: bool) -> bool:
@@ -1961,13 +1969,13 @@ class SpeechManager(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
-            self.KEY_USE_COLOR_NAMES,
+            SpeechManagerSettings.KEY_USE_COLOR_NAMES,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_INSERT_PAUSES_BETWEEN_UTTERANCES,
+        key=SpeechManagerSettings.KEY_INSERT_PAUSES_BETWEEN_UTTERANCES,
         schema="speech",
         gtype="b",
         default=True,
@@ -1979,7 +1987,7 @@ class SpeechManager(Extension):
         """Returns whether pauses are inserted between utterances, e.g. between name and role."""
 
         return self._get_setting(
-            self.KEY_INSERT_PAUSES_BETWEEN_UTTERANCES, "b", True, app_name=app_name
+            SpeechManagerSettings.KEY_INSERT_PAUSES_BETWEEN_UTTERANCES, "b", True, app_name=app_name
         )
 
     @dbus_service.setter
@@ -1990,13 +1998,13 @@ class SpeechManager(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
-            self.KEY_INSERT_PAUSES_BETWEEN_UTTERANCES,
+            SpeechManagerSettings.KEY_INSERT_PAUSES_BETWEEN_UTTERANCES,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_USE_PRONUNCIATION_DICTIONARY,
+        key=SpeechManagerSettings.KEY_USE_PRONUNCIATION_DICTIONARY,
         schema="speech",
         gtype="b",
         default=True,
@@ -2008,7 +2016,7 @@ class SpeechManager(Extension):
         """Returns whether the user's pronunciation dictionary should be applied."""
 
         return self._get_setting(
-            self.KEY_USE_PRONUNCIATION_DICTIONARY, "b", True, app_name=app_name
+            SpeechManagerSettings.KEY_USE_PRONUNCIATION_DICTIONARY, "b", True, app_name=app_name
         )
 
     @dbus_service.setter
@@ -2019,13 +2027,13 @@ class SpeechManager(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
-            self.KEY_USE_PRONUNCIATION_DICTIONARY,
+            SpeechManagerSettings.KEY_USE_PRONUNCIATION_DICTIONARY,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_AUTO_LANGUAGE_SWITCHING,
+        key=SpeechManagerSettings.KEY_AUTO_LANGUAGE_SWITCHING,
         schema="speech",
         gtype="b",
         default=True,
@@ -2036,7 +2044,9 @@ class SpeechManager(Extension):
     def get_auto_language_switching(self, app_name: str | None = None) -> bool:
         """Returns whether automatic language switching for document content is enabled."""
 
-        return self._get_setting(self.KEY_AUTO_LANGUAGE_SWITCHING, "b", True, app_name=app_name)
+        return self._get_setting(
+            SpeechManagerSettings.KEY_AUTO_LANGUAGE_SWITCHING, "b", True, app_name=app_name
+        )
 
     @dbus_service.setter
     def set_auto_language_switching(self, value: bool) -> bool:
@@ -2046,13 +2056,13 @@ class SpeechManager(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
-            self.KEY_AUTO_LANGUAGE_SWITCHING,
+            SpeechManagerSettings.KEY_AUTO_LANGUAGE_SWITCHING,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_AUTO_LANGUAGE_SWITCHING_UI,
+        key=SpeechManagerSettings.KEY_AUTO_LANGUAGE_SWITCHING_UI,
         schema="speech",
         gtype="b",
         default=False,
@@ -2062,7 +2072,9 @@ class SpeechManager(Extension):
     def get_auto_language_switching_ui(self, app_name: str | None = None) -> bool:
         """Returns whether automatic language switching for UI elements is enabled."""
 
-        return self._get_setting(self.KEY_AUTO_LANGUAGE_SWITCHING_UI, "b", False, app_name=app_name)
+        return self._get_setting(
+            SpeechManagerSettings.KEY_AUTO_LANGUAGE_SWITCHING_UI, "b", False, app_name=app_name
+        )
 
     @dbus_service.setter
     def set_auto_language_switching_ui(self, value: bool) -> bool:
@@ -2072,13 +2084,13 @@ class SpeechManager(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
-            self.KEY_AUTO_LANGUAGE_SWITCHING_UI,
+            SpeechManagerSettings.KEY_AUTO_LANGUAGE_SWITCHING_UI,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES,
+        key=SpeechManagerSettings.KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES,
         schema="speech",
         gtype="b",
         default=False,
@@ -2089,7 +2101,10 @@ class SpeechManager(Extension):
         """Returns whether language switching is limited to configured voice sets."""
 
         return self._get_setting(
-            self.KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES, "b", False, app_name=app_name
+            SpeechManagerSettings.KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES,
+            "b",
+            False,
+            app_name=app_name,
         )
 
     @dbus_service.setter
@@ -2100,7 +2115,7 @@ class SpeechManager(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
-            self.KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES,
+            SpeechManagerSettings.KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES,
             value,
         )
         return True
@@ -2132,7 +2147,7 @@ class SpeechManager(Extension):
                 presentation_manager.get_manager().present_message(messages.SPEECH_ENABLED)
         elif not self.get_speech_is_enabled():
             gsettings_registry.get_registry().set_runtime_value(
-                self.SPEECH_SCHEMA, self.KEY_ENABLE, True
+                self.SPEECH_SCHEMA, SpeechManagerSettings.KEY_ENABLE, True
             )
             self._init_server()
             if script is not None and notify_user:
@@ -2141,7 +2156,7 @@ class SpeechManager(Extension):
             if script is not None and notify_user:
                 presentation_manager.get_manager().present_message(messages.SPEECH_DISABLED)
             gsettings_registry.get_registry().remove_runtime_value(
-                self.SPEECH_SCHEMA, self.KEY_ENABLE
+                self.SPEECH_SCHEMA, SpeechManagerSettings.KEY_ENABLE
             )
             if not self.get_speech_is_enabled():
                 self.shutdown_speech()

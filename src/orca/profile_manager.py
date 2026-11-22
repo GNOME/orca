@@ -45,6 +45,7 @@ from . import (
 )
 from .extension import Extension
 from .profile_manager_preferences_grid import ProfilePreferencesGrid
+from .profile_manager_settings import ProfileSettings
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -67,7 +68,7 @@ class ProfileManager(Extension):
         self._preferences_grid: ProfilePreferencesGrid | None = None
 
     @gsettings_registry.get_registry().gsetting(
-        key="display-name",
+        key=ProfileSettings.KEY_DISPLAY_NAME,
         schema="metadata",
         gtype="s",
         default="",
@@ -79,7 +80,7 @@ class ProfileManager(Extension):
         return gsettings_registry.get_registry().get_active_profile()
 
     @gsettings_registry.get_registry().gsetting(
-        key="internal-name",
+        key=ProfileSettings.KEY_INTERNAL_NAME,
         schema="metadata",
         gtype="s",
         default="",
@@ -131,8 +132,8 @@ class ProfileManager(Extension):
             gs = registry.get_settings("metadata", sanitized_name)
             if gs is None:
                 continue
-            display_variant = gs.get_user_value("display-name")
-            internal_variant = gs.get_user_value("internal-name")
+            display_variant = gs.get_user_value(ProfileSettings.KEY_DISPLAY_NAME)
+            internal_variant = gs.get_user_value(ProfileSettings.KEY_INTERNAL_NAME)
             if display_variant is None or internal_variant is None:
                 continue
             display_name = display_variant.get_string()
@@ -219,8 +220,8 @@ class ProfileManager(Extension):
 
         metadata_gs = registry.get_settings("metadata", new_name)
         if metadata_gs is not None:
-            metadata_gs.set_string("display-name", new_profile[0])
-            metadata_gs.set_string("internal-name", new_profile[1])
+            metadata_gs.set_string(ProfileSettings.KEY_DISPLAY_NAME, new_profile[0])
+            metadata_gs.set_string(ProfileSettings.KEY_INTERNAL_NAME, new_profile[1])
 
         return True
 

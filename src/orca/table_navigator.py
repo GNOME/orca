@@ -51,6 +51,7 @@ from .ax_table import AXTable
 from .ax_utilities import AXUtilities
 from .enums import ActivePresentationMode, CaretSetReason
 from .extension import Extension
+from .table_navigator_settings import TableNavigationSettings
 
 if TYPE_CHECKING:
     import gi
@@ -71,8 +72,6 @@ class TableNavigator(Extension):
     """Provides Orca-controlled navigation for tabular content."""
 
     _SCHEMA = "table-navigation"
-    KEY_ENABLED = "enabled"
-    KEY_SKIP_BLANK_CELLS = "skip-blank-cells"
 
     def _get_setting(self, key: str, default: bool) -> bool:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -690,7 +689,7 @@ class TableNavigator(Extension):
                 )
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_ENABLED,
+        key=TableNavigationSettings.KEY_ENABLED,
         schema="table-navigation",
         gtype="b",
         default=True,
@@ -701,7 +700,7 @@ class TableNavigator(Extension):
     def get_is_enabled(self) -> bool:
         """Returns whether table navigation is enabled."""
 
-        return self._get_setting(self.KEY_ENABLED, True)
+        return self._get_setting(TableNavigationSettings.KEY_ENABLED, True)
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:
@@ -718,7 +717,9 @@ class TableNavigator(Extension):
 
         tokens = ["TABLE NAVIGATOR: Setting enabled to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_ENABLED, value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, TableNavigationSettings.KEY_ENABLED, value
+        )
 
         self._last_input_event = None
         command_manager.get_manager().set_group_enabled(guilabels.KB_GROUP_TABLE_NAVIGATION, value)
@@ -737,7 +738,7 @@ class TableNavigator(Extension):
         )
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SKIP_BLANK_CELLS,
+        key=TableNavigationSettings.KEY_SKIP_BLANK_CELLS,
         schema="table-navigation",
         gtype="b",
         default=False,
@@ -748,7 +749,7 @@ class TableNavigator(Extension):
     def get_skip_blank_cells(self) -> bool:
         """Returns whether blank cells should be skipped during navigation."""
 
-        return self._get_setting(self.KEY_SKIP_BLANK_CELLS, False)
+        return self._get_setting(TableNavigationSettings.KEY_SKIP_BLANK_CELLS, False)
 
     @dbus_service.setter
     def set_skip_blank_cells(self, value: bool) -> bool:
@@ -760,7 +761,7 @@ class TableNavigator(Extension):
         tokens = ["TABLE NAVIGATOR: Setting skip blank cells to", value, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, self.KEY_SKIP_BLANK_CELLS, value
+            self._SCHEMA, TableNavigationSettings.KEY_SKIP_BLANK_CELLS, value
         )
         return True
 
