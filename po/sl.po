@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-11-21 15:15+0000\n"
-"PO-Revision-Date: 2026-11-22 22:10+0100\n"
+"PO-Revision-Date: 2026-11-22 22:11+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -5846,7 +5846,6 @@ msgstr "Glave in noge"
 #. or a variable. This setting is separate from announcements of code blocks,
 #. which occupy their own lines rather than forming part of a sentence.
 #: src/orca/guilabels.py:80
-#, fuzzy
 msgctxt "Context"
 msgid "Inline code"
 msgstr "Medvrstična koda"
@@ -9192,7 +9191,6 @@ msgstr ""
 #. "Commands", please use terminology consistent with that of this localized
 #. string above: `COMMANDS = _("Commands")`
 #: src/orca/guilabels.py:2456
-#, fuzzy
 msgid "You can assign keybindings to any configured voice set in Commands."
 msgstr ""
 "Tipkovne bližnjice lahko dodelite poljubnemu nastavljenemu glasu, "
