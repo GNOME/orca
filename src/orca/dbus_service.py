@@ -18,6 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-lines
+
 """Provides a D-Bus interface for remotely controlling Orca."""
 
 import ast
@@ -37,7 +39,7 @@ from dasbus.connection import SessionMessageBus
 from dasbus.error import DBusError
 from dasbus.server.interface import dbus_interface
 from dasbus.server.publishable import Publishable
-from dasbus.typing import UInt32 as UInt32  # noqa: PLC0414  (re-export)
+from dasbus.typing import UInt32
 
 # This module cannot use `from __future__ import annotations`: dasbus inspects
 # runtime annotations when building interfaces. Import Atspi normally so these
@@ -310,6 +312,7 @@ class _ModuleRegistration:  # pylint: disable=too-many-instance-attributes
         return registration
 
     @staticmethod
+    # pylint: disable-next=too-many-return-statements
     def _classify_method(method: Callable) -> tuple[_Kind | None, str]:
         """Returns (kind, description) for a decorated method, or (None, '') if undecorated."""
 
@@ -352,7 +355,7 @@ class _InterfaceBuilder:
         "list": list,
         "tuple": tuple,
         "dict": dict,
-        "None": type(None),
+        "None": types.NoneType,
     }
 
     @classmethod
@@ -412,7 +415,9 @@ class _InterfaceBuilder:
 
         origin = typing.get_origin(annotation)
         if origin in (typing.Union, types.UnionType):
-            non_none = tuple(arg for arg in typing.get_args(annotation) if arg is not type(None))
+            non_none = tuple(
+                arg for arg in typing.get_args(annotation) if arg is not types.NoneType
+            )
             if len(non_none) == 1:
                 return non_none[0]
         return annotation
@@ -421,10 +426,8 @@ class _InterfaceBuilder:
     def _resolve_annotation(cls, annotation):
         """Resolves annotation to a real type, or returns the original string."""
 
-        # Resolve each annotation independently. typing.get_type_hints is all-or-nothing:
-        # a single TYPE_CHECKING-only name on a sibling parameter (e.g. `script: default.Script`)
-        # makes it raise NameError and lose every annotation in the function. Walking the AST
-        # per-annotation lets the resolvable ones — like `language: str` — survive.
+        # typing.get_type_hints() cannot be used here. It fails for the whole function if
+        # any one type is only imported for type checking, e.g. script: default.Script.
         if not isinstance(annotation, str):
             return annotation
         try:
@@ -444,7 +447,7 @@ class _InterfaceBuilder:
             return cls._BUILTIN_TYPES[node.id]
         if isinstance(node, ast.Constant):
             if node.value is None:
-                return type(None)
+                return types.NoneType
             raise KeyError(node.value)
         if isinstance(node, ast.Subscript):
             base = cls._type_from_node(node.value)
@@ -798,7 +801,7 @@ class RemoteControllerHandler(Protocol):
         """Quits Orca."""
 
 
-class OrcaRemoteController:
+class OrcaRemoteController:  # pylint: disable=too-many-public-methods
     """Manages Orca's D-Bus service for remote control."""
 
     SERVICE_NAME = "org.gnome.Orca1.Service"
