@@ -395,7 +395,6 @@ class ImportsOutsideTopLevel(Rule):
         "src/orca/ax_utilities_event.py": 6,
         "src/orca/command_manager.py": 1,
         "src/orca/screen_reader_manager.py": 1,
-        "src/orca/speech_presenter.py": 1,
     }
 
     @staticmethod

@@ -52,6 +52,7 @@ from . import (
     presentation_manager,
     pronunciation_dictionary_manager,
     say_all_presenter,
+    script_manager,
     speech_generator,
     speech_manager,
     speech_monitor,
@@ -1652,8 +1653,6 @@ class SpeechPresenter(Extension):
 
     def _get_active_script(self) -> default.Script | None:
         """Returns the active script."""
-
-        from . import script_manager  # pylint: disable=import-outside-toplevel
 
         return script_manager.get_manager().get_active_script()
 
