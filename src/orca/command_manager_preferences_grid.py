@@ -39,7 +39,6 @@ from gi.repository import Gdk, GLib, Gtk  # pylint: disable=no-name-in-module
 
 from . import (
     ax_device_manager,
-    command_manager,
     debug,
     gsettings_registry,
     guilabels,
@@ -51,6 +50,7 @@ from . import (
     preferences_grid_base,
 )
 from .ax_object import AXObject
+from .command_manager_settings import KeyboardLayout
 from .help_metadata import (
     PreferenceCategoryDoc,
     PreferenceControlDoc,
@@ -204,10 +204,10 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         keyboard_layout_model = Gtk.ListStore(str, int)
         keyboard_layout_model.append(
-            [guilabels.KEYBOARD_LAYOUT_DESKTOP, command_manager.KeyboardLayout.DESKTOP.value],
+            [guilabels.KEYBOARD_LAYOUT_DESKTOP, KeyboardLayout.DESKTOP.value],
         )
         keyboard_layout_model.append(
-            [guilabels.KEYBOARD_LAYOUT_LAPTOP, command_manager.KeyboardLayout.LAPTOP.value],
+            [guilabels.KEYBOARD_LAYOUT_LAPTOP, KeyboardLayout.LAPTOP.value],
         )
 
         self._settings_listbox = preferences_grid_base.PreferencesFocusManagedListBox()
@@ -770,7 +770,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 layout_value = self.keyboard_layout_combo.get_model().get_value(layout_iter, 1)
         general["keyboard-layout"] = layout_value
 
-        is_desktop = layout_value == command_manager.KeyboardLayout.DESKTOP.value
+        is_desktop = layout_value == KeyboardLayout.DESKTOP.value
         if self._modifier_switches:
             modifier_keys = self._get_selected_modifier_keys()
             if modifier_keys:
@@ -862,7 +862,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         if self._modifier_switches:
             layout_value = self._manager.get_keyboard_layout_value()
-            is_desktop = layout_value == command_manager.KeyboardLayout.DESKTOP.value
+            is_desktop = layout_value == KeyboardLayout.DESKTOP.value
             app_name = AXObject.get_name(self._script.app) if self._script.app else ""
             modifier_keys = self._manager.get_modifier_keys_for_layout(
                 is_desktop,
@@ -884,7 +884,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             model = combo.get_model()
             layout_value = model.get_value(tree_iter, 1)
 
-            is_desktop = layout_value == command_manager.KeyboardLayout.DESKTOP.value
+            is_desktop = layout_value == KeyboardLayout.DESKTOP.value
             self._manager.load_keyboard_layout(is_desktop)
 
             if self._modifier_switches:

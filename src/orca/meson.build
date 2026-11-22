@@ -111,6 +111,7 @@ lib_sources = [
   'command_manager.py',
   'command_manager_command_definitions.py',
   'command_manager_preferences_grid.py',
+  'command_manager_settings.py',
   'dbus_service.py',
   'debug.py',
   'debugging_tools_manager.py',

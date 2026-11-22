@@ -32,7 +32,6 @@ from __future__ import annotations
 import contextlib
 import time
 import weakref
-from enum import Enum
 from typing import TYPE_CHECKING, Any, Protocol
 
 import gi
@@ -51,12 +50,13 @@ from . import (
     orca_modifier_manager,
 )
 from .command import BrailleCommand, Command, KeyboardCommand
+from .command_manager_preferences_grid import KeybindingsPreferencesGrid
+from .command_manager_settings import KeyboardLayout
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
     from . import input_event
-    from .command_manager_preferences_grid import KeybindingsPreferencesGrid
     from .scripts import default
 
 
@@ -98,23 +98,6 @@ class ModalBrailleHandler(Protocol):
         command: BrailleCommand,
     ) -> bool:
         """Handles a claimed event."""
-
-
-@gsettings_registry.get_registry().gsettings_enum(
-    "org.gnome.Orca.KeyboardLayout",
-    values={"desktop": 1, "laptop": 2},
-)
-class KeyboardLayout(Enum):
-    """Keyboard layout enumeration."""
-
-    DESKTOP = 1
-    LAPTOP = 2
-
-    @property
-    def string_name(self) -> str:
-        """Returns the lowercase string name for this enum value."""
-
-        return self.name.lower()
 
 
 # pylint: disable-next=too-many-public-methods
@@ -1398,9 +1381,6 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         title_change_callback: Callable[[str], None] | None = None,
     ) -> KeybindingsPreferencesGrid:
         """Returns the GtkGrid containing the keybindings preferences UI."""
-
-        # pylint: disable-next=import-outside-toplevel
-        from .command_manager_preferences_grid import KeybindingsPreferencesGrid
 
         return KeybindingsPreferencesGrid(self, script, title_change_callback)
 

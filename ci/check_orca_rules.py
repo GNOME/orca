@@ -393,7 +393,7 @@ class ImportsOutsideTopLevel(Rule):
     # have more than its count. When one of them is moved, its file's count has to be lowered.
     REMAINING: ClassVar[dict[str, int]] = {
         "src/orca/ax_utilities_event.py": 6,
-        "src/orca/command_manager.py": 2,
+        "src/orca/command_manager.py": 1,
         "src/orca/document_presenter.py": 1,
         "src/orca/screen_reader_manager.py": 1,
         "src/orca/speech_presenter.py": 1,
