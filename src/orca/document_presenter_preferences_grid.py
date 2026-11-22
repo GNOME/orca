@@ -31,11 +31,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from . import (
-    guilabels,
-    math_presenter,
-    preferences_grid_base,
-)
+from . import guilabels, preferences_grid_base
 from .document_presenter_settings import DocumentSettings
 from .help_metadata import (
     PreferenceCategoryDoc,
@@ -51,6 +47,7 @@ if TYPE_CHECKING:
 
     from .caret_navigator_preferences_grid import CaretNavigationPreferencesGrid
     from .document_presenter import DocumentPresenter
+    from .math_presenter_preferences_grid import MathPreferencesGrid
     from .structural_navigator_preferences_grid import StructuralNavigationPreferencesGrid
     from .table_navigator_preferences_grid import TableNavigationPreferencesGrid
 
@@ -318,6 +315,7 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         caret_grid: CaretNavigationPreferencesGrid,
         structural_grid: StructuralNavigationPreferencesGrid,
         table_grid: TableNavigationPreferencesGrid,
+        math_grid: MathPreferencesGrid | None,
         title_change_callback: Callable[[str], None] | None = None,
     ) -> None:
         super().__init__(guilabels.DOCUMENTS)
@@ -329,22 +327,29 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._structural_grid = structural_grid
         self._table_grid = table_grid
         self._native_grid = NativeNavigationPreferencesGrid(presenter)
-        self._math_grid = math_presenter.get_presenter().create_preferences_grid()
+        self._math_grid = math_grid
+        self._grids: list[preferences_grid_base.PreferencesGridBase] = [
+            caret_grid,
+            structural_grid,
+            table_grid,
+            self._native_grid,
+        ]
+        if math_grid is not None:
+            self._grids.append(math_grid)
 
         self._build()
         self._initializing = False
 
     def _build(self) -> None:
-        categories = [
+        categories: list[tuple[str, str, preferences_grid_base.PreferencesGridBase]] = [
             (guilabels.KB_GROUP_CARET_NAVIGATION, "caret", self._caret_grid),
             (guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, "structural", self._structural_grid),
             (guilabels.KB_GROUP_TABLE_NAVIGATION, "table", self._table_grid),
             (guilabels.NATIVE_NAVIGATION, "native", self._native_grid),
-            (guilabels.MATH_PRESENTATION, "math", self._math_grid),
         ]
 
-        if not math_presenter.get_presenter().is_available():
-            categories.remove((guilabels.MATH_PRESENTATION, "math", self._math_grid))
+        if self._math_grid is not None:
+            categories.append((guilabels.MATH_PRESENTATION, "math", self._math_grid))
 
         _enable_listbox, stack, _categories_listbox = self._create_child_grid_preferences_stack(
             enable_label=None,
@@ -367,44 +372,28 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self._initializing = True
         self._has_unsaved_changes = False
-        self._caret_grid.reload()
-        self._structural_grid.reload()
-        self._table_grid.reload()
-        self._native_grid.reload()
-        self._math_grid.reload()
+        for grid in self._grids:
+            grid.reload()
         self._initializing = False
 
     def save_settings(self, profile: str = "", app_name: str = "") -> dict:
         """Save all settings from child grids."""
 
         result = {}
-        result.update(self._caret_grid.save_settings(profile, app_name))
-        result.update(self._structural_grid.save_settings(profile, app_name))
-        result.update(self._table_grid.save_settings(profile, app_name))
-        result.update(self._native_grid.save_settings(profile, app_name))
-        result.update(self._math_grid.save_settings(profile, app_name))
+        for grid in self._grids:
+            result.update(grid.save_settings(profile, app_name))
 
         return result
 
     def has_changes(self) -> bool:
         """Check if any child grid has changes."""
 
-        return (
-            self._has_unsaved_changes
-            or self._caret_grid.has_changes()
-            or self._structural_grid.has_changes()
-            or self._table_grid.has_changes()
-            or self._native_grid.has_changes()
-            or self._math_grid.has_changes()
-        )
+        return self._has_unsaved_changes or any(grid.has_changes() for grid in self._grids)
 
     def refresh(self) -> None:
         """Refresh all child grids."""
 
         self._initializing = True
-        self._caret_grid.refresh()
-        self._structural_grid.refresh()
-        self._table_grid.refresh()
-        self._native_grid.refresh()
-        self._math_grid.refresh()
+        for grid in self._grids:
+            grid.refresh()
         self._initializing = False

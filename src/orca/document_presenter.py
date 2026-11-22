@@ -50,6 +50,7 @@ from . import (
     input_event,
     input_event_manager,
     math_navigator,
+    math_presenter,
     messages,
     presentation_manager,
     script_manager,
@@ -60,6 +61,7 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_utilities_math import AXUtilitiesMath
+from .document_presenter_preferences_grid import DocumentPreferencesGrid
 from .document_presenter_settings import DocumentSettings
 from .enums import StructuralNavigationMode
 from .extension import Extension
@@ -69,7 +71,6 @@ if TYPE_CHECKING:
 
     from .command import Command
     from .dbus_service import UInt32
-    from .document_presenter_preferences_grid import DocumentPreferencesGrid
     from .scripts import default
 
 
@@ -1255,14 +1256,12 @@ class DocumentPresenter(Extension):
     ) -> DocumentPreferencesGrid:
         """Returns the preferences grid for document settings."""
 
-        # pylint: disable-next=import-outside-toplevel
-        from .document_presenter_preferences_grid import DocumentPreferencesGrid
-
         return DocumentPreferencesGrid(
             self,
             caret_navigator.get_navigator().create_preferences_grid(),
             structural_navigator.get_navigator().create_preferences_grid(),
             table_navigator.get_navigator().create_preferences_grid(),
+            math_presenter.get_presenter().create_preferences_grid(),
             title_change_callback,
         )
 

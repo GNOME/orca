@@ -560,8 +560,11 @@ class MathPresenter(Extension):
 
         return ""
 
-    def create_preferences_grid(self) -> MathPreferencesGrid:
-        """Returns the GtkGrid containing the math preferences UI."""
+    def create_preferences_grid(self) -> MathPreferencesGrid | None:
+        """Returns the math preferences grid, or None if math is not available."""
+
+        if not self.is_available():
+            return None
 
         return MathPreferencesGrid(self)
 
